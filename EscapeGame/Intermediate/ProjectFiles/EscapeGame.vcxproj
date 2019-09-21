@@ -111,7 +111,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{116B5958-3494-456B-9BD0-E2B3A0877A6E}</ProjectGuid>
+    <ProjectGuid>{9E4FD846-82A7-4767-A9EB-831F0655AC2B}</ProjectGuid>
     <Keyword>MakeFileProj</Keyword>
     <RootNamespace>EscapeGame</RootNamespace>
     <PlatformToolset>v141</PlatformToolset>
