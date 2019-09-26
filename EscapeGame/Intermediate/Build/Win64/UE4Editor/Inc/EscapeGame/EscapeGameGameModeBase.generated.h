@@ -13,9 +13,9 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define ESCAPEGAME_EscapeGameGameModeBase_generated_h
 
-#define EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_15_RPC_WRAPPERS
-#define EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_15_RPC_WRAPPERS_NO_PURE_DECLS
-#define EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_15_INCLASS_NO_PURE_DECLS \
+#define EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_15_RPC_WRAPPERS
+#define EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_15_RPC_WRAPPERS_NO_PURE_DECLS
+#define EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_15_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAEscapeGameGameModeBase(); \
 	friend struct Z_Construct_UClass_AEscapeGameGameModeBase_Statics; \
@@ -24,7 +24,7 @@ public: \
 	DECLARE_SERIALIZER(AEscapeGameGameModeBase)
 
 
-#define EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_15_INCLASS \
+#define EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_15_INCLASS \
 private: \
 	static void StaticRegisterNativesAEscapeGameGameModeBase(); \
 	friend struct Z_Construct_UClass_AEscapeGameGameModeBase_Statics; \
@@ -33,7 +33,7 @@ public: \
 	DECLARE_SERIALIZER(AEscapeGameGameModeBase)
 
 
-#define EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_15_STANDARD_CONSTRUCTORS \
+#define EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_15_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API AEscapeGameGameModeBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(AEscapeGameGameModeBase) \
@@ -46,7 +46,7 @@ private: \
 public:
 
 
-#define EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_15_ENHANCED_CONSTRUCTORS \
+#define EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_15_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API AEscapeGameGameModeBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) : Super(ObjectInitializer) { }; \
 private: \
@@ -59,32 +59,32 @@ DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(AEscapeGameGameModeBase); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(AEscapeGameGameModeBase)
 
 
-#define EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_15_PRIVATE_PROPERTY_OFFSET
-#define EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_12_PROLOG
-#define EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_15_GENERATED_BODY_LEGACY \
+#define EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_15_PRIVATE_PROPERTY_OFFSET
+#define EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_12_PROLOG
+#define EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_15_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_15_PRIVATE_PROPERTY_OFFSET \
-	EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_15_RPC_WRAPPERS \
-	EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_15_INCLASS \
-	EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_15_STANDARD_CONSTRUCTORS \
+	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_15_PRIVATE_PROPERTY_OFFSET \
+	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_15_RPC_WRAPPERS \
+	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_15_INCLASS \
+	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_15_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_15_GENERATED_BODY \
+#define EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_15_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_15_PRIVATE_PROPERTY_OFFSET \
-	EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
-	EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_15_INCLASS_NO_PURE_DECLS \
-	EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h_15_ENHANCED_CONSTRUCTORS \
+	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_15_PRIVATE_PROPERTY_OFFSET \
+	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
+	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_15_INCLASS_NO_PURE_DECLS \
+	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_15_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID EscapeGame_Source_EscapeGame_EscapeGameGameModeBase_h
+#define CURRENT_FILE_ID EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

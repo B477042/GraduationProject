@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\EscapeGame.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{DC777D2C-059E-4BA7-956F-A373C9EBC451}</UniqueIdentifier>
+      <UniqueIdentifier>{E2C61643-D189-43A2-8451-53B18A973EC5}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\EscapeGame.Target.cs">
       <Filter>Source</Filter>
@@ -12,7 +12,7 @@
       <Filter>Source</Filter>
     </None>
     <Filter Include="Config">
-      <UniqueIdentifier>{F8CCC55C-C47B-4082-91CA-D6DEDA539371}</UniqueIdentifier>
+      <UniqueIdentifier>{2F74325E-5988-45D7-8EBD-38217D37B85B}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
@@ -24,32 +24,34 @@
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\EscapeGame">
-      <UniqueIdentifier>{8F895E3C-8273-4BD6-AEEA-F5D5DE2CA73C}</UniqueIdentifier>
+      <UniqueIdentifier>{C570D403-3944-45BD-B2E0-06176E59921E}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\EscapeGame\EscapeGame.Build.cs">
       <Filter>Source\EscapeGame</Filter>
     </None>
-    <ClCompile Include="..\..\Source\EscapeGame\EscapeGameGameModeBase.cpp">
-      <Filter>Source\EscapeGame</Filter>
+    <Filter Include="Source\EscapeGame\private">
+      <UniqueIdentifier>{8C653D03-E07C-421B-8591-08252673A17A}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\EscapeGame\private\EscapeGame.cpp">
+      <Filter>Source\EscapeGame\private</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\EscapeGame\EscapeGameGameModeBase.h">
-      <Filter>Source\EscapeGame</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\Source\EscapeGame\Path1.cpp">
-      <Filter>Source\EscapeGame</Filter>
+    <ClCompile Include="..\..\Source\EscapeGame\private\EscapeGameGameModeBase.cpp">
+      <Filter>Source\EscapeGame\private</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\EscapeGame\Path1.h">
-      <Filter>Source\EscapeGame</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Source\EscapeGame\EscapeGameMode.h">
-      <Filter>Source\EscapeGame</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\Source\EscapeGame\EscapeGameMode.cpp">
-      <Filter>Source\EscapeGame</Filter>
+    <ClCompile Include="..\..\Source\EscapeGame\private\NormalPath.cpp">
+      <Filter>Source\EscapeGame\private</Filter>
     </ClCompile>
+    <Filter Include="Source\EscapeGame\public">
+      <UniqueIdentifier>{F35E1C45-7525-4BE3-8940-2EEBF61BD4E6}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\EscapeGame\public\EscapeGame.h">
+      <Filter>Source\EscapeGame\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\EscapeGame\public\EscapeGameGameModeBase.h">
+      <Filter>Source\EscapeGame\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\EscapeGame\public\NormalPath.h">
+      <Filter>Source\EscapeGame\public</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

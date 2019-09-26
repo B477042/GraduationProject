@@ -5,7 +5,7 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "EscapeGame/EscapeGameGameModeBase.h"
+#include "EscapeGame/public/EscapeGameGameModeBase.h"
 #ifdef _MSC_VER
 #pragma warning (push)
 #pragma warning (disable : 4883)
@@ -42,7 +42,7 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGameGameModeBase() {}
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AEscapeGameGameModeBase_Statics::Class_MetaDataParams[] = {
 		{ "HideCategories", "Info Rendering MovementReplication Replication Actor Input Movement Collision Rendering Utilities|Transformation" },
 		{ "IncludePath", "EscapeGameGameModeBase.h" },
-		{ "ModuleRelativePath", "EscapeGameGameModeBase.h" },
+		{ "ModuleRelativePath", "public/EscapeGameGameModeBase.h" },
 		{ "ShowCategories", "Input|MouseInput Input|TouchInput" },
 	};
 #endif
@@ -69,7 +69,7 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGameGameModeBase() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AEscapeGameGameModeBase, 1253430971);
+	IMPLEMENT_CLASS(AEscapeGameGameModeBase, 3416950219);
 	static FCompiledInDefer Z_CompiledInDefer_UClass_AEscapeGameGameModeBase(Z_Construct_UClass_AEscapeGameGameModeBase, &AEscapeGameGameModeBase::StaticClass, TEXT("/Script/EscapeGame"), TEXT("AEscapeGameGameModeBase"), false, nullptr, nullptr, nullptr);
 	DEFINE_VTABLE_PTR_HELPER_CTOR(AEscapeGameGameModeBase);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
