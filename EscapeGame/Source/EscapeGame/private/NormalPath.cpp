@@ -9,13 +9,13 @@ ANormalPath::ANormalPath()
 	//2019 09 26 아직 Tick은 필요 없다
 	PrimaryActorTick.bCanEverTick = false;
 	// UPROPERTY 멤버 변수 초기화
-	plate = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PLATE"));
-	leftSideWall = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LEFTSIDEWALL"));
-	rightSideWall = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("RIGHTSIDEWALL"));
-	ceiling =  CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CEILING"));
-	lampMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LAMPMESH"));
+	Plate = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PLATE"));
+	LeftSideWall = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LEFTSIDEWALL"));
+	RightSideWall = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("RIGHTSIDEWALL"));
+	Ceiling =  CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CEILING"));
+	LampMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LAMPMESH"));
 
-	lampLight = CreateDefaultSubobject<USpotLightComponent>(TEXT("LAMPLIGHT"));
+	LampLight = CreateDefaultSubobject<USpotLightComponent>(TEXT("LAMPLIGHT"));
 
 
 	//에셋 로드
@@ -23,7 +23,7 @@ ANormalPath::ANormalPath()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_PLATE(TEXT("/Game/StarterBundle/ModularSci_Int/Meshes/SM_FloorPanel_A_2.SM_FloorPanel_A_2"));
 	if (SM_PLATE.Succeeded())
 	{
-		plate->SetStaticMesh(SM_PLATE.Object);
+		Plate->SetStaticMesh(SM_PLATE.Object);
 	}
 	//우벽
 
@@ -32,13 +32,13 @@ ANormalPath::ANormalPath()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_LEFT(TEXT("/Game/StarterBundle/ModularSci_Int/Meshes/SM_Wall_A_2.SM_Wall_A_2"));
 	if (SM_LEFT.Succeeded())
 	{
-		leftSideWall->SetStaticMesh(SM_LEFT.Object);
+		LeftSideWall->SetStaticMesh(SM_LEFT.Object);
 	}
 	//좌벽
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_RIGHT(TEXT("/Game/StarterBundle/ModularSci_Int/Meshes/SM_Wall_A_2.SM_Wall_A_2"));
 	if (SM_RIGHT.Succeeded())
 	{
-		rightSideWall->SetStaticMesh(SM_RIGHT.Object);
+		RightSideWall->SetStaticMesh(SM_RIGHT.Object);
 	}
 
 	//천장
@@ -46,14 +46,14 @@ ANormalPath::ANormalPath()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_CEILING(TEXT("/Game/StarterBundle/ModularSci_Int/Meshes/SM_Ceiling_B_4.SM_Ceiling_B_4"));
 	if (SM_CEILING.Object)
 	{
-		ceiling->SetStaticMesh(SM_CEILING.Object);
+		Ceiling->SetStaticMesh(SM_CEILING.Object);
 	}
 	//등불
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_LAMPMESH(TEXT("/Game/StarterBundle/ModularSci_Int/Meshes/SM_Light_Square.SM_Light_Square"));
 	if (SM_LAMPMESH.Succeeded())
 	{
-		lampMesh->SetStaticMesh(SM_LAMPMESH.Object);
+		LampMesh->SetStaticMesh(SM_LAMPMESH.Object);
 	}
 
 
@@ -62,34 +62,40 @@ ANormalPath::ANormalPath()
 
 	//Object들 위치 배치
 	
-	plate->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
+	Plate->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
 	//plate->SetRelativeRotation(FRotator(180.0f,90.0f,180.0f));
 
-	leftSideWall->SetRelativeLocation(FVector(0.0f, -340.0f, 0.0f));
-	leftSideWall->SetRelativeRotation(FRotator(0.0f, 270.0f, 0.0f));
+	LeftSideWall->SetRelativeLocation(FVector(0.0f, -340.0f, 0.0f));
+	LeftSideWall->SetRelativeRotation(FRotator(0.0f, 270.0f, 0.0f));
 
-	rightSideWall->SetRelativeLocation(FVector(-360.0f, 0.0f, 0.0f));
-	rightSideWall->SetRelativeRotation(FRotator(0.0f, 90.0f, 0.0f));
+	RightSideWall->SetRelativeLocation(FVector(-360.0f, 0.0f, 0.0f));
+	RightSideWall->SetRelativeRotation(FRotator(0.0f, 90.0f, 0.0f));
 
-	ceiling->SetRelativeLocation(FVector(0.0f, -340.0f, 400.0f));
-	ceiling->SetRelativeRotation(FRotator(0.0f, 0.0f, 0.0f));
+	Ceiling->SetRelativeLocation(FVector(0.0f, -340.0f, 400.0f));
+	Ceiling->SetRelativeRotation(FRotator(0.0f, 0.0f, 0.0f));
 	
-	lampMesh->SetRelativeLocation(FVector(-180.0f, 130.0f-340.0f, 400.0f));
-	lampMesh->SetRelativeRotation(FRotator(180.0f, 90.0f, 00.0f));
+	LampMesh->SetRelativeLocation(FVector(-180.0f, 130.0f-340.0f, 400.0f));
+	LampMesh->SetRelativeRotation(FRotator(180.0f, 90.0f, 00.0f));
 
-	lampLight->SetRelativeLocation(FVector(-190.0f,120.0f-340.0f,400.0f));
-	lampLight->SetRelativeRotation(FRotator(-90.0f,0.0f,0.0f));
-
+	LampLight->SetRelativeLocation(FVector(-190.0f,120.0f-340.0f,400.0f));
+	LampLight->SetRelativeRotation(FRotator(-90.0f,0.0f,0.0f));
+//SpotLight 밝기 조절
+	LampLight->SetIntensity(47627.695313f);
+	LampLight->SetAttenuationRadius(428.286865f);
+	LampLight->SetInnerConeAngle(21.464767f);
+	LampLight->SetOuterConeAngle(28.952377f);
+	//빠른 랜더링을 위해 Light를 Static으로
+	LampLight->SetMobility(EComponentMobility::Movable);
 
 
 	//UPROPERTY 계층구조 만들기
-	RootComponent = plate;
-	leftSideWall->SetupAttachment(plate);
-	rightSideWall->SetupAttachment(plate);
-	ceiling->SetupAttachment(plate);
-	lampMesh->SetupAttachment(plate);;
+	RootComponent = Plate;
+	LeftSideWall->SetupAttachment(Plate);
+	RightSideWall->SetupAttachment(Plate);
+	Ceiling->SetupAttachment(Plate);
+	LampMesh->SetupAttachment(Plate);;
 
-	lampLight->SetupAttachment(plate);
+	LampLight->SetupAttachment(Plate);
 
 
 }

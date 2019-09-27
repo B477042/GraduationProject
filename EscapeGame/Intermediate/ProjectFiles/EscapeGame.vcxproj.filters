@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\EscapeGame.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{E2C61643-D189-43A2-8451-53B18A973EC5}</UniqueIdentifier>
+      <UniqueIdentifier>{D7BCE8AF-1680-4D2A-A02A-BADC413E9E26}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\EscapeGame.Target.cs">
       <Filter>Source</Filter>
@@ -12,7 +12,7 @@
       <Filter>Source</Filter>
     </None>
     <Filter Include="Config">
-      <UniqueIdentifier>{2F74325E-5988-45D7-8EBD-38217D37B85B}</UniqueIdentifier>
+      <UniqueIdentifier>{8492AB1A-E916-455C-8D23-FD4172292549}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
@@ -24,14 +24,17 @@
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\EscapeGame">
-      <UniqueIdentifier>{C570D403-3944-45BD-B2E0-06176E59921E}</UniqueIdentifier>
+      <UniqueIdentifier>{EB568CF7-7062-4341-9172-A8E4D81901E5}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\EscapeGame\EscapeGame.Build.cs">
       <Filter>Source\EscapeGame</Filter>
     </None>
     <Filter Include="Source\EscapeGame\private">
-      <UniqueIdentifier>{8C653D03-E07C-421B-8591-08252673A17A}</UniqueIdentifier>
+      <UniqueIdentifier>{650F6096-A7DE-42E4-8E21-AB7EDEEDECC9}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\EscapeGame\private\BattleHall.cpp">
+      <Filter>Source\EscapeGame\private</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\EscapeGame\private\EscapeGame.cpp">
       <Filter>Source\EscapeGame\private</Filter>
     </ClCompile>
@@ -41,9 +44,21 @@
     <ClCompile Include="..\..\Source\EscapeGame\private\NormalPath.cpp">
       <Filter>Source\EscapeGame\private</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\EscapeGame\private\OneSideBlockedPath.cpp">
+      <Filter>Source\EscapeGame\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\EscapeGame\private\OneSideOpendPath.cpp">
+      <Filter>Source\EscapeGame\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\EscapeGame\private\RightAnglePath.cpp">
+      <Filter>Source\EscapeGame\private</Filter>
+    </ClCompile>
     <Filter Include="Source\EscapeGame\public">
-      <UniqueIdentifier>{F35E1C45-7525-4BE3-8940-2EEBF61BD4E6}</UniqueIdentifier>
+      <UniqueIdentifier>{AE742B5A-BCF2-4AD4-868C-E1B6E48EF8C8}</UniqueIdentifier>
     </Filter>
+    <ClInclude Include="..\..\Source\EscapeGame\public\BattleHall.h">
+      <Filter>Source\EscapeGame\public</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\EscapeGame\public\EscapeGame.h">
       <Filter>Source\EscapeGame\public</Filter>
     </ClInclude>
@@ -51,6 +66,15 @@
       <Filter>Source\EscapeGame\public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\EscapeGame\public\NormalPath.h">
+      <Filter>Source\EscapeGame\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\EscapeGame\public\OneSideBlockedPath.h">
+      <Filter>Source\EscapeGame\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\EscapeGame\public\OneSideOpendPath.h">
+      <Filter>Source\EscapeGame\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\EscapeGame\public\RightAnglePath.h">
       <Filter>Source\EscapeGame\public</Filter>
     </ClInclude>
   </ItemGroup>

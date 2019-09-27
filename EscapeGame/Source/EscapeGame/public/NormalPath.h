@@ -26,17 +26,17 @@ public:
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
-		UStaticMeshComponent* plate;//바닥
+		UStaticMeshComponent* Plate;//바닥
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
-		UStaticMeshComponent* leftSideWall;//좌측벽
+		UStaticMeshComponent* LeftSideWall;//좌측벽
 		UPROPERTY(VisibleAnywhere, Category = Mesh)
-		UStaticMeshComponent* rightSideWall;//우측벽
+		UStaticMeshComponent* RightSideWall;//우측벽
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
-		UStaticMeshComponent* ceiling;//천장
+		UStaticMeshComponent* Ceiling;//천장
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
-		UStaticMeshComponent* lampMesh;//천장 전등
+		UStaticMeshComponent* LampMesh;//천장 전등
 
 	UPROPERTY(VisibleAnywhere, Category = SpotLight)
-		USpotLightComponent* lampLight;
+		USpotLightComponent* LampLight;
 
 };
