@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\EscapeGame.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{D7BCE8AF-1680-4D2A-A02A-BADC413E9E26}</UniqueIdentifier>
+      <UniqueIdentifier>{57ADE159-D8BD-408C-BDC0-DC0E83352617}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\EscapeGame.Target.cs">
       <Filter>Source</Filter>
@@ -12,7 +12,7 @@
       <Filter>Source</Filter>
     </None>
     <Filter Include="Config">
-      <UniqueIdentifier>{8492AB1A-E916-455C-8D23-FD4172292549}</UniqueIdentifier>
+      <UniqueIdentifier>{B59A6722-7EF8-403B-AB15-4FCFEF42CA7E}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
@@ -24,13 +24,13 @@
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\EscapeGame">
-      <UniqueIdentifier>{EB568CF7-7062-4341-9172-A8E4D81901E5}</UniqueIdentifier>
+      <UniqueIdentifier>{4FE09811-0DAE-40DA-8BF7-8BA474CD3B62}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\EscapeGame\EscapeGame.Build.cs">
       <Filter>Source\EscapeGame</Filter>
     </None>
     <Filter Include="Source\EscapeGame\private">
-      <UniqueIdentifier>{650F6096-A7DE-42E4-8E21-AB7EDEEDECC9}</UniqueIdentifier>
+      <UniqueIdentifier>{8AEDCB7B-D4EE-4A06-9176-DDB271CE0704}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\EscapeGame\private\BattleHall.cpp">
       <Filter>Source\EscapeGame\private</Filter>
@@ -54,7 +54,7 @@
       <Filter>Source\EscapeGame\private</Filter>
     </ClCompile>
     <Filter Include="Source\EscapeGame\public">
-      <UniqueIdentifier>{AE742B5A-BCF2-4AD4-868C-E1B6E48EF8C8}</UniqueIdentifier>
+      <UniqueIdentifier>{F9972439-D7CB-4F88-AB40-38B2382BD7E4}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\Source\EscapeGame\public\BattleHall.h">
       <Filter>Source\EscapeGame\public</Filter>

@@ -56,17 +56,25 @@ AOneSideBlockedPath::AOneSideBlockedPath()
 	Plate->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
 	//plate->SetRelativeRotation(FRotator(180.0f,90.0f,180.0f));
 
-	
-	//MiddleWall->SetRelativeLocation(FVector(-360.0f, 0.0f, 0.0f));
-	//MiddleWall->SetRelativeRotation(FRotator(0.0f, 90.0f, 0.0f));
+	MiddleWall->SetRelativeLocation(FVector(10.0f, 0.0f, 0.0f));
+	//LeftSideWall->SetRelativeRotation(FRotator(0.0f, 270.0f, 0.0f));
 
-	Ceiling->SetRelativeLocation(FVector(0.0f, -340.0f, 400.0f));
+	
+
+	//(X=0.000000,Y=-360.000000,Z=410.000000)
+	//(Pitch=0.000000,Yaw=0.000000,Roll=0.000000)
+	Ceiling->SetRelativeLocation(FVector(0.0f, -360.0f, 410.0f));
 	Ceiling->SetRelativeRotation(FRotator(0.0f, 0.0f, 0.0f));
 
-	LampMesh->SetRelativeLocation(FVector(-180.0f, 130.0f - 340.0f, 400.0f));
-	LampMesh->SetRelativeRotation(FRotator(180.0f, 90.0f, 00.0f));
-
-	LampLight->SetRelativeLocation(FVector(-190.0f, 120.0f - 340.0f, 400.0f));
+	//(X=-170.000000,Y=-150.000000,Z=410.000000)
+	//(Pitch=0.000000,Yaw=90.000000,Roll=180.000244)
+	//(X=1.500000,Y=1.000000,Z=1.000000)
+	LampMesh->SetRelativeLocation(FVector(-170.0f, -150, 410.0f));
+	//LampMesh->SetRelativeRotation(FRotator(180.0f, 90.0f, 00.0f));
+	LampMesh->SetRelativeScale3D(FVector(1.5f, 1.0f, 1.0f));
+	//(X=-160.000000,Y=-130.000000,Z=410.000000)
+	//(Pitch=-90.000000,Yaw=0.000000,Roll=0.000000)
+	LampLight->SetRelativeLocation(FVector(-160.0f, -130.0f, 410.0f));
 	LampLight->SetRelativeRotation(FRotator(-90.0f, 0.0f, 0.0f));
 	//SpotLight ¹à±â Á¶Àý
 	LampLight->SetIntensity(47627.695313f);
