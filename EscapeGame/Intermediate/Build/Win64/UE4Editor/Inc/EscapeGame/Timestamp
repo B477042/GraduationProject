@@ -1,6 +1,9 @@
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\BattleHall.h
+E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Door.h
+E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\DoorSector.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EscapeGameGameModeBase.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\NormalPath.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\OneSideBlockedPath.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\OneSideOpendPath.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\RightAnglePath.h
+E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\StairPath.h

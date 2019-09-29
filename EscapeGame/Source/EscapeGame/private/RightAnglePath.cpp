@@ -92,7 +92,7 @@ ARightAnglePath::ARightAnglePath()
 	LampLight->SetRelativeLocation(FVector(-160.0f, -130.0f, 410.0f));
 	LampLight->SetRelativeRotation(FRotator(-90.0f, 0.0f, 0.0f));
 	//SpotLight ¹à±â Á¶Àý
-	LampLight->SetIntensity(47627.695313f);
+	LampLight->SetIntensity(5000.695313f);
 	LampLight->SetAttenuationRadius(428.286865f);
 	LampLight->SetInnerConeAngle(21.464767f);
 	LampLight->SetOuterConeAngle(28.952377f);

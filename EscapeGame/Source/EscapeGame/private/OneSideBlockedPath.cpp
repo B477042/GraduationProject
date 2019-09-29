@@ -77,11 +77,11 @@ AOneSideBlockedPath::AOneSideBlockedPath()
 	LampLight->SetRelativeLocation(FVector(-160.0f, -130.0f, 410.0f));
 	LampLight->SetRelativeRotation(FRotator(-90.0f, 0.0f, 0.0f));
 	//SpotLight 밝기 조절
-	LampLight->SetIntensity(47627.695313f);
+	LampLight->SetIntensity(5000.695313f);
 	LampLight->SetAttenuationRadius(428.286865f);
 	LampLight->SetInnerConeAngle(21.464767f);
 	LampLight->SetOuterConeAngle(28.952377f);
-	//빠른 랜더링을 위해 Light를 Static으로
+	
 	LampLight->SetMobility(EComponentMobility::Movable);
 
 
