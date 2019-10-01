@@ -1,0 +1,198 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#include "StairPath2.h"
+
+// Sets default values
+AStairPath2::AStairPath2()
+{
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = false;
+	// UPROPERTY 멤버 변수 초기화
+	InitUPropertys();
+	LoadAssets();
+	SettingWorldMatrix();
+	MakeComponentsTree();
+}
+
+// Called when the game starts or when spawned
+void AStairPath2::BeginPlay()
+{
+	Super::BeginPlay();
+	
+}
+
+void AStairPath2::InitUPropertys()
+{
+
+	Plate1 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PLATE1"));
+	Plate2 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PLATE2"));
+	Root = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ROOT"));
+	Wall1 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WALL1"));
+	Wall2 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WALL2"));
+	Wall3 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WALL3"));
+	Wall4 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WALL4"));
+	Wall5 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WALL5"));
+
+	Stair1 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("STAIR1"));
+	Stair2 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("STAIR2"));
+
+	Ceiling = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CEILING"));
+	CeilingDiv = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CEILINGDIV"));
+	LampMesh1 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LAMPMESH1"));
+	LampMesh2 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LAMPMESH2"));
+
+	LampLight1 = CreateDefaultSubobject<USpotLightComponent>(TEXT("LAMPLIGHT1"));
+	LampLight2 = CreateDefaultSubobject<USpotLightComponent>(TEXT("LAMPLIGHT2"));
+
+}
+
+bool AStairPath2::LoadAssets()
+{
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_PLATE(TEXT("/Game/StarterBundle/ModularSci_Int/Meshes/SM_FloorPanel_A_2.SM_FloorPanel_A_2"));
+	if (SM_PLATE.Succeeded())
+	{
+		Plate1->SetStaticMesh(SM_PLATE.Object);
+		Plate2->SetStaticMesh(SM_PLATE.Object);
+	}
+
+
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_WALL(TEXT("/Game/StarterBundle/ModularSci_Int/Meshes/SM_Wall_B_2.SM_Wall_B_2"));
+	if (SM_WALL.Succeeded())
+	{
+		Wall1->SetStaticMesh(SM_WALL.Object);
+		Wall2->SetStaticMesh(SM_WALL.Object);
+
+		Wall4->SetStaticMesh(SM_WALL.Object);
+		Wall5->SetStaticMesh(SM_WALL.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_WALL1(TEXT("/Game/StarterBundle/ModularSci_Int/Meshes/SM_Wall_B_3.SM_Wall_B_3"));
+	if (SM_WALL1.Succeeded())
+	{
+		Wall3->SetStaticMesh(SM_WALL1.Object);
+	}
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_STAIR(TEXT("/Game/StarterBundle/ModularSci_Comm/Meshes/SM_Stairs_A_Straight.SM_Stairs_A_Straight"));
+	if (SM_STAIR.Succeeded())
+	{
+		Stair1->SetStaticMesh(SM_STAIR.Object);
+		Stair2->SetStaticMesh(SM_STAIR.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_CEILING(TEXT("/Game/StarterBundle/ModularScifiProps/Meshes/SM_Ceiling_A.SM_Ceiling_A"));
+	if (SM_CEILING.Object)
+	{
+		Ceiling->SetStaticMesh(SM_CEILING.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_CEILINGDIV(TEXT("/Game/StarterBundle/ModularScifiProps/Meshes/SM_Ceiling_Div_A.SM_Ceiling_Div_A"));
+	if (SM_CEILINGDIV.Object)
+	{
+		CeilingDiv->SetStaticMesh(SM_CEILINGDIV.Object);
+	}
+
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_LAMPMESH(TEXT("/Game/StarterBundle/ModularSci_Int/Meshes/SM_Light_Square.SM_Light_Square"));
+	if (SM_LAMPMESH.Succeeded())
+	{
+		LampMesh1->SetStaticMesh(SM_LAMPMESH.Object);
+		LampMesh2->SetStaticMesh(SM_LAMPMESH.Object);
+		Root->SetStaticMesh(SM_LAMPMESH.Object);
+	}
+
+
+	return true;
+}
+
+void AStairPath2::SettingWorldMatrix()
+{
+	float X = 0.0f, Y = 0.0f, Z = 0.0f;
+	float Pitch = 0.0f, Yaw = 0.0f, Roll = 0.0f;
+
+	Root->SetRelativeLocation(FVector::ZeroVector);
+
+	Plate1->SetRelativeLocation(FVector(X = 300.000000f, Y = 190.000000f, Z = 0.000000f));
+	Plate1->SetRelativeScale3D(FVector(1.5f, 1.75f, 1.0f));
+
+	Plate2->SetRelativeLocation(FVector(X = 320.000000f, Y = 180.000000f, Z = 160.000000f));
+	Plate2->SetRelativeScale3D(FVector(X = 1.000000f, Y = 1.750000f, Z = 1.000000f));
+
+	Wall1->SetRelativeLocation(FVector(X = 320.000000f, Y = -500.000000f, Z = 0.000000f));
+	Wall1->SetRelativeRotation(FRotator(Pitch = 0.000000f, Yaw = 0.000000f, Roll = 0.000000f));
+	Wall1->SetRelativeScale3D(FVector(X = 1.570000f, Y = 1.000000f, Z = 1.750000f));
+
+	Wall2->SetRelativeLocation(FVector(X = -180.000000f, Y = 250.000000f, Z = 10.000000f));
+	Wall2->SetRelativeRotation(FRotator(Pitch = 0.000000f, Yaw = 180.000000f, Roll = 0.000000f));
+	Wall2->SetRelativeScale3D(FVector(X = 1.570000f, Y = 1.000000f, Z = 1.750000f));
+
+	Wall3->SetRelativeLocation(FVector(X = 360.000000f, Y = 210.000000f, Z = 0.000000f));
+	Wall3->SetRelativeRotation(FRotator(Pitch = 0.000000f, Yaw = 90.000000f, Roll = 0.000000f));
+	Wall3->SetRelativeScale3D(FVector(X = 2.250000f, Y = 1.000000f, Z = 1.750000f));
+
+	Wall4->SetRelativeLocation(FVector(X = -230.000000, Y = -160.000000, Z = 0.000000));
+	Wall4->SetRelativeRotation(FRotator(Pitch = 0.000000f, Yaw = -90.000000f, Roll = 0.000000f));
+	Wall4->SetRelativeScale3D(FVector(X = 1.150000f, Y = 1.000000f, Z = 0.750000f));
+
+	Wall5->SetRelativeLocation(FVector(X = -230.000000, Y = -460.000000, Z = 420.000000));
+	Wall5->SetRelativeRotation(FRotator(Pitch = 0.000000f, Yaw = -90.000000f, Roll = 0.000000f));
+	Wall5->SetRelativeScale3D(FVector(X = 1.150000f, Y = 1.000000f, Z = 0.750000f));
+
+	Stair1->SetRelativeLocation(FVector(X = 0.000000, Y = -300.000000, Z = 0.000000));
+	Stair1->SetRelativeRotation(FRotator(Pitch = 0.000000f, Yaw = 0.000000f, Roll = 0.000000f));
+	Stair1->SetRelativeScale3D(FVector(X = 1.000000f, Y = 0.75000f, Z = 1.000000f));
+
+	Stair2->SetRelativeLocation(FVector(X = -170.000000, Y = 30.000000, Z = 150.000000));
+	Stair2->SetRelativeRotation(FRotator(Pitch = 0.000000f, Yaw = 180.000000f, Roll = 0.000000f));
+	Stair2->SetRelativeScale3D(FVector(X = 1.000000f, Y = 0.750000f, Z = 1.000000f));
+
+	Ceiling->SetRelativeLocation(FVector(X = 370.000000f, Y = 200.000000f, Z = 710.000000f));
+	Ceiling->SetRelativeRotation(FRotator::ZeroRotator);
+	Ceiling->SetRelativeScale3D(FVector(X = 1.750000, Y = 2.000000, Z = 1.000000));
+
+	CeilingDiv->SetRelativeLocation(FVector(X = -180.000000f, Y = -130.000000f, Z = 720.000000f));
+	CeilingDiv->SetRelativeRotation(FRotator(Pitch = 0.000000f, Yaw = 90.000000f, Roll = 0.000000f));
+	CeilingDiv->SetRelativeScale3D(FVector(X = 1.000000f, Y = 1.000000f, Z = 1.000000f));
+
+	LampMesh1->SetRelativeLocation(FVector(X = -90.000000f, Y = -290.000000f, Z = 690.000000f));
+	LampMesh1->SetRelativeRotation(FRotator(Pitch = 180.000000f, Yaw = 90.000000f, Roll = 0.000000f));
+	LampMesh1->SetRelativeScale3D(FVector(X = 2.000000f, Y = 2.000000f, Z = 1.000000f));
+
+	LampMesh2->SetRelativeLocation(FVector(X = 314.716888f, Y = 18.943176f, Z = 615.080750f));
+	LampMesh2->SetRelativeRotation(FRotator(Pitch = 0.0f, Yaw = 90.0f, Roll = 90.0f));
+	LampMesh2->SetRelativeScale3D(FVector(X = 2.000000f, Y = 2.000000f, Z = 1.000000f));
+
+	LampLight1->SetRelativeLocation(FVector(X = 314.716888f, Y = 38.943176f, Z = 595.080750f));
+	LampLight1->SetRelativeRotation(FRotator(Pitch = -46.0f, Yaw = 154.0f, Roll = 140.0f));
+
+	LampLight2->SetRelativeLocation(FVector(X = -110.000000f, Y = -320.000000f, Z = 690.000000f));
+	LampLight2->SetRelativeRotation(FRotator(Pitch = -60.0f, Yaw = 90.0f, Roll = -90.0f));
+
+}
+
+void AStairPath2::MakeComponentsTree()
+{
+	RootComponent = Root;
+	Plate1->SetupAttachment(Root);
+	Plate2->SetupAttachment(Root);
+
+	Wall1->SetupAttachment(Root);
+	Wall2->SetupAttachment(Root);
+	Wall3->SetupAttachment(Root);
+	Wall4->SetupAttachment(Root);
+	Wall5->SetupAttachment(Root);
+
+	Stair1->SetupAttachment(Root);
+	Stair2->SetupAttachment(Root);
+
+	Ceiling->SetupAttachment(Root);
+	CeilingDiv->SetupAttachment(Root);
+
+	LampMesh1->SetupAttachment(Root);
+	LampMesh2->SetupAttachment(Root);
+	LampLight1->SetupAttachment(Root);
+	LampLight2->SetupAttachment(Root);
+
+}
+
+

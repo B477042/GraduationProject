@@ -60,8 +60,5 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = SpotLight)
 		USpotLightComponent* LampLight2;
 	
-	UPROPERTY(VisibleAnywhere, Category = Mesh)
-		AActor*Path1;
-	UPROPERTY(VisibleAnywhere, Category = Mesh)
-		AActor*Path2;
+
 };

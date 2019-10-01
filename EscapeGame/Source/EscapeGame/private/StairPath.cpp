@@ -99,6 +99,7 @@ bool AStairPath::LoadAssets()
 	{
 		LampMesh1->SetStaticMesh(SM_LAMPMESH.Object);
 		LampMesh2->SetStaticMesh(SM_LAMPMESH.Object);
+		Root->SetStaticMesh(SM_LAMPMESH.Object);
 	}
 
 
@@ -148,7 +149,7 @@ void AStairPath::SettingWorldMatrix()
 
 	Ceiling->SetRelativeLocation(FVector(X = 370.000000f, Y = 200.000000f, Z = 710.000000f));
 	Ceiling->SetRelativeRotation(FRotator::ZeroRotator);
-	Ceiling->SetRelativeScale3D(FVector(X = 1.750000f, Y = 2.250000f, Z = 1.000000f));
+	Ceiling->SetRelativeScale3D(FVector(X = 1.750000, Y = 2.000000, Z = 1.000000));
 
 	CeilingDiv->SetRelativeLocation(FVector(X = -180.000000f, Y = -130.000000f, Z = 720.000000f));
 	CeilingDiv->SetRelativeRotation(FRotator(Pitch = 0.000000f, Yaw = 90.000000f, Roll = 0.000000f));
@@ -168,11 +169,7 @@ void AStairPath::SettingWorldMatrix()
 	LampLight2->SetRelativeLocation(FVector(X = -110.000000f, Y = -320.000000f, Z = 690.000000f));
 	LampLight2->SetRelativeRotation(FRotator(Pitch = -60.0f, Yaw = 90.0f, Roll = -90.0f));
 
-	/*Path1->SetActorRelativeLocation(FVector(X = -540.000000, Y = 200.000000, Z = 0.000000));
-	Path1->SetActorRelativeRotation(FRotator(Pitch = 0.000000, Yaw = 90.000000, Roll = 0.000000));
-
-	Path2->SetActorRelativeLocation(FVector(X = -540.000000, Y = -140.000000, Z = 310.000000));
-	Path2->SetActorRelativeRotation(FRotator(Pitch = 0.000000, Yaw = 90.000000, Roll = 0.000000));*/
+	
 }
 
 void AStairPath::MakeComponentsTree()
