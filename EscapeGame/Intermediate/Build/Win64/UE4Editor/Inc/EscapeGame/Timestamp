@@ -1,6 +1,10 @@
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\BattleHall.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Door.h
+E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\DoorPath.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\DoorSector.h
+E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EGGamePawn.h
+E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EGPlayerCharacter.h
+E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EGPlayerController.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EscapeGameGameModeBase.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\NormalPath.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\OneSideBlockedPath.h
