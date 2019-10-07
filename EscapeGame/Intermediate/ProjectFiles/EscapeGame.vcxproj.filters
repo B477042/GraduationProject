@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\EscapeGame.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{BF0A79E1-4675-40D0-9374-78503E17C926}</UniqueIdentifier>
+      <UniqueIdentifier>{18A5566A-0356-4CA1-BEF6-DD2EAD0E39B0}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\EscapeGame.Target.cs">
       <Filter>Source</Filter>
@@ -12,7 +12,7 @@
       <Filter>Source</Filter>
     </None>
     <Filter Include="Config">
-      <UniqueIdentifier>{99EE02E0-A6E2-47E7-BD47-597E17E19368}</UniqueIdentifier>
+      <UniqueIdentifier>{80BBE70A-46CB-441D-8831-0CF827EB541A}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
@@ -24,24 +24,15 @@
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\EscapeGame">
-      <UniqueIdentifier>{B372D599-670A-4182-A2DA-5D8066ADD3A1}</UniqueIdentifier>
+      <UniqueIdentifier>{885BF1E7-CC5F-4CB2-8AFA-02ED8C8B350F}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\EscapeGame\EscapeGame.Build.cs">
       <Filter>Source\EscapeGame</Filter>
     </None>
     <Filter Include="Source\EscapeGame\private">
-      <UniqueIdentifier>{5A6C73F4-85EE-4684-AC78-FB35A2B7D80B}</UniqueIdentifier>
+      <UniqueIdentifier>{4E7C812D-DBA7-4ACF-AB5A-B65D5CE3A8C2}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\EscapeGame\private\BattleHall.cpp">
-      <Filter>Source\EscapeGame\private</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\EscapeGame\private\Door.cpp">
-      <Filter>Source\EscapeGame\private</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\EscapeGame\private\DoorPath.cpp">
-      <Filter>Source\EscapeGame\private</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\EscapeGame\private\DoorSector.cpp">
       <Filter>Source\EscapeGame\private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\EscapeGame\private\EGGamePawn.cpp">
@@ -78,18 +69,9 @@
       <Filter>Source\EscapeGame\private</Filter>
     </ClCompile>
     <Filter Include="Source\EscapeGame\public">
-      <UniqueIdentifier>{EB3335C2-D222-421D-81E8-932FC261FA12}</UniqueIdentifier>
+      <UniqueIdentifier>{F8195378-FD1C-4B61-AA6B-FC44FB03B522}</UniqueIdentifier>
     </Filter>
-    <ClInclude Include="..\..\Source\EscapeGame\public\BattleHall.h">
-      <Filter>Source\EscapeGame\public</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\EscapeGame\public\Door.h">
-      <Filter>Source\EscapeGame\public</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\EscapeGame\public\DoorPath.h">
-      <Filter>Source\EscapeGame\public</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\EscapeGame\public\DoorSector.h">
       <Filter>Source\EscapeGame\public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\EscapeGame\public\EGGamePawn.h">

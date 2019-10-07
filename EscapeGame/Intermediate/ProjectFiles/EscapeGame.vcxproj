@@ -506,10 +506,7 @@
     <None Include="..\..\Config\DefaultEngine.ini"/>
     <None Include="..\..\Config\DefaultGame.ini"/>
     <None Include="..\..\Source\EscapeGame\EscapeGame.Build.cs"/>
-    <ClCompile Include="..\..\Source\EscapeGame\private\BattleHall.cpp"/>
-    <ClCompile Include="..\..\Source\EscapeGame\private\Door.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\DoorPath.cpp"/>
-    <ClCompile Include="..\..\Source\EscapeGame\private\DoorSector.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\EGGamePawn.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\EGPlayerCharacter.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\EGPlayerController.cpp"/>
@@ -521,10 +518,7 @@
     <ClCompile Include="..\..\Source\EscapeGame\private\RightAnglePath.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\StairPath.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\StairPath2.cpp"/>
-    <ClInclude Include="..\..\Source\EscapeGame\public\BattleHall.h"/>
-    <ClInclude Include="..\..\Source\EscapeGame\public\Door.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\DoorPath.h"/>
-    <ClInclude Include="..\..\Source\EscapeGame\public\DoorSector.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\EGGamePawn.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\EGPlayerCharacter.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\EGPlayerController.h"/>
