@@ -13,5 +13,19 @@ UCLASS()
 class ESCAPEGAME_API ADoorPath : public ANormalPath
 {
 	GENERATED_BODY()
+public:
+	ADoorPath(); 
+	void OpenTheDoor();
+	void CloseTheDoor();
+private:
+	void SetRelativePos();
 	
+
+private:
+	UPROPERTY(VisibleAnywhere, Category = Mesh)
+		UStaticMeshComponent* Door1;
+	UPROPERTY(VisibleAnywhere, Category = Mesh)
+		UStaticMeshComponent*Door2;
+	UPROPERTY(VisibleAnywhere, Category = Mesh)
+		UStaticMeshComponent*DoorGate;
 };
