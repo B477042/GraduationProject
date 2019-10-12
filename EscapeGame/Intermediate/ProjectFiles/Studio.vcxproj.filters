@@ -2,118 +2,118 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source">
-      <UniqueIdentifier>{8463370E-DFA8-4C5E-951F-5B59492A04B8}</UniqueIdentifier>
+      <UniqueIdentifier>{D218B41E-943A-4F12-9FB9-41DC5B3ABDBE}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Source\StudioEditor.Target.cs">
       <Filter>Source</Filter>
     </None>
     <Filter Include="Source\Developer">
-      <UniqueIdentifier>{B0CCA64D-96A0-44F0-B92B-6E3843B396DE}</UniqueIdentifier>
+      <UniqueIdentifier>{1F6EA671-F7A1-48F0-9878-21370C78AC91}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Developer\Datasmith">
-      <UniqueIdentifier>{DA1DA5AD-82C9-4BC3-8E06-EC35A92774B9}</UniqueIdentifier>
+      <UniqueIdentifier>{20670C71-DE5C-47AB-ABBC-091096BF6D98}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Developer\Datasmith\DatasmithCore">
-      <UniqueIdentifier>{3F19A4F0-0226-41CF-AC8B-0E8A5E94BDE6}</UniqueIdentifier>
+      <UniqueIdentifier>{9142E448-B5FA-45F6-BCF6-B9608F8AFF51}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Source\Developer\Datasmith\DatasmithCore\DatasmithCore.Build.cs">
       <Filter>Source\Developer\Datasmith\DatasmithCore</Filter>
     </None>
     <Filter Include="Plugins">
-      <UniqueIdentifier>{2E5A0C3F-22FF-4F4E-BC93-04D02E25B062}</UniqueIdentifier>
+      <UniqueIdentifier>{79D00903-2052-4952-97AC-B687BE4CF205}</UniqueIdentifier>
     </Filter>
     <Filter Include="Plugins\Editor">
-      <UniqueIdentifier>{59A56584-9077-40F6-8879-0E68977A82D6}</UniqueIdentifier>
+      <UniqueIdentifier>{98F21966-D4AF-44A7-95C8-5A23BC809D09}</UniqueIdentifier>
     </Filter>
     <Filter Include="Plugins\Editor\DatasmithCADImporter">
-      <UniqueIdentifier>{47671D15-1822-4EE7-BCF4-BDA8617786D8}</UniqueIdentifier>
+      <UniqueIdentifier>{9BA747D2-29B0-4CA1-988D-727B66F4704B}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Editor\DatasmithCADImporter\DatasmithCADImporter.uplugin">
       <Filter>Plugins\Editor\DatasmithCADImporter</Filter>
     </None>
     <Filter Include="Plugins\Editor\DatasmithCADImporter\Resources">
-      <UniqueIdentifier>{4842165E-D008-4147-B11C-BAFCE9F64F5F}</UniqueIdentifier>
+      <UniqueIdentifier>{436FB7B4-533F-416D-9A15-DEE972325F04}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Editor\DatasmithCADImporter\Resources\Icon128.png">
       <Filter>Plugins\Editor\DatasmithCADImporter\Resources</Filter>
     </None>
     <Filter Include="Plugins\Editor\DatasmithFBXImporter">
-      <UniqueIdentifier>{4B5ACA2D-6142-427A-AF84-F257ACF25E43}</UniqueIdentifier>
+      <UniqueIdentifier>{CA12229D-1AB2-40DD-9E40-D5E4A10618C4}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Editor\DatasmithFBXImporter\DatasmithFBXImporter.uplugin">
       <Filter>Plugins\Editor\DatasmithFBXImporter</Filter>
     </None>
     <Filter Include="Plugins\Editor\DatasmithFBXImporter\Resources">
-      <UniqueIdentifier>{33D2C3A6-A0FE-443D-B7EF-D986D84D410C}</UniqueIdentifier>
+      <UniqueIdentifier>{D0102334-5549-4ABD-83C3-CF4E2021504D}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Editor\DatasmithFBXImporter\Resources\Icon128.png">
       <Filter>Plugins\Editor\DatasmithFBXImporter\Resources</Filter>
     </None>
     <Filter Include="Plugins\Editor\DatasmithImporter">
-      <UniqueIdentifier>{82D444DC-E321-43EC-878A-772988CA4519}</UniqueIdentifier>
+      <UniqueIdentifier>{01BACAD0-3FDB-4D4A-9E56-DC6959861A57}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Editor\DatasmithImporter\DatasmithImporter.uplugin">
       <Filter>Plugins\Editor\DatasmithImporter</Filter>
     </None>
     <Filter Include="Plugins\Editor\DatasmithImporter\Config">
-      <UniqueIdentifier>{CABED318-BCF1-4DC2-8983-820B131B81C1}</UniqueIdentifier>
+      <UniqueIdentifier>{D8AF3DA1-E87A-40AD-B60B-A8C4464FC4BB}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Editor\DatasmithImporter\Config\BaseDatasmithImporter.ini">
       <Filter>Plugins\Editor\DatasmithImporter\Config</Filter>
     </None>
     <Filter Include="Plugins\Editor\DatasmithImporter\Resources">
-      <UniqueIdentifier>{CB2C89B7-C44D-4939-A0EF-D1C2A3F3846D}</UniqueIdentifier>
+      <UniqueIdentifier>{42C4C643-A167-497C-B21E-B5D6B42F3C16}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Editor\DatasmithImporter\Resources\Icon128.png">
       <Filter>Plugins\Editor\DatasmithImporter\Resources</Filter>
     </None>
     <Filter Include="Plugins\Editor\MDLImporter">
-      <UniqueIdentifier>{7C4F5C6D-E808-4C37-8F02-0F378AC48797}</UniqueIdentifier>
+      <UniqueIdentifier>{B1433DC0-8875-4E0E-A17F-8F875406EDFA}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Editor\MDLImporter\MDLImporter.uplugin">
       <Filter>Plugins\Editor\MDLImporter</Filter>
     </None>
     <Filter Include="Plugins\Editor\StaticMeshEditorExtension">
-      <UniqueIdentifier>{281C07EC-8306-4483-A229-4E4EA189B1C5}</UniqueIdentifier>
+      <UniqueIdentifier>{947ACE41-920B-451F-AFD7-82C304287851}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Editor\StaticMeshEditorExtension\StaticMeshEditorExtension.uplugin">
       <Filter>Plugins\Editor\StaticMeshEditorExtension</Filter>
     </None>
     <Filter Include="Plugins\Runtime">
-      <UniqueIdentifier>{BC9501A2-7E1F-4655-A996-AC53F3817CE0}</UniqueIdentifier>
+      <UniqueIdentifier>{631A0895-A043-44B9-A9E2-B470792E2A64}</UniqueIdentifier>
     </Filter>
     <Filter Include="Plugins\Runtime\VariantManager">
-      <UniqueIdentifier>{0C308B2A-112F-4DC3-B343-3AA4CF776860}</UniqueIdentifier>
+      <UniqueIdentifier>{6EDB566E-F420-483C-83B6-A79C2819B6FD}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Runtime\VariantManager\VariantManager.uplugin">
       <Filter>Plugins\Runtime\VariantManager</Filter>
     </None>
     <Filter Include="Source\Developer\Datasmith\DatasmithExporter">
-      <UniqueIdentifier>{E84B5532-3E53-4FE6-BDFF-B808F3500565}</UniqueIdentifier>
+      <UniqueIdentifier>{7EF9B647-8708-4DE1-A714-14B690CE270C}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Source\Developer\Datasmith\DatasmithExporter\DatasmithExporter.Build.cs">
       <Filter>Source\Developer\Datasmith\DatasmithExporter</Filter>
     </None>
     <Filter Include="Source\Runtime">
-      <UniqueIdentifier>{9743E738-3BB2-4744-B467-8EBE0BA3B6FE}</UniqueIdentifier>
+      <UniqueIdentifier>{21DCD362-07BD-466D-899D-16E0D565E1B0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Runtime\Launch">
-      <UniqueIdentifier>{DB254457-76C1-4665-981A-0CADAFEFB3CE}</UniqueIdentifier>
+      <UniqueIdentifier>{06A7E93E-A141-4894-91BD-F641119F9339}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Source\Runtime\Launch\EnterpriseLaunch.Build.cs">
       <Filter>Source\Runtime\Launch</Filter>
     </None>
     <Filter Include="Source\Runtime\Launch\Resources">
-      <UniqueIdentifier>{0D7A38F1-9555-4313-B318-8994908E7A82}</UniqueIdentifier>
+      <UniqueIdentifier>{ACDD44E1-77AF-4BED-A524-39BEA66FE88D}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Source\Runtime\Launch\Resources\EnterpriseVersion.h">
       <Filter>Source\Runtime\Launch\Resources</Filter>
     </ClInclude>
     <Filter Include="Source\ThirdParty">
-      <UniqueIdentifier>{41FDEDB0-24F5-42E3-AC79-6F963164A54C}</UniqueIdentifier>
+      <UniqueIdentifier>{B45C2DAB-34D9-4119-9F41-ACF0077C93D7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\ThirdParty\FreeImage">
-      <UniqueIdentifier>{03F9A980-F5BA-425E-8B4E-CFBD8435FD30}</UniqueIdentifier>
+      <UniqueIdentifier>{CA12D5DB-27B7-4658-B487-87B77128CF70}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Source\ThirdParty\FreeImage\FreeImage.Build.cs">
       <Filter>Source\ThirdParty\FreeImage</Filter>
@@ -149,13 +149,13 @@
       <Filter>Source\ThirdParty\FreeImage</Filter>
     </None>
     <Filter Include="Source\ThirdParty\FreeImage\Source">
-      <UniqueIdentifier>{55417181-01A6-4706-8953-F209622E3A7A}</UniqueIdentifier>
+      <UniqueIdentifier>{AC5AD158-E901-467A-8790-1285FA893823}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Source\ThirdParty\FreeImage\Source\FreeImage.h">
       <Filter>Source\ThirdParty\FreeImage\Source</Filter>
     </ClInclude>
     <Filter Include="Source\ThirdParty\FreeImage\x64">
-      <UniqueIdentifier>{BB403708-4FEC-4E94-8A31-75B631072A1E}</UniqueIdentifier>
+      <UniqueIdentifier>{88A87D01-0C63-47FE-B6F9-7C1591E1B316}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Source\ThirdParty\FreeImage\x64\FreeImage317.dll">
       <Filter>Source\ThirdParty\FreeImage\x64</Filter>
@@ -167,7 +167,7 @@
       <Filter>Source\ThirdParty\FreeImage\x64</Filter>
     </None>
     <Filter Include="Source\ThirdParty\GPureSDK">
-      <UniqueIdentifier>{A70B7EA0-EA65-4951-B74C-4CCFDAA1B761}</UniqueIdentifier>
+      <UniqueIdentifier>{D7BE0796-8610-43DA-8EE5-5908D454513D}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Source\ThirdParty\GPureSDK\GPureSDK.Build.cs">
       <Filter>Source\ThirdParty\GPureSDK</Filter>
@@ -176,7 +176,7 @@
       <Filter>Source\ThirdParty\GPureSDK</Filter>
     </None>
     <Filter Include="Source\ThirdParty\Itoo">
-      <UniqueIdentifier>{B4B16D91-0F20-4FE6-8603-A204771FB757}</UniqueIdentifier>
+      <UniqueIdentifier>{E494A27D-3A3D-4500-B20C-5E077165B7DE}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Source\ThirdParty\Itoo\forestitreesinterface.h">
       <Filter>Source\ThirdParty\Itoo</Filter>
@@ -194,73 +194,73 @@
       <Filter>Source\ThirdParty\Itoo</Filter>
     </ClInclude>
     <Filter Include="Plugins\Editor\DatasmithCADImporter\Source">
-      <UniqueIdentifier>{EB88B39D-A242-48CA-AC2E-428CBFC1EAC7}</UniqueIdentifier>
+      <UniqueIdentifier>{1F44F50F-991B-4D2D-8468-3B2921E8F366}</UniqueIdentifier>
     </Filter>
     <Filter Include="Plugins\Editor\DatasmithCADImporter\Source\DatasmithCADImporter">
-      <UniqueIdentifier>{609F7B86-C3D6-44A8-AFC1-3497EC5B95AD}</UniqueIdentifier>
+      <UniqueIdentifier>{7A783E6E-81CF-4553-8B51-5A241ADD3C8C}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Editor\DatasmithCADImporter\Source\DatasmithCADImporter\DatasmithCADImporter.Build.cs">
       <Filter>Plugins\Editor\DatasmithCADImporter\Source\DatasmithCADImporter</Filter>
     </None>
     <Filter Include="Plugins\Editor\DatasmithFBXImporter\Source">
-      <UniqueIdentifier>{2ECC997F-DC3B-44F9-A8B8-AA0401592E54}</UniqueIdentifier>
+      <UniqueIdentifier>{A140419E-82F8-4738-B1A0-047C82ABA9CF}</UniqueIdentifier>
     </Filter>
     <Filter Include="Plugins\Editor\DatasmithFBXImporter\Source\DatasmithDeltaGenImporter">
-      <UniqueIdentifier>{96DB84AC-96AD-41F8-8941-6DD8979F8301}</UniqueIdentifier>
+      <UniqueIdentifier>{C16B1F85-008F-403A-B345-B21258CDDB13}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Editor\DatasmithFBXImporter\Source\DatasmithDeltaGenImporter\DatasmithDeltaGenImporter.Build.cs">
       <Filter>Plugins\Editor\DatasmithFBXImporter\Source\DatasmithDeltaGenImporter</Filter>
     </None>
     <Filter Include="Plugins\Editor\DatasmithFBXImporter\Source\DatasmithFBXImporter">
-      <UniqueIdentifier>{8AD6BBC9-98CF-4365-8EC2-75D4A59A5D34}</UniqueIdentifier>
+      <UniqueIdentifier>{F536906C-FEB1-4728-ACD6-78DB9CF8EC7B}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Editor\DatasmithFBXImporter\Source\DatasmithFBXImporter\DatasmithFBXImporter.Build.cs">
       <Filter>Plugins\Editor\DatasmithFBXImporter\Source\DatasmithFBXImporter</Filter>
     </None>
     <Filter Include="Plugins\Editor\DatasmithFBXImporter\Source\DatasmithVREDImporter">
-      <UniqueIdentifier>{3130DEA1-0EB8-4EF4-842B-8D5FA920EDFE}</UniqueIdentifier>
+      <UniqueIdentifier>{5E62A556-EA04-4D91-9D40-566BE678ACE2}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Editor\DatasmithFBXImporter\Source\DatasmithVREDImporter\DatasmithVREDImporter.Build.cs">
       <Filter>Plugins\Editor\DatasmithFBXImporter\Source\DatasmithVREDImporter</Filter>
     </None>
     <Filter Include="Plugins\Editor\DatasmithImporter\Source">
-      <UniqueIdentifier>{E4687E1C-05A2-42D3-9C16-F278CDC1FB5A}</UniqueIdentifier>
+      <UniqueIdentifier>{04EF3BDE-B5F5-49A8-9011-E2C1C10A253B}</UniqueIdentifier>
     </Filter>
     <Filter Include="Plugins\Editor\DatasmithImporter\Source\DatasmithImporter">
-      <UniqueIdentifier>{9C018D6C-3E6C-4046-A578-96AB3A57F62B}</UniqueIdentifier>
+      <UniqueIdentifier>{4443FCD3-CF4F-4A74-BA59-9ABDDA28A7B2}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Editor\DatasmithImporter\Source\DatasmithImporter\DatasmithImporter.Build.cs">
       <Filter>Plugins\Editor\DatasmithImporter\Source\DatasmithImporter</Filter>
     </None>
     <Filter Include="Plugins\Editor\MDLImporter\Source">
-      <UniqueIdentifier>{5866A7E7-1CFE-4787-A37E-B5B12CB22ACD}</UniqueIdentifier>
+      <UniqueIdentifier>{8651C4A9-6555-43E0-A908-5C0E01027C8C}</UniqueIdentifier>
     </Filter>
     <Filter Include="Plugins\Editor\MDLImporter\Source\MDLImporter">
-      <UniqueIdentifier>{79CA7013-5ACB-49CE-8A47-777553933DFB}</UniqueIdentifier>
+      <UniqueIdentifier>{F3BFA7C2-6249-4769-898E-C7BA118931AB}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Editor\MDLImporter\Source\MDLImporter\MDLImporter.Build.cs">
       <Filter>Plugins\Editor\MDLImporter\Source\MDLImporter</Filter>
     </None>
     <Filter Include="Plugins\Editor\StaticMeshEditorExtension\Source">
-      <UniqueIdentifier>{EDD73299-6A09-4BBA-BFD8-02DA57F7942D}</UniqueIdentifier>
+      <UniqueIdentifier>{36BDDD7D-4BAE-4C72-ADEC-FDD25DA99C88}</UniqueIdentifier>
     </Filter>
     <Filter Include="Plugins\Editor\StaticMeshEditorExtension\Source\MeshProcessingLibrary">
-      <UniqueIdentifier>{9BFA6402-FC23-415D-8895-F00AFD607B58}</UniqueIdentifier>
+      <UniqueIdentifier>{F732EABE-8601-43CE-AEAB-4A402FC8C2B5}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Editor\StaticMeshEditorExtension\Source\MeshProcessingLibrary\MeshProcessingLibrary.Build.cs">
       <Filter>Plugins\Editor\StaticMeshEditorExtension\Source\MeshProcessingLibrary</Filter>
     </None>
     <Filter Include="Plugins\Editor\StaticMeshEditorExtension\Source\StaticMeshEditorExtension">
-      <UniqueIdentifier>{574A2675-8F63-4D69-95BC-971C53BAFA39}</UniqueIdentifier>
+      <UniqueIdentifier>{793F100C-4AAF-406D-AE03-70A1B358DF3D}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Editor\StaticMeshEditorExtension\Source\StaticMeshEditorExtension\StaticMeshEditorExtension.Build.cs">
       <Filter>Plugins\Editor\StaticMeshEditorExtension\Source\StaticMeshEditorExtension</Filter>
     </None>
     <Filter Include="Plugins\Runtime\VariantManager\Source">
-      <UniqueIdentifier>{500F7D4C-FD9B-4CAE-B473-C806E1047233}</UniqueIdentifier>
+      <UniqueIdentifier>{C65FFB0C-569A-4A86-B806-A7D7C198B691}</UniqueIdentifier>
     </Filter>
     <Filter Include="Plugins\Runtime\VariantManager\Source\VariantManager">
-      <UniqueIdentifier>{A945CE99-9D2A-4061-96EB-AE84DE25D373}</UniqueIdentifier>
+      <UniqueIdentifier>{43F979D7-1AC1-463F-A362-63996C985DFF}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\..\..\..\Unreal Engine\UE_4.21\Enterprise\Plugins\Runtime\VariantManager\Source\VariantManager\VariantManager.Build.cs">
       <Filter>Plugins\Runtime\VariantManager\Source\VariantManager</Filter>

@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\EscapeGame.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{18A5566A-0356-4CA1-BEF6-DD2EAD0E39B0}</UniqueIdentifier>
+      <UniqueIdentifier>{82893A17-DFD4-4E7B-9755-1EBFF5AD42A9}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\EscapeGame.Target.cs">
       <Filter>Source</Filter>
@@ -12,7 +12,7 @@
       <Filter>Source</Filter>
     </None>
     <Filter Include="Config">
-      <UniqueIdentifier>{80BBE70A-46CB-441D-8831-0CF827EB541A}</UniqueIdentifier>
+      <UniqueIdentifier>{FF6459A6-E660-4C8F-B37C-768F844338BF}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
@@ -24,13 +24,13 @@
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\EscapeGame">
-      <UniqueIdentifier>{885BF1E7-CC5F-4CB2-8AFA-02ED8C8B350F}</UniqueIdentifier>
+      <UniqueIdentifier>{18F74B43-87F4-4C81-B308-582096868A3E}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\EscapeGame\EscapeGame.Build.cs">
       <Filter>Source\EscapeGame</Filter>
     </None>
     <Filter Include="Source\EscapeGame\private">
-      <UniqueIdentifier>{4E7C812D-DBA7-4ACF-AB5A-B65D5CE3A8C2}</UniqueIdentifier>
+      <UniqueIdentifier>{9DB2B4DB-A190-4D57-A2E3-748BE5C98860}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\EscapeGame\private\DoorPath.cpp">
       <Filter>Source\EscapeGame\private</Filter>
@@ -68,8 +68,11 @@
     <ClCompile Include="..\..\Source\EscapeGame\private\StairPath2.cpp">
       <Filter>Source\EscapeGame\private</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\EscapeGame\private\Trap.cpp">
+      <Filter>Source\EscapeGame\private</Filter>
+    </ClCompile>
     <Filter Include="Source\EscapeGame\public">
-      <UniqueIdentifier>{F8195378-FD1C-4B61-AA6B-FC44FB03B522}</UniqueIdentifier>
+      <UniqueIdentifier>{A2AFB5B9-6E77-475A-9B20-4643B5137C38}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\Source\EscapeGame\public\DoorPath.h">
       <Filter>Source\EscapeGame\public</Filter>
@@ -105,6 +108,9 @@
       <Filter>Source\EscapeGame\public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\EscapeGame\public\StairPath2.h">
+      <Filter>Source\EscapeGame\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\EscapeGame\public\Trap.h">
       <Filter>Source\EscapeGame\public</Filter>
     </ClInclude>
   </ItemGroup>
