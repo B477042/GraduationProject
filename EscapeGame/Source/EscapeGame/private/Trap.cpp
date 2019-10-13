@@ -10,17 +10,17 @@ ATrap::ATrap()
 
 }
 
-// Called when the game starts or when spawned
-void ATrap::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void ATrap::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
+//// Called when the game starts or when spawned
+//void ATrap::BeginPlay()
+//{
+//	Super::BeginPlay();
+//	
+//}
+//
+// //Called every frame
+//void ATrap::Tick(float DeltaTime)
+//{
+//	Super::Tick(DeltaTime);
+//
+//}
 

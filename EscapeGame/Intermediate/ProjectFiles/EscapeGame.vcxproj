@@ -506,6 +506,7 @@
     <None Include="..\..\Config\DefaultEngine.ini"/>
     <None Include="..\..\Config\DefaultGame.ini"/>
     <None Include="..\..\Source\EscapeGame\EscapeGame.Build.cs"/>
+    <ClCompile Include="..\..\Source\EscapeGame\private\Claymore.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\DoorPath.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\EGGamePawn.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\EGPlayerCharacter.cpp"/>
@@ -519,6 +520,7 @@
     <ClCompile Include="..\..\Source\EscapeGame\private\StairPath.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\StairPath2.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\Trap.cpp"/>
+    <ClInclude Include="..\..\Source\EscapeGame\public\Claymore.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\DoorPath.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\EGGamePawn.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\EGPlayerCharacter.h"/>

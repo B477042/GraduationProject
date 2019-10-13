@@ -11,16 +11,18 @@
 앞으로 추가될 모든 함정들의 원형 클래스로 만들 것
 
 상속 PROPERTY
-skeletalmesh
+Staticemesh
 particle
 
 상속 Function
 Activate
-Deactivate
+DeActivate
+ClearTrap
+SettingTrap
 
 */
 
-UCLASS()
+UCLASS(abstract)
 class ESCAPEGAME_API ATrap : public AActor
 {
 	GENERATED_BODY()
@@ -29,12 +31,26 @@ public:
 	// Sets default values for this actor's properties
 	ATrap();
 
+//protected:
+//	// Called when the game starts or when spawned
+//	virtual void BeginPlay() override;
+//
+//public:	
+//	// Called every frame
+//	virtual void Tick(float DeltaTime) override;
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	//함정을 작동, default return value false
+	virtual bool Activate() PURE_VIRTUAL(ATrap::Activate, return false;);
+	//함정의 기능을 정지, default return value false
+	virtual bool DeActivate() PURE_VIRTUAL(ATrap::DeActivate, return false;);
+	//작동한 함정을 정리
+	virtual void ClearTrap() PURE_VIRTUAL(ATrap::ClearTrap, ;);
+	//함정이 spawn 됐을 때 셋팅 되야할 것들
+	virtual void SettingTrap()  PURE_VIRTUAL(ATrap::SettingTrap, ;);
+protected:
+	UPROPERTY(VisibleAnywhere, Category = Mesh)
+		UStaticMeshComponent* Body;
+	UPROPERTY(VisibleAnywhere, Category = Mesh)
+		UParticleSystemComponent* Effect;
 
 };
