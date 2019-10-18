@@ -9,9 +9,13 @@
 /**
  * 
  */
+
+
 UCLASS()
 class ESCAPEGAME_API AEGPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+public:
+	virtual void PostInitializeComponents()override;
+	virtual void Possess(APawn* aPawn)override;
 };

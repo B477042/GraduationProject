@@ -25,5 +25,39 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	//=====================================================================
+	//Public Not UPROPERTY member 
+public:
+	float ArmLengthTo = 0.0f;
+	FRotator ArmRotationTo = FRotator::ZeroRotator;
+	float ArmLengthSpeed = 0.0f;
+	float ArmRotationSpeed = 0.0f;
+	//=====================================================================
+	// Public UPROPERTY Zone
+public:
+	UPROPERTY(VisibleAnywhere, Category = Camera)
+		USpringArmComponent* SpringArm;
+	UPROPERTY(VisibleAnywhere, Category = Camera)
+		UCameraComponent* Camera;
+	
+private:
+	void InitComponents();
+	void LoadAssets();
+	//=========================
+	//Camera Category Init Functions
+	void SetupSpringArm();
+	//void SetupCamera();
+	//=========================
+	//Axis Input Functions
+	void UpDown(float NewAxisValue);
+	void LeftRight(float NewAxisValue);
+	void LookUp(float NewAxisValue);
+	void Turn(float NewAxisValue);
+	//=========================
+	//Action Input Functions
+
+	//=========================
+	
+	
 
 };

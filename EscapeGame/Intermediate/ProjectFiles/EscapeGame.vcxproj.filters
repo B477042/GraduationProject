@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\EscapeGame.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{38E1E919-158E-4253-B22B-E8C8ED7C8500}</UniqueIdentifier>
+      <UniqueIdentifier>{4FFFE47F-1456-42A5-A31F-C53655D20B8B}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\EscapeGame.Target.cs">
       <Filter>Source</Filter>
@@ -12,7 +12,7 @@
       <Filter>Source</Filter>
     </None>
     <Filter Include="Config">
-      <UniqueIdentifier>{F148BA92-7A2F-4BE0-8B36-12D2BF6A5C0B}</UniqueIdentifier>
+      <UniqueIdentifier>{1512B2B3-6E6E-4309-8831-67C04CECB620}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
@@ -23,22 +23,22 @@
     <None Include="..\..\Config\DefaultGame.ini">
       <Filter>Config</Filter>
     </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
     <Filter Include="Source\EscapeGame">
-      <UniqueIdentifier>{53F36423-1347-426F-8F1B-685FE3627BBF}</UniqueIdentifier>
+      <UniqueIdentifier>{AA9B9EBA-4179-40E0-BEFD-58AC75684D46}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\EscapeGame\EscapeGame.Build.cs">
       <Filter>Source\EscapeGame</Filter>
     </None>
     <Filter Include="Source\EscapeGame\private">
-      <UniqueIdentifier>{39C18146-A89B-41F9-94B7-4A98D2F66EBB}</UniqueIdentifier>
+      <UniqueIdentifier>{1641C8DB-872B-4D0B-A6C4-21206A3B357B}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\EscapeGame\private\Claymore.cpp">
       <Filter>Source\EscapeGame\private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\EscapeGame\private\DoorPath.cpp">
-      <Filter>Source\EscapeGame\private</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\EscapeGame\private\EGGamePawn.cpp">
       <Filter>Source\EscapeGame\private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\EscapeGame\private\EGPlayerCharacter.cpp">
@@ -75,15 +75,12 @@
       <Filter>Source\EscapeGame\private</Filter>
     </ClCompile>
     <Filter Include="Source\EscapeGame\public">
-      <UniqueIdentifier>{07B46C76-537D-459E-9974-8CC560A253C6}</UniqueIdentifier>
+      <UniqueIdentifier>{F9724F1E-135F-4AB0-B7FA-71F76D7CCD96}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\Source\EscapeGame\public\Claymore.h">
       <Filter>Source\EscapeGame\public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\EscapeGame\public\DoorPath.h">
-      <Filter>Source\EscapeGame\public</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\EscapeGame\public\EGGamePawn.h">
       <Filter>Source\EscapeGame\public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\EscapeGame\public\EGPlayerCharacter.h">
