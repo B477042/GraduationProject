@@ -1,3 +1,4 @@
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\EscapeGame.Build.cs
+E:\CODE\GraduationProject\EscapeGame\Source\PathStructure\PathStructure.Build.cs
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame.Target.cs
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGameEditor.Target.cs

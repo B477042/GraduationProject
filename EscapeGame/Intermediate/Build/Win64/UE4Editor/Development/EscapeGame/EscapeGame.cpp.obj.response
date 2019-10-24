@@ -413,8 +413,10 @@
 /I ThirdParty
 /I ThirdParty\libSampleRate\Public
 /I ThirdParty\libSampleRate
-/I E:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Inc\EscapeGame
 /I E:\CODE\GraduationProject\EscapeGame\Source
+/I E:\CODE\GraduationProject\EscapeGame\Source\PathStructure\Public
+/I E:\CODE\GraduationProject\EscapeGame\Source\PathStructure
+/I E:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Inc\EscapeGame
 /I E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\Public
 /I E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame
 /I "E:\Visual Studio\VC\Tools\MSVC\14.16.27023\INCLUDE"

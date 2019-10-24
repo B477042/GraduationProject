@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\EscapeGame.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{4FFFE47F-1456-42A5-A31F-C53655D20B8B}</UniqueIdentifier>
+      <UniqueIdentifier>{20E7885A-8CDA-4DB7-8AEB-950328DC8832}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\EscapeGame.Target.cs">
       <Filter>Source</Filter>
@@ -12,7 +12,7 @@
       <Filter>Source</Filter>
     </None>
     <Filter Include="Config">
-      <UniqueIdentifier>{1512B2B3-6E6E-4309-8831-67C04CECB620}</UniqueIdentifier>
+      <UniqueIdentifier>{7BBA137F-D472-4327-8DAC-408545084EFC}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
@@ -27,13 +27,13 @@
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\EscapeGame">
-      <UniqueIdentifier>{AA9B9EBA-4179-40E0-BEFD-58AC75684D46}</UniqueIdentifier>
+      <UniqueIdentifier>{8301D778-0D6F-4E91-8110-9A0B21B02997}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\EscapeGame\EscapeGame.Build.cs">
       <Filter>Source\EscapeGame</Filter>
     </None>
     <Filter Include="Source\EscapeGame\private">
-      <UniqueIdentifier>{1641C8DB-872B-4D0B-A6C4-21206A3B357B}</UniqueIdentifier>
+      <UniqueIdentifier>{63557455-550E-46CC-AADD-5EDE66A75B6B}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\EscapeGame\private\Claymore.cpp">
       <Filter>Source\EscapeGame\private</Filter>
@@ -75,7 +75,7 @@
       <Filter>Source\EscapeGame\private</Filter>
     </ClCompile>
     <Filter Include="Source\EscapeGame\public">
-      <UniqueIdentifier>{F9724F1E-135F-4AB0-B7FA-71F76D7CCD96}</UniqueIdentifier>
+      <UniqueIdentifier>{BAA3AC67-BEB9-45E6-8EC8-ACE1D057059C}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\Source\EscapeGame\public\Claymore.h">
       <Filter>Source\EscapeGame\public</Filter>
@@ -115,6 +115,24 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\EscapeGame\public\Trap.h">
       <Filter>Source\EscapeGame\public</Filter>
+    </ClInclude>
+    <Filter Include="Source\PathStructure">
+      <UniqueIdentifier>{0D6F148E-C2D3-4CD2-A122-E47E8368FD00}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\PathStructure\PathStructure.Build.cs">
+      <Filter>Source\PathStructure</Filter>
+    </None>
+    <Filter Include="Source\PathStructure\Private">
+      <UniqueIdentifier>{F14FE6D6-9D56-4C6E-B0B7-FBC401908855}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\PathStructure\Private\PathStructure.cpp">
+      <Filter>Source\PathStructure\Private</Filter>
+    </ClCompile>
+    <Filter Include="Source\PathStructure\Public">
+      <UniqueIdentifier>{16800329-306A-468C-83AD-333DCA4F3A5D}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\PathStructure\Public\PathStructure.h">
+      <Filter>Source\PathStructure\Public</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

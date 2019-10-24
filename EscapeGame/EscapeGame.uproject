@@ -6,23 +6,32 @@
 	"Enterprise": true,
 	"Modules": [
 		{
+			"Name": "PathStructure",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault",
+			"AdditionalDependencies": [
+				"Engine"
+			]
+		},
+		{
 			"Name": "EscapeGame",
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
-				"Engine"
+				"Engine",
+				"PathStructure"
 			]
 		}
 	],
-  "Plugins": [
-    {
-    	"Name": "HoudiniEngine",
-    	"Enabled": false
-    },
-    {
-      "Name": "LogViewer",
-      "Enabled": true,
-      "MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/4853cdc0a6a54d7b9c0712cbe72f6b68"
-    }
-  ]
+	"Plugins": [
+		{
+			"Name": "HoudiniEngine",
+			"Enabled": false
+		},
+		{
+			"Name": "LogViewer",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/4853cdc0a6a54d7b9c0712cbe72f6b68"
+		}
+	]
 }
