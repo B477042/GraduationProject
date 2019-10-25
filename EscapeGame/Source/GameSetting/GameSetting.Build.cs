@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class PathStructure : ModuleRules
+public class GameSetting : ModuleRules
 {
-	public PathStructure(ReadOnlyTargetRules Target) : base(Target)
+	public GameSetting(ReadOnlyTargetRules Target) : base(Target)
 	{
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 

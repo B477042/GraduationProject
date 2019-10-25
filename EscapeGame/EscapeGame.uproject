@@ -4,25 +4,26 @@
 	"Category": "",
 	"Description": "",
 	"Enterprise": true,
-	"Modules": [
-		{
-			"Name": "PathStructure",
-			"Type": "Runtime",
-			"LoadingPhase": "PreDefault",
-			"AdditionalDependencies": [
-				"Engine"
-			]
-		},
-		{
-			"Name": "EscapeGame",
-			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"Engine",
-				"PathStructure"
-			]
-		}
-	],
+  "Modules": [
+   
+    {
+      "Name": "GameSetting",
+      "Type": "Runtime",
+      "LoadingPhase": "PreDefault",
+      "AdditionalDependencies": [
+        "Engine"
+      ]
+    },
+    {
+      "Name": "EscapeGame",
+      "Type": "Runtime",
+      "LoadingPhase": "Default",
+      "AdditionalDependencies": [
+        "Engine",        
+        "GameSetting"
+      ]
+    }
+  ],
 	"Plugins": [
 		{
 			"Name": "HoudiniEngine",
