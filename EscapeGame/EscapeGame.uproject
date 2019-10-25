@@ -5,7 +5,6 @@
 	"Description": "",
 	"Enterprise": true,
   "Modules": [
-   
     {
       "Name": "GameSetting",
       "Type": "Runtime",

@@ -1,12 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "EGPlayerCharacter.h"
+#include "EGPlayerCharacter.h"
 
 // Sets default values
 AEGPlayerCharacter::AEGPlayerCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	InitComponents();
+	LoadAssets();
+	SetupSpringArm();
+	
+
 
 }
 
@@ -48,20 +54,35 @@ void AEGPlayerCharacter::InitComponents()
 
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	Camera->SetupAttachment(SpringArm);
-	GetMesh()->SetRelativeLocationAndRotation(FVector(-1710.0f, 134.0f, 151.0f), FRotator(0.0f, -90.0f, 0.0f));
+	
+	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 	SpringArm->TargetArmLength = 400.0f;
 	SpringArm->SetRelativeRotation(FRotator(-15.0f, 0.0f, 0.0f));
 }
 
 void AEGPlayerCharacter::LoadAssets()
 {
-	
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SM_CHARACTER(TEXT("/Game/ParagonKwang/Characters/Heroes/Kwang/Meshes/KwangSunrise.KwangSunrise"));
+	if (SM_CHARACTER.Succeeded())
+	{
+		GetMesh()->SetSkeletalMesh(SM_CHARACTER.Object);
+	}
+	///Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang.AniPlayerCharacterKwang
+	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+
+	static ConstructorHelpers::FClassFinder<UAnimInstance>ANI_CHARACTER(TEXT("/Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang.AniPlayerCharacterKwang_C"));
+	if (ANI_CHARACTER.Succeeded())
+	{
+		GetMesh()->SetAnimInstanceClass(ANI_CHARACTER.Class);
+	}
+
 }
 
 
 void AEGPlayerCharacter::SetupSpringArm()
 {
-	ArmLengthTo = 450.0f;
+	//캐릭터와 거리
+	ArmLengthTo = 300.0f;
 	SpringArm->bUsePawnControlRotation = true;
 	SpringArm->bInheritPitch = true;
 	SpringArm->bInheritRoll = true;
