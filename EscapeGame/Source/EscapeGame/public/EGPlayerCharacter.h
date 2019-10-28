@@ -39,7 +39,8 @@ public:
 		USpringArmComponent* SpringArm;
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 		UCameraComponent* Camera;
-	
+	/*UPROPERTY(VisibleAnywhere, Category = UI)
+		class UWidgetComponent* HPBarWidget;*/
 private:
 	void InitComponents();
 	void LoadAssets();
@@ -58,6 +59,9 @@ private:
 
 	//=========================
 	
-	
+	//========================================
+	//private PROPERTY
+private:
+	//UPROPERTY(BlueprintReadable, Meta=privateAccessAllowd=true)
 
 };
