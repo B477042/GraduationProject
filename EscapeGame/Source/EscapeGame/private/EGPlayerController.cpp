@@ -40,7 +40,6 @@ void AEGPlayerController::Possess(APawn * aPawn)
 {
 	Super::Possess(aPawn);
 	EGLOG(Warning, TEXT("possessed complete") );
-
 }
 
  UGameWidget* AEGPlayerController::GetHUDWidget() const

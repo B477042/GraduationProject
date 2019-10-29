@@ -43,7 +43,7 @@ public:
 		class UWidgetComponent* HUD;
 	//UPROPERTY(VisibleAnywhere, Category = Stat)
 	//	class UGameStat* PlayerStat;
-
+	
 private:
 	void InitComponents();
 	void LoadAssets();

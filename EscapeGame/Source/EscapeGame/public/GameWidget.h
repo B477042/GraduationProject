@@ -18,7 +18,9 @@ public:
 	//void BindCharacterStat(class UGameStat* NewCharacterStat);
 	virtual void NativeConstruct() override;
 	void UpdateCharacterStat();
-	void UpdateTimerProgress();
+
+	UFUNCTION(BlueprintCallable)
+		float CheackTimeOut(float NewValue);
 	
 private:
 	//TWeakObjectPtr<class UGameStat>CurrentCharacterStat;
@@ -28,4 +30,6 @@ private:
 		class UTextBlock* HPText;
 	UPROPERTY()
 		class UTextBlock* TimerText;
+	UPROPERTY(BlueprintReadWrite, Category = Timer, Meta = (AllowPrivateAccess = true))
+		float GameTimer;
 };

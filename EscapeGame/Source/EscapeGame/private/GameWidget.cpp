@@ -17,7 +17,8 @@ void UGameWidget::NativeConstruct()
 	Super::NativeConstruct();
 	PB_HP = Cast<UProgressBar>(GetWidgetFromName(TEXT("HPBar")));
 	HPText = Cast<UTextBlock>(GetWidgetFromName(TEXT("HPTEXT")));
-	TimerText = Cast<UTextBlock>(GetWidgetFromName(TEXT("TimerBlock")));
+	
+	
 }
 
 void UGameWidget::UpdateCharacterStat()
@@ -26,8 +27,10 @@ void UGameWidget::UpdateCharacterStat()
 	PB_HP->SetPercent(90.0f);
 }
 
-void UGameWidget::UpdateTimerProgress()
+float UGameWidget::CheackTimeOut(float NewValue)
 {
+	return (NewValue >= 0.0f) ? NewValue: 0.0f;
 }
+
 
 

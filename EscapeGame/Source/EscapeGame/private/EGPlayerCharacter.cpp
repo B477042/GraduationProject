@@ -52,7 +52,7 @@ void AEGPlayerCharacter::InitComponents()
 {
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
-	//PlayerStat = CreateDefaultSubobject<UGameStat>(TEXT("PLAYERSTAT"));
+	
 
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	Camera->SetupAttachment(SpringArm);
@@ -61,6 +61,7 @@ void AEGPlayerCharacter::InitComponents()
 	SpringArm->TargetArmLength = 400.0f;
 	SpringArm->SetRelativeRotation(FRotator(-15.0f, 0.0f, 0.0f));
 
+	
 	
 }
 
