@@ -2,6 +2,7 @@
 
 #include "EGPlayerCharacter.h"
 #include "EGPlayerCharacter.h"
+#include"EGPlayerController.h"
 
 // Sets default values
 AEGPlayerCharacter::AEGPlayerCharacter()
@@ -51,6 +52,7 @@ void AEGPlayerCharacter::InitComponents()
 {
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
+	//PlayerStat = CreateDefaultSubobject<UGameStat>(TEXT("PLAYERSTAT"));
 
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	Camera->SetupAttachment(SpringArm);
@@ -58,6 +60,8 @@ void AEGPlayerCharacter::InitComponents()
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 	SpringArm->TargetArmLength = 400.0f;
 	SpringArm->SetRelativeRotation(FRotator(-15.0f, 0.0f, 0.0f));
+
+	
 }
 
 void AEGPlayerCharacter::LoadAssets()
@@ -75,6 +79,8 @@ void AEGPlayerCharacter::LoadAssets()
 	{
 		GetMesh()->SetAnimInstanceClass(ANI_CHARACTER.Class);
 	}
+
+	
 
 }
 

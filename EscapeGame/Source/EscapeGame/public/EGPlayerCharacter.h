@@ -39,8 +39,11 @@ public:
 		USpringArmComponent* SpringArm;
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 		UCameraComponent* Camera;
-	/*UPROPERTY(VisibleAnywhere, Category = UI)
-		class UWidgetComponent* HPBarWidget;*/
+	UPROPERTY(VisibleAnywhere, Category = UI)
+		class UWidgetComponent* HUD;
+	//UPROPERTY(VisibleAnywhere, Category = Stat)
+	//	class UGameStat* PlayerStat;
+
 private:
 	void InitComponents();
 	void LoadAssets();

@@ -514,7 +514,6 @@
     <ClCompile Include="..\..\Source\EscapeGame\private\EGPlayerController.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\EscapeGame.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\EscapeGameGameModeBase.cpp"/>
-    <ClCompile Include="..\..\Source\EscapeGame\private\GameStat.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\GameWidget.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\NormalPath.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\OneSideBlockedPath.cpp"/>
@@ -530,7 +529,6 @@
     <ClInclude Include="..\..\Source\EscapeGame\public\EGPlayerController.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\EscapeGame.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\EscapeGameGameModeBase.h"/>
-    <ClInclude Include="..\..\Source\EscapeGame\public\GameStat.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\GameWidget.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\NormalPath.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\OneSideBlockedPath.h"/>

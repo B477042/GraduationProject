@@ -17,9 +17,17 @@ class ESCAPEGAME_API AEGPlayerController : public APlayerController
 	GENERATED_BODY()
 public:
 	AEGPlayerController();
+	void BeginPlay();
+
 	virtual void PostInitializeComponents()override;
 	virtual void Possess(APawn* aPawn)override;
+	class UGameWidget* GetHUDWidget()const;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
+		TSubclassOf<class UGameWidget>HUDWidgetClass;
 public:
-	UPROPERTY(VisibleAnywhere, Category = UI)
-		class UWidgetComponent* HUD;
+	UPROPERTY()
+		class UGameWidget* HUD;
+	/*UPROPERTY()
+		class UGameStat* PlayerStat;*/
 };
