@@ -2,7 +2,9 @@
 
 #include "EGPlayerCharacter.h"
 #include "EGPlayerCharacter.h"
-#include"EGPlayerController.h"
+#include "EGPlayerController.h"
+//#include "GameWidget.h"
+
 
 // Sets default values
 AEGPlayerCharacter::AEGPlayerCharacter()
@@ -14,7 +16,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	SetupSpringArm();
 	
 
-
+	
 }
 
 // Called when the game starts or when spawned
@@ -30,8 +32,10 @@ void AEGPlayerCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	SpringArm->TargetArmLength = FMath::FInterpTo(SpringArm->TargetArmLength, ArmLengthTo, DeltaTime, ArmLengthSpeed);
-
-
+	
+	
+	//MiniMapCapture->CaptureScene();
+//	GetController()->
 }
 
 // Called to bind functionality to input
@@ -52,17 +56,30 @@ void AEGPlayerCharacter::InitComponents()
 {
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
-	
 
+	//MiniMapSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("MINIMAPSPRINGARM"));
+	//MiniMapCapture = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("MINIMAPCAPTURE"));
+
+	
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	Camera->SetupAttachment(SpringArm);
-	
+	//MiniMapSpringArm->SetupAttachment(GetCapsuleComponent());
+	//MiniMapCapture->SetupAttachment(MiniMapSpringArm);
+
+
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 	SpringArm->TargetArmLength = 400.0f;
 	SpringArm->SetRelativeRotation(FRotator(-15.0f, 0.0f, 0.0f));
 
 	
-	
+
+	//MiniMapSpringArm->TargetArmLength = 0.0f;
+	//MiniMapSpringArm->SetRelativeLocation(FVector(0.0f, 0.0f, 330.0f));
+	//MiniMapSpringArm->SetRelativeRotation(FRotator(-90.0f, 0.0f,0.0f));
+	//
+	//
+	////MiniMapCapture->TextureTarget=MiniMapRender;
+	//MiniMapCapture->bCaptureEveryFrame = false;
 }
 
 void AEGPlayerCharacter::LoadAssets()
@@ -75,14 +92,20 @@ void AEGPlayerCharacter::LoadAssets()
 	///Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang.AniPlayerCharacterKwang
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 
+	
 	static ConstructorHelpers::FClassFinder<UAnimInstance>ANI_CHARACTER(TEXT("/Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang.AniPlayerCharacterKwang_C"));
 	if (ANI_CHARACTER.Succeeded())
 	{
 		GetMesh()->SetAnimInstanceClass(ANI_CHARACTER.Class);
 	}
-
+	//static ConstructorHelpers::FObjectFinder<UTextureRenderTarget2D>T_CAPTURE(TEXT("/Game/MyFolder/MiniMap/MiniMapRender.MiniMapRender"));
+	//if (T_CAPTURE.Succeeded())
+	//{
+	//	
+	//	MiniMapCapture->TextureTarget =T_CAPTURE.Object;
+	//}
 	
-
+	
 }
 
 
@@ -99,6 +122,14 @@ void AEGPlayerCharacter::SetupSpringArm()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->bUseControllerDesiredRotation = false;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
+
+	////ArmLengthTo = 420.0f;
+	//MiniMapSpringArm->bUsePawnControlRotation = false;
+	//MiniMapSpringArm->bInheritPitch = false;
+	//MiniMapSpringArm->bInheritRoll =false;
+	//MiniMapSpringArm->bInheritYaw = false;
+	//MiniMapSpringArm->bDoCollisionTest = false;
+	//bUseControllerRotationYaw = false;
 }
 
 

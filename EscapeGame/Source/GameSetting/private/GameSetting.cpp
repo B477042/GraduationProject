@@ -3,4 +3,4 @@
 #include "GameSetting.h"
 #include "Modules/ModuleManager.h"
 
-IMPLEMENT_MODULE( FDefaultModuleImpl, PathStructure );
+IMPLEMENT_MODULE( FDefaultModuleImpl, GameSetting );

@@ -3,6 +3,8 @@
 #pragma once
 
 #include "EscapeGame.h"
+#include"Components/SceneCaptureComponent2D.h"
+
 #include "GameFramework/Character.h"
 #include "EGPlayerCharacter.generated.h"
 
@@ -32,6 +34,7 @@ public:
 	FRotator ArmRotationTo = FRotator::ZeroRotator;
 	float ArmLengthSpeed = 0.0f;
 	float ArmRotationSpeed = 0.0f;
+	
 	//=====================================================================
 	// Public UPROPERTY Zone
 public:
@@ -39,11 +42,15 @@ public:
 		USpringArmComponent* SpringArm;
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 		UCameraComponent* Camera;
-	UPROPERTY(VisibleAnywhere, Category = UI)
-		class UWidgetComponent* HUD;
+	
 	//UPROPERTY(VisibleAnywhere, Category = Stat)
 	//	class UGameStat* PlayerStat;
-	
+	//UPROPERTY(VisibleAnywhere, Category = MiniMap)
+	//	USceneCaptureComponent2D* MiniMapCapture;
+	//UPROPERTY(VisibleAnywhere, Category = MiniMap)
+	//	USpringArmComponent* MiniMapSpringArm;
+	//UPROPERTY(BlueprintReadWrite, Category = MiniMap)
+	//	UTextureRenderTarget2D* MiniMapRender;
 private:
 	void InitComponents();
 	void LoadAssets();

@@ -4,6 +4,7 @@
 
 #include "EscapeGame.h"
 #include "GameFramework/PlayerController.h"
+#include "Components/SceneCaptureComponent2D.h"
 #include "EGPlayerController.generated.h"
 
 /**
@@ -28,6 +29,8 @@ public:
 public:
 	UPROPERTY()
 		class UGameWidget* HUD;
+	/*UPROPERTY()
+		 USceneCaptureComponent2D* MapCam;*/
 	/*UPROPERTY()
 		class UGameStat* PlayerStat;*/
 };

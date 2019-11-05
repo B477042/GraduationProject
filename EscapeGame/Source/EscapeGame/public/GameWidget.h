@@ -32,4 +32,6 @@ private:
 		class UTextBlock* TimerText;
 	UPROPERTY(BlueprintReadWrite, Category = Timer, Meta = (AllowPrivateAccess = true))
 		float GameTimer;
+	UPROPERTY(BlueprintReadOnly, Category = Camera, Meta = (AllowPrivateAccess = true))
+		UCameraComponent* MiniMapCapture;
 };

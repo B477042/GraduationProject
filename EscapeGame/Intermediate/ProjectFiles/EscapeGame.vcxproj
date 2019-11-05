@@ -512,9 +512,12 @@
     <ClCompile Include="..\..\Source\EscapeGame\private\DoorPath.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\EGPlayerCharacter.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\EGPlayerController.cpp"/>
+    <ClCompile Include="..\..\Source\EscapeGame\private\EnemyAIController.cpp"/>
+    <ClCompile Include="..\..\Source\EscapeGame\private\EnemyCharacter.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\EscapeGame.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\EscapeGameGameModeBase.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\GameWidget.cpp"/>
+    <ClCompile Include="..\..\Source\EscapeGame\private\HPBox.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\NormalPath.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\OneSideBlockedPath.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\OneSideOpendPath.cpp"/>
@@ -527,9 +530,12 @@
     <ClInclude Include="..\..\Source\EscapeGame\public\DoorPath.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\EGPlayerCharacter.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\EGPlayerController.h"/>
+    <ClInclude Include="..\..\Source\EscapeGame\public\EnemyAIController.h"/>
+    <ClInclude Include="..\..\Source\EscapeGame\public\EnemyCharacter.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\EscapeGame.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\EscapeGameGameModeBase.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\GameWidget.h"/>
+    <ClInclude Include="..\..\Source\EscapeGame\public\HPBox.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\NormalPath.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\OneSideBlockedPath.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\OneSideOpendPath.h"/>
@@ -538,8 +544,10 @@
     <ClInclude Include="..\..\Source\EscapeGame\public\StairPath2.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\Trap.h"/>
     <None Include="..\..\Source\GameSetting\GameSetting.Build.cs"/>
+    <ClCompile Include="..\..\Source\GameSetting\private\EGCharacterSetting.cpp"/>
     <ClCompile Include="..\..\Source\GameSetting\private\GameSetting.cpp"/>
     <ClCompile Include="..\..\Source\GameSetting\private\test.cpp"/>
+    <ClInclude Include="..\..\Source\GameSetting\public\EGCharacterSetting.h"/>
     <ClInclude Include="..\..\Source\GameSetting\public\GameSetting.h"/>
     <ClInclude Include="..\..\Source\GameSetting\public\test.h"/>
     <None Include="..\..\Source\GameSetting\public\.vscode\c_cpp_properties.json"/>

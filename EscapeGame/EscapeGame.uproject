@@ -10,7 +10,8 @@
 			"Type": "Runtime",
 			"LoadingPhase": "PreDefault",
 			"AdditionalDependencies": [
-				"Engine"
+				"Engine",
+				"CoreUObject"
 			]
 		},
 		{
@@ -20,7 +21,8 @@
 			"AdditionalDependencies": [
 				"Engine",
 				"GameSetting",
-				"UMG"
+				"UMG",
+				"AIModule"
 			]
 		}
 	],

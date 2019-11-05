@@ -413,6 +413,7 @@
 /I ThirdParty
 /I ThirdParty\libSampleRate\Public
 /I ThirdParty\libSampleRate
+/I E:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Inc\GameSetting
 /I E:\CODE\GraduationProject\EscapeGame\Source
 /I E:\CODE\GraduationProject\EscapeGame\Source\GameSetting\Public
 /I E:\CODE\GraduationProject\EscapeGame\Source\GameSetting
