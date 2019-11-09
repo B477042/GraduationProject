@@ -505,6 +505,7 @@
     <None Include="..\..\Config\DefaultEditor.ini"/>
     <None Include="..\..\Config\DefaultEngine.ini"/>
     <None Include="..\..\Config\DefaultGame.ini"/>
+    <None Include="..\..\Config\DefaultGameSetting.ini"/>
     <None Include="..\..\Config\DefaultInput.ini"/>
     <None Include="..\..\Source\EscapeGame\EscapeGame.Build.cs"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\CharacterAnimInstance.cpp"/>
@@ -518,6 +519,7 @@
     <ClCompile Include="..\..\Source\EscapeGame\private\EscapeGameGameModeBase.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\GameWidget.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\HPBox.cpp"/>
+    <ClCompile Include="..\..\Source\EscapeGame\private\MiniMapRender.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\NormalPath.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\OneSideBlockedPath.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\OneSideOpendPath.cpp"/>
@@ -536,6 +538,7 @@
     <ClInclude Include="..\..\Source\EscapeGame\public\EscapeGameGameModeBase.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\GameWidget.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\HPBox.h"/>
+    <ClInclude Include="..\..\Source\EscapeGame\public\MiniMapRender.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\NormalPath.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\OneSideBlockedPath.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\OneSideOpendPath.h"/>

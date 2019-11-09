@@ -2,3 +2,7 @@
 
 #include "EGCharacterSetting.h"
 
+UEGCharacterSetting::UEGCharacterSetting() 
+{
+
+}
