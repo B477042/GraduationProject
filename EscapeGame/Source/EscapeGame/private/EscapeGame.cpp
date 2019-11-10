@@ -3,6 +3,7 @@
 #include "EscapeGame.h"
 #include "Modules/ModuleManager.h"
 
-IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, EscapeGame, "EscapeGame" );
+//IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, EscapeGame, "EscapeGame" );
+IMPLEMENT_MODULE(FDefaultModuleImpl, EscapeGame);
 
 DEFINE_LOG_CATEGORY(EGgame)
