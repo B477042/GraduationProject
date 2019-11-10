@@ -9,6 +9,6 @@ public class EscapeGameEditorTarget : TargetRules
 	{
 		Type = TargetType.Editor;
 
-		ExtraModuleNames.AddRange( new string[] { "EscapeGame","GameSetting","GameElement" } );
+		ExtraModuleNames.AddRange( new string[] { "EscapeGame","GameSetting" } );
 	}
 }

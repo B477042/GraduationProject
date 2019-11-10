@@ -21,7 +21,6 @@ public:
 		TArray<FSoftObjectPath>TargetTexture;
 	UPROPERTY(Config)
 		TArray<FSoftObjectPath>AnimBlueprints;
-	
 //private:
 	
 };

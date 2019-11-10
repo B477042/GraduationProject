@@ -90,7 +90,7 @@ void AEGPlayerCharacter::LoadAssets()
 	{
 		GetMesh()->SetSkeletalMesh(SM_CHARACTER.Object);
 	}
-	// /Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang.AniPlayerCharacterKwang
+	///Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang.AniPlayerCharacterKwang
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 
 	
@@ -106,22 +106,7 @@ void AEGPlayerCharacter::LoadAssets()
 	//	MiniMapCapture->TextureTarget =T_CAPTURE.Object;
 	//}
 	
-	auto defaultSetting = GetDefault<UEGCharacterSetting>();
-	if (defaultSetting->CharacterAssets.Num() > 0)
-	{
-		for (auto asset : defaultSetting->CharacterAssets)
-			EGLOG(Warning, TEXT("Asset Path = %s"), *asset.ToString());
-	}
-	if (defaultSetting->TargetTexture.Num() > 0)
-	{
-		for (auto asset : defaultSetting->TargetTexture)
-			EGLOG(Warning, TEXT("Texture Asset Path = %s"), *asset.ToString());
-	}
-	if (defaultSetting->AnimBlueprints.Num() > 0)
-	{
-		for (auto asset : defaultSetting->AnimBlueprints)
-			EGLOG(Warning, TEXT("Anim Blue print Asset Path = %s"), *asset.ToString());
-	}
+	
 }
 
 
