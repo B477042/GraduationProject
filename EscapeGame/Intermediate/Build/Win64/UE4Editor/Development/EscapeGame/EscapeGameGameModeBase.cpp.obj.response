@@ -418,6 +418,8 @@
 /I ThirdParty
 /I ThirdParty\libSampleRate\Public
 /I ThirdParty\libSampleRate
+/I E:\CODE\GraduationProject\EscapeGame\Source\Structure\Public
+/I E:\CODE\GraduationProject\EscapeGame\Source\Structure
 /I E:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Inc\EscapeGame
 /I E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\Public
 /I E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame
