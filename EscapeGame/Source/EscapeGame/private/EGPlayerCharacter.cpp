@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "EGPlayerCharacter.h"
-
+#include"Engine/SceneCapture2D.h"
 #include "EGPlayerController.h"
 #include"GameSetting/public/EGCharacterSetting.h"
 //#include "GameWidget.h"
@@ -14,8 +14,10 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	InitComponents();
 	LoadAssets();
-	SetupSpringArm();
 	
+	
+
+	SetupSpringArm();
 
 	
 }
@@ -61,7 +63,7 @@ void AEGPlayerCharacter::InitComponents()
 	//MiniMapSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("MINIMAPSPRINGARM"));
 	//MiniMapCapture = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("MINIMAPCAPTURE"));
 
-	
+	//Components Tree
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	Camera->SetupAttachment(SpringArm);
 	//MiniMapSpringArm->SetupAttachment(GetCapsuleComponent());
@@ -81,6 +83,7 @@ void AEGPlayerCharacter::InitComponents()
 	//
 	////MiniMapCapture->TextureTarget=MiniMapRender;
 	//MiniMapCapture->bCaptureEveryFrame = false;
+	SetupSpringArm();
 }
 
 void AEGPlayerCharacter::LoadAssets()
@@ -99,13 +102,40 @@ void AEGPlayerCharacter::LoadAssets()
 	{
 		GetMesh()->SetAnimInstanceClass(ANI_CHARACTER.Class);
 	}
-	//static ConstructorHelpers::FObjectFinder<UTextureRenderTarget2D>T_CAPTURE(TEXT("/Game/MyFolder/MiniMap/MiniMapRender.MiniMapRender"));
-	//if (T_CAPTURE.Succeeded())
-	//{
-	//	
-	//	MiniMapCapture->TextureTarget =T_CAPTURE.Object;
-	//}
+	//static ConstructorHelpers::FClassFinder<UBlueprint>ANI_CHARACTR(TEXT("/Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang.AniPlayerCharacterKwang_C"));
+	/*
+	Material'/Game/MyFolder/MiniMap/MiniMapRender_Mat.MiniMapRender_Mat'
+		TextureRenderTarget2D'/Game/MyFolder/MiniMap/MiniMapRender.MiniMapRender'
+		Blueprint'/Game/MyFolder/MiniMap/MiniMapCam.MiniMapCam'
+		StaticMesh'/Game/MyFolder/SkeletalMeshs/SM_Gold_Door.SM_Gold_Door'
+		WidgetBlueprint'/Game/MyFolder/UI/UI_HUD.UI_HUD'
+		AnimBlueprint'/Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang.AniPlayerCharacterKwang'*/
 	
+	static ConstructorHelpers::FClassFinder<ASceneCapture2D>T_CAPTURE(TEXT("/Game/MyFolder/MiniMap/MiniMapCam.MiniMapCam_C"));
+	if (T_CAPTURE.Succeeded())
+	{
+		MiniMapCapture = Cast<ASceneCapture2D>(T_CAPTURE.Class);
+
+	}
+	else
+		EGLOG(Error, TEXT("FUCKKKKKKKKKKKK"));
+	
+	
+}
+//set target texture
+void AEGPlayerCharacter::SetupMiniMap()
+{
+	/*auto characterSetting = GetDefault<UEGCharacterSetting>();
+	if (characterSetting->TargetTexture.IsValidIndex(0) )
+	{
+		MiniMapCapture->TextureTarget  = characterSetting->TargetTexture.GetData()->GetAssetPathName();
+	}*/
+	/*static ConstructorHelpers::FObjectFinder<UTextureRenderTarget2D>T_CAPTURE(TEXT("/Game/MyFolder/MiniMap/MiniMapRender.MiniMapRender"));
+	if (T_CAPTURE.Succeeded())
+	{
+		
+		MiniMapCapture->TextureTarget =T_CAPTURE.Object;
+	}*/
 	
 }
 

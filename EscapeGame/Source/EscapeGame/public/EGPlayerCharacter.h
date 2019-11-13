@@ -4,6 +4,7 @@
 
 #include "EscapeGame.h"
 #include"Components/SceneCaptureComponent2D.h"
+#include"Engine/SceneCapture2D.h"
 
 #include "GameFramework/Character.h"
 #include "EGPlayerCharacter.generated.h"
@@ -45,15 +46,19 @@ public:
 	
 	//UPROPERTY(VisibleAnywhere, Category = Stat)
 	//	class UGameStat* PlayerStat;
-	//UPROPERTY(VisibleAnywhere, Category = MiniMap)
-	//	USceneCaptureComponent2D* MiniMapCapture;
-	//UPROPERTY(VisibleAnywhere, Category = MiniMap)
-	//	USpringArmComponent* MiniMapSpringArm;
-	//UPROPERTY(BlueprintReadWrite, Category = MiniMap)
-	//	UTextureRenderTarget2D* MiniMapRender;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = MiniMap)
+		ASceneCapture2D* MiniMapCapture;
+
+	UPROPERTY(VisibleAnywhere, Category = MiniMap)
+		USpringArmComponent* MiniMapSpringArm;
+	/*UPROPERTY(BlueprintReadWrite, Category = MiniMap)
+		UTextureRenderTarget2D* MiniMapRender;*/
+	
 private:
 	void InitComponents();
 	void LoadAssets();
+	void SetupMiniMap();
 	//=========================
 	//Camera Category Init Functions
 	void SetupSpringArm();

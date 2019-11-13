@@ -511,6 +511,7 @@
     <ClCompile Include="..\..\Source\EscapeGame\private\CharacterAnimInstance.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\Claymore.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\DoorPath.cpp"/>
+    <ClCompile Include="..\..\Source\EscapeGame\private\EGGameInstance.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\EGPlayerCharacter.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\EGPlayerController.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\EnemyAIController.cpp"/>
@@ -530,6 +531,7 @@
     <ClInclude Include="..\..\Source\EscapeGame\public\CharacterAnimInstance.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\Claymore.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\DoorPath.h"/>
+    <ClInclude Include="..\..\Source\EscapeGame\public\EGGameInstance.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\EGPlayerCharacter.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\EGPlayerController.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\EnemyAIController.h"/>

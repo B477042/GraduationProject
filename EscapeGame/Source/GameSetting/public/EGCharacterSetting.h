@@ -18,7 +18,7 @@ public:
 	UPROPERTY(Config)
 		TArray<FSoftObjectPath>CharacterAssets;
 	UPROPERTY(Config)
-		TArray<FSoftObjectPath>TargetTexture;
+		TArray<FSoftObjectPath>TextureBlueprints;
 	UPROPERTY(Config)
 		TArray<FSoftObjectPath>AnimBlueprints;
 //private:
