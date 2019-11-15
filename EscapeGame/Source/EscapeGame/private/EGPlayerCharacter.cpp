@@ -59,30 +59,34 @@ void AEGPlayerCharacter::InitComponents()
 {
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
+	MiniMapArm= CreateDefaultSubobject<USpringArmComponent>(TEXT("MINMAPARM"));
+	MapRenderer = CreateDefaultSubobject<UMiniMapRender>(TEXT("MAPRENDERER"));
+
 
 	//MiniMapSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("MINIMAPSPRINGARM"));
-	//MiniMapCapture = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("MINIMAPCAPTURE"));
+	////MiniMapCapture = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("MINIMAPCAPTURE"));
+	//MiniMapCapture = CreateDefaultSubobject<ASceneCapture2D>(TEXT("MINIMAPCAPTURE"));
 
 	//Components Tree
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	Camera->SetupAttachment(SpringArm);
+	MiniMapArm->SetupAttachment(GetCapsuleComponent());
+	MapRenderer->SetupAttachment(MiniMapArm);
 	//MiniMapSpringArm->SetupAttachment(GetCapsuleComponent());
 	//MiniMapCapture->SetupAttachment(MiniMapSpringArm);
+	
 
 
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 	SpringArm->TargetArmLength = 400.0f;
 	SpringArm->SetRelativeRotation(FRotator(-15.0f, 0.0f, 0.0f));
 
-	
+	MiniMapArm->TargetArmLength = 0.0f;
+	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, 330.0f));
+	MiniMapArm->SetRelativeRotation(FRotator(-90.0f, 0.0f,0.0f));
 
-	//MiniMapSpringArm->TargetArmLength = 0.0f;
-	//MiniMapSpringArm->SetRelativeLocation(FVector(0.0f, 0.0f, 330.0f));
-	//MiniMapSpringArm->SetRelativeRotation(FRotator(-90.0f, 0.0f,0.0f));
-	//
-	//
-	////MiniMapCapture->TextureTarget=MiniMapRender;
-	//MiniMapCapture->bCaptureEveryFrame = false;
+	
+	
 	SetupSpringArm();
 }
 
@@ -111,33 +115,51 @@ void AEGPlayerCharacter::LoadAssets()
 		WidgetBlueprint'/Game/MyFolder/UI/UI_HUD.UI_HUD'
 		AnimBlueprint'/Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang.AniPlayerCharacterKwang'*/
 	
-	static ConstructorHelpers::FClassFinder<ASceneCapture2D>T_CAPTURE(TEXT("/Game/MyFolder/MiniMap/MiniMapCam.MiniMapCam_C"));
-	if (T_CAPTURE.Succeeded())
-	{
-		MiniMapCapture = Cast<ASceneCapture2D>(T_CAPTURE.Class);
 
-	}
-	else
-		EGLOG(Error, TEXT("FUCKKKKKKKKKKKK"));
+	//static ConstructorHelpers::FClassFinder<ASceneCapture2D>T_CAPTURE(TEXT("/Game/MyFolder/MiniMap/MiniMapCam.MiniMapCam_C"));
+	//if (T_CAPTURE.Succeeded())
+	//{
+	//	MiniMapCapture = Cast<ASceneCapture2D>(T_CAPTURE.Class);
+	//	
+	//	SetupMiniMap();
+	//}
+	//else
+	//	EGLOG(Error, TEXT("FUCKKKKKKKKKKKK"));
 	
 	
 }
-//set target texture
-void AEGPlayerCharacter::SetupMiniMap()
-{
-	/*auto characterSetting = GetDefault<UEGCharacterSetting>();
-	if (characterSetting->TargetTexture.IsValidIndex(0) )
-	{
-		MiniMapCapture->TextureTarget  = characterSetting->TargetTexture.GetData()->GetAssetPathName();
-	}*/
-	/*static ConstructorHelpers::FObjectFinder<UTextureRenderTarget2D>T_CAPTURE(TEXT("/Game/MyFolder/MiniMap/MiniMapRender.MiniMapRender"));
-	if (T_CAPTURE.Succeeded())
-	{
-		
-		MiniMapCapture->TextureTarget =T_CAPTURE.Object;
-	}*/
-	
-}
+//미니맵 캡쳐와 스프링암을 조정해준다
+//void AEGPlayerCharacter::SetupMiniMap()
+//{
+//	/*auto characterSetting = GetDefault<UEGCharacterSetting>();
+//	if (characterSetting->TargetTexture.IsValidIndex(0) )
+//	{
+//		MiniMapCapture->TextureTarget  = characterSetting->TargetTexture.GetData()->GetAssetPathName();
+//	}*/
+//	/*static ConstructorHelpers::FObjectFinder<UTextureRenderTarget2D>T_CAPTURE(TEXT("/Game/MyFolder/MiniMap/MiniMapRender.MiniMapRender"));
+//	if (T_CAPTURE.Succeeded())
+//	{
+//		
+//		MiniMapCapture->TextureTarget =T_CAPTURE.Object;
+//	}*/
+//	//MiniMapSpringArm->TargetArmLength = 0.0f;
+//	//MiniMapSpringArm->SetRelativeLocation(FVector(0.0f, 0.0f, 330.0f));
+//	//MiniMapSpringArm->SetRelativeRotation(FRotator(-90.0f, 0.0f,0.0f));
+//	//
+//	//
+//	////MiniMapCapture->TextureTarget=MiniMapRender;
+//	//MiniMapCapture->bCaptureEveryFrame = false;
+//
+//	//MiniMapSpringArm->actor
+//
+//	//MiniMapSpringArm->bUsePawnControlRotation = false;
+//	//MiniMapSpringArm->bInheritPitch = false;
+//	//MiniMapSpringArm->bInheritRoll =false;
+//	//MiniMapSpringArm->bInheritYaw = false;
+//	//MiniMapSpringArm->bDoCollisionTest = false;
+//	//bUseControllerRotationYaw = false;
+//
+//}
 
 
 void AEGPlayerCharacter::SetupSpringArm()
@@ -155,12 +177,11 @@ void AEGPlayerCharacter::SetupSpringArm()
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
 
 	////ArmLengthTo = 420.0f;
-	//MiniMapSpringArm->bUsePawnControlRotation = false;
-	//MiniMapSpringArm->bInheritPitch = false;
-	//MiniMapSpringArm->bInheritRoll =false;
-	//MiniMapSpringArm->bInheritYaw = false;
-	//MiniMapSpringArm->bDoCollisionTest = false;
-	//bUseControllerRotationYaw = false;
+	MiniMapArm->bUsePawnControlRotation = false;
+	MiniMapArm->bInheritPitch = false;
+	MiniMapArm->bInheritRoll = false;
+	MiniMapArm->bInheritYaw = false;
+
 }
 
 

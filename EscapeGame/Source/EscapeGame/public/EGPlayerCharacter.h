@@ -3,9 +3,9 @@
 #pragma once
 
 #include "EscapeGame.h"
-#include"Components/SceneCaptureComponent2D.h"
-#include"Engine/SceneCapture2D.h"
-
+#include "Components/SceneCaptureComponent2D.h"
+#include "Engine/SceneCapture2D.h"
+#include "MinimapRender.h"
 #include "GameFramework/Character.h"
 #include "EGPlayerCharacter.generated.h"
 
@@ -39,26 +39,30 @@ public:
 	//=====================================================================
 	// Public UPROPERTY Zone
 public:
-	UPROPERTY(VisibleAnywhere, Category = Camera)
+	UPROPERTY(VisibleAnywhere, Category = MainCam)
 		USpringArmComponent* SpringArm;
-	UPROPERTY(VisibleAnywhere, Category = Camera)
+	UPROPERTY(VisibleAnywhere, Category = MainCam)
 		UCameraComponent* Camera;
-	
+	UPROPERTY(VisibleAnywhere, Category = Minimap)
+		USpringArmComponent* MiniMapArm;
+	UPROPERTY(VisibleAnywhere, Category = Minimap)
+		UMiniMapRender* MapRenderer;
 	//UPROPERTY(VisibleAnywhere, Category = Stat)
 	//	class UGameStat* PlayerStat;
 
-	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = MiniMap)
-		ASceneCapture2D* MiniMapCapture;
-
+	/*UPROPERTY(EditAnywhere, Category = MiniMap)
+		 ASceneCapture2D* MiniMapCapture;
+	
+	
 	UPROPERTY(VisibleAnywhere, Category = MiniMap)
-		USpringArmComponent* MiniMapSpringArm;
+		USpringArmComponent* MiniMapSpringArm;*/
 	/*UPROPERTY(BlueprintReadWrite, Category = MiniMap)
 		UTextureRenderTarget2D* MiniMapRender;*/
 	
 private:
 	void InitComponents();
 	void LoadAssets();
-	void SetupMiniMap();
+	//void SetupMiniMap();
 	//=========================
 	//Camera Category Init Functions
 	void SetupSpringArm();

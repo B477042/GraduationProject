@@ -2,13 +2,15 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "EscapeGame.h"
 #include "Components/ActorComponent.h"
+#include"Components/SceneCaptureComponent2D.h"
+#include "Engine/SceneCapture2D.h"
 #include "MiniMapRender.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class ESCAPEGAME_API UMiniMapRender : public UActorComponent
+class ESCAPEGAME_API UMiniMapRender : public USceneCaptureComponent2D
 {
 	GENERATED_BODY()
 
@@ -23,6 +25,13 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+
+
+private:
+	
+	
+	
 
 		
 };
