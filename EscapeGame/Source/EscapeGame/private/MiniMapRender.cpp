@@ -22,6 +22,9 @@ UMiniMapRender::UMiniMapRender()
 	
 	this->CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
 	bCaptureEveryFrame = true;
+	//TextureTarget->AdjustBrightness = 255.0f;
+
+	//밝기는 나중에 조절하자
 	// ...
 }
 
