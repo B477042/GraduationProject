@@ -11,12 +11,14 @@ UCharacterStatComponent::UCharacterStatComponent()
 	CurrentHP = MaxHP;
 	CurrentATK = 10.0f;
 	timer = 0.0f;
+	EGLOG(Warning, TEXT("Stat component!"));
 	// ...
 }
 
 
 void UCharacterStatComponent::InitializeComponent()
 {
+	EGLOG(Warning, TEXT("Stat component ÃÊ±âÈ­"));
 	Super::InitializeComponent();
 }
 
@@ -29,6 +31,11 @@ void UCharacterStatComponent::BeginPlay()
 	
 }
 
+void UCharacterStatComponent::PostInitializeComponent()
+{
+	Super::PostInitializeComponent();
+}
+
 
 // Called every frame
 void UCharacterStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -38,24 +45,31 @@ void UCharacterStatComponent::TickComponent(float DeltaTime, ELevelTick TickType
 	// ...
 }
 
-void UCharacterStatComponent::SetDamage(float NewDamage)
+void UCharacterStatComponent::HitDamage(float NewDamage)
 {
+	
 	CurrentHP -= NewDamage;
+	HPChangedDelegate.Broadcast();
 }
 
 void UCharacterStatComponent::SetHP(float NewHP)
 {
+	//EGLOG(Warning, TEXT("HP : %f"), GetHPRatio());
 	CurrentHP = NewHP;
+	HPChangedDelegate.Broadcast();
 }
 
 void UCharacterStatComponent::TestLogic()
 {
 	timer += GetWorld()->DeltaTimeSeconds;
+	
 	if (timer > 1.0f)
 	{
-		SetDamage(5.0f);
+		HitDamage(5.0f);
 		timer = 0.0f;
 	}
+	if (CurrentHP < 0.0f)
+		SetHP(0.0f);
 }
 
 

@@ -22,6 +22,7 @@ public:
 
 	virtual void PostInitializeComponents()override;
 	virtual void Possess(APawn* aPawn)override;
+	
 	class UGameWidget* GetHUDWidget()const;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)

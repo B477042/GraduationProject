@@ -4,6 +4,7 @@
 
 #include "EscapeGame.h"
 #include "Blueprint/UserWidget.h"
+#include"CharacterStatComponent.h"
 #include "GameWidget.generated.h"
 
 /**
@@ -17,13 +18,15 @@ public:
 	//UGameWidget();
 	//void BindCharacterStat(class UGameStat* NewCharacterStat);
 	virtual void NativeConstruct() override;
+	UFUNCTION(BlueprintCallable)
 	void UpdateCharacterStat();
 
 	UFUNCTION(BlueprintCallable)
 		float CheackTimeOut(float NewValue);
+	void BindCharacterStat(UCharacterStatComponent* newStat);
 	
 private:
-	//TWeakObjectPtr<class UGameStat>CurrentCharacterStat;
+	TWeakObjectPtr<class UCharacterStatComponent>CurrentCharacterStat;
 	UPROPERTY()
 		class UProgressBar* PB_HP;
 	UPROPERTY()
@@ -34,4 +37,5 @@ private:
 		float GameTimer;
 	UPROPERTY(BlueprintReadOnly, Category = Camera, Meta = (AllowPrivateAccess = true))
 		UCameraComponent* MiniMapCapture;
+	
 };

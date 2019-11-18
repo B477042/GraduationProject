@@ -10,6 +10,8 @@
 #include "CharacterStatComponent.h"
 #include "EGPlayerCharacter.generated.h"
 
+
+
 UCLASS()
 class ESCAPEGAME_API AEGPlayerCharacter : public ACharacter
 {
@@ -22,7 +24,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
+	//virtual void 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -48,7 +50,7 @@ public:
 		USpringArmComponent* MiniMapArm;
 	UPROPERTY(VisibleAnywhere, Category = Minimap)
 		UMiniMapRenderComponent* MapRenderer;
-	UPROPERTY(EditInstanceOnly, Catgory = Stat)
+	UPROPERTY(BlueprintReadOnly,EditInstanceOnly, Category = Stat)
 		UCharacterStatComponent* Stat;
 	
 private:

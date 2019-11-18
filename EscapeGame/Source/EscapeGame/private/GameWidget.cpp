@@ -23,13 +23,30 @@ void UGameWidget::NativeConstruct()
 
 void UGameWidget::UpdateCharacterStat()
 {
-	if(PB_HP!=nullptr)
-	PB_HP->SetPercent(90.0f);
+	if(CurrentCharacterStat.IsValid())
+		if(PB_HP!=nullptr)
+			PB_HP->SetPercent(CurrentCharacterStat->GetHPRatio());
 }
 
 float UGameWidget::CheackTimeOut(float NewValue)
 {
 	return (NewValue >= 0.0f) ? NewValue: 0.0f;
+}
+
+void UGameWidget::BindCharacterStat(UCharacterStatComponent * newStat)
+{
+	if (newStat == nullptr) {
+		EGLOG(Error, TEXT("No Character Stat Componenet"));
+		return;
+	}
+	CurrentCharacterStat = newStat;
+	CurrentCharacterStat->HPChangedDelegate.AddUObject(this, &UGameWidget::UpdateCharacterStat);
+	CurrentCharacterStat->HPChangedDelegate.AddLambda([this]()->void {
+		if (CurrentCharacterStat.IsValid())
+		{
+			EGLOG(Warning, TEXT("HP : %f%"), CurrentCharacterStat->GetHPRatio());
+		}
+	});
 }
 
 

@@ -7,6 +7,7 @@
 #include "CharacterStatComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FOnHPChangeDelegate);
+DECLARE_MULTICAST_DELEGATE(FIsHPZero);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ESCAPEGAME_API UCharacterStatComponent : public UActorComponent
@@ -21,11 +22,11 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
+	virtual void PostInitializeComponent();
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	void SetDamage(float NewDamage);
+	void HitDamage(float NewDamage);
 	void SetHP(float NewHP);
 	void TestLogic();
 
@@ -34,7 +35,8 @@ public:
 	float GetHPRatio()const;
 	
 
-	FOnHPChangeDelegate HPChagnDelegate;
+	FOnHPChangeDelegate HPChangedDelegate;
+	FIsHPZero HPZeroDelegate;
 private:
 	const float MaxHP=100.0f;
 	float timer;
@@ -43,6 +45,6 @@ private:
 	//save current HP,Transient ����
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		float CurrentHP;
-	UPROPERTY(isibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
+	UPROPERTY(VisibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		float CurrentATK;
 };

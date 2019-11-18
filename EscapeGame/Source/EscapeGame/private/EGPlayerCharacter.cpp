@@ -16,6 +16,8 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	LoadAssets();
 	
 	
+	
+	
 
 	SetupSpringArm();
 
@@ -36,7 +38,7 @@ void AEGPlayerCharacter::Tick(float DeltaTime)
 	
 
 	SpringArm->TargetArmLength = FMath::FInterpTo(SpringArm->TargetArmLength, ArmLengthTo, DeltaTime, ArmLengthSpeed);
-	
+	//GetController()
 	
 	//MiniMapCapture->CaptureScene();
 //	GetController()->
@@ -70,10 +72,13 @@ void AEGPlayerCharacter::InitComponents()
 	//MiniMapCapture = CreateDefaultSubobject<ASceneCapture2D>(TEXT("MINIMAPCAPTURE"));
 
 	//Components Tree
+	
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	Camera->SetupAttachment(SpringArm);
 	MiniMapArm->SetupAttachment(GetCapsuleComponent());
 	MapRenderer->SetupAttachment(MiniMapArm);
+	 
+
 	//MiniMapSpringArm->SetupAttachment(GetCapsuleComponent());
 	//MiniMapCapture->SetupAttachment(MiniMapSpringArm);
 	
