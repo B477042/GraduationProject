@@ -19,8 +19,8 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGame_init() {}
 			static const UE4CodeGen_Private::FPackageParams PackageParams = {
 				"/Script/EscapeGame",
 				PKG_CompiledIn | 0x00000000,
-				0x4D30B971,
-				0x3B3F4896,
+				0xF5C47DEB,
+				0x6A1B9FBE,
 				nullptr, 0,
 				METADATA_PARAMS(nullptr, 0)
 			};
