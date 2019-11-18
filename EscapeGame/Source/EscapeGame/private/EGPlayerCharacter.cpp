@@ -60,7 +60,7 @@ void AEGPlayerCharacter::InitComponents()
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
 	MiniMapArm= CreateDefaultSubobject<USpringArmComponent>(TEXT("MINMAPARM"));
-	MapRenderer = CreateDefaultSubobject<UMiniMapRender>(TEXT("MAPRENDERER"));
+	MapRenderer = CreateDefaultSubobject<UMiniMapRenderComponent>(TEXT("MAPRENDERER"));
 
 
 	//MiniMapSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("MINIMAPSPRINGARM"));
@@ -128,7 +128,7 @@ void AEGPlayerCharacter::LoadAssets()
 	
 	
 }
-//¹Ì´Ï¸Ê Ä¸ÃÄ¿Í ½ºÇÁ¸µ¾ÏÀ» Á¶Á¤ÇØÁØ´Ù
+//ï¿½Ì´Ï¸ï¿½ Ä¸ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½
 //void AEGPlayerCharacter::SetupMiniMap()
 //{
 //	/*auto characterSetting = GetDefault<UEGCharacterSetting>();
@@ -164,7 +164,7 @@ void AEGPlayerCharacter::LoadAssets()
 
 void AEGPlayerCharacter::SetupSpringArm()
 {
-	//Ä³¸¯ÅÍ¿Í °Å¸®
+	//Ä³ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½Å¸ï¿½
 	ArmLengthTo = 300.0f;
 	SpringArm->bUsePawnControlRotation = true;
 	SpringArm->bInheritPitch = true;

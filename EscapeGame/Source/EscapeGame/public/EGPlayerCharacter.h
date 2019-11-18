@@ -5,7 +5,7 @@
 #include "EscapeGame.h"
 #include "Components/SceneCaptureComponent2D.h"
 #include "Engine/SceneCapture2D.h"
-#include "MinimapRender.h"
+#include "MinimapRenderComponent.h"
 #include "GameFramework/Character.h"
 #include "EGPlayerCharacter.generated.h"
 
@@ -46,7 +46,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Minimap)
 		USpringArmComponent* MiniMapArm;
 	UPROPERTY(VisibleAnywhere, Category = Minimap)
-		UMiniMapRender* MapRenderer;
+		UMiniMapRenderComponent* MapRenderer;
 	//UPROPERTY(VisibleAnywhere, Category = Stat)
 	//	class UGameStat* PlayerStat;
 
