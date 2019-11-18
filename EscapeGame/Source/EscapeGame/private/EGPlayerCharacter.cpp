@@ -33,6 +33,7 @@ void AEGPlayerCharacter::BeginPlay()
 void AEGPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
 
 	SpringArm->TargetArmLength = FMath::FInterpTo(SpringArm->TargetArmLength, ArmLengthTo, DeltaTime, ArmLengthSpeed);
 	
@@ -61,6 +62,7 @@ void AEGPlayerCharacter::InitComponents()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
 	MiniMapArm= CreateDefaultSubobject<USpringArmComponent>(TEXT("MINMAPARM"));
 	MapRenderer = CreateDefaultSubobject<UMiniMapRenderComponent>(TEXT("MAPRENDERER"));
+	Stat = CreateDefaultSubobject <UCharacterStatComponent>(TEXT("STAT"));
 
 
 	//MiniMapSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("MINIMAPSPRINGARM"));
@@ -97,6 +99,9 @@ void AEGPlayerCharacter::LoadAssets()
 	{
 		GetMesh()->SetSkeletalMesh(SM_CHARACTER.Object);
 	}
+
+	
+
 	///Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang.AniPlayerCharacterKwang
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 

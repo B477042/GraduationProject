@@ -7,6 +7,7 @@
 #include "Engine/SceneCapture2D.h"
 #include "MinimapRenderComponent.h"
 #include "GameFramework/Character.h"
+#include "CharacterStatComponent.h"
 #include "EGPlayerCharacter.generated.h"
 
 UCLASS()
@@ -25,7 +26,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+	//virtual void TickComponent(float DeltaTime)override;
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	//=====================================================================
@@ -47,17 +48,8 @@ public:
 		USpringArmComponent* MiniMapArm;
 	UPROPERTY(VisibleAnywhere, Category = Minimap)
 		UMiniMapRenderComponent* MapRenderer;
-	//UPROPERTY(VisibleAnywhere, Category = Stat)
-	//	class UGameStat* PlayerStat;
-
-	/*UPROPERTY(EditAnywhere, Category = MiniMap)
-		 ASceneCapture2D* MiniMapCapture;
-	
-	
-	UPROPERTY(VisibleAnywhere, Category = MiniMap)
-		USpringArmComponent* MiniMapSpringArm;*/
-	/*UPROPERTY(BlueprintReadWrite, Category = MiniMap)
-		UTextureRenderTarget2D* MiniMapRender;*/
+	UPROPERTY(EditInstanceOnly, Catgory = Stat)
+		UCharacterStatComponent* Stat;
 	
 private:
 	void InitComponents();

@@ -27,15 +27,22 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	void SetDamage(float NewDamage);
 	void SetHP(float NewHP);
+	void TestLogic();
 
-	int32 GetDropExp()const;
+	//int32 GetDropExp()const;
 	float GetAttack()const;
 	float GetHPRatio()const;
+	
 
 	FOnHPChangeDelegate HPChagnDelegate;
+private:
+	const float MaxHP=100.0f;
+	float timer;
 private:
 	
 	//save current HP,Transient ����
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		float CurrentHP;
+	UPROPERTY(isibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
+		float CurrentATK;
 };
