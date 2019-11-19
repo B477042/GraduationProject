@@ -10,6 +10,9 @@
 /**
  * 
  */
+
+//DECLARE_DELEGATE_OneParam(FBindStat,UCharacterStatComponent);
+
 UCLASS()
 class ESCAPEGAME_API UGameWidget : public UUserWidget
 {
@@ -23,8 +26,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		float CheackTimeOut(float NewValue);
-	void BindCharacterStat(UCharacterStatComponent* newStat);
+	void BindCharacterStat(const UCharacterStatComponent* newStat);
 	
+	//FBindStat BindStatDelegate;
+
 private:
 	TWeakObjectPtr<class UCharacterStatComponent>CurrentCharacterStat;
 	UPROPERTY()

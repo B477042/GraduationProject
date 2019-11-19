@@ -31,6 +31,7 @@ public:
 	//virtual void TickComponent(float DeltaTime)override;
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void PostInitializeComponents() override;
 	//=====================================================================
 	//Public Not UPROPERTY member 
 public:
@@ -39,6 +40,7 @@ public:
 	float ArmLengthSpeed = 0.0f;
 	float ArmRotationSpeed = 0.0f;
 	
+	const UCharacterStatComponent*GetStatComponent();
 	//=====================================================================
 	// Public UPROPERTY Zone
 public:

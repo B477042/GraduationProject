@@ -18,7 +18,7 @@ UCharacterStatComponent::UCharacterStatComponent()
 
 void UCharacterStatComponent::InitializeComponent()
 {
-	EGLOG(Warning, TEXT("Stat component √ ±‚»≠"));
+	EGLOG(Warning, TEXT("Stat component initialize"));
 	Super::InitializeComponent();
 }
 
@@ -31,10 +31,7 @@ void UCharacterStatComponent::BeginPlay()
 	
 }
 
-void UCharacterStatComponent::PostInitializeComponent()
-{
-	Super::PostInitializeComponent();
-}
+
 
 
 // Called every frame

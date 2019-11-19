@@ -2,6 +2,7 @@
 
 #include "EGPlayerController.h"
 #include"GameWidget.h"
+#include"EGPlayerCharacter.h"
 //#include"GameStat.h"
 
 
@@ -26,7 +27,7 @@ void AEGPlayerController::BeginPlay()
 	//PlayerStat = Cast<UGameStat>(PlayerStat);
 	//if (PlayerStat == nullptr)return;
 	//HUD->BindCharacterStat(PlayerStat);
-	//
+	SyncStatToHUD();
 	EGLOG(Warning, TEXT("Controller begin play"));
 }
 
@@ -34,11 +35,13 @@ void AEGPlayerController::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	EGLOG(Warning, TEXT("Controller post initialize components"));
+	
 }
 
 void AEGPlayerController::Possess(APawn * aPawn)
 {
 	Super::Possess(aPawn);
+	
 	EGLOG(Warning, TEXT("possessed complete") );
 }
 
@@ -48,3 +51,18 @@ void AEGPlayerController::Possess(APawn * aPawn)
 {
 	return HUD;
 }
+
+ void AEGPlayerController::SyncStatToHUD()
+ {
+	 auto player = dynamic_cast<AEGPlayerCharacter*>(GetCharacter());
+	 if (player==nullptr)
+	 {
+		 EGLOG(Error, TEXT("Dynamic failed"));
+		 return;
+	 }
+	 HUD->BindCharacterStat(player->GetStatComponent());
+	
+	 
+ }
+
+ 

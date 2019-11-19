@@ -23,12 +23,16 @@ public:
 	virtual void PostInitializeComponents()override;
 	virtual void Possess(APawn* aPawn)override;
 	
+
 	class UGameWidget* GetHUDWidget()const;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UGameWidget>HUDWidgetClass;
-public:
-	UPROPERTY()
+
+
+	void SyncStatToHUD();
+private:
+	UPROPERTY(meta=(AllowPrivateAccess=true))
 		class UGameWidget* HUD;
 	/*UPROPERTY()
 		 USceneCaptureComponent2D* MapCam;*/

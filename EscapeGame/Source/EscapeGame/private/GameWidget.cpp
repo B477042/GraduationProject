@@ -33,7 +33,7 @@ float UGameWidget::CheackTimeOut(float NewValue)
 	return (NewValue >= 0.0f) ? NewValue: 0.0f;
 }
 
-void UGameWidget::BindCharacterStat(UCharacterStatComponent * newStat)
+void UGameWidget::BindCharacterStat(const UCharacterStatComponent * newStat)
 {
 	if (newStat == nullptr) {
 		EGLOG(Error, TEXT("No Character Stat Componenet"));

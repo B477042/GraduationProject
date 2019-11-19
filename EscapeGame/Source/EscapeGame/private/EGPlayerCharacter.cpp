@@ -14,13 +14,8 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	InitComponents();
 	LoadAssets();
-	
-	
-	
-	
-
 	SetupSpringArm();
-
+	EGLOG(Warning, TEXT("Character Constroucter"));
 	
 }
 
@@ -28,6 +23,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 void AEGPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	EGLOG(Warning, TEXT("Character Begin Play"));
 	
 }
 
@@ -54,8 +50,21 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAxis(TEXT("LeftRight"), this, &AEGPlayerCharacter::LeftRight);
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &AEGPlayerCharacter::LookUp);
 	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AEGPlayerCharacter::Turn);
-
+	EGLOG(Warning, TEXT("Player input component"));
 }
+
+void AEGPlayerCharacter::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	EGLOG(Warning, TEXT("Player Post init compons"));
+}
+
+const UCharacterStatComponent * AEGPlayerCharacter::GetStatComponent()
+{
+	return Stat;
+}
+
+
 
 
 void AEGPlayerCharacter::InitComponents()
