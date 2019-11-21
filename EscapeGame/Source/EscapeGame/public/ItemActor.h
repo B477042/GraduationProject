@@ -27,6 +27,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
 		UStaticMeshComponent* Body;
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
-		UParticleSystemComponent* Effect
+		UParticleSystemComponent* Effect;
 
 };
