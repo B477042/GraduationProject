@@ -17,6 +17,11 @@ void AHPBox::BeginPlay()
 	
 }
 
+void AHPBox::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+}
+
 // Called every frame
 void AHPBox::Tick(float DeltaTime)
 {
