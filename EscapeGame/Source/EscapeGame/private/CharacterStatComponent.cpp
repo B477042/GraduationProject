@@ -56,6 +56,15 @@ void UCharacterStatComponent::SetHP(float NewHP)
 	HPChangedDelegate.Broadcast();
 }
 
+void UCharacterStatComponent::HealHP(float AddHP)
+{
+	CurrentHP += AddHP;
+	if (CurrentHP > MaxHP)
+		CurrentHP = MaxHP;
+
+	HPChangedDelegate.Broadcast();
+}
+
 void UCharacterStatComponent::TestLogic()
 {
 	timer += GetWorld()->DeltaTimeSeconds;

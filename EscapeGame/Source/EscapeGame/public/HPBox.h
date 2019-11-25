@@ -24,10 +24,22 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 private:
+	void loadAssets();
+	void initComponents();
+	void setupCollision();
+	void switchMesh();
+
+private:
 	UFUNCTION()
 		void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
 		UStaticMeshComponent* Body;
-	UPROPERTY(EditInstanceOnly, Category = Trigger)
+	UPROPERTY(VisibleAnywhere, Category = Trigger)
 		UBoxComponent* BoxCollider;
+	UPROPERTY(EditInstanceOnly, Category = Mesh)
+		TArray<UStaticMesh*> MeshArray;
+	UPROPERTY(VisibleAnywhere, Category = Effect)
+		UParticleSystemComponent* Effect;
+	UPROPERTY(VisibleAnywhere, Category = Statue)
+		bool bIsOpened;
 };

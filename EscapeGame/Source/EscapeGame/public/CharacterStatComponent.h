@@ -27,7 +27,10 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	void HitDamage(float NewDamage);
+	//set new hp. 
 	void SetHP(float NewHP);
+	//Add HP to Current HP
+	void HealHP(float AddHP);
 	void TestLogic();
 
 	//int32 GetDropExp()const;

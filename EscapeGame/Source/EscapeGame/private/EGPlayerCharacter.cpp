@@ -15,6 +15,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	InitComponents();
 	LoadAssets();
 	SetupSpringArm();
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("PlayerCharacter"));
 	EGLOG(Warning, TEXT("Character Constroucter"));
 	
 }
@@ -59,7 +60,7 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	EGLOG(Warning, TEXT("Player Post init compons"));
 }
 
-const UCharacterStatComponent * AEGPlayerCharacter::GetStatComponent()
+ UCharacterStatComponent * AEGPlayerCharacter::GetStatComponent()
 {
 	return Stat;
 }
