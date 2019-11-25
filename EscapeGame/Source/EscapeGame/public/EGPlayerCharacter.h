@@ -40,7 +40,7 @@ public:
 	float ArmLengthSpeed = 0.0f;
 	float ArmRotationSpeed = 0.0f;
 	
-	const UCharacterStatComponent*GetStatComponent();
+	 UCharacterStatComponent* GetStatComponent();
 	//=====================================================================
 	// Public UPROPERTY Zone
 public:

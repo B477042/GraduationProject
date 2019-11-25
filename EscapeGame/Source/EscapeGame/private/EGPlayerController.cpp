@@ -54,7 +54,7 @@ void AEGPlayerController::Possess(APawn * aPawn)
 
  void AEGPlayerController::SyncStatToHUD()
  {
-	 auto player = dynamic_cast<AEGPlayerCharacter*>(GetCharacter());
+	 auto player = Cast<AEGPlayerCharacter>(GetCharacter());
 	 if (player==nullptr)
 	 {
 		 EGLOG(Error, TEXT("Dynamic failed"));

@@ -60,7 +60,7 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	EGLOG(Warning, TEXT("Player Post init compons"));
 }
 
- UCharacterStatComponent * AEGPlayerCharacter::GetStatComponent()
+ UCharacterStatComponent* AEGPlayerCharacter::GetStatComponent()
 {
 	return Stat;
 }

@@ -27,7 +27,8 @@ private:
 	void loadAssets();
 	void initComponents();
 	void setupCollision();
-	void switchMesh();
+	//when box opened called once. 
+	void switchMesh(UParticleSystemComponent*PSystem);
 
 private:
 	UFUNCTION()
