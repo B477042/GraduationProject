@@ -2,6 +2,8 @@
 
 #include "HPBox.h"
 #include"EGPlayerCharacter.h"
+#include"EGPlayerController.h"
+#include"GameWidget.h"
 
 // Sets default values
 AHPBox::AHPBox()
@@ -9,8 +11,9 @@ AHPBox::AHPBox()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	bIsOpened = false;
+	Heal = 20.0f;
+	BounsTime = 10.0f;
 
-	
 	initComponents();
 	loadAssets();
 	setupCollision();
@@ -35,6 +38,11 @@ void AHPBox::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+float AHPBox::GetBounsTime()
+{
+	return BounsTime;
 }
 
 void AHPBox::loadAssets()
@@ -119,8 +127,13 @@ void AHPBox::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * O
 	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (Player == nullptr)return;
 
-	Player->GetStatComponent()->HealHP(20.0f);
-	
+	Player->GetStatComponent()->HealHP(Heal);
+	auto Controller = Cast<AEGPlayerController>(Player->GetController());
+	if (Controller != nullptr)
+	{
+		Controller->GetHUDWidget()->TimeExtend(BounsTime);
+	}
+
 	Effect->Activate(true);
 	EGLOG(Error, TEXT("Collision -> false"));
 	SetActorEnableCollision(false);

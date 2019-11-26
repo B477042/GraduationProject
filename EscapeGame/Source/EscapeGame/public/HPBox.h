@@ -23,6 +23,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	float GetBounsTime();
+
 private:
 	void loadAssets();
 	void initComponents();
@@ -34,6 +36,7 @@ private:
 	
 	UFUNCTION()
 		void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
+
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
 		UStaticMeshComponent* Body;
 	UPROPERTY(VisibleAnywhere, Category = Trigger)
@@ -42,6 +45,11 @@ private:
 		TArray<UStaticMesh*> MeshArray;
 	UPROPERTY(VisibleAnywhere, Category = Effect)
 		UParticleSystemComponent* Effect;
+
 	UPROPERTY(VisibleAnywhere, Category = Statue)
 		bool bIsOpened;
+	UPROPERTY(EditInstanceOnly, Category = Content)
+		float Heal;
+	UPROPERTY(EditInstanceOnly, Category = Content)
+		float BounsTime;
 };

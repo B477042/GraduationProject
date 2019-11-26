@@ -17,7 +17,7 @@ void UGameWidget::NativeConstruct()
 	Super::NativeConstruct();
 	PB_HP = Cast<UProgressBar>(GetWidgetFromName(TEXT("HPBar")));
 	HPText = Cast<UTextBlock>(GetWidgetFromName(TEXT("HPTEXT")));
-	
+	GameTimer = 60.0f;
 	
 }
 
@@ -31,6 +31,11 @@ void UGameWidget::UpdateCharacterStat()
 float UGameWidget::CheackTimeOut(float NewValue)
 {
 	return (NewValue >= 0.0f) ? NewValue: 0.0f;
+}
+
+void UGameWidget::TimeExtend(float addTime)
+{
+	GameTimer += addTime;
 }
 
 void UGameWidget::BindCharacterStat(const UCharacterStatComponent * newStat)
@@ -47,6 +52,13 @@ void UGameWidget::BindCharacterStat(const UCharacterStatComponent * newStat)
 			EGLOG(Warning, TEXT("HP : %f%"), CurrentCharacterStat->GetHPRatio());
 		}
 	});
+
+	
+}
+
+float UGameWidget::GetGameTimer()
+{
+	return GameTimer;
 }
 
 

@@ -21,15 +21,16 @@ public:
 	//UGameWidget();
 	//void BindCharacterStat(class UGameStat* NewCharacterStat);
 	virtual void NativeConstruct() override;
+	void TimeExtend(float addTime);
+	void BindCharacterStat(const UCharacterStatComponent* newStat);
+	float GetGameTimer();
+	//FBindStat BindStatDelegate;
+	
 	UFUNCTION(BlueprintCallable)
-	void UpdateCharacterStat();
+		void UpdateCharacterStat();
 
 	UFUNCTION(BlueprintCallable)
 		float CheackTimeOut(float NewValue);
-	void BindCharacterStat(const UCharacterStatComponent* newStat);
-	
-	//FBindStat BindStatDelegate;
-
 private:
 	TWeakObjectPtr<class UCharacterStatComponent>CurrentCharacterStat;
 	UPROPERTY()
