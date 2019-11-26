@@ -40,9 +40,9 @@ public:
 //	virtual void Tick(float DeltaTime) override;
 protected:
 	//함정을 작동, default return value false
-	virtual bool Activate() PURE_VIRTUAL(ATrap::Activate, return false;);
+	virtual void ActivateTrap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult) PURE_VIRTUAL(ATrap::ActivateTrap, return false;);
 	//함정의 기능을 정지, default return value false
-	virtual bool DeActivate() PURE_VIRTUAL(ATrap::DeActivate, return false;);
+	virtual void DeActivateTrap() PURE_VIRTUAL(ATrap::DeActivateTrap, return false;);
 	//작동한 함정을 정리
 	virtual void ClearTrap() PURE_VIRTUAL(ATrap::ClearTrap, ;);
 	//함정이 spawn 됐을 때 셋팅 되야할 것들
@@ -52,5 +52,6 @@ protected:
 		UStaticMeshComponent* Body;
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
 		UParticleSystemComponent* Effect;
+
 
 };

@@ -22,16 +22,26 @@ public:
 	AClaymore();
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
+	virtual void PostInitializeComponents()override;
 
 protected:
 	//상속 받은 함수들
-	bool Activate()override;
-	bool DeActivate()override;
+	void ActivateTrap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult)override;
+	void DeActivateTrap()override;
 	void ClearTrap()override;
 	void SettingTrap()override;
 
 private:
-	void LoadAssets();
-	void SetRelativeCoordinates();
+	void loadAssets();
+	void setRelativeCoordinates();
+	void setupCollision();
+	void activeTimer();
 	
+private:
+	UPROPERTY(VisibleAnywhere, Category = Collision)
+		UBoxComponent*BoxCollision;
+	UPROPERTY(EditInstanceOnly, Category = Content)
+		float Damage;
+	UPROPERTY(EditInstanceOnly, Category = Content)
+		float Timer;
 };

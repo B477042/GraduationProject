@@ -1,14 +1,19 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Claymore.h"
+#include"EGPlayerCharacter.h"
 
 AClaymore::AClaymore()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BODY"));
 	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EFFECT"));
-	LoadAssets();
-	SetRelativeCoordinates();
+	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BOX"));
+	Damage = 40.0f;
+	Timer = 0.0f;
+	loadAssets();
+	setRelativeCoordinates();
+	setupCollision();
 
 }
 
@@ -20,6 +25,7 @@ void  AClaymore::BeginPlay()
 	Super::BeginPlay();
 
 	SettingTrap();
+	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AClaymore::ActivateTrap);
 }
 
 // Called every frame
@@ -29,19 +35,27 @@ void  AClaymore::Tick(float DeltaTime)
 
 }
 
-bool AClaymore::Activate()
+void AClaymore::PostInitializeComponents()
 {
-	//한번 터지면 끝. 게임에서 보인다면 active 불가능하게
-	if (!Effect->bHiddenInGame )return false;
-	Effect->bHiddenInGame = false;
+	Super::PostInitializeComponents();
+}
 
-	return true;
+void AClaymore::ActivateTrap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult)
+{
+	auto player = Cast<AEGPlayerCharacter>(OtherActor);
+	if (player == nullptr)return;
+
+	Body->bHiddenInGame = true;
+	Effect->Activate(true);
+	player->GetStatComponent()->HitDamage(Damage);
+	
+
 }
 
 
-bool AClaymore::DeActivate()
+void AClaymore::DeActivateTrap()
 {
-	return false;
+	
 }
 
 void AClaymore::ClearTrap()
@@ -54,7 +68,7 @@ void AClaymore::SettingTrap()
 
 }
 
-void AClaymore::LoadAssets()
+void AClaymore::loadAssets()
 {
 	
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_BODY(TEXT("/Game/MyFolder/Download_Object/m18a1.m18a1"));
@@ -80,11 +94,14 @@ void AClaymore::LoadAssets()
 	//Make Components Tree
 	RootComponent = Body;
 	Effect->SetupAttachment(Body);
+	BoxCollision->SetupAttachment(Body);
+
+	Effect->bAutoActivate = false;
 
 
 }
 
-void AClaymore::SetRelativeCoordinates()
+void AClaymore::setRelativeCoordinates()
 {
 	if (!Body->GetStaticMesh())return;
 	
@@ -93,4 +110,19 @@ void AClaymore::SetRelativeCoordinates()
 
 	Body->SetRelativeRotation(FRotator(0.0f,-90.0f,0.0f));
 	Effect->SetRelativeRotation(FRotator(Pitch = 40.0000f, Yaw = 0.000000f, Roll = 0.000000f));
+}
+
+void AClaymore::setupCollision()
+{
+	
+	BoxCollision->SetCollisionProfileName(TEXT("OnStaticTrap"));
+	Body->SetCollisionProfileName(TEXT("NoCollision"));
+	BoxCollision->SetGenerateOverlapEvents(true);
+
+
+}
+
+void AClaymore::activeTimer()
+{
+	Timer = 0.3f;
 }

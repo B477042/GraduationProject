@@ -91,7 +91,7 @@ void AHPBox::initComponents()
 
 void AHPBox::setupCollision()
 {
-	BoxCollider->SetCollisionProfileName(TEXT("ItemBox"));
+	BoxCollider->SetCollisionProfileName(TEXT("OnItemBox"));
 	Body->SetCollisionProfileName(TEXT("NoCollision"));
 	BoxCollider->SetGenerateOverlapEvents(true);
 
