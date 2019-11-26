@@ -28,9 +28,10 @@ private:
 	void initComponents();
 	void setupCollision();
 	//when box opened called once. 
-	void switchMesh(UParticleSystemComponent*PSystem);
-
+	void setBoxStateToOpened();
 private:
+
+	
 	UFUNCTION()
 		void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 	UPROPERTY(VisibleAnywhere, Category = Mesh)

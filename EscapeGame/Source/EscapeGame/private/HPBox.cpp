@@ -53,7 +53,7 @@ void AHPBox::loadAssets()
 		EGLOG(Warning, TEXT("Box2 added"));
 		MeshArray.Add(SM_OPENBOX.Object);
 	}
-	static ConstructorHelpers::FObjectFinder<UParticleSystem>U_EFFECT(TEXT("ParticleSystem'/Game/MagicModule/VFX/P_Healing.P_Healing'"));
+	static ConstructorHelpers::FObjectFinder<UParticleSystem>U_EFFECT(TEXT("ParticleSystem'/Game/MagicModule/VFX/P_InstantHeal.P_InstantHeal'"));
 	if (U_EFFECT.Succeeded())
 	{
 		Effect->SetTemplate(U_EFFECT.Object);
@@ -87,30 +87,46 @@ void AHPBox::setupCollision()
 	Body->SetCollisionProfileName(TEXT("NoCollision"));
 	BoxCollider->SetGenerateOverlapEvents(true);
 
-	FVector temp = new FVector(float X = 38.219345f, float Y = 49.518700f, float Z = 39.436543f);
-	BoxCollider->SetBoxExtent();
+	BoxCollider->SetRelativeLocation(FVector(40.0f,60.0f,40.0f));
+	BoxCollider->SetBoxExtent(FVector( 38.219345f,  49.518700f, 39.436543f));
 }
 
-void AHPBox::switchMesh(UParticleSystemComponent*PSystem)
+void AHPBox::setBoxStateToOpened()
 {
+	
+		bIsOpened = true;
+
+	
 	Effect->Activate(false);
-	auto it = MeshArray.CreateIterator();
-	it++;
-	Body->SetStaticMesh(*it);
+
+	auto temp = MeshArray.GetData();
+	temp++;
+	Body->SetStaticMesh(*temp);
+
+	SetActorEnableCollision(true);
+	BoxCollider->SetCollisionProfileName("BlockAll");
 }
 
 
 
 void AHPBox::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
+	if (bIsOpened == true) { 
+		EGLOG(Error, TEXT("opend box"));
+		return; 
+	}
+
 	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (Player == nullptr)return;
+
 	Player->GetStatComponent()->HealHP(20.0f);
-	Body->bHiddenInGame = true;
+	
 	Effect->Activate(true);
+	EGLOG(Error, TEXT("Collision -> false"));
 	SetActorEnableCollision(false);
 
-	Effect->OnSystemFinished.AddDynamic(this, &AHPBox::switchMesh );
+	setBoxStateToOpened();
+	
 	
 }
 
