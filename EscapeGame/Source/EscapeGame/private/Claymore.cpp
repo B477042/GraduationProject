@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Claymore.h"
-#include"EGPlayerCharacter.h"
+//#include "..\public\Claymore.h"
+
 
 AClaymore::AClaymore()
 {
@@ -9,8 +10,12 @@ AClaymore::AClaymore()
 	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BODY"));
 	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EFFECT"));
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BOX"));
-	Damage = 40.0f;
+	MinDamage = 20.0f;
+	MaxDamage = 40.0f;
 	Timer = 0.0f;
+	isActive = false;
+	
+
 	loadAssets();
 	setRelativeCoordinates();
 	setupCollision();
@@ -32,7 +37,11 @@ void  AClaymore::BeginPlay()
 void  AClaymore::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	if (!isActive)
+		return;
+	Timer -= DeltaTime;
+	if (Timer <= 0.0f)
+		explosion();
 }
 
 void AClaymore::PostInitializeComponents()
@@ -40,15 +49,20 @@ void AClaymore::PostInitializeComponents()
 	Super::PostInitializeComponents();
 }
 
+//플레이어가 탐지 범위에 들어온 시점
+//타이머가 작동
+//
 void AClaymore::ActivateTrap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult)
 {
 	auto player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (player == nullptr)return;
 
-	Body->bHiddenInGame = true;
-	Effect->Activate(true);
-	player->GetStatComponent()->HitDamage(Damage);
-	
+	//Body->bHiddenInGame = true;
+	//Effect->Activate(true);
+	//player->GetStatComponent()->TakeDamage(Damage);
+
+	target = player;
+	activeTimer();
 
 }
 
@@ -60,6 +74,7 @@ void AClaymore::DeActivateTrap()
 
 void AClaymore::ClearTrap()
 {
+
 }
 
 void AClaymore::SettingTrap()
@@ -115,7 +130,7 @@ void AClaymore::setRelativeCoordinates()
 void AClaymore::setupCollision()
 {
 	
-	BoxCollision->SetCollisionProfileName(TEXT("OnStaticTrap"));
+	BoxCollision->SetCollisionProfileName(TEXT("OnTrapTrigger"));
 	Body->SetCollisionProfileName(TEXT("NoCollision"));
 	BoxCollision->SetGenerateOverlapEvents(true);
 
@@ -124,5 +139,72 @@ void AClaymore::setupCollision()
 
 void AClaymore::activeTimer()
 {
-	Timer = 0.3f;
+	isActive = true;
+	Timer = 0.5;
+}
+
+void AClaymore::explosion()
+{
+	Body->bHiddenInGame = true;
+	BoxCollision->SetCollisionProfileName(TEXT("NoCollision"));
+
+	Effect->Activate(true);
+
+	FHitResult hitResult;
+	FCollisionQueryParams param(NAME_None, false, this);
+	
+	bool result = GetWorld()->SweepSingleByChannel(hitResult, this->GetActorLocation(), target.Get()->GetActorLocation(),
+		FQuat::MakeFromEuler(getNormalVectorDistance()),
+		//Explosion
+		ECollisionChannel::ECC_GameTraceChannel4,
+		FCollisionShape::MakeSphere(10.0f)
+	);
+	if (result)
+	{
+		if (hitResult.Actor.IsValid())
+		{
+
+			EGLOG(Error,TEXT("%s has attacked by Claymore"),*hitResult.GetActor()->GetName())
+		}
+	}
+}
+
+FVector AClaymore::getNormalVectorDistance()
+{
+	if (target != nullptr)
+	{
+		FVector temp=FVector::ZeroVector;
+		auto pointB = target.Get()->GetActorLocation().GetSafeNormal();
+		auto pointA = Body->GetComponentLocation().GetSafeNormal();
+		
+		temp = pointA - pointB;
+		//EGLOG(Warning,TEXT("point A normalize : "))
+		return temp;
+			
+	}
+	else
+		return FVector::ZeroVector;
+	
+}
+
+float AClaymore::getDistance()
+{
+	if (target != nullptr)
+		return FVector::Distance(Body->GetComponentLocation(), target.Get()->GetActorLocation());
+	else
+	return -1.0f;
+}
+
+float AClaymore::getDamage()
+{
+	if (!isActive)	return 0.0f;
+	float distance = getDistance();
+	if (distance == -1.0f)	return 0.0f;
+
+	//최대 데미지 범위 안에 있다면
+	if (distance < maxDamageRange)
+		return MaxDamage;
+	//나중에 데미지 프레임 만들기
+	if (distance < minDamageRange)
+		return MinDamage;
 }

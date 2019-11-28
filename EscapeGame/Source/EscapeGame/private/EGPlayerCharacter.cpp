@@ -60,7 +60,17 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	EGLOG(Warning, TEXT("Player Post init compons"));
 }
 
- UCharacterStatComponent* AEGPlayerCharacter::GetStatComponent()
+void AEGPlayerCharacter::TakeDamage(float damage)
+{
+	Stat->TakeDamage(damage);
+}
+
+void AEGPlayerCharacter::HealHP(float addHP)
+{
+	Stat->HealHP(addHP);
+}
+
+UCharacterStatComponent* AEGPlayerCharacter::GetStatComponent()
 {
 	return Stat;
 }
@@ -77,9 +87,6 @@ void AEGPlayerCharacter::InitComponents()
 	Stat = CreateDefaultSubobject <UCharacterStatComponent>(TEXT("STAT"));
 
 
-	//MiniMapSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("MINIMAPSPRINGARM"));
-	////MiniMapCapture = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("MINIMAPCAPTURE"));
-	//MiniMapCapture = CreateDefaultSubobject<ASceneCapture2D>(TEXT("MINIMAPCAPTURE"));
 
 	//Components Tree
 	
@@ -89,9 +96,6 @@ void AEGPlayerCharacter::InitComponents()
 	MapRenderer->SetupAttachment(MiniMapArm);
 	 
 
-	//MiniMapSpringArm->SetupAttachment(GetCapsuleComponent());
-	//MiniMapCapture->SetupAttachment(MiniMapSpringArm);
-	
 
 
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
@@ -115,71 +119,18 @@ void AEGPlayerCharacter::LoadAssets()
 		GetMesh()->SetSkeletalMesh(SM_CHARACTER.Object);
 	}
 
-	
+
 
 	///Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang.AniPlayerCharacterKwang
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 
-	
+
 	static ConstructorHelpers::FClassFinder<UAnimInstance>ANI_CHARACTER(TEXT("/Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang.AniPlayerCharacterKwang_C"));
 	if (ANI_CHARACTER.Succeeded())
 	{
 		GetMesh()->SetAnimInstanceClass(ANI_CHARACTER.Class);
 	}
-	//static ConstructorHelpers::FClassFinder<UBlueprint>ANI_CHARACTR(TEXT("/Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang.AniPlayerCharacterKwang_C"));
-	/*
-	Material'/Game/MyFolder/MiniMap/MiniMapRender_Mat.MiniMapRender_Mat'
-		TextureRenderTarget2D'/Game/MyFolder/MiniMap/MiniMapRender.MiniMapRender'
-		Blueprint'/Game/MyFolder/MiniMap/MiniMapCam.MiniMapCam'
-		StaticMesh'/Game/MyFolder/SkeletalMeshs/SM_Gold_Door.SM_Gold_Door'
-		WidgetBlueprint'/Game/MyFolder/UI/UI_HUD.UI_HUD'
-		AnimBlueprint'/Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang.AniPlayerCharacterKwang'*/
-	
-
-	//static ConstructorHelpers::FClassFinder<ASceneCapture2D>T_CAPTURE(TEXT("/Game/MyFolder/MiniMap/MiniMapCam.MiniMapCam_C"));
-	//if (T_CAPTURE.Succeeded())
-	//{
-	//	MiniMapCapture = Cast<ASceneCapture2D>(T_CAPTURE.Class);
-	//	
-	//	SetupMiniMap();
-	//}
-	//else
-	//	EGLOG(Error, TEXT("FUCKKKKKKKKKKKK"));
-	
-	
 }
-//�̴ϸ� ĸ�Ŀ� ���������� �������ش�
-//void AEGPlayerCharacter::SetupMiniMap()
-//{
-//	/*auto characterSetting = GetDefault<UEGCharacterSetting>();
-//	if (characterSetting->TargetTexture.IsValidIndex(0) )
-//	{
-//		MiniMapCapture->TextureTarget  = characterSetting->TargetTexture.GetData()->GetAssetPathName();
-//	}*/
-//	/*static ConstructorHelpers::FObjectFinder<UTextureRenderTarget2D>T_CAPTURE(TEXT("/Game/MyFolder/MiniMap/MiniMapRender.MiniMapRender"));
-//	if (T_CAPTURE.Succeeded())
-//	{
-//		
-//		MiniMapCapture->TextureTarget =T_CAPTURE.Object;
-//	}*/
-//	//MiniMapSpringArm->TargetArmLength = 0.0f;
-//	//MiniMapSpringArm->SetRelativeLocation(FVector(0.0f, 0.0f, 330.0f));
-//	//MiniMapSpringArm->SetRelativeRotation(FRotator(-90.0f, 0.0f,0.0f));
-//	//
-//	//
-//	////MiniMapCapture->TextureTarget=MiniMapRender;
-//	//MiniMapCapture->bCaptureEveryFrame = false;
-//
-//	//MiniMapSpringArm->actor
-//
-//	//MiniMapSpringArm->bUsePawnControlRotation = false;
-//	//MiniMapSpringArm->bInheritPitch = false;
-//	//MiniMapSpringArm->bInheritRoll =false;
-//	//MiniMapSpringArm->bInheritYaw = false;
-//	//MiniMapSpringArm->bDoCollisionTest = false;
-//	//bUseControllerRotationYaw = false;
-//
-//}
 
 
 void AEGPlayerCharacter::SetupSpringArm()

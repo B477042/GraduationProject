@@ -127,7 +127,7 @@ void AHPBox::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * O
 	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (Player == nullptr)return;
 
-	Player->GetStatComponent()->HealHP(Heal);
+	Player->HealHP(Heal);
 	auto Controller = Cast<AEGPlayerController>(Player->GetController());
 	if (Controller != nullptr)
 	{

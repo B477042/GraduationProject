@@ -4,14 +4,18 @@
 
 //#include "CoreMinimal.h"
 #include "Trap.h"
+#include"EGPlayerCharacter.h"
 #include "Claymore.generated.h"
 
 /**
  * Claymore를 이용한 함정
 	Player가 다가가면 터지게 한다
-	테스트를 위해 f키를 누르면 터트려본다
 	
-	2019 10 13 f키 바인딩까지만
+	타이머는 0.5초 이내로
+	반경은 최대 데미지를 주는 반경은 5미터
+	최대 범위는 10미터로
+	
+	
 
  */
 UCLASS()
@@ -36,12 +40,27 @@ private:
 	void setRelativeCoordinates();
 	void setupCollision();
 	void activeTimer();
+	void explosion();
+	FVector getNormalVectorDistance();
+	float getDistance();
+	float getDamage();
+	//float get
+private:
+	const float maxDamageRange=5.0f;
+	const float minDamageRange = 10.0f;
 	
+
+	TWeakObjectPtr<AEGPlayerCharacter> target;
 private:
 	UPROPERTY(VisibleAnywhere, Category = Collision)
 		UBoxComponent*BoxCollision;
 	UPROPERTY(EditInstanceOnly, Category = Content)
-		float Damage;
+		float MinDamage;
+	UPROPERTY(EditInstanceOnly, Category = Content)
+		float MaxDamage;
 	UPROPERTY(EditInstanceOnly, Category = Content)
 		float Timer;
+	UPROPERTY(EditInstanceOnly, Category = Statue)
+		bool isActive;
+	
 };

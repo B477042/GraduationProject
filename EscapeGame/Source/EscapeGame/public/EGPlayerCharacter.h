@@ -40,6 +40,8 @@ public:
 	float ArmLengthSpeed = 0.0f;
 	float ArmRotationSpeed = 0.0f;
 	
+	void TakeDamage(float damage);
+	void HealHP(float addHP);
 	 UCharacterStatComponent* GetStatComponent();
 	//=====================================================================
 	// Public UPROPERTY Zone
