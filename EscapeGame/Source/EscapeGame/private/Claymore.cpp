@@ -7,20 +7,21 @@
 AClaymore::AClaymore()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BODY"));
-	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EFFECT"));
-	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BOX"));
+	
+
+
 
 	MinDamage = 20.0f;
 	MaxDamage = 40.0f;
 	Timer = 0.0f;
-	isActive = false;
-	
+	bIsActive = false;
+	target = nullptr;
 
+	initComponents();
 	loadAssets();
 	setRelativeCoordinates();
 	setupCollision();
-
+	
 }
 
 
@@ -30,8 +31,6 @@ void  AClaymore::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SettingTrap();
-	
 	ExplosionDelegate.AddUObject(this, &AClaymore::explosion);
 
 }
@@ -40,7 +39,7 @@ void  AClaymore::BeginPlay()
 void  AClaymore::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (isActive)
+	if (bIsActive)
 	{
 		Timer -= DeltaTime;
 		if (Timer <= 0.0f)
@@ -51,42 +50,23 @@ void  AClaymore::Tick(float DeltaTime)
 void AClaymore::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AClaymore::ActivateTrap);
-}
-
-//플레이어가 탐지 범위에 들어온 시점
-//타이머가 작동
-//
-void AClaymore::ActivateTrap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult)
-{
-	EGLOG(Error, TEXT("Actor Ditected"));
-	auto player = Cast<AEGPlayerCharacter>(OtherActor);
-	if (player == nullptr)return;
-
-	//Body->bHiddenInGame = true;
-	//Effect->Activate(true);
-	//player->GetStatComponent()->TakeDamage(Damage);
-	
-	target = player;
-	activeTimer();
-
+	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AClaymore::OnCharacterOverlap);
+	Effect->OnSystemFinished.AddDynamic(this,&AClaymore::ClearMe);
 }
 
 
-void AClaymore::DeActivateTrap()
+
+
+
+void AClaymore::initComponents()
 {
-	
-}
-
-void AClaymore::ClearTrap()
-{
-
-}
-
-void AClaymore::SettingTrap()
-{
-	//Effect->bHiddenInGame = true;
-
+	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BODY"));
+	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EFFECT"));
+	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BOX"));
+	//Make Components Tree
+	RootComponent = BoxCollision;
+	Effect->SetupAttachment(Body);
+	Body->SetupAttachment(RootComponent);
 }
 
 void AClaymore::loadAssets()
@@ -112,11 +92,7 @@ void AClaymore::loadAssets()
 	}
 
 
-	//Make Components Tree
-	RootComponent = Body;
-	Effect->SetupAttachment(Body);
-	BoxCollision->SetupAttachment(Body);
-
+	
 	Effect->bAutoActivate = false;
 
 
@@ -135,9 +111,8 @@ void AClaymore::setRelativeCoordinates()
 
 void AClaymore::setupCollision()
 {
-	
-	BoxCollision->SetCollisionProfileName(TEXT("OnTrapTrigger"));
 	Body->SetCollisionProfileName(TEXT("NoCollision"));
+	BoxCollision->SetCollisionProfileName(TEXT("OnTrapTrigger"));
 	BoxCollision->SetGenerateOverlapEvents(true);
 
 
@@ -146,37 +121,8 @@ void AClaymore::setupCollision()
 
 }
 
-void AClaymore::activeTimer()
-{
-	isActive = true;
-	Timer = 0.5;
-}
 
-void AClaymore::explosion()
-{
-	Body->bHiddenInGame = true;
-	BoxCollision->SetCollisionProfileName(TEXT("OnExplosion"));
-	
-	Effect->Activate(true);
 
-	FHitResult hitResult;
-	FCollisionQueryParams param(NAME_None, false, this);
-	
-	bool result = GetWorld()->SweepSingleByChannel(hitResult, this->GetActorLocation(), target.Get()->GetActorLocation(),
-		FQuat::MakeFromEuler(getNormalVectorDistance()),
-		//Explosion
-		ECollisionChannel::ECC_GameTraceChannel4,
-		FCollisionShape::MakeSphere(10.0f)
-	);
-	if (result)
-	{
-		if (hitResult.Actor.IsValid())
-		{
-
-			EGLOG(Error,TEXT("%s has attacked by Claymore"),*hitResult.GetActor()->GetName())
-		}
-	}
-}
 
 FVector AClaymore::getNormalVectorDistance()
 {
@@ -206,7 +152,7 @@ float AClaymore::getDistance()
 
 float AClaymore::getDamage()
 {
-	if (!isActive)	return 0.0f;
+	if (!bIsActive)	return 0.0f;
 	float distance = getDistance();
 	if (distance == -1.0f)	return 0.0f;
 
@@ -219,4 +165,59 @@ float AClaymore::getDamage()
 	//범위를 벗어남
 	else
 		return 0.0f;
+}
+
+
+
+void AClaymore::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	EGLOG(Error, TEXT("Actor Ditected"));
+	auto player = Cast<AEGPlayerCharacter>(OtherActor);
+	if (player == nullptr)return;
+
+
+	target = player;
+	EGLOG(Error, TEXT("Target Name : %s"), *target->GetName());
+	Timer = 0.4;
+	bIsActive = true;
+}
+
+void AClaymore::ClearMe(UParticleSystemComponent *Particle)
+{
+	Destroy();
+}
+
+void AClaymore::explosion()
+{
+	Body->SetHiddenInGame(true, false);
+	BoxCollision->SetCollisionProfileName(TEXT("NoCollision"));
+	
+	Effect->Activate(true);
+
+	FHitResult hitResult;
+	FCollisionQueryParams param(NAME_None, false, this);
+
+	bool result = GetWorld()->SweepSingleByChannel(hitResult, GetActorLocation(), target->GetActorLocation(),
+		FQuat::MakeFromEuler(getNormalVectorDistance()),
+		//Explosion
+		ECollisionChannel::ECC_GameTraceChannel2,
+		FCollisionShape::MakeSphere(10.0f)
+	);
+	EGLOG(Error, TEXT("Target Name : %s"), *target->GetName());
+	EGLOG(Error, TEXT("Distance : %f"), getDistance());
+	if (result)
+	{
+		if (hitResult.Actor.IsValid())
+		{
+
+			EGLOG(Error, TEXT("%s has attacked by Claymore"), *hitResult.GetActor()->GetName());
+			if (target == hitResult.GetActor())
+			{
+				target.Get()->HitDamage(getDamage());
+			}
+		}
+	}
+	bIsActive = false;
+
+
 }

@@ -15,8 +15,9 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	InitComponents();
 	LoadAssets();
 	SetupSpringArm();
-	GetCapsuleComponent()->SetCollisionProfileName(TEXT("PlayerCharacter"));
-	EGLOG(Warning, TEXT("Character Constroucter"));
+	//object type을 PlayerCharacter로 해준다
+	GetCapsuleComponent()->SetCollisionObjectType(ECollisionChannel::ECC_GameTraceChannel2);
+	//EGLOG(Warning, TEXT("Character Constroucter"));
 	
 }
 

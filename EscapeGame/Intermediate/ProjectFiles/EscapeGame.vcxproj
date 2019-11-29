@@ -530,7 +530,6 @@
     <ClCompile Include="..\..\Source\EscapeGame\private\RightAnglePath.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\StairPath.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\StairPath2.cpp"/>
-    <ClCompile Include="..\..\Source\EscapeGame\private\Trap.cpp"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\CharacterAnimInstance.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\CharacterStatComponent.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\Claymore.h"/>
@@ -553,7 +552,6 @@
     <ClInclude Include="..\..\Source\EscapeGame\public\RightAnglePath.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\StairPath.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\StairPath2.h"/>
-    <ClInclude Include="..\..\Source\EscapeGame\public\Trap.h"/>
     <None Include="..\..\Source\GameSetting\GameSetting.Build.cs"/>
     <ClCompile Include="..\..\Source\GameSetting\private\EGCharacterSetting.cpp"/>
     <ClCompile Include="..\..\Source\GameSetting\private\GameSetting.cpp"/>

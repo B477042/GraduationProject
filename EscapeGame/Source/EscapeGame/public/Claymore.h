@@ -3,7 +3,7 @@
 #pragma once
 
 //#include "CoreMinimal.h"
-#include "Trap.h"
+#include"EscapeGame.h"
 #include"EGPlayerCharacter.h"
 #include "Claymore.generated.h"
 
@@ -20,7 +20,7 @@
 DECLARE_MULTICAST_DELEGATE(FOnExplosion);
 
 UCLASS()
-class ESCAPEGAME_API AClaymore : public ATrap
+class ESCAPEGAME_API AClaymore : public AActor
 {
 	GENERATED_BODY()
 public:
@@ -32,32 +32,38 @@ public:
 
 	FOnExplosion ExplosionDelegate;
 
-protected:
-	//상속 받은 함수들
+
 	
-	void ActivateTrap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult)override;
-	void DeActivateTrap()override;
-	void ClearTrap()override;
-	void SettingTrap()override;
 
 private:
+	void initComponents();
 	void loadAssets();
 	void setRelativeCoordinates();
 	void setupCollision();
 
-	void activeTimer();
+	
 	void explosion();
 	FVector getNormalVectorDistance();
 	float getDistance();
 	float getDamage();
+	
 	//float get
 private:
-	const float maxDamageRange=5.0f;
-	const float minDamageRange = 10.0f;
+	const float maxDamageRange = 200.0f;
+	const float minDamageRange = 300.0f;
 	
 
 	TWeakObjectPtr<AEGPlayerCharacter> target;
+	//상속 받은 함수들
+	UFUNCTION()
+		void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
+	UFUNCTION()
+		void ClearMe(UParticleSystemComponent* Particle);
 private:
+	UPROPERTY(VisibleAnywhere, Category = Mesh)
+		UStaticMeshComponent* Body;
+	UPROPERTY(VisibleAnywhere, Category = Mesh)
+		UParticleSystemComponent* Effect;
 	UPROPERTY(VisibleAnywhere, Category = Collision)
 		UBoxComponent*BoxCollision;
 	UPROPERTY(EditInstanceOnly, Category = Content)
@@ -67,6 +73,6 @@ private:
 	UPROPERTY(EditInstanceOnly, Category = Content)
 		float Timer;
 	UPROPERTY(EditInstanceOnly, Category = Statue)
-		bool isActive;
+		bool bIsActive;
 	
 };
