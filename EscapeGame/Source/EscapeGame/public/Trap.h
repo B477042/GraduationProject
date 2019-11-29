@@ -40,6 +40,7 @@ public:
 //	virtual void Tick(float DeltaTime) override;
 protected:
 	//함정을 작동, default return value false
+	UFUNCTION()
 	virtual void ActivateTrap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult) PURE_VIRTUAL(ATrap::ActivateTrap, ;);
 	//함정의 기능을 정지, default return value false
 	virtual void DeActivateTrap() PURE_VIRTUAL(ATrap::DeActivateTrap, ;);

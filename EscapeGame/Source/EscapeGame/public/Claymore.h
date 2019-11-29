@@ -15,9 +15,10 @@
 	반경은 최대 데미지를 주는 반경은 5미터
 	최대 범위는 10미터로
 	
-	
-
  */
+
+DECLARE_MULTICAST_DELEGATE(FOnExplosion);
+
 UCLASS()
 class ESCAPEGAME_API AClaymore : public ATrap
 {
@@ -27,9 +28,13 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	virtual void PostInitializeComponents()override;
+public:
+
+	FOnExplosion ExplosionDelegate;
 
 protected:
 	//상속 받은 함수들
+	
 	void ActivateTrap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult)override;
 	void DeActivateTrap()override;
 	void ClearTrap()override;
@@ -39,6 +44,7 @@ private:
 	void loadAssets();
 	void setRelativeCoordinates();
 	void setupCollision();
+
 	void activeTimer();
 	void explosion();
 	FVector getNormalVectorDistance();

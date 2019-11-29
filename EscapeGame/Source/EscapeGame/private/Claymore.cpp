@@ -10,6 +10,7 @@ AClaymore::AClaymore()
 	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BODY"));
 	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EFFECT"));
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BOX"));
+
 	MinDamage = 20.0f;
 	MaxDamage = 40.0f;
 	Timer = 0.0f;
@@ -30,23 +31,27 @@ void  AClaymore::BeginPlay()
 	Super::BeginPlay();
 
 	SettingTrap();
-	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AClaymore::ActivateTrap);
+	
+	ExplosionDelegate.AddUObject(this, &AClaymore::explosion);
+
 }
 
 // Called every frame
 void  AClaymore::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (!isActive)
-		return;
-	Timer -= DeltaTime;
-	if (Timer <= 0.0f)
-		explosion();
+	if (isActive)
+	{
+		Timer -= DeltaTime;
+		if (Timer <= 0.0f)
+			ExplosionDelegate.Broadcast();
+	}
 }
 
 void AClaymore::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AClaymore::ActivateTrap);
 }
 
 //플레이어가 탐지 범위에 들어온 시점
@@ -54,13 +59,14 @@ void AClaymore::PostInitializeComponents()
 //
 void AClaymore::ActivateTrap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult)
 {
+	EGLOG(Error, TEXT("Actor Ditected"));
 	auto player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (player == nullptr)return;
 
 	//Body->bHiddenInGame = true;
 	//Effect->Activate(true);
 	//player->GetStatComponent()->TakeDamage(Damage);
-
+	
 	target = player;
 	activeTimer();
 
@@ -79,7 +85,7 @@ void AClaymore::ClearTrap()
 
 void AClaymore::SettingTrap()
 {
-	Effect->bHiddenInGame = true;
+	//Effect->bHiddenInGame = true;
 
 }
 
@@ -135,6 +141,9 @@ void AClaymore::setupCollision()
 	BoxCollision->SetGenerateOverlapEvents(true);
 
 
+	BoxCollision->SetRelativeLocation(FVector(( 39.999947f,   109.999817f,  40.000000f)));
+	BoxCollision->SetBoxExtent(FVector(99.491638f, 113.015816f, 35.989304f));
+
 }
 
 void AClaymore::activeTimer()
@@ -146,8 +155,8 @@ void AClaymore::activeTimer()
 void AClaymore::explosion()
 {
 	Body->bHiddenInGame = true;
-	BoxCollision->SetCollisionProfileName(TEXT("NoCollision"));
-
+	BoxCollision->SetCollisionProfileName(TEXT("OnExplosion"));
+	
 	Effect->Activate(true);
 
 	FHitResult hitResult;
@@ -207,4 +216,7 @@ float AClaymore::getDamage()
 	//나중에 데미지 프레임 만들기
 	if (distance < minDamageRange)
 		return MinDamage;
+	//범위를 벗어남
+	else
+		return 0.0f;
 }
