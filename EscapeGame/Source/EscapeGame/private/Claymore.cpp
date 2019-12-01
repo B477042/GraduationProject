@@ -64,9 +64,13 @@ void AClaymore::initComponents()
 	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EFFECT"));
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BOX"));
 	//Make Components Tree
-	RootComponent = BoxCollision;
+	/*RootComponent = BoxCollision;
 	Effect->SetupAttachment(Body);
 	Body->SetupAttachment(RootComponent);
+*/
+	RootComponent = Body;
+	Effect->SetupAttachment(Body);
+	BoxCollision->SetupAttachment(RootComponent);
 }
 
 void AClaymore::loadAssets()
@@ -104,9 +108,11 @@ void AClaymore::setRelativeCoordinates()
 	
 
 	float Pitch = 0.0f, Yaw = 0.0f, Roll = 0.0f;
-
-	Body->SetRelativeRotation(FRotator(0.0f,-90.0f,0.0f));
+	float X = 0.0f, Y = 0.0f, Z = 0.0f;
+//	Body->SetRelativeLocation(FVector((X = 90.000000f, Y = 0.000000f, Z = -30.000000f)));
+	//Body->SetRelativeRotation(FRotator(0.0f,-90.0f,0.0f));
 	Effect->SetRelativeRotation(FRotator(Pitch = 40.0000f, Yaw = 0.000000f, Roll = 0.000000f));
+	Body->SetMobility(EComponentMobility::Static);
 }
 
 void AClaymore::setupCollision()
@@ -116,9 +122,9 @@ void AClaymore::setupCollision()
 	BoxCollision->SetGenerateOverlapEvents(true);
 
 
-	BoxCollision->SetRelativeLocation(FVector(( 39.999947f,   109.999817f,  40.000000f)));
-	BoxCollision->SetBoxExtent(FVector(99.491638f, 113.015816f, 35.989304f));
-
+	BoxCollision->SetRelativeLocation(FVector( 0.0f,   90.0f,  30.000000f));
+	BoxCollision->SetBoxExtent(FVector(100.0f, 113.015816f, 30.0f));
+	BoxCollision->SetMobility(EComponentMobility::Static);
 }
 
 
@@ -200,7 +206,7 @@ void AClaymore::explosion()
 	bool result = GetWorld()->SweepSingleByChannel(hitResult, GetActorLocation(), target->GetActorLocation(),
 		FQuat::MakeFromEuler(getNormalVectorDistance()),
 		//Explosion
-		ECollisionChannel::ECC_GameTraceChannel2,
+		ECollisionChannel::ECC_GameTraceChannel4,
 		FCollisionShape::MakeSphere(10.0f)
 	);
 	EGLOG(Error, TEXT("Target Name : %s"), *target->GetName());
@@ -214,6 +220,10 @@ void AClaymore::explosion()
 			if (target == hitResult.GetActor())
 			{
 				target.Get()->HitDamage(getDamage());
+			}
+			else
+			{
+				EGLOG(Error, TEXT("That's not Player"));
 			}
 		}
 	}
