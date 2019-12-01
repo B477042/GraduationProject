@@ -54,7 +54,7 @@ private:
 	
 
 	TWeakObjectPtr<AEGPlayerCharacter> target;
-	//상속 받은 함수들
+	
 	UFUNCTION()
 		void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 	UFUNCTION()

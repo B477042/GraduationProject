@@ -86,6 +86,8 @@ void AHPBox::initComponents()
 	
 	BoxCollider->SetupAttachment(RootComponent);
 	Effect->SetupAttachment(RootComponent);
+	BoxCollider->SetMobility(EComponentMobility::Static);
+	Body->SetMobility(EComponentMobility::Static);
 	
 }
 
@@ -97,6 +99,7 @@ void AHPBox::setupCollision()
 
 	BoxCollider->SetRelativeLocation(FVector(40.0f,60.0f,40.0f));
 	BoxCollider->SetBoxExtent(FVector( 38.219345f,  49.518700f, 39.436543f));
+
 }
 
 void AHPBox::setBoxStateToOpened()

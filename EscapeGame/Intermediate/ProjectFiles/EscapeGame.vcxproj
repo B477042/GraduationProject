@@ -379,6 +379,7 @@
     <ClCompile Include="..\..\Source\EscapeGame\private\HPBox.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\InventoryComponent.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\ItemActor.cpp"/>
+    <ClCompile Include="..\..\Source\EscapeGame\private\LightningTrap_Origin.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\MiniMapRenderComponent.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\NormalPath.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\OneSideBlockedPath.cpp"/>
@@ -401,6 +402,7 @@
     <ClInclude Include="..\..\Source\EscapeGame\public\HPBox.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\InventoryComponent.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\ItemActor.h"/>
+    <ClInclude Include="..\..\Source\EscapeGame\public\LightningTrap_Origin.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\MiniMapRenderComponent.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\NormalPath.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\OneSideBlockedPath.h"/>
