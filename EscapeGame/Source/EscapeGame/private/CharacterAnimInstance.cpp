@@ -15,5 +15,7 @@ void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	if (::IsValid(Pawn))
 	{
 		CurrentCharacterSpeed = Pawn->GetVelocity().Size();
+		CurrentCharacterHeightChange = Pawn->GetVelocity().Z;
+		
 	}
 }
