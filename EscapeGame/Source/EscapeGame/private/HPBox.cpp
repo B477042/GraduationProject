@@ -86,8 +86,7 @@ void AHPBox::initComponents()
 	
 	BoxCollider->SetupAttachment(RootComponent);
 	Effect->SetupAttachment(RootComponent);
-	BoxCollider->SetMobility(EComponentMobility::Static);
-	Body->SetMobility(EComponentMobility::Static);
+	
 	
 }
 
