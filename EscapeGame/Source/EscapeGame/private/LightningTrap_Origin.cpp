@@ -8,13 +8,18 @@ ALightningTrap_Origin::ALightningTrap_Origin()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	Timer = 0.0f;
+	ActveTime = 3.0f;
+	IntervalTime = 2.0f;
+	bIsActive = true;
+	initComponents();
 }
 
 // Called when the game starts or when spawned
 void ALightningTrap_Origin::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	CapsuleCollision->OnComponentBeginOverlap.AddDynamic(this,&ALightningTrap_Origin::OnCharacterOverlap);
 }
 
 // Called every frame
@@ -22,32 +27,118 @@ void ALightningTrap_Origin::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	Timer += DeltaTime;
+	/*EGLOG(Warning, TEXT("Tick~: %f"), DeltaTime);
+	EGLOG(Warning, TEXT("Timer : %f"), Timer);*/
+	//번개 함정이 켜졌을 경우
+	//active Time을 넘겼을 경우, 함정을 꺼준다
+	if (bIsActive)
+	{
+		if (Timer < ActveTime)return;
+		turnOffTrap();
+	}
+	//번개가 함정이 꺼졌을 경우
+	//interval time을 넘겼을 경우, 함정을 켜준다
+	else
+	{
+		if (Timer < IntervalTime)return;
+		turnOnTrap();
+	}
+
+}
+
+bool ALightningTrap_Origin::IsActive()
+{
+	return bIsActive;
 }
 
 void ALightningTrap_Origin::initComponents()
 {
-	LeftMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LEFTMESH"));
-	RightMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("RIGHTMESH"));
+	MeshA = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MESHA"));
+	MeshB = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MESHB"));
 	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EFFECT"));
 	CapsuleCollision = CreateDefaultSubobject <UCapsuleComponent>(TEXT("CAPSULE"));
 
-	 RootComponent = CapsuleCollision;
-	 LeftMesh->SetupAttachment(RootComponent);
-	 RightMesh->SetupAttachment(RootComponent);
+	 RootComponent = MeshA;
+	
+	 MeshB->SetupAttachment(RootComponent);
 	 Effect->SetupAttachment(RootComponent);
+	 CapsuleCollision->SetupAttachment(RootComponent);
+	// Effect->bAutoActivate = false;
 
-	 Effect->bAutoActivate = false;
+
+	 //Call other funcs to init components
+	 loadAssets();
+	 setRelativeCoordinates();
+	 setupCollision();
+
 }
 
-void ALightningTrap_Origin::setupMemberVariables()
+void ALightningTrap_Origin::loadAssets()
 {
-	Timer = 0.0f;
-	ActveTimer = 3.0f;
-	IntervalTimer = 2.0f;
-	bIsActve = false;
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_MESH(TEXT("StaticMesh'/Game/StarterBundle/ModularScifiProps/Meshes/SM_Coaster.SM_Coaster'"));
+	if (SM_MESH.Succeeded())
+	{
+		MeshA->SetStaticMesh(SM_MESH.Object);
+		MeshB->SetStaticMesh(SM_MESH.Object);
+	}
+	static ConstructorHelpers::FObjectFinder<UParticleSystem >PS_EFFECT(TEXT("ParticleSystem'/Game/MagicModule/VFX/P_Beam.P_Beam'"));
+	if(PS_EFFECT.Succeeded())
+	{
+		Effect->SetTemplate(PS_EFFECT.Object);
+	}
+
 }
 
-//void ALightningTrap_Origin::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
-//{
-//}
+void ALightningTrap_Origin::setRelativeCoordinates()
+{
+	float X=0.0f, Y=0.0f, Z=0.0f, Yaw=0.0f, Pitch=0.0f, Roll=0.0f;
+	//(X = -20.000000, Y = -290.000000, Z = 150.000000)
+	//MeshA->SetRelativeLocation(FVector(X = -310.000000f, Y = -290.000000f, Z = 150.000000f));
+	MeshA->SetRelativeRotation(FRotator(Pitch = -90.000000f, Yaw = 0.000000f, Roll = 90.000000f));
+
+	MeshB->SetRelativeLocation(FVector(X = 00.000000f, Y = 0.000000f, Z = 300.000000f));
+	//MeshB->SetRelativeRotation(FRotator(Pitch = 280.000092, Yaw = 360.000000, Roll = 360.000122));
+	
+	Effect->SetRelativeScale3D(FVector(X = 0.600000f, Y = 1.000000f, Z = 1.000000f));
+	Effect->SetRelativeRotation(FRotator(Pitch = 90.000000f, Yaw = 0.000000f, Roll = -90.000000f));
+	//Effect->SetRelativeRotation(FRotator(Pitch = -0.000519, Yaw = 360.000000, Roll = 360.000000));
+	
+	CapsuleCollision->SetRelativeLocation(FVector(X = -0.000092, Y = -0.000318, Z = 149.999588));
+	
+	
+}
+
+void ALightningTrap_Origin::setupCollision()
+{
+	CapsuleCollision->SetCapsuleRadius(20.0f);
+	CapsuleCollision->SetCapsuleHalfHeight(148.273148f);
+	CapsuleCollision->SetCollisionProfileName(TEXT("OnTrapTrigger"));
+}
+
+void ALightningTrap_Origin::turnOnTrap()
+{
+	EGLOG(Error, TEXT("Turn on"));
+	Effect->Activate(true);
+	CapsuleCollision->SetCollisionProfileName(TEXT("OnTrapTrigger"));
+	Timer = 0.0f;
+	bIsActive = true;
+	
+}
+
+void ALightningTrap_Origin::turnOffTrap()
+{
+	EGLOG(Error, TEXT("Turn off"));
+	CapsuleCollision->SetCollisionProfileName(TEXT("NoCollision"));
+	Effect->Deactivate();
+	Timer = 0.0f;
+	bIsActive = false;
+}
+
+
+
+void ALightningTrap_Origin::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	EGLOG(Error, TEXT("Actor : %s"),* OtherActor->GetName());
+}
 

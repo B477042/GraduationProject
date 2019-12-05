@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "LightningTrap_Origin.generated.h"
 
+//파생형은 4가지. 가로, 세로, 상향,하향
+//충돌은 캡슐 컴포넌트
+//데미지 프레임은 tick time마다 0.1씩
 UCLASS()
 class ESCAPEGAME_API ALightningTrap_Origin : public AActor
 {
@@ -22,18 +25,19 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	/*UFUNCTION()
+	UFUNCTION()
 		void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
-*/
+
+	bool IsActive();
 protected:
 	void initComponents();
 	void loadAssets();
 	void setRelativeCoordinates();
 	void setupCollision();
-	void setupMemberVariables();
+	
 
-	bool Activate();
-	bool Decativate();
+	void turnOnTrap();
+	void turnOffTrap();
 
 	//액션을 위한 타이머
 	float Timer;
@@ -42,20 +46,20 @@ protected:
 protected:
 	
 	UPROPERTY(VisibleAnywhere, Category = mesh)
-		UStaticMeshComponent*LeftMesh;
+		UStaticMeshComponent*MeshA;
 	UPROPERTY(VisibleAnywhere, Category = mesh)
-		UStaticMeshComponent*RightMesh;
+		UStaticMeshComponent*MeshB;
 	UPROPERTY(VisibleAnywhere, Category = Collision)
 		UCapsuleComponent*CapsuleCollision;
 	UPROPERTY(VisibleAnywhere, Category = mesh)
 		UParticleSystemComponent* Effect;
 	//on, off 사이의 간격
 	UPROPERTY(EditInstanceOnly, Category = Contents)
-		float IntervalTimer;
+		float IntervalTime;
 	//effect가 작동하는 시간
 	UPROPERTY(EditInstanceOnly, Category = Contents)
-		float ActveTimer;
+		float ActveTime;
 	UPROPERTY(EditInstanceOnly, Category = Contents)
-		bool bIsActve;
+		bool bIsActive;
 	
 };
