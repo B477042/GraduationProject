@@ -219,7 +219,7 @@ void AClaymore::explosion()
 			EGLOG(Error, TEXT("%s has attacked by Claymore"), *hitResult.GetActor()->GetName());
 			if (target == hitResult.GetActor())
 			{
-				target.Get()->HitDamage(getDamage());
+				target.Get()->TakeDamage(getDamage());
 			}
 			else
 			{

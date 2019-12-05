@@ -40,7 +40,7 @@ public:
 	float ArmLengthSpeed = 0.0f;
 	float ArmRotationSpeed = 0.0f;
 	
-	void HitDamage(float damage);
+	void TakeDamage(float damage);
 	void HealHP(float addHP);
 	 UCharacterStatComponent* GetStatComponent();
 	//=====================================================================

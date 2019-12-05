@@ -61,10 +61,11 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	EGLOG(Warning, TEXT("Player Post init compons"));
 }
 
-void AEGPlayerCharacter::HitDamage(float damage)
+void AEGPlayerCharacter::TakeDamage(float damage)
 {
 	Stat->HitDamage(damage);
 }
+
 
 void AEGPlayerCharacter::HealHP(float addHP)
 {
