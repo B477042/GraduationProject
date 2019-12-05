@@ -24,12 +24,12 @@
 /wd4838
 /we4668
 /I .
-/I E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\Private
-/I E:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Inc\GameSetting
-/I E:\CODE\GraduationProject\EscapeGame\Source
-/I E:\CODE\GraduationProject\EscapeGame\Source\GameSetting\Public
-/I E:\CODE\GraduationProject\EscapeGame\Source\GameSetting
-/I E:\CODE\GraduationProject\EscapeGame\Source\GameSetting\Public\.vscode
+/I C:\EpicGames\UnrealProject\GraduationProject\EscapeGame\Source\EscapeGame\Private
+/I C:\EpicGames\UnrealProject\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Inc\GameSetting
+/I C:\EpicGames\UnrealProject\GraduationProject\EscapeGame\Source
+/I C:\EpicGames\UnrealProject\GraduationProject\EscapeGame\Source\GameSetting\Public
+/I C:\EpicGames\UnrealProject\GraduationProject\EscapeGame\Source\GameSetting
+/I C:\EpicGames\UnrealProject\GraduationProject\EscapeGame\Source\GameSetting\Public\.vscode
 /I Runtime
 /I Runtime\Core\Public
 /I Runtime\Core
@@ -418,23 +418,23 @@
 /I ThirdParty
 /I ThirdParty\libSampleRate\Public
 /I ThirdParty\libSampleRate
-/I E:\CODE\GraduationProject\EscapeGame\Source\Structure\Public
-/I E:\CODE\GraduationProject\EscapeGame\Source\Structure
-/I E:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Inc\EscapeGame
-/I E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\Public
-/I E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame
-/I "E:\Visual Studio\VC\Tools\MSVC\14.16.27023\INCLUDE"
+/I C:\EpicGames\UnrealProject\GraduationProject\EscapeGame\Source\Structure\Public
+/I C:\EpicGames\UnrealProject\GraduationProject\EscapeGame\Source\Structure
+/I C:\EpicGames\UnrealProject\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Inc\EscapeGame
+/I C:\EpicGames\UnrealProject\GraduationProject\EscapeGame\Source\EscapeGame\Public
+/I C:\EpicGames\UnrealProject\GraduationProject\EscapeGame\Source\EscapeGame
+/I "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.16.27023\INCLUDE"
 /I "C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\include\um"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"
-/FI"E:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\EscapeGameEditor\Development\Engine\SharedPCH.Engine.h"
-/Yu"E:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\EscapeGameEditor\Development\Engine\SharedPCH.Engine.h"
-/Fp"E:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\EscapeGameEditor\Development\Engine\SharedPCH.Engine.h.pch"
-"E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\private\EscapeGame.cpp"
-/FI"E:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\Definitions.EscapeGame.h"
-/Fo"E:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\EscapeGame.cpp.obj"
+/FI"C:\EpicGames\UnrealProject\GraduationProject\EscapeGame\Intermediate\Build\Win64\EscapeGameEditor\Development\Engine\SharedPCH.Engine.h"
+/Yu"C:\EpicGames\UnrealProject\GraduationProject\EscapeGame\Intermediate\Build\Win64\EscapeGameEditor\Development\Engine\SharedPCH.Engine.h"
+/Fp"C:\EpicGames\UnrealProject\GraduationProject\EscapeGame\Intermediate\Build\Win64\EscapeGameEditor\Development\Engine\SharedPCH.Engine.h.pch"
+"C:\EpicGames\UnrealProject\GraduationProject\EscapeGame\Source\EscapeGame\private\EscapeGame.cpp"
+/FI"C:\EpicGames\UnrealProject\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\Definitions.EscapeGame.h"
+/Fo"C:\EpicGames\UnrealProject\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\EscapeGame.cpp.obj"
 /TP
 /GR-
 /W4
