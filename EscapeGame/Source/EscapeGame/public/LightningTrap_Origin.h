@@ -27,7 +27,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	UFUNCTION()
 		void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
-
+	UFUNCTION()
+		void OnCharacterHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	
 	bool IsActive();
 protected:
 	void initComponents();
@@ -61,5 +63,9 @@ protected:
 		float ActveTime;
 	UPROPERTY(EditInstanceOnly, Category = Contents)
 		bool bIsActive;
+	UPROPERTY(EditInstanceOnly, Category = Contents)
+		float Damage;
+	UPROPERTY(EditInstanceOnly, Category = Contents)
+		float KnockBackRange;
 	
 };

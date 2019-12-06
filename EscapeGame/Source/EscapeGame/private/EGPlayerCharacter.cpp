@@ -16,7 +16,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	LoadAssets();
 	SetupSpringArm();
 	//object type을 PlayerCharacter로 해준다
-	GetCapsuleComponent()->SetCollisionObjectType(ECollisionChannel::ECC_GameTraceChannel2);
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("PlayerCharacter"));
 	//EGLOG(Warning, TEXT("Character Constroucter"));
 	
 }
@@ -25,7 +25,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 void AEGPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	EGLOG(Warning, TEXT("Character Begin Play"));
+	//EGLOG(Warning, TEXT("Character Begin Play"));
 	
 }
 
@@ -61,9 +61,14 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	EGLOG(Warning, TEXT("Player Post init compons"));
 }
 
-void AEGPlayerCharacter::TakeDamage(float damage)
+
+float AEGPlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
 {
-	Stat->HitDamage(damage);
+	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	Stat->TakeDamage(DamageAmount);
+
+	return FinalDamage;
 }
 
 

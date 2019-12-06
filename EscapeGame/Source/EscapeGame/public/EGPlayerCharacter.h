@@ -40,7 +40,8 @@ public:
 	float ArmLengthSpeed = 0.0f;
 	float ArmRotationSpeed = 0.0f;
 	
-	void TakeDamage(float damage);
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, \
+		class AController* EventInstigator, AActor* DamageCauser)override;
 	void HealHP(float addHP);
 	 UCharacterStatComponent* GetStatComponent();
 	//=====================================================================

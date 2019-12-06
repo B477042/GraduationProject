@@ -219,8 +219,10 @@ void AClaymore::explosion()
 			EGLOG(Error, TEXT("%s has attacked by Claymore"), *hitResult.GetActor()->GetName());
 			if (target == hitResult.GetActor())
 			{
-				target.Get()->TakeDamage(getDamage());
+				
+				target.Get()->TakeDamage(getDamage(),ActorTakeDamageEvent,target->GetController(),this);
 			}
+			
 			else
 			{
 				EGLOG(Error, TEXT("That's not Player"));

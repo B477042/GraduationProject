@@ -42,7 +42,7 @@ void UCharacterStatComponent::TickComponent(float DeltaTime, ELevelTick TickType
 	// ...
 }
 
-void UCharacterStatComponent::HitDamage(float NewDamage)
+void UCharacterStatComponent::TakeDamage(float NewDamage)
 {
 	
 	CurrentHP -= NewDamage;
@@ -71,7 +71,7 @@ void UCharacterStatComponent::TestLogic()
 	
 	if (timer > 1.0f)
 	{
-		HitDamage(5.0f);
+		TakeDamage(5.0f);
 		timer = 0.0f;
 	}
 	if (CurrentHP < 0.0f)

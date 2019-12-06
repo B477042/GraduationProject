@@ -26,7 +26,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	void HitDamage(float NewDamage);
+	void TakeDamage(float NewDamage);
 	//set new hp. 
 	void SetHP(float NewHP);
 	//Add HP to Current HP

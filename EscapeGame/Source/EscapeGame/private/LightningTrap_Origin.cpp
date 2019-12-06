@@ -11,6 +11,8 @@ ALightningTrap_Origin::ALightningTrap_Origin()
 	Timer = 0.0f;
 	ActveTime = 3.0f;
 	IntervalTime = 2.0f;
+	Damage = 5.0f;
+	KnockBackRange = 50.0f;
 	bIsActive = true;
 	initComponents();
 }
@@ -19,7 +21,8 @@ ALightningTrap_Origin::ALightningTrap_Origin()
 void ALightningTrap_Origin::BeginPlay()
 {
 	Super::BeginPlay();
-	CapsuleCollision->OnComponentBeginOverlap.AddDynamic(this,&ALightningTrap_Origin::OnCharacterOverlap);
+	//CapsuleCollision->OnComponentBeginOverlap.AddDynamic(this,&ALightningTrap_Origin::OnCharacterOverlap);
+	CapsuleCollision->OnComponentHit.AddDynamic(this,&ALightningTrap_Origin::OnCharacterHit);
 }
 
 // Called every frame
@@ -113,14 +116,15 @@ void ALightningTrap_Origin::setupCollision()
 {
 	CapsuleCollision->SetCapsuleRadius(20.0f);
 	CapsuleCollision->SetCapsuleHalfHeight(148.273148f);
-	CapsuleCollision->SetCollisionProfileName(TEXT("OnTrapTrigger"));
+	CapsuleCollision->SetCollisionProfileName(TEXT("OnBlockingTypeTrap"));
+	CapsuleCollision->SetGenerateOverlapEvents(true);
 }
 
 void ALightningTrap_Origin::turnOnTrap()
 {
 	EGLOG(Error, TEXT("Turn on"));
 	Effect->Activate(true);
-	CapsuleCollision->SetCollisionProfileName(TEXT("OnTrapTrigger"));
+	CapsuleCollision->SetCollisionProfileName(TEXT("OnBlockingTypeTrap"));
 	Timer = 0.0f;
 	bIsActive = true;
 	
@@ -140,5 +144,16 @@ void ALightningTrap_Origin::turnOffTrap()
 void ALightningTrap_Origin::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	EGLOG(Error, TEXT("Actor : %s"),* OtherActor->GetName());
+	OtherActor->TakeDamage(Damage, ActorTakeDamageEvent, OtherActor->GetInstigatorController(), this);
+	
+	/*auto newPos = OtherActor->GetActorLocation() - OtherActor->GetActorForwardVector()*KnockBackRange;
+	OtherActor->SetActorLocation(newPos);*/
+
+}
+
+void ALightningTrap_Origin::OnCharacterHit(UPrimitiveComponent * HitComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit)
+{
+	EGLOG(Error, TEXT("Actor : %s"), *OtherActor->GetName());
+	OtherActor->TakeDamage(Damage, ActorTakeDamageEvent, OtherActor->GetInstigatorController(), this);
 }
 
