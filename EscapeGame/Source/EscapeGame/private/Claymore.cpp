@@ -32,7 +32,7 @@ void  AClaymore::BeginPlay()
 	Super::BeginPlay();
 
 	ExplosionDelegate.AddUObject(this, &AClaymore::explosion);
-
+	getDistanceForCheackBlock();
 }
 
 // Called every frame
@@ -52,6 +52,8 @@ void AClaymore::PostInitializeComponents()
 	Super::PostInitializeComponents();
 	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AClaymore::OnCharacterOverlap);
 	Effect->OnSystemFinished.AddDynamic(this,&AClaymore::ClearMe);
+
+
 }
 
 
@@ -122,8 +124,8 @@ void AClaymore::setupCollision()
 	BoxCollision->SetGenerateOverlapEvents(true);
 
 
-	BoxCollision->SetRelativeLocation(FVector( 0.0f,   90.0f,  30.000000f));
-	BoxCollision->SetBoxExtent(FVector(100.0f, 113.015816f, 30.0f));
+	BoxCollision->SetRelativeLocation(FVector( 0.0f,   100.0f,  30.000000f));
+	BoxCollision->SetBoxExtent(FVector(100.0f, 100.0f, 30.0f));
 	BoxCollision->SetMobility(EComponentMobility::Static);
 }
 
@@ -148,7 +150,7 @@ FVector AClaymore::getNormalVectorDistance()
 	
 }
 
-float AClaymore::getDistance()
+float AClaymore::getDistanceToTarget()
 {
 	if (target != nullptr)
 		return FVector::Distance(Body->GetComponentLocation(), target.Get()->GetActorLocation());
@@ -159,7 +161,7 @@ float AClaymore::getDistance()
 float AClaymore::getDamage()
 {
 	if (!bIsActive)	return 0.0f;
-	float distance = getDistance();
+	float distance = getDistanceToTarget();
 	if (distance == -1.0f)	return 0.0f;
 
 	//최대 데미지 범위 안에 있다면
@@ -171,6 +173,34 @@ float AClaymore::getDamage()
 	//범위를 벗어남
 	else
 		return 0.0f;
+}
+
+AActor* AClaymore::cheackBlockingActor()
+{
+	FHitResult hitResult;
+	FCollisionQueryParams param(NAME_None, false, this);
+
+	bool result = GetWorld()->SweepSingleByChannel(hitResult, GetActorLocation(), GetActorForwardVector() ,
+		FQuat::MakeFromEuler(getNormalVectorDistance()),
+		//All Block Trace
+		ECollisionChannel::ECC_GameTraceChannel4,
+		FCollisionShape::MakeSphere(10.0f));
+
+
+	return nullptr;
+}
+
+FVector AClaymore::getDistanceForCheackBlock()
+{
+	FVector result =GetActorLocation();
+	FVector FW = GetActorForwardVector();
+	FVector axisY(0.0f, 1.0f, 0.0f);
+	float cosA = FMath::Acos(FVector::DotProduct(FW, axisY));
+	float sinA= FMath::Asin(FVector::DotProduct(FW, axisY));
+	FVector pointA(sinA, cosA, 0.0f);
+	result = pointA * maxDetectRange+result;
+	EGLOG(Error, TEXT("result : %s distance point %f %f %f"), *GetName(), result.X, result.Y, result.Z);
+	return result;
 }
 
 
@@ -210,7 +240,7 @@ void AClaymore::explosion()
 		FCollisionShape::MakeSphere(10.0f)
 	);
 	EGLOG(Error, TEXT("Target Name : %s"), *target->GetName());
-	EGLOG(Error, TEXT("Distance : %f"), getDistance());
+	EGLOG(Error, TEXT("Distance : %f"), getDistanceToTarget());
 	if (result)
 	{
 		if (hitResult.Actor.IsValid())

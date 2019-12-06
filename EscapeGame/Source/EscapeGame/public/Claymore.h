@@ -44,14 +44,19 @@ private:
 	
 	void explosion();
 	FVector getNormalVectorDistance();
-	float getDistance();
+	float getDistanceToTarget();
 	float getDamage();
 	
+	AActor* cheackBlockingActor();
+	FVector getDistanceForCheackBlock();
+	//float estimaateBoxRange(AActor*Blocked);
+	void reSettingBoxSize(bool bResult);
+
 	//float get
 private:
 	const float maxDamageRange = 200.0f;
 	const float minDamageRange = 300.0f;
-	
+	const float maxDetectRange = 200.0f;
 
 	TWeakObjectPtr<AEGPlayerCharacter> target;
 	

@@ -4,10 +4,13 @@
 #include"EGPlayerCharacter.h"
 #include"EGPlayerController.h"
 
+
 AEscapeGameGameModeBase::AEscapeGameGameModeBase()
 {
 	DefaultPawnClass = AEGPlayerCharacter::StaticClass();
 	PlayerControllerClass = AEGPlayerController::StaticClass();
+
+
 }
 
 void AEscapeGameGameModeBase::PostLogin(APlayerController * NewPlayer)
