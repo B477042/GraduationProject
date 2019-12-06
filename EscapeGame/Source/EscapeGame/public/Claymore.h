@@ -43,14 +43,14 @@ private:
 
 	
 	void explosion();
-	FVector getNormalVectorDistance();
+	FVector getNormalVectorDistance(const FVector* Other);
 	float getDistanceToTarget();
 	float getDamage();
 	
-	AActor* cheackBlockingActor();
-	FVector getDistanceForCheackBlock();
+	bool cheackBlockingActor(FVector& BlockingActorLocation,float& DistanceToBlockingActor);
+	FVector getPointForCheackBlock();
 	//float estimaateBoxRange(AActor*Blocked);
-	void reSettingBoxSize(bool bResult);
+	void reSettingBoxSize(FVector& BlockingActorLocation, float& DistanceToBlockingActor, bool bResult);
 
 	//float get
 private:

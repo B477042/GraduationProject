@@ -122,7 +122,7 @@ void ALightningTrap_Origin::setupCollision()
 
 void ALightningTrap_Origin::turnOnTrap()
 {
-	EGLOG(Error, TEXT("Turn on"));
+//	EGLOG(Error, TEXT("Turn on"));
 	Effect->Activate(true);
 	CapsuleCollision->SetCollisionProfileName(TEXT("OnBlockingTypeTrap"));
 	Timer = 0.0f;
@@ -132,7 +132,7 @@ void ALightningTrap_Origin::turnOnTrap()
 
 void ALightningTrap_Origin::turnOffTrap()
 {
-	EGLOG(Error, TEXT("Turn off"));
+	//EGLOG(Error, TEXT("Turn off"));
 	CapsuleCollision->SetCollisionProfileName(TEXT("NoCollision"));
 	Effect->Deactivate();
 	Timer = 0.0f;
