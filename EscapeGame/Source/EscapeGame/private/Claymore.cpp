@@ -193,12 +193,29 @@ AActor* AClaymore::cheackBlockingActor()
 FVector AClaymore::getDistanceForCheackBlock()
 {
 	FVector result =GetActorLocation();
+	EGLOG(Error, TEXT("Actor : %s's current position point %f %f %f"), *GetName(), result.X, result.Y, result.Z);
 	FVector FW = GetActorForwardVector();
+	EGLOG(Error, TEXT("Actor : %s's current view point %f %f %f"), *GetName(),FW.X, FW.Y, FW.Z);
 	FVector axisY(0.0f, 1.0f, 0.0f);
-	float cosA = FMath::Acos(FVector::DotProduct(FW, axisY));
-	float sinA= FMath::Asin(FVector::DotProduct(FW, axisY));
-	FVector pointA(sinA, cosA, 0.0f);
-	result = pointA * maxDetectRange+result;
+	result.Z = 0.0f; FW.Z = 0.0f;
+
+	float dotProduct = FVector::DotProduct(FW, axisY);
+	EGLOG(Warning, TEXT("%f"), FVector::DotProduct(FW, axisY));
+	float arcCos = FMath::Acos(dotProduct);
+	float angle = FMath::RadiansToDegrees(arcCos);
+	EGLOG(Warning, TEXT("arcCos : %f cos: %f"), arcCos,angle);
+	EGLOG(Warning, TEXT("cos 90 = %f"), FMath::Cos(60.0f));
+	/*
+		dot Product 를 하면 두 벡터가 이루는 각도의 cos 값이 리턴된다
+
+	*/
+	//float cosA = FMath::Acos(FVector::DotProduct(FW, axisY));
+	//
+	//float sinA= FMath::Asin(FVector::DotProduct(FW, axisY));
+	
+	FVector pointA(FMath::Cos(arcCos)*maxDetectRange, FMath::Sin(arcCos)*maxDetectRange, 0.0f);
+	EGLOG(Error, TEXT("Actor : %s's pointA %f %f %f"), *GetName(), pointA.X, pointA.Y, pointA.Z);
+	result = pointA +result;
 	EGLOG(Error, TEXT("result : %s distance point %f %f %f"), *GetName(), result.X, result.Y, result.Z);
 	return result;
 }
