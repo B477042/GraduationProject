@@ -54,11 +54,11 @@ void AClaymore::PostInitializeComponents()
 	Effect->OnSystemFinished.AddDynamic(this,&AClaymore::ClearMe);
 
 	
-	FVector blockingPos = FVector::ZeroVector;
+	/*FVector blockingPos = FVector::ZeroVector;
 	float distance = 0.0f;
 	bool bResult=cheackBlockingActor(blockingPos, distance);
 	reSettingBoxSize(blockingPos, distance, bResult);
-	EGLOG(Error, TEXT("claymore postinit"));
+	EGLOG(Error, TEXT("claymore postinit"));*/
 }
 
 
@@ -180,44 +180,56 @@ float AClaymore::getDamage()
 		return 0.0f;
 }
 
-bool AClaymore::cheackBlockingActor(FVector& BlockingActorLocation, float& DistanceToBlockingActor)
+bool AClaymore::cheackBlockingActor(FVector& BlockedLocation, float& DistanceToBlocked)
 {
+	
+
 	FHitResult hitResult;
 	FCollisionQueryParams param(NAME_None, false, this);
-	BoxCollision->SetCollisionProfileName(TEXT("NoCollision"));
 	
+
 	auto tempPoint = getPointForCheackBlock();
 	//전방으로 detecte range만큼 탐색한다. 
-	bool result = GetWorld()->SweepSingleByChannel(hitResult, GetActorLocation(), tempPoint,
-		FQuat::MakeFromEuler(getNormalVectorDistance(&tempPoint)),
+	bool bResult = GetWorld()->LineTraceSingleByChannel(hitResult, Body->GetComponentLocation() , tempPoint,
 		//All Block Trace
-		ECollisionChannel::ECC_GameTraceChannel4,
-		FCollisionShape::MakeSphere(10.0f));
-	//탐색 결과 있다면 그것의 true
-	BoxCollision->SetCollisionProfileName(TEXT("OnTrapTrigger"));
+		ECollisionChannel::ECC_GameTraceChannel4);
+	
 
-	if (hitResult.Actor.IsValid())
+	// auto tempPoint = getPointForCheackBlock();
+	////전방으로 detecte range만큼 탐색한다. 
+	//bool bResult = GetWorld()->SweepSingleByChannel(hitResult, Body->GetComponentLocation(), tempPoint,
+	//	FQuat::MakeFromEuler(getNormalVectorDistance(&tempPoint)),
+	//	//All Block Trace
+	//	ECollisionChannel::ECC_GameTraceChannel4,
+	//	FCollisionShape::MakeSphere(0.01f));
+
+
+	////탐색 결과 있다면 그것의 true
+	if (bResult)
 	{
-		EGLOG(Error, TEXT("Detected Object Name : %s"),*hitResult.Actor->GetName());
-		BlockingActorLocation=hitResult.Actor->GetActorLocation();
-		DistanceToBlockingActor = FVector::Distance(GetActorLocation(), BlockingActorLocation);
+		EGLOG(Error,TEXT("Actor Name : %s BodyComponent Location : %s"),*GetName(),*Body->GetComponentLocation().ToString())
+		EGLOG(Error, TEXT("Detected Point Location : %s"), *hitResult.Location.ToString());
+		EGLOG(Error, TEXT("Detected Point : impactPoint %s"), *hitResult.ImpactPoint.ToString());
+
+		BlockedLocation =  hitResult.Location;
+		DistanceToBlocked = FVector::Distance(GetActorLocation(), BlockedLocation);
 		return true;
 	}
-		
+
 	// 없다면, nullptr리턴
 	else
 	{
 		EGLOG(Error, TEXT("No"));
 		return false;
 	}
-	
 		
 	
 }
 //전방 벡터를 기준으로 탐지 거리까지의 거리를 구해준다. 
 FVector AClaymore::getPointForCheackBlock()
 {
-	FVector result =GetActorLocation();
+	//FVector result =GetActorLocation();
+	FVector result =Body->GetComponentLocation();
 	
 	FVector FW = GetActorForwardVector();
 
@@ -241,16 +253,18 @@ FVector AClaymore::getPointForCheackBlock()
 	FVector pointA(FMath::Cos(arcCos)*maxDetectRange, FMath::Sin(arcCos)*maxDetectRange, 0.0f);
 	//EGLOG(Error, TEXT("Actor : %s's pointA %f %f %f"), *GetName(), pointA.X, pointA.Y, pointA.Z);
 	result = pointA +result;
-	//EGLOG(Error, TEXT("result : %s distance point %f %f %f"), *GetName(), result.X, result.Y, result.Z);
+	result.Z = Body->GetComponentLocation().Z;
+	EGLOG(Error, TEXT("result : %s distance point %f %f %f"), *GetName(), result.X, result.Y, result.Z);
 	return result;
 }
 
-void AClaymore::reSettingBoxSize(FVector& BlockingActorLocation, float& DistanceToBlockingActor, bool bResult)
+void AClaymore::reSettingBoxSize(FVector& BlockedLocation, float& DistanceToBlocked, bool bResult)
 {
 	if (!bResult)return;
 
-	FVector newBoxColliderPos = (GetActorLocation() +BlockingActorLocation)/2.0f;
-	BoxCollision->SetBoxExtent(FVector((100.000000f, DistanceToBlockingActor, 30.000000f)));
+	FVector newBoxCollisionPos = (Body->GetComponentLocation() +BlockedLocation)/2.0f;
+	BoxCollision->SetBoxExtent(FVector(100.000000f, DistanceToBlocked/2.0f, 30.000000f));
+	BoxCollision->SetRelativeLocation(newBoxCollisionPos);
 }
 
 

@@ -47,10 +47,10 @@ private:
 	float getDistanceToTarget();
 	float getDamage();
 	
-	bool cheackBlockingActor(FVector& BlockingActorLocation,float& DistanceToBlockingActor);
+	bool cheackBlockingActor(FVector& BlockedLocation, float& DistanceToBlocked);
 	FVector getPointForCheackBlock();
 	//float estimaateBoxRange(AActor*Blocked);
-	void reSettingBoxSize(FVector& BlockingActorLocation, float& DistanceToBlockingActor, bool bResult);
+	void reSettingBoxSize(FVector& BlockedLocation, float& DistanceToBlocked, bool bResult);
 
 	//float get
 private:
