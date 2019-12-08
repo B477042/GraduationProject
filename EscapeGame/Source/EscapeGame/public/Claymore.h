@@ -71,13 +71,17 @@ private:
 		UParticleSystemComponent* Effect;
 	UPROPERTY(VisibleAnywhere, Category = Collision)
 		UBoxComponent*BoxCollision;
+	UPROPERTY(VisibleAnywhere, Category = Content)
+		UAudioComponent* AudioEffect;
 	UPROPERTY(EditInstanceOnly, Category = Content)
 		float MinDamage;
 	UPROPERTY(EditInstanceOnly, Category = Content)
 		float MaxDamage;
 	UPROPERTY(EditInstanceOnly, Category = Content)
 		float Timer;
+	
 	UPROPERTY(EditInstanceOnly, Category = Statue)
 		bool bIsActive;
 	
+
 };

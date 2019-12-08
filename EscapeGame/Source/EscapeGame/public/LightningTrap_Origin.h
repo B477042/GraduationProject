@@ -55,6 +55,8 @@ protected:
 		UCapsuleComponent*CapsuleCollision;
 	UPROPERTY(VisibleAnywhere, Category = mesh)
 		UParticleSystemComponent* Effect;
+	UPROPERTY(VisibleAnywhere, Category = Contents)
+		UAudioComponent* SparkAudio;
 	//on, off 사이의 간격
 	UPROPERTY(EditInstanceOnly, Category = Contents)
 		float IntervalTime;

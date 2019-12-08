@@ -61,12 +61,14 @@ void ALightningTrap_Origin::initComponents()
 	MeshB = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MESHB"));
 	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EFFECT"));
 	CapsuleCollision = CreateDefaultSubobject <UCapsuleComponent>(TEXT("CAPSULE"));
+	SparkAudio = CreateDefaultSubobject<UAudioComponent>(TEXT("SPARKAUDIO"));
 
 	 RootComponent = MeshA;
 	
 	 MeshB->SetupAttachment(RootComponent);
 	 Effect->SetupAttachment(RootComponent);
 	 CapsuleCollision->SetupAttachment(RootComponent);
+	 SparkAudio->SetupAttachment(Effect);
 	// Effect->bAutoActivate = false;
 
 
@@ -91,6 +93,14 @@ void ALightningTrap_Origin::loadAssets()
 		Effect->SetTemplate(PS_EFFECT.Object);
 	}
 
+	//SoundWave'/Game/MagicModule/SFX/WAV/WAV_LightingSparks.WAV_LightingSparks'
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_SPARK(TEXT("SoundWave'/Game/MagicModule/SFX/WAV/WAV_LightingSparks.WAV_LightingSparks'"));
+	if (SB_SPARK.Succeeded())
+	{
+		SparkAudio->SetSound(SB_SPARK.Object);
+
+	}
+	SparkAudio->bAutoActivate = false;
 }
 
 void ALightningTrap_Origin::setRelativeCoordinates()
@@ -123,7 +133,8 @@ void ALightningTrap_Origin::setupCollision()
 void ALightningTrap_Origin::turnOnTrap()
 {
 //	EGLOG(Error, TEXT("Turn on"));
-	Effect->Activate(true);
+	Effect->Activate();
+	SparkAudio->Play();
 	CapsuleCollision->SetCollisionProfileName(TEXT("OnBlockingTypeTrap"));
 	Timer = 0.0f;
 	bIsActive = true;
@@ -135,6 +146,8 @@ void ALightningTrap_Origin::turnOffTrap()
 	//EGLOG(Error, TEXT("Turn off"));
 	CapsuleCollision->SetCollisionProfileName(TEXT("NoCollision"));
 	Effect->Deactivate();
+	SparkAudio->Stop();
+	//SparkAudio->Deactivate();
 	Timer = 0.0f;
 	bIsActive = false;
 }

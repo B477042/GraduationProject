@@ -70,6 +70,7 @@ void AClaymore::initComponents()
 	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BODY"));
 	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EFFECT"));
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BOX"));
+	AudioEffect = CreateDefaultSubobject<UAudioComponent>(TEXT("AUDIO"));
 	//Make Components Tree
 	/*RootComponent = BoxCollision;
 	Effect->SetupAttachment(Body);
@@ -78,6 +79,7 @@ void AClaymore::initComponents()
 	RootComponent = Body;
 	Effect->SetupAttachment(Body);
 	BoxCollision->SetupAttachment(RootComponent);
+	AudioEffect->SetupAttachment(Effect);
 }
 
 void AClaymore::loadAssets()
@@ -102,9 +104,14 @@ void AClaymore::loadAssets()
 		Effect->SetTemplate(PS_EFFECT.Object);
 	}
 
-
-	
+	//SoundWave'/Game/GrenadePack/MapAssets/Audio/Explosion01.Explosion01'
+	static ConstructorHelpers::FObjectFinder <USoundBase>AC_AUDIO(TEXT("SoundWave'/Game/GrenadePack/MapAssets/Audio/Explosion01.Explosion01'"));
+	if (AC_AUDIO.Succeeded())
+	{
+		AudioEffect->SetSound(AC_AUDIO.Object);
+	}
 	Effect->bAutoActivate = false;
+	AudioEffect->bAutoActivate = false;
 
 
 }
@@ -293,7 +300,7 @@ void AClaymore::explosion()
 	BoxCollision->SetCollisionProfileName(TEXT("NoCollision"));
 	
 	Effect->Activate(true);
-
+	AudioEffect->Activate(true);
 	FHitResult hitResult;
 	FCollisionQueryParams param(NAME_None, false, this);
 
