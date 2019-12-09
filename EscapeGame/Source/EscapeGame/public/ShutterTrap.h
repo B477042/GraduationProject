@@ -27,12 +27,30 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	FOnSpearDurabilityChange SpearDuabilityChangedDelegate;
+	void OnPlayerEntered(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
+	void RiseUpSpears();
+private:
+	void initComponents();
+	void loadAssets();
+	void setupCollision();
 
+	
+
+	const float DelayTime = 0.3f;
 private:
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
 		UStaticMeshComponent*Root;
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
 		 TArray<TWeakObjectPtr<ASpearActor>> Spears;
+	UPROPERTY(VisibleAnywhere, Category = Sounds)
+		UAudioComponent* SoundEffect;
+
 	UPROPERTY(VisibleAnywhere, Category = Collision)
 		UBoxComponent* Trigger;
+
+	UPROPERTY(EditInstanceOnly, Category = Contents)
+		float Timer;
+	UPROPERTY(EditInstanceOnly, Category = Contents)
+		bool bIsActivated;
+	
 };

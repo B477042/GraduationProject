@@ -24,3 +24,11 @@ void AShutterTrap::Tick(float DeltaTime)
 
 }
 
+void AShutterTrap::initComponents()
+{
+	Root = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ROOT"));
+	SoundEffect = CreateDefaultSubobject<UAudioComponent>(TEXT("SE"));
+	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("TRIGGER"));
+
+}
+
