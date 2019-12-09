@@ -32,13 +32,16 @@ public:
 	UFUNCTION()
 	void StopPlay(class UParticleSystemComponent* PSystem);
 	bool IsActive();
+
+	
+
 protected:
 	void initComponents();
 	void loadAssets();
 	void setRelativeCoordinates();
 	void setupCollision();
 
-
+	
 
 	void turnOnTrap();
 	void turnOffTrap();

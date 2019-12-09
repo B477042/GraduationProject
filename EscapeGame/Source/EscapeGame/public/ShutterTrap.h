@@ -4,7 +4,7 @@
 
 #include "EscapeGame.h"
 #include "GameFramework/Actor.h"
-#include"SpearActor.h"
+#include "SpearActor.h"
 #include "ShutterTrap.generated.h"
 
 
@@ -27,8 +27,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	FOnSpearDurabilityChange SpearDuabilityChangedDelegate;
-	void OnPlayerEntered(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
-	void RiseUpSpears();
+	
+	void RiseUpSpears(float deltaTime);
+	UFUNCTION()
+		void OnPlayerEntered(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 private:
 	void initComponents();
 	void loadAssets();
@@ -36,7 +38,10 @@ private:
 
 	
 
-	const float DelayTime = 0.3f;
+	const float StreachTime = 0.3f;
+	const int n_spears = 4;
+	const float spear_start = -120.0f;
+	const float spear_last = 12.0f;
 private:
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
 		UStaticMeshComponent*Root;

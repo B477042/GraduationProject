@@ -25,6 +25,11 @@ ASpearActor::ASpearActor()
 
 }
 
+void ASpearActor::SetCollisionProfileTo(FName profile)
+{
+	Body->SetCollisionProfileName(profile);
+}
+
 // Called when the game starts or when spawned
 void ASpearActor::BeginPlay()
 {
