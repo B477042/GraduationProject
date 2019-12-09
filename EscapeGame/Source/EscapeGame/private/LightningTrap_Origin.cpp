@@ -35,15 +35,15 @@ void ALightningTrap_Origin::Tick(float DeltaTime)
 	Timer += DeltaTime;
 	/*EGLOG(Warning, TEXT("Tick~: %f"), DeltaTime);
 	EGLOG(Warning, TEXT("Timer : %f"), Timer);*/
-	//¹ø°³ ÇÔÁ¤ÀÌ ÄÑÁ³À» °æ¿ì
-	//active TimeÀ» ³Ñ°åÀ» °æ¿ì, ÇÔÁ¤À» ²¨ÁØ´Ù
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	//active Timeï¿½ï¿½ ï¿½Ñ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø´ï¿½
 	if (bIsActive)
 	{
 		if (Timer < ActveTime)return;
 		turnOffTrap();
 	}
-	//¹ø°³°¡ ÇÔÁ¤ÀÌ ²¨Á³À» °æ¿ì
-	//interval timeÀ» ³Ñ°åÀ» °æ¿ì, ÇÔÁ¤À» ÄÑÁØ´Ù
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	//interval timeï¿½ï¿½ ï¿½Ñ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø´ï¿½
 	else
 	{
 		if (Timer < IntervalTime)return;
@@ -160,9 +160,11 @@ void ALightningTrap_Origin::turnOffTrap()
 {
 	//EGLOG(Error, TEXT("Turn off"));
 	CapsuleCollision->SetCollisionProfileName(TEXT("NoCollision"));
+
 	Effect->DeactivateSystem();
 	
 	//SparkAudio->Stop();
+
 	//SparkAudio->Deactivate();
 	Timer = 0.0f;
 	bIsActive = false;
