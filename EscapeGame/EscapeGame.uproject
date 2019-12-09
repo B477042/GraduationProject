@@ -3,40 +3,39 @@
 	"EngineAssociation": "4.21",
 	"Category": "",
 	"Description": "",
-  "Enterprise": true,
-
-  "Modules": [
-    {
-      "Name": "Structure",
-      "Type": "Runtime",
-      "LoadingPhase": "PreDefault",
-      "AdditionalDependencies": [
-        "Engine",
-        "CoreUObject"
-      ]
-    },
-    {
-      "Name": "GameSetting",
-      "Type": "Runtime",
-      "LoadingPhase": "PreDefault",
-      "AdditionalDependencies": [
-        "Engine",
-        "CoreUObject"
-      ]
-    },
-    {
-      "Name": "EscapeGame",
-      "Type": "Runtime",
-      "LoadingPhase": "Default",
-      "AdditionalDependencies": [
-        "Engine",
-        "GameSetting",
-        "Structure",
-        "UMG",
-        "AIModule"
-      ]
-    }
-  ],
+	"Enterprise": true,
+	"Modules": [
+		{
+			"Name": "Structure",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault",
+			"AdditionalDependencies": [
+				"Engine",
+				"CoreUObject"
+			]
+		},
+		{
+			"Name": "GameSetting",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault",
+			"AdditionalDependencies": [
+				"Engine",
+				"CoreUObject"
+			]
+		},
+		{
+			"Name": "EscapeGame",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine",
+				"GameSetting",
+				"Structure",
+				"UMG",
+				"AIModule"
+			]
+		}
+	],
 	"Plugins": [
 		{
 			"Name": "HoudiniEngine",
@@ -46,6 +45,10 @@
 			"Name": "LogViewer",
 			"Enabled": true,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/4853cdc0a6a54d7b9c0712cbe72f6b68"
+		},
+		{
+			"Name": "PerceptionNeuron",
+			"Enabled": true
 		}
 	]
 }
