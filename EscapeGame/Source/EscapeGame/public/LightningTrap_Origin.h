@@ -29,14 +29,16 @@ public:
 		void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 	UFUNCTION()
 		void OnCharacterHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
-	
+	UFUNCTION()
+	void StopPlay(class UParticleSystemComponent* PSystem);
 	bool IsActive();
 protected:
 	void initComponents();
 	void loadAssets();
 	void setRelativeCoordinates();
 	void setupCollision();
-	
+
+
 
 	void turnOnTrap();
 	void turnOffTrap();
@@ -55,6 +57,8 @@ protected:
 		UCapsuleComponent*CapsuleCollision;
 	UPROPERTY(VisibleAnywhere, Category = mesh)
 		UParticleSystemComponent* Effect;
+	UPROPERTY(VisibleAnywhere, Category = Contents)
+		UAudioComponent* SparkAudio;
 	//on, off 사이의 간격
 	UPROPERTY(EditInstanceOnly, Category = Contents)
 		float IntervalTime;

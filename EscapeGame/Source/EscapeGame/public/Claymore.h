@@ -43,14 +43,14 @@ private:
 
 	
 	void explosion();
-	FVector getNormalVectorDistance();
+	FVector getNormalVectorDistance(const FVector* Other);
 	float getDistanceToTarget();
 	float getDamage();
 	
-	AActor* cheackBlockingActor();
-	FVector getDistanceForCheackBlock();
+	bool cheackBlockingActor(FVector& BlockedLocation, float& DistanceToBlocked);
+	FVector getPointForCheackBlock();
 	//float estimaateBoxRange(AActor*Blocked);
-	void reSettingBoxSize(bool bResult);
+	void reSettingBoxSize(FVector& BlockedLocation, float& DistanceToBlocked, bool bResult);
 
 	//float get
 private:
@@ -71,13 +71,17 @@ private:
 		UParticleSystemComponent* Effect;
 	UPROPERTY(VisibleAnywhere, Category = Collision)
 		UBoxComponent*BoxCollision;
+	UPROPERTY(VisibleAnywhere, Category = Content)
+		UAudioComponent* AudioEffect;
 	UPROPERTY(EditInstanceOnly, Category = Content)
 		float MinDamage;
 	UPROPERTY(EditInstanceOnly, Category = Content)
 		float MaxDamage;
 	UPROPERTY(EditInstanceOnly, Category = Content)
 		float Timer;
+	
 	UPROPERTY(EditInstanceOnly, Category = Statue)
 		bool bIsActive;
 	
+
 };

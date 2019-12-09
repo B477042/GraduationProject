@@ -23,6 +23,8 @@ void ALightningTrap_Origin::BeginPlay()
 	Super::BeginPlay();
 	//CapsuleCollision->OnComponentBeginOverlap.AddDynamic(this,&ALightningTrap_Origin::OnCharacterOverlap);
 	CapsuleCollision->OnComponentHit.AddDynamic(this,&ALightningTrap_Origin::OnCharacterHit);
+	Effect->OnSystemFinished.AddDynamic(this,&ALightningTrap_Origin::StopPlay);
+	//Effect->OnSystemPreActivationChange.AddDynamic(this, &ALightningTrap_Origin::StopPlay);
 }
 
 // Called every frame
@@ -61,12 +63,14 @@ void ALightningTrap_Origin::initComponents()
 	MeshB = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MESHB"));
 	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EFFECT"));
 	CapsuleCollision = CreateDefaultSubobject <UCapsuleComponent>(TEXT("CAPSULE"));
+	SparkAudio = CreateDefaultSubobject<UAudioComponent>(TEXT("SPARKAUDIO"));
 
 	 RootComponent = MeshA;
 	
 	 MeshB->SetupAttachment(RootComponent);
 	 Effect->SetupAttachment(RootComponent);
 	 CapsuleCollision->SetupAttachment(RootComponent);
+	 SparkAudio->SetupAttachment(CapsuleCollision);
 	// Effect->bAutoActivate = false;
 
 
@@ -91,6 +95,21 @@ void ALightningTrap_Origin::loadAssets()
 		Effect->SetTemplate(PS_EFFECT.Object);
 	}
 
+	//SoundWave'/Game/MagicModule/SFX/WAV/WAV_LightingSparks.WAV_LightingSparks'
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_SPARK(TEXT("SoundWave'/Game/MagicModule/SFX/WAV/WAV_LightingSparks.WAV_LightingSparks'"));
+	if (SB_SPARK.Succeeded())
+	{
+		SparkAudio->SetSound(SB_SPARK.Object);
+
+	}
+	SparkAudio->bAutoActivate = false;
+	Effect->bAutoActivate = false;
+	//SoundAttenuation'/Game/MyFolder/Sound/SparkAttenuation.SparkAttenuation'
+	static ConstructorHelpers::FObjectFinder <USoundAttenuation>SA_SPARK(TEXT("SoundAttenuation'/Game/MyFolder/Sound/SparkAttenuation.SparkAttenuation'"));
+	if (SA_SPARK.Succeeded())
+	{
+		SparkAudio->AttenuationSettings = SA_SPARK.Object;
+	}
 }
 
 void ALightningTrap_Origin::setRelativeCoordinates()
@@ -116,14 +135,21 @@ void ALightningTrap_Origin::setupCollision()
 {
 	CapsuleCollision->SetCapsuleRadius(20.0f);
 	CapsuleCollision->SetCapsuleHalfHeight(148.273148f);
-	CapsuleCollision->SetCollisionProfileName(TEXT("OnBlockingTypeTrap"));
+	CapsuleCollision->SetCollisionProfileName(TEXT("NoCollision"));
 	CapsuleCollision->SetGenerateOverlapEvents(true);
+}
+
+void ALightningTrap_Origin::StopPlay(class UParticleSystemComponent* PSystem)
+{
+	SparkAudio->Stop();
+	EGLOG(Warning, TEXT("Stop"));
 }
 
 void ALightningTrap_Origin::turnOnTrap()
 {
-	EGLOG(Error, TEXT("Turn on"));
-	Effect->Activate(true);
+//	EGLOG(Error, TEXT("Turn on"));
+	Effect->Activate();
+	SparkAudio->Play();
 	CapsuleCollision->SetCollisionProfileName(TEXT("OnBlockingTypeTrap"));
 	Timer = 0.0f;
 	bIsActive = true;
@@ -132,9 +158,12 @@ void ALightningTrap_Origin::turnOnTrap()
 
 void ALightningTrap_Origin::turnOffTrap()
 {
-	EGLOG(Error, TEXT("Turn off"));
+	//EGLOG(Error, TEXT("Turn off"));
 	CapsuleCollision->SetCollisionProfileName(TEXT("NoCollision"));
-	Effect->Deactivate();
+	Effect->DeactivateSystem();
+	
+	//SparkAudio->Stop();
+	//SparkAudio->Deactivate();
 	Timer = 0.0f;
 	bIsActive = false;
 }
@@ -143,7 +172,7 @@ void ALightningTrap_Origin::turnOffTrap()
 
 void ALightningTrap_Origin::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	EGLOG(Error, TEXT("Actor : %s"),* OtherActor->GetName());
+	EGLOG(Error, TEXT("Overlap Actor : %s"),* OtherActor->GetName());
 	OtherActor->TakeDamage(Damage, ActorTakeDamageEvent, OtherActor->GetInstigatorController(), this);
 	
 	/*auto newPos = OtherActor->GetActorLocation() - OtherActor->GetActorForwardVector()*KnockBackRange;
@@ -153,7 +182,7 @@ void ALightningTrap_Origin::OnCharacterOverlap(UPrimitiveComponent * OverlappedC
 
 void ALightningTrap_Origin::OnCharacterHit(UPrimitiveComponent * HitComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit)
 {
-	EGLOG(Error, TEXT("Actor : %s"), *OtherActor->GetName());
+	EGLOG(Error, TEXT("Hit Actor : %s"), *OtherActor->GetName());
 	OtherActor->TakeDamage(Damage, ActorTakeDamageEvent, OtherActor->GetInstigatorController(), this);
 }
 

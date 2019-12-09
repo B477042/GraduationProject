@@ -32,7 +32,7 @@ void  AClaymore::BeginPlay()
 	Super::BeginPlay();
 
 	ExplosionDelegate.AddUObject(this, &AClaymore::explosion);
-	getDistanceForCheackBlock();
+	getPointForCheackBlock();
 }
 
 // Called every frame
@@ -53,7 +53,12 @@ void AClaymore::PostInitializeComponents()
 	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AClaymore::OnCharacterOverlap);
 	Effect->OnSystemFinished.AddDynamic(this,&AClaymore::ClearMe);
 
-
+	
+	/*FVector blockingPos = FVector::ZeroVector;
+	float distance = 0.0f;
+	bool bResult=cheackBlockingActor(blockingPos, distance);
+	reSettingBoxSize(blockingPos, distance, bResult);
+	EGLOG(Error, TEXT("claymore postinit"));*/
 }
 
 
@@ -65,6 +70,7 @@ void AClaymore::initComponents()
 	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BODY"));
 	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EFFECT"));
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BOX"));
+	AudioEffect = CreateDefaultSubobject<UAudioComponent>(TEXT("AUDIO"));
 	//Make Components Tree
 	/*RootComponent = BoxCollision;
 	Effect->SetupAttachment(Body);
@@ -73,6 +79,7 @@ void AClaymore::initComponents()
 	RootComponent = Body;
 	Effect->SetupAttachment(Body);
 	BoxCollision->SetupAttachment(RootComponent);
+	AudioEffect->SetupAttachment(Effect);
 }
 
 void AClaymore::loadAssets()
@@ -97,9 +104,14 @@ void AClaymore::loadAssets()
 		Effect->SetTemplate(PS_EFFECT.Object);
 	}
 
-
-	
+	//SoundWave'/Game/GrenadePack/MapAssets/Audio/Explosion01.Explosion01'
+	static ConstructorHelpers::FObjectFinder <USoundBase>AC_AUDIO(TEXT("SoundWave'/Game/GrenadePack/MapAssets/Audio/Explosion01.Explosion01'"));
+	if (AC_AUDIO.Succeeded())
+	{
+		AudioEffect->SetSound(AC_AUDIO.Object);
+	}
 	Effect->bAutoActivate = false;
+	AudioEffect->bAutoActivate = false;
 
 
 }
@@ -114,7 +126,7 @@ void AClaymore::setRelativeCoordinates()
 //	Body->SetRelativeLocation(FVector((X = 90.000000f, Y = 0.000000f, Z = -30.000000f)));
 	//Body->SetRelativeRotation(FRotator(0.0f,-90.0f,0.0f));
 	Effect->SetRelativeRotation(FRotator(Pitch = 40.0000f, Yaw = 0.000000f, Roll = 0.000000f));
-	Body->SetMobility(EComponentMobility::Static);
+	//Body->SetMobility(EComponentMobility::Static);
 }
 
 void AClaymore::setupCollision()
@@ -126,18 +138,18 @@ void AClaymore::setupCollision()
 
 	BoxCollision->SetRelativeLocation(FVector( 0.0f,   100.0f,  30.000000f));
 	BoxCollision->SetBoxExtent(FVector(100.0f, 100.0f, 30.0f));
-	BoxCollision->SetMobility(EComponentMobility::Static);
+	//BoxCollision->SetMobility(EComponentMobility::Static);
 }
 
 
 
 
-FVector AClaymore::getNormalVectorDistance()
+FVector AClaymore::getNormalVectorDistance(const FVector* Other)
 {
 	if (target != nullptr)
 	{
 		FVector temp=FVector::ZeroVector;
-		auto pointB = target.Get()->GetActorLocation().GetSafeNormal();
+		auto pointB = Other->GetSafeNormal();
 		auto pointA = Body->GetComponentLocation().GetSafeNormal();
 		
 		temp = pointA - pointB;
@@ -175,32 +187,91 @@ float AClaymore::getDamage()
 		return 0.0f;
 }
 
-AActor* AClaymore::cheackBlockingActor()
+bool AClaymore::cheackBlockingActor(FVector& BlockedLocation, float& DistanceToBlocked)
 {
+	
+
 	FHitResult hitResult;
 	FCollisionQueryParams param(NAME_None, false, this);
+	
 
-	bool result = GetWorld()->SweepSingleByChannel(hitResult, GetActorLocation(), GetActorForwardVector() ,
-		FQuat::MakeFromEuler(getNormalVectorDistance()),
+	auto tempPoint = getPointForCheackBlock();
+	//전방으로 detecte range만큼 탐색한다. 
+	bool bResult = GetWorld()->LineTraceSingleByChannel(hitResult, Body->GetComponentLocation() , tempPoint,
 		//All Block Trace
-		ECollisionChannel::ECC_GameTraceChannel4,
-		FCollisionShape::MakeSphere(10.0f));
+		ECollisionChannel::ECC_GameTraceChannel4);
+	
+
+	// auto tempPoint = getPointForCheackBlock();
+	////전방으로 detecte range만큼 탐색한다. 
+	//bool bResult = GetWorld()->SweepSingleByChannel(hitResult, Body->GetComponentLocation(), tempPoint,
+	//	FQuat::MakeFromEuler(getNormalVectorDistance(&tempPoint)),
+	//	//All Block Trace
+	//	ECollisionChannel::ECC_GameTraceChannel4,
+	//	FCollisionShape::MakeSphere(0.01f));
 
 
-	return nullptr;
+	////탐색 결과 있다면 그것의 true
+	if (bResult)
+	{
+		EGLOG(Error,TEXT("Actor Name : %s BodyComponent Location : %s"),*GetName(),*Body->GetComponentLocation().ToString())
+		EGLOG(Error, TEXT("Detected Point Location : %s"), *hitResult.Location.ToString());
+		EGLOG(Error, TEXT("Detected Point : impactPoint %s"), *hitResult.ImpactPoint.ToString());
+
+		BlockedLocation =  hitResult.Location;
+		DistanceToBlocked = FVector::Distance(GetActorLocation(), BlockedLocation);
+		return true;
+	}
+
+	// 없다면, nullptr리턴
+	else
+	{
+		EGLOG(Error, TEXT("No"));
+		return false;
+	}
+		
+	
 }
-
-FVector AClaymore::getDistanceForCheackBlock()
+//전방 벡터를 기준으로 탐지 거리까지의 거리를 구해준다. 
+FVector AClaymore::getPointForCheackBlock()
 {
-	FVector result =GetActorLocation();
+	//FVector result =GetActorLocation();
+	FVector result =Body->GetComponentLocation();
+	
 	FVector FW = GetActorForwardVector();
+
 	FVector axisY(0.0f, 1.0f, 0.0f);
-	float cosA = FMath::Acos(FVector::DotProduct(FW, axisY));
-	float sinA= FMath::Asin(FVector::DotProduct(FW, axisY));
-	FVector pointA(sinA, cosA, 0.0f);
-	result = pointA * maxDetectRange+result;
+	result.Z = 0.0f; FW.Z = 0.0f;
+
+	float dotProduct = FVector::DotProduct(FW, axisY);
+	/*EGLOG(Warning, TEXT("%f"), FVector::DotProduct(FW, axisY));*/
+	float arcCos = FMath::Acos(dotProduct);
+	float angle = FMath::RadiansToDegrees(arcCos);
+	//EGLOG(Warning, TEXT("arcCos : %f cos: %f"), arcCos,angle);
+	//EGLOG(Warning, TEXT("cos 90 = %f"), FMath::Cos(60.0f));
+	/*
+		dot Product 를 하면 두 벡터가 이루는 각도의 cos 값이 리턴된다
+
+	*/
+	//float cosA = FMath::Acos(FVector::DotProduct(FW, axisY));
+	//
+	//float sinA= FMath::Asin(FVector::DotProduct(FW, axisY));
+	
+	FVector pointA(FMath::Cos(arcCos)*maxDetectRange, FMath::Sin(arcCos)*maxDetectRange, 0.0f);
+	//EGLOG(Error, TEXT("Actor : %s's pointA %f %f %f"), *GetName(), pointA.X, pointA.Y, pointA.Z);
+	result = pointA +result;
+	result.Z = Body->GetComponentLocation().Z;
 	EGLOG(Error, TEXT("result : %s distance point %f %f %f"), *GetName(), result.X, result.Y, result.Z);
 	return result;
+}
+
+void AClaymore::reSettingBoxSize(FVector& BlockedLocation, float& DistanceToBlocked, bool bResult)
+{
+	if (!bResult)return;
+
+	FVector newBoxCollisionPos = (Body->GetComponentLocation() +BlockedLocation)/2.0f;
+	BoxCollision->SetBoxExtent(FVector(100.000000f, DistanceToBlocked/2.0f, 30.000000f));
+	BoxCollision->SetRelativeLocation(newBoxCollisionPos);
 }
 
 
@@ -229,15 +300,17 @@ void AClaymore::explosion()
 	BoxCollision->SetCollisionProfileName(TEXT("NoCollision"));
 	
 	Effect->Activate(true);
-
+	AudioEffect->Activate(true);
 	FHitResult hitResult;
 	FCollisionQueryParams param(NAME_None, false, this);
 
-	bool result = GetWorld()->SweepSingleByChannel(hitResult, GetActorLocation(), target->GetActorLocation(),
-		FQuat::MakeFromEuler(getNormalVectorDistance()),
+	FVector targetPos = target->GetActorLocation();
+
+	bool result = GetWorld()->SweepSingleByChannel(hitResult, GetActorLocation(), targetPos,
+		FQuat::MakeFromEuler(getNormalVectorDistance(&targetPos)),
 		//Explosion
 		ECollisionChannel::ECC_GameTraceChannel4,
-		FCollisionShape::MakeSphere(10.0f)
+		FCollisionShape::MakeSphere(0.1f)
 	);
 	EGLOG(Error, TEXT("Target Name : %s"), *target->GetName());
 	EGLOG(Error, TEXT("Distance : %f"), getDistanceToTarget());
