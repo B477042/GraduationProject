@@ -71,6 +71,7 @@ void AClaymore::initComponents()
 	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EFFECT"));
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BOX"));
 	AudioEffect = CreateDefaultSubobject<UAudioComponent>(TEXT("AUDIO"));
+	SwitchClickSound = CreateDefaultSubobject<UAudioComponent>(TEXT("CLICKSOUND"));
 	//Make Components Tree
 	/*RootComponent = BoxCollision;
 	Effect->SetupAttachment(Body);
@@ -80,6 +81,7 @@ void AClaymore::initComponents()
 	Effect->SetupAttachment(Body);
 	BoxCollision->SetupAttachment(RootComponent);
 	AudioEffect->SetupAttachment(Effect);
+	SwitchClickSound->SetupAttachment(Effect);
 }
 
 void AClaymore::loadAssets()
@@ -110,8 +112,21 @@ void AClaymore::loadAssets()
 	{
 		AudioEffect->SetSound(AC_AUDIO.Object);
 	}
+	static ConstructorHelpers::FObjectFinder <USoundBase>AC_CLICKAUDIO(TEXT("SoundWave'/Game/MyFolder/Sound/car-seatbelt-clicking.car-seatbelt-clicking'"));
+	if (AC_CLICKAUDIO.Succeeded())
+	{
+		SwitchClickSound ->SetSound(AC_CLICKAUDIO.Object);
+	}
+	static ConstructorHelpers::FObjectFinder<USoundAttenuation>SA_CLICK(TEXT("SoundAttenuation'/Game/MyFolder/Sound/ClickAttenuation.ClickAttenuation'"));
+	if (SA_CLICK.Succeeded())
+	{
+		SwitchClickSound->AttenuationSettings = SA_CLICK.Object;
+	}
+	//SoundAttenuation'/Game/MyFolder/Sound/ClickAttenuation.ClickAttenuation'
+
 	Effect->bAutoActivate = false;
 	AudioEffect->bAutoActivate = false;
+	SwitchClickSound->bAutoActivate = false;
 
 
 }
@@ -194,7 +209,7 @@ bool AClaymore::cheackBlockingActor(FVector& BlockedLocation, float& DistanceToB
 	FHitResult hitResult;
 	FCollisionQueryParams param(NAME_None, false, this);
 	
-
+	
 	auto tempPoint = getPointForCheackBlock();
 	//전방으로 detecte range만큼 탐색한다. 
 	bool bResult = GetWorld()->LineTraceSingleByChannel(hitResult, Body->GetComponentLocation() , tempPoint,
@@ -209,7 +224,7 @@ bool AClaymore::cheackBlockingActor(FVector& BlockedLocation, float& DistanceToB
 	//	//All Block Trace
 	//	ECollisionChannel::ECC_GameTraceChannel4,
 	//	FCollisionShape::MakeSphere(0.01f));
-
+	
 
 	////탐색 결과 있다면 그것의 true
 	if (bResult)
@@ -282,11 +297,12 @@ void AClaymore::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor 
 	auto player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (player == nullptr)return;
 
-
+	
 	target = player;
 	EGLOG(Error, TEXT("Target Name : %s"), *target->GetName());
 	Timer = 0.4;
 	bIsActive = true;
+	SwitchClickSound->Play();
 }
 
 void AClaymore::ClearMe(UParticleSystemComponent *Particle)

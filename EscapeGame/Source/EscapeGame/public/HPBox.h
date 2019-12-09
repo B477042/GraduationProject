@@ -45,6 +45,8 @@ private:
 		TArray<UStaticMesh*> MeshArray;
 	UPROPERTY(VisibleAnywhere, Category = Effect)
 		UParticleSystemComponent* Effect;
+	UPROPERTY(VisibleAnywhere, Category = Content)
+		UAudioComponent* PopSound;
 
 	UPROPERTY(VisibleAnywhere, Category = Statue)
 		bool bIsOpened;
@@ -52,4 +54,5 @@ private:
 		float Heal;
 	UPROPERTY(EditInstanceOnly, Category = Content)
 		float BounsTime;
+	
 };

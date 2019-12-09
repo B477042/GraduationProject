@@ -68,7 +68,18 @@ void AHPBox::loadAssets()
 		Effect->bAutoActivate = false;
 		
 	}
-	
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_POP(TEXT("SoundWave'/Game/MyFolder/Sound/HealPop.HealPop'"));
+	if (SB_POP.Succeeded())
+	{
+		PopSound->SetSound(SB_POP.Object);
+		PopSound->bAutoActivate = false;
+	}
+
+	static ConstructorHelpers::FObjectFinder<USoundAttenuation>SA_ATTENUATION(TEXT("SoundAttenuation'/Game/MyFolder/Sound/SparkAttenuation.SparkAttenuation'"));
+	if (SA_ATTENUATION.Succeeded())
+	{
+		PopSound->AttenuationSettings = SA_ATTENUATION.Object;
+	}
  
 	Body->SetStaticMesh(*MeshArray.GetData());
 }
@@ -78,7 +89,7 @@ void AHPBox::initComponents()
 	BoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("BOX"));
 	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BODY"));
 	Effect = CreateDefaultSubobject <UParticleSystemComponent >(TEXT("EFFECT"));
-
+	PopSound = CreateDefaultSubobject<UAudioComponent>(TEXT("POPSOUND"));
 
 
 	RootComponent = Body;
@@ -86,7 +97,7 @@ void AHPBox::initComponents()
 	
 	BoxCollider->SetupAttachment(RootComponent);
 	Effect->SetupAttachment(RootComponent);
-	
+	PopSound->SetupAttachment(RootComponent);
 	
 }
 
@@ -139,7 +150,7 @@ void AHPBox::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * O
 	Effect->Activate(true);
 	EGLOG(Error, TEXT("Collision -> false"));
 	SetActorEnableCollision(false);
-
+	PopSound->Play();
 	setBoxStateToOpened();
 	
 	

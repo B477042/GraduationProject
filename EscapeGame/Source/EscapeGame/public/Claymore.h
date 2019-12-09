@@ -73,6 +73,8 @@ private:
 		UBoxComponent*BoxCollision;
 	UPROPERTY(VisibleAnywhere, Category = Content)
 		UAudioComponent* AudioEffect;
+	UPROPERTY(VisibleAnywhere, Category = Content)
+		UAudioComponent* SwitchClickSound;
 	UPROPERTY(EditInstanceOnly, Category = Content)
 		float MinDamage;
 	UPROPERTY(EditInstanceOnly, Category = Content)
