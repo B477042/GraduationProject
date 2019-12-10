@@ -11,7 +11,7 @@ ALightningTrap_Origin::ALightningTrap_Origin()
 	Timer = 0.0f;
 	ActveTime = 3.0f;
 	IntervalTime = 2.0f;
-	Damage = 5.0f;
+	Damage = 0.1f;
 	KnockBackRange = 50.0f;
 	bIsActive = true;
 	initComponents();

@@ -68,7 +68,7 @@ void AHPBox::loadAssets()
 		Effect->bAutoActivate = false;
 		
 	}
-	static ConstructorHelpers::FObjectFinder<USoundBase>SB_POP(TEXT("SoundWave'/Game/MyFolder/Sound/HealPop.HealPop'"));
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_POP(TEXT("SoundWave'/Game/MyFolder/Sound/trashcanOpen__1___1_.trashcanOpen__1___1_'"));
 	if (SB_POP.Succeeded())
 	{
 		PopSound->SetSound(SB_POP.Object);
