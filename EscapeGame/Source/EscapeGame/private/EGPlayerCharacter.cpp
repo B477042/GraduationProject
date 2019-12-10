@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "EGPlayerCharacter.h"
-#include"Engine/SceneCapture2D.h"
+#include "Engine/SceneCapture2D.h"
 #include "EGPlayerController.h"
-#include"GameSetting/public/EGCharacterSetting.h"
+#include "GameSetting/public/EGCharacterSetting.h"
 //#include "GameWidget.h"
 
 
