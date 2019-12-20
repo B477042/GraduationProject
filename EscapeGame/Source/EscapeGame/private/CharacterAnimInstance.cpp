@@ -6,6 +6,8 @@
 UCharacterAnimInstance::UCharacterAnimInstance()
 {
 	CurrentCharacterSpeed = 0.0f;
+	PriviousCharacterHight = 0.0f;
+	HightVariation = 0.0f;
 }
 
 void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
@@ -15,7 +17,8 @@ void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	if (::IsValid(Pawn))
 	{
 		CurrentCharacterSpeed = Pawn->GetVelocity().Size();
-		CurrentCharacterHeightChange = Pawn->GetVelocity().Z;
+		HightVariation = Pawn->GetActorLocation().Z - PriviousCharacterHight;
+		PriviousCharacterHight = Pawn->GetActorLocation().Z;
 		
 	}
 }
