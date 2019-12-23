@@ -5,15 +5,15 @@
 	"Description": "",
 	"Enterprise": true,
 	"Modules": [
-		{
-			"Name": "Structure",
-			"Type": "Runtime",
-			"LoadingPhase": "PreDefault",
-			"AdditionalDependencies": [
-				"Engine",
-				"CoreUObject"
-			]
-		},
+    {
+      "Name": "Building",
+      "Type": "Runtime",
+      "LoadingPhase": "PreDefault",
+      "AdditionalDependencies": [
+        "Engine",
+        "CoreUObject"
+      ]
+    },
 		{
 			"Name": "GameSetting",
 			"Type": "Runtime",
@@ -27,13 +27,13 @@
 			"Name": "EscapeGame",
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"Engine",
-				"GameSetting",
-				"Structure",
-				"UMG",
-				"AIModule"
-			]
+      "AdditionalDependencies": [
+        "Engine",
+        "GameSetting",
+        "Building",
+        "UMG",
+        "AIModule"
+      ]
 		}
 	],
 	"Plugins": [

@@ -1,5 +1,5 @@
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\EscapeGame.Build.cs
 E:\CODE\GraduationProject\EscapeGame\Source\GameSetting\GameSetting.Build.cs
-E:\CODE\GraduationProject\EscapeGame\Source\Structure\Structure.Build.cs
+E:\CODE\GraduationProject\EscapeGame\Source\Structure\Building.Build.cs
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame.Target.cs
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGameEditor.Target.cs

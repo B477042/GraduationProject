@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Structure.h"
+#include "Building.h"
 #include "Modules/ModuleManager.h"
 
-IMPLEMENT_MODULE( FDefaultModuleImpl, Structure);
+IMPLEMENT_MODULE( FDefaultModuleImpl, Building);
