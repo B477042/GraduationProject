@@ -64,7 +64,7 @@ void AShutterTrap::RiseUpSpears(float deltaTime)
 	for (int i = 0; i < n_spears; i++)
 	{
 		FVector spearPos = Spears[i]->GetActorLocation();
-		EGLOG(Warning, TEXT("Rise!"));
+		//EGLOG(Warning, TEXT("Rise!"));
 		FVector newLocation = spearPos + FVector(0.0f, 0.0f, newZ);
 		Spears[i]->SetActorLocation(newLocation);
 	}
