@@ -37,6 +37,8 @@ private:
 	void setupCollision();
 
 	
+	void setSpearsDefaultPos();
+
 
 	const float StreachTime = 0.3f;
 	const int n_spears = 4;
