@@ -27,7 +27,12 @@ void AShutterTrap::BeginPlay()
 		{
 			
 			Spears[i]->SetActorHiddenInGame(true);
+
+			//문제가 있는 코드
+			//이거 때문에 창이 어느 방향이건 똑같은 방향에서 나온다
+			//다시 만들 것 -> 값 조절에서 문제가 있다. x,y좌표를 다시 계산하자
 			FVector location = Root->GetComponentLocation() + FVector(100.0f - (50.0f*i), -10.0f, -120.0f);
+
 			Spears[i]->SetActorRelativeLocation(location);
 			Spears[i]->SetCollisionProfileTo(TEXT("NoCollision"));
 		}
@@ -63,9 +68,9 @@ void AShutterTrap::RiseUpSpears(float deltaTime)
 	float newZ=(spear_last-spear_start)/StreachTime*deltaTime;
 	for (int i = 0; i < n_spears; i++)
 	{
-		FVector spearPos = Spears[i]->GetActorLocation();
+		 
 		//EGLOG(Warning, TEXT("Rise!"));
-		FVector newLocation = spearPos + FVector(0.0f, 0.0f, newZ);
+		FVector newLocation = Spears[i]->GetActorLocation() + FVector(0.0f, 0.0f, newZ);
 		Spears[i]->SetActorLocation(newLocation);
 	}
 
