@@ -69,9 +69,9 @@ private:
 	//=========================
 	//Axis Input Functions
 	void UpDown(float NewAxisValue);
-	void LeftRight(float NewAxisValue);
-	void LookUp(float NewAxisValue);
-	void Turn(float NewAxisValue);
+	void LeftRight( float NewAxisValue);
+	void LookUp( float  NewAxisValue);
+	void Turn( float NewAxisValue);
 	//=========================
 	//Action Input Functions
 

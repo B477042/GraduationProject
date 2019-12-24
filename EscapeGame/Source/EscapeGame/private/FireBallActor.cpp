@@ -50,7 +50,7 @@ void AFireBallActor::PostInitializeComponents()
 	//SoundExplosion->OnAudioFinished.AddDynamic(this,& AFireBallActor::destroyMe);
 }
 
-void AFireBallActor::Fire(FRotator Direction)
+void AFireBallActor::Fire(const FRotator& Direction)
 {
 	direction = Direction;
 	bIsFlying = true;

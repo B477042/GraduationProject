@@ -23,7 +23,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	virtual void PostInitializeComponents()override;
-	void Fire(FRotator Direction);
+	void Fire(const FRotator& Direction);
 private:
 	void initComponents();
 	void loadAssetes();

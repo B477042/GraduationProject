@@ -165,12 +165,12 @@ void AEGPlayerCharacter::SetupSpringArm()
 
 
 
-void AEGPlayerCharacter::UpDown(float NewAxisValue)
+void AEGPlayerCharacter::UpDown( float  NewAxisValue)
 {
 	AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X), NewAxisValue);
 }
 
-void AEGPlayerCharacter::LeftRight(float NewAxisValue)
+void AEGPlayerCharacter::LeftRight( float NewAxisValue)
 {
 	AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y), NewAxisValue);
 }
@@ -180,7 +180,7 @@ void AEGPlayerCharacter::LookUp(float NewAxisValue)
 	AddControllerPitchInput(NewAxisValue);
 }
 
-void AEGPlayerCharacter::Turn(float NewAxisValue)
+void AEGPlayerCharacter::Turn( float  NewAxisValue)
 {
 	AddControllerYawInput(NewAxisValue);
 }

@@ -32,7 +32,7 @@ void  AClaymore::BeginPlay()
 	Super::BeginPlay();
 
 	ExplosionDelegate.AddUObject(this, &AClaymore::explosion);
-	getPointForCheackBlock();
+	//getPointForCheackBlock();
 }
 
 // Called every frame
@@ -54,9 +54,17 @@ void AClaymore::PostInitializeComponents()
 	Effect->OnSystemFinished.AddDynamic(this,&AClaymore::ClearMe);
 
 	
+	FHitResult hitResult;
+
+	bool bResult=bIsActorInFrontSide(hitResult);
+	if (bResult)
+	{
+		changeBoxExtent(hitResult);
+	}
+
 	/*FVector blockingPos = FVector::ZeroVector;
 	float distance = 0.0f;
-	bool bResult=cheackBlockingActor(blockingPos, distance);
+	bool bResult=bCheackBlockingActor(blockingPos, distance);
 	reSettingBoxSize(blockingPos, distance, bResult);
 	EGLOG(Error, TEXT("claymore postinit"));*/
 }
@@ -202,93 +210,173 @@ float AClaymore::getDamage()
 		return 0.0f;
 }
 
-bool AClaymore::cheackBlockingActor(FVector& BlockedLocation, float& DistanceToBlocked)
+//max detect range안에 엑터랑 부딪쳤다면 true
+bool AClaymore::bIsActorInFrontSide(FHitResult &hitResult)
 {
-	
 
-	FHitResult hitResult;
-	FCollisionQueryParams param(NAME_None, false, this);
-	
-	
-	auto tempPoint = getPointForCheackBlock();
-	//전방으로 detecte range만큼 탐색한다. 
-	bool bResult = GetWorld()->LineTraceSingleByChannel(hitResult, Body->GetComponentLocation() , tempPoint,
-		//All Block Trace
-		ECollisionChannel::ECC_GameTraceChannel4);
-	
 
-	// auto tempPoint = getPointForCheackBlock();
-	////전방으로 detecte range만큼 탐색한다. 
-	//bool bResult = GetWorld()->SweepSingleByChannel(hitResult, Body->GetComponentLocation(), tempPoint,
-	//	FQuat::MakeFromEuler(getNormalVectorDistance(&tempPoint)),
-	//	//All Block Trace
-	//	ECollisionChannel::ECC_GameTraceChannel4,
-	//	FCollisionShape::MakeSphere(0.01f));
-	
-
-	////탐색 결과 있다면 그것의 true
-	if (bResult)
-	{
-		EGLOG(Error,TEXT("Actor Name : %s BodyComponent Location : %s"),*GetName(),*Body->GetComponentLocation().ToString())
-		EGLOG(Error, TEXT("Detected Point Location : %s"), *hitResult.Location.ToString());
-		EGLOG(Error, TEXT("Detected Point : impactPoint %s"), *hitResult.ImpactPoint.ToString());
-
-		BlockedLocation =  hitResult.Location;
-		DistanceToBlocked = FVector::Distance(GetActorLocation(), BlockedLocation);
-		return true;
-	}
-
-	// 없다면, nullptr리턴
-	else
-	{
-		EGLOG(Error, TEXT("No"));
-		return false;
-	}
+		//FHitResult hitResult;
+		FCollisionQueryParams param(NAME_None, false, this);
 		
-	
+		const FVector ClaymorePos = Body->GetComponentLocation();
+
+	//내가 사용하기 원하는 벡터는 전방벡터의 x,y값이 서로 스왑된 값이다. 그리고 내가 원하는 벡터의 x값은 -1이 곱해진다
+		FVector newVec = GetActorForwardVector();
+		newVec.Y *= -1.0f;
+		const FVector myFwVec = FVector(newVec.Y, newVec.X, newVec.Z);
+
+		//저 방향대로 디텍트 범위를 곱한후, claymorePos을 더하면 월드 좌표계에서 디텍트 범위 끝 점에 위치한 점이 나올 것이다.
+		const FVector myTargetVec = (myFwVec * maxDetectRange) + ClaymorePos;
+
+	/*	EGLOG(Warning, TEXT("Claymore :%s ForwardVector : %s"),*GetName(),*GetActorForwardVector().ToString());
+		EGLOG(Warning, TEXT("Claymore :%s MyFwVec : %s"), *GetName(), *myFwVec.ToString());
+		EGLOG(Warning, TEXT("Claymore :%s myTargetVec : %s"), *GetName(), *myTargetVec.ToString());
+		EGLOG(Warning, TEXT("========================="));
+		//디버그 로깅용
+		DrawDebugLine(GetWorld(), ClaymorePos, myTargetVec, FColor::Red, true,300.0f);*/
+
+		//아무튼 이 식은 맞다
+
+		//전방으로 detecte range만큼 탐색한다. 레이를 쏜다
+		bool bResult = GetWorld()->LineTraceSingleByChannel(hitResult, ClaymorePos , myTargetVec,
+			//All Block Trace
+			ECollisionChannel::ECC_GameTraceChannel4);
+		//EdgePos = myTargetVec;
+		
+		if (!bResult)
+		{
+			EGLOG(Error, TEXT("Nothing"));
+			return false;
+		}
+		//정보 확인 용
+		EGLOG(Error, TEXT("%s 's Trace was hit The %s, At : %s"), *GetName(), *hitResult.Actor.Get()->GetName(), *hitResult.ImpactPoint.ToString());
+		EGLOG(Error, TEXT("BoxExtent : %s"), *BoxCollision->GetScaledBoxExtent().ToString());
+		EGLOG(Error, TEXT("Box RelativeTransform location : %s"), *BoxCollision->GetRelativeTransform().GetLocation().ToString()); 
+		//EGLOG(Warning, TEXT("%s hit!"), *hitResult.Actor.Get()->GetName());
+		return true;
 }
-//전방 벡터를 기준으로 탐지 거리까지의 거리를 구해준다. 
-FVector AClaymore::getPointForCheackBlock()
+
+//앞서 얻은 결과를 바탕으로 박스를 다시 수정한다. 박스의 길이를 
+void AClaymore::changeBoxExtent(const FHitResult& hitResult)
 {
-	//FVector result =GetActorLocation();
-	FVector result =Body->GetComponentLocation();
+	const auto impactPoint = hitResult.ImpactPoint;
+
+	float newBoxYPos=0.0f;
+	float newBoxYLength=0.0f;
 	
-	FVector FW = GetActorForwardVector();
 
-	FVector axisY(0.0f, 1.0f, 0.0f);
-	result.Z = 0.0f; FW.Z = 0.0f;
+	//현재 Box Extent로 설정된 값을 복사한다. 100 100 30일 것이다
+	//초기화 값을 현재 상태 값들로 한다
+	FVector newBoxExtent = BoxCollision->GetScaledBoxExtent();
+	FVector newBoxPos = BoxCollision->GetRelativeTransform().GetLocation();
 
-	float dotProduct = FVector::DotProduct(FW, axisY);
-	/*EGLOG(Warning, TEXT("%f"), FVector::DotProduct(FW, axisY));*/
-	float arcCos = FMath::Acos(dotProduct);
-	float angle = FMath::RadiansToDegrees(arcCos);
-	//EGLOG(Warning, TEXT("arcCos : %f cos: %f"), arcCos,angle);
-	//EGLOG(Warning, TEXT("cos 90 = %f"), FMath::Cos(60.0f));
-	/*
-		dot Product 를 하면 두 벡터가 이루는 각도의 cos 값이 리턴된다
+	//이제 새로운 위치와 길이를 계산한다.
+	newBoxYLength = FVector::Distance(hitResult.TraceStart,impactPoint)/2.0f;
+	newBoxYPos = newBoxYLength;
 
-	*/
-	//float cosA = FMath::Acos(FVector::DotProduct(FW, axisY));
-	//
-	//float sinA= FMath::Asin(FVector::DotProduct(FW, axisY));
+	//계산 한 것을 new vector에 넣는다
+	newBoxExtent.Y = newBoxYLength;
+	newBoxPos.Y = newBoxYPos;
+
+	//새로운 값을 설정해서 넣어준다
+	BoxCollision->SetRelativeLocation(newBoxPos);
+	BoxCollision->SetBoxExtent(newBoxExtent);
 	
-	FVector pointA(FMath::Cos(arcCos)*maxDetectRange, FMath::Sin(arcCos)*maxDetectRange, 0.0f);
-	//EGLOG(Error, TEXT("Actor : %s's pointA %f %f %f"), *GetName(), pointA.X, pointA.Y, pointA.Z);
-	result = pointA +result;
-	result.Z = Body->GetComponentLocation().Z;
-	EGLOG(Error, TEXT("result : %s distance point %f %f %f"), *GetName(), result.X, result.Y, result.Z);
-	return result;
+	EGLOG(Warning, TEXT("Box Changed"));
+	
+
 }
 
-void AClaymore::reSettingBoxSize(FVector& BlockedLocation, float& DistanceToBlocked, bool bResult)
-{
-	if (!bResult)return;
-
-	FVector newBoxCollisionPos = (Body->GetComponentLocation() +BlockedLocation)/2.0f;
-	BoxCollision->SetBoxExtent(FVector(100.000000f, DistanceToBlocked/2.0f, 30.000000f));
-	BoxCollision->SetRelativeLocation(newBoxCollisionPos);
-}
-
+/*
+//
+//전방에 대하여 레이를 쏴서 가로 막는 actor가 있는지 검사한다
+//없다면 false, 있다면 true 
+//
+//DistanceToBlocked는 그 가로막는 것까지의 길이
+//BlockedLocation은 레이가 반사된 지점의 좌표다
+//*/
+//
+//bool AClaymore::bCheackBlockingActor(FVector& BlockedLocation, float& DistanceToBlocked)
+//{
+//	
+//
+//	FHitResult hitResult;
+//	FCollisionQueryParams param(NAME_None, false, this);
+//	
+//	
+//	auto tempPoint = getPointForCheackBlock();
+//	//전방으로 detecte range만큼 탐색한다. 레이를 쏜다
+//	bool bResult = GetWorld()->LineTraceSingleByChannel(hitResult, Body->GetComponentLocation() , tempPoint,
+//		//All Block Trace
+//		ECollisionChannel::ECC_GameTraceChannel4);
+//	
+//
+//	//old style
+//	// auto tempPoint = getPointForCheackBlock();
+//	////전방으로 detecte range만큼 탐색한다. 
+//	//bool bResult = GetWorld()->SweepSingleByChannel(hitResult, Body->GetComponentLocation(), tempPoint,
+//	//	FQuat::MakeFromEuler(getNormalVectorDistance(&tempPoint)),
+//	//	//All Block Trace
+//	//	ECollisionChannel::ECC_GameTraceChannel4,
+//	//	FCollisionShape::MakeSphere(0.01f));
+//	
+//
+//	////탐색 결과 있다면 그것의 true
+//	if (bResult)
+//	{
+//		EGLOG(Error,TEXT("Actor Name : %s BodyComponent Location : %s"),*GetName(),*Body->GetComponentLocation().ToString())
+//		EGLOG(Error, TEXT("Detected Point Location : %s"), *hitResult.Location.ToString());
+//		EGLOG(Error, TEXT("Detected Point : impactPoint %s"), *hitResult.ImpactPoint.ToString());
+//
+//		BlockedLocation =  hitResult.Location;
+//		DistanceToBlocked = FVector::Distance(GetActorLocation(), BlockedLocation);
+//		return true;
+//	}
+//
+//	// 없다면, nullptr리턴
+//	else
+//	{
+//		EGLOG(Error, TEXT("No"));
+//		return false;
+//	}
+//		
+//	
+//}
+////전방 벡터를 기준으로 탐지 거리까지의 거리를 구해준다. 
+////리턴은 FVector
+////내각계산 다시 공부해서 만들 것
+//const FVector AClaymore::getPointForCheackBlock()
+//{
+//	//FVector result =GetActorLocation();
+//	FVector result =Body->GetComponentLocation();
+//	
+//	FVector FW = GetActorForwardVector();
+//
+//	FVector axisY(0.0f, 1.0f, 0.0f);
+//	result.Z = 0.0f; FW.Z = 0.0f;
+//
+//	float dotProduct = FVector::DotProduct(FW, axisY);
+//	/*EGLOG(Warning, TEXT("%f"), FVector::DotProduct(FW, axisY));*/
+//	float arcCos = FMath::Acos(dotProduct);
+//	float angle = FMath::RadiansToDegrees(arcCos);
+//	//EGLOG(Warning, TEXT("arcCos : %f cos: %f"), arcCos,angle);
+//	//EGLOG(Warning, TEXT("cos 90 = %f"), FMath::Cos(60.0f));
+//	/*
+//		dot Product 를 하면 두 벡터가 이루는 각도의 cos 값이 리턴된다
+//
+//	*/
+//	//float cosA = FMath::Acos(FVector::DotProduct(FW, axisY));
+//	//
+//	//float sinA= FMath::Asin(FVector::DotProduct(FW, axisY));
+//	
+//	FVector pointA(FMath::Cos(arcCos)*maxDetectRange, FMath::Sin(arcCos)*maxDetectRange, 0.0f);
+//	//EGLOG(Error, TEXT("Actor : %s's pointA %f %f %f"), *GetName(), pointA.X, pointA.Y, pointA.Z);
+//	result = pointA +result;
+//	result.Z = Body->GetComponentLocation().Z;
+//	EGLOG(Error, TEXT("result : %s distance point %f %f %f"), *GetName(), result.X, result.Y, result.Z);
+//	return result;
+//}
+//
 
 
 void AClaymore::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)

@@ -5,6 +5,7 @@
 //#include "CoreMinimal.h"
 #include"EscapeGame.h"
 #include"EGPlayerCharacter.h"
+#include "DrawDebugHelpers.h"
 #include "Claymore.generated.h"
 
 /**
@@ -16,6 +17,20 @@
 	최대 범위는 10미터로
 	
  */
+
+/*
+void DrawDebugBox
+(
+    const UWorld * InWorld,
+    FVector const & LineStart,
+    FVector const & LineEnd,
+    FColor const & Color,
+    bool bPersistentLines,
+    float LifeTime,
+    uint8 DepthPriority,
+    float Thickness
+)
+*/
 
 DECLARE_MULTICAST_DELEGATE(FOnExplosion);
 
@@ -47,12 +62,12 @@ private:
 	float getDistanceToTarget();
 	float getDamage();
 	
-	bool cheackBlockingActor(FVector& BlockedLocation, float& DistanceToBlocked);
-	FVector getPointForCheackBlock();
-	//float estimaateBoxRange(AActor*Blocked);
-	void reSettingBoxSize(FVector& BlockedLocation, float& DistanceToBlocked, bool bResult);
-
-	//float get
+	//박스의 크기를 동적으로 변경
+	bool bIsActorInFrontSide(FHitResult& hitResult);
+	//박스의 크기를 동적으로 변경
+	void changeBoxExtent(const FHitResult& hitResult);
+	
+	
 private:
 	const float maxDamageRange = 200.0f;
 	const float minDamageRange = 300.0f;
