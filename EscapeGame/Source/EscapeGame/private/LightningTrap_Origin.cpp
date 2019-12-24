@@ -142,7 +142,7 @@ void ALightningTrap_Origin::setupCollision()
 void ALightningTrap_Origin::StopPlay(class UParticleSystemComponent* PSystem)
 {
 	SparkAudio->Stop();
-	EGLOG(Warning, TEXT("Stop"));
+	//EGLOG(Warning, TEXT("Stop"));
 }
 
 void ALightningTrap_Origin::turnOnTrap()
@@ -174,7 +174,7 @@ void ALightningTrap_Origin::turnOffTrap()
 
 void ALightningTrap_Origin::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	EGLOG(Error, TEXT("Overlap Actor : %s"),* OtherActor->GetName());
+	//EGLOG(Error, TEXT("Overlap Actor : %s"),* OtherActor->GetName());
 	OtherActor->TakeDamage(Damage, ActorTakeDamageEvent, OtherActor->GetInstigatorController(), this);
 	
 	/*auto newPos = OtherActor->GetActorLocation() - OtherActor->GetActorForwardVector()*KnockBackRange;
