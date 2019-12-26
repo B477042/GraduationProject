@@ -21,7 +21,7 @@ void AShutterTrap::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//문제 코드
+	////문제 코드
 	for (int i = 0; i < n_spears; i++)
 	{
 		Spears.Emplace(GetWorld()->SpawnActor<ASpearActor>());
@@ -41,8 +41,16 @@ void AShutterTrap::BeginPlay()
 
 	}
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AShutterTrap::OnPlayerEntered);
-	//setSpearsDefaultPos();
+	////setSpearsDefaultPos();
 	
+}
+
+
+void AShutterTrap::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	//setSpearsDefaultPos();
 }
 
 // Called every frame
@@ -66,6 +74,8 @@ void AShutterTrap::Tick(float DeltaTime)
 		EGLOG(Error, TEXT("Tick"));
 	}
 }
+
+
 
 void AShutterTrap::RiseUpSpears(float deltaTime)
 {
@@ -141,21 +151,24 @@ void AShutterTrap::setSpearsDefaultPos()
 	//원점에서 창들이 솟은 지점을 바라볼 때, 그것이 일렬로 나열되어 있어야 한다. 그래야 길이 막히니까.
 	//원점에서 box 콜리전까지 길이
 	const float distToBox = Trigger->GetRelativeTransform().GetLocation().Y;
-	const FVector actorPos = GetActorLocation();
+	const FVector CurrentPos = GetActorLocation();
 	const FRotator CurrentRot = GetActorRotation();
 
+	//Way 1
 
-	//내가 사용하기 원하는 벡터는 전방벡터의 x,y값이 서로 스왑된 값이다. 그리고 내가 원하는 벡터의 x값은 -1이 곱해진다.
-	//이렇게 한다면 벡터는 내쪽을 바라보게 된다
-	FVector newVec = GetActorForwardVector();
-	newVec.Y *= -1.0f;
-	const FVector myFwVec = FVector(newVec.Y, newVec.X, newVec.Z);
+	////내가 사용하기 원하는 벡터는 전방벡터의 x,y값이 서로 스왑된 값이다. 그리고 내가 원하는 벡터의 x값은 -1이 곱해진다.
+	////이렇게 한다면 벡터는 내쪽을 바라보게 된다
+	//FVector newVec = GetActorForwardVector();
+	//newVec.Y *= -1.0f;
+	//const FVector myFwVec = FVector(newVec.Y, newVec.X, newVec.Z);
 
-	//저 방향대로 디텍트 범위를 곱한후, 상대 좌표계에서 5개의 창의 중심점이 될 곳이 나올 것이다.
-	const FVector mySpearCenterPos = (myFwVec * distToBox) ;
+	////저 방향대로 디텍트 범위를 곱한후, 상대 좌표계에서 5개의 창의 중심점이 될 곳이 나올 것이다.
+	//const FVector mySpearCenterPos = (myFwVec * distToBox) ;
 
-	//원점으로 되돌린다
-	//SetActorRotation(FRotator::ZeroRotator);
+
+	//원점으로 되돌린다.
+	//그럼 상대좌표를 직접 지정해도 될 테니까
+	SetActorRotation(FRotator::ZeroRotator);
 
 	for (int i = 0; i < n_spears; i++)
 	{
@@ -168,23 +181,36 @@ void AShutterTrap::setSpearsDefaultPos()
 			////문제가 있는 코드
 			////이거 때문에 창이 어느 방향이건 똑같은 방향에서 나온다
 			////다시 만들 것 -> 값 조절에서 문제가 있다. x,y좌표를 다시 계산하자
-			FVector location = Root->GetComponentLocation() + FVector(100.0f - (50.0f*i), -10.0f, -120.0f);
-
+			 
+			FVector NewLocation = FVector(100.0f - (50.0f*i), -10.0f, -120.0f);
+			//회전 반경
+			FVector Radius = FVector(NewLocation.X, 0.0f, 0.0f);
+			float Angle = CurrentRot.Yaw;
+			FVector RotateValue = Radius.RotateAngleAxis(Angle, FVector(0.0f, 0.0f, 1.0f));
+			NewLocation += RotateValue + CurrentPos;
+			Spears[i]->SetActorRelativeLocation(NewLocation);
 			
 			//if(i%2==0)
 			//Spears[i]->SetActorRelativeLocation(mySpearCenterPos + FVector(100.0f - (50.0f*i), -10.0f, -120.0f));
 			
+			
 
 			Spears[i]->SetCollisionProfileTo(TEXT("NoCollision"));
+
+			EGLOG(Warning, TEXT("Spear[%i]'s pos : %s"), i, *Spears[i]->GetTransform().GetLocation().ToString());
 		}
 
 	}
 
 	//배치가 끝났으니 되돌린다
-	//SetActorRotation(CurrentRot);
+	SetActorRotation(CurrentRot);
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AShutterTrap::OnPlayerEntered);
 
-	EGLOG(Error, TEXT("Claymore :%s ForwardVector : %s"), *GetName(), *GetActorForwardVector().ToString());
+	EGLOG(Warning, TEXT("========================"));
+	for (int i = 0; i < n_spears; i++)
+	EGLOG(Warning, TEXT("Spear[%i]'s pos : %s"), i, *Spears[i]->GetTransform().GetLocation().ToString());
+
+	//EGLOG(Error, TEXT("Claymore :%s ForwardVector : %s"), *GetName(), *GetActorForwardVector().ToString());
 	//EGLOG(Warning, TEXT("Claymore :%s MyFwVec : %s"), *GetName(), *myFwVec.ToString());
 	//EGLOG(Warning, TEXT("Claymore :%s myTargetVec : %s"), *GetName(), *myTargetVec.ToString());
 }

@@ -67,7 +67,7 @@ void AFireBallTrap::Fire()
 {
 	FireBall->Fire(FirePoint->GetRelativeTransform().GetRotation().Rotator());
 	Trigger->SetCollisionProfileName(TEXT("NoCollision"));
-	FireBall.Get();
+	//FireBall.Get();
 }
 
 void AFireBallTrap::OnPlayerEntered(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)

@@ -32,6 +32,7 @@ void AFireBallActor::BeginPlay()
 void AFireBallActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 	if (!bIsFlying)return;
 
 	flyingTime += DeltaTime;
@@ -39,7 +40,8 @@ void AFireBallActor::Tick(float DeltaTime)
 	FVector newLocation=GetActorLocation()+FVector(1.0f,1.0f,1.0f)*(Speed);
 	this->SetActorLocation(newLocation);
 	this->SetActorRotation(direction);
-	if (flyingTime >= 4.0f)Destroy();
+
+	if (flyingTime >= 10.0f)Destroy();
 }
 
 void AFireBallActor::PostInitializeComponents()
