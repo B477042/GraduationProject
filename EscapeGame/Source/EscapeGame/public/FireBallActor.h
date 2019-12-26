@@ -42,10 +42,10 @@ private:
 		void ExplosionMe();
 	UFUNCTION()
 		void DestroyMe();
-	void flying();
+	void flying(const float& DeltaTime);
 	
 	float flyingTime;
-	const float MaxFlyingTime=5.0f;
+	const float MaxFlyingTime=4.0f;
 	
 private:
 	

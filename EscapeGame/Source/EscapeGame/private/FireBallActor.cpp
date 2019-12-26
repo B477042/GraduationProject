@@ -12,6 +12,7 @@ AFireBallActor::AFireBallActor()
 	Speed = 0.001f;
 	
 	flyingTime = 0.0f;
+	Damage = 20.0f;
 	bIsFlying = false;
 	
 	initComponents();
@@ -33,9 +34,9 @@ void AFireBallActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	flying();
+	flying(DeltaTime);
 
-	
+	//ExplosionMe();
 }
 
 void AFireBallActor::PostInitializeComponents()
@@ -76,6 +77,7 @@ void AFireBallActor::loadAssetes()
 	if (PS_FIREBALL.Succeeded())
 	{
 		FireBall->SetTemplate(PS_FIREBALL.Object);
+		FireBall->SetRelativeScale3D(FVector(3.5f, 3.5f, 3.5f));
 		//FireBall->bHiddenInGame = true;
 		//FireBall->bAutoActivate = false;
 	}
@@ -84,6 +86,7 @@ void AFireBallActor::loadAssetes()
 	{
 		ExplosionEffect->SetTemplate(PS_EXPLOSION.Object);
 		ExplosionEffect->bAutoActivate = false;
+		ExplosionEffect->SetRelativeScale3D(FVector(3.5f, 3.5f, 3.5f));
 		//ExplosionEffect->bHiddenInGame = true;
 
 	}
@@ -92,6 +95,7 @@ void AFireBallActor::loadAssetes()
 	{
 		HitEffect->SetTemplate(PS_HIT.Object);
 		HitEffect->bAutoActivate = false;
+		HitEffect->SetRelativeScale3D(FVector(3.5f, 3.5f, 3.5f));
 		//HitEffect->bHiddenInGame = true;
 	}
 	static ConstructorHelpers::FObjectFinder<USoundBase>SB_CAST(TEXT("SoundWave'/Game/MagicModule/SFX/WAV/WAV_FireballCast.WAV_FireballCast'"));
@@ -99,6 +103,7 @@ void AFireBallActor::loadAssetes()
 	{
 		SoundCast->SetSound(SB_CAST.Object);
 		SoundCast->bAutoActivate = false;
+		SoundCast->Deactivate();
 	}
 	static ConstructorHelpers::FObjectFinder<USoundBase>SB_EXPLOSION(TEXT("SoundWave'/Game/MagicModule/SFX/WAV/WAV_GroundExplosion01.WAV_GroundExplosion01'"));
 	if (SB_EXPLOSION.Succeeded())
@@ -119,21 +124,21 @@ void AFireBallActor::loadAssetes()
 
 void AFireBallActor::setupCollision()
 {
-	Collision->SetSphereRadius(20.3f);
+	Collision->SetSphereRadius(40.3f);
 	Collision->SetCollisionProfileName(TEXT("NoCollision"));
 	SoundTrigger->SetCollisionProfileName(TEXT("OnTrapTrigger"));
-	SoundTrigger->SetSphereRadius(400.0f);
+	SoundTrigger->SetSphereRadius(200.0f);
 }
 
 
 //맞으면 데미지 주고 터트리고
 void AFireBallActor::OnCharacterHit(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult)
 {
-	if (auto Player = Cast<AEGPlayerCharacter>(OtherActor))
-	{
+	EGLOG(Error, TEXT("Hit"));
+
 		FDamageEvent damageEvent;
-		Player->TakeDamage(Damage, damageEvent, GetWorld()->GetFirstPlayerController(), this);
-	}
+		OtherActor->TakeDamage(Damage, damageEvent, GetWorld()->GetFirstPlayerController(), this);
+	
 	ExplosionMe();
 
 
@@ -147,10 +152,16 @@ void AFireBallActor::OnCharacterEntered(UPrimitiveComponent * OverlappedComp, AA
 
 void AFireBallActor::ExplosionMe()
 {
+	EGLOG(Error, TEXT("Explosion"));
+	FireBall->Deactivate();
 	FireBall->bHiddenInGame = true;
+	Collision->Deactivate();
+
 	bIsFlying = false;
 	ExplosionEffect->Activate();
 	HitEffect->Activate();
+
+	SoundCast->Deactivate();
 	SoundExplosion->Play();
 
 	
@@ -162,14 +173,22 @@ void AFireBallActor::DestroyMe()
 
 }
 
-void AFireBallActor::flying()
+void AFireBallActor::flying(const float& DeltaTime)
 {
 	if (!bIsFlying)return;
 
-	Speed += 0.05f;
+	Speed += 0.6f;
+	flyingTime += DeltaTime;
+	if (DeltaTime >= MaxFlyingTime)
+	{
+		ExplosionMe();
+		return;
+	}
+
 	FVector NewLocation = GetActorLocation() + (GetActorForwardVector()*Speed);
 	SetActorLocation(NewLocation);
-	EGLOG(Error, TEXT("FireBall's pos: %s"), *GetActorLocation().ToString());
+	//EGLOG(Error, TEXT("FireBall's pos: %s"), *GetActorLocation().ToString());
+	
 }
 
 void AFireBallActor::Fire()
@@ -178,6 +197,6 @@ void AFireBallActor::Fire()
 
 	bIsFlying = true;
 	FireBall->bHiddenInGame=false;
-	Collision->SetCollisionProfileName(TEXT("BlockAll"));
+	Collision->SetCollisionProfileName(TEXT("OverlapAll"));
 
 }
