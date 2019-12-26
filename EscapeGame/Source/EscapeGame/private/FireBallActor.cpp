@@ -10,10 +10,10 @@ AFireBallActor::AFireBallActor()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Speed = 0.001f;
-	LimitSpeed = 0.01f;
+	
 	flyingTime = 0.0f;
 	bIsFlying = false;
-	direction = FRotator::ZeroRotator;
+	
 	initComponents();
 	loadAssetes();
 	setupCollision();
@@ -33,15 +33,9 @@ void AFireBallActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (!bIsFlying)return;
+	flying();
 
-	flyingTime += DeltaTime;
-	Speed += Speed * flyingTime*0.5f;
-	FVector newLocation=GetActorLocation()+FVector(1.0f,1.0f,1.0f)*(Speed);
-	this->SetActorLocation(newLocation);
-	this->SetActorRotation(direction);
-
-	if (flyingTime >= 10.0f)Destroy();
+	
 }
 
 void AFireBallActor::PostInitializeComponents()
@@ -49,21 +43,11 @@ void AFireBallActor::PostInitializeComponents()
 	Super::PostInitializeComponents();
 	SoundTrigger->OnComponentBeginOverlap.AddDynamic(this, &AFireBallActor::OnCharacterEntered);
 	Collision->OnComponentBeginOverlap.AddDynamic(this, &AFireBallActor::OnCharacterHit);
-	//SoundExplosion->OnAudioFinished.AddDynamic(this,& AFireBallActor::destroyMe);
+	SoundExplosion->OnAudioFinished.AddDynamic(this,& AFireBallActor::DestroyMe);
 }
 
-void AFireBallActor::Fire(const FRotator& Direction)
-{
-	direction = Direction;
-	bIsFlying = true;
-	/*FireBall->bHiddenInGame = false;
-	ExplosionEffect->bHiddenInGame = false;
-	HitEffect->bHiddenInGame = false;*/
-	setCollisionProfile(TEXT("BlockAll"));
-	//Collision->SetGenerateOverlapEvents(true);
-	Collision->SetGenerateOverlapEvents(true);
-	EGLOG(Error, TEXT("Fire~~"));
-}
+
+
 
 void AFireBallActor::initComponents()
 {
@@ -132,19 +116,17 @@ void AFireBallActor::loadAssetes()
 
 }
 
+
 void AFireBallActor::setupCollision()
 {
 	Collision->SetSphereRadius(20.3f);
-	setCollisionProfile(TEXT("NoCollision"));
+	Collision->SetCollisionProfileName(TEXT("NoCollision"));
 	SoundTrigger->SetCollisionProfileName(TEXT("OnTrapTrigger"));
 	SoundTrigger->SetSphereRadius(400.0f);
 }
 
-void AFireBallActor::setCollisionProfile(FName NewProfile)
-{
-	Collision->SetCollisionProfileName(NewProfile);
-}
 
+//맞으면 데미지 주고 터트리고
 void AFireBallActor::OnCharacterHit(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult)
 {
 	if (auto Player = Cast<AEGPlayerCharacter>(OtherActor))
@@ -152,25 +134,50 @@ void AFireBallActor::OnCharacterHit(UPrimitiveComponent* OverlappedComp, AActor*
 		FDamageEvent damageEvent;
 		Player->TakeDamage(Damage, damageEvent, GetWorld()->GetFirstPlayerController(), this);
 	}
-	FireBall->bHiddenInGame = true;
-	bIsFlying = false;
-	ExplosionEffect->Activate();
-	HitEffect->Activate();
-
-	setCollisionProfile(TEXT("NoCollision"));
-	SoundExplosion->Play();
+	ExplosionMe();
 
 
 }
 
+//날아가는 소리가 들리는 범위에 들어갔다면
 void AFireBallActor::OnCharacterEntered(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	SoundCast->Play();
 }
 
-void AFireBallActor::destroyMe()
+void AFireBallActor::ExplosionMe()
 {
+	FireBall->bHiddenInGame = true;
+	bIsFlying = false;
+	ExplosionEffect->Activate();
+	HitEffect->Activate();
+	SoundExplosion->Play();
 
-	Destroy();
+	
 }
 
+void AFireBallActor::DestroyMe()
+{
+	Destroy();
+
+}
+
+void AFireBallActor::flying()
+{
+	if (!bIsFlying)return;
+
+	Speed += 0.05f;
+	FVector NewLocation = GetActorLocation() + (GetActorForwardVector()*Speed);
+	SetActorLocation(NewLocation);
+	EGLOG(Error, TEXT("FireBall's pos: %s"), *GetActorLocation().ToString());
+}
+
+void AFireBallActor::Fire()
+{
+	EGLOG(Error, TEXT("FireBall's forward vector : %s"),* GetActorForwardVector().ToString());
+
+	bIsFlying = true;
+	FireBall->bHiddenInGame=false;
+	Collision->SetCollisionProfileName(TEXT("BlockAll"));
+
+}

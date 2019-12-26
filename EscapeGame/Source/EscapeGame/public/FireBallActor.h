@@ -23,23 +23,30 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	virtual void PostInitializeComponents()override;
-	void Fire(const FRotator& Direction);
+	void Fire();
+
 private:
 	void initComponents();
 	void loadAssetes();
 	void setupCollision();
+
+	
+	
 	
 
-	void setCollisionProfile(FName NewProfile);
 	UFUNCTION()
 		void OnCharacterHit(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 	UFUNCTION()
 		void OnCharacterEntered(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 	UFUNCTION()
-		void destroyMe();
+		void ExplosionMe();
+	UFUNCTION()
+		void DestroyMe();
+	void flying();
+	
 	float flyingTime;
-
-
+	const float MaxFlyingTime=5.0f;
+	
 private:
 	
 	UPROPERTY(VisibleAnywhere, Category = effect)
@@ -50,23 +57,24 @@ private:
 		UParticleSystemComponent* HitEffect;
 	UPROPERTY(VisibleAnywhere, Category = Collision)
 		USphereComponent*Collision;
+
 	UPROPERTY(VisibleAnywhere, Category = Collision)
-		USphereComponent*SoundTrigger;
+		USphereComponent*SoundTrigger;//볼이 날아갈 때 옆에 지나가면 날아가는 소리가 들리게끔 하는 범위
 
 
 	UPROPERTY(VisibleAnywhere, Category = Contents)
 		UAudioComponent*SoundExplosion;
 	UPROPERTY(VisibleAnywhere, Category = Contents)
 		UAudioComponent*SoundCast;
-	UPROPERTY(VisibleAnywhere, Category = Speed)
-		bool bIsFlying;
+
 
 	UPROPERTY(EditInstanceOnly, Category = Damage)
 		float Damage;
 	UPROPERTY(EditInstanceOnly, Category = Speed)
 		float Speed;
+	
 	UPROPERTY(VisibleAnywhere, Category = Speed)
-		float LimitSpeed;
-	UPROPERTY(EditInstanceOnly, Category = Speed)
-		FRotator direction;
+		bool bIsFlying;
+
+	
 };

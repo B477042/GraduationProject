@@ -17,7 +17,7 @@ void AFireBallTrap::BeginPlay()
 	Super::BeginPlay();
 	FireBall = GetWorld()->SpawnActor <AFireBallActor>();
 	FireBall->SetActorHiddenInGame(true);
-FireBall->AttachToComponent(FirePoint, FAttachmentTransformRules::KeepRelativeTransform);
+	FireBall->AttachToComponent(FirePoint, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 void AFireBallTrap::PostInitializeComponents()
@@ -45,7 +45,7 @@ void AFireBallTrap::initComponents()
 	Trigger->SetupAttachment(RootComponent);
 	
 	FirePoint->SetRelativeLocation(FVector(0.0f, 480.0f, 90.0f));
-	FirePoint->SetRelativeRotation(FRotator(0.000000f, 269.999329f, 0.000000f));
+	FirePoint->SetRelativeRotation(FRotator(0.000000f, 270.0f, 0.000000f));
 
 	//StaticMesh'/Game/StarterBundle/ModularScifiProps/Meshes/SM_Coaster.SM_Coaster'
 	static ConstructorHelpers::FObjectFinder <UStaticMesh>SM_Mesh(TEXT("StaticMesh'/Game/StarterBundle/ModularScifiProps/Meshes/SM_Coaster.SM_Coaster'"));
@@ -65,14 +65,15 @@ void AFireBallTrap::setupCollision()
 
 void AFireBallTrap::Fire()
 {
-	FireBall->Fire(FirePoint->GetRelativeTransform().GetRotation().Rotator());
+	FireBall->Fire();
 	Trigger->SetCollisionProfileName(TEXT("NoCollision"));
 	//FireBall.Get();
 }
 
 void AFireBallTrap::OnPlayerEntered(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	Fire();
 	FireBall->SetActorHiddenInGame(false);
+	Fire();
+	
 }
 

@@ -7,6 +7,8 @@
 #include "GameFramework/Actor.h"
 #include "FireBallTrap.generated.h"
 
+//DECLARE_DELEGATE(FOnCharacterEntered,void);
+
 UCLASS()
 class ESCAPEGAME_API AFireBallTrap : public AActor
 {
