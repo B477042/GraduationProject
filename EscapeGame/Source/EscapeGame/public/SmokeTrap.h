@@ -9,6 +9,9 @@
 
 /*
 	연기형 함정
+	연기가 하나면 잘 보이지 않아서 4개를 둔다
+	연기 5개로 연출을 하고 콜리전으로 충돌을 처리한다. 
+	root는  가운데 연기로 한다.
 
 */
 UCLASS()
@@ -34,12 +37,14 @@ private:
 		void OnCharacterEntered(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 private:
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
-		UStaticMeshComponent* Body;
+		UBoxComponent* Collision;
 	UPROPERTY(VisibleAnywhere, Category = Particle)
-		UParticleSystemComponent* Effect;
+		TArray<UParticleSystemComponent*> Effects;
 	UPROPERTY(VisibleAnywhere, Category = Damage)
 		float Damage;
 	UPROPERTY(VisibleAnywhere, Category = Timer)
 		float Timer;
+	UPROPERTY(VisibleAnywhere, Category = Particle)
+		const int n_Smokes=4;
 
 };

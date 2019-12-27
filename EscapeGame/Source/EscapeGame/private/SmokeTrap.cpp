@@ -8,6 +8,12 @@ ASmokeTrap::ASmokeTrap()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	Collision = CreateDefaultSubobject<UBoxComponent>(TEXT("BC_COLLISION"));
+
+	for (int i = 0; i < n_Smokes; i++)
+		Effects.Add(CreateDefaultSubobject<UParticleSystemComponent>(TEXT("PS_EFFECT%i"), i));
+	RootComponent = Effects[2];
+
 }
 
 // Called when the game starts or when spawned
