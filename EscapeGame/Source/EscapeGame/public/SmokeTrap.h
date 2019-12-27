@@ -13,6 +13,9 @@
 	연기 5개로 연출을 하고 콜리전으로 충돌을 처리한다. 
 	root는  가운데 연기로 한다.
 
+
+	들어오면 데미지를 받고 일정 시간이 자나면 또 데미지를 입힌다.
+
 */
 UCLASS()
 class ESCAPEGAME_API ASmokeTrap : public AActor
