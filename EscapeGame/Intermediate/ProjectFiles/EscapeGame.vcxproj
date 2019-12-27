@@ -533,6 +533,7 @@
     <ClCompile Include="..\..\Source\EscapeGame\private\OneSideOpendPath.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\RightAnglePath.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\ShutterTrap.cpp"/>
+    <ClCompile Include="..\..\Source\EscapeGame\private\SmokeTrap.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\SpearActor.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\StairPath.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\StairPath2.cpp"/>
@@ -562,6 +563,7 @@
     <ClInclude Include="..\..\Source\EscapeGame\public\OneSideOpendPath.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\RightAnglePath.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\ShutterTrap.h"/>
+    <ClInclude Include="..\..\Source\EscapeGame\public\SmokeTrap.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\SpearActor.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\StairPath.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\StairPath2.h"/>
