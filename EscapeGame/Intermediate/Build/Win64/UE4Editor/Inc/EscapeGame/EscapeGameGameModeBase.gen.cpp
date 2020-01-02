@@ -1,4 +1,4 @@
-// Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
+// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 /*===========================================================================
 	Generated code exported from UnrealHeaderTool.
 	DO NOT modify this manually! Edit the corresponding .h files instead!
@@ -40,6 +40,7 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGameGameModeBase() {}
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AEscapeGameGameModeBase_Statics::Class_MetaDataParams[] = {
+		{ "Comment", "/**\n * \n */" },
 		{ "HideCategories", "Info Rendering MovementReplication Replication Actor Input Movement Collision Rendering Utilities|Transformation" },
 		{ "IncludePath", "EscapeGameGameModeBase.h" },
 		{ "ModuleRelativePath", "public/EscapeGameGameModeBase.h" },
@@ -51,14 +52,18 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGameGameModeBase() {}
 	};
 	const UE4CodeGen_Private::FClassParams Z_Construct_UClass_AEscapeGameGameModeBase_Statics::ClassParams = {
 		&AEscapeGameGameModeBase::StaticClass,
-		DependentSingletons, ARRAY_COUNT(DependentSingletons),
-		0x009002A8u,
-		nullptr, 0,
-		nullptr, 0,
-		nullptr,
+		"Game",
 		&StaticCppClassTypeInfo,
-		nullptr, 0,
-		METADATA_PARAMS(Z_Construct_UClass_AEscapeGameGameModeBase_Statics::Class_MetaDataParams, ARRAY_COUNT(Z_Construct_UClass_AEscapeGameGameModeBase_Statics::Class_MetaDataParams))
+		DependentSingletons,
+		nullptr,
+		nullptr,
+		nullptr,
+		UE_ARRAY_COUNT(DependentSingletons),
+		0,
+		0,
+		0,
+		0x009002ACu,
+		METADATA_PARAMS(Z_Construct_UClass_AEscapeGameGameModeBase_Statics::Class_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UClass_AEscapeGameGameModeBase_Statics::Class_MetaDataParams))
 	};
 	UClass* Z_Construct_UClass_AEscapeGameGameModeBase()
 	{
@@ -69,7 +74,11 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGameGameModeBase() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AEscapeGameGameModeBase, 3416950219);
+	IMPLEMENT_CLASS(AEscapeGameGameModeBase, 3101934329);
+	template<> ESCAPEGAME_API UClass* StaticClass<AEscapeGameGameModeBase>()
+	{
+		return AEscapeGameGameModeBase::StaticClass();
+	}
 	static FCompiledInDefer Z_CompiledInDefer_UClass_AEscapeGameGameModeBase(Z_Construct_UClass_AEscapeGameGameModeBase, &AEscapeGameGameModeBase::StaticClass, TEXT("/Script/EscapeGame"), TEXT("AEscapeGameGameModeBase"), false, nullptr, nullptr, nullptr);
 	DEFINE_VTABLE_PTR_HELPER_CTOR(AEscapeGameGameModeBase);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
