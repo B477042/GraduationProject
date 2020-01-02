@@ -1,19 +1,19 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "4.21",
+	"EngineAssociation": "4.24",
 	"Category": "",
 	"Description": "",
 	"Enterprise": true,
 	"Modules": [
-    {
-      "Name": "Building",
-      "Type": "Runtime",
-      "LoadingPhase": "PreDefault",
-      "AdditionalDependencies": [
-        "Engine",
-        "CoreUObject"
-      ]
-    },
+		{
+			"Name": "Building",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault",
+			"AdditionalDependencies": [
+				"Engine",
+				"CoreUObject"
+			]
+		},
 		{
 			"Name": "GameSetting",
 			"Type": "Runtime",
@@ -27,13 +27,13 @@
 			"Name": "EscapeGame",
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
-      "AdditionalDependencies": [
-        "Engine",
-        "GameSetting",
-        "Building",
-        "UMG",
-        "AIModule"
-      ]
+			"AdditionalDependencies": [
+				"Engine",
+				"GameSetting",
+				"Building",
+				"UMG",
+				"AIModule"
+			]
 		}
 	],
 	"Plugins": [
@@ -43,7 +43,7 @@
 		},
 		{
 			"Name": "LogViewer",
-			"Enabled": true,
+			"Enabled": false,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/4853cdc0a6a54d7b9c0712cbe72f6b68"
 		}
 	]

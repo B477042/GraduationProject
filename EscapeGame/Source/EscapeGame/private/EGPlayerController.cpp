@@ -38,9 +38,9 @@ void AEGPlayerController::PostInitializeComponents()
 	
 }
 
-void AEGPlayerController::Possess(APawn * aPawn)
+void AEGPlayerController::OnPossess(APawn * aPawn)
 {
-	Super::Possess(aPawn);
+	Super::OnPossess(aPawn);
 	
 	EGLOG(Warning, TEXT("possessed complete") );
 }

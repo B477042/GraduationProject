@@ -1,4 +1,4 @@
-// Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
+// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 /*===========================================================================
 	Generated code exported from UnrealHeaderTool.
 	DO NOT modify this manually! Edit the corresponding .h files instead!
@@ -13,6 +13,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define ESCAPEGAME_EscapeGameGameModeBase_generated_h
 
+#define EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_16_SPARSE_DATA
 #define EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_16_RPC_WRAPPERS
 #define EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_16_RPC_WRAPPERS_NO_PURE_DECLS
 #define EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_16_INCLASS_NO_PURE_DECLS \
@@ -20,7 +21,7 @@ private: \
 	static void StaticRegisterNativesAEscapeGameGameModeBase(); \
 	friend struct Z_Construct_UClass_AEscapeGameGameModeBase_Statics; \
 public: \
-	DECLARE_CLASS(AEscapeGameGameModeBase, AGameModeBase, COMPILED_IN_FLAGS(0 | CLASS_Transient), CASTCLASS_None, TEXT("/Script/EscapeGame"), NO_API) \
+	DECLARE_CLASS(AEscapeGameGameModeBase, AGameModeBase, COMPILED_IN_FLAGS(0 | CLASS_Transient | CLASS_Config), CASTCLASS_None, TEXT("/Script/EscapeGame"), NO_API) \
 	DECLARE_SERIALIZER(AEscapeGameGameModeBase)
 
 
@@ -29,7 +30,7 @@ private: \
 	static void StaticRegisterNativesAEscapeGameGameModeBase(); \
 	friend struct Z_Construct_UClass_AEscapeGameGameModeBase_Statics; \
 public: \
-	DECLARE_CLASS(AEscapeGameGameModeBase, AGameModeBase, COMPILED_IN_FLAGS(0 | CLASS_Transient), CASTCLASS_None, TEXT("/Script/EscapeGame"), NO_API) \
+	DECLARE_CLASS(AEscapeGameGameModeBase, AGameModeBase, COMPILED_IN_FLAGS(0 | CLASS_Transient | CLASS_Config), CASTCLASS_None, TEXT("/Script/EscapeGame"), NO_API) \
 	DECLARE_SERIALIZER(AEscapeGameGameModeBase)
 
 
@@ -63,6 +64,7 @@ DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(AEscapeGameGameModeBase); \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
 	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_16_PRIVATE_PROPERTY_OFFSET \
+	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_16_SPARSE_DATA \
 	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_16_RPC_WRAPPERS \
 	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_16_INCLASS \
 	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_16_STANDARD_CONSTRUCTORS \
@@ -74,12 +76,15 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
 	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_16_PRIVATE_PROPERTY_OFFSET \
+	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_16_SPARSE_DATA \
 	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
 	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_16_INCLASS_NO_PURE_DECLS \
 	EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h_16_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
+
+template<> ESCAPEGAME_API UClass* StaticClass<class AEscapeGameGameModeBase>();
 
 #undef CURRENT_FILE_ID
 #define CURRENT_FILE_ID EscapeGame_Source_EscapeGame_public_EscapeGameGameModeBase_h
