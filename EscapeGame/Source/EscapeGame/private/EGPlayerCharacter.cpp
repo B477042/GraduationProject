@@ -4,6 +4,7 @@
 #include "Engine/SceneCapture2D.h"
 #include "EGPlayerController.h"
 #include "GameSetting/public/EGCharacterSetting.h"
+#include "..\public\EGPlayerCharacter.h"
 //#include "GameWidget.h"
 
 
@@ -52,6 +53,9 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAxis(TEXT("LeftRight"), this, &AEGPlayerCharacter::LeftRight);
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &AEGPlayerCharacter::LookUp);
 	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AEGPlayerCharacter::Turn);
+
+	//Action Input
+	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed,this, &AEGPlayerCharacter::Jump);
 	EGLOG(Warning, TEXT("Player input component"));
 }
 
@@ -183,5 +187,11 @@ void AEGPlayerCharacter::LookUp(float NewAxisValue)
 void AEGPlayerCharacter::Turn( float  NewAxisValue)
 {
 	AddControllerYawInput(NewAxisValue);
+}
+
+void AEGPlayerCharacter::Jump()
+{
+	Super::Jump();
+	
 }
 

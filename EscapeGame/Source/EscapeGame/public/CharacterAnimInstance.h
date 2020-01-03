@@ -17,7 +17,8 @@ class ESCAPEGAME_API UCharacterAnimInstance : public UAnimInstance
 public:
 	UCharacterAnimInstance();
 	virtual void NativeUpdateAnimation(float DeltaSeconds)override;
-	
+	//virtual void PostInitalizeComponents()override;
+	virtual void NativeBeginPlay()override;
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
 		float CurrentCharacterSpeed;
@@ -25,4 +26,9 @@ private:
 		float HightVariation;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
 		float PriviousCharacterHight;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
+		bool IsInAir;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Character, Meta = (AllowPrivateAccess = true))
+		bool IsJumpPressed;
 };

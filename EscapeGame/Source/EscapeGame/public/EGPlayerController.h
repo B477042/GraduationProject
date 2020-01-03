@@ -12,6 +12,7 @@
  */
 
 
+
 UCLASS()
 class ESCAPEGAME_API AEGPlayerController : public APlayerController
 {

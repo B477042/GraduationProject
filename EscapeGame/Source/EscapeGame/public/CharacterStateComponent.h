@@ -20,19 +20,20 @@
 
 */
 
-UENUM(/*BlueprintType*/)
-enum class EPositionState
-{
-	EInGround UMETA(DisplayName="InGround")=0,
-	EInAir UMETA(DisplayName = "InAir")
-};
-
-UENUM(/*BlueprintType*/)
-enum class EDamageableState
-{
-	EDamageAllowed UMETA(DisplayName = "DmageAllowed")=0,
-	EDamageNotAllowed UMETA(DisplayName = "DmageNotAllowed")
-};
+//UENUM(/*BlueprintType*/)
+//	enum class EPositionState
+//	{
+//		EInGround UMETA(DisplayName = "InGround") = 0,
+//		EInAir UMETA(DisplayName = "InAir")
+//	};
+//
+//
+//UENUM(/*BlueprintType*/)
+//enum class EDamageableState
+//{
+//	EDamageAllowed UMETA(DisplayName = "DmageAllowed")=0,
+//	EDamageNotAllowed UMETA(DisplayName = "DmageNotAllowed")
+//};
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -52,10 +53,10 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Meta = (AllowPrivateAcces = true))
+	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Meta = (AllowPrivateAccess = true))
 		EPositionState PositionState;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Meta = (AllowPrivateAcces = true))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Meta = (AllowPrivateAccess = true))
 		EDamageableState DamageableState;
-		
+	*/	
 };

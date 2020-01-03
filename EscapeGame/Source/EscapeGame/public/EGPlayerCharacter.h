@@ -10,7 +10,7 @@
 #include "CharacterStatComponent.h"
 #include "EGPlayerCharacter.generated.h"
 
-
+DECLARE_DELEGATE(FOnKeyPressed, void);
 
 UCLASS()
 class ESCAPEGAME_API AEGPlayerCharacter : public ACharacter
@@ -20,7 +20,7 @@ class ESCAPEGAME_API AEGPlayerCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AEGPlayerCharacter();
-
+	FOnKeyPressed OnKeyPressed;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -44,6 +44,7 @@ public:
 		class AController* EventInstigator, AActor* DamageCauser)override;
 	void HealHP(float addHP);
 	 UCharacterStatComponent* GetStatComponent();
+	
 	//=====================================================================
 	// Public UPROPERTY Zone
 public:
@@ -74,7 +75,7 @@ private:
 	void Turn( float NewAxisValue);
 	//=========================
 	//Action Input Functions
-
+	virtual void Jump()override;
 	//=========================
 	
 	//========================================

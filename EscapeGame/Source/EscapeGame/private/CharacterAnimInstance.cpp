@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CharacterAnimInstance.h"
+#include "..\public\CharacterAnimInstance.h"
 
 
 UCharacterAnimInstance::UCharacterAnimInstance()
@@ -8,7 +9,10 @@ UCharacterAnimInstance::UCharacterAnimInstance()
 	CurrentCharacterSpeed = 0.0f;
 	PriviousCharacterHight = 0.0f;
 	HightVariation = 0.0f;
+	IsInAir = false;
+	
 }
+
 
 void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
@@ -20,5 +24,13 @@ void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		HightVariation = Pawn->GetActorLocation().Z - PriviousCharacterHight;
 		PriviousCharacterHight = Pawn->GetActorLocation().Z;
 		
+
+		auto Character = Cast<ACharacter>(Pawn);
+		if (Character)
+		{
+			IsInAir = Character->GetMovementComponent()->IsFalling();
+		}
+
 	}
 }
+
