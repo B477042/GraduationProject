@@ -53,7 +53,7 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAxis(TEXT("LeftRight"), this, &AEGPlayerCharacter::LeftRight);
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &AEGPlayerCharacter::LookUp);
 	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AEGPlayerCharacter::Turn);
-
+	
 	//Action Input
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed,this, &AEGPlayerCharacter::Jump);
 	EGLOG(Warning, TEXT("Player input component"));
@@ -172,11 +172,13 @@ void AEGPlayerCharacter::SetupSpringArm()
 void AEGPlayerCharacter::UpDown( float  NewAxisValue)
 {
 	AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X), NewAxisValue);
+	//EGLOG(Warning, TEXT("UP or Down Pressed"));
 }
 
 void AEGPlayerCharacter::LeftRight( float NewAxisValue)
 {
 	AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y), NewAxisValue);
+	//EGLOG(Warning, TEXT("Left or Right Pressed"));
 }
 
 void AEGPlayerCharacter::LookUp(float NewAxisValue)
@@ -193,5 +195,10 @@ void AEGPlayerCharacter::Jump()
 {
 	Super::Jump();
 	
+}
+
+void AEGPlayerCharacter::KeyInputTest()
+{
+	playerinputcomponent
 }
 

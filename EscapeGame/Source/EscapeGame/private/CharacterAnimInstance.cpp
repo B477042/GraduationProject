@@ -34,3 +34,9 @@ void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	}
 }
 
+void UCharacterAnimInstance::BPBeginPlay()
+{
+	EGLOG(Warning, TEXT("Anim Blueprint Begin!!!"));
+	EGLOG(Warning, TEXT("Anim Bp Owner name : %s"), *GetOwningActor()->GetName());
+}
+

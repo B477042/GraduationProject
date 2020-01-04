@@ -38,10 +38,11 @@ void UCharacterStatComponent::BeginPlay()
 void UCharacterStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	TestLogic();
+	BasicDamage();
 	// ...
 }
 
+// TakeDamage Frame
 void UCharacterStatComponent::TakeDamage(float NewDamage)
 {
 	
@@ -49,6 +50,7 @@ void UCharacterStatComponent::TakeDamage(float NewDamage)
 	HPChangedDelegate.Broadcast();
 }
 
+//Set a point 
 void UCharacterStatComponent::SetHP(float NewHP)
 {
 	//EGLOG(Warning, TEXT("HP : %f"), GetHPRatio());
@@ -56,6 +58,7 @@ void UCharacterStatComponent::SetHP(float NewHP)
 	HPChangedDelegate.Broadcast();
 }
 
+//Plus(Heal) HP
 void UCharacterStatComponent::HealHP(float AddHP)
 {
 	CurrentHP += AddHP;
@@ -65,13 +68,13 @@ void UCharacterStatComponent::HealHP(float AddHP)
 	HPChangedDelegate.Broadcast();
 }
 
-void UCharacterStatComponent::TestLogic()
+void UCharacterStatComponent::BasicDamage()
 {
 	timer += GetWorld()->DeltaTimeSeconds;
 	
 	if (timer > 1.0f)
 	{
-		TakeDamage(5.0f);
+		TakeDamage(1.0f);
 		timer = 0.0f;
 	}
 	if (CurrentHP < 0.0f)
@@ -87,5 +90,10 @@ float UCharacterStatComponent::GetAttack() const
 float UCharacterStatComponent::GetHPRatio() const
 {
 	return (CurrentHP<0.0f)? 0.0f : CurrentHP/MaxHP;
+}
+
+float UCharacterStatComponent::GetHP() const
+{
+	return CurrentHP;
 }
 

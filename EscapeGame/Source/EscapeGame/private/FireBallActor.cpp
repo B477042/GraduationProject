@@ -134,7 +134,7 @@ void AFireBallActor::setupCollision()
 //맞으면 데미지 주고 터트리고
 void AFireBallActor::OnCharacterHit(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult)
 {
-	EGLOG(Error, TEXT("Hit"));
+	//EGLOG(Error, TEXT("Hit"));
 
 		FDamageEvent damageEvent;
 		OtherActor->TakeDamage(Damage, damageEvent, GetWorld()->GetFirstPlayerController(), this);
@@ -152,7 +152,7 @@ void AFireBallActor::OnCharacterEntered(UPrimitiveComponent * OverlappedComp, AA
 
 void AFireBallActor::ExplosionMe()
 {
-	EGLOG(Error, TEXT("Explosion"));
+	//EGLOG(Error, TEXT("Explosion"));
 	FireBall->Deactivate();
 	FireBall->bHiddenInGame = true;
 	Collision->Deactivate();
@@ -193,7 +193,7 @@ void AFireBallActor::flying(const float& DeltaTime)
 
 void AFireBallActor::Fire()
 {
-	EGLOG(Error, TEXT("FireBall's forward vector : %s"),* GetActorForwardVector().ToString());
+	//EGLOG(Error, TEXT("FireBall's forward vector : %s"),* GetActorForwardVector().ToString());
 
 	bIsFlying = true;
 	FireBall->bHiddenInGame=false;

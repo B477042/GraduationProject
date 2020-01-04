@@ -35,12 +35,17 @@ private:
 	TWeakObjectPtr<class UCharacterStatComponent>CurrentCharacterStat;
 	UPROPERTY()
 		class UProgressBar* PB_HP;
-	UPROPERTY()
-		class UTextBlock* HPText;
-	UPROPERTY()
-		class UTextBlock* TimerText;
+	//UPROPERTY()
+	//	class UTextBlock* HPAmount;//Write 'HP'
+	//
+	//UPROPERTY()
+	//	class UTextBlock* TimerText;
+	UPROPERTY(BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
+		float PlayerHP;
+
 	UPROPERTY(BlueprintReadWrite, Category = Timer, Meta = (AllowPrivateAccess = true))
 		float GameTimer;
+
 	UPROPERTY(BlueprintReadOnly, Category = Camera, Meta = (AllowPrivateAccess = true))
 		UCameraComponent* MiniMapCapture;
 	

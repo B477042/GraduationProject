@@ -16,16 +16,24 @@ void UGameWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 	PB_HP = Cast<UProgressBar>(GetWidgetFromName(TEXT("HPBar")));
-	HPText = Cast<UTextBlock>(GetWidgetFromName(TEXT("HPTEXT")));
+	//HPAmount = Cast<UTextBlock>(GetWidgetFromName(TEXT("HPTEXT")));
 	GameTimer = 60.0f;
-	
+	PlayerHP = 100.0f;
 }
-
+//연동된 character의 stat component에서 채력이 바뀔 때, 호출된다. 
 void UGameWidget::UpdateCharacterStat()
 {
-	if(CurrentCharacterStat.IsValid())
-		if(PB_HP!=nullptr)
+	if (CurrentCharacterStat.IsValid())
+	{
+		if (PB_HP != nullptr)
 			PB_HP->SetPercent(CurrentCharacterStat->GetHPRatio());
+		/*if (HPAmount != nullptr)
+		{
+			HPAmount->
+		}*/
+		PlayerHP=CurrentCharacterStat->GetHP();
+	}
+
 }
 
 float UGameWidget::CheackTimeOut(float NewValue)
@@ -46,18 +54,19 @@ void UGameWidget::BindCharacterStat(const UCharacterStatComponent * newStat)
 	}
 	CurrentCharacterStat = newStat;
 	CurrentCharacterStat->HPChangedDelegate.AddUObject(this, &UGameWidget::UpdateCharacterStat);
-	CurrentCharacterStat->HPChangedDelegate.AddLambda([this]()->void {
+	/*CurrentCharacterStat->HPChangedDelegate.AddLambda([this]()->void {
 		if (CurrentCharacterStat.IsValid())
 		{
 			EGLOG(Warning, TEXT("HP : %f%"), CurrentCharacterStat->GetHPRatio());
 		}
-	});
+	});*/
 
 	
 }
 
 float UGameWidget::GetGameTimer()
 {
+	//GameTimer= floorf(GameTimer * 100) / 100;
 	return GameTimer;
 }
 

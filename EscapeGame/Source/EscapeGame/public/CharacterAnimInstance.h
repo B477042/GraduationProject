@@ -18,7 +18,10 @@ public:
 	UCharacterAnimInstance();
 	virtual void NativeUpdateAnimation(float DeltaSeconds)override;
 	//virtual void PostInitalizeComponents()override;
-	virtual void NativeBeginPlay()override;
+
+	UFUNCTION(BlueprintCallable)
+		void BPBeginPlay();
+	
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
 		float CurrentCharacterSpeed;
@@ -32,3 +35,7 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Character, Meta = (AllowPrivateAccess = true))
 		bool IsJumpPressed;
 };
+/*
+	2020 01 03 - 원하는 것
+	완벽하게 구별되는 
+*/

@@ -3,6 +3,7 @@
 #include "EGPlayerController.h"
 #include"GameWidget.h"
 #include"EGPlayerCharacter.h"
+#include "..\public\EGPlayerController.h"
 //#include"GameStat.h"
 
 
@@ -63,6 +64,15 @@ void AEGPlayerController::OnPossess(APawn * aPawn)
 	 HUD->BindCharacterStat(player->GetStatComponent());
 	
 	 
+ }
+
+ bool AEGPlayerController::IsMoveKeyPressed()
+ {
+	/* IsInputKeyDown(FKey::FKey());
+	Ispressed
+	*/
+	 
+	 return false;
  }
 
  

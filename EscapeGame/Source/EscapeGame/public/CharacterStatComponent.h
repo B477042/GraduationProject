@@ -31,12 +31,12 @@ public:
 	void SetHP(float NewHP);
 	//Add HP to Current HP
 	void HealHP(float AddHP);
-	void TestLogic();
+	void BasicDamage();
 
 	//int32 GetDropExp()const;
 	float GetAttack()const;
 	float GetHPRatio()const;
-	
+	float GetHP()const;
 
 	FOnHPChangeDelegate HPChangedDelegate;
 	FIsHPZero HPZeroDelegate;

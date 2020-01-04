@@ -52,13 +52,13 @@ void AHPBox::loadAssets()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_CLOSEBOX(TEXT("/Game/StarterBundle/ModularScifiHallways/Meshes/SM_Crate_A.SM_Crate_A"));
 	if (SM_CLOSEBOX.Succeeded())
 	{
-		EGLOG(Warning, TEXT("Box1 added"));
+	//	EGLOG(Warning, TEXT("Box1 added"));
 		MeshArray.Add(SM_CLOSEBOX.Object);
 	}
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_OPENBOX(TEXT("/Game/StarterBundle/ModularScifiHallways/Meshes/SM_Crate_A3.SM_Crate_A3"));
 	if (SM_OPENBOX.Succeeded())
 	{
-		EGLOG(Warning, TEXT("Box2 added"));
+	//	EGLOG(Warning, TEXT("Box2 added"));
 		MeshArray.Add(SM_OPENBOX.Object);
 	}
 	static ConstructorHelpers::FObjectFinder<UParticleSystem>U_EFFECT(TEXT("ParticleSystem'/Game/MagicModule/VFX/P_InstantHeal.P_InstantHeal'"));
@@ -133,7 +133,7 @@ void AHPBox::setBoxStateToOpened()
 void AHPBox::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	if (bIsOpened == true) { 
-		EGLOG(Error, TEXT("opend box"));
+		//EGLOG(Error, TEXT("opend box"));
 		return; 
 	}
 
@@ -148,7 +148,7 @@ void AHPBox::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * O
 	}
 
 	Effect->Activate(true);
-	EGLOG(Error, TEXT("Collision -> false"));
+	//EGLOG(Error, TEXT("Collision -> false"));
 	SetActorEnableCollision(false);
 	PopSound->Play();
 	setBoxStateToOpened();

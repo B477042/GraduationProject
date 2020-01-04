@@ -32,6 +32,8 @@ public:
 
 
 	void SyncStatToHUD();
+	bool IsMoveKeyPressed();
+
 private:
 	UPROPERTY(meta=(AllowPrivateAccess=true))
 		class UGameWidget* HUD;
