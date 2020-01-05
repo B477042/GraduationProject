@@ -30,6 +30,9 @@ void AEGPlayerController::BeginPlay()
 	//HUD->BindCharacterStat(PlayerStat);
 	SyncStatToHUD();
 	EGLOG(Warning, TEXT("Controller begin play"));
+
+	KeyInputTest.AddUObject(this,&AEGPlayerController::IsMoveKeyPressed);
+
 }
 
 void AEGPlayerController::PostInitializeComponents()
@@ -66,13 +69,28 @@ void AEGPlayerController::OnPossess(APawn * aPawn)
 	 
  }
 
- bool AEGPlayerController::IsMoveKeyPressed()
+void AEGPlayerController::IsMoveKeyPressed()
  {
-	/* IsInputKeyDown(FKey::FKey());
-	Ispressed
-	*/
+	 if (IsInputKeyDown(EKeys::A))
+	 {
+		 EGLOG(Warning, TEXT("A Pressed"));
+		 //return true;
+	 }
+	 else if (IsInputKeyDown(EKeys::S))
+	 {
+		 EGLOG(Warning, TEXT("S Pressed"));
+	 }
+	 else if (IsInputKeyDown(EKeys::D))
+	 {
+		 EGLOG(Warning, TEXT("D Pressed"));
+	 }
+	 else if (IsInputKeyDown(EKeys::W))
+	 {
+		 EGLOG(Warning, TEXT("W Pressed"));
+	 }
+	
 	 
-	 return false;
+	// return false;
  }
 
  

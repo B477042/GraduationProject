@@ -10,7 +10,7 @@
 /**
  * 
  */
-
+DECLARE_MULTICAST_DELEGATE(FOnKeyTest);
 
 
 UCLASS()
@@ -27,12 +27,14 @@ public:
 
 	class UGameWidget* GetHUDWidget()const;
 
+	FOnKeyTest KeyInputTest;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UGameWidget>HUDWidgetClass;
 
 
 	void SyncStatToHUD();
-	bool IsMoveKeyPressed();
+	void IsMoveKeyPressed();
 
 private:
 	UPROPERTY(meta=(AllowPrivateAccess=true))

@@ -3,6 +3,7 @@
 #include "EGPlayerCharacter.h"
 #include "Engine/SceneCapture2D.h"
 #include "EGPlayerController.h"
+#include"Components/InputComponent.h"
 #include "GameSetting/public/EGCharacterSetting.h"
 #include "..\public\EGPlayerCharacter.h"
 //#include "GameWidget.h"
@@ -37,6 +38,16 @@ void AEGPlayerCharacter::Tick(float DeltaTime)
 	
 
 	SpringArm->TargetArmLength = FMath::FInterpTo(SpringArm->TargetArmLength, ArmLengthTo, DeltaTime, ArmLengthSpeed);
+
+	//key입력 테스트 delegate
+	/*auto PlayerController = Cast<AEGPlayerController>(Controller);
+	if (PlayerController != nullptr)
+	{
+	
+		PlayerController->KeyInputTest.Broadcast();
+	}*/
+
+
 	//GetController()
 	
 	//MiniMapCapture->CaptureScene();
@@ -179,6 +190,7 @@ void AEGPlayerCharacter::LeftRight( float NewAxisValue)
 {
 	AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y), NewAxisValue);
 	//EGLOG(Warning, TEXT("Left or Right Pressed"));
+	
 }
 
 void AEGPlayerCharacter::LookUp(float NewAxisValue)
@@ -199,6 +211,8 @@ void AEGPlayerCharacter::Jump()
 
 void AEGPlayerCharacter::KeyInputTest()
 {
-	playerinputcomponent
+	//playerinputcomponent
+	
+		
 }
 

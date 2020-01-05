@@ -10,7 +10,7 @@
 #include "CharacterStatComponent.h"
 #include "EGPlayerCharacter.generated.h"
 
-DECLARE_DELEGATE(FOnKeyPressed);
+//DECLARE_DELEGATE(FOnKeyPressed);
 
 UCLASS()
 class ESCAPEGAME_API AEGPlayerCharacter : public ACharacter
@@ -20,7 +20,7 @@ class ESCAPEGAME_API AEGPlayerCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AEGPlayerCharacter();
-	 FOnKeyPressed OnKeyPressed;
+	 //FOnKeyPressed OnKeyPressed;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

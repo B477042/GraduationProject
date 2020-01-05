@@ -21,7 +21,7 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGame_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-				0xC5908114,
+				0x4A20984A,
 				0x08778E20,
 				METADATA_PARAMS(nullptr, 0)
 			};
