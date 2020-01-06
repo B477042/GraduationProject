@@ -29,8 +29,10 @@ void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		if (Character)
 		{
 			IsInAir = Character->GetCharacterMovement()->IsFalling();
-			if (Character->GetCharacterMovement()->GetCurrentAcceleration() != FVector::ZeroVector)
+
+		/*	if (Character->GetCharacterMovement()->GetCurrentAcceleration() != FVector::ZeroVector)
 				IsAccelerating=true;
+			else IsAccelerating = false;*/
 		}
 
 	}
