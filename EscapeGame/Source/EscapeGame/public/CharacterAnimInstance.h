@@ -25,7 +25,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void BPBeginPlay();
-	
+	//UFUNCTION(BlueprintCallable)
+	//	void UpdateIsMoving();
+
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
 		float CurrentCharacterSpeed;
@@ -36,6 +38,10 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
 		bool IsInAir;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
+		bool IsAccelerating;//Character가  가속중인지 체크
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
 		TWeakObjectPtr<AEGPlayerCharacter> Character;
 		

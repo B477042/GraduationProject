@@ -187,17 +187,18 @@ void AEGPlayerCharacter::UpDown( float  NewAxisValue)
 	if (NewAxisValue != 0.0f&&GetController() != nullptr)
 	{
 		//굳이 안 움직여도 확인할 수 있다.
-		if (GetCharacterMovement()->IsMovingOnGround())
+		/*if (GetCharacterMovement()->IsMovingOnGround())
 			EGLOG(Warning, TEXT("I'm moving on ground"));
 
 		if (GetCharacterMovement()->IsFalling())
 		EGLOG(Warning, TEXT("I'm falling"));
-		
+		*/
 
 		AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X), NewAxisValue);
 		
 	}
-	
+	if (GetCharacterMovement()->IsWalking())
+		EGLOG(Warning, TEXT("Walk!"));
 }
 
 void AEGPlayerCharacter::LeftRight( float NewAxisValue)
@@ -217,7 +218,8 @@ void AEGPlayerCharacter::LookUp(float NewAxisValue)
 		else if(CurrentControllerPitch + NewAxisValue <= -30.0f)
 			NewAxisValue = -CurrentControllerPitch - 30.0f;
 	}*/
-	
+	if (GetCharacterMovement()->IsWalking())
+		EGLOG(Warning, TEXT("Walk!"));
 	AddControllerPitchInput(NewAxisValue);
 	
 }

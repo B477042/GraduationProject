@@ -62,6 +62,6 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Meta = (AllowPrivateAccess = true))
 		EDamageableState DamageableState;
 	*/	
-
+	
 
 };
