@@ -37,6 +37,11 @@ void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 void UCharacterAnimInstance::BPBeginPlay()
 {
 	EGLOG(Warning, TEXT("Anim Blueprint Begin!!!"));
-	EGLOG(Warning, TEXT("Anim Bp Owner name : %s"), *GetOwningActor()->GetName());
+	//EGLOG(Warning, TEXT("Anim Bp Owner name : %s"), *GetOwningActor()->GetName());
+	Character = Cast<AEGPlayerCharacter>(GetOwningActor());
+	if (Character != nullptr)
+		EGLOG(Warning, TEXT("Character Name : %s"), *Character->GetName());
+
+	
 }
 

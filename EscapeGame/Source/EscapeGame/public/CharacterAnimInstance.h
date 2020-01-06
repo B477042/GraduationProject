@@ -4,11 +4,15 @@
 
 #include "EscapeGame.h"
 #include "Animation/AnimInstance.h"
+#include "EGPlayerCharacter.h"
 #include "CharacterAnimInstance.generated.h"
 
 /**
  * 
  */
+
+DECLARE_MULTICAST_DELEGATE(FAttackEventDelegate);
+
 UCLASS()
 class ESCAPEGAME_API UCharacterAnimInstance : public UAnimInstance
 {
@@ -32,8 +36,12 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
 		bool IsInAir;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Character, Meta = (AllowPrivateAccess = true))
-		bool IsJumpPressed;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
+		TWeakObjectPtr<AEGPlayerCharacter> Character;
+		
+	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Character, Meta = (AllowPrivateAccess = true))
+		bool IsJumpPressed;*/
+
 };
 /*
 	2020 01 03 - 원하는 것

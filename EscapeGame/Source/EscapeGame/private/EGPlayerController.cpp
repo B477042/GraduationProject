@@ -2,6 +2,7 @@
 
 #include "EGPlayerController.h"
 #include"GameWidget.h"
+//#include""
 #include"EGPlayerCharacter.h"
 #include "..\public\EGPlayerController.h"
 //#include"GameStat.h"
@@ -32,6 +33,8 @@ void AEGPlayerController::BeginPlay()
 	EGLOG(Warning, TEXT("Controller begin play"));
 
 	KeyInputTest.AddUObject(this,&AEGPlayerController::IsMoveKeyPressed);
+
+	
 
 }
 
@@ -71,6 +74,7 @@ void AEGPlayerController::OnPossess(APawn * aPawn)
 
 void AEGPlayerController::IsMoveKeyPressed()
  {
+	//inputkey
 	 if (IsInputKeyDown(EKeys::A))
 	 {
 		 EGLOG(Warning, TEXT("A Pressed"));

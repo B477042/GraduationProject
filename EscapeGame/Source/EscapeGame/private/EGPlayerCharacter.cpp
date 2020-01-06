@@ -179,11 +179,25 @@ void AEGPlayerCharacter::SetupSpringArm()
 }
 
 
-
+//이것 하나하나가 input event다.
+//이것들을 활용해서 움직임을 개선해야 된다
 void AEGPlayerCharacter::UpDown( float  NewAxisValue)
 {
-	AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X), NewAxisValue);
-	//EGLOG(Warning, TEXT("UP or Down Pressed"));
+	
+	if (NewAxisValue != 0.0f&&GetController() != nullptr)
+	{
+		//굳이 안 움직여도 확인할 수 있다.
+		if (GetCharacterMovement()->IsMovingOnGround())
+			EGLOG(Warning, TEXT("I'm moving on ground"));
+
+		if (GetCharacterMovement()->IsFalling())
+		EGLOG(Warning, TEXT("I'm falling"));
+		
+
+		AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X), NewAxisValue);
+		
+	}
+	
 }
 
 void AEGPlayerCharacter::LeftRight( float NewAxisValue)
@@ -195,7 +209,17 @@ void AEGPlayerCharacter::LeftRight( float NewAxisValue)
 
 void AEGPlayerCharacter::LookUp(float NewAxisValue)
 {
+	/*if (GetVelocity() != FVector::ZeroVector)
+	{
+		auto CurrentControllerPitch = GetControlRotation().Pitch;
+		if (CurrentControllerPitch + NewAxisValue >= 30.0f)
+			NewAxisValue = -CurrentControllerPitch + 30.0f;
+		else if(CurrentControllerPitch + NewAxisValue <= -30.0f)
+			NewAxisValue = -CurrentControllerPitch - 30.0f;
+	}*/
+	
 	AddControllerPitchInput(NewAxisValue);
+	
 }
 
 void AEGPlayerCharacter::Turn( float  NewAxisValue)

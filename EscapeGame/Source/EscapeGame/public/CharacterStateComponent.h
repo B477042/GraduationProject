@@ -11,13 +11,13 @@
 	상태는 여러가지가 있을 것이다.
 
 	위치 관련 상태
-	InGround : 지면에 닿고 있는 상태
+	InGround : 지면에 닿고 있는 상태. 
 	InAir : 지면에서 떨어진 상태
 
 	데미지 관련 상태, 채력 관련 상태로 볼 수 있지 않나?
 	DamageAllowed : 데미지를 받는 상태
 	DamageNotAllowed : 데미지를 받지 못하는 상태
-
+	
 */
 
 //UENUM(/*BlueprintType*/)
@@ -48,10 +48,13 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
+	
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	void SetState();
+
 private:
 	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Meta = (AllowPrivateAccess = true))
 		EPositionState PositionState;
@@ -59,4 +62,6 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Meta = (AllowPrivateAccess = true))
 		EDamageableState DamageableState;
 	*/	
+
+
 };

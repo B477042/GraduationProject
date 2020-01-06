@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CharacterStateComponent.h"
+#include"EGPlayerCharacter.h"
 
 // Sets default values for this component's properties
 UCharacterStateComponent::UCharacterStateComponent()
