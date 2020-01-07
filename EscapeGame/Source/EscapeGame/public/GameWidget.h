@@ -22,7 +22,7 @@ public:
 	//void BindCharacterStat(class UGameStat* NewCharacterStat);
 	virtual void NativeConstruct() override;
 	void TimeExtend(float addTime);
-	void BindCharacterStat(const UCharacterStatComponent* newStat);
+	void BindCharacterStat( UCharacterStatComponent* newStat);
 	float GetGameTimer();
 	//FBindStat BindStatDelegate;
 	

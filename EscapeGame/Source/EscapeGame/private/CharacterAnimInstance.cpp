@@ -10,7 +10,14 @@ UCharacterAnimInstance::UCharacterAnimInstance()
 	PriviousCharacterHight = 0.0f;
 	HightVariation = 0.0f;
 	IsInAir = false;
-	
+
+	//
+	static ConstructorHelpers::FObjectFinder <UAnimMontage>NORMAL_ATTACK(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/m_NormalAttack.m_NormalAttack'"));
+	if (NORMAL_ATTACK.Succeeded())
+	{
+		NormalAttackMontage = NORMAL_ATTACK.Object;
+		//EGLOG(Error, TEXT("Montage vailed"));
+	}
 }
 
 
@@ -42,10 +49,21 @@ void UCharacterAnimInstance::BPBeginPlay()
 {
 	EGLOG(Warning, TEXT("Anim Blueprint Begin!!!"));
 	//EGLOG(Warning, TEXT("Anim Bp Owner name : %s"), *GetOwningActor()->GetName());
-	Character = Cast<AEGPlayerCharacter>(GetOwningActor());
+	/*Character = Cast<AEGPlayerCharacter>(GetOwningActor());
 	if (Character != nullptr)
 		EGLOG(Warning, TEXT("Character Name : %s"), *Character->GetName());
-
+*/
 	
+}
+
+void UCharacterAnimInstance::PlayNormalAttackMontage()
+{
+	/*EGLOG(Warning, TEXT("Mon enter"));
+	if (!Montage_IsPlaying(NormalAttackMontage))
+	{*/
+		Montage_Play(NormalAttackMontage, 1.0f);
+	/*	EGLOG(Warning, TEXT("Mon ATtack"));
+	}*/
+
 }
 

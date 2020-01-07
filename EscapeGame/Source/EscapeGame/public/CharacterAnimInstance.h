@@ -27,7 +27,7 @@ public:
 		void BPBeginPlay();
 	//UFUNCTION(BlueprintCallable)
 	//	void UpdateIsMoving();
-
+	void PlayNormalAttackMontage();
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
 		float CurrentCharacterSpeed;
@@ -42,9 +42,12 @@ private:
 		bool IsAccelerating;//Character가  가속중인지 체크
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
-		TWeakObjectPtr<AEGPlayerCharacter> Character;
-		
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
+	//	TWeakObjectPtr<AEGPlayerCharacter> Character;//나중에 안 쓰면 그냥 지우고
+	
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
+		UAnimMontage* NormalAttackMontage;//통상공격 몽타주
+
 	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Character, Meta = (AllowPrivateAccess = true))
 		bool IsJumpPressed;*/
 

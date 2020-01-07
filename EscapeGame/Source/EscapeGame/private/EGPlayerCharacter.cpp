@@ -39,19 +39,6 @@ void AEGPlayerCharacter::Tick(float DeltaTime)
 
 	SpringArm->TargetArmLength = FMath::FInterpTo(SpringArm->TargetArmLength, ArmLengthTo, DeltaTime, ArmLengthSpeed);
 
-	//key입력 테스트 delegate
-	/*auto PlayerController = Cast<AEGPlayerController>(Controller);
-	if (PlayerController != nullptr)
-	{
-	
-		PlayerController->KeyInputTest.Broadcast();
-	}*/
-
-
-	//GetController()
-	
-	//MiniMapCapture->CaptureScene();
-//	GetController()->
 }
 
 // Called to bind functionality to input
@@ -67,6 +54,7 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	
 	//Action Input
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed,this, &AEGPlayerCharacter::Jump);
+	PlayerInputComponent->BindAction(TEXT("NormalAttack"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::NormalAttack);
 	EGLOG(Warning, TEXT("Player input component"));
 }
 
@@ -74,6 +62,13 @@ void AEGPlayerCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	EGLOG(Warning, TEXT("Player Post init compons"));
+	//Anim load
+	Anim = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+	if (Anim != nullptr)
+	{
+		//Anim->montage_
+		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnNormalAttackMontageEnded);
+	}
 }
 
 
@@ -96,6 +91,8 @@ UCharacterStatComponent* AEGPlayerCharacter::GetStatComponent()
 {
 	return Stat;
 }
+
+
 
 
 
@@ -184,8 +181,7 @@ void AEGPlayerCharacter::SetupSpringArm()
 void AEGPlayerCharacter::UpDown( float  NewAxisValue)
 {
 	
-	if (NewAxisValue != 0.0f&&GetController() != nullptr)
-	{
+	if (NewAxisValue == 0.0f)return;
 		//굳이 안 움직여도 확인할 수 있다.
 		/*if (GetCharacterMovement()->IsMovingOnGround())
 			EGLOG(Warning, TEXT("I'm moving on ground"));
@@ -196,13 +192,13 @@ void AEGPlayerCharacter::UpDown( float  NewAxisValue)
 
 		AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X), NewAxisValue);
 		
-	}
-	if (GetCharacterMovement()->IsWalking())
-		EGLOG(Warning, TEXT("Walk!"));
+	
+
 }
 
 void AEGPlayerCharacter::LeftRight( float NewAxisValue)
 {
+	if (NewAxisValue == 0.0f)return;
 	AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y), NewAxisValue);
 	//EGLOG(Warning, TEXT("Left or Right Pressed"));
 	
@@ -210,7 +206,8 @@ void AEGPlayerCharacter::LeftRight( float NewAxisValue)
 
 void AEGPlayerCharacter::LookUp(float NewAxisValue)
 {
-	/*if (GetVelocity() != FVector::ZeroVector)
+	if (NewAxisValue == 0.0f)return;
+	/*if (GetVelocity() == FVector::ZeroVector)
 	{
 		auto CurrentControllerPitch = GetControlRotation().Pitch;
 		if (CurrentControllerPitch + NewAxisValue >= 30.0f)
@@ -218,14 +215,15 @@ void AEGPlayerCharacter::LookUp(float NewAxisValue)
 		else if(CurrentControllerPitch + NewAxisValue <= -30.0f)
 			NewAxisValue = -CurrentControllerPitch - 30.0f;
 	}*/
-	if (GetCharacterMovement()->IsWalking())
-		EGLOG(Warning, TEXT("Walk!"));
+	/*if (GetCharacterMovement()->IsWalking())
+		EGLOG(Warning, TEXT("Walk!"));*/
 	AddControllerPitchInput(NewAxisValue);
 	
 }
 
 void AEGPlayerCharacter::Turn( float  NewAxisValue)
 {
+	if (NewAxisValue == 0.0f)return;
 	AddControllerYawInput(NewAxisValue);
 }
 
@@ -242,3 +240,22 @@ void AEGPlayerCharacter::KeyInputTest()
 		
 }
 
+void AEGPlayerCharacter::OnNormalAttackMontageEnded(UAnimMontage * Montage, bool bInterrupted)
+{
+	//if (!Stat->IsAttacking())return;
+	EGLOG(Warning, TEXT("PlayEnded"));
+	Stat->OnAttacking(false);
+}
+
+void AEGPlayerCharacter::NormalAttack()
+{
+
+
+	if (Stat->IsAttacking()) {
+		EGLOG(Warning, TEXT("You Attacking now"));
+		return;
+	}
+
+	Anim->PlayNormalAttackMontage();
+	Stat->OnAttacking(true);
+}

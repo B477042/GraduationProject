@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CharacterStatComponent.h"
+#include "..\public\CharacterStatComponent.h"
 
 // Sets default values for this component's properties
 UCharacterStatComponent::UCharacterStatComponent()
@@ -11,6 +12,7 @@ UCharacterStatComponent::UCharacterStatComponent()
 	CurrentHP = MaxHP;
 	CurrentATK = 10.0f;
 	timer = 0.0f;
+	bIsAttacking = false;
 	EGLOG(Warning, TEXT("Stat component!"));
 	// ...
 }
@@ -68,6 +70,16 @@ void UCharacterStatComponent::HealHP(float AddHP)
 	HPChangedDelegate.Broadcast();
 }
 
+void UCharacterStatComponent::AddCombo(int count)
+{
+	CurrentCombo += count;
+}
+
+void UCharacterStatComponent::ResetCombo()
+{
+	CurrentCombo = 0;
+}
+
 void UCharacterStatComponent::BasicDamage()
 {
 	timer += GetWorld()->DeltaTimeSeconds;
@@ -81,8 +93,15 @@ void UCharacterStatComponent::BasicDamage()
 		SetHP(0.0f);
 }
 
+void UCharacterStatComponent::OnAttacking(bool bResult)
+{
+	bIsAttacking = bResult;
+}
 
-float UCharacterStatComponent::GetAttack() const
+
+
+
+float UCharacterStatComponent::GetAttackPoint() const
 {
 	return CurrentATK;
 }
@@ -95,5 +114,15 @@ float UCharacterStatComponent::GetHPRatio() const
 float UCharacterStatComponent::GetHP() const
 {
 	return CurrentHP;
+}
+
+float UCharacterStatComponent::GetCurrentCombo() const
+{
+	return 0.0f;
+}
+
+bool UCharacterStatComponent::IsAttacking() const
+{
+	return bIsAttacking;
 }
 

@@ -31,12 +31,20 @@ public:
 	void SetHP(float NewHP);
 	//Add HP to Current HP
 	void HealHP(float AddHP);
+	void AddCombo(int count);
+	void ResetCombo();
 	void BasicDamage();
+	void OnAttacking(bool bResult);
+	
+	
 
 	//int32 GetDropExp()const;
-	float GetAttack()const;
+	float GetAttackPoint()const;
 	float GetHPRatio()const;
 	float GetHP()const;
+	float GetCurrentCombo()const;
+	bool IsAttacking()const;
+	
 
 	FOnHPChangeDelegate HPChangedDelegate;
 	FIsHPZero HPZeroDelegate;
@@ -45,9 +53,16 @@ private:
 	float timer;
 private:
 	
-	//save current HP,Transient ����
+	//save current HP,
+	//Transient 이 프로퍼티는 휘발성이라, 저장 또는 로드되지 않습니다. 
+	//이런 식의 지정자가 붙은 프로퍼티는 로드 시간에 0 으로 채워집니다.
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		float CurrentHP;
 	UPROPERTY(VisibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		float CurrentATK;
+	UPROPERTY(Transient, VisibleInstanceOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
+		int CurrentCombo;
+	UPROPERTY(Transient, VisibleInstanceOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
+		bool	bIsAttacking;
+
 };

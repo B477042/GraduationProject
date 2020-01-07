@@ -8,6 +8,7 @@
 #include "MinimapRenderComponent.h"
 #include "GameFramework/Character.h"
 #include "CharacterStatComponent.h"
+#include "CharacterAnimInstance.h"
 #include "EGPlayerCharacter.generated.h"
 
 //DECLARE_DELEGATE(FOnKeyPressed);
@@ -45,6 +46,8 @@ public:
 	void HealHP(float addHP);
 	 UCharacterStatComponent* GetStatComponent();
 	
+	 void NormalAttack();
+	 void ComboAttack();
 	//=====================================================================
 	// Public UPROPERTY Zone
 public:
@@ -79,11 +82,17 @@ private:
 	//=========================
 	void KeyInputTest();
 
+	//============================
+	UFUNCTION()
+	void OnNormalAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+	
 //==================================================
 
 
 	//private PROPERTY
 private:
-	//UPROPERTY(BlueprintReadable, Meta=privateAccessAllowd=true)
+
+	UPROPERTY(/*VisibleInstanceOnly,BlueprintReadOnly, Category = Anim, Meta=(AllowPrivateAccess=true)*/)
+		class UCharacterAnimInstance* Anim;
 
 };
