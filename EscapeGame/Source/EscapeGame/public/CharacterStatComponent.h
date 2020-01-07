@@ -60,9 +60,15 @@ private:
 		float CurrentHP;
 	UPROPERTY(VisibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		float CurrentATK;
-	UPROPERTY(Transient, VisibleInstanceOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
-		int CurrentCombo;
-	UPROPERTY(Transient, VisibleInstanceOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
+	UPROPERTY( VisibleInstanceOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
+		int32 CurrentCombo;
+	UPROPERTY( VisibleInstanceOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
+		int32 MaxCombo;
+	UPROPERTY( VisibleInstanceOnly,BlueprintReadOnly Category = Attacking, Meta = (AllowPrivateAccess = true))
 		bool	bIsAttacking;
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly Category = Attacking, Meta = (AllowPrivateAccess = true))
+		bool bCanNextNA;//Can next normal attack
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly Category = Attacking, Meta = (AllowPrivateAccess = true))
+		bool bCanNextCA;//Can next Charge Attack
 
 };
