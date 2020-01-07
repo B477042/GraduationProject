@@ -243,7 +243,7 @@ void AEGPlayerCharacter::KeyInputTest()
 void AEGPlayerCharacter::OnNormalAttackMontageEnded(UAnimMontage * Montage, bool bInterrupted)
 {
 	//if (!Stat->IsAttacking())return;
-	EGLOG(Warning, TEXT("PlayEnded"));
+	//EGLOG(Warning, TEXT("PlayEnded"));
 	Stat->OnAttacking(false);
 }
 
