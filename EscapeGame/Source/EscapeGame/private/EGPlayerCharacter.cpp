@@ -54,7 +54,8 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	
 	//Action Input
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed,this, &AEGPlayerCharacter::Jump);
-	PlayerInputComponent->BindAction(TEXT("NormalAttack"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::NormalAttack);
+	PlayerInputComponent->BindAction(TEXT("ComboAttack"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::ComboAttack);
+	PlayerInputComponent->BindAction(TEXT("ChargeAttack"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::ChargeAttack);
 	EGLOG(Warning, TEXT("Player input component"));
 }
 
@@ -90,6 +91,23 @@ void AEGPlayerCharacter::HealHP(float addHP)
 UCharacterStatComponent* AEGPlayerCharacter::GetStatComponent()
 {
 	return Stat;
+}
+
+void AEGPlayerCharacter::ChargeAttack()
+{
+	EGLOG(Warning, TEXT("Charge Attack"));
+}
+
+void AEGPlayerCharacter::ComboAttack()
+{
+
+	if (Stat->IsAttacking()) {
+		EGLOG(Warning, TEXT("You Attacking now"));
+		return;
+	}
+
+	Anim->PlayAttackMontage();
+	Stat->OnAttacking(true);
 }
 
 
@@ -247,15 +265,10 @@ void AEGPlayerCharacter::OnNormalAttackMontageEnded(UAnimMontage * Montage, bool
 	Stat->OnAttacking(false);
 }
 
-void AEGPlayerCharacter::NormalAttack()
+void AEGPlayerCharacter::ComboAttackStart()
 {
+}
 
-
-	if (Stat->IsAttacking()) {
-		EGLOG(Warning, TEXT("You Attacking now"));
-		return;
-	}
-
-	Anim->PlayNormalAttackMontage();
-	Stat->OnAttacking(true);
+void AEGPlayerCharacter::ComboAttackEnd()
+{
 }

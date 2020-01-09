@@ -15,8 +15,8 @@ UCharacterStatComponent::UCharacterStatComponent()
 	bIsAttacking = false;
 	bIsChargeAttackInputOn = false;
 	bIsComboAttackInputOn = false;
-	bCanNextCA = false;
-	bCanNextNA = false;
+	bCanChargeAttack = false;
+	bCanComboAttack = false;
 	CurrentCombo = 0;
 	MaxCombo = 4;
 	EGLOG(Warning, TEXT("Stat component!"));
@@ -108,17 +108,31 @@ void UCharacterStatComponent::OnAttacking(bool bResult)
 
 void UCharacterStatComponent::SetCanNextNA(bool bResult)
 {
-	bCanNextNA = bResult;
+	bCanComboAttack = bResult;
 }
 
 void UCharacterStatComponent::SetCanNextCA(bool bResult)
 {
-	bCanNextCA = bResult;
+	bCanChargeAttack = bResult;
 }
-
+//montage paly가 종료되면 호출 될 것이다
 void UCharacterStatComponent::SetComboEndState()
 {
-	Can
+	bCanComboAttack = false;
+	bCanChargeAttack = false;
+	bIsAttacking = false;
+
+	ResetCombo();
+
+}
+
+void UCharacterStatComponent::SetComboStartState()
+{
+	AddCombo(1);
+	bCanChargeAttack = true;
+	bCanComboAttack = true;
+
+	
 }
 
 
@@ -155,13 +169,14 @@ bool UCharacterStatComponent::IsAttacking() const
 	return bIsAttacking;
 }
 
-bool UCharacterStatComponent::CheackNextNA() const
+bool UCharacterStatComponent::CheackCanComboAttack() const
 {
-	return bCanNextNA;
+	return bCanComboAttack;
 }
 
-bool UCharacterStatComponent::CheackNextCA() const
+bool UCharacterStatComponent::CheackCanChargeAttack() const
 {
-	return bCanNextCA;
+	return bCanChargeAttack;
 }
+
 

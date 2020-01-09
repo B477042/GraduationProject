@@ -52,8 +52,8 @@ public:
 	float GetHP()const;
 	
 	bool IsAttacking()const;
-	bool CheackNextNA()const;
-	bool CheackNextCA()const;
+	bool CheackCanComboAttack()const;
+	bool CheackCanChargeAttack()const;
 	
 
 	FOnHPChangeDelegate HPChangedDelegate;
@@ -86,9 +86,9 @@ private:
 		bool bIsChargeAttackInputOn;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly ,Category = Attacking, Meta = (AllowPrivateAccess = true))
-		bool bCanNextNA;//Can next normal attack
+		bool bCanComboAttack;//Can next Combo attack
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
-		bool bCanNextCA;//Can next Charge Attack
+		bool bCanChargeAttack;//Can next Charge Attack
 
 
 };

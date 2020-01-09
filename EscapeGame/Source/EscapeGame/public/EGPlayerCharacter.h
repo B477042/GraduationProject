@@ -46,7 +46,7 @@ public:
 	void HealHP(float addHP);
 	 UCharacterStatComponent* GetStatComponent();
 	
-	 void NormalAttack();
+	 void ChargeAttack();
 	 void ComboAttack();
 	//=====================================================================
 	// Public UPROPERTY Zone
@@ -85,14 +85,16 @@ private:
 	//============================
 	UFUNCTION()
 	void OnNormalAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+
 	UFUNCTION()
 		void ComboAttackStart();
 	UFUNCTION()
 		void ComboAttackEnd();
-	UFUNCTION()
+
+	/*UFUNCTION()
 		void ChargeAttackStart();
 	UFUNCTION()
-		void ChargeAttackEnd();
+		void ChargeAttackEnd();*/
 
 //==================================================
 

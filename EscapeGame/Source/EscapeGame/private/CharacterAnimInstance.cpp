@@ -56,7 +56,7 @@ void UCharacterAnimInstance::BPBeginPlay()
 	
 }
 
-void UCharacterAnimInstance::PlayNormalAttackMontage()
+void UCharacterAnimInstance::PlayAttackMontage()
 {
 	/*EGLOG(Warning, TEXT("Mon enter"));
 	if (!Montage_IsPlaying(NormalAttackMontage))
@@ -71,7 +71,7 @@ void UCharacterAnimInstance::JumpToComboAttackSection(int32 NewSection)
 {
 	if(!Montage_IsPlaying(AttackMontage))//if not playing attack montage 
 		return;
-	Montage_JumpToSection(GetComboMontageSectionName(NewSection));
+	//Montage_JumpToSection(GetAttackMontageSectionName(NewSection));
 
 }
 
@@ -93,9 +93,11 @@ void UCharacterAnimInstance::AnimNotify_CanChargeAttack()
 	//Called Function in EGPlayerCharaceter;
 }
 
-FName UCharacterAnimInstance::GetComboMontageSectionName(int32 Section)
+//Section값이 Combo값과 일치 하는지 검사한다
+//일치 하지 않는다면 Failed라는 FName이 반환된다
+FName UCharacterAnimInstance::GetAttackMontageSectionName(int32 Section)
 {
-	if (!FMath::IsWithinInclusive<int32>(Section, 1, 4))return;
+	if (!FMath::IsWithinInclusive<int32>(Section, StartCombo, EndCombo))return FName(*FString::Printf(TEXT("Failed")));
 	return FName(*FString::Printf(TEXT("ComboAttack%d"),Section));
 }
 
