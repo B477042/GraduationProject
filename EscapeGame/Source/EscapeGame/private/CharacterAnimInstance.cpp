@@ -71,7 +71,7 @@ void UCharacterAnimInstance::JumpToComboAttackSection(int32 NewSection)
 {
 	if(!Montage_IsPlaying(AttackMontage))//if not playing attack montage 
 		return;
-	//Montage_JumpToSection(GetAttackMontageSectionName(NewSection));
+	Montage_JumpToSection(GetAttackMontageSectionName(NewSection));
 
 }
 
@@ -79,16 +79,20 @@ void UCharacterAnimInstance::JumpToChargetAttackSection(int32 NewSection)
 {
 	if (!Montage_IsPlaying(AttackMontage))//if not playing attack montage 
 		return;
-	EGLOG(Warning, TEXT("Not impelemented"));
+	
 }
 
-void UCharacterAnimInstance::AnimNotify_CanNextAttack()
+//공격 애니메이션 재생되고 다음 애니메이션을 재생할지 검사하는 타이밍에 나온다
+void UCharacterAnimInstance::AnimNotify_CanComboAttack()
 {
+	EGLOG(Warning, TEXT("AnimNotify_CanCombo"));
 	OnComboAttackCheckDelegate.Broadcast();
 }
 
+//공격 애니메이션 재생되고 다음 애니메이션을 재생할지 검사하는 타이밍에 나온다
 void UCharacterAnimInstance::AnimNotify_CanChargeAttack()
 {
+	EGLOG(Warning, TEXT("AnimNotify_CanCharge"));
 	OnChargeAttackCheckDelegate.Broadcast();
 	//Called Function in EGPlayerCharaceter;
 }

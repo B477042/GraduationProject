@@ -37,8 +37,9 @@ public:
 	FComboAttackCheckDelegate OnComboAttackCheckDelegate;//콤보 어택으로 이어질지 검사하는 델리게이트
 	FChargeAttackCheckDelegate OnChargeAttackCheckDelegate;//차지어택으로 이어질지 검사하는 델리게이트
 private:
+	//AnimNotify는 몽타쥬에서 정한 호출 시점에서 자동으로 호출된다
 	UFUNCTION()
-		void AnimNotify_CanNextAttack();
+		void AnimNotify_CanComboAttack();
 	UFUNCTION()
 		void AnimNotify_CanChargeAttack();
 	FName GetAttackMontageSectionName(int32 Section);

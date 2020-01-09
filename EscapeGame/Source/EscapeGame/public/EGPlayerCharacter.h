@@ -85,9 +85,10 @@ private:
 	//============================
 	UFUNCTION()
 	void OnNormalAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
-
+	//Attack Montage가 재생될 때 호출될 함수
 	UFUNCTION()
 		void ComboAttackStart();
+	//Montage가 멈출 때 호출될 함수
 	UFUNCTION()
 		void ComboAttackEnd();
 

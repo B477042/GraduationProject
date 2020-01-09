@@ -106,12 +106,12 @@ void UCharacterStatComponent::OnAttacking(bool bResult)
 	bIsAttacking = bResult;
 }
 
-void UCharacterStatComponent::SetCanNextNA(bool bResult)
+void UCharacterStatComponent::SetCanComboAttack(bool bResult)
 {
 	bCanComboAttack = bResult;
 }
 
-void UCharacterStatComponent::SetCanNextCA(bool bResult)
+void UCharacterStatComponent::SetCanChargeAttack(bool bResult)
 {
 	bCanChargeAttack = bResult;
 }
@@ -121,18 +121,24 @@ void UCharacterStatComponent::SetComboEndState()
 	bCanComboAttack = false;
 	bCanChargeAttack = false;
 	bIsAttacking = false;
-
+	//공격이 불가능하게 해준다
+	bIsChargeAttackInputOn = false;
+	bIsComboAttackInputOn = false;
 	ResetCombo();
 
 }
 
+//Montage Play가 시작되면 호출될 상태다
 void UCharacterStatComponent::SetComboStartState()
 {
-	AddCombo(1);
+	
 	bCanChargeAttack = true;
 	bCanComboAttack = true;
 
-	
+	AddCombo(1);
+	////공격을 시작 했으니 둘의 입력을 초기화 시킨다
+	bIsChargeAttackInputOn = false;
+	bIsComboAttackInputOn = false;
 }
 
 
@@ -171,12 +177,12 @@ bool UCharacterStatComponent::IsAttacking() const
 
 bool UCharacterStatComponent::CheackCanComboAttack() const
 {
-	return bCanComboAttack;
+	return bIsComboAttackInputOn;
 }
 
 bool UCharacterStatComponent::CheackCanChargeAttack() const
 {
-	return bCanChargeAttack;
+	return bIsChargeAttackInputOn;
 }
 
 

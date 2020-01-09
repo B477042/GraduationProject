@@ -35,8 +35,8 @@ public:
 	void ResetCombo();
 	void BasicDamage();//자신이 초당 입는 기본 데미지
 	void OnAttacking( bool bResult);
-	void SetCanNextNA(bool bResult);
-	void SetCanNextCA(bool bResult);
+	void SetCanComboAttack(bool bResult);
+	void SetCanChargeAttack(bool bResult);
 	void SetComboEndState();
 	void SetComboStartState();
 

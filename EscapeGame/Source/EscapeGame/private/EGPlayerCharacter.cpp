@@ -69,6 +69,10 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	{
 		//Anim->montage_
 		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnNormalAttackMontageEnded);
+
+		Anim->OnComboAttackCheckDelegate.AddLambda([this]()->void {
+			if(Stat->)
+		});
 	}
 }
 
@@ -95,19 +99,38 @@ UCharacterStatComponent* AEGPlayerCharacter::GetStatComponent()
 
 void AEGPlayerCharacter::ChargeAttack()
 {
-	EGLOG(Warning, TEXT("Charge Attack"));
+	//Charge Attack은 시동이 걸린 상태에서만 실행될 것이다
+	if(Stat->IsAttacking())
+		EGLOG(Warning, TEXT("Charge Attack"));
 }
 
 void AEGPlayerCharacter::ComboAttack()
 {
 
-	if (Stat->IsAttacking()) {
+	/*if (Stat->IsAttacking()) {
 		EGLOG(Warning, TEXT("You Attacking now"));
 		return;
+	}*/
+	//시동동작
+	if (!Stat->IsAttacking())
+	{
+		Stat->SetComboStartState();
+		Anim->JumpToComboAttackSection(Stat->GetCurrentCombo());
+		Anim->PlayAttackMontage();//시동이니 ComboAttack1이 재생된다
+		
 	}
-
-	Anim->PlayAttackMontage();
-	Stat->OnAttacking(true);
+	//이미 공격중인 상태
+	else
+	{
+		//combo Attack input이 걸렸는지 확인한다.
+		//input이 안 걸렸다면 걸어준다
+		if (!Stat->CheackCanComboAttack())
+		{
+			Stat->SetCanComboAttack(true);//다음 몽타쥬가 재생될 수 있게 해준다
+			Stat->SetCanChargeAttack(false);//대신 차지 공격은 불가능하다
+		}
+	}
+	
 }
 
 
@@ -262,13 +285,18 @@ void AEGPlayerCharacter::OnNormalAttackMontageEnded(UAnimMontage * Montage, bool
 {
 	//if (!Stat->IsAttacking())return;
 	//EGLOG(Warning, TEXT("PlayEnded"));
-	Stat->OnAttacking(false);
+	ComboAttackEnd();
 }
 
 void AEGPlayerCharacter::ComboAttackStart()
 {
+	if (Stat == nullptr)return;
+	Stat->SetComboStartState();
 }
+
 
 void AEGPlayerCharacter::ComboAttackEnd()
 {
+	if (Stat == nullptr)return;
+	Stat->SetComboEndState();
 }
