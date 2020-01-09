@@ -31,23 +31,34 @@ public:
 	void SetHP(float NewHP);
 	//Add HP to Current HP
 	void HealHP(float AddHP);
-	void AddCombo(int count);
+	void AddCombo(int32 Amount);
 	void ResetCombo();
-	void BasicDamage();
-	void OnAttacking(bool bResult);
+	void BasicDamage();//자신이 초당 입는 기본 데미지
+	void OnAttacking( bool bResult);
+	void SetCanNextNA(bool bResult);
+	void SetCanNextCA(bool bResult);
+	void SetComboEndState();
+	void SetComboStartState();
+
 	
 	
 
 	//int32 GetDropExp()const;
+	int32 GetMaxCombo()const;
+	int32 GetCurrentCombo()const;
+
 	float GetAttackPoint()const;
 	float GetHPRatio()const;
 	float GetHP()const;
-	float GetCurrentCombo()const;
+	
 	bool IsAttacking()const;
+	bool CheackNextNA()const;
+	bool CheackNextCA()const;
 	
 
 	FOnHPChangeDelegate HPChangedDelegate;
 	FIsHPZero HPZeroDelegate;
+
 private:
 	const float MaxHP=100.0f;
 	float timer;
@@ -64,11 +75,20 @@ private:
 		int32 CurrentCombo;
 	UPROPERTY( VisibleInstanceOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
 		int32 MaxCombo;
-	UPROPERTY( VisibleInstanceOnly,BlueprintReadOnly Category = Attacking, Meta = (AllowPrivateAccess = true))
-		bool	bIsAttacking;
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly Category = Attacking, Meta = (AllowPrivateAccess = true))
+
+	UPROPERTY( VisibleInstanceOnly,BlueprintReadOnly ,Category = Attacking, Meta = (AllowPrivateAccess = true))
+		bool bIsAttacking;
+	//Normal Combo를 진행할 입력이 입력 됐는지
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
+		bool bIsComboAttackInputOn;
+	//Charge Combo를 진행할 입력이 입력 됐는지
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
+		bool bIsChargeAttackInputOn;
+
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly ,Category = Attacking, Meta = (AllowPrivateAccess = true))
 		bool bCanNextNA;//Can next normal attack
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly Category = Attacking, Meta = (AllowPrivateAccess = true))
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
 		bool bCanNextCA;//Can next Charge Attack
+
 
 };

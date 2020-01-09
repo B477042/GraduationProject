@@ -85,7 +85,15 @@ private:
 	//============================
 	UFUNCTION()
 	void OnNormalAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
-	
+	UFUNCTION()
+		void ComboAttackStart();
+	UFUNCTION()
+		void ComboAttackEnd();
+	UFUNCTION()
+		void ChargeAttackStart();
+	UFUNCTION()
+		void ChargeAttackEnd();
+
 //==================================================
 
 

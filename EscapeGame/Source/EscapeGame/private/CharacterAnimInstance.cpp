@@ -15,7 +15,7 @@ UCharacterAnimInstance::UCharacterAnimInstance()
 	static ConstructorHelpers::FObjectFinder <UAnimMontage>NORMAL_ATTACK(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/m_NormalAttack.m_NormalAttack'"));
 	if (NORMAL_ATTACK.Succeeded())
 	{
-		NormalAttackMontage = NORMAL_ATTACK.Object;
+		AttackMontage = NORMAL_ATTACK.Object;
 		//EGLOG(Error, TEXT("Montage vailed"));
 	}
 }
@@ -61,9 +61,41 @@ void UCharacterAnimInstance::PlayNormalAttackMontage()
 	/*EGLOG(Warning, TEXT("Mon enter"));
 	if (!Montage_IsPlaying(NormalAttackMontage))
 	{*/
-		Montage_Play(NormalAttackMontage, 1.0f);
+		Montage_Play(AttackMontage, 1.0f);
 	/*	EGLOG(Warning, TEXT("Mon ATtack"));
 	}*/
 
+}
+
+void UCharacterAnimInstance::JumpToComboAttackSection(int32 NewSection)
+{
+	if(!Montage_IsPlaying(AttackMontage))//if not playing attack montage 
+		return;
+	Montage_JumpToSection(GetComboMontageSectionName(NewSection));
+
+}
+
+void UCharacterAnimInstance::JumpToChargetAttackSection(int32 NewSection)
+{
+	if (!Montage_IsPlaying(AttackMontage))//if not playing attack montage 
+		return;
+	EGLOG(Warning, TEXT("Not impelemented"));
+}
+
+void UCharacterAnimInstance::AnimNotify_CanNextAttack()
+{
+	OnComboAttackCheckDelegate.Broadcast();
+}
+
+void UCharacterAnimInstance::AnimNotify_CanChargeAttack()
+{
+	OnChargeAttackCheckDelegate.Broadcast();
+	//Called Function in EGPlayerCharaceter;
+}
+
+FName UCharacterAnimInstance::GetComboMontageSectionName(int32 Section)
+{
+	if (!FMath::IsWithinInclusive<int32>(Section, 1, 4))return;
+	return FName(*FString::Printf(TEXT("ComboAttack%d"),Section));
 }
 

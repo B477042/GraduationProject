@@ -13,6 +13,12 @@ UCharacterStatComponent::UCharacterStatComponent()
 	CurrentATK = 10.0f;
 	timer = 0.0f;
 	bIsAttacking = false;
+	bIsChargeAttackInputOn = false;
+	bIsComboAttackInputOn = false;
+	bCanNextCA = false;
+	bCanNextNA = false;
+	CurrentCombo = 0;
+	MaxCombo = 4;
 	EGLOG(Warning, TEXT("Stat component!"));
 	// ...
 }
@@ -70,10 +76,12 @@ void UCharacterStatComponent::HealHP(float AddHP)
 	HPChangedDelegate.Broadcast();
 }
 
-void UCharacterStatComponent::AddCombo(int count)
+void UCharacterStatComponent::AddCombo(int32 Amount)
 {
-	CurrentCombo += count;
+	CurrentCombo += Amount;
 }
+
+
 
 void UCharacterStatComponent::ResetCombo()
 {
@@ -98,6 +106,21 @@ void UCharacterStatComponent::OnAttacking(bool bResult)
 	bIsAttacking = bResult;
 }
 
+void UCharacterStatComponent::SetCanNextNA(bool bResult)
+{
+	bCanNextNA = bResult;
+}
+
+void UCharacterStatComponent::SetCanNextCA(bool bResult)
+{
+	bCanNextCA = bResult;
+}
+
+void UCharacterStatComponent::SetComboEndState()
+{
+	Can
+}
+
 
 
 
@@ -116,13 +139,29 @@ float UCharacterStatComponent::GetHP() const
 	return CurrentHP;
 }
 
-float UCharacterStatComponent::GetCurrentCombo() const
+int32 UCharacterStatComponent::GetMaxCombo() const
 {
-	return 0.0f;
+	return MaxCombo;
 }
+
+int32 UCharacterStatComponent::GetCurrentCombo() const
+{
+	return  CurrentCombo;
+}
+
 
 bool UCharacterStatComponent::IsAttacking() const
 {
 	return bIsAttacking;
+}
+
+bool UCharacterStatComponent::CheackNextNA() const
+{
+	return bCanNextNA;
+}
+
+bool UCharacterStatComponent::CheackNextCA() const
+{
+	return bCanNextCA;
 }
 
