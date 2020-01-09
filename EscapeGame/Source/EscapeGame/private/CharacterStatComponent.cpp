@@ -106,14 +106,20 @@ void UCharacterStatComponent::OnAttacking(bool bResult)
 	bIsAttacking = bResult;
 }
 
-void UCharacterStatComponent::SetCanComboAttack(bool bResult)
+void UCharacterStatComponent::SetComboAttackInput(bool bResult)
 {
-	bCanComboAttack = bResult;
+	//bCanComboAttack = bResult;
+	bIsComboAttackInputOn = bResult;
+	//bIsChargeAttackInputOn = false;
+	EGLOG(Warning, TEXT("Set Combo Input : %d"), bIsComboAttackInputOn);
 }
 
-void UCharacterStatComponent::SetCanChargeAttack(bool bResult)
+void UCharacterStatComponent::SetChargeAttackInput(bool bResult)
 {
-	bCanChargeAttack = bResult;
+	//bCanChargeAttack = bResult;
+	bIsChargeAttackInputOn = bResult;
+	EGLOG(Warning, TEXT("Set ChargeAttack Input : %d"), bIsChargeAttackInputOn);
+	//bIsComboAttackInputOn = false;
 }
 //montage paly가 종료되면 호출 될 것이다
 void UCharacterStatComponent::SetComboEndState()
@@ -134,7 +140,7 @@ void UCharacterStatComponent::SetComboStartState()
 	
 	bCanChargeAttack = true;
 	bCanComboAttack = true;
-
+	bIsAttacking = true;
 	AddCombo(1);
 	////공격을 시작 했으니 둘의 입력을 초기화 시킨다
 	bIsChargeAttackInputOn = false;
@@ -175,12 +181,12 @@ bool UCharacterStatComponent::IsAttacking() const
 	return bIsAttacking;
 }
 
-bool UCharacterStatComponent::CheackCanComboAttack() const
+bool UCharacterStatComponent::CheckCanComboAttack() const
 {
 	return bIsComboAttackInputOn;
 }
 
-bool UCharacterStatComponent::CheackCanChargeAttack() const
+bool UCharacterStatComponent::CheckCanChargeAttack() const
 {
 	return bIsChargeAttackInputOn;
 }

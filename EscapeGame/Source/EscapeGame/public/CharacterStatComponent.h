@@ -35,8 +35,8 @@ public:
 	void ResetCombo();
 	void BasicDamage();//자신이 초당 입는 기본 데미지
 	void OnAttacking( bool bResult);
-	void SetCanComboAttack(bool bResult);
-	void SetCanChargeAttack(bool bResult);
+	void SetComboAttackInput(bool bResult);
+	void SetChargeAttackInput(bool bResult);
 	void SetComboEndState();
 	void SetComboStartState();
 
@@ -52,8 +52,8 @@ public:
 	float GetHP()const;
 	
 	bool IsAttacking()const;
-	bool CheackCanComboAttack()const;
-	bool CheackCanChargeAttack()const;
+	bool CheckCanComboAttack()const;
+	bool CheckCanChargeAttack()const;
 	
 
 	FOnHPChangeDelegate HPChangedDelegate;
