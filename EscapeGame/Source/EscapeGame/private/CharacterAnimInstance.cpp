@@ -52,7 +52,7 @@ void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 void UCharacterAnimInstance::BPBeginPlay()
 {
-	EGLOG(Warning, TEXT("Anim Blueprint Begin!!!"));
+	//EGLOG(Warning, TEXT("Anim Blueprint Begin!!!"));
 	//EGLOG(Warning, TEXT("Anim Bp Owner name : %s"), *GetOwningActor()->GetName());
 	/*Character = Cast<AEGPlayerCharacter>(GetOwningActor());
 	if (Character != nullptr)
@@ -95,14 +95,14 @@ void UCharacterAnimInstance::JumpToChargetAttackSection(int32 NewSection)
 //공격 애니메이션 재생되고 다음 애니메이션을 재생할지 검사하는 타이밍에 나온다
 void UCharacterAnimInstance::AnimNotify_CanComboAttack()
 {
-	EGLOG(Warning, TEXT("AnimNotify_CanCombo"));
+	//EGLOG(Warning, TEXT("AnimNotify_CanCombo"));
 	OnComboAttackCheckDelegate.Broadcast();
 }
 
 //공격 애니메이션 재생되고 다음 애니메이션을 재생할지 검사하는 타이밍에 나온다
 void UCharacterAnimInstance::AnimNotify_CanChargeAttack()
 {
-	EGLOG(Warning, TEXT("AnimNotify_CanCharge"));
+	//EGLOG(Warning, TEXT("AnimNotify_CanCharge"));
 	OnChargeAttackCheckDelegate.Broadcast();
 	//Called Function in EGPlayerCharaceter;
 }

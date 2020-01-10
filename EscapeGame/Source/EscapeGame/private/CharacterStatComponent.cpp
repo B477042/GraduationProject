@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CharacterStatComponent.h"
+#include "EGPlayerCharacter.h"
 #include "..\public\CharacterStatComponent.h"
 
 // Sets default values for this component's properties
@@ -132,6 +133,7 @@ void UCharacterStatComponent::SetComboEndState()
 	bIsComboAttackInputOn = false;
 	ResetCombo();
 
+	SetIdleMovement();
 }
 
 //Montage Play가 시작되면 호출될 상태다
@@ -145,6 +147,30 @@ void UCharacterStatComponent::SetComboStartState()
 	////공격을 시작 했으니 둘의 입력을 초기화 시킨다
 	bIsChargeAttackInputOn = false;
 	bIsComboAttackInputOn = false;
+
+	SetAttackingMovement();
+}
+
+void UCharacterStatComponent::SetAttackingMovement()
+{
+	auto Character = Cast<AEGPlayerCharacter>(GetOwner());
+	if (Character != nullptr)
+	{
+		auto Movement = Character->GetCharacterMovement();
+		Movement->MaxWalkSpeed = 10.0f;
+	}
+
+}
+
+void UCharacterStatComponent::SetIdleMovement()
+{
+	auto Character = Cast<AEGPlayerCharacter>(GetOwner());
+	if (Character != nullptr)
+	{
+		auto Movement = Character->GetCharacterMovement();
+		Movement->MaxWalkSpeed = 250.0f;
+	}
+
 }
 
 

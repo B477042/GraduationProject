@@ -228,6 +228,7 @@ void AEGPlayerCharacter::SetupSpringArm()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->bUseControllerDesiredRotation = false;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
+	GetCharacterMovement()->MaxWalkSpeed = 250.0f;
 
 	////ArmLengthTo = 420.0f;
 
@@ -243,7 +244,7 @@ void AEGPlayerCharacter::SetupSpringArm()
 //이것들을 활용해서 움직임을 개선해야 된다
 void AEGPlayerCharacter::UpDown( float  NewAxisValue)
 {
-	
+ 
 	if (NewAxisValue == 0.0f)return;
 		//굳이 안 움직여도 확인할 수 있다.
 		/*if (GetCharacterMovement()->IsMovingOnGround())
@@ -261,6 +262,7 @@ void AEGPlayerCharacter::UpDown( float  NewAxisValue)
 
 void AEGPlayerCharacter::LeftRight( float NewAxisValue)
 {
+	
 	if (NewAxisValue == 0.0f)return;
 	AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y), NewAxisValue);
 	//EGLOG(Warning, TEXT("Left or Right Pressed"));
