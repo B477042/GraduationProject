@@ -68,7 +68,8 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	if (Anim != nullptr)
 	{
 		//Anim->montage_
-		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnNormalAttackMontageEnded);
+		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
+
 
 		Anim->OnComboAttackCheckDelegate.AddLambda([this]()->void {
 			if (Stat->CheckCanComboAttack())
@@ -112,7 +113,11 @@ void AEGPlayerCharacter::ChargeAttack()
 
 void AEGPlayerCharacter::ComboAttack()
 {
-
+	if (GetCharacterMovement()->IsFalling())
+	{
+		AirAttack();
+		return;
+	}
 	
 	//시동동작
 	if (!Stat->IsAttacking())
@@ -136,6 +141,18 @@ void AEGPlayerCharacter::ComboAttack()
 		}
 	}
 	
+}
+
+void AEGPlayerCharacter::AirAttack()
+{
+	//한가지 동작만 반복될 것이다
+	if (!Stat->IsAttacking())
+	{
+		Stat->SetComboStartState();
+		Anim->PlayAirAttackMontage();
+	}
+	
+
 }
 
 
@@ -286,7 +303,7 @@ void AEGPlayerCharacter::KeyInputTest()
 		
 }
 
-void AEGPlayerCharacter::OnNormalAttackMontageEnded(UAnimMontage * Montage, bool bInterrupted)
+void AEGPlayerCharacter::OnAttackMontageEnded(UAnimMontage * Montage, bool bInterrupted)
 {
 	//if (!Stat->IsAttacking())return;
 	//EGLOG(Warning, TEXT("PlayEnded"));

@@ -31,6 +31,7 @@ public:
 	//	void UpdateIsMoving();
 	//montage 플레이를 테스트 해보자. 된다면 CharageAttack용 몽타주를 안 만들어도 된다.
 	void PlayAttackMontage();
+	void PlayAirAttackMontage();
 	void JumpToComboAttackSection(int32 NewSection);//ComboAttack 사이를 재생 시키는 함수
 	void JumpToChargetAttackSection(int32 NewSection);//ChargeAttack으로 넘어가 ChargeAttack을 재생시키는 함수
 
@@ -63,6 +64,8 @@ private:
 	
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
 		UAnimMontage* AttackMontage;//통상공격 몽타주
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
+		UAnimMontage* AirAttackMontage;//공중공격 몽타주
 
 	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Character, Meta = (AllowPrivateAccess = true))
 		bool IsJumpPressed;*/

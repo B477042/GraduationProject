@@ -18,6 +18,11 @@ UCharacterAnimInstance::UCharacterAnimInstance()
 		AttackMontage = NORMAL_ATTACK.Object;
 		//EGLOG(Error, TEXT("Montage vailed"));
 	}
+	static ConstructorHelpers::FObjectFinder <UAnimMontage>AIR_ATTACK(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/m_AirAttackMontage.m_AirAttackMontage'"));
+	if (AIR_ATTACK.Succeeded())
+	{
+		AirAttackMontage = AIR_ATTACK.Object;
+	}
 }
 
 
@@ -65,6 +70,11 @@ void UCharacterAnimInstance::PlayAttackMontage()
 	/*	EGLOG(Warning, TEXT("Mon ATtack"));
 	}*/
 
+}
+
+void UCharacterAnimInstance::PlayAirAttackMontage()
+{
+	Montage_Play(AirAttackMontage,1.0f);
 }
 
 void UCharacterAnimInstance::JumpToComboAttackSection(int32 NewSection)

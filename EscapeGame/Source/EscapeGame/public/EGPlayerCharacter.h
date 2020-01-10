@@ -48,6 +48,7 @@ public:
 	
 	 void ChargeAttack();
 	 void ComboAttack();
+	 void AirAttack();
 	//=====================================================================
 	// Public UPROPERTY Zone
 public:
@@ -84,7 +85,7 @@ private:
 
 	//============================
 	UFUNCTION()
-	void OnNormalAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 	//Attack Montage가 재생될 때 호출될 함수
 	UFUNCTION()
 		void ComboAttackStart();
