@@ -133,7 +133,7 @@ void UCharacterStatComponent::SetComboEndState()
 	bIsComboAttackInputOn = false;
 	ResetCombo();
 
-	SetIdleMovement();
+	SetFreeMove();
 }
 
 //Montage Play가 시작되면 호출될 상태다
@@ -148,27 +148,27 @@ void UCharacterStatComponent::SetComboStartState()
 	bIsChargeAttackInputOn = false;
 	bIsComboAttackInputOn = false;
 
-	SetAttackingMovement();
+	SetDontMove();
 }
 
-void UCharacterStatComponent::SetAttackingMovement()
+void UCharacterStatComponent::SetDontMove()
 {
 	auto Character = Cast<AEGPlayerCharacter>(GetOwner());
 	if (Character != nullptr)
 	{
 		auto Movement = Character->GetCharacterMovement();
-		Movement->MaxWalkSpeed = 10.0f;
+		Movement->MaxWalkSpeed = 1.0f;
 	}
 
 }
 
-void UCharacterStatComponent::SetIdleMovement()
+void UCharacterStatComponent::SetFreeMove()
 {
 	auto Character = Cast<AEGPlayerCharacter>(GetOwner());
 	if (Character != nullptr)
 	{
 		auto Movement = Character->GetCharacterMovement();
-		Movement->MaxWalkSpeed = 250.0f;
+		Movement->MaxWalkSpeed = 400.0f;
 	}
 
 }

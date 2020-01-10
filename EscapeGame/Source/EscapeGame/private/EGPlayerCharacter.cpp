@@ -228,7 +228,7 @@ void AEGPlayerCharacter::SetupSpringArm()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->bUseControllerDesiredRotation = false;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
-	GetCharacterMovement()->MaxWalkSpeed = 250.0f;
+	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
 
 	////ArmLengthTo = 420.0f;
 

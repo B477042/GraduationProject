@@ -39,8 +39,8 @@ public:
 	void SetChargeAttackInput(bool bResult);
 	void SetComboEndState();
 	void SetComboStartState();
-	void SetAttackingMovement();
-	void SetIdleMovement();
+	void SetDontMove();
+	void SetFreeMove();
 	
 	
 
