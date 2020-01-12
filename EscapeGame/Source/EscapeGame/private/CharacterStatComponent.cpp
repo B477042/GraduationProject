@@ -112,14 +112,14 @@ void UCharacterStatComponent::SetComboAttackInput(bool bResult)
 	//bCanComboAttack = bResult;
 	bIsComboAttackInputOn = bResult;
 	//bIsChargeAttackInputOn = false;
-	EGLOG(Warning, TEXT("Set Combo Input : %d"), bIsComboAttackInputOn);
+//	EGLOG(Warning, TEXT("Set Combo Input : %d"), bIsComboAttackInputOn);
 }
 
 void UCharacterStatComponent::SetChargeAttackInput(bool bResult)
 {
 	//bCanChargeAttack = bResult;
 	bIsChargeAttackInputOn = bResult;
-	EGLOG(Warning, TEXT("Set ChargeAttack Input : %d"), bIsChargeAttackInputOn);
+//	EGLOG(Warning, TEXT("Set ChargeAttack Input : %d"), bIsChargeAttackInputOn);
 	//bIsComboAttackInputOn = false;
 }
 //montage paly가 종료되면 호출 될 것이다

@@ -14,4 +14,12 @@ class ESCAPEGAME_API AGruntCharacter : public AEnemyCharacter
 {
 	GENERATED_BODY()
 	
+public:
+
+
+protected:
+
+
+private:
+
 };

@@ -294,6 +294,7 @@ void AEGPlayerCharacter::Turn( float  NewAxisValue)
 
 void AEGPlayerCharacter::Jump()
 {
+	if(!Stat->IsAttacking())
 	Super::Jump();
 	
 }
