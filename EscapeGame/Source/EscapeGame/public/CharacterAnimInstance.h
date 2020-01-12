@@ -4,7 +4,7 @@
 
 #include "EscapeGame.h"
 #include "Animation/AnimInstance.h"
-#include "EGPlayerCharacter.h"
+//#include "EGPlayerCharacter.h"
 #include "CharacterAnimInstance.generated.h"
 
 /**

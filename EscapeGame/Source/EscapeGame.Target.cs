@@ -9,6 +9,6 @@ public class EscapeGameTarget : TargetRules
 	{
 		Type = TargetType.Game;
 
-		ExtraModuleNames.AddRange( new string[] { "EscapeGame","GameSetting", "Building" } );
+		ExtraModuleNames.AddRange( new string[] { "EscapeGame","GameSetting", "Building","PCG" } );
 	}
 }

@@ -4,38 +4,49 @@
 	"Category": "",
 	"Description": "",
 	"Enterprise": true,
-	"Modules": [
-		{
-			"Name": "Building",
-			"Type": "Runtime",
-			"LoadingPhase": "PreDefault",
-			"AdditionalDependencies": [
-				"Engine",
-				"CoreUObject"
-			]
-		},
-		{
-			"Name": "GameSetting",
-			"Type": "Runtime",
-			"LoadingPhase": "PreDefault",
-			"AdditionalDependencies": [
-				"Engine",
-				"CoreUObject"
-			]
-		},
-		{
-			"Name": "EscapeGame",
-			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"Engine",
-				"GameSetting",
-				"Building",
-				"UMG",
-				"AIModule"
-			]
-		}
-	],
+  "Modules": [
+    {
+      "Name": "Building",
+      "Type": "Runtime",
+      "LoadingPhase": "PreDefault",
+      "AdditionalDependencies": [
+        "Engine",
+        "CoreUObject"
+      ]
+    },
+    {
+      "Name": "GameSetting",
+      "Type": "Runtime",
+      "LoadingPhase": "PreDefault",
+      "AdditionalDependencies": [
+        "Engine",
+        "CoreUObject"
+      ]
+    },
+    {
+      "Name": "PCG",
+      "Type": "Runtime",
+      "LoadingPhase": "PreDefault",
+      "AdditionalDependencies": [
+        "Engine",
+        "CoreUObject"
+          ,"Building"
+      ]
+    },
+    {
+      "Name": "EscapeGame",
+      "Type": "Runtime",
+      "LoadingPhase": "Default",
+      "AdditionalDependencies": [
+        "Engine",
+        "GameSetting",
+        "Building",
+        "PCG",
+        "UMG",
+        "AIModule"
+      ]
+    }
+  ],
 	"Plugins": [
 		{
 			"Name": "HoudiniEngine",
