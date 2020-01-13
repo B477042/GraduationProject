@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "PCG.h"
+
 #include "GameFramework/Actor.h"
 #include "PCGConerGenerator.generated.h"
 
@@ -22,5 +23,30 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	
+	void GenerateConers();
+	void GeneratePaths(const FVector& From, const FVector& To);
+private:
+	FVector generateCoord();
+	bool checkRange(const FVector& From,const FVector& To);
 
+private:
+	UPROPERTY(EditAnywhere, Category = Mesh)
+		UStaticMeshComponent* Path;
+	UPROPERTY(EditAnywhere, Category = Mesh)
+		UStaticMeshComponent* Coner;
+	UPROPERTY(EditAnywhere, Category = Location)
+		TArray<FVector> ConerCoordinations;
+	UPROPERTY(EditAnywhere)
+		int32 nConer;
+	UPROPERTY(EditAnywhere)
+		int32 Floor;
+	UPROPERTY(EditAnywhere)
+		int32 XRange;
+	
 };
+/* 
+랜덤한 위치에 스폰시켜 본다. 
+시켰으면 그 사이에 뭔가 또 스폰 시켜본다
+
+*/
