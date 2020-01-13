@@ -157,7 +157,7 @@ void UCharacterStatComponent::SetDontMove()
 	if (Character != nullptr)
 	{
 		auto Movement = Character->GetCharacterMovement();
-		Movement->MaxWalkSpeed = 1.0f;
+		Movement->MaxWalkSpeed = MinWalkingSpeed;
 	}
 
 }
@@ -168,9 +168,29 @@ void UCharacterStatComponent::SetFreeMove()
 	if (Character != nullptr)
 	{
 		auto Movement = Character->GetCharacterMovement();
-		Movement->MaxWalkSpeed = 400.0f;
+		Movement->MaxWalkSpeed = MaxWalkingSpeed;
 	}
 
+}
+
+void UCharacterStatComponent::SetRunning()
+{
+	auto Character = Cast<AEGPlayerCharacter>(GetOwner());
+	if (Character != nullptr)
+	{
+		auto Movement = Character->GetCharacterMovement();
+		Movement->MaxWalkSpeed = MaxRunningSpeed;
+	}
+}
+
+void UCharacterStatComponent::SetWalking()
+{
+	auto Character = Cast<AEGPlayerCharacter>(GetOwner());
+	if (Character != nullptr)
+	{
+		auto Movement = Character->GetCharacterMovement();
+		Movement->MaxWalkSpeed = MinWalkingSpeed;
+	}
 }
 
 

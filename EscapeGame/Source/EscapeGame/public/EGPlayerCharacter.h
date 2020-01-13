@@ -46,9 +46,13 @@ public:
 	void HealHP(float addHP);
 	 UCharacterStatComponent* GetStatComponent();
 	
+	 //Actions
 	 void ChargeAttack();
 	 void ComboAttack();
 	 void AirAttack();
+	 void StartRunning();
+	 void StopRunning();
+	 void Roll();
 	//=====================================================================
 	// Public UPROPERTY Zone
 public:

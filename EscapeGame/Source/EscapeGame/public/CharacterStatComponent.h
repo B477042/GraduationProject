@@ -41,7 +41,8 @@ public:
 	void SetComboStartState();
 	void SetDontMove();
 	void SetFreeMove();
-	
+	void SetRunning();
+	void SetWalking();
 	
 
 	//int32 GetDropExp()const;
@@ -62,6 +63,9 @@ public:
 
 private:
 	const float MaxHP=100.0f;
+	const float MaxWalkingSpeed = 500.0f;
+	const float MaxRunningSpeed = 1000.0f;
+	const float MinWalkingSpeed = 1.0f;
 	float timer;
 private:
 	

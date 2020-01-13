@@ -56,6 +56,8 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed,this, &AEGPlayerCharacter::Jump);
 	PlayerInputComponent->BindAction(TEXT("ComboAttack"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::ComboAttack);
 	PlayerInputComponent->BindAction(TEXT("ChargeAttack"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::ChargeAttack);
+	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::StartRunning);
+	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Released, this, &AEGPlayerCharacter::StopRunning);
 	EGLOG(Warning, TEXT("Player input component"));
 }
 
@@ -153,6 +155,21 @@ void AEGPlayerCharacter::AirAttack()
 	}
 	
 
+}
+
+void AEGPlayerCharacter::StartRunning()
+{
+	EGLOG(Warning, TEXT("Run Key Preesed"));
+	//if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::ZeroVector)return;
+	//Stat->SetRunning();//달릴 상태로 만들어 준다
+	//
+}
+
+void AEGPlayerCharacter::StopRunning()
+{
+	EGLOG(Warning, TEXT("Run Key Released"));
+	/*if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::ZeroVector)return;
+	Stat->SetWalking();*/
 }
 
 
