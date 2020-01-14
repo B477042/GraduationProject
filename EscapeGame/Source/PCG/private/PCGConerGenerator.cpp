@@ -44,10 +44,10 @@ void APCGConerGenerator::GenerateConers()
 	{
 		//UE_LOG(LogTemp, Error, TEXT("!!!!!!!!!!!ASDFASDFSADF5848443ASDF"));
 		var += generateCoord();
-		auto obj= GetWorld()->SpawnActor(ATestSpawnActor::StaticClass() );
+		auto obj= Cast<ATestSpawnActor>( GetWorld()->SpawnActor(ATestSpawnActor::StaticClass() ));
 		obj->SetActorLocation(var);
-		CreatedConers.Add(obj);
-		obj->
+		CreatedConers.Emplace(obj);
+		
 	}
 
 	//from now, we need a meter param. not 1cm param. so we multiply 100 for make it to meter.
@@ -65,10 +65,11 @@ FVector APCGConerGenerator::generateCoord()
 	float y= FMath::RandRange(-XRange, XRange);
 	y -= ((int32)x % 10);
 	//UE_LOG(LogTemp, Warning, TEXT("x = %f , Y= %f"), x, y);
-	 result.X = x*100;
-	 result.Y = y*100;
+	 result.X = x*100 + GetTransform().GetLocation().X;
+	 result.Y = y*100 + GetTransform().GetLocation().Y;
 	result.Z = Floor;
 
+	
 
 	return result;
 }
