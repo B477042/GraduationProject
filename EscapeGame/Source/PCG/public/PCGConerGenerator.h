@@ -5,6 +5,7 @@
 #include "PCG.h"
 
 #include "GameFramework/Actor.h"
+#include "TestSpawnActor.h"
 #include "PCGConerGenerator.generated.h"
 
 UCLASS()
@@ -25,10 +26,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 	void GenerateConers();
-	void GeneratePaths(const FVector& From, const FVector& To);
+	void GeneratePaths(const AActor& From, const AActor& To);
 private:
 	FVector generateCoord();
-	bool checkRange(const FVector& From,const FVector& To);
+	bool checkRange(const AActor& From,const AActor& To);
 
 private:
 	UPROPERTY(EditAnywhere, Category = Mesh)
@@ -37,10 +38,15 @@ private:
 		UStaticMeshComponent* Coner;
 	UPROPERTY(EditAnywhere, Category = Location)
 		TArray<FVector> ConerCoordinations;
+
+	UPROPERTY(EditAnywhere, Category = Location)
+		TArray<TWeakObjectPtr <ATestSpawnActor>> CreatedConers;
+
 	UPROPERTY(EditAnywhere)
 		int32 nConer;
 	UPROPERTY(EditAnywhere)
 		int32 Floor;
+	//value : 1 = 1 meter in game. this is a meter value
 	UPROPERTY(EditAnywhere)
 		int32 XRange;
 	

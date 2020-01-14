@@ -2,7 +2,7 @@
 
 
 #include "PCGConerGenerator.h"
-#include "TestSpawnActor.h"
+
 
 // Sets default values
 APCGConerGenerator::APCGConerGenerator()
@@ -14,7 +14,7 @@ APCGConerGenerator::APCGConerGenerator()
 	Coner = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CONER"));
 	nConer = 5;
 	Floor = 100;
-	XRange = 100;
+	XRange = 10;
 
 
 }
@@ -27,7 +27,7 @@ void APCGConerGenerator::BeginPlay()
 	
 	ConerCoordinations.Init(FVector::ZeroVector, nConer);
 	
-	UE_LOG(LogTemp, Error, TEXT("ASDFASDFSADFASDF"));
+	//UE_LOG(LogTemp, Error, TEXT("ASDFASDFSADFASDF"));
 	GenerateConers();
 }
 
@@ -40,21 +40,33 @@ void APCGConerGenerator::Tick(float DeltaTime)
 
 void APCGConerGenerator::GenerateConers()
 {
-	for  (auto var : ConerCoordinations)
+	for  (auto & var : ConerCoordinations)
 	{
-		UE_LOG(LogTemp, Error, TEXT("!!!!!!!!!!!ASDFASDFSADF5848443ASDF"));
+		//UE_LOG(LogTemp, Error, TEXT("!!!!!!!!!!!ASDFASDFSADF5848443ASDF"));
 		var += generateCoord();
 		auto obj= GetWorld()->SpawnActor(ATestSpawnActor::StaticClass() );
 		obj->SetActorLocation(var);
+		CreatedConers.Add(obj);
+		obj->
 	}
+
+	//from now, we need a meter param. not 1cm param. so we multiply 100 for make it to meter.
+	XRange *= 100;
+
 
 }
 
 FVector APCGConerGenerator::generateCoord()
 {
 	FVector result;
-	result.X=  FMath::RandRange(-XRange, XRange);
-	result.Y = FMath::RandRange(-XRange, XRange);
+	 
+	float x= FMath::RandRange(-XRange, XRange);
+	x -= ((int32)x % 10);
+	float y= FMath::RandRange(-XRange, XRange);
+	y -= ((int32)x % 10);
+	//UE_LOG(LogTemp, Warning, TEXT("x = %f , Y= %f"), x, y);
+	 result.X = x*100;
+	 result.Y = y*100;
 	result.Z = Floor;
 
 

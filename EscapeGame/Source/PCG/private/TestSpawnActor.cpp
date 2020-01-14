@@ -29,6 +29,11 @@ void ATestSpawnActor::BeginPlay()
 void ATestSpawnActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+}
 
+void ATestSpawnActor::SetMaterial(int32 Num, UMaterialInterface * Material)
+{
+	Mesh->SetMaterial(Num, Material);
 }
 

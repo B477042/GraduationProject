@@ -14,7 +14,7 @@ class PCG_API ATestSpawnActor : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ATestSpawnActor();
-
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -22,7 +22,11 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	void SetMaterial(int32 Num, UMaterialInterface * Material);
+
 private:
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
 		UStaticMeshComponent* Mesh;
+ 
 };
