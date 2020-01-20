@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+
 #include "EnemyCharacter.h"
 #include "GruntCharacter.generated.h"
 
@@ -15,10 +15,18 @@ class ESCAPEGAME_API AGruntCharacter : public AEnemyCharacter
 	GENERATED_BODY()
 	
 public:
-
+	AGruntCharacter();
 
 protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
 
+
+	virtual void PostInitializeComponents() override;
+
+public:
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
 
 private:
 
