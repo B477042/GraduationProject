@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "EscapeGame.h"
 #include "GameFramework/Character.h"
 #include "EnemyCharacter.generated.h"
 

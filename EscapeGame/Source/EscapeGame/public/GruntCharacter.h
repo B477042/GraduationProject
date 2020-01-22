@@ -29,5 +29,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-
+	UPROPERTY(VisibleAnywhere,Category=Animation)
+		class UCharacterAnimInstance* Anim;
 };
