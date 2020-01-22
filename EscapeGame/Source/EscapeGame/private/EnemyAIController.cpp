@@ -17,7 +17,7 @@ AEnemyAIController::AEnemyAIController()
 	static ConstructorHelpers::FObjectFinder<UBehaviorTree>BT(TEXT("BehaviorTree'/Game/MyFolder/AIData/BT_EnemyTree.BT_EnemyTree'"));
 	if (BT.Succeeded())
 	{
-		BTDtat = BT.Object;
+		BTData = BT.Object;
 	}
 }
 
@@ -30,4 +30,31 @@ void AEnemyAIController::OnPossess(APawn * InPawn)
 void AEnemyAIController::OnUnPossess()
 {
 	Super::OnUnPossess();
+}
+
+void AEnemyAIController::BeginPlay()
+{
+	Super::BeginPlay();
+	RunAI();
+}
+
+void AEnemyAIController::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+}
+
+void AEnemyAIController::RunAI()
+{
+	
+	RunBehaviorTree(BTData);
+	EGLOG(Warning, TEXT("Running"));
+}
+
+void AEnemyAIController::StopAI()
+{
+	auto BehaviorTreeComponent = Cast<UBehaviorTreeComponent>(BrainComponent);
+	if (nullptr != BehaviorTreeComponent)
+	{
+		BehaviorTreeComponent->StopTree(EBTStopMode::Safe);
+	}
 }

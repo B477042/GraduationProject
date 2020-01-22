@@ -19,15 +19,18 @@ public:
 		void OnPossess(APawn* InPawn)override;
 		void OnUnPossess()override;
 
+protected:
+	virtual void BeginPlay()override;
+	virtual void PostInitializeComponents()override;
+	
+private:
 		void RunAI();
 		void StopAI();
-protected:
-
 private:
 	//Blackboard Data File Data
 	UPROPERTY(VisibleAnywhere,Category=AI)
 		class UBlackboardData* BBData;
 	//Behavior Tree File Data
 	UPROPERTY(VisibleAnywhere, Category = AI)
-		class UBehaviorTree* BTDtat;
+		class UBehaviorTree* BTData;
 };
