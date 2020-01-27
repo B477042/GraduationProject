@@ -19,6 +19,7 @@ public:
 		void OnPossess(APawn* InPawn)override;
 		void OnUnPossess()override;
 
+		static const FName TargetPlayer;
 protected:
 	virtual void BeginPlay()override;
 	virtual void PostInitializeComponents()override;

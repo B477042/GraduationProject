@@ -7,6 +7,8 @@
 #include "BehaviorTree/BlackboardComponent.h"
 
 
+const FName AEnemyAIController ::TargetPlayer (TEXT("TargetPlayer"));
+
 AEnemyAIController::AEnemyAIController()
 {
 	static ConstructorHelpers::FObjectFinder<UBlackboardData>BB(TEXT("BlackboardData'/Game/MyFolder/AIData/BB_EnemyBoard.BB_EnemyBoard'"));
