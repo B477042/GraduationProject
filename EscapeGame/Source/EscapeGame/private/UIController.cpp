@@ -16,6 +16,7 @@ void AUIController::BeginPlay()
 		return;
 	}
 	UIWidgetInstance->AddToViewport();
+
 	FInputModeUIOnly Mode;
 	Mode.SetWidgetToFocus(UIWidgetInstance->GetCachedWidget());
 	SetInputMode(Mode);
