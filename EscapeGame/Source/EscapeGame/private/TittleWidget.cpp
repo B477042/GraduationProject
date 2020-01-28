@@ -44,10 +44,12 @@ void UTittleWidget::NativeConstruct()
 void UTittleWidget::StartNew()
 {
 	EGLOG(Warning, TEXT("Click!"));
+	EGLOG(Warning, TEXT("Current Game Mode : %s"), *GetWorld()->GetFirstPlayerController()->GetName());
 	FName LevelName = TEXT("/Game/MyFolder/Maps/Stage1");
-	FString LevelOption = TEXT("Class'/Script/EscapeGame.EscapeGameGameModeBase_C'");
-	UGameplayStatics::OpenLevel(this, LevelName,true,LevelOption);
-	
+	//FString LevelOption = TEXT("Class'/Script/EscapeGame.EscapeGameGameModeBase_C'");
+	UGameplayStatics::OpenLevel(this, LevelName,true);
+	GetWorld()->SetGameMode(TEXT("Class'/Script/EscapeGame.EscapeGameGameModeBase_C'"));
+	EGLOG(Warning, TEXT("Current Game Mode : %s"), *GetWorld()->GetFirstPlayerController()->GetName());
 }
 
 void UTittleWidget::LoadGame()
