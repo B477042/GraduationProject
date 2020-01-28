@@ -33,7 +33,7 @@ void AEGPlayerController::BeginPlay()
 	EGLOG(Warning, TEXT("Controller begin play"));
 
 	KeyInputTest.AddUObject(this,&AEGPlayerController::IsMoveKeyPressed);
-
+	
 	
 
 }

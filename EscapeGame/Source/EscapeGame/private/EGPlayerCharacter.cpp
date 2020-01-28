@@ -83,6 +83,8 @@ void AEGPlayerCharacter::PostInitializeComponents()
 			}
 		});
 	}
+
+	
 }
 
 
@@ -160,6 +162,7 @@ void AEGPlayerCharacter::AirAttack()
 void AEGPlayerCharacter::StartRunning()
 {
 	EGLOG(Warning, TEXT("Run Key Preesed"));
+
 	//if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::ZeroVector)return;
 	//Stat->SetRunning();//달릴 상태로 만들어 준다
 	//
