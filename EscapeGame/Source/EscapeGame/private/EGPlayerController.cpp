@@ -34,8 +34,10 @@ void AEGPlayerController::BeginPlay()
 
 	KeyInputTest.AddUObject(this,&AEGPlayerController::IsMoveKeyPressed);
 	
+	EGLOG(Warning, TEXT("Current Game Mode : %s"), *GetWorld()->GetFirstPlayerController()->GetName());
 	
-
+	FInputModeGameOnly GameOnly;
+	SetInputMode(GameOnly);
 }
 
 void AEGPlayerController::PostInitializeComponents()

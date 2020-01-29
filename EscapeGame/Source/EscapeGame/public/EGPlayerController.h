@@ -35,6 +35,7 @@ public:
 
 	void SyncStatToHUD();
 	void IsMoveKeyPressed();
+	
 
 private:
 	UPROPERTY(meta=(AllowPrivateAccess=true))

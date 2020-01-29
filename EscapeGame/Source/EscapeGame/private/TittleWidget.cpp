@@ -8,7 +8,7 @@
 void UTittleWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-
+	EGLOG(Warning, TEXT("Current Game Mode : %s"), *GetWorld()->GetFirstPlayerController()->GetName());
 	//BTN_Start = Cast<UButton>(GetWidgetFromName(TEXT("Button_Start")));
 	//if (BTN_Start == nullptr)
 	//{
