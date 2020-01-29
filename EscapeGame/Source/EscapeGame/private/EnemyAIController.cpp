@@ -16,7 +16,7 @@ AEnemyAIController::AEnemyAIController()
 	{
 		BBData = BB.Object;
 	}
-	static ConstructorHelpers::FObjectFinder<UBehaviorTree>BT(TEXT("BehaviorTree'/Game/MyFolder/AIData/BT_EnemyTree.BT_EnemyTree'"));
+	static ConstructorHelpers::FObjectFinder<UBehaviorTree>BT(TEXT("BehaviorTree'/Game/MyFolder/AIData/BT_GruntEnemyTree.BT_GruntEnemyTree'"));
 	if (BT.Succeeded())
 	{
 		BTData = BT.Object;
