@@ -47,6 +47,13 @@ void AGruntCharacter::PostInitializeComponents()
 	Super::PostInitializeComponents();
 }
 
+float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+{
+	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	return FinalDamage;
+}
+
 void AGruntCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
