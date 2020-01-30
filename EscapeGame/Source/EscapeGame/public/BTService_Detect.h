@@ -9,9 +9,9 @@
 
 /**
  *
-	AI가 Player를 스캔하는 Task다. 
-	여러가지를 스캔해서 그 중에서 PlayerCharacter를 골라낸다
-	발견한 Player는 저장한다
+	Ai will scan Player
+	and Set Near Player as Target Player
+
 
  */
 UCLASS()
