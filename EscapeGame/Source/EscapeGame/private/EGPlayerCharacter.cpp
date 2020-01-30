@@ -84,7 +84,7 @@ void AEGPlayerCharacter::PostInitializeComponents()
 		});
 	}
 
-	EGLOG(Warning, TEXT("Current Game Mode : %s"), *GetWorld()->GetFirstPlayerController()->GetName());
+	
 }
 
 
