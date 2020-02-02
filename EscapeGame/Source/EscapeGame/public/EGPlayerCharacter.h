@@ -8,7 +8,7 @@
 #include "MinimapRenderComponent.h"
 #include "GameFramework/Character.h"
 #include "CharacterStatComponent.h"
-#include "CharacterAnimInstance.h"
+#include "Anim_Player.h"
 #include "EGPlayerCharacter.generated.h"
 
 //DECLARE_DELEGATE(FOnKeyPressed);
@@ -109,6 +109,6 @@ private:
 private:
 
 	UPROPERTY(/*VisibleInstanceOnly,BlueprintReadOnly, Category = Anim, Meta=(AllowPrivateAccess=true)*/)
-		class UCharacterAnimInstance* Anim;
+		class UAnim_Player* Anim;
 
 };

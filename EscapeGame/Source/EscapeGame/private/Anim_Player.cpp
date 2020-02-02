@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "CharacterAnimInstance_Player.h"
+#include "Anim_Player.h"
 
 
-UCharacterAnimInstance_Player::UCharacterAnimInstance_Player()
+UAnim_Player::UAnim_Player()
 {
 
 	static ConstructorHelpers::FObjectFinder <UAnimMontage>NORMAL_ATTACK(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/m_NormalAttack.m_NormalAttack'"));
@@ -19,16 +19,18 @@ UCharacterAnimInstance_Player::UCharacterAnimInstance_Player()
 	{
 		AirAttackMontage = AIR_ATTACK.Object;
 	}
+	StartCombo = 1;//Attack Montage에서 처음 액션 번호
+	EndCombo = 4;//Attack Montage에서 마지막 액션 번호
 }
 
-void UCharacterAnimInstance_Player::JumpToComboAttackSection(int32 NewSection)
+void UAnim_Player::JumpToComboAttackSection(int32 NewSection)
 {
 	if (!Montage_IsPlaying(AttackMontage))//if not playing attack montage 
 		return;
 	Montage_JumpToSection(GetAttackMontageSectionName(NewSection));
 }
 
-void UCharacterAnimInstance_Player::JumpToChargetAttackSection(int32 NewSection)
+void UAnim_Player::JumpToChargetAttackSection(int32 NewSection)
 {
 	if (!Montage_IsPlaying(AttackMontage))//if not playing attack montage 
 		return;

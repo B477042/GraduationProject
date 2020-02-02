@@ -66,7 +66,7 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	Super::PostInitializeComponents();
 	EGLOG(Warning, TEXT("Player Post init compons"));
 	//Anim load
-	Anim = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+	Anim = Cast<UAnim_Player>(GetMesh()->GetAnimInstance());
 	if (Anim != nullptr)
 	{
 		//Anim->montage_

@@ -31,7 +31,7 @@ public:
 	//UFUNCTION(BlueprintCallable)
 	//	void UpdateIsMoving();
 	//montage 플레이를 테스트 해보자. 된다면 CharageAttack용 몽타주를 안 만들어도 된다.
-protected:
+
 	void PlayAttackMontage();
 	void PlayAirAttackMontage();
 	virtual void JumpToComboAttackSection(int32 NewSection);
@@ -39,7 +39,7 @@ protected:
 
 	FComboAttackCheckDelegate OnComboAttackCheckDelegate;//콤보 어택으로 이어질지 검사하는 델리게이트
 	FChargeAttackCheckDelegate OnChargeAttackCheckDelegate;//차지어택으로 이어질지 검사하는 델리게이트
-
+	
 	//AnimNotify는 몽타쥬에서 정한 호출 시점에서 자동으로 호출된다
 	UFUNCTION()
 		void AnimNotify_CanComboAttack();
@@ -50,7 +50,7 @@ protected:
 	/*UFUNCTION(BlueprintCallable)
 		void Switch;*/
 
-
+protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
 		float CurrentCharacterSpeed;
 
@@ -77,7 +77,8 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
 		UAnimMontage* AirAttackMontage;
 
-	
+	const int32 StartCombo ;//Attack Montage에서 처음 액션 번호
+	const int32 EndCombo ;//Attack Montage에서 마지막 액션 번호
 
 	
 };
