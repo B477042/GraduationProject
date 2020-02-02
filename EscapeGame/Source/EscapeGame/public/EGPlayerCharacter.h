@@ -108,7 +108,7 @@ private:
 	//private PROPERTY
 private:
 
-	UPROPERTY(/*VisibleInstanceOnly,BlueprintReadOnly, Category = Anim, Meta=(AllowPrivateAccess=true)*/)
+	UPROPERTY(VisibleInstanceOnly,/*BlueprintReadOnly,*/ Category = Anim, Meta=(AllowPrivateAccess=true))
 		class UAnim_Player* Anim;
 
 };

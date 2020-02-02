@@ -23,6 +23,7 @@ class ESCAPEGAME_API UCharacterAnimInstance : public UAnimInstance
 	
 public:
 	UCharacterAnimInstance();
+	//dont override it. if override, Write down Super at first
 	virtual void NativeUpdateAnimation(float DeltaSeconds)override;
 	//virtual void PostInitalizeComponents()override;
 
@@ -32,10 +33,8 @@ public:
 	//	void UpdateIsMoving();
 	//montage 플레이를 테스트 해보자. 된다면 CharageAttack용 몽타주를 안 만들어도 된다.
 
-	void PlayAttackMontage();
-	void PlayAirAttackMontage();
-	virtual void JumpToComboAttackSection(int32 NewSection);
-	virtual void JumpToChargetAttackSection(int32 NewSection);
+	
+	
 
 	FComboAttackCheckDelegate OnComboAttackCheckDelegate;//콤보 어택으로 이어질지 검사하는 델리게이트
 	FChargeAttackCheckDelegate OnChargeAttackCheckDelegate;//차지어택으로 이어질지 검사하는 델리게이트
@@ -46,7 +45,12 @@ public:
 	UFUNCTION()
 		void AnimNotify_CanChargeAttack();
 
-	FName GetAttackMontageSectionName(int32 Section);
+	//Pure Virtual func
+	virtual FName GetAttackMontageSectionName(int32 Section) PURE_VIRTUAL(UCharacterAnimInstance::GetAttackMontageSectionName , return FName(TEXT("NULL")); );
+	virtual void JumpToComboAttackSection(int32 NewSection) PURE_VIRTUAL(UCharacterAnimInstance::JumpToComboAttackSection, ;);
+	virtual void JumpToChargetAttackSection(int32 NewSection) PURE_VIRTUAL(UCharacterAnimInstance::JumpToChargetAttackSection, ;);
+	virtual void PlayAttackMontage() PURE_VIRTUAL(UCharacterAnimInstance::PlayAttackMontage, ;);
+	virtual void PlayAirAttackMontage() PURE_VIRTUAL(UCharacterAnimInstance::PlayAirAttackMontage, ;);
 	/*UFUNCTION(BlueprintCallable)
 		void Switch;*/
 
@@ -69,20 +73,20 @@ protected:
 
 
 	
-	//통상공격 몽타주
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
-		UAnimMontage* AttackMontage;
-	
-	//공중공격 몽타주
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
-		UAnimMontage* AirAttackMontage;
-
-	const int32 StartCombo ;//Attack Montage에서 처음 액션 번호
-	const int32 EndCombo ;//Attack Montage에서 마지막 액션 번호
+	////통상공격 몽타주
+	//UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
+	//	UAnimMontage* AttackMontage;
+	//
+	////공중공격 몽타주
+	//UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
+	//	UAnimMontage* AirAttackMontage;
+	//Attack Montage에서 처음 액션 번호
+	 int32 StartCombo;
+	//Attack Montage에서 마지막 액션 번호
+	 int32 EndCombo;
 
 	
 };
 /*
-	2020 01 03 - 원하는 것
-	완벽하게 구별되는 
+	2020 
 */

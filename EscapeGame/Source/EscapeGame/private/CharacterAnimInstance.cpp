@@ -11,6 +11,8 @@ UCharacterAnimInstance::UCharacterAnimInstance()
 	HightVariation = 0.0f;
 	IsInAir = false;
 
+	StartCombo = 0;
+	EndCombo = 0;
 	//
 	
 }
@@ -38,6 +40,7 @@ void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		}
 
 	}
+	//EGLOG(Warning, TEXT("Tick"));
 }
 
 void UCharacterAnimInstance::BPBeginPlay()
@@ -51,33 +54,35 @@ void UCharacterAnimInstance::BPBeginPlay()
 	
 }
 
-void UCharacterAnimInstance::PlayAttackMontage()
-{
-	/*EGLOG(Warning, TEXT("Mon enter"));
-	if (!Montage_IsPlaying(NormalAttackMontage))
-	{*/
-		Montage_Play(AttackMontage, 1.0f);
-	/*	EGLOG(Warning, TEXT("Mon ATtack"));
-	}*/
+//void UCharacterAnimInstance::PlayAttackMontage()
+//{
+//	EGLOG(Warning, TEXT("Mon enter"));
+//	/*if (!Montage_IsPlaying(NormalAttackMontage))
+//	{*/
+//	if (AttackMontage == nullptr)EGLOG(Warning, TEXT("Attack mon is null"));
+//
+//		Montage_Play(AttackMontage, 1.0f);
+//	/*	EGLOG(Warning, TEXT("Mon ATtack"));
+//	}*/
+//
+//}
+//
+//void UCharacterAnimInstance::PlayAirAttackMontage()
+//{
+//	Montage_Play(AirAttackMontage,1.0f);
+//}
 
-}
-
-void UCharacterAnimInstance::PlayAirAttackMontage()
-{
-	Montage_Play(AirAttackMontage,1.0f);
-}
-
-void UCharacterAnimInstance::JumpToComboAttackSection(int32 NewSection)
-{
-	
-
-}
-
-void UCharacterAnimInstance::JumpToChargetAttackSection(int32 NewSection)
-{
-
-	
-}
+//void UCharacterAnimInstance::JumpToComboAttackSection(int32 NewSection)
+//{
+//	
+//
+//}
+//
+//void UCharacterAnimInstance::JumpToChargetAttackSection(int32 NewSection)
+//{
+//
+//	
+//}
 
 //공격 애니메이션 재생되고 다음 애니메이션을 재생할지 검사하는 타이밍에 나온다
 void UCharacterAnimInstance::AnimNotify_CanComboAttack()
@@ -92,14 +97,12 @@ void UCharacterAnimInstance::AnimNotify_CanChargeAttack()
 	//EGLOG(Warning, TEXT("AnimNotify_CanCharge"));
 	OnChargeAttackCheckDelegate.Broadcast();
 	//Called Function in EGPlayerCharaceter;
+	
 }
 
-//Section값이 Combo값과 일치 하는지 검사한다
-//일치 하지 않는다면 Failed라는 FName이 반환된다
-FName UCharacterAnimInstance::GetAttackMontageSectionName(int32 Section)
-{
-	if (!FMath::IsWithinInclusive<int32>(Section, StartCombo, EndCombo))return FName(*FString::Printf(TEXT("Failed")));
-	return FName(*FString::Printf(TEXT("ComboAttack%d"),Section));
 
-}
+//FName UCharacterAnimInstance::GetAttackMontageSectionName(int32 Section)
+//{
+//	
+//}
 
