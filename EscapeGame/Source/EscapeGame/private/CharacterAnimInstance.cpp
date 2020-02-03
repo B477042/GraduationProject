@@ -54,19 +54,14 @@ void UCharacterAnimInstance::BPBeginPlay()
 	
 }
 
-//void UCharacterAnimInstance::PlayAttackMontage()
-//{
-//	EGLOG(Warning, TEXT("Mon enter"));
-//	/*if (!Montage_IsPlaying(NormalAttackMontage))
-//	{*/
-//	if (AttackMontage == nullptr)EGLOG(Warning, TEXT("Attack mon is null"));
-//
-//		Montage_Play(AttackMontage, 1.0f);
-//	/*	EGLOG(Warning, TEXT("Mon ATtack"));
-//	}*/
-//
-//}
-//
+void UCharacterAnimInstance::PlayAttackMontage()
+{
+	
+		Montage_Play(AttackMontage, 1.0f);
+
+
+}
+
 //void UCharacterAnimInstance::PlayAirAttackMontage()
 //{
 //	Montage_Play(AirAttackMontage,1.0f);
@@ -101,8 +96,10 @@ void UCharacterAnimInstance::AnimNotify_CanChargeAttack()
 }
 
 
-//FName UCharacterAnimInstance::GetAttackMontageSectionName(int32 Section)
-//{
-//	
-//}
+FName UCharacterAnimInstance::GetAttackMontageSectionName(int32 Section)
+{
+	//if(StartCombo<=0||EndCombo<=StartCombo)
+	if (!FMath::IsWithinInclusive<int32>(Section, StartCombo, EndCombo))return FName(*FString::Printf(TEXT("Failed")));
+	return FName(*FString::Printf(TEXT("ComboAttack%d"), Section));
+}
 

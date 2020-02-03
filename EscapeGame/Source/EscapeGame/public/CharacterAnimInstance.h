@@ -45,11 +45,12 @@ public:
 	UFUNCTION()
 		void AnimNotify_CanChargeAttack();
 
-	//Pure Virtual func
-	virtual FName GetAttackMontageSectionName(int32 Section) PURE_VIRTUAL(UCharacterAnimInstance::GetAttackMontageSectionName , return FName(TEXT("NULL")); );
+
+	 FName GetAttackMontageSectionName(int32 Section)/* PURE_VIRTUAL(UCharacterAnimInstance::GetAttackMontageSectionName , return FName(TEXT("NULL")); )*/;
+	void PlayAttackMontage() /*PURE_VIRTUAL(UCharacterAnimInstance::PlayAttackMontage, ;)*/;
+		//Pure Virtual func
 	virtual void JumpToComboAttackSection(int32 NewSection) PURE_VIRTUAL(UCharacterAnimInstance::JumpToComboAttackSection, ;);
-	virtual void JumpToChargetAttackSection(int32 NewSection) PURE_VIRTUAL(UCharacterAnimInstance::JumpToChargetAttackSection, ;);
-	virtual void PlayAttackMontage() PURE_VIRTUAL(UCharacterAnimInstance::PlayAttackMontage, ;);
+	//virtual void JumpToChargetAttackSection(int32 NewSection) PURE_VIRTUAL(UCharacterAnimInstance::JumpToChargetAttackSection, ;);
 	virtual void PlayAirAttackMontage() PURE_VIRTUAL(UCharacterAnimInstance::PlayAirAttackMontage, ;);
 	/*UFUNCTION(BlueprintCallable)
 		void Switch;*/
@@ -73,9 +74,9 @@ protected:
 
 
 	
-	////통상공격 몽타주
-	//UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
-	//	UAnimMontage* AttackMontage;
+	//통상공격 몽타주
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
+		UAnimMontage* AttackMontage;
 	//
 	////공중공격 몽타주
 	//UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))

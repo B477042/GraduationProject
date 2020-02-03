@@ -69,7 +69,7 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	Anim = Cast<UAnim_Player>(GetMesh()->GetAnimInstance());
 	if (Anim != nullptr)
 	{
-		EGLOG(Warning, TEXT("Anim Post init compons"));
+	
 		//Anim->montage_
 		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
 
@@ -128,7 +128,7 @@ void AEGPlayerCharacter::ComboAttack()
 	if (!Stat->IsAttacking())
 	{
 		Stat->SetComboStartState();
-		EGLOG(Warning, TEXT("Current Comobo : %d"), Stat->GetCurrentCombo());
+		//EGLOG(Warning, TEXT("Current Comobo : %d"), Stat->GetCurrentCombo());
 		Anim->JumpToComboAttackSection(Stat->GetCurrentCombo());
 		Anim->PlayAttackMontage();//시동이니 ComboAttack1이 재생된다
 		//Stat->OnAttacking(true);
