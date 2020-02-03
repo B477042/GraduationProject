@@ -190,7 +190,7 @@ void AEGPlayerCharacter::InitComponents()
 	MiniMapArm= CreateDefaultSubobject<USpringArmComponent>(TEXT("MINMAPARM"));
 	MapRenderer = CreateDefaultSubobject<UMiniMapRenderComponent>(TEXT("MAPRENDERER"));
 	Stat = CreateDefaultSubobject <UCharacterStatComponent>(TEXT("STAT"));
-
+	State = CreateDefaultSubobject <UCharacterStateComponent>(TEXT("STATE"));
 
 
 	//Components Tree

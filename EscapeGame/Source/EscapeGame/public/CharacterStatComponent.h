@@ -9,6 +9,11 @@
 DECLARE_MULTICAST_DELEGATE(FOnHPChangeDelegate);
 DECLARE_MULTICAST_DELEGATE(FIsHPZero);
 
+
+/*
+	Define Character's Stat. Such as HP, ATK, Stamina, Combo, etc...
+
+*/
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ESCAPEGAME_API UCharacterStatComponent : public UActorComponent
 {

@@ -66,7 +66,8 @@ public:
 		UMiniMapRenderComponent* MapRenderer;
 	UPROPERTY(BlueprintReadOnly,EditInstanceOnly, Category = Stat)
 		UCharacterStatComponent* Stat;
-	
+	UPROPERTY(BlueprintReadOnly, EditInstanceOnly, Category = Stat)
+		UCharacterStateComponent* State;
 private:
 	void InitComponents();
 	void LoadAssets();
