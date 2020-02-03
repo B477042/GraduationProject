@@ -42,12 +42,15 @@ void UAnim_Player::JumpToComboAttackSection(int32 NewSection)
 
 void UAnim_Player::JumpToChargetAttackSection(int32 NewSection)
 {
+	if (AttackMontage == nullptr)EGLOG(Warning, TEXT("Mon is null"));
 	if (!Montage_IsPlaying(AttackMontage))//if not playing attack montage 
 		return;
 }
 
 FName UAnim_Player::GetAttackMontageSectionName(int32 Section)
 {
+	if (AttackMontage == nullptr)EGLOG(Warning, TEXT("Mon is null"));
+
 	if (!FMath::IsWithinInclusive<int32>(Section, StartCombo, EndCombo))return FName(*FString::Printf(TEXT("Failed")));
 	return FName(*FString::Printf(TEXT("ComboAttack%d"), Section));
 
@@ -72,4 +75,9 @@ void UAnim_Player::PlayAirAttackMontage()
 {
 	Montage_Play(AirAttackMontage, 1.0f);
 
+}
+
+UAnimMontage * UAnim_Player::GetAttackMontage() const
+{
+	return AttackMontage;
 }

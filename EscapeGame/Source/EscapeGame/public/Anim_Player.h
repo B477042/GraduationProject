@@ -23,6 +23,7 @@ public:
 	virtual FName GetAttackMontageSectionName(int32 Section);
 	virtual void PlayAttackMontage();
 	virtual void PlayAirAttackMontage();
+	UAnimMontage* GetAttackMontage()const;
 private:
 	//const int32 StartCombo = 1;//Attack Montage에서 처음 액션 번호
 	//const int32 EndCombo = 4;//Attack Montage에서 마지막 액션 번호

@@ -168,8 +168,7 @@ void AEGPlayerCharacter::StartRunning()
 	//if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::ZeroVector)return;
 	//Stat->SetRunning();//달릴 상태로 만들어 준다
 	//
-	EGLOG(Error, TEXT("Anim Name : %s"), *Anim->GetName());
-	EGLOG(Warning,TEXT("Anim : %s"),*Anim->)
+	
 }
 
 void AEGPlayerCharacter::StopRunning()
