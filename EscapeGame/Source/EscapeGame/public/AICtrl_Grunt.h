@@ -19,5 +19,12 @@ public:
 	static const FName TargetPlayer;
 	static const FName HomePos;
 	static const FName PatrolPos;
+protected:
+	virtual void BeginPlay()override;
+	virtual void PostInitializeComponents()override;
+
+	virtual void RunAI()override;
+	virtual void StopAI()override;
+
 
 };

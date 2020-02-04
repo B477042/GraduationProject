@@ -24,3 +24,25 @@ AAICtrl_Grunt::AAICtrl_Grunt()
 	}
 
 }
+
+void AAICtrl_Grunt::BeginPlay()
+{
+	Super::BeginPlay();
+	RunAI();
+}
+
+void AAICtrl_Grunt::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+}
+
+void AAICtrl_Grunt::RunAI()
+{
+	Super::RunAI();
+	//EGLOG(Warning, TEXT("AI~"));
+}
+
+void AAICtrl_Grunt::StopAI()
+{
+	Super::StopAI();
+}

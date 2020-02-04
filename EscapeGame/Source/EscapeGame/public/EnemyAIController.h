@@ -31,8 +31,8 @@ protected:
 	virtual void PostInitializeComponents()override;
 	
 //private:
-		void RunAI();
-		void StopAI();
+	virtual	void RunAI();
+	virtual	void StopAI();
 //private:
 	//Blackboard Data File Data
 	UPROPERTY(VisibleAnywhere,Category=AI)
