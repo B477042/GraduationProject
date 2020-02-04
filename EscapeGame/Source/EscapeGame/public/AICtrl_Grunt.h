@@ -16,9 +16,7 @@ class ESCAPEGAME_API AAICtrl_Grunt : public AEnemyAIController
 public:
 	AAICtrl_Grunt();
 
-	static const FName TargetPlayer;
-	static const FName HomePos;
-	static const FName PatrolPos;
+
 protected:
 	virtual void BeginPlay()override;
 	virtual void PostInitializeComponents()override;

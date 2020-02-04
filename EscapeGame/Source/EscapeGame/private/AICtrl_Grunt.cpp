@@ -5,9 +5,7 @@
 
 
 
-const FName AAICtrl_Grunt::TargetPlayer(TEXT("TargetPlayer"));
-const FName AAICtrl_Grunt::HomePos(TEXT("HomePos"));
-const FName AAICtrl_Grunt::PatrolPos(TEXT("PatrolPos"));
+
 
 AAICtrl_Grunt::AAICtrl_Grunt()
 {
@@ -39,7 +37,11 @@ void AAICtrl_Grunt::PostInitializeComponents()
 void AAICtrl_Grunt::RunAI()
 {
 	Super::RunAI();
-	//EGLOG(Warning, TEXT("AI~"));
+	
+	if (UseBlackboard(BBData,Blackboard))
+	{
+		Blackboard->SetValueAsVector(HomePos, GetPawn()->GetActorLocation());
+	}
 }
 
 void AAICtrl_Grunt::StopAI()

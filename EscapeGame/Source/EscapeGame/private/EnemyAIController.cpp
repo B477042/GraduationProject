@@ -9,6 +9,10 @@
 
 
 
+const FName AEnemyAIController::TargetPlayer(TEXT("TargetPlayer"));
+const FName AEnemyAIController::HomePos(TEXT("HomePos"));
+const FName AEnemyAIController::PatrolPos(TEXT("PatrolPos"));
+
 AEnemyAIController::AEnemyAIController()
 {
 

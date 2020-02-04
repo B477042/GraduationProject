@@ -50,8 +50,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, uint8 * Nod
 		FCollisionShape::MakeSphere(DetectRadius), CollisionQueryParam);
 
 	
-	//draw detect range
-	DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Yellow, false, 0.2f);
+
 	if (bResult)
 	{
 		
@@ -64,17 +63,34 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, uint8 * Nod
 
 			if (resultChara->GetController()->IsPlayerController())
 			{
-				EGLOG(Warning, TEXT("Detect!"));
+			//	EGLOG(Warning, TEXT("Detect!"));
 				DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Purple, false, 0.2f);
 				//Draw Point Detected Player
 				DrawDebugPoint(World, resultChara->GetTargetLocation(), 100.0f, FColor::Red, false, 0.2f);
+
+				OwnerComp.GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer,resultChara);
+				EGLOG(Warning,TEXT("Detect : %s") , *OwnerComp.GetBlackboardComponent()->GetValueAsObject(AEnemyAIController::TargetPlayer)->GetName());
+				return;
 			}
 			
-		/*	else
+			else
 			{
-
-			}*/
+				OwnerComp.GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, nullptr);
+				
+			}
 		}
 	}
+
+	//draw detect range
+	DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Yellow, false, 0.2f);
+
+	
+	
+	
 	
 }
+
+//AActor * UBTService_Detect::FindNearest(const TArray<FOverlapResult>& Results)
+//{
+//	for(int i =0;i<Results.)
+//}
