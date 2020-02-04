@@ -2,7 +2,7 @@
 
 
 #include "GruntCharacter.h"
-#include "EnemyAIController.h"
+#include "AICtrl_Grunt.h"
 #include "CharacterAnimInstance.h"
 
 
@@ -11,7 +11,8 @@ AGruntCharacter::AGruntCharacter()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	AIControllerClass = AEnemyAIController::StaticClass();
+	//Set AI Controller
+	AIControllerClass = AAICtrl_Grunt::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
 	

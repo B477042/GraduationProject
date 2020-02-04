@@ -7,20 +7,11 @@
 #include "BehaviorTree/BlackboardComponent.h"
 
 
-const FName AEnemyAIController ::TargetPlayer (TEXT("TargetPlayer"));
+
 
 AEnemyAIController::AEnemyAIController()
 {
-	static ConstructorHelpers::FObjectFinder<UBlackboardData>BB(TEXT("BlackboardData'/Game/MyFolder/AIData/BB_EnemyBoard.BB_EnemyBoard'"));
-	if (BB.Succeeded())
-	{
-		BBData = BB.Object;
-	}
-	static ConstructorHelpers::FObjectFinder<UBehaviorTree>BT(TEXT("BehaviorTree'/Game/MyFolder/AIData/BT_GruntEnemyTree.BT_GruntEnemyTree'"));
-	if (BT.Succeeded())
-	{
-		BTData = BT.Object;
-	}
+
 }
 
 void AEnemyAIController::OnPossess(APawn * InPawn)
@@ -37,7 +28,7 @@ void AEnemyAIController::OnUnPossess()
 void AEnemyAIController::BeginPlay()
 {
 	Super::BeginPlay();
-	RunAI();
+	//RunAI();
 }
 
 void AEnemyAIController::PostInitializeComponents()

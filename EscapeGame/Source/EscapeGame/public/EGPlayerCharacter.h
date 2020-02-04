@@ -9,6 +9,7 @@
 #include "GameFramework/Character.h"
 #include "CharacterStatComponent.h"
 #include "Anim_Player.h"
+#include "CharacterStateComponent.h"
 #include "EGPlayerCharacter.generated.h"
 
 //DECLARE_DELEGATE(FOnKeyPressed);

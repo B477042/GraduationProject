@@ -4,10 +4,14 @@
 
 #include "EscapeGame.h"
 #include "AIController.h"
+#include "BehaviorTree/BehaviorTree.h"
+#include "BehaviorTree/BehaviorTreeComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "EnemyAIController.generated.h"
 
 /**
  * 
+	Default AI Controller in My Game
  */
 UCLASS()
 class ESCAPEGAME_API AEnemyAIController : public AAIController
@@ -19,16 +23,17 @@ public:
 		void OnPossess(APawn* InPawn)override;
 		void OnUnPossess()override;
 
-		static const FName TargetPlayer;
+	
+
 		
 protected:
 	virtual void BeginPlay()override;
 	virtual void PostInitializeComponents()override;
 	
-private:
+//private:
 		void RunAI();
 		void StopAI();
-private:
+//private:
 	//Blackboard Data File Data
 	UPROPERTY(VisibleAnywhere,Category=AI)
 		class UBlackboardData* BBData;
