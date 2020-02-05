@@ -28,6 +28,11 @@ EBTNodeResult::Type UBTTask_MoveAround::ExecuteTask(UBehaviorTreeComponent & Own
 	//Point to Next Pos.
 	FNavLocation NextPoint;
 
+	/** Finds random, point in navigable space restricted to Radius around Origin. Resulting location is not tested for reachability from the Origin
+	 *	@param ResultLocation Found point is put here
+	 *	@param NavData If NavData == NULL then MainNavData is used.
+	 *	@return true if any location found, false otherwise */
+
 	//Set NextPoint Value as Random. From Controlling Pawn's Position, Radius 4m. 
 	if (NaviSys->GetRandomPointInNavigableRadius(ControllingPawn->GetActorLocation(), 400.0f, NextPoint))
 	{

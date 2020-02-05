@@ -7,6 +7,8 @@
 #include "CharacterStatComponent.h"
 #include "EnemyCharacter.generated.h"
 
+
+
 UCLASS()
 class ESCAPEGAME_API AEnemyCharacter : public ACharacter
 {
