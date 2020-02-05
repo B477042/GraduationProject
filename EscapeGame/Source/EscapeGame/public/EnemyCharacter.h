@@ -4,6 +4,7 @@
 
 #include "EscapeGame.h"
 #include "GameFramework/Character.h"
+#include "CharacterStatComponent.h"
 #include "EnemyCharacter.generated.h"
 
 UCLASS()
@@ -21,6 +22,8 @@ protected:
 	/*UFUNCTION(BlueprintCallable)
 		float GetCurrentSpeed();*/
 
+	UPROPERTY(VisibleInstanceOnly, Category = Stat)
+		UCharacterStatComponent* Stat;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

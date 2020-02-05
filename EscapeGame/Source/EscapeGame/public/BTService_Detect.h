@@ -10,7 +10,7 @@
 /**
  *
 	Ai will scan Player
-	and Set Near Player as Target Player
+	
 
 
  */
