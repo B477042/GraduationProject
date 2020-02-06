@@ -2,6 +2,7 @@
 
 #include "CharacterStatComponent.h"
 #include "EGPlayerCharacter.h"
+#include "EnemyCharacter.h"
 #include "..\public\CharacterStatComponent.h"
 
 // Sets default values for this component's properties
@@ -20,7 +21,7 @@ UCharacterStatComponent::UCharacterStatComponent()
 	bCanComboAttack = false;
 	CurrentCombo = 0;
 	MaxCombo = 4;
-	EGLOG(Warning, TEXT("Stat component!"));
+	//EGLOG(Warning, TEXT("Stat component!"));
 	// ...
 }
 
@@ -153,7 +154,7 @@ void UCharacterStatComponent::SetComboStartState()
 
 void UCharacterStatComponent::SetDontMove()
 {
-	auto Character = Cast<AEGPlayerCharacter>(GetOwner());
+	auto Character = Cast<ACharacter>(GetOwner());
 	if (Character != nullptr)
 	{
 		auto Movement = Character->GetCharacterMovement();
@@ -164,11 +165,13 @@ void UCharacterStatComponent::SetDontMove()
 
 void UCharacterStatComponent::SetFreeMove()
 {
+	//Set Player's Character Movement To Normal
 	auto Character = Cast<AEGPlayerCharacter>(GetOwner());
 	if (Character != nullptr)
 	{
 		auto Movement = Character->GetCharacterMovement();
 		Movement->MaxWalkSpeed = MaxWalkingSpeed;
+		return;
 	}
 
 }

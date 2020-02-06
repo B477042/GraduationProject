@@ -17,11 +17,15 @@ EBTNodeResult::Type UBTTask_MoveAround::ExecuteTask(UBehaviorTreeComponent & Own
 	EBTNodeResult::Type Result = Super::ExecuteTask(OwnerComp, NodeMemory);
 
 	
+	
 	auto ControllingPawn = OwnerComp.GetAIOwner()->GetPawn();
 	if (ControllingPawn == nullptr)return EBTNodeResult::Failed;
 
 	UNavigationSystemV1* NaviSys = UNavigationSystemV1::GetNavigationSystem(ControllingPawn->GetWorld());
 	if(NaviSys==nullptr)return EBTNodeResult::Failed;
+
+
+	EGLOG(Warning, TEXT("AI Controller rotate : %s"), *ControllingPawn->GetController()->GetControlRotation().ToString());
 
 	//Get Vector From Blackboard Value "HomePos" point to Pawn's Current Pos
 	FVector StartingPoint = OwnerComp.GetBlackboardComponent()->GetValueAsVector(AEnemyAIController::HomePos);
@@ -32,7 +36,6 @@ EBTNodeResult::Type UBTTask_MoveAround::ExecuteTask(UBehaviorTreeComponent & Own
 	 *	@param ResultLocation Found point is put here
 	 *	@param NavData If NavData == NULL then MainNavData is used.
 	 *	@return true if any location found, false otherwise */
-
 	//Set NextPoint Value as Random. From Controlling Pawn's Position, Radius 4m. 
 	if (NaviSys->GetRandomPointInNavigableRadius(ControllingPawn->GetActorLocation(), 400.0f, NextPoint))
 	{

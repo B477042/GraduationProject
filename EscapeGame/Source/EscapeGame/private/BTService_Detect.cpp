@@ -67,6 +67,8 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, uint8 * Nod
 				DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Purple, false, 0.2f);
 				//Draw Point Detected Player
 				DrawDebugPoint(World, resultChara->GetTargetLocation(), 100.0f, FColor::Red, false, 0.2f);
+				FVector DebugFVPoint = resultChara->GetActorForwardVector()*FVector(1.0f,1.0f,1.0f)*200.0f;
+				DrawDebugLine(World, resultChara->GetActorLocation(), DebugFVPoint, FColor::Red, false, 2.0f);
 
 				OwnerComp.GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer,resultChara);
 				OwnerComp.GetBlackboardComponent()->SetValueAsVector(AEnemyAIController::PatrolPos, resultChara->GetActorLocation());
