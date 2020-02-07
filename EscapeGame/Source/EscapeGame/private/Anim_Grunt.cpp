@@ -7,7 +7,7 @@
 
 UAnim_Grunt::UAnim_Grunt()
 {
-
+	
 }
 
 void UAnim_Grunt::JumpToComboAttackSection(int32 NewSection)
@@ -18,3 +18,4 @@ void UAnim_Grunt::JumpToComboAttackSection(int32 NewSection)
 void UAnim_Grunt::PlayAirattackMontage()
 {
 }
+

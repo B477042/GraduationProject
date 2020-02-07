@@ -17,8 +17,9 @@ public:
 	UAnim_Grunt();
 	virtual void JumpToComboAttackSection(int32 NewSection);
 	virtual void PlayAirattackMontage();
-protected:
 
+protected:
+	
 private:
 
 };

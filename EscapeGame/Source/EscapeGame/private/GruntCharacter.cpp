@@ -4,6 +4,7 @@
 #include "GruntCharacter.h"
 #include "AICtrl_Grunt.h"
 #include "CharacterAnimInstance.h"
+#include "DrawDebugHelpers.h"
 
 
 AGruntCharacter::AGruntCharacter()
@@ -24,7 +25,7 @@ AGruntCharacter::AGruntCharacter()
 		GetMesh()->SetSkeletalMesh(SM_Body.Object);
 
 		GetMesh()->SetRelativeLocation(FVector( 0.000000f, 0.000000f,-122.000000f));
-		
+		GetMesh()->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 	}
 	GetCapsuleComponent()->SetCapsuleHalfHeight(122.208832f);
 	GetCapsuleComponent()->SetCapsuleRadius(63.929523f);
@@ -41,6 +42,7 @@ AGruntCharacter::AGruntCharacter()
 void AGruntCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	DrawDebugLine(GetWorld(), GetActorLocation(), GetActorLocation() + GetActorForwardVector()*200.0f,FColor ::Red, true);
 }
 
 void AGruntCharacter::PostInitializeComponents()
@@ -58,4 +60,7 @@ float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Damag
 void AGruntCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	//FVector DPoint = GetActorLocation()+GetMesh()->GetForwardVector()*500.0f;
+	//DrawDebugLine(GetWorld(), GetActorLocation(), DPoint, FColor::Cyan, false);
 }

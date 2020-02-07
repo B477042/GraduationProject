@@ -25,7 +25,7 @@ EBTNodeResult::Type UBTTask_MoveAround::ExecuteTask(UBehaviorTreeComponent & Own
 	if(NaviSys==nullptr)return EBTNodeResult::Failed;
 
 
-	EGLOG(Warning, TEXT("AI Controller rotate : %s"), *ControllingPawn->GetController()->GetControlRotation().ToString());
+	//EGLOG(Warning, TEXT("AI Controller rotate : %s"), *ControllingPawn->GetController()->GetControlRotation().ToString());
 
 	//Get Vector From Blackboard Value "HomePos" point to Pawn's Current Pos
 	FVector StartingPoint = OwnerComp.GetBlackboardComponent()->GetValueAsVector(AEnemyAIController::HomePos);

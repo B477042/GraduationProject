@@ -9,6 +9,11 @@ AEnemyCharacter::AEnemyCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Stat = CreateDefaultSubobject<UCharacterStatComponent>(TEXT("STAT"));
+
+	bUseControllerRotationYaw = false;
+	GetCharacterMovement()->bOrientRotationToMovement = false;
+	GetCharacterMovement()->bUseControllerDesiredRotation = true;
+	GetCharacterMovement()->RotationRate = FRotator(0.0f, 480.0f, 0.0f);
 }
 
 // Called when the game starts or when spawned
@@ -29,6 +34,11 @@ void AEnemyCharacter::Tick(float DeltaTime)
 void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AEnemyCharacter::Turn);
+}
 
+void AEnemyCharacter::Turn(float NewAxisValue)
+{
+	AddControllerYawInput(NewAxisValue);
 }
 
