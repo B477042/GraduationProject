@@ -19,5 +19,5 @@ EBTNodeResult::Type UBTTask_TurnToForward::ExecuteTask(UBehaviorTreeComponent& O
 	ControllingChara->SetActorRotation(FMath::RInterpTo(ControllingChara->GetActorRotation(), ForwardRot, GetWorld()->GetDeltaSeconds(), 2.0f));
 	
 
-	return Result;
+	return EBTNodeResult::Succeeded;
 }

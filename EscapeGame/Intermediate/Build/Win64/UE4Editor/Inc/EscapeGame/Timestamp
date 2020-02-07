@@ -1,13 +1,12 @@
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\AICtrl_Grunt.h
-E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Anim_Grunt.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Anim_Player.h
-E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\BTService_Detect.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\BTTask_MoveAround.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\BTTask_TurnToForward.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\CharacterAnimInstance.h
+E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Anim_Grunt.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\CharacterStatComponent.h
-E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\CharacterStateComponent.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Claymore.h
+E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\CharacterStateComponent.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\DoorPath.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EGGameInstance.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EGPlayerCharacter.h
@@ -36,3 +35,5 @@ E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\StairPath2.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\TittleWidget.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\UIController.h
 E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Weapon.h
+E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\BTService_Detect.h
+E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\BTTask_Attack.h
