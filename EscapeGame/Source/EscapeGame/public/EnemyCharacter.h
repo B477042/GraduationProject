@@ -18,6 +18,10 @@ public:
 	// Sets default values for this character's properties
 	AEnemyCharacter();
 
+	/*const static float MaxHP;
+	const static float MaxWalkingSpeed;
+	const static float MaxRunningSpeed;
+	const static float MinWalkingSpeed;*/
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -5,6 +5,9 @@
 #include "EnemyCharacter.h"
 #include "..\public\CharacterStatComponent.h"
 
+
+
+
 // Sets default values for this component's properties
 UCharacterStatComponent::UCharacterStatComponent()
 {
@@ -238,6 +241,14 @@ bool UCharacterStatComponent::CheckCanComboAttack() const
 bool UCharacterStatComponent::CheckCanChargeAttack() const
 {
 	return bIsChargeAttackInputOn;
+}
+
+void UCharacterStatComponent::LoadDBfromOwner(const float & hp, const float & maxWalk, const float & minWalk, const float & maxRunning)
+{
+	MaxHP = hp;
+	MaxWalkingSpeed = maxWalk;
+	MinWalkingSpeed = minWalk;
+	MaxRunningSpeed = maxRunning;
 }
 
 

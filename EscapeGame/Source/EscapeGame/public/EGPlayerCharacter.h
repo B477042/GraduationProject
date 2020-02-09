@@ -54,6 +54,14 @@ public:
 	 void StartRunning();
 	 void StopRunning();
 	 void Roll();
+
+
+	 //===============Static Vars
+	 const static float MaxHP;
+	 const static float MaxWalkingSpeed;
+	 const static float MaxRunningSpeed;
+	 const static float MinWalkingSpeed;
+
 	//=====================================================================
 	// Public UPROPERTY Zone
 public:

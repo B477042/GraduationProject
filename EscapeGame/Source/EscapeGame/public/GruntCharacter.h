@@ -28,6 +28,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	const static float MaxHP;
+	const static float MaxWalkingSpeed;
+	const static float MaxRunningSpeed;
+	const static float MinWalkingSpeed;
 private:
 	UPROPERTY(VisibleAnywhere,Category=Animation)
 		class UCharacterAnimInstance* Anim;

@@ -6,6 +6,11 @@
 #include "CharacterAnimInstance.h"
 #include "DrawDebugHelpers.h"
 
+const float AGruntCharacter::MaxHP = 200.0f;
+const float AGruntCharacter::MinWalkingSpeed = 0.0f;
+const float AGruntCharacter::MaxWalkingSpeed = 400.0f;
+const float AGruntCharacter::MaxRunningSpeed = 700.0f;
+
 
 AGruntCharacter::AGruntCharacter()
 {
@@ -48,6 +53,8 @@ void AGruntCharacter::BeginPlay()
 void AGruntCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+
+	Stat->LoadDBfromOwner(MaxHP, MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
 }
 
 float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)

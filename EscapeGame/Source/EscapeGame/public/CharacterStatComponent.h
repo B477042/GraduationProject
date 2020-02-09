@@ -49,6 +49,9 @@ public:
 	void SetRunning();
 	void SetWalking();
 	
+	//Load Movement Data form owner's static data
+	void LoadDBfromOwner(const float& hp, const float&maxWalk, const float&minWalk, const float&maxRunning);
+
 
 	//int32 GetDropExp()const;
 	int32 GetMaxCombo()const;
@@ -67,11 +70,17 @@ public:
 	FIsHPZero HPZeroDelegate;
 
 private:
-	const float MaxHP=100.0f;
+	/*const float MaxHP=100.0f;
 	const float MaxWalkingSpeed = 500.0f;
 	const float MaxRunningSpeed = 1000.0f;
-	const float MinWalkingSpeed = 1.0f;
+	const float MinWalkingSpeed = 1.0f;*/
+	float MaxHP ;
+	float MaxWalkingSpeed ;
+	float MaxRunningSpeed ;
+	float MinWalkingSpeed ;
 	float timer;
+	
+
 private:
 	
 	//save current HP,

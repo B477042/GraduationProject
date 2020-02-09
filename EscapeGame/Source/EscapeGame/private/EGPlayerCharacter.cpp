@@ -8,6 +8,11 @@
 #include "..\public\EGPlayerCharacter.h"
 //#include "GameWidget.h"
 
+const float AEGPlayerCharacter::MaxHP = 100.0f;
+const float AEGPlayerCharacter::MaxWalkingSpeed = 600.0f;
+const float AEGPlayerCharacter::MinWalkingSpeed = 0.0f;
+const float AEGPlayerCharacter::MaxRunningSpeed = 1200.0f;
+
 
 // Sets default values
 AEGPlayerCharacter::AEGPlayerCharacter()
@@ -84,6 +89,7 @@ void AEGPlayerCharacter::PostInitializeComponents()
 			}
 		});
 	}
+	Stat->LoadDBfromOwner(MaxHP, MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
 
 	
 }
@@ -176,6 +182,10 @@ void AEGPlayerCharacter::StopRunning()
 	EGLOG(Warning, TEXT("Run Key Released"));
 	/*if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::ZeroVector)return;
 	Stat->SetWalking();*/
+}
+
+void AEGPlayerCharacter::Roll()
+{
 }
 
 
