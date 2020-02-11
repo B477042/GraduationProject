@@ -9,6 +9,8 @@
 /**
  * 
  */
+
+
 UCLASS()
 class ESCAPEGAME_API UAnim_Grunt : public UCharacterAnimInstance
 {
@@ -16,8 +18,10 @@ class ESCAPEGAME_API UAnim_Grunt : public UCharacterAnimInstance
 public:
 	UAnim_Grunt();
 	virtual void JumpToComboAttackSection(int32 NewSection);
-	virtual void PlayAirattackMontage();
-
+	virtual void PlayAttackMontage();
+	//Check Actor At Front of Owner Actor.
+	UFUNCTION()
+	void AnimNotify_CheckRange();
 protected:
 	
 private:
