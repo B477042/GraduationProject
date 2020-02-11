@@ -7,7 +7,7 @@
 #include "BTTask_Attack.generated.h"
 
 /**
- * 
+ * Excute Attack Motion. Check Hit Actor and Taken Damage
  */
 UCLASS()
 class ESCAPEGAME_API UBTTask_Attack : public UBTTaskNode

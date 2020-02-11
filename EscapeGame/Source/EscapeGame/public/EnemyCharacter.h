@@ -38,4 +38,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void Turn(float NewAxisValue);
 
+	//Change Name if need. refed at GruntChara, BTTask Attack. 
+	virtual void Attack();
+
 };

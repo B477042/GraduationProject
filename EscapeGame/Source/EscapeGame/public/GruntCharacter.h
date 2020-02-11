@@ -4,6 +4,7 @@
 
 
 #include "EnemyCharacter.h"
+#include "Anim_Grunt.h"
 #include "GruntCharacter.generated.h"
 
 /**
@@ -28,11 +29,15 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void Attack()override;
+
 	const static float MaxHP;
 	const static float MaxWalkingSpeed;
 	const static float MaxRunningSpeed;
 	const static float MinWalkingSpeed;
+
+
 private:
 	UPROPERTY(VisibleAnywhere,Category=Animation)
-		class UCharacterAnimInstance* Anim;
+		class UAnim_Grunt* Anim;
 };

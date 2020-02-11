@@ -42,3 +42,7 @@ void AEnemyCharacter::Turn(float NewAxisValue)
 	AddControllerYawInput(NewAxisValue);
 }
 
+void AEnemyCharacter::Attack()
+{
+}
+

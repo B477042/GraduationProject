@@ -8,7 +8,7 @@
 
 const float AGruntCharacter::MaxHP = 200.0f;
 const float AGruntCharacter::MinWalkingSpeed = 0.0f;
-const float AGruntCharacter::MaxWalkingSpeed = 400.0f;
+const float AGruntCharacter::MaxWalkingSpeed = 200.0f;
 const float AGruntCharacter::MaxRunningSpeed = 700.0f;
 
 
@@ -47,7 +47,8 @@ AGruntCharacter::AGruntCharacter()
 void AGruntCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	DrawDebugLine(GetWorld(), GetActorLocation(), GetActorLocation() + GetActorForwardVector()*200.0f,FColor ::Red, true);
+	//Check Direction of This Actor. Will Draw a line that point to Front 2m
+	//DrawDebugLine(GetWorld(), GetActorLocation(), GetActorLocation() + GetActorForwardVector()*200.0f,FColor ::Red, true);
 }
 
 void AGruntCharacter::PostInitializeComponents()
@@ -70,4 +71,9 @@ void AGruntCharacter::Tick(float DeltaTime)
 	
 	//FVector DPoint = GetActorLocation()+GetMesh()->GetForwardVector()*500.0f;
 	//DrawDebugLine(GetWorld(), GetActorLocation(), DPoint, FColor::Cyan, false);
+}
+
+void AGruntCharacter::Attack()
+{
+	EGLOG(Warning, TEXT("Attack! Grunt"));
 }
