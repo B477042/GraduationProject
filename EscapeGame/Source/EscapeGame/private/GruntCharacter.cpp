@@ -5,6 +5,7 @@
 #include "AICtrl_Grunt.h"
 #include "CharacterAnimInstance.h"
 #include "DrawDebugHelpers.h"
+#include "EGPlayerCharacter.h"
 
 const float AGruntCharacter::MaxHP = 200.0f;
 const float AGruntCharacter::MinWalkingSpeed = 0.0f;
@@ -21,9 +22,10 @@ AGruntCharacter::AGruntCharacter()
 	AIControllerClass = AAICtrl_Grunt::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
-	
-
-
+	//Set Attack Range To 100cm
+	AttackRange = 100.0f;
+	AttackExtent = FVector(100.0f,50.0f,50.0f);
+	ATK = 40.0f;
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh>SM_Body(TEXT("SkeletalMesh'/Game/ParagonHowitzer/Characters/Heroes/Howitzer/Skins/Tier_2/Domed/Meshes/Howitzer_Domed.Howitzer_Domed'"));
 	if (SM_Body.Succeeded())
 	{
@@ -56,6 +58,8 @@ void AGruntCharacter::PostInitializeComponents()
 	Super::PostInitializeComponents();
 
 	Stat->LoadDBfromOwner(MaxHP, MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
+
+	//Anim->AttackEvent_Delegate.AddDynamic(&AGruntCharacter::Attack);
 }
 
 float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
@@ -76,4 +80,42 @@ void AGruntCharacter::Tick(float DeltaTime)
 void AGruntCharacter::Attack()
 {
 	EGLOG(Warning, TEXT("Attack! Grunt"));
+
+	Anim->PlayAttackMontage();
+
+	/*
+	*	Scan Enemy By Attack Range -> Using Sweep by cube
+	*	and Take Damage At Scanned Actors
+	*	Player Only Can be Damaged
+	*/
+
+	//2020 02 12 중단점 16:05
+	//Attack에서 잘못 짰다
+	//이하 코드는 AnimNotify에서 실행되야할 것들이다. 
+	//이 코드를 그 쪽으로 옮긴다.
+
+	////Model 1 Not Access To Stat Component Way
+	//FHitResult HitResult;
+	//FVector EndPoint = GetActorLocation() + GetActorForwardVector()*AttackRange;
+	//FCollisionQueryParams Params(NAME_None, false, this);
+
+	////ECC_EngineTraceChannel2 = 'Player' Trace
+	//bool bResult = GetWorld()->SweepSingleByObjectType(HitResult, GetActorLocation(), EndPoint,
+	//		FQuat::Identity,ECollisionChannel::ECC_EngineTraceChannel2, FCollisionShape::MakeBox(AttackExtent),Params);
+
+	////if hit
+	//if (bResult)
+	//{
+	//	auto Player = Cast<AEGPlayerCharacter>(HitResult.GetActor());
+	//	if (Player == nullptr)
+	//	{
+	//		EGLOG(Warning, TEXT("Casting Error"));
+	//		return;
+	//	}
+
+	//	FDamageEvent DamageEvent;
+	//	Player->TakeDamage(ATK,DamageEvent, GetController(),this);
+	//	
+	//}
+
 }

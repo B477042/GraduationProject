@@ -20,6 +20,8 @@ public:
 	virtual void JumpToComboAttackSection(int32 NewSection);
 	virtual void PlayAttackMontage();
 	//Check Actor At Front of Owner Actor.
+	FAttackEventDelegate AttackEvent_Delegate;
+
 	UFUNCTION()
 	void AnimNotify_CheckRange();
 protected:

@@ -47,7 +47,7 @@ public:
 
 
 	 FName GetAttackMontageSectionName(int32 Section)/* PURE_VIRTUAL(UCharacterAnimInstance::GetAttackMontageSectionName , return FName(TEXT("NULL")); )*/;
-	void PlayAttackMontage() /*PURE_VIRTUAL(UCharacterAnimInstance::PlayAttackMontage, ;)*/;
+	virtual void PlayAttackMontage() /*PURE_VIRTUAL(UCharacterAnimInstance::PlayAttackMontage, ;)*/;
 		//Pure Virtual func
 	virtual void JumpToComboAttackSection(int32 NewSection) PURE_VIRTUAL(UCharacterAnimInstance::JumpToComboAttackSection, ;);
 	//virtual void JumpToChargetAttackSection(int32 NewSection) PURE_VIRTUAL(UCharacterAnimInstance::JumpToChargetAttackSection, ;);

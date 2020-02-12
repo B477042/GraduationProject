@@ -40,4 +40,13 @@ public:
 private:
 	UPROPERTY(VisibleAnywhere,Category=Animation)
 		class UAnim_Grunt* Anim;
+
+	//Stat Component 정리되면 거기에 넣는다. 전방 탐지 범위
+	UPROPERTY(VisibleInstanceOnly, Category = Stat)
+		float AttackRange;
+	UPROPERTY(VisibleInstanceOnly, Category = Stat)
+		FVector AttackExtent;
+
+	float ATK;
+
 };
