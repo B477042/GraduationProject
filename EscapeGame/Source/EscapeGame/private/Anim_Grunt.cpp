@@ -11,6 +11,7 @@ UAnim_Grunt::UAnim_Grunt()
 	if (M_ATTACK.Succeeded())
 	{
 		AttackMontage = M_ATTACK.Object;
+		EGLOG(Warning, TEXT("G Anim!!!!"));
 	}
 }
 
@@ -22,6 +23,12 @@ void UAnim_Grunt::JumpToComboAttackSection(int32 NewSection)
 void UAnim_Grunt::PlayAttackMontage()
 {
 	Super::PlayAttackMontage();
+	
+
+	if (!Montage_IsPlaying(AttackMontage))
+	{
+		EGLOG(Warning, TEXT("Montage i s no tplaying"));
+	}
 }
 
 void UAnim_Grunt::AnimNotify_CheckRange()

@@ -38,12 +38,16 @@ AGruntCharacter::AGruntCharacter()
 	GetCapsuleComponent()->SetCapsuleRadius(63.929523f);
 
 
-	static ConstructorHelpers::FClassFinder <UAnimInstance>CA_Anim(TEXT("AnimBlueprint'/Game/MyFolder/AnimationBlueprint/GruntAnim.GruntAnim_C'"));
+	static ConstructorHelpers::FClassFinder <UAnimInstance>CA_Anim(TEXT("/Game/MyFolder/AnimationBlueprint/GruntAnim.GruntAnim_C"));
 	if (CA_Anim.Succeeded())
 	{
-		GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+		
 		GetMesh()->SetAnimClass(CA_Anim.Class);
+		EGLOG(Warning, TEXT("Anim!!!!"));
 	}
+	else
+		EGLOG(Warning, TEXT("Faile"));
+	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 }
 
 void AGruntCharacter::BeginPlay()
@@ -59,6 +63,11 @@ void AGruntCharacter::PostInitializeComponents()
 
 	Stat->LoadDBfromOwner(MaxHP, MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
 
+	Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
+	if (Anim == nullptr)
+	{
+		EGLOG(Warning, TEXT("Anim is null"));
+	}
 	//Anim->AttackEvent_Delegate.AddDynamic(&AGruntCharacter::Attack);
 }
 
@@ -72,6 +81,11 @@ float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Damag
 void AGruntCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (Anim == nullptr)
+	{
+		EGLOG(Warning, TEXT("Anim is Null"));
+		return;
+	}
 	
 	//FVector DPoint = GetActorLocation()+GetMesh()->GetForwardVector()*500.0f;
 	//DrawDebugLine(GetWorld(), GetActorLocation(), DPoint, FColor::Cyan, false);
@@ -81,7 +95,10 @@ void AGruntCharacter::Attack()
 {
 	EGLOG(Warning, TEXT("Attack! Grunt"));
 
+	
 	Anim->PlayAttackMontage();
+
+
 
 	/*
 	*	Scan Enemy By Attack Range -> Using Sweep by cube
