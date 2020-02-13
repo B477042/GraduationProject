@@ -25,14 +25,12 @@ void UAnim_Grunt::PlayAttackMontage()
 	Super::PlayAttackMontage();
 	
 
-	if (!Montage_IsPlaying(AttackMontage))
-	{
-		EGLOG(Warning, TEXT("Montage i s no tplaying"));
-	}
+	
 }
 
 void UAnim_Grunt::AnimNotify_CheckRange()
 {
+	EGLOG(Warning, TEXT("Notify!"));
 	//Excute Delegate 
 	AttackEvent_Delegate.Broadcast();
 	//Owner의 앞을 스캔한다 1미터 정도
