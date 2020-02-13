@@ -56,10 +56,7 @@ void UCharacterAnimInstance::BPBeginPlay()
 
 void UCharacterAnimInstance::PlayAttackMontage()
 {
-	if (AttackMontage == nullptr)
-	{
-		EGLOG(Warning, TEXT("Attack mon is null"));
-	}
+	
 		Montage_Play(AttackMontage, 1.0f);
 
 
