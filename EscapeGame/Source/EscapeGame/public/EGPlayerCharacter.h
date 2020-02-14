@@ -56,7 +56,7 @@ public:
 	 void Roll();
 
 
-	 //===============Static Vars
+	 ////===============Static Vars
 	 const static float MaxHP;
 	 const static float MaxWalkingSpeed;
 	 const static float MaxRunningSpeed;
