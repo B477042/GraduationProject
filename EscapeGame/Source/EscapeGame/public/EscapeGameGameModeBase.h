@@ -17,4 +17,6 @@ class ESCAPEGAME_API AEscapeGameGameModeBase : public AGameModeBase
 		AEscapeGameGameModeBase();
 public:
 	virtual void PostLogin(APlayerController* NewPlayer)override;
+
+
 };

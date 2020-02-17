@@ -3,6 +3,7 @@
 #include "EscapeGameGameModeBase.h"
 #include"EGPlayerCharacter.h"
 #include"EGPlayerController.h"
+//#include "DT_DataStruct.h"
 
 
 AEscapeGameGameModeBase::AEscapeGameGameModeBase()

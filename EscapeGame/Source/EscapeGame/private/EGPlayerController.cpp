@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "EGPlayerController.h"
-#include"GameWidget.h"
-//#include""
-#include"EGPlayerCharacter.h"
+#include "GameWidget.h"
+#include "EGPlayerCharacter.h"
 #include "..\public\EGPlayerController.h"
+#include "DT_DataStruct.h"
 //#include"GameStat.h"
 
 
@@ -15,6 +15,12 @@ AEGPlayerController::AEGPlayerController()
 	if (UI_HUD_C.Succeeded())
 	{
 		HUDWidgetClass = UI_HUD_C.Class;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UDataTable>DT_PLAYER(TEXT("DataTable'/Game/MyFolder/DataTable/DT_PlayerStat.DT_PlayerStat'"));
+	if (DT_PLAYER.Succeeded())
+	{
+		DT_Player = DT_PLAYER.Object;
 	}
 	
 }
@@ -98,5 +104,10 @@ void AEGPlayerController::IsMoveKeyPressed()
 	 
 	// return false;
  }
+
+const UDataTable * AEGPlayerController::GetDT_Player()
+{
+	return DT_Player;
+}
 
  

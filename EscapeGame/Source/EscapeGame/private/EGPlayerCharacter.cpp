@@ -6,6 +6,7 @@
 #include"Components/InputComponent.h"
 #include "GameSetting/public/EGCharacterSetting.h"
 #include "..\public\EGPlayerCharacter.h"
+//#include "DT_DataStruct.h"
 //#include "GameWidget.h"
 
 const float AEGPlayerCharacter::MaxHP = 100.0f;
@@ -25,6 +26,8 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	//object type을 PlayerCharacter로 해준다
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("PlayerCharacter"));
 	//EGLOG(Warning, TEXT("Character Constroucter"));
+
+	
 	
 }
 
