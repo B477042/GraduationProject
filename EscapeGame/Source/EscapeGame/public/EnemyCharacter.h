@@ -4,7 +4,7 @@
 
 #include "EscapeGame.h"
 #include "GameFramework/Character.h"
-#include "CharacterStatComponent.h"
+#include "StatComponent_Enemy.h"
 #include "EnemyCharacter.generated.h"
 
 
@@ -29,7 +29,7 @@ protected:
 		float GetCurrentSpeed();*/
 
 	UPROPERTY(VisibleInstanceOnly, Category = Stat)
-		UCharacterStatComponent* Stat;
+		UStatComponent_Enemy* Stat;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

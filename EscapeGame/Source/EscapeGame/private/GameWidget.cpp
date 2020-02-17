@@ -46,7 +46,7 @@ void UGameWidget::TimeExtend(float addTime)
 	GameTimer += addTime;
 }
 
-void UGameWidget::BindCharacterStat( UCharacterStatComponent * newStat)
+void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 {
 	if (newStat == nullptr) {
 		EGLOG(Error, TEXT("No Character Stat Componenet"));

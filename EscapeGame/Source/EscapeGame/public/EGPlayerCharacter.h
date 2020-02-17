@@ -7,9 +7,9 @@
 #include "Engine/SceneCapture2D.h"
 #include "MinimapRenderComponent.h"
 #include "GameFramework/Character.h"
-#include "CharacterStatComponent.h"
+#include "StatComponent_Player.h"
 #include "Anim_Player.h"
-#include "CharacterStateComponent.h"
+
 #include "EGPlayerCharacter.generated.h"
 
 //DECLARE_DELEGATE(FOnKeyPressed);
@@ -45,7 +45,7 @@ public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, \
 		class AController* EventInstigator, AActor* DamageCauser)override;
 	void HealHP(float addHP);
-	 UCharacterStatComponent* GetStatComponent();
+	 UStatComponent_Player* GetStatComponent();
 	
 	 //Actions
 	 void ChargeAttack();
@@ -74,9 +74,8 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Minimap)
 		UMiniMapRenderComponent* MapRenderer;
 	UPROPERTY(BlueprintReadOnly,EditInstanceOnly, Category = Stat)
-		UCharacterStatComponent* Stat;
-	UPROPERTY(BlueprintReadOnly, EditInstanceOnly, Category = Stat)
-		UCharacterStateComponent* State;
+		UStatComponent_Player* Stat;
+
 private:
 	void InitComponents();
 	void LoadAssets();
@@ -100,10 +99,10 @@ private:
 	//============================
 	UFUNCTION()
 	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
-	//Attack Montage°¡ Àç»ýµÉ ¶§ È£ÃâµÉ ÇÔ¼ö
+	//Attack Montageï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
 	UFUNCTION()
 		void ComboAttackStart();
-	//Montage°¡ ¸ØÃâ ¶§ È£ÃâµÉ ÇÔ¼ö
+	//Montageï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
 	UFUNCTION()
 		void ComboAttackEnd();
 
