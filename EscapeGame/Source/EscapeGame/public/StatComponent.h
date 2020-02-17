@@ -69,7 +69,7 @@ public:
 	FOnHPChangeDelegate HPChangedDelegate;
 	FIsHPZero HPZeroDelegate;
 
-private:
+protected:
 	/*const float MaxHP=100.0f;
 	const float MaxWalkingSpeed = 500.0f;
 	const float MaxRunningSpeed = 1000.0f;
@@ -81,7 +81,7 @@ private:
 	float timer;
 	
 
-private:
+protected:
 	
 	//save current HP,
 	//Transient 이 프로퍼티는 휘발성이라, 저장 또는 로드되지 않습니다. 
