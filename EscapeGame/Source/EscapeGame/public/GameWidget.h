@@ -4,11 +4,13 @@
 
 #include "EscapeGame.h"
 #include "Blueprint/UserWidget.h"
-#include"StatComponent_Player.h"
+#include "StatComponent_Player.h"
 #include "GameWidget.generated.h"
 
 /**
- * 
+ * HUD System Class
+ * Main UI for Player
+ * Display Timer and MiniMap, HP
  */
 
 //DECLARE_DELEGATE_OneParam(FBindStat,UCharacterStatComponent);
