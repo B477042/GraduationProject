@@ -51,7 +51,7 @@ void UStatComponent::BeginPlay()
 void UStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	BasicDamage();
+	//BasicDamage();
 	// ...
 }
 
@@ -93,18 +93,18 @@ void UStatComponent::ResetCombo()
 	CurrentCombo = 0;
 }
 
-void UStatComponent::BasicDamage()
-{
-	timer += GetWorld()->DeltaTimeSeconds;
+// void UStatComponent::BasicDamage()
+// {
+// 	timer += GetWorld()->DeltaTimeSeconds;
 	
-	if (timer > 1.0f)
-	{
-		TakeDamage(1.0f);
-		timer = 0.0f;
-	}
-	if (CurrentHP < 0.0f)
-		SetHP(0.0f);
-}
+// 	if (timer > 1.0f)
+// 	{
+// 		TakeDamage(1.0f);
+// 		timer = 0.0f;
+// 	}
+// 	if (CurrentHP < 0.0f)
+// 		SetHP(0.0f);
+// }
 
 void UStatComponent::OnAttacking(bool bResult)
 {

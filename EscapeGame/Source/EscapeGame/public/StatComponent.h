@@ -38,7 +38,7 @@ public:
 	void HealHP(float AddHP);
 	void AddCombo(int32 Amount);
 	void ResetCombo();
-	void BasicDamage();//자신이 초당 입는 기본 데미지
+	//void BasicDamage();//자신이 초당 입는 기본 데미지
 	void OnAttacking( bool bResult);
 	void SetComboAttackInput(bool bResult);
 	void SetChargeAttackInput(bool bResult);
