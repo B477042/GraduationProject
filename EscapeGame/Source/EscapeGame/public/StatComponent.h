@@ -27,23 +27,22 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-	//virtual void PostInitializeComponent();
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
 	void TakeDamage(float NewDamage);
 	//set new hp. 
 	void SetHP(float NewHP);
+
 	//Add HP to Current HP
 	void HealHP(float AddHP);
-	void AddCombo(int32 Amount);
-	void ResetCombo();
+	
 	//void BasicDamage();//자신이 초당 입는 기본 데미지
 	void OnAttacking( bool bResult);
-	void SetComboAttackInput(bool bResult);
-	void SetChargeAttackInput(bool bResult);
-	void SetComboEndState();
-	void SetComboStartState();
+
+	
 	void SetDontMove();
 	void SetFreeMove();
 	void SetRunning();
@@ -54,16 +53,14 @@ public:
 
 
 	//int32 GetDropExp()const;
-	int32 GetMaxCombo()const;
-	int32 GetCurrentCombo()const;
+	
 
-	float GetAttackPoint()const;
+	float GetATK()const;
 	float GetHPRatio()const;
 	float GetHP()const;
 	
 	bool IsAttacking()const;
-	bool CheckCanComboAttack()const;
-	bool CheckCanChargeAttack()const;
+	
 	
 
 	FOnHPChangeDelegate HPChangedDelegate;
@@ -78,7 +75,7 @@ protected:
 	float MaxWalkingSpeed ;
 	float MaxRunningSpeed ;
 	float MinWalkingSpeed ;
-	float timer;
+	//float timer;
 	
 
 protected:
@@ -90,24 +87,11 @@ protected:
 		float CurrentHP;
 	UPROPERTY(VisibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		float CurrentATK;
-	UPROPERTY( VisibleInstanceOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
-		int32 CurrentCombo;
-	UPROPERTY( VisibleInstanceOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
-		int32 MaxCombo;
+
 
 	UPROPERTY( VisibleInstanceOnly,BlueprintReadOnly ,Category = Attacking, Meta = (AllowPrivateAccess = true))
 		bool bIsAttacking;
-	//Normal Combo를 진행할 입력이 입력 됐는지
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
-		bool bIsComboAttackInputOn;
-	//Charge Combo를 진행할 입력이 입력 됐는지
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
-		bool bIsChargeAttackInputOn;
 
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly ,Category = Attacking, Meta = (AllowPrivateAccess = true))
-		bool bCanComboAttack;//Can next Combo attack
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
-		bool bCanChargeAttack;//Can next Charge Attack
 
 
 };
