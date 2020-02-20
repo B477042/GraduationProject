@@ -39,6 +39,6 @@ public:
 	virtual void Turn(float NewAxisValue);
 
 	//Change Name if need. refed at GruntChara, BTTask Attack. 
-	virtual void Attack() PURE_VIRTUAL(AEnemyCharacter::Attack, ;);
+	virtual void Attack() PURE_VIRTUAL(AEnemyCharacter::Attack,);
 
 };

@@ -4,6 +4,7 @@
 
 #include "EscapeGame.h"
 #include "Components/ActorComponent.h"
+#include "Engine/DataTable.h"
 #include "StatComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FOnHPChangeDelegate);
@@ -60,8 +61,8 @@ public:
 	float GetHP()const;
 	
 	bool IsAttacking()const;
-	
-	
+	//PURE_VIRTUAL( 함수 이름, 기본 리턴 값;)
+	virtual void LoadDataTable(const class UDataTable* DataTable) PURE_VIRTUAL(StatComponent::LoadDataTable, ;);
 
 	FOnHPChangeDelegate HPChangedDelegate;
 	FIsHPZero HPZeroDelegate;

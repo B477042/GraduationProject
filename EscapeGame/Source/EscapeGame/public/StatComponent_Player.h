@@ -38,14 +38,15 @@ public:
 
 	void SetComboAttackInput(bool bResult);
 	void SetChargeAttackInput(bool bResult);
-	void SetComboEndState();
 	void SetComboStartState();
+	void SetComboEndState();
+	
 
 	void AddCombo(int32 Amount);
 	void ResetCombo();
 
 
-
+	virtual  void LoadDataTable(const class UDataTable* DataTable)override ;
 private:
 
 	UPROPERTY(VisibleInstanceOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
@@ -65,4 +66,6 @@ private:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
 		bool bCanChargeAttack;//Can next Charge Attack
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
+		int32 Level;
 };

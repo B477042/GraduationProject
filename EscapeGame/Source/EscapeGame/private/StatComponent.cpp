@@ -16,14 +16,9 @@ UStatComponent::UStatComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 	//CurrentHP = MaxHP;
 	CurrentATK = 10.0f;
-	timer = 0.0f;
+
 	bIsAttacking = false;
-	bIsChargeAttackInputOn = false;
-	bIsComboAttackInputOn = false;
-	bCanChargeAttack = false;
-	bCanComboAttack = false;
-	CurrentCombo = 0;
-	MaxCombo = 4;
+	
 	//EGLOG(Warning, TEXT("Stat component!"));
 	// ...
 }
@@ -81,79 +76,13 @@ void UStatComponent::HealHP(float AddHP)
 	HPChangedDelegate.Broadcast();
 }
 
-void UStatComponent::AddCombo(int32 Amount)
-{
-	CurrentCombo += Amount;
-}
 
-
-
-void UStatComponent::ResetCombo()
-{
-	CurrentCombo = 0;
-}
-
-// void UStatComponent::BasicDamage()
-// {
-// 	timer += GetWorld()->DeltaTimeSeconds;
-	
-// 	if (timer > 1.0f)
-// 	{
-// 		TakeDamage(1.0f);
-// 		timer = 0.0f;
-// 	}
-// 	if (CurrentHP < 0.0f)
-// 		SetHP(0.0f);
-// }
 
 void UStatComponent::OnAttacking(bool bResult)
 {
 	bIsAttacking = bResult;
 }
 
-void UStatComponent::SetComboAttackInput(bool bResult)
-{
-	//bCanComboAttack = bResult;
-	bIsComboAttackInputOn = bResult;
-	//bIsChargeAttackInputOn = false;
-//	EGLOG(Warning, TEXT("Set Combo Input : %d"), bIsComboAttackInputOn);
-}
-
-void UStatComponent::SetChargeAttackInput(bool bResult)
-{
-	//bCanChargeAttack = bResult;
-	bIsChargeAttackInputOn = bResult;
-//	EGLOG(Warning, TEXT("Set ChargeAttack Input : %d"), bIsChargeAttackInputOn);
-	//bIsComboAttackInputOn = false;
-}
-//montage paly�� ����Ǹ� ȣ�� �� ���̴�
-void UStatComponent::SetComboEndState()
-{
-	bCanComboAttack = false;
-	bCanChargeAttack = false;
-	bIsAttacking = false;
-	//������ �Ұ����ϰ� ���ش�
-	bIsChargeAttackInputOn = false;
-	bIsComboAttackInputOn = false;
-	ResetCombo();
-
-	SetFreeMove();
-}
-
-//Montage Play�� ���۵Ǹ� ȣ��� ���´�
-void UStatComponent::SetComboStartState()
-{
-	
-	bCanChargeAttack = true;
-	bCanComboAttack = true;
-	bIsAttacking = true;
-	AddCombo(1);
-	////������ ���� ������ ���� �Է��� �ʱ�ȭ ��Ų��
-	bIsChargeAttackInputOn = false;
-	bIsComboAttackInputOn = false;
-
-	SetDontMove();
-}
 
 void UStatComponent::SetDontMove()
 {
@@ -217,30 +146,11 @@ float UStatComponent::GetHP() const
 	return CurrentHP;
 }
 
-int32 UStatComponent::GetMaxCombo() const
-{
-	return MaxCombo;
-}
-
-int32 UStatComponent::GetCurrentCombo() const
-{
-	return  CurrentCombo;
-}
 
 
 bool UStatComponent::IsAttacking() const
 {
 	return bIsAttacking;
-}
-
-bool UStatComponent::CheckCanComboAttack() const
-{
-	return bIsComboAttackInputOn;
-}
-
-bool UStatComponent::CheckCanChargeAttack() const
-{
-	return bIsChargeAttackInputOn;
 }
 
 void UStatComponent::LoadDBfromOwner(const float & hp, const float & maxWalk, const float & minWalk, const float & maxRunning)

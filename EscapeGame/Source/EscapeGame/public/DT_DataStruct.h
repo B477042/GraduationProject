@@ -28,7 +28,10 @@ public:
 	//Inventory Slot. Share With Skill slot
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DataTable")
 		int32 Slot;
-
+	void ShowInfo()
+	{
+		UE_LOG(LogTemp, Error, TEXT("level : %d, maxHp : %d, Atk : %d, NextExp : %d,Slot : %d"),Levl,MaxHp,Atk,NextExp,Slot);
+	}
 };
 
 
