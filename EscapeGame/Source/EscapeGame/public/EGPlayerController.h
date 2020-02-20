@@ -35,11 +35,15 @@ public:
 
 	void SyncStatToHUD();
 	void IsMoveKeyPressed();
-	
+	const class UDataTable* GetDT_Player();
 
 private:
 	UPROPERTY(meta=(AllowPrivateAccess=true))
 		class UGameWidget* HUD;
+
+	//Data Table For Player Stat
+	UPROPERTY(VisibleAnywhere, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
+	class UDataTable* DT_Player;
 	/*UPROPERTY()
 		 USceneCaptureComponent2D* MapCam;*/
 	/*UPROPERTY()

@@ -6,6 +6,7 @@
 #include"Components/InputComponent.h"
 #include "GameSetting/public/EGCharacterSetting.h"
 #include "..\public\EGPlayerCharacter.h"
+//#include "DT_DataStruct.h"
 //#include "GameWidget.h"
 
 const float AEGPlayerCharacter::MaxHP = 100.0f;
@@ -25,6 +26,8 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	//object type을 PlayerCharacter로 해준다
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("PlayerCharacter"));
 	//EGLOG(Warning, TEXT("Character Constroucter"));
+
+	
 	
 }
 
@@ -110,7 +113,7 @@ void AEGPlayerCharacter::HealHP(float addHP)
 	Stat->HealHP(addHP);
 }
 
-UCharacterStatComponent* AEGPlayerCharacter::GetStatComponent()
+UStatComponent_Player* AEGPlayerCharacter::GetStatComponent()
 {
 	return Stat;
 }
@@ -199,8 +202,8 @@ void AEGPlayerCharacter::InitComponents()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
 	MiniMapArm= CreateDefaultSubobject<USpringArmComponent>(TEXT("MINMAPARM"));
 	MapRenderer = CreateDefaultSubobject<UMiniMapRenderComponent>(TEXT("MAPRENDERER"));
-	Stat = CreateDefaultSubobject <UCharacterStatComponent>(TEXT("STAT"));
-	State = CreateDefaultSubobject <UCharacterStateComponent>(TEXT("STATE"));
+	Stat = CreateDefaultSubobject <UStatComponent_Player>(TEXT("STAT"));
+	
 
 
 	//Components Tree

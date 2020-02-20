@@ -48,6 +48,8 @@ AGruntCharacter::AGruntCharacter()
 	else
 		EGLOG(Warning, TEXT("Faile"));
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+	//Stat = CreateDefaultSubobject<UStatComponent_Enemy>(TEXT("STAT"));
+	//if (Stat == nullptr)EGLOG(Warning, TEXT("Enemy's Stat is null"));
 }
 
 void AGruntCharacter::BeginPlay()
@@ -61,7 +63,7 @@ void AGruntCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	Stat->LoadDBfromOwner(MaxHP, MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
+	//Stat->LoadDBfromOwner(MaxHP, MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
 
 	Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
 	if (Anim == nullptr)

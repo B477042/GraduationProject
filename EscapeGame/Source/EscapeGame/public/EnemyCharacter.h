@@ -4,7 +4,7 @@
 
 #include "EscapeGame.h"
 #include "GameFramework/Character.h"
-#include "CharacterStatComponent.h"
+//#include "StatComponent_Enemy.h"
 #include "EnemyCharacter.generated.h"
 
 
@@ -28,8 +28,8 @@ protected:
 	/*UFUNCTION(BlueprintCallable)
 		float GetCurrentSpeed();*/
 
-	UPROPERTY(VisibleInstanceOnly, Category = Stat)
-		UCharacterStatComponent* Stat;
+	//UPROPERTY(VisibleInstanceOnly, Category = Stat)
+	//	UStatComponent_Enemy* Stat;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -39,6 +39,6 @@ public:
 	virtual void Turn(float NewAxisValue);
 
 	//Change Name if need. refed at GruntChara, BTTask Attack. 
-	virtual void Attack() PURE_VIRTUAL(AEnemyCharacter::Attack, ;);
+	virtual void Attack() PURE_VIRTUAL(AEnemyCharacter::Attack,);
 
 };

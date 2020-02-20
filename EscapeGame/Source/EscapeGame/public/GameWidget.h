@@ -4,11 +4,13 @@
 
 #include "EscapeGame.h"
 #include "Blueprint/UserWidget.h"
-#include"CharacterStatComponent.h"
+#include "StatComponent_Player.h"
 #include "GameWidget.generated.h"
 
 /**
- * 
+ * HUD System Class
+ * Main UI for Player
+ * Display Timer and MiniMap, HP
  */
 
 //DECLARE_DELEGATE_OneParam(FBindStat,UCharacterStatComponent);
@@ -22,7 +24,7 @@ public:
 	//void BindCharacterStat(class UGameStat* NewCharacterStat);
 	virtual void NativeConstruct() override;
 	void TimeExtend(float addTime);
-	void BindCharacterStat( UCharacterStatComponent* newStat);
+	void BindCharacterStat( UStatComponent_Player* newStat);
 	float GetGameTimer();
 	//FBindStat BindStatDelegate;
 	
@@ -32,7 +34,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 		float CheackTimeOut(float NewValue);
 private:
-	TWeakObjectPtr<class UCharacterStatComponent>CurrentCharacterStat;
+	TWeakObjectPtr<class UStatComponent_Player>CurrentCharacterStat;
 	UPROPERTY()
 		class UProgressBar* PB_HP;
 	//UPROPERTY()

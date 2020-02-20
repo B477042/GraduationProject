@@ -1,0 +1,9 @@
+{
+	"files.exclude": {
+		"E:/CODE/GraduationProject/EscapeGame/.vs": true,
+		"E:/CODE/GraduationProject/EscapeGame/.vscode": true,
+		"E:/CODE/GraduationProject/EscapeGame/Content": true,
+		"E:/CODE/GraduationProject/EscapeGame/Intermediate": true,
+		"E:/CODE/GraduationProject/EscapeGame/Saved": true
+	}
+}
