@@ -55,6 +55,7 @@ public:
 	 void StopRunning();
 	 void Roll();
 
+	//const AController* GetController();
 
 	 ////===============Static Vars
 	 const static float MaxHP;

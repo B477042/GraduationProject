@@ -2,7 +2,7 @@
 
 
 #include "StatComponent_Player.h"
-
+#include "EGPlayerController.h"
 #include "DT_DataStruct.h"
 
 UStatComponent_Player::UStatComponent_Player()
@@ -26,6 +26,7 @@ void UStatComponent_Player::InitializeComponent()
 void UStatComponent_Player::BeginPlay()
 {
 	Super::BeginPlay();
+	loadLevelData();
 }
 
 
@@ -102,24 +103,85 @@ void UStatComponent_Player::ResetCombo()
 	CurrentCombo = 0;
 }
 
-void UStatComponent_Player::LoadDataTable(const UDataTable * DataTable)
+void UStatComponent_Player::GetExp(const int32 & DropExp)
 {
+	Exp += DropExp;
+	//if Level up
+	if (Exp >= NextExp)
+	{
+		levelUp();
+		
+	}
+}
+//
+//void UStatComponent_Player::LoadDataTable()
+//{
+//	/*
+//	*	Set Player Table row To DataTable
+//	*	if Player Table setted, return
+//	*/
+//	
+//	//if (DataTable == nullptr) { EGLOG(Warning, TEXT("inputted Data Table is nullptr")); return; }
+//	
+//	//if (PlayerTable != nullptr) { EGLOG(Warning, TEXT("Data Table already loaded")); return; }
+//	//PlayerTable = DataTab
+//	
+//	
+//	auto OwnerChara = Cast<ACharacter>(GetOwner());
+//	if (OwnerChara == nullptr)
+//	{
+//		EGLOG(Warning, TEXT("Owner is not Character class"));
+//		return;
+//	}
+//	auto OwnerCon = Cast<AEGPlayerController>(OwnerChara->Controller);
+//	if (OwnerCon == nullptr)
+//	{
+//		EGLOG(Warning, TEXT("Owner controller Casting failed"));
+//		return;
+//	}
+//
+//	PlayerTableRow = DataTable->FindRow<FPlayerTableRow>(FName(*(FString::FormatAsNumber(Level))), FString(""));
+//}
+
+void UStatComponent_Player::levelUp()
+{
+	//Exp가 NextExp를 초과한 만큼 빼주고
+	Exp -= NextExp;
+	//0미만이면 Exp를 0으로 설정해준다
+	if (Exp < 0)Exp = 0;
+	Level++;
+	
+	loadLevelData();
+}
+
+void UStatComponent_Player::loadLevelData()
+{
+
 	/*
-	*	First, Get Player controller Static class
-	*	Second, Bring DataTable from PlayerController
-	*	Third, Compare Inputted Data Table To Controller's Table
-	*
+		
+	
 	*/
-	
-	if (DataTable == nullptr) { EGLOG(Warningt, TEXT("inputted Data Table is nullptr")); return; }
-	
-	FPlayerTableRow* PlayerTableRow = DataTable->FindRow<FPlayerTableRow>(FName(*(FString::FormatAsNumber(Level))),FString(""));
-	
-	//LevelUpDataTable->FindRow<FLevelUpTableRow>(FName(*(FString::FormatAsNumber(i))), FString(""));
+	auto OwnerChara = Cast<ACharacter>(GetOwner());
+	if (OwnerChara == nullptr)
+	{
+		EGLOG(Warning, TEXT("Owner is not Character class"));
+		return;
+	}
+	auto OwnerCon = Cast<AEGPlayerController>(OwnerChara->Controller);
+	if (OwnerCon == nullptr)
+	{
+		EGLOG(Warning, TEXT("Owner controller Casting failed"));
+		return;
+	}
 
-	if(PlayerTableRow==nullptr) { EGLOG(Warningt, TEXT("Player Table Row is nullptr")); return; }
+	auto DataTable = OwnerCon->GetDT_Player();
 
-	PlayerTableRow->ShowInfo();
-	
+	FPlayerTableRow* PlayerTableRow;
+	PlayerTableRow = DataTable->FindRow<FPlayerTableRow>(FName(*(FString::FormatAsNumber(Level))), FString(""));
 
+	MaxHP = PlayerTableRow->MaxHp;
+	CurrentHP = MaxHP;
+	NextExp = PlayerTableRow->NextExp;
+	CurrentATK = PlayerTableRow->Atk;
+	ItemSlot = PlayerTableRow->Slot;
 }

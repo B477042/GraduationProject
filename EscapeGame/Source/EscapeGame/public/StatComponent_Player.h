@@ -4,6 +4,7 @@
 
 
 #include "StatComponent.h"
+
 #include "StatComponent_Player.generated.h"
 
 /**
@@ -45,8 +46,18 @@ public:
 	void AddCombo(int32 Amount);
 	void ResetCombo();
 
+	//Get Exp form enemy's Drop Exp
+	void GetExp(const int32 &DropExp );
 
-	virtual  void LoadDataTable(const class UDataTable* DataTable)override ;
+
+	//virtual  void LoadDataTable()override ;
+
+
+private:
+	//Called when Exp is enough to level up
+	void levelUp();
+	//data table에서 level에 맞는 data를 가져온다
+	void loadLevelData();
 private:
 
 	UPROPERTY(VisibleInstanceOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
@@ -54,18 +65,38 @@ private:
 	UPROPERTY(VisibleInstanceOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
 		int32 MaxCombo;
 
+	//Player level
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
+		int32 Level;
+	//Player's Current Exp
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
+		int32 Exp;
+	//Exp, need to level up
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
+		int32 NextExp;
+	//Size of Inventory
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
+		int32 ItemSlot;
+
 	//Normal Combo를 진행할 입력이 입력 됐는지
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
 		bool bIsComboAttackInputOn;
 	//Charge Combo를 진행할 입력이 입력 됐는지
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
 		bool bIsChargeAttackInputOn;
-
+	//Can next Combo attack
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
-		bool bCanComboAttack;//Can next Combo attack
+		bool bCanComboAttack;
+	//Can next Charge Attack
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
-		bool bCanChargeAttack;//Can next Charge Attack
+		bool bCanChargeAttack;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
-		int32 Level;
+	
+
+
+
+	/*UPROPERTY( VisibleInstanceOnly, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
+		FPlayerTableRow* PlayerTableRow;*/
+	//UPROPERTY(Transient, VisibleInstanceOnly, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
+	//	UDataTable* PlayerTable;
 };

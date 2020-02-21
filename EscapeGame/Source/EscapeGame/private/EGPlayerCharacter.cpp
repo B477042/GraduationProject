@@ -36,6 +36,14 @@ void AEGPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	//EGLOG(Warning, TEXT("Character Begin Play"));
+
+	auto Con = Cast<AEGPlayerController>(Controller);
+	if (Con == nullptr)
+	{
+		EGLOG(Warning, TEXT("Fail to Casting Controller"));
+		return;
+	}
+	//Stat->LoadDataTable(Con->GetDT_Player());
 	
 }
 
@@ -92,8 +100,10 @@ void AEGPlayerCharacter::PostInitializeComponents()
 			}
 		});
 	}
-	Stat->LoadDBfromOwner(MaxHP, MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
+	
+	
 
+	//Stat->LoadDBfromOwner(MaxHP, MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
 	
 }
 
@@ -190,6 +200,8 @@ void AEGPlayerCharacter::StopRunning()
 void AEGPlayerCharacter::Roll()
 {
 }
+
+
 
 
 

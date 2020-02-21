@@ -30,7 +30,7 @@ public:
 		int32 Slot;
 	void ShowInfo()
 	{
-		UE_LOG(LogTemp, Error, TEXT("level : %d, maxHp : %d, Atk : %d, NextExp : %d,Slot : %d"),Levl,MaxHp,Atk,NextExp,Slot);
+		UE_LOG(LogTemp, Error, TEXT("level : %d, maxHp : %d, Atk : %d, NextExp : %d,Slot : %d"),Level,MaxHp,Atk,NextExp,Slot);
 	}
 };
 
