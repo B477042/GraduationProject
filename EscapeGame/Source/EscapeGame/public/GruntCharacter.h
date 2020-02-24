@@ -31,7 +31,7 @@ public:
 
 	virtual void Attack()override;
 
-	const static float MaxHP;
+
 	const static float MaxWalkingSpeed;
 	const static float MaxRunningSpeed;
 	const static float MinWalkingSpeed;

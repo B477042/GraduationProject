@@ -49,8 +49,10 @@ public:
 	void SetRunning();
 	void SetWalking();
 	
+
+	void SetSpeedLimits(const float&maxWalk, const float&minWalk, const float&maxRunning);
 	//Load Movement Data form owner's static data
-	void LoadDBfromOwner(const float& hp, const float&maxWalk, const float&minWalk, const float&maxRunning);
+	//void LoadDBfromOwner(const float&maxWalk, const float&minWalk, const float&maxRunning);
 
 
 	//int32 GetDropExp()const;

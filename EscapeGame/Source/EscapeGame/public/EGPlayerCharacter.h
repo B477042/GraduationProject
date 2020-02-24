@@ -58,7 +58,7 @@ public:
 	//const AController* GetController();
 
 	 ////===============Static Vars
-	 const static float MaxHP;
+	// const static float MaxHP;
 	 const static float MaxWalkingSpeed;
 	 const static float MaxRunningSpeed;
 	 const static float MinWalkingSpeed;

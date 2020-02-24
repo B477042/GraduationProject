@@ -128,6 +128,13 @@ void UStatComponent::SetWalking()
 	}
 }
 
+void UStatComponent::SetSpeedLimits(const float & maxWalk, const float & minWalk, const float & maxRunning)
+{
+	MaxWalkingSpeed = maxWalk;
+	MinWalkingSpeed = minWalk;
+	MaxRunningSpeed = maxRunning;
+}
+
 
 
 
@@ -153,12 +160,12 @@ bool UStatComponent::IsAttacking() const
 	return bIsAttacking;
 }
 
-void UStatComponent::LoadDBfromOwner(const float & hp, const float & maxWalk, const float & minWalk, const float & maxRunning)
-{
-	MaxHP = hp;
-	MaxWalkingSpeed = maxWalk;
-	MinWalkingSpeed = minWalk;
-	MaxRunningSpeed = maxRunning;
-}
+//void UStatComponent::LoadDBfromOwner( const float & maxWalk, const float & minWalk, const float & maxRunning)
+//{
+//
+//	MaxWalkingSpeed = maxWalk;
+//	MinWalkingSpeed = minWalk;
+//	MaxRunningSpeed = maxRunning;
+//}
 
 

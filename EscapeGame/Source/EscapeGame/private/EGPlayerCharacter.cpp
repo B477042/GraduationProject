@@ -9,7 +9,7 @@
 //#include "DT_DataStruct.h"
 //#include "GameWidget.h"
 
-const float AEGPlayerCharacter::MaxHP = 100.0f;
+//const float AEGPlayerCharacter::MaxHP = 100.0f;
 const float AEGPlayerCharacter::MaxWalkingSpeed = 600.0f;
 const float AEGPlayerCharacter::MinWalkingSpeed = 0.0f;
 const float AEGPlayerCharacter::MaxRunningSpeed = 1200.0f;
@@ -103,7 +103,7 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	
 	
 
-	//Stat->LoadDBfromOwner(MaxHP, MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
+	Stat->SetSpeedLimits( MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
 	
 }
 

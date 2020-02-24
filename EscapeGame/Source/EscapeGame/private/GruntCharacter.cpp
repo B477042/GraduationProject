@@ -7,7 +7,7 @@
 #include "DrawDebugHelpers.h"
 #include "EGPlayerCharacter.h"
 
-const float AGruntCharacter::MaxHP = 200.0f;
+//const float AGruntCharacter::MaxHP = 200.0f;
 const float AGruntCharacter::MinWalkingSpeed = 0.0f;
 const float AGruntCharacter::MaxWalkingSpeed = 200.0f;
 const float AGruntCharacter::MaxRunningSpeed = 700.0f;
@@ -71,6 +71,8 @@ void AGruntCharacter::PostInitializeComponents()
 		EGLOG(Warning, TEXT("Anim is null"));
 	}
 	//Anim->AttackEvent_Delegate.AddDynamic(&AGruntCharacter::Attack);
+	//Set Limit of Speeds
+	Stat->SetSpeedLimits(MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
 }
 
 float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
