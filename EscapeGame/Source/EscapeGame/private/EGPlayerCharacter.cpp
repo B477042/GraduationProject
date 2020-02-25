@@ -10,9 +10,9 @@
 //#include "GameWidget.h"
 
 //const float AEGPlayerCharacter::MaxHP = 100.0f;
-const float AEGPlayerCharacter::MaxWalkingSpeed = 600.0f;
-const float AEGPlayerCharacter::MinWalkingSpeed = 0.0f;
-const float AEGPlayerCharacter::MaxRunningSpeed = 1200.0f;
+//const float AEGPlayerCharacter::MaxWalkingSpeed = 600.0f;
+//const float AEGPlayerCharacter::MinWalkingSpeed = 0.0f;
+//const float AEGPlayerCharacter::MaxRunningSpeed = 1200.0f;
 
 
 // Sets default values
@@ -103,7 +103,7 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	
 	
 
-	Stat->SetSpeedLimits( MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
+	//Stat->SetSpeedLimits( MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
 	
 }
 

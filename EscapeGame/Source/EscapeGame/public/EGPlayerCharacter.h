@@ -58,10 +58,10 @@ public:
 	//const AController* GetController();
 
 	 ////===============Static Vars
-	// const static float MaxHP;
-	 const static float MaxWalkingSpeed;
-	 const static float MaxRunningSpeed;
-	 const static float MinWalkingSpeed;
+	//// const static float MaxHP;
+	// const static float MaxWalkingSpeed;
+	// const static float MaxRunningSpeed;
+	// const static float MinWalkingSpeed;
 
 	//=====================================================================
 	// Public UPROPERTY Zone

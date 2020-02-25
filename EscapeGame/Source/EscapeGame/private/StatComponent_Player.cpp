@@ -16,6 +16,10 @@ UStatComponent_Player::UStatComponent_Player()
 	MaxCombo = 4;
 
 	Level = 1;
+
+	MinWalkingSpeed = 0.0f;
+	MaxWalkingSpeed = 600.0f;
+	MaxRunningSpeed = 1000.0f;
 }
 
 void UStatComponent_Player::InitializeComponent()
@@ -90,7 +94,7 @@ void UStatComponent_Player::SetComboEndState()
 	bIsComboAttackInputOn = false;
 	ResetCombo();
 
-	SetFreeMove();
+	SetWalking();
 }
 
 void UStatComponent_Player::AddCombo(int32 Amount)

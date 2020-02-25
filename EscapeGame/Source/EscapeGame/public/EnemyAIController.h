@@ -22,6 +22,7 @@ public:
 		AEnemyAIController();
 		void OnPossess(APawn* InPawn)override;
 		void OnUnPossess()override;
+		
 
 		static const FName TargetPlayer;
 		static const FName HomePos;

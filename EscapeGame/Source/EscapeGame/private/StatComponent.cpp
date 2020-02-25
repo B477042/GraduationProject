@@ -35,6 +35,7 @@ void UStatComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	SetWalking();
 	// ...
 	
 }
@@ -95,22 +96,9 @@ void UStatComponent::SetDontMove()
 
 }
 
-void UStatComponent::SetFreeMove()
-{
-	//Set Player's Character Movement To Normal
-	auto Character = Cast<AEGPlayerCharacter>(GetOwner());
-	if (Character != nullptr)
-	{
-		auto Movement = Character->GetCharacterMovement();
-		Movement->MaxWalkSpeed = MaxWalkingSpeed;
-		return;
-	}
-
-}
-
 void UStatComponent::SetRunning()
 {
-	auto Character = Cast<AEGPlayerCharacter>(GetOwner());
+	auto Character = Cast<ACharacter>(GetOwner());
 	if (Character != nullptr)
 	{
 		auto Movement = Character->GetCharacterMovement();
@@ -120,11 +108,11 @@ void UStatComponent::SetRunning()
 
 void UStatComponent::SetWalking()
 {
-	auto Character = Cast<AEGPlayerCharacter>(GetOwner());
+	auto Character = Cast<ACharacter>(GetOwner());
 	if (Character != nullptr)
 	{
 		auto Movement = Character->GetCharacterMovement();
-		Movement->MaxWalkSpeed = MinWalkingSpeed;
+		Movement->MaxWalkSpeed = MaxWalkingSpeed;
 	}
 }
 

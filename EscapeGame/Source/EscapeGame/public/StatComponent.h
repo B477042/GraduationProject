@@ -43,10 +43,12 @@ public:
 	//void BasicDamage();//자신이 초당 입는 기본 데미지
 	void OnAttacking( bool bResult);
 
-	
+	//Set Actor Can't Move Around using MinWalkingSpeed
 	void SetDontMove();
-	void SetFreeMove();
+
+	//Set Actor Speed To MaxRunningSpeed
 	void SetRunning();
+	//Set Actor Speed To MaxWalingSpeed
 	void SetWalking();
 	
 
