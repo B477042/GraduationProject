@@ -27,6 +27,7 @@ protected:
 	virtual void BeginPlay() override;
 	/*UFUNCTION(BlueprintCallable)
 		float GetCurrentSpeed();*/
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,class AController* EventInstigator, AActor* DamageCauser)override;
 
 	UPROPERTY(VisibleInstanceOnly, Category = Stat)
 		UStatComponent_Enemy* Stat;

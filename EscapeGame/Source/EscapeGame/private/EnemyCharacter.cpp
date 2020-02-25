@@ -24,6 +24,15 @@ void AEnemyCharacter::BeginPlay()
 	
 }
 
+float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+{
+	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	Stat->TakeDamage(DamageAmount);
+
+	return FinalDamage;
+}
+
 // Called every frame
 void AEnemyCharacter::Tick(float DeltaTime)
 {
