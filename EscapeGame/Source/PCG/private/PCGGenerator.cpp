@@ -40,6 +40,6 @@ void APCGGenerator::RunPCG()
 
 AActor* APCGGenerator::generateTile()
 {
-
+	return nullptr;
 }
 

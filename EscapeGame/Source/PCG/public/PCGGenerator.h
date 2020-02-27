@@ -6,6 +6,14 @@
 #include "GameFramework/Actor.h"
 #include "PCGGenerator.generated.h"
 
+//현재 PCG 생성자가 블럭을 만드는 진행 방향. 기본은 Forward
+UENUM(BlueprintType) 
+enum class CreateDirection : uint8
+{
+	Forward=0,Backward,Left,Right
+};
+
+
 UCLASS()
 class PCG_API APCGGenerator : public AActor
 {
@@ -43,5 +51,8 @@ private:
 	//타일들의 좌표를 저장한 array
 	UPROPERTY(VisibleInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))
 		TArray<FVector> coords_tiles;
+	//
+	UPROPERTY(VisibleInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))
+		int32 CreateCount;
 
 };
