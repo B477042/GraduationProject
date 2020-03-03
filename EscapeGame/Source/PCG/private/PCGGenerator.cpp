@@ -45,11 +45,18 @@ void APCGGenerator::RunPCG()
 	SetActorLocation(FVector::ZeroVector);
 	SetActorRotation(FRotator::ZeroRotator);
 
-	//처음 시작하는 것이라면
-	if (CreatedCount == 0)
+	for (int i = 0; i < TotalTiles; i++)
+		
 	{
+		//처음 시작하는 것이라면 아직 아무것도 만들지 않았다. .
+		if (CreatedCount == 0)
+		{
+			
+		}
+		
 
 	}
+
 }
 
 AActor* APCGGenerator::generateTile()
