@@ -9,6 +9,9 @@
 
 */
 
+
+
+
 #pragma once
 
 #include "PCG.h"
@@ -32,7 +35,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	FVector GetTailSize();
+	FVector GetTailRadius();
 	
 private:
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
@@ -40,9 +43,12 @@ private:
 	//타일의 전체 크기로서 측정하는데 사용하게 될 것
 	UPROPERTY(EditAnywhere, Category = "Box", meta = (AllowPrivateAccess = "true"))
 		UBoxComponent* BoxCollision;
-	//Box의 지름. BoxCollision은 반지름을 이용한다
-	FVector BoxSize;
-	UPROPERTY(VisibleAnywhere, Category = "TileCoord")
-		UComponent_TileCoordinate* TileSystem;
+	//Box의 반지름. BoxCollision은 반지름을 이용한다
+	FVector TailRadius;
+
+	FPCGCoord* PCGCoord;
+	
+	//UPROPERTY(VisibleAnywhere, Category = "TileCoord")
+	//	UComponent_TileCoordinate* TileSystem;
 
 };

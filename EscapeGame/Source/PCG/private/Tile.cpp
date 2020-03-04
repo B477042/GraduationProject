@@ -10,7 +10,7 @@ ATile::ATile()
 	PrimaryActorTick.bCanEverTick = true;
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BOX"));
-	TileSystem = CreateDefaultSubobject<UComponent_TileCoordinate>(TEXT("TileSystem"));
+	//TileSystem = CreateDefaultSubobject<UComponent_TileCoordinate>(TEXT("TileSystem"));
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_MESH(TEXT("StaticMesh'/Engine/BasicShapes/Cube.Cube'"));
 	if (SM_MESH.Succeeded())
@@ -20,9 +20,9 @@ ATile::ATile()
 
 	RootComponent = BoxCollision;
 	Mesh->SetupAttachment(RootComponent);
-	BoxSize = FVector(50.0f, 50.0f, 50.0f)*2.0f;
-	BoxCollision->SetBoxExtent(BoxSize/2.0f);
-	TileSystem->LoadTileSize(BoxSize);
+	TailRadius = FVector(50.0f, 50.0f, 50.0f)*2.0f;
+	BoxCollision->SetBoxExtent(TailRadius/2.0f);
+	//TileSystem->LoadTileSize(BoxSize);
 
 	
 }
@@ -32,6 +32,7 @@ void ATile::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	PCGCoord = new FPCGCoord(GetActorLocation(), TailRadius);
 }
 
 // Called every frame
@@ -41,8 +42,8 @@ void ATile::Tick(float DeltaTime)
 
 }
 
-FVector ATile::GetTailSize()
+FVector ATile::GetTailRadius()
 {
-	return BoxSize;
+	return TailRadius;
 }
 

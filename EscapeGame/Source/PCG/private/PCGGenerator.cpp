@@ -45,6 +45,7 @@ void APCGGenerator::RunPCG()
 	SetActorLocation(FVector::ZeroVector);
 	SetActorRotation(FRotator::ZeroRotator);
 
+	//i를 사용한 이유 : 막히거나 한다면 만들지 않을 것이다
 	for (int i = 0; i < TotalTiles; i++)
 		
 	{
@@ -61,6 +62,9 @@ void APCGGenerator::RunPCG()
 
 AActor* APCGGenerator::generateTile()
 {
+	CreatedCount++;
+
+
 	return nullptr;
 }
 

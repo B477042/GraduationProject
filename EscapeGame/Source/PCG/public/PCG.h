@@ -17,17 +17,17 @@ struct FPCGCoord
 {
 public:
 	GENERATED_BODY()
-
-	FPCGCoord()
+//Caution!! Set Radius MUST!!!!
+	FPCGCoord(FVector WorldCoord, FVector TailRadius=FVector::ZeroVector)
 	{
+		this->TailRadius = TailRadius;
+		this->WorldCoord = WorldCoord;
+
+		PCGCoord = WorldCoord / TailRadius;
 
 	}
 	//Input PCG Coord
-	void SetCoord(FVector Input, int TailSize)
-	{
-		PCGCoord = Input;
-		WorldCoord = Input * TailSize;
-	}
+	
 	const FVector GetPCGCoord()
 	{
 		return PCGCoord;
@@ -41,5 +41,6 @@ private:
 
 	FVector PCGCoord;
 	FVector WorldCoord;
+	FVector TailRadius;
 };
 
