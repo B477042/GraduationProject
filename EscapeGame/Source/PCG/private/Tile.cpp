@@ -32,7 +32,7 @@ void ATile::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	PCGCoord = new FPCGCoord(GetActorLocation(), TailRadius);
+	PCGCoord.SetDefaultValue(GetActorLocation(), TailRadius);
 }
 
 // Called every frame

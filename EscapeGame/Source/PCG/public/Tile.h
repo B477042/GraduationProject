@@ -46,7 +46,7 @@ private:
 	//Box의 반지름. BoxCollision은 반지름을 이용한다
 	FVector TailRadius;
 
-	FPCGCoord* PCGCoord;
+	FPCGCoord PCGCoord;
 	
 	//UPROPERTY(VisibleAnywhere, Category = "TileCoord")
 	//	UComponent_TileCoordinate* TileSystem;
