@@ -3,6 +3,10 @@
 
 #include "Tile.h"
 
+
+FVector ATile::TailRadius = FVector(100.0f, 100.0f, 100.0f)/2.0f;
+
+
 // Sets default values
 ATile::ATile()
 {
@@ -20,8 +24,8 @@ ATile::ATile()
 
 	RootComponent = BoxCollision;
 	Mesh->SetupAttachment(RootComponent);
-	TailRadius = FVector(50.0f, 50.0f, 50.0f)*2.0f;
-	BoxCollision->SetBoxExtent(TailRadius/2.0f);
+	
+	BoxCollision->SetBoxExtent(TailRadius);
 	//TileSystem->LoadTileSize(BoxSize);
 
 	
@@ -33,6 +37,8 @@ void ATile::BeginPlay()
 	Super::BeginPlay();
 	
 	PCGCoord.SetDefaultValue(GetActorLocation(), TailRadius);
+	UE_LOG(LogTemp, Warning, TEXT("ActorLocation : %s"), *GetActorLocation().ToString());
+	UE_LOG(LogTemp, Warning, TEXT("PCGLocation : %s"), *PCGCoord.GetPCGCoord().ToString());
 }
 
 // Called every frame

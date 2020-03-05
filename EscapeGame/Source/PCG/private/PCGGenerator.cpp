@@ -38,13 +38,29 @@ void APCGGenerator::Tick(float DeltaTime)
 
 void APCGGenerator::RunPCG()
 {
-	if (isPCGlunched == true)return;
+	if (isPCGlunched == true)
+	{
+		UE_LOG(LogTemp, Error, TEXT("PCG has been lunched"));
+		return;
+	}
 
+	if (GetWorld() == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("World is nullptr"));
+		return;
+	}
 	isPCGlunched = true;
 	//PCG의 기준을 원점으로 잡아준다
 	SetActorLocation(FVector::ZeroVector);
 	SetActorRotation(FRotator::ZeroRotator);
 
+	UE_LOG(LogTemp, Error, TEXT("PCG Generating Start"));
+	/*
+	
+		타일을 만드는데 필요한 정보
+		- 타일을 둘 위치 
+		- 타일의 크기 : Static 처리로 해결
+	*/
 	//i를 사용한 이유 : 막히거나 한다면 만들지 않을 것이다
 	for (int i = 0; i < TotalTiles; i++)
 		
