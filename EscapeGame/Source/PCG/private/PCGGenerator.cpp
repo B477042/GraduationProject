@@ -55,6 +55,8 @@ void APCGGenerator::RunPCG()
 	SetActorRotation(FRotator::ZeroRotator);
 
 	UE_LOG(LogTemp, Error, TEXT("PCG Generating Start"));
+	if(CreatedCount!=0)
+		UE_LOG(LogTemp, Error, TEXT("Created Count is not 0!!"));
 	/*
 	
 		타일을 만드는데 필요한 정보
@@ -63,7 +65,6 @@ void APCGGenerator::RunPCG()
 	*/
 	//i를 사용한 이유 : 막히거나 한다면 만들지 않을 것이다
 	for (int i = 0; i < TotalTiles; i++)
-		
 	{
 		//처음 시작하는 것이라면 아직 아무것도 만들지 않았다. .
 		if (CreatedCount == 0)
