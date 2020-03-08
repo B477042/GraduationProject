@@ -2,6 +2,7 @@
 
 
 #include "PCGGenerator.h"
+#include "Tile.h"
 
 // Sets default values
 APCGGenerator::APCGGenerator()
@@ -60,20 +61,22 @@ void APCGGenerator::RunPCG()
 	/*
 	
 		타일을 만드는데 필요한 정보
-		- 타일을 둘 위치 
+		- 타일을 둘 위치  : Spawn할 때 위치를 정해주면 Tile 내부 코드로 PCG 좌표가 작성된다
+							여기서 정해줘야될 것은 World 좌표계에서의 위치가 되버린다.
 		- 타일의 크기 : Static 처리로 해결
 	*/
 	//i를 사용한 이유 : 막히거나 한다면 만들지 않을 것이다
-	for (int i = 0; i < TotalTiles; i++)
-	{
-		//처음 시작하는 것이라면 아직 아무것도 만들지 않았다. .
-		if (CreatedCount == 0)
-		{
-			
-		}
-		
+	//for (int i = 0; i < TotalTiles; i++)
+	//{
+	//	//처음 시작하는 것이라면 아직 아무것도 만들지 않았다. .
+	//	if (CreatedCount == 0)
+	//	{
+	//		CreatedCount++;
+	//		//GetWorld()->SpawnActor(ATile::StaticClass(), );
+	//	}
+	//	
 
-	}
+	//}
 
 }
 

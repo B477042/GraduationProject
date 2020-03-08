@@ -32,7 +32,7 @@ public:
 	{
 		return WorldCoord;
 	}
-	void SetDefaultValue(FVector WorldCoord, FVector TailRadius = FVector::ZeroVector)
+	void SetDefaultValue(FVector WorldCoord, FVector TailRadius/* = FVector::ZeroVector*/)
 	{
 		this->TailRadius = TailRadius;
 		this->WorldCoord = WorldCoord;

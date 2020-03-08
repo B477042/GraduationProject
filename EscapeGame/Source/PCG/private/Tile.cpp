@@ -36,6 +36,7 @@ void ATile::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	SetActorLocation(GetActorLocation()/(TailRadius*2)*(TailRadius*2));
 	PCGCoord.SetDefaultValue(GetActorLocation(), TailRadius);
 	UE_LOG(LogTemp, Warning, TEXT("ActorLocation : %s"), *GetActorLocation().ToString());
 	UE_LOG(LogTemp, Warning, TEXT("PCGLocation : %s"), *PCGCoord.GetPCGCoord().ToString());
