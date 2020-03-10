@@ -11,7 +11,7 @@ APCGGenerator::APCGGenerator()
 	PrimaryActorTick.bCanEverTick = true;
 	n_Tiles = 10;
 	Floors = 1;
-	TailSize = 50;
+	//TailSize = 50;
 	TotalTiles = n_Tiles * Floors;
 	CreatedCount=0;
 	isPCGlunched = false;
@@ -27,6 +27,7 @@ void APCGGenerator::BeginPlay()
 {
 	Super::BeginPlay();
 	TotalTiles = n_Tiles * Floors;
+	TailSize = ATile::TileRadius * 2.0f;
 	RunPCG();
 }
 
@@ -66,25 +67,39 @@ void APCGGenerator::RunPCG()
 		- 타일의 크기 : Static 처리로 해결
 	*/
 	//i를 사용한 이유 : 막히거나 한다면 만들지 않을 것이다
-	//for (int i = 0; i < TotalTiles; i++)
-	//{
-	//	//처음 시작하는 것이라면 아직 아무것도 만들지 않았다. .
-	//	if (CreatedCount == 0)
-	//	{
-	//		CreatedCount++;
-	//		//GetWorld()->SpawnActor(ATile::StaticClass(), );
-	//	}
-	//	
+	for (int i = 0; i < TotalTiles; i++)
+	{
+		//처음 시작하는 것이라면 아직 아무것도 만들지 않았다. .
+		if (CreatedCount == 0)
+		{
+			//CreatedCount++;
+			//GetWorld()->SpawnActor(ATile::StaticClass(), );
+			auto g_Tile = generateTile();
 
-	//}
+		}
+		//주로 이 밑에서 배치가 일어날 예정이다
+		else
+		{
+
+		}
+		
+
+	}
+
+	
 
 }
 
+//반환되는 tile은 zero transform을 가진다
 AActor* APCGGenerator::generateTile()
 {
 	CreatedCount++;
+	auto CreatedActor = Cast<AActor>(GetWorld()->SpawnActor(ATile::StaticClass()));
+	CreatedActor->SetActorRotation(FRotator::ZeroRotator);
+	CreatedActor->SetActorLocation(FVector::ZeroVector);
+	//완성된 타일을 Tiles에 저장해둔다
+	Tiles.Add(CreatedActor);
 
-
-	return nullptr;
+	return CreatedActor;
 }
 

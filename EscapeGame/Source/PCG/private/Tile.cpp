@@ -21,6 +21,13 @@ ATile::ATile()
 	{
 		Mesh->SetStaticMesh(SM_MESH.Object);
 	}
+	static ConstructorHelpers::FObjectFinder < UMaterial >M_MATERIAL(TEXT("Material'/Game/StarterContent/Materials/M_Metal_Gold.M_Metal_Gold'"));
+	if (M_MATERIAL.Succeeded())
+	{
+		
+		Mesh->SetMaterial(0,M_MATERIAL.Object);
+	}
+
 
 	RootComponent = BoxCollision;
 	Mesh->SetupAttachment(RootComponent);
