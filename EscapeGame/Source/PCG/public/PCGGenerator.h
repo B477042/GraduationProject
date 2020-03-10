@@ -49,12 +49,19 @@ private:
 		int32 Floors;
 	//타일의 크기
 	UPROPERTY(EditInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))
-		int32 TailSize;
+		float TailSize;
+
 	UPROPERTY(VisibleInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))
 		int32 TotalTiles;
+
 	//타일들의 좌표를 저장한 array
 	UPROPERTY(VisibleInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))
 		TArray<FPCGCoord> coords_tiles;
+
+	//이 좌표에 PCG Tile을 배치할 것이다
+	UPROPERTY(VisibleInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))
+		FVector CreatingCousor;
+
 	//지금까지 만들어진 타일들의 총 수 
 	UPROPERTY(VisibleInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))
 		int32 CreatedCount;

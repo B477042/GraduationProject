@@ -32,14 +32,14 @@ public:
 	{
 		return WorldCoord;
 	}
-	void SetDefaultValue(FVector WorldCoord, FVector TailRadius/* = FVector::ZeroVector*/)
+	void SetDefaultValue(FVector WorldCoord, FVector TileRadius/* = FVector::ZeroVector*/)
 	{
-		this->TailRadius = TailRadius;
+		this->TileRadius = TileRadius;
 		this->WorldCoord = WorldCoord;
 
 		//Tail의 반지름은 BoxExtent의 입력값인 반지름의 수치와 같다. 그래서 2배로 늘려야
 		//간격으로 사용 가능한 값이 나온다. 이 값으로 PCG 좌표를 정한다
-		PCGCoord = WorldCoord / (TailRadius*2);
+		PCGCoord = WorldCoord / (TileRadius*2);
 
 	}
 
@@ -47,6 +47,6 @@ private:
 
 	FVector PCGCoord;
 	FVector WorldCoord;
-	FVector TailRadius;
+	FVector TileRadius;
 };
 

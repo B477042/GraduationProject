@@ -44,7 +44,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Box", meta = (AllowPrivateAccess = "true"))
 		UBoxComponent* BoxCollision;
 	//Box의 반지름. BoxCollision은 반지름을 이용한다
-	static FVector TailRadius;
+	static FVector TileRadius;
 
 	FPCGCoord PCGCoord;
 	
