@@ -15,6 +15,7 @@ APCGGenerator::APCGGenerator()
 	TotalTiles = n_Tiles * Floors;
 	CreatedCount=0;
 	isPCGlunched = false;
+	GenerateIndex = FVector::ZeroVector;
 
 	Map_Dir.Add(ECreateDirection::Forward,FVector(1.0f,0.0f,0.0f));
 	Map_Dir.Add(ECreateDirection::Backward, FVector(0.0f, 1.0f, 0.0f));
@@ -72,8 +73,7 @@ void APCGGenerator::RunPCG()
 		//처음 시작하는 것이라면 아직 아무것도 만들지 않았다. .
 		if (CreatedCount == 0)
 		{
-			//CreatedCount++;
-			//GetWorld()->SpawnActor(ATile::StaticClass(), );
+			
 			auto g_Tile = generateTile();
 
 		}

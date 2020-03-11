@@ -49,8 +49,10 @@ private:
 		int32 Floors;
 	//타일의 크기
 	UPROPERTY(EditInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))
-		float TailSize;
-
+		FVector TailSize;
+	//생성을 도와줄 index. 해당 좌표에 생성된 타일을 배치할 것이다
+	UPROPERTY(EditInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))
+		FVector GenerateIndex;
 	UPROPERTY(VisibleInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))
 		int32 TotalTiles;
 
