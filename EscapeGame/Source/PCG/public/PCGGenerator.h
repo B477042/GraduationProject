@@ -10,8 +10,24 @@
 #include "GameFramework/Actor.h"
 #include "PCGGenerator.generated.h"
 
+USTRUCT(BlueprintType, meta = (ToolTip = "PCG 좌표와 월드좌표"))
+struct   FCreatingCousor
+{
+public:
+	GENERATED_BODY()
 
+	//CreatingCousor(FVector Location = FVector::ZeroVector, ECreateDirection Direction = ECreateDirection::Forward) :Location(Location), Direction(Direction) {}
+		FCreatingCousor()
+	{
+		Location = FVector::ZeroVector;
 
+	}
+	UPROPERTY(VisibleAnywhere,Category= CousorInfor)
+	FVector Location;
+	UPROPERTY(VisibleAnywhere,Category = CousorInfor)
+	ECreateDirection Direction;
+
+};
 
 UCLASS()
 class PCG_API APCGGenerator : public AActor
@@ -36,6 +52,10 @@ private:
 	AActor* generateTile();
 	//방향과 이동량을 묶은 map
 	TMap<ECreateDirection, FVector> Map_Dir;
+	//타일을 CreateIndex 위치로 옮겨서 맞춰준다.그리고 커서를 진행 방향에 맞게 이동시킨다
+	bool tileAtCousor(AActor* Object);
+
+	bool resetCousor(ECreateDirection direction);
 
 private:
 	//사용한 타일 타입의 객체들을 담아둔 Array
@@ -49,10 +69,8 @@ private:
 		int32 Floors;
 	//타일의 크기
 	UPROPERTY(EditInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))
-		FVector TailSize;
-	//생성을 도와줄 index. 해당 좌표에 생성된 타일을 배치할 것이다
-	UPROPERTY(EditInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))
-		FVector GenerateIndex;
+		FVector TileSize;
+	
 	UPROPERTY(VisibleInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))
 		int32 TotalTiles;
 
@@ -60,9 +78,12 @@ private:
 	UPROPERTY(VisibleInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))
 		TArray<FPCGCoord> coords_tiles;
 
+	////이 좌표에 PCG Tile을 배치할 것이다
+	//UPROPERTY(VisibleInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))
+	//	FVector CreatingCousor;
 	//이 좌표에 PCG Tile을 배치할 것이다
 	UPROPERTY(VisibleInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))
-		FVector CreatingCousor;
+		FCreatingCousor CreatingCousor;
 
 	//지금까지 만들어진 타일들의 총 수 
 	UPROPERTY(VisibleInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))

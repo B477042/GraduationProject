@@ -56,7 +56,7 @@ void ATile::Tick(float DeltaTime)
 
 }
 
-FVector ATile::GetTailRadius()
+FVector ATile::GetTileRadius()
 {
 	return TileRadius;
 }

@@ -35,8 +35,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	static FVector GetTailRadius();
-	
+	static FVector GetTileRadius();
+		
 private:
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
 		UStaticMeshComponent* Mesh;
@@ -44,7 +44,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Box", meta = (AllowPrivateAccess = "true"))
 		UBoxComponent* BoxCollision;
 	//Box의 반지름. BoxCollision은 반지름을 이용한다
-	static FVector TileRadius;
+static FVector TileRadius;
 
 	FPCGCoord PCGCoord;
 	

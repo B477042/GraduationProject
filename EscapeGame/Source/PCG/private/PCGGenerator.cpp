@@ -15,12 +15,9 @@ APCGGenerator::APCGGenerator()
 	TotalTiles = n_Tiles * Floors;
 	CreatedCount=0;
 	isPCGlunched = false;
-	GenerateIndex = FVector::ZeroVector;
+	
 
-	Map_Dir.Add(ECreateDirection::Forward,FVector(1.0f,0.0f,0.0f));
-	Map_Dir.Add(ECreateDirection::Backward, FVector(0.0f, 1.0f, 0.0f));
-	Map_Dir.Add(ECreateDirection::Left, FVector(0.0f, 1.0f, 0.0f));
-	Map_Dir.Add(ECreateDirection::Right, FVector(0.0f, -1.0f, 0.0f));
+	
 }
 
 // Called when the game starts or when spawned
@@ -28,7 +25,12 @@ void APCGGenerator::BeginPlay()
 {
 	Super::BeginPlay();
 	TotalTiles = n_Tiles * Floors;
-	TailSize = ATile::TileRadius * 2.0f;
+	TileSize = ATile::GetTileRadius() * 2.0f;
+	Map_Dir.Add(ECreateDirection::Forward, FVector(1.0f, 0.0f, 0.0f)*TileSize);
+	Map_Dir.Add(ECreateDirection::Backward, FVector(0.0f, 1.0f, 0.0f)*TileSize);
+	Map_Dir.Add(ECreateDirection::Left, FVector(0.0f, 1.0f, 0.0f)*TileSize);
+	Map_Dir.Add(ECreateDirection::Right, FVector(0.0f, -1.0f, 0.0f)*TileSize);
+
 	RunPCG();
 }
 
@@ -70,19 +72,21 @@ void APCGGenerator::RunPCG()
 	//i를 사용한 이유 : 막히거나 한다면 만들지 않을 것이다
 	for (int i = 0; i < TotalTiles; i++)
 	{
-		//처음 시작하는 것이라면 아직 아무것도 만들지 않았다. .
-		if (CreatedCount == 0)
-		{
-			
-			auto g_Tile = generateTile();
+		////처음 시작하는 것이라면 아직 아무것도 만들지 않았다. .
+		//if (CreatedCount == 0)
+		//{
+		//	
+		//	auto g_Tile = generateTile();
+		//	tileAtCousor(g_Tile);
 
-		}
-		//주로 이 밑에서 배치가 일어날 예정이다
-		else
-		{
+		//}
+		////주로 이 밑에서 배치가 일어날 예정이다
+		//else
+		//{
 
-		}
-		
+		//}
+		auto g_Tile = generateTile();
+		tileAtCousor(g_Tile);
 
 	}
 
@@ -101,5 +105,27 @@ AActor* APCGGenerator::generateTile()
 	Tiles.Add(CreatedActor);
 
 	return CreatedActor;
+}
+
+bool APCGGenerator::tileAtCousor(AActor* Object)
+{
+	/*if (CreatingCousor == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("creatingCousor is nullptr"));
+		return false;
+	}*/
+	
+	Object->SetActorLocation(CreatingCousor.Location);
+
+	if (!Map_Dir.Contains(CreatingCousor.Direction))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Map_Dir has not contain that Direction"));
+		return false;
+	}
+
+	CreatingCousor.Location += Map_Dir[CreatingCousor.Direction]*2.0f;
+	
+
+	return true;
 }
 
