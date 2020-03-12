@@ -123,7 +123,7 @@ bool APCGGenerator::tileAtCousor(AActor* Object)
 		return false;
 	}
 
-	CreatingCousor.Location += Map_Dir[CreatingCousor.Direction]*2.0f;
+	CreatingCousor.Location += Map_Dir[CreatingCousor.Direction];
 	
 
 	return true;
