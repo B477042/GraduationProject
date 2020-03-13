@@ -70,23 +70,43 @@ void APCGGenerator::RunPCG()
 		- 타일의 크기 : Static 처리로 해결
 	*/
 	//i를 사용한 이유 : 막히거나 한다면 만들지 않을 것이다
+
+	//배치를 랜덤하게 할 것이다
+	/*	
+		3~5칸을 진행한 후방향을 바꿔서 또 3~5칸을 진행하게 될 것이다.
+		randRange로 몇 칸을 진행하게 될지 정하고
+		randCount로 횟수를 센다
+
+		randCount가 Range와 같거나 커지면
+		새로 Rnage를 정하고 Count를 초기화시킨다
+
+		
+	*/
+	int randRange = FMath::RandRange(3, 5);
+	int randCount = 0;
+
 	for (int i = 0; i < TotalTiles; i++)
 	{
-		////처음 시작하는 것이라면 아직 아무것도 만들지 않았다. .
-		//if (CreatedCount == 0)
-		//{
-		//	
-		//	auto g_Tile = generateTile();
-		//	tileAtCousor(g_Tile);
-
-		//}
-		////주로 이 밑에서 배치가 일어날 예정이다
-		//else
-		//{
-
-		//}
+		
 		auto g_Tile = generateTile();
 		tileAtCousor(g_Tile);
+
+		//만든 후 rand 변수들을 조정한다
+		randCount++;
+		if (randCount >= randRange)
+		{
+			randCount = 0;
+			randRange = FMath::RandRange(3, 5);
+			auto temp_direction = CreatingCousor.Direction;
+
+			
+			CreatingCousor.Direction =ECreateDirection ( FMath::RandRange(0, 3));
+			//
+			while (isReverseDirection(temp_direction, CreatingCousor.Direction))
+			{
+				
+			}
+		}
 
 	}
 
@@ -127,5 +147,42 @@ bool APCGGenerator::tileAtCousor(AActor* Object)
 	
 
 	return true;
+}
+
+bool APCGGenerator::resetCousor(ECreateDirection direction)
+{/*
+	커서를 처음 지점으로 되돌리고 방향도 전환시킨다
+ */
+	CreatingCousor.Location = FVector::ZeroVector;
+	CreatingCousor.Direction = direction;
+	return true;
+}
+/*
+		isReverseDirection(ECreateDirection Old, ECreateDirection New)
+		Old는 새로 배정되기 전의 방향이고
+		new는 새로 배정된 방향이 들어와야 된다
+
+		둘이 서로 상반되게 -><- 된다면
+
+		생성방향이 역순으로 되버려 같은 구간에 똑같은게 또 생성된다
+
+		반약 서로 상반되면 fals를 리턴한다
+
+		상반되지 않다면 true
+	*/
+bool APCGGenerator::isReverseDirection(ECreateDirection Old, ECreateDirection New)
+{
+
+	
+	if (Old == ECreateDirection::Forward&&New == ECreateDirection::Backward)
+		return true;
+	else if (Old == ECreateDirection::Backward&&New == ECreateDirection::Forward)
+		return true;
+	else if (Old == ECreateDirection::Left&&New == ECreateDirection::Right)
+		return true;
+	else if (Old == ECreateDirection::Right&&New == ECreateDirection::Left)
+		return true;
+	else
+		return false;
 }
 
