@@ -57,7 +57,7 @@ private:
 
 	bool resetCousor(ECreateDirection direction);
 	bool isReverseDirection(ECreateDirection Old, ECreateDirection New);
-
+	
 private:
 	//사용한 타일 타입의 객체들을 담아둔 Array
 	UPROPERTY(EditInstanceOnly, Category = "PCGSystem", meta = (AllowPrivateAccess = "true"))

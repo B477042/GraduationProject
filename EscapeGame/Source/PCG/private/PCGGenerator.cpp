@@ -88,25 +88,32 @@ void APCGGenerator::RunPCG()
 	for (int i = 0; i < TotalTiles; i++)
 	{
 		
+		//tile을 만든 후, tile을 커서 위치로 옮겨준다
 		auto g_Tile = generateTile();
 		tileAtCousor(g_Tile);
 
 		//만든 후 rand 변수들을 조정한다
 		randCount++;
+		UE_LOG(LogTemp, Warning, TEXT("Current direct : %d"), CreatingCousor.Direction);
+		//rand range 수만큼 만들었을 경우		
 		if (randCount >= randRange)
 		{
 			randCount = 0;
 			randRange = FMath::RandRange(3, 5);
-			auto temp_direction = CreatingCousor.Direction;
+			ECreateDirection temp_direction = CreatingCousor.Direction;
 
 			
-			CreatingCousor.Direction =ECreateDirection ( FMath::RandRange(0, 3));
-			//
+			CreatingCousor.Direction =ECreateDirection ( FMath::RandRange(0,3));
+			
+			UE_LOG(LogTemp, Warning, TEXT("temp_direct : %d"), temp_direction);
+		
+			////방향을 랜덤하게 조정을 해줄 것인데, 서로 상반되지 않게 해줘야 된다. 
 			while (isReverseDirection(temp_direction, CreatingCousor.Direction))
 			{
-				
+				CreatingCousor.Direction = ECreateDirection(FMath::RandRange(0, 3));
 			}
 		}
+		
 
 	}
 
@@ -148,11 +155,11 @@ bool APCGGenerator::tileAtCousor(AActor* Object)
 
 	return true;
 }
-
-bool APCGGenerator::resetCousor(ECreateDirection direction)
-{/*
+/*
 	커서를 처음 지점으로 되돌리고 방향도 전환시킨다
  */
+bool APCGGenerator::resetCousor(ECreateDirection direction)
+{
 	CreatingCousor.Location = FVector::ZeroVector;
 	CreatingCousor.Direction = direction;
 	return true;
@@ -166,21 +173,21 @@ bool APCGGenerator::resetCousor(ECreateDirection direction)
 
 		생성방향이 역순으로 되버려 같은 구간에 똑같은게 또 생성된다
 
-		반약 서로 상반되면 fals를 리턴한다
+		반약 서로 상반되면 ture를 리턴한다
 
-		상반되지 않다면 true
+		상반되지 않다면 false
 	*/
 bool APCGGenerator::isReverseDirection(ECreateDirection Old, ECreateDirection New)
 {
 
 	
-	if (Old == ECreateDirection::Forward&&New == ECreateDirection::Backward)
+	if (Old == ECreateDirection::Forward &&New == ECreateDirection::Backward)
 		return true;
-	else if (Old == ECreateDirection::Backward&&New == ECreateDirection::Forward)
+	else if (Old == ECreateDirection::Backward &&New == ECreateDirection::Forward)
 		return true;
-	else if (Old == ECreateDirection::Left&&New == ECreateDirection::Right)
+	else if (Old == ECreateDirection::Left &&New == ECreateDirection::Right)
 		return true;
-	else if (Old == ECreateDirection::Right&&New == ECreateDirection::Left)
+	else if (Old == ECreateDirection::Right &&New == ECreateDirection::Left)
 		return true;
 	else
 		return false;

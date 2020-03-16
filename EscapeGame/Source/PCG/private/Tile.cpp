@@ -11,7 +11,7 @@ FVector ATile::TileRadius = FVector(100.0f, 100.0f, 100.0f)/2.0f;
 ATile::ATile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BOX"));
 	//TileSystem = CreateDefaultSubobject<UComponent_TileCoordinate>(TEXT("TileSystem"));
@@ -45,8 +45,8 @@ void ATile::BeginPlay()
 	
 	SetActorLocation(GetActorLocation()/(TileRadius*2)*(TileRadius*2));
 	PCGCoord.SetDefaultValue(GetActorLocation(), TileRadius);
-	UE_LOG(LogTemp, Warning, TEXT("ActorLocation : %s"), *GetActorLocation().ToString());
-	UE_LOG(LogTemp, Warning, TEXT("PCGLocation : %s"), *PCGCoord.GetPCGCoord().ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("ActorLocation : %s"), *GetActorLocation().ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("PCGLocation : %s"), *PCGCoord.GetPCGCoord().ToString());
 }
 
 // Called every frame
