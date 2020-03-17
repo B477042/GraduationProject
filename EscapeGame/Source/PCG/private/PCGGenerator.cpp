@@ -27,7 +27,7 @@ void APCGGenerator::BeginPlay()
 	TotalTiles = n_Tiles * Floors;
 	TileSize = ATile::GetTileRadius() * 2.0f;
 	Map_Dir.Add(ECreateDirection::Forward, FVector(1.0f, 0.0f, 0.0f)*TileSize);
-	Map_Dir.Add(ECreateDirection::Backward, FVector(0.0f, 1.0f, 0.0f)*TileSize);
+	Map_Dir.Add(ECreateDirection::Backward, FVector(-1.0f, 0.0f, 0.0f)*TileSize);
 	Map_Dir.Add(ECreateDirection::Left, FVector(0.0f, 1.0f, 0.0f)*TileSize);
 	Map_Dir.Add(ECreateDirection::Right, FVector(0.0f, -1.0f, 0.0f)*TileSize);
 
@@ -105,17 +105,29 @@ void APCGGenerator::RunPCG()
 			
 			CreatingCousor.Direction =ECreateDirection ( FMath::RandRange(0,3));
 			
-			UE_LOG(LogTemp, Warning, TEXT("temp_direct : %d"), temp_direction);
+			
 		
 			////방향을 랜덤하게 조정을 해줄 것인데, 서로 상반되지 않게 해줘야 된다. 
 			while (isReverseDirection(temp_direction, CreatingCousor.Direction))
 			{
 				CreatingCousor.Direction = ECreateDirection(FMath::RandRange(0, 3));
 			}
+			
+			UE_LOG(LogTemp, Warning, TEXT("Next direct : %d"), CreatingCousor.Direction);
 		}
 		
 
 	}
+	/*
+		2020 03 17  
+			: 랜덤하게 4방향하게 잘 뻗어 나간다
+		문제점
+		1. 저대로 놨두면 교차가 생긴다. 교차가 됐을 때 이벤트를 호출해서 
+		교차로 처리를 하는게 나아보인다.
+
+		Tile에 겹치는 이벤트를 넣어준다.
+
+	*/
 
 	
 
