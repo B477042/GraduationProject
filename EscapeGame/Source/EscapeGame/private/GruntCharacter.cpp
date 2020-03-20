@@ -21,6 +21,8 @@ AGruntCharacter::AGruntCharacter()
 	//Set AI Controller
 	AIControllerClass = AAICtrl_Grunt::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+	/*if(Stat==nullptr)
+	Stat = CreateDefaultSubobject<UStatComponent_Enemy>(TEXT("STAT"));*/
 
 	//Set Attack Range To 100cm
 	AttackRange = 100.0f;
@@ -72,6 +74,8 @@ void AGruntCharacter::PostInitializeComponents()
 	}
 	//Anim->AttackEvent_Delegate.AddDynamic(&AGruntCharacter::Attack);
 	//Set Limit of Speeds
+
+	if(Stat!=nullptr)
 	Stat->SetSpeedLimits(MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
 }
 
