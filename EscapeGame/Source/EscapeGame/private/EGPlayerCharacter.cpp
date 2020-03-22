@@ -197,8 +197,16 @@ void AEGPlayerCharacter::StopRunning()
 	Stat->SetWalking();*/
 }
 
+
+/*
+
+	구르는 동작을 수행한다.
+	구르기 시작하는 과정이 여기에 들어간다
+	구르는 동작을 여기서 재생한다. 
+*/
 void AEGPlayerCharacter::Roll()
 {
+
 }
 
 
@@ -277,6 +285,7 @@ void AEGPlayerCharacter::SetupSpringArm()
 	GetCharacterMovement()->bUseControllerDesiredRotation = false;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
 	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+	
 
 	////ArmLengthTo = 420.0f;
 

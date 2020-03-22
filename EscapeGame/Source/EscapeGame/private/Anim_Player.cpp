@@ -27,6 +27,8 @@ UAnim_Player::UAnim_Player()
 	//UCharacterAnimInstance::StartCombo = 1;
 	StartCombo = 1;
 	EndCombo = 4;
+
+	bIsRolling = false;
 }
 
 void UAnim_Player::JumpToComboAttackSection(int32 NewSection)
