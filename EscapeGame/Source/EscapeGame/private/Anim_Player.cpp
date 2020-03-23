@@ -80,3 +80,55 @@ UAnimMontage * UAnim_Player::GetAttackMontage() const
 {
 	return AttackMontage;
 }
+
+void UAnim_Player::SetRolling(bool bResult)
+{
+	bIsRolling=bResult;
+}
+/*
+	구르기 시작할 때 호출된다. 
+	구르기 시작하면 데미지를 받지 않아야 된다.
+	구르기 시작하면 그 방향으로만 굴러야 된다. 
+*/
+void UAnim_Player::AnimNotify_RollingStart()
+{
+	auto Owner = Cast<ACharacter>(GetOwningActor());
+	if (Owner == nullptr)
+	{
+		EGLOG(Warning, TEXT("Animation Rolling's Owner actor is not Vailed"));
+		return;
+	}
+	//
+	Owner->GetMesh()->SetCollisionProfileName(TEXT("Rolling"));
+
+	EGLOG(Warning, TEXT("Actor Location : %s"), *Owner->GetActorLocation().ToString());
+	EGLOG(Warning, TEXT("Mesh Location : %s"), *(Owner->GetActorLocation() +Owner->GetMesh()->GetRelativeLocation()).ToString());
+
+}
+
+void UAnim_Player::AnimNotify_RollingEnd()
+{
+	auto Owner = Cast<ACharacter>(GetOwningActor());
+	if (Owner == nullptr)
+	{
+		EGLOG(Warning, TEXT("Animation Rolling's Owner actor is not Vailed in  RollingEnd"));
+		return;
+	}
+	Owner->GetMesh()->SetCollisionProfileName(TEXT("PlayerCharacter"));
+	EGLOG(Warning, TEXT("Actor Location : %s"), *Owner->GetActorLocation().ToString());
+	EGLOG(Warning, TEXT("Mesh Location : %s"), *(Owner->GetActorLocation() + Owner->GetMesh()->GetRelativeLocation()).ToString());
+}
+
+void UAnim_Player::AnimNotify_AnimEnd()
+{
+	bIsRolling = false;
+
+	auto Owner = Cast<ACharacter>(GetOwningActor());
+	if (Owner == nullptr)
+	{
+		EGLOG(Warning, TEXT("Animation Rolling's Owner actor is not Vailed"));
+		return;
+	}
+	EGLOG(Warning, TEXT("Actor Location : %s"), *Owner->GetActorLocation().ToString());
+	EGLOG(Warning, TEXT("Mesh Location : %s"), *(Owner->GetActorLocation() + Owner->GetMesh()->GetRelativeLocation()).ToString());
+}

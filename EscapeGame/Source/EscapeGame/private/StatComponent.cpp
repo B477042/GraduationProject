@@ -54,8 +54,13 @@ void UStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 // TakeDamage Frame
 void UStatComponent::TakeDamage(float NewDamage)
 {
-	
+	if (NewDamage < 0)
+	{
+		EGLOG(Warning, TEXT("Minors Number Input in Take Damage!"));
+		return;
+	}
 	CurrentHP -= NewDamage;
+	if(!IsDead())
 	HPChangedDelegate.Broadcast();
 }
 
@@ -64,17 +69,25 @@ void UStatComponent::SetHP(float NewHP)
 {
 	//EGLOG(Warning, TEXT("HP : %f"), GetHPRatio());
 	CurrentHP = NewHP;
+	if (!IsDead())
 	HPChangedDelegate.Broadcast();
 }
 
 //Plus(Heal) HP
 void UStatComponent::HealHP(float AddHP)
 {
+	if (AddHP < 0)
+	{
+		EGLOG(Warning, TEXT("Minors Number Input in Heal HP!"));
+		return;
+	}
+
 	CurrentHP += AddHP;
 	if (CurrentHP > MaxHP)
 		CurrentHP = MaxHP;
 
 	HPChangedDelegate.Broadcast();
+
 }
 
 
@@ -114,6 +127,14 @@ void UStatComponent::SetWalking()
 		auto Movement = Character->GetCharacterMovement();
 		Movement->MaxWalkSpeed = MaxWalkingSpeed;
 	}
+}
+// return True If dead
+bool UStatComponent::IsDead()
+{
+	if (CurrentHP > 0)return false;
+	
+	HPZeroDelegate.Broadcast();
+	return true;
 }
 
 void UStatComponent::SetSpeedLimits(const float & maxWalk, const float & minWalk, const float & maxRunning)

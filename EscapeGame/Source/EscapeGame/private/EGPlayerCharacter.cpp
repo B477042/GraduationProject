@@ -74,6 +74,7 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction(TEXT("ChargeAttack"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::ChargeAttack);
 	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::StartRunning);
 	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Released, this, &AEGPlayerCharacter::StopRunning);
+	PlayerInputComponent->BindAction(TEXT("Roll"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::Roll);
 	EGLOG(Warning, TEXT("Player input component"));
 }
 
@@ -199,14 +200,24 @@ void AEGPlayerCharacter::StopRunning()
 
 
 /*
-
-	구르는 동작을 수행한다.
+	호출시점 : Shift + Space
+	구르는 동작을 시작한다
 	구르기 시작하는 과정이 여기에 들어간다
 	구르는 동작을 여기서 재생한다. 
+	
 */
 void AEGPlayerCharacter::Roll()
 {
+	Anim->SetRolling(true);
+	float interval = Anim->GetRollingLength();
+	//Actor를 뒤로 후퇴시킬 방향
+	FVector jumpPoint = GetActorForwardVector()*interval;
 
+	auto myCon = Cast<APlayerController>(GetController());
+	if (myCon != nullptr)
+	{
+		DisableInput(myCon);
+	}
 }
 
 
