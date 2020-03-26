@@ -112,7 +112,8 @@ Build/Android/res/*/*
 
 
 
-Content/
+Content/*
+Content/MyFolder
 Intemediate/
 Saved/
 # End of https://www.gitignore.io/api/c++,unrealengine
