@@ -74,6 +74,7 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction(TEXT("ChargeAttack"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::ChargeAttack);
 	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::StartRunning);
 	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Released, this, &AEGPlayerCharacter::StopRunning);
+	PlayerInputComponent->BindAction(TEXT("Roll"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::Roll);
 	EGLOG(Warning, TEXT("Player input component"));
 }
 
@@ -110,7 +111,16 @@ void AEGPlayerCharacter::PostInitializeComponents()
 
 float AEGPlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
 {
+	
+
 	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	//bCanBeDamaged가 0이라면 데미지를 받지 않는다
+	
+	/*if (bCanBeDamaged == false)
+	{
+		EGLOG(Error, TEXT("Can't Take Damage"));
+		return 0.0f;
+	}*/
 
 	Stat->TakeDamage(DamageAmount);
 
@@ -197,8 +207,44 @@ void AEGPlayerCharacter::StopRunning()
 	Stat->SetWalking();*/
 }
 
+
+/*
+	호출시점 : Shift + Space
+	구르는 동작을 시작한다
+	구르기 시작하는 과정이 여기에 들어간다
+
+	
+*/
 void AEGPlayerCharacter::Roll()
 {
+	//Anim의 bIsRolling을 true로 바꿔주면 AnimBP에서 구르는 애니메이션을 재생하게 된다.
+	Anim->SetRolling(true);
+	float interval = Anim->GetRollingLength();
+
+	//Actor를 뒤로 후퇴시킬 방향
+	FVector jumpPoint = GetActorForwardVector()*interval;
+
+	//입력을 제한 시킨다
+	RestricInput();
+
+}
+
+void AEGPlayerCharacter::RestricInput()
+{
+	auto myCon = Cast<APlayerController>(GetController());
+	if (myCon != nullptr)
+	{
+		DisableInput(myCon);
+	}
+}
+
+void AEGPlayerCharacter::RecoverInput()
+{
+	auto myCon = Cast<APlayerController>(GetController());
+	if (myCon != nullptr)
+	{
+		EnableInput(myCon);
+	}
 }
 
 
@@ -277,6 +323,7 @@ void AEGPlayerCharacter::SetupSpringArm()
 	GetCharacterMovement()->bUseControllerDesiredRotation = false;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
 	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+	
 
 	////ArmLengthTo = 420.0f;
 

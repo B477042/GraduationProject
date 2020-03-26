@@ -55,6 +55,10 @@ public:
 	 void StopRunning();
 	 void Roll();
 
+	 //User Input Disable
+	 void RestricInput();
+	 //User Input Enable
+	 void RecoverInput();
 	//const AController* GetController();
 
 	 ////===============Static Vars

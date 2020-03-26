@@ -2,6 +2,7 @@
 
 
 #include "Anim_Player.h"
+#include "EGPlayerCharacter.h"
 #include "..\public\Anim_Player.h"
 
 
@@ -27,6 +28,8 @@ UAnim_Player::UAnim_Player()
 	//UCharacterAnimInstance::StartCombo = 1;
 	StartCombo = 1;
 	EndCombo = 4;
+
+	bIsRolling = false;
 }
 
 void UAnim_Player::JumpToComboAttackSection(int32 NewSection)
@@ -77,4 +80,61 @@ void UAnim_Player::PlayAirAttackMontage()
 UAnimMontage * UAnim_Player::GetAttackMontage() const
 {
 	return AttackMontage;
+}
+
+void UAnim_Player::SetRolling(bool bResult)
+{
+	bIsRolling=bResult;
+}
+/*
+	구르기 시작할 때 호출된다. 
+	구르기 시작하면 데미지를 받지 않아야 된다.
+	구르기 시작하면 그 방향으로만 굴러야 된다. 
+*/
+void UAnim_Player::AnimNotify_RollingStart()
+{
+	auto Owner = Cast<AEGPlayerCharacter>(GetOwningActor());
+	if (Owner == nullptr)
+	{
+		EGLOG(Warning, TEXT("Animation Rolling's Owner actor is not Vailed"));
+		return;
+	}
+	//
+	Owner->GetMesh()->SetCollisionProfileName(TEXT("Rolling"));
+//	Owner->bCanBeDamaged = false;
+	EGLOG(Warning, TEXT("Actor Location : %s"), *Owner->GetActorLocation().ToString());
+	EGLOG(Warning, TEXT("Mesh Location : %s"), *(Owner->GetActorLocation() +Owner->GetMesh()->GetRelativeLocation()).ToString());
+
+}
+
+void UAnim_Player::AnimNotify_RollingEnd()
+{
+	auto Owner = Cast<AEGPlayerCharacter>(GetOwningActor());
+	if (Owner == nullptr)
+	{
+		EGLOG(Warning, TEXT("Animation Rolling's Owner actor is not Vailed in  RollingEnd"));
+		return;
+	}
+	Owner->GetMesh()->SetCollisionProfileName(TEXT("PlayerCharacter"));
+	//Owner->bCanBeDamaged = true;
+	EGLOG(Warning, TEXT("Actor Location : %s"), *Owner->GetActorLocation().ToString());
+	EGLOG(Warning, TEXT("Mesh Location : %s"), *(Owner->GetActorLocation() + Owner->GetMesh()->GetRelativeLocation()).ToString());
+}
+
+//Rolling Animation의 재생이 끝나면 호출 될 것이다. 
+//Notify는 같은 스캘레톤 내부에서 이름을 공유하게 되니까 바꿔야겠다. 
+void UAnim_Player::AnimNotify_AnimEnd()
+{
+	bIsRolling = false;
+
+	auto Owner = Cast<AEGPlayerCharacter>(GetOwningActor());
+	if (Owner == nullptr)
+	{
+		EGLOG(Warning, TEXT("Animation Rolling's Owner actor is not Vailed"));
+		return;
+	}
+	EGLOG(Warning, TEXT("Actor Location : %s"), *Owner->GetActorLocation().ToString());
+	EGLOG(Warning, TEXT("Mesh Location : %s"), *(Owner->GetActorLocation() + Owner->GetMesh()->GetRelativeLocation()).ToString());
+
+	Owner->RecoverInput();
 }
