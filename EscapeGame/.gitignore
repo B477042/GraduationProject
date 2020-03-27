@@ -112,8 +112,8 @@ Build/Android/res/*/*
 
 
 
-Content/*/**
-!Content/MyFolder/**
+Content/
+!Content/MyFolder/
 
 Intemediate/
 Saved/
