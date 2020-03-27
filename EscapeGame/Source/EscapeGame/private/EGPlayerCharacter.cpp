@@ -101,7 +101,8 @@ void AEGPlayerCharacter::PostInitializeComponents()
 			}
 		});
 	}
-	
+
+	Stat->HPZeroDelegate.AddUObject(this,&AEGPlayerCharacter::SetDeath );
 	
 
 	//Stat->SetSpeedLimits( MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
@@ -261,8 +262,7 @@ void AEGPlayerCharacter::InitComponents()
 	MiniMapArm= CreateDefaultSubobject<USpringArmComponent>(TEXT("MINMAPARM"));
 	MapRenderer = CreateDefaultSubobject<UMiniMapRenderComponent>(TEXT("MAPRENDERER"));
 	Stat = CreateDefaultSubobject <UStatComponent_Player>(TEXT("STAT"));
-	
-
+	SelfDamage = CreateDefaultSubobject<UComponent_SelfDamage>(TEXT("SelfDAMAGE"));
 
 	//Components Tree
 	
@@ -399,6 +399,11 @@ void AEGPlayerCharacter::KeyInputTest()
 	//playerinputcomponent
 	
 		
+}
+
+void AEGPlayerCharacter::SetDeath()
+{
+	EGLOG(Error, TEXT("Im Dead~"));
 }
 
 void AEGPlayerCharacter::OnAttackMontageEnded(UAnimMontage * Montage, bool bInterrupted)

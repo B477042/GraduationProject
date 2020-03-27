@@ -9,6 +9,7 @@
 #include "GameFramework/Character.h"
 #include "StatComponent_Player.h"
 #include "Anim_Player.h"
+#include "Component_SelfDamage.h"
 
 #include "EGPlayerCharacter.generated.h"
 
@@ -80,7 +81,8 @@ public:
 		UMiniMapRenderComponent* MapRenderer;
 	UPROPERTY(BlueprintReadOnly,EditInstanceOnly, Category = Stat)
 		UStatComponent_Player* Stat;
-
+	UPROPERTY(EditAnywhere, Category = "Damage")
+		UComponent_SelfDamage* SelfDamage;
 private:
 	void InitComponents();
 	void LoadAssets();
@@ -100,6 +102,9 @@ private:
 	virtual void Jump()override;
 	//=========================
 	void KeyInputTest();
+
+	//======================
+	void SetDeath();
 
 	//============================
 	UFUNCTION()

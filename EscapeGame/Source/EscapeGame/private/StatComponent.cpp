@@ -132,7 +132,9 @@ void UStatComponent::SetWalking()
 bool UStatComponent::IsDead()
 {
 	if (CurrentHP > 0)return false;
-	
+	CurrentHP = 0.0f;
+	EGLOG(Error, TEXT("He is Dead"));
+	HPChangedDelegate.Broadcast();
 	HPZeroDelegate.Broadcast();
 	return true;
 }
