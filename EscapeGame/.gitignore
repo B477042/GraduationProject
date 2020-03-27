@@ -112,7 +112,7 @@ Build/Android/res/*/*
 
 
 !Content/MyFolder/
-Content/
+##Content/
 
 
 Intemediate/
