@@ -113,7 +113,7 @@ Build/Android/res/*/*
 
 
 Content/*/*
-!Content/MyFolder
+!Content/MyFolder/**
 
 Intemediate/
 Saved/
