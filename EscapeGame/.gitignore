@@ -111,8 +111,7 @@ Build/Android/res/*/*
 !Build/Android/res/*/*.png
 
 
-!Content/MyFolder/
-##Content/
+
 
 
 Intemediate/
