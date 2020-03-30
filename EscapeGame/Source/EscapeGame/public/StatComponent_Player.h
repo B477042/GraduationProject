@@ -47,7 +47,7 @@ public:
 	//Stamina관련
 	//============
 	void UseStamina(float DeltaTime);
-	void RecoverStamina(float DeltaTime);
+	void SetRunning();
 	bool SetStaminaUsing(bool bResult);
 	
 	float GetStamina();
@@ -69,6 +69,7 @@ private:
 	//data table에서 level에 맞는 data를 가져온다
 	void loadLevelData();
 
+	void RecoverStamina(float DeltaTime);
 
 	const float MaxStamina = 100.0f;
 	float TimerStamina;

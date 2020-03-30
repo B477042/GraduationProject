@@ -23,7 +23,7 @@ UStatComponent_Player::UStatComponent_Player()
 	Stamina = 0.0f;
 	TimerStamina = 0.0f;
 	bIsStaminaUsing = false;
-	bCanUsingStamina = ture;
+	bCanUsingStamina = true;
 }
 
 void UStatComponent_Player::InitializeComponent()
@@ -124,6 +124,21 @@ void UStatComponent_Player::UseStamina(float DeltaTime)
 	}
 	Stamina -= DeltaTime * 10.0f;
 	
+}
+
+//Call when Running Start
+void UStatComponent_Player::SetRunning()
+{
+	if (!bCanUsingStamina)return;
+	//if (!GetWorld())return;
+
+
+	//켜준다
+	bIsStaminaUsing = true;
+	/*float DeltaTime = GetWorld()->GetDeltaSeconds();
+	UseStamina(DeltaTime);*/
+	
+
 }
 /*
 	will Call in Tick

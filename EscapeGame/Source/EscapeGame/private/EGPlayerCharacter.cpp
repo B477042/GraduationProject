@@ -74,6 +74,7 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction(TEXT("ChargeAttack"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::ChargeAttack);
 	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::StartRunning);
 	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Released, this, &AEGPlayerCharacter::StopRunning);
+	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::Running);
 	PlayerInputComponent->BindAction(TEXT("Roll"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::Roll);
 	EGLOG(Warning, TEXT("Player input component"));
 }
@@ -201,10 +202,14 @@ void AEGPlayerCharacter::StartRunning()
 	
 }
 
+//호출 시점 IE_Repeated
+//누르고 있는지 좀 돼야 반응한다
 void AEGPlayerCharacter::Running()
 {
+	EGLOG(Warning, TEXT("Run to"));
 }
-
+//호출시점IE_Released
+//키에서 때면 바로 호출된다
 void AEGPlayerCharacter::StopRunning()
 {
 	EGLOG(Warning, TEXT("Run Key Released"));
