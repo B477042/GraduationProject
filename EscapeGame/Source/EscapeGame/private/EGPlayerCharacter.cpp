@@ -201,6 +201,10 @@ void AEGPlayerCharacter::StartRunning()
 	
 }
 
+void AEGPlayerCharacter::Running()
+{
+}
+
 void AEGPlayerCharacter::StopRunning()
 {
 	EGLOG(Warning, TEXT("Run Key Released"));

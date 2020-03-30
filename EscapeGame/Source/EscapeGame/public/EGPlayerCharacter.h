@@ -53,6 +53,7 @@ public:
 	 void ComboAttack();
 	 void AirAttack();
 	 void StartRunning();
+	 void Running();
 	 void StopRunning();
 	 void Roll();
 

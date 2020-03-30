@@ -27,16 +27,20 @@ public:
 	void BindCharacterStat( UStatComponent_Player* newStat);
 	float GetGameTimer();
 	//FBindStat BindStatDelegate;
-	
+	//Update UI's Hp
 	UFUNCTION(BlueprintCallable)
 		void UpdateCharacterStat();
-
+	//Update UI's Stamina
+	UFUNCTION(BlueprintCallable)
+		void UpdateStamina();
 	UFUNCTION(BlueprintCallable)
 		float CheackTimeOut(float NewValue);
 private:
 	TWeakObjectPtr<class UStatComponent_Player>CurrentCharacterStat;
 	UPROPERTY()
 		class UProgressBar* PB_HP;
+	UPROPERTY()
+		class UProgressBar* PB_Stamina;
 	//UPROPERTY()
 	//	class UTextBlock* HPAmount;//Write 'HP'
 	//
@@ -44,6 +48,9 @@ private:
 	//	class UTextBlock* TimerText;
 	UPROPERTY(BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		float PlayerHP;
+	UPROPERTY(BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
+		float PlayerStamina;
+
 
 	UPROPERTY(BlueprintReadWrite, Category = Timer, Meta = (AllowPrivateAccess = true))
 		float GameTimer;

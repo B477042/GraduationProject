@@ -12,6 +12,8 @@
  * Add Additional Stat
  * Add Combo Condition
  */
+DECLARE_MULTICAST_DELEGATE(FStaminaChangedDelegate);
+
 UCLASS()
 class ESCAPEGAME_API UStatComponent_Player : public UStatComponent
 {
@@ -41,7 +43,15 @@ public:
 	void SetChargeAttackInput(bool bResult);
 	void SetComboStartState();
 	void SetComboEndState();
+	//===========
+	//Stamina관련
+	//============
+	void UseStamina(float DeltaTime);
+	void RecoverStamina(float DeltaTime);
+	bool SetStaminaUsing(bool bResult);
 	
+	float GetStamina();
+	float GetStaminaRatio();
 
 	void AddCombo(int32 Amount);
 	void ResetCombo();
@@ -49,7 +59,7 @@ public:
 	//Get Exp form enemy's Drop Exp
 	void GetExp(const int32 &DropExp );
 
-
+	FStaminaChangedDelegate StaminaChangedDelegate;
 	//virtual  void LoadDataTable()override ;
 
 
@@ -58,13 +68,21 @@ private:
 	void levelUp();
 	//data table에서 level에 맞는 data를 가져온다
 	void loadLevelData();
+
+
+	const float MaxStamina = 100.0f;
+	float TimerStamina;
 private:
+
+	
 
 	UPROPERTY(VisibleInstanceOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
 		int32 CurrentCombo;
 	UPROPERTY(VisibleInstanceOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
 		int32 MaxCombo;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
+		float Stamina;
 	//Player level
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
 		int32 Level;
@@ -90,8 +108,11 @@ private:
 	//Can next Charge Attack
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
 		bool bCanChargeAttack;
-	
-	
+	//현재 Stamina가 사용되고 있는지 체크를 한다
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
+		bool bIsStaminaUsing;
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
+		bool bCanUsingStamina;
 
 
 

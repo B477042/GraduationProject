@@ -16,9 +16,11 @@ void UGameWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 	PB_HP = Cast<UProgressBar>(GetWidgetFromName(TEXT("HPBar")));
+	PB_Stamina = Cast<UProgressBar>(GetWidgetFromName(TEXT("StaminaBar")));
 	//HPAmount = Cast<UTextBlock>(GetWidgetFromName(TEXT("HPTEXT")));
 	GameTimer = 60.0f;
 	PlayerHP = 100.0f;
+	PlayerStamina = 100.0f;
 }
 //연동된 character의 stat component에서 채력이 바뀔 때, 호출된다. 
 void UGameWidget::UpdateCharacterStat()
@@ -34,6 +36,16 @@ void UGameWidget::UpdateCharacterStat()
 		PlayerHP=CurrentCharacterStat->GetHP();
 	}
 
+}
+
+void UGameWidget::UpdateStamina()
+{
+	if (CurrentCharacterStat.IsValid())
+	{
+		if (PB_Stamina != nullptr)
+			PB_Stamina->SetPercent(CurrentCharacterStat->GetStaminaRatio());
+		PlayerStamina = CurrentCharacterStat->GetStamina();
+	}
 }
 
 float UGameWidget::CheackTimeOut(float NewValue)
@@ -54,6 +66,7 @@ void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 	}
 	CurrentCharacterStat = newStat;
 	CurrentCharacterStat->HPChangedDelegate.AddUObject(this, &UGameWidget::UpdateCharacterStat);
+	CurrentCharacterStat->StaminaChangedDelegate.AddUObject(this, &UGameWidget::UpdateStamina);
 	/*CurrentCharacterStat->HPChangedDelegate.AddLambda([this]()->void {
 		if (CurrentCharacterStat.IsValid())
 		{
