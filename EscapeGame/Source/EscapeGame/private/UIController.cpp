@@ -5,6 +5,7 @@
 void AUIController::BeginPlay()
 {
 	Super::BeginPlay();
+
 	if (UserWidgetClass == nullptr) {
 		EGLOG(Error, TEXT("UserWidgetClass is nullptr"));
 		return;
