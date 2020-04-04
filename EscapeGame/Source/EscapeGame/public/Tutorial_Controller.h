@@ -26,6 +26,11 @@ public:
 		TSubclassOf<class UUserWidget>UserWidgetClass;
 	UPROPERTY()
 		class UUserWidget* UIWidgetInstance;
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = UI)
-		UButton* BTN_Next;
+	
+	void FindTalkers();
+
+	/*UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = UI)
+		UButton* BTN_Next;*/
+
+
 };

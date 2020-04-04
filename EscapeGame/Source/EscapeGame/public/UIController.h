@@ -24,7 +24,7 @@ protected:
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadwrite, Category = UI)
 		TSubclassOf<class UUserWidget>UserWidgetClass;
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 		class UUserWidget* UIWidgetInstance;
 	/*UPROPERTY()
 		class UButton* Btn_StartNew;*/

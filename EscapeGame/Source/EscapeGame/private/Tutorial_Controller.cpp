@@ -3,11 +3,14 @@
 
 #include "Tutorial_Controller.h"
 #include "Blueprint/UserWidget.h"
+#include "DialogueWidget.h"
 
 void ATutorial_Controller::BeginPlay()
 {
 
 	Super::BeginPlay();
+
+	
 
 	if (UserWidgetClass == nullptr) {
 		EGLOG(Error, TEXT("UserWidgetClass is nullptr"));
@@ -21,11 +24,12 @@ void ATutorial_Controller::BeginPlay()
 		return;
 	}
 
-	static ConstructorHelpers::FClassFinder<UUserWidget>WIDGET(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Dialogue.UI_Dialogue_C'"));
-	if (WIDGET.Succeeded())
-	{
-		UserWidgetClass = WIDGET.Class;
-	}
+	//static ConstructorHelpers::FClassFinder<UUserWidget>WIDGET(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Dialogue.UI_Dialogue_C'"));
+	//if (WIDGET.Succeeded())
+	//{
+	//	UserWidgetClass = WIDGET.Class;
+	//}
+	
 
 	//UserWidgetClass.Get()->FindPropertyByName();
 
@@ -35,8 +39,23 @@ void ATutorial_Controller::BeginPlay()
 	Mode.SetWidgetToFocus(UIWidgetInstance->GetCachedWidget());
 	SetInputMode(Mode);
 	bShowMouseCursor = true;
-
+	
 
 	
 
+}
+
+void ATutorial_Controller::FindTalkers()
+{
+	bool bIsSucceed = false;
+
+	auto Actors =GetWorld()->GetCurrentLevel()->Actors;
+
+	for (int i = 0; i < Actors.Num(); i++)
+	{
+		auto it = Actors[i];
+
+		//it.getcomponent
+
+	}
 }
