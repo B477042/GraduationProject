@@ -10,7 +10,11 @@
 #include "DialogueWidget.generated.h"
 
 /**
- * 
+ *	
+ *	다이얼로그 용 위젯 ui의 클래스
+ *	
+ *
+ *
  */
 //대화가 일어날 때 호출시킬 델리게이트. 처음으로 호출된다
 DECLARE_MULTICAST_DELEGATE(FOnTalkeInvoke);
@@ -30,7 +34,8 @@ public:
 	
 	
 	FOnTalkeInvoke OnTalkeInvokeDelegate;
-
+	FOnClickNext OnClickNextDelegate;
+	FOnClickPrev OnClickPrevDelegate;
 protected:
 	virtual void NativeConstruct()override;
 
