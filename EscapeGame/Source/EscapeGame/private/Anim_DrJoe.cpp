@@ -8,7 +8,3 @@ UAnim_DrJoe::UAnim_DrJoe()
 
 }
 
-void UAnim_DrJoe::BlueprintBeginPlay()
-{
-	Super::BlueprintBeginPlay()
-}
