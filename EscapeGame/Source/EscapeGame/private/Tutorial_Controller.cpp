@@ -5,12 +5,18 @@
 #include "Blueprint/UserWidget.h"
 #include "DialogueWidget.h"
 
+ATutorial_Controller::ATutorial_Controller()
+{
+
+
+
+}
+
+
 void ATutorial_Controller::BeginPlay()
 {
 
 	Super::BeginPlay();
-
-	
 
 	if (UserWidgetClass == nullptr) {
 		EGLOG(Error, TEXT("UserWidgetClass is nullptr"));
@@ -23,6 +29,7 @@ void ATutorial_Controller::BeginPlay()
 		EGLOG(Error, TEXT("UIWidgetInstance is nullptr"));
 		return;
 	}
+
 
 	//static ConstructorHelpers::FClassFinder<UUserWidget>WIDGET(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Dialogue.UI_Dialogue_C'"));
 	//if (WIDGET.Succeeded())

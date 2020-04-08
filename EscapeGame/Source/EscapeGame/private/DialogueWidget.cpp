@@ -52,8 +52,8 @@ void UDialogueWidget::SetTalker(AActor * Other, FText Name)
 {
 	Talker = Other;
 	
-	TalkerBox->SetText(Name);
-	
+	TalkerBox->Text =Name;
+	//TalkerBox->text
 }
 
 void UDialogueWidget::OnNextClicked()

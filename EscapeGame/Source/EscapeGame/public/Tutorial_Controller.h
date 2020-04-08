@@ -19,7 +19,7 @@ class ESCAPEGAME_API ATutorial_Controller : public APlayerController
 	
 public:
 	
-
+	ATutorial_Controller();
 
 	virtual void BeginPlay()override;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadwrite, Category = UI)
