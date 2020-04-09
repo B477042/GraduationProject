@@ -14,11 +14,15 @@ APawn_Camera::APawn_Camera()
 
 	Cam = CreateDefaultSubobject<UCameraComponent>(TEXT("Cam"));
 	BoxCollision= CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
-	RootComponent = Cam;
-	BoxCollision->SetupAttachment(RootComponent);
+	RootComponent = BoxCollision;
+	//BoxCollision->SetupAttachment(RootComponent);
+	Cam->SetupAttachment(RootComponent);
 	BoxCollision->SetBoxExtent(FVector(1.0f, 1.0f, 1.0f));
-	BoxCollision->SetCollisionProfileName(FName("PlayerCharacter"));
-	
+	BoxCollision -> SetCollisionProfileName(TEXT("PlayerCharacter"));
+	//BoxCollision->SetGenerateOverlapEvents(true);
+
+	float X, Y, Z, Roll, Yaw, Pitch;
+	SetActorLocationAndRotation(FVector(X = -10.000000, Y = 230.000000, Z = 40.000000), FRotator(Pitch = 0.000000, Yaw = -90.000114, Roll = 0.000000));
 }
 
 // Called when the game starts or when spawned

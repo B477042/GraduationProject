@@ -3,6 +3,7 @@
 
 #include "NPC_DrJoe.h"
 
+#include"Pawn_Camera.h"
 
 ANPC_DrJoe::ANPC_DrJoe()
 {
@@ -22,11 +23,12 @@ ANPC_DrJoe::ANPC_DrJoe()
 	Name = "Dr.Joe";
 
 	EventCollision = CreateDefaultSubobject<USphereComponent>(TEXT("EVENTCOLLISION"));
-	EventCollision->SetupAttachment(GetMesh());
+	EventCollision->SetupAttachment(GetCapsuleComponent());
 
 	EventCollision->SetCollisionProfileName(TEXT("OnTrapTrigger"));
+	//EventCollision->SetCollisionProfileName(TEXT("OverlapAll"));
 	EventCollision->SetGenerateOverlapEvents(true);
-	EventCollision->SetSphereRadius(800.0f);
+	EventCollision->SetSphereRadius(400.0f);
 
 
 
@@ -45,11 +47,17 @@ void ANPC_DrJoe::Tick(float DeltaTime)
 void ANPC_DrJoe::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-
+	//EventCollision->onoverlap
 	EventCollision->OnComponentBeginOverlap.AddDynamic(this,&ANPC_DrJoe::OnPlayerOverlap );
 }
 
+
 void ANPC_DrJoe::OnPlayerOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	
+	EGLOG(Warning, TEXT("Something"));
+	auto tempActor = Cast<APawn_Camera>(OtherActor);
+	if (tempActor == nullptr)return;
+	EGLOG(Warning, TEXT("Something"));
+	tempActor->ListenTalk(this, &Name);
+
 }
