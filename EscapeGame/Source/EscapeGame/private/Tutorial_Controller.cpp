@@ -26,7 +26,7 @@ void ATutorial_Controller::BeginPlay()
 	UIWidgetInstance = CreateWidget <UUserWidget>(this, UserWidgetClass);
 	if (UIWidgetInstance == nullptr)
 	{
-		EGLOG(Error, TEXT("UIWidgetInstance is nullptr"));
+		EGLOG(Error, TEXT("Dialogue widget instance is nullptr"));
 		return;
 	}
 
@@ -52,17 +52,4 @@ void ATutorial_Controller::BeginPlay()
 
 }
 
-void ATutorial_Controller::FindTalkers()
-{
-	bool bIsSucceed = false;
 
-	auto Actors =GetWorld()->GetCurrentLevel()->Actors;
-
-	for (int i = 0; i < Actors.Num(); i++)
-	{
-		auto it = Actors[i];
-
-		//it.getcomponent
-
-	}
-}

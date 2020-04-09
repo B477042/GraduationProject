@@ -4,7 +4,8 @@
 
 #include "EscapeGame.h"
 #include "GameFramework/PlayerController.h"
-#include "Button.h"
+
+#include"DialogueWidget.h"
 #include "Tutorial_Controller.generated.h"
 
 /**
@@ -27,7 +28,7 @@ public:
 	UPROPERTY()
 		class UUserWidget* UIWidgetInstance;
 	
-	void FindTalkers();
+	
 
 	/*UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = UI)
 		UButton* BTN_Next;*/

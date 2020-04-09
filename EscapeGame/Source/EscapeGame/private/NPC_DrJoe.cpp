@@ -3,6 +3,7 @@
 
 #include "NPC_DrJoe.h"
 
+
 ANPC_DrJoe::ANPC_DrJoe()
 {
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SM_MESH(TEXT("SkeletalMesh'/Game/Scanned3DPeoplePack/RP_Character/rp_eric_rigged_001_ue4/rp_eric_rigged_001_ue4.rp_eric_rigged_001_ue4'"));
@@ -20,6 +21,15 @@ ANPC_DrJoe::ANPC_DrJoe()
 	}
 	Name = "Dr.Joe";
 
+	EventCollision = CreateDefaultSubobject<USphereComponent>(TEXT("EVENTCOLLISION"));
+	EventCollision->SetupAttachment(GetMesh());
+
+	EventCollision->SetCollisionProfileName(TEXT("OnTrapTrigger"));
+	EventCollision->SetGenerateOverlapEvents(true);
+	EventCollision->SetSphereRadius(800.0f);
+
+
+
 }
 
 void ANPC_DrJoe::BeginPlay()
@@ -30,4 +40,16 @@ void ANPC_DrJoe::BeginPlay()
 void ANPC_DrJoe::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void ANPC_DrJoe::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	EventCollision->OnComponentBeginOverlap.AddDynamic(this,&ANPC_DrJoe::OnPlayerOverlap );
+}
+
+void ANPC_DrJoe::OnPlayerOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	
 }

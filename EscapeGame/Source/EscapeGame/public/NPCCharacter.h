@@ -20,6 +20,7 @@ public:
 	// Sets default values for this actor's properties
 	ANPCCharacter();
 
+	FString GetName() { return *Name; }
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
