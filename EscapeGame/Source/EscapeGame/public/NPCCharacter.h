@@ -12,7 +12,7 @@
 
 */
 UCLASS()
-class ESCAPEGAME_API ANPCCharacter : public AActor
+class ESCAPEGAME_API ANPCCharacter : public ACharacter
 {
 	GENERATED_BODY()
 	
@@ -28,6 +28,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 protected:
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Animation", meta = (AllowPrivateAccess = "true"))
-		UAnimInstance* Anim;
+	/*UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Animation", meta = (AllowPrivateAccess = "true"))
+		UAnimInstance* Anim;*/
 };
