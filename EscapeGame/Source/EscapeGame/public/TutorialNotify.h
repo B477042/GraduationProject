@@ -4,6 +4,7 @@
 
 #include "EscapeGame.h"
 #include "Engine/TriggerBox.h"
+#include "Components/TextRenderComponent.h"
 #include "TutorialNotify.generated.h"
 
 /*
@@ -61,5 +62,6 @@ protected:
 
 	UPROPERTY(EditInstanceOnly, Category = "NotifyType", meta = (ToolTip = "어떤 튜토리얼 메시지가 출력될지 보여줍니다"))
 		ENotifyType NotifyType;
-
+	UPROPERTY(VisibleInstanceOnly, Category = "TEXT", meta = (ToolTip = "3d공간에 출력될 텍스트"))
+	UTextRenderComponent* TextRenderer;
 };

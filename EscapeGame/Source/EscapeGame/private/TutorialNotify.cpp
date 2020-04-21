@@ -4,16 +4,21 @@
 #include "TutorialNotify.h"
 #include "EGPlayerController.h"
 #include "EGPlayerCharacter.h"
+//#include "Components/BoxComponent.h"
 
 // Sets default values
 ATutorialNotify::ATutorialNotify()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	//PrimaryActorTick.bCanEverTick = true;
-	
-	NotifyType = ENotifyType::E_None;
+	TextRenderer = CreateDefaultSubobject<UTextRenderComponent>(TEXT("TextRenderer"));
+	TextRenderer->SetupAttachment(RootComponent);
 
-	//GetCollisionComponent()->extent
+	NotifyType = ENotifyType::E_None;
+	auto BoxCom = Cast<UBoxComponent>(GetCollisionComponent());
+	float X, Y, Z;
+	BoxCom->SetBoxExtent(FVector(X = 98.860458, Y = 91.200172, Z = 99.117844));
+
 }
 
 // Called when the game starts or when spawned
@@ -21,7 +26,7 @@ void ATutorialNotify::BeginPlay()
 {
 	Super::BeginPlay();
 	
-
+	
 }
 
 void ATutorialNotify::PostInitializeComponents()
@@ -46,6 +51,9 @@ void ATutorialNotify::OnOverlapBegin(AActor * OvelappedActor, AActor * OtherActo
 	if (!checkOverlappedActor((OtherActor)))return;
 
 	EGLOG(Warning, TEXT("Welcom player"));
+	
+	
+
 }
 
 void ATutorialNotify::OnOverlapEnd(AActor * OvelappedActor, AActor * OtherActor)
