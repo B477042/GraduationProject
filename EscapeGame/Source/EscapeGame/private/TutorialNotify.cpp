@@ -147,6 +147,7 @@ void ATutorialNotify::setInfo()
 		break;
 
 	case ENotifyType::E_None:
+		//에디터에서 메시지를 적어서 사용해야될 때 사용한다
 		//TextRenderer->SetText(TEXT("PLZ SET NOTIFYYYYYYYY"));
 		break;
 	}

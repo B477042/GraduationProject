@@ -20,7 +20,7 @@
 	
 */
 
-//notify 해줄 이벤트의 종류
+//무엇을 알려줘야 하는지 설정하기 위한 enum
 UENUM()
 enum class ENotifyType :int32 {
 	E_None = 0,
