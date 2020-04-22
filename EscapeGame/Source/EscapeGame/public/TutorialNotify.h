@@ -57,6 +57,10 @@ public:
 	// declare overlap end function
 	UFUNCTION()
 	void OnOverlapEnd(AActor* OvelappedActor, AActor*OtherActor);
+
+protected:
+	//Init TextRenderer Default Value
+	void initTextRenderer();
 protected:
 	
 

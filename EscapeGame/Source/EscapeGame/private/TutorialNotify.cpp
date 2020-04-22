@@ -11,8 +11,8 @@ ATutorialNotify::ATutorialNotify()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	//PrimaryActorTick.bCanEverTick = true;
-	TextRenderer = CreateDefaultSubobject<UTextRenderComponent>(TEXT("TextRenderer"));
-	TextRenderer->SetupAttachment(RootComponent);
+	
+	initTextRenderer();
 
 	NotifyType = ENotifyType::E_None;
 	auto BoxCom = Cast<UBoxComponent>(GetCollisionComponent());
@@ -51,8 +51,11 @@ void ATutorialNotify::OnOverlapBegin(AActor * OvelappedActor, AActor * OtherActo
 	if (!checkOverlappedActor((OtherActor)))return;
 
 	EGLOG(Warning, TEXT("Welcom player"));
+	TextRenderer->SetText(TEXT("Welcome Bro"));
 	
-	
+	TextRenderer->SetHiddenInGame(false);
+	if (TextRenderer->bHiddenInGame != false)
+		EGLOG(Error, TEXT("bHidden in game isnot flase"));
 
 }
 
@@ -60,6 +63,28 @@ void ATutorialNotify::OnOverlapEnd(AActor * OvelappedActor, AActor * OtherActor)
 {
 	if (!checkOverlappedActor((OtherActor)))return;
 	EGLOG(Warning, TEXT("Goodbye player"));
+
+	TextRenderer->SetText(TEXT("Good Bye Bro"));
+
+	//TextRenderer->bHiddenInGame = true;
+	TextRenderer->SetHiddenInGame(true);
+}
+
+void ATutorialNotify::initTextRenderer()
+{
+
+	TextRenderer = CreateDefaultSubobject<UTextRenderComponent>(TEXT("TextRenderer"));
+	TextRenderer->SetupAttachment(RootComponent);
+	TextRenderer->SetRelativeLocation(FVector(0.0f, 60.0f, 0.0f));
+	//TextRenderer->bHiddenInGame = true;
+	TextRenderer->SetHiddenInGame(true);
+
+
+
+	TextRenderer->SetText(TEXT("Welcome Bro"));
+
+	TextRenderer->SetTextRenderColor(FColor(0,87,85,255));
+	
 }
 
 //void ATutorialNotify::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
