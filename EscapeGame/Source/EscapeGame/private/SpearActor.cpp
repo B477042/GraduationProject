@@ -21,7 +21,7 @@ ASpearActor::ASpearActor()
 		Body->SetStaticMesh(SM_BODY.Object);
 	}
 
-	Body->SetCollisionProfileName(TEXT("BlockingTypeTrap"));
+	Body->SetCollisionProfileName(TEXT("BlockAll"));
 
 }
 
