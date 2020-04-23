@@ -10,7 +10,11 @@ void ATutorial_Controller::BeginPlay()
 
 	Super::BeginPlay();
 
-	
+	static ConstructorHelpers::FClassFinder<UUserWidget>WIDGET(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Dialogue.UI_Dialogue_C'"));
+	if (WIDGET.Succeeded())
+	{
+		UserWidgetClass = WIDGET.Class;
+	}
 
 	if (UserWidgetClass == nullptr) {
 		EGLOG(Error, TEXT("UserWidgetClass is nullptr"));
@@ -24,11 +28,7 @@ void ATutorial_Controller::BeginPlay()
 		return;
 	}
 
-	//static ConstructorHelpers::FClassFinder<UUserWidget>WIDGET(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Dialogue.UI_Dialogue_C'"));
-	//if (WIDGET.Succeeded())
-	//{
-	//	UserWidgetClass = WIDGET.Class;
-	//}
+
 	
 
 	//UserWidgetClass.Get()->FindPropertyByName();

@@ -50,15 +50,16 @@ void APawn_Camera::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 }
 
-void APawn_Camera::ListenTalk(AActor* Talker, FString *Name)
+void APawn_Camera::StartListenTo(TWeakObjectPtr<ACharacter>Talker)
 {
 	auto tempTalker = Cast<ANPCCharacter>(Talker);
+	//Casting Test
 	if (tempTalker==nullptr)
 	{
 		EGLOG(Warning, TEXT("Temp Talker failed"));
 		return;
 	}
-
+	//player의 컨트롤러를 casting한다
 	auto tempController = Cast<ATutorial_Controller>(Controller);
 	if (tempController==nullptr)
 	{ 
@@ -73,6 +74,7 @@ void APawn_Camera::ListenTalk(AActor* Talker, FString *Name)
 		EGLOG(Warning, TEXT("Temp widget failed"));
 		return;
 	}
+	//Widget에 이름을 적어준다
 	widget->SetTalker(tempTalker, FText::FromString(tempTalker->GetName()));
 	
 	EGLOG(Error, TEXT("I Told U!!!!!"));

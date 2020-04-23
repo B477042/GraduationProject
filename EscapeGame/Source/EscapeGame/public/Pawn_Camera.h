@@ -34,10 +34,14 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	//대화하는 상대의 말을 듣게 된다
-	void ListenTalk(AActor* Talker,FString *Name);
+	void ListenTalk(TWeakObjectPtr<ACharacter> Talker);
+	//말을 걸어오기 시작할 때 호출합니다
+	void StartListenTo(TWeakObjectPtr<ACharacter>Talker);
 private:
 	UPROPERTY(EditAnywhere)
 		UCameraComponent* Cam;
 	UPROPERTY(EditAnywhere)
 		UBoxComponent* BoxCollision;
+
+	TWeakObjectPtr<ACharacter>CurrentTalker;
 };

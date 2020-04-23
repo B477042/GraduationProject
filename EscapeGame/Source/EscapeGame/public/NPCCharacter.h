@@ -27,7 +27,9 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	string GetName() { return name; }
 protected:
 	/*UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Animation", meta = (AllowPrivateAccess = "true"))
 		UAnimInstance* Anim;*/
+	string name;
 };
