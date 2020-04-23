@@ -50,6 +50,10 @@ void APawn_Camera::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 }
 
+void APawn_Camera::ListenTalk(TWeakObjectPtr<ACharacter> Talker)
+{
+}
+
 void APawn_Camera::StartListenTo(TWeakObjectPtr<ACharacter>Talker)
 {
 	auto tempTalker = Cast<ANPCCharacter>(Talker);
