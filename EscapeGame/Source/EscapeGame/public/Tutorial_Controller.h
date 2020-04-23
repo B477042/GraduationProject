@@ -18,8 +18,7 @@ class ESCAPEGAME_API ATutorial_Controller : public APlayerController
 	GENERATED_BODY()
 	
 public:
-	
-
+	 ATutorial_Controller();
 
 	virtual void BeginPlay()override;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadwrite, Category = UI)

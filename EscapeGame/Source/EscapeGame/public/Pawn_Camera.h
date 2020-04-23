@@ -34,9 +34,15 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	//대화하는 상대의 말을 듣게 된다
-	void ListenTalk(TWeakObjectPtr<ACharacter> Talker);
+	void ListenTalk(TWeakObjectPtr<ACharacter> Talker,FText Diagram);
 	//말을 걸어오기 시작할 때 호출합니다
 	void StartListenTo(TWeakObjectPtr<ACharacter>Talker);
+	UFUNCTION(BlueprintCallable)
+	void OnNextClicked();
+	UFUNCTION(BlueprintCallable)
+	void OnPrevClicked();
+
+
 private:
 	UPROPERTY(EditAnywhere)
 		UCameraComponent* Cam;

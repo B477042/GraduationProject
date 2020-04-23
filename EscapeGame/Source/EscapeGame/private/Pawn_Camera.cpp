@@ -40,7 +40,7 @@ void APawn_Camera::BeginPlay()
 void APawn_Camera::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
 }
 
 // Called to bind functionality to input
@@ -50,8 +50,25 @@ void APawn_Camera::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 }
 
-void APawn_Camera::ListenTalk(TWeakObjectPtr<ACharacter> Talker)
+void APawn_Camera::ListenTalk(TWeakObjectPtr<ACharacter> Talker, FText Diagram)
 {
+	auto tempController = Cast<ATutorial_Controller>(Controller);
+	if (tempController == nullptr)
+	{
+		EGLOG(Warning, TEXT("Temp Controller failed"));
+		return;
+	}
+
+
+	auto widget = Cast<UDialogueWidget>(tempController->UIWidgetInstance);
+	if (widget == nullptr)
+	{
+		EGLOG(Warning, TEXT("Temp widget failed"));
+		return;
+	}
+	EGLOG(Warning,*Diagram.ToString() );
+	widget->RecieveDiagram(Diagram);
+
 }
 
 void APawn_Camera::StartListenTo(TWeakObjectPtr<ACharacter>Talker)
@@ -82,5 +99,13 @@ void APawn_Camera::StartListenTo(TWeakObjectPtr<ACharacter>Talker)
 	widget->SetTalker(tempTalker, FText::FromString(tempTalker->GetName()));
 	
 	EGLOG(Error, TEXT("I Told U!!!!!"));
+}
+
+void APawn_Camera::OnNextClicked()
+{
+}
+
+void APawn_Camera::OnPrevClicked()
+{
 }
 

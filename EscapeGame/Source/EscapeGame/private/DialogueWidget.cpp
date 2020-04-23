@@ -6,6 +6,15 @@
 
 
 
+void UDialogueWidget::RecieveDiagram(FText Diagram)
+{
+	if (TextDiagram!=nullptr)
+		TextDiagram->SetText(Diagram);
+		//->SetText(Diagram);
+	EGLOG(Warning, *Diagram.ToString());
+
+}
+
 void UDialogueWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -33,6 +42,12 @@ void UDialogueWidget::NativeConstruct()
 	if (TalkerBox == nullptr)
 	{
 		EGLOG(Error, TEXT("Talker Box is nullptr"));
+		return;
+	}
+	TextDiagram = Cast<UEditableText>(GetWidgetFromName("Dialogue"));
+	if (TalkerBox == nullptr)
+	{
+		EGLOG(Error, TEXT("TextDiagram is nullptr"));
 		return;
 	}
 	

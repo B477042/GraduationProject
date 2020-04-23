@@ -29,13 +29,19 @@ public:
 	
 	//말을 겁니다. 말은 OtherPlayer를 통해 widget에 전달되어야 합니다
 	void TalkTo();
+
+	UFUNCTION(BlueprintCallable)
+	void OnNextClicked();
+	UFUNCTION(BlueprintCallable)
+	void OnPrevClicked();
+
 protected:
 
 	
 protected:
 	//지금 상대와 얼마나 대화를 했는지 카운팅합니다
 	UPROPERTY(VisibleAnywhere, Category = "Communication")
-	int32 TalkingCount;
+	int TalkingCount;
 	//말을 걸려고 하는 대상. Camera Pawn이 된다
 	UPROPERTY(VisibleAnywhere, Category = "Communication")
 	TWeakObjectPtr<APawn>OtherPlayer;

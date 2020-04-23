@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Button.h"
 #include "UMG/Public/Components/EditableTextBox.h"
+#include "UMG/Public/Components/EditableText.h"
 #include "EditableTextBox.h"
 #include "DialogueWidget.generated.h"
 
@@ -31,7 +32,8 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category=Talker)
 		void SetTalker(AActor* Other,FText Name);
-	
+	UFUNCTION(BlueprintCallable, Category = Talker)
+	void RecieveDiagram(FText Diagram);
 	
 	FOnTalkeInvoke OnTalkeInvokeDelegate;
 	FOnClickNext OnClickNextDelegate;
@@ -48,7 +50,8 @@ protected:
 		class UButton* ContinueButton;
 	UPROPERTY()
 		class UEditableTextBox* TalkerBox;
-
+	UPROPERTY()
+	class UEditableText* TextDiagram;
 	UPROPERTY()
 		TWeakObjectPtr<AActor> Talker;
 		
