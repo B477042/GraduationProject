@@ -55,7 +55,7 @@ protected:
 	bool checkOverlappedActor(AActor* Other);
 public:	
 	// Called every frame
-	//virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float DeltaTime) override;
 
 	
 	UFUNCTION()
@@ -70,7 +70,7 @@ protected:
 	void initBoxComponent();
 	//해당되는 튜토리얼 문구를 출력해줍니다
 	void setInfo();
-
+	void rotateTextToPlayer();
 protected:
 	UPROPERTY(EditInstanceOnly, Category = "TriggerCollision")
 		UBoxComponent* BoxTrigger;
@@ -81,4 +81,7 @@ protected:
 		ENotifyType NotifyType;
 	UPROPERTY(VisibleInstanceOnly, Category = "TEXT", meta = (ToolTip = "3d공간에 출력될 텍스트"))
 	UTextRenderComponent* TextRenderer;
+
+	//들어온 캐릭터를 가리킨다. 영역 밖으로 나가면 풀어준다
+	TWeakObjectPtr<AActor> EnteredPlayer;
 };

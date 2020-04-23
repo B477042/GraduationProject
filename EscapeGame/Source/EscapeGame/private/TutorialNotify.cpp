@@ -12,13 +12,14 @@ ATutorialNotify::ATutorialNotify()
 	Axis = CreateDefaultSubobject<USceneComponent>(TEXT("Axis"));
 	RootComponent = Axis;
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	//PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 	initBoxComponent();
 	initTextRenderer();
 
 	NotifyType = ENotifyType::E_None;
 	//auto BoxCom = Cast<UBoxComponent>(GetCollisionComponent());
 	TextRenderer->SetHiddenInGame(true);
+	EnteredPlayer = nullptr;
 	//BoxCom->SetBoxExtent(FVector(X = 98.860458, Y = 91.200172, Z = 99.117844));
 	//SetActorHiddenInGame(false);
 }
@@ -44,7 +45,7 @@ bool ATutorialNotify::checkOverlappedActor(AActor * Other)
 	auto otherChara = Cast<AEGPlayerCharacter>(Other);
 	if (otherChara == nullptr)return false;
 
-
+	EnteredPlayer = Other;
 	return true;
 }
 
@@ -57,26 +58,29 @@ void ATutorialNotify::OnOverlapBegin(AActor * OvelappedActor, AActor * OtherActo
 	
 	TextRenderer->SetHiddenInGame(false);
 
-	FVector Start = GetActorLocation() + TextRenderer->GetRelativeLocation();
-	FVector Target = OtherActor->GetActorLocation();
+	EnteredPlayer = OtherActor;
+	rotateTextToPlayer();
+	//FVector Start = GetActorLocation() + TextRenderer->GetRelativeLocation();
+	//FVector Target = OtherActor->GetActorLocation();
 
-	//Start지점에서 Target지점을 바라볼 때 벡터를 연산한다
-	FRotator rotateTo=UKismetMathLibrary::FindLookAtRotation(Start,Target)/*+FRotator(0.0f,180.0f,0.0f)*/;
-	//FRotator rotateTo = OtherActor->GetActorRotation();
-	TextRenderer->SetWorldRotation(rotateTo);
-	//SetActorRotation(rotateTo);
+	////Start지점에서 Target지점을 바라볼 때 벡터를 연산한다
+	//FRotator rotateTo=UKismetMathLibrary::FindLookAtRotation(Start,Target)/*+FRotator(0.0f,180.0f,0.0f)*/;
+	////FRotator rotateTo = OtherActor->GetActorRotation();
+	//TextRenderer->SetWorldRotation(rotateTo);
+	////SetActorRotation(rotateTo);
+	//
+	//틱을 켜준다
 	
 }
 
 void ATutorialNotify::OnOverlapEnd(AActor * OvelappedActor, AActor * OtherActor)
 {
 	if (!checkOverlappedActor((OtherActor)))return;
-//	EGLOG(Warning, TEXT("Goodbye player"));
 
-	//TextRenderer->SetText(TEXT("Good Bye Bro"));
-
-	//TextRenderer->bHiddenInGame = true;
 	TextRenderer->SetHiddenInGame(true);
+	//Tick을 꺼준다
+	//PrimaryActorTick.bCanEverTick = false;
+	EnteredPlayer = nullptr;
 }
 
 void ATutorialNotify::initTextRenderer()
@@ -90,8 +94,8 @@ void ATutorialNotify::initTextRenderer()
 
 	TextRenderer->SetHiddenInGame(true);
 
-	TextRenderer->SetText(TEXT("Set Message on editor"));
-
+	TextRenderer->SetText(FText::FromString("Set Message on editor"));
+	
 	TextRenderer->SetTextRenderColor(FColor(0,87,85,255));
 	
 }
@@ -113,37 +117,37 @@ void ATutorialNotify::setInfo()
 	switch (NotifyType)
 	{
 	case ENotifyType::E_MoveInput:
-		TextRenderer->SetText(TEXT("Press\nW,A,S,D\nTo Move"));
+		TextRenderer->SetText(FText::FromString("Press\nW,A,S,D\nTo Move"));
 		break;
 	case ENotifyType::E_MouseInput:
-		TextRenderer->SetText(TEXT("Move Your Mouse\nAnd Look\nAround"));
+		TextRenderer->SetText(FText::FromString("Move Your Mouse\nAnd Look\nAround"));
 		break;
 	case ENotifyType::E_Jump:
-		TextRenderer->SetText(TEXT("Press Space\nTo Jump"));
+		TextRenderer->SetText(FText::FromString("Press Space\nTo Jump"));
 		break;
 	case ENotifyType::E_AttackInput:
-		TextRenderer->SetText(TEXT("Click LMB\nTo Attack"));
+		TextRenderer->SetText(FText::FromString("Click LMB\nTo Attack"));
 		break;
 	case ENotifyType::E_GruntEnemy:
-		TextRenderer->SetText(TEXT("Watch Out\nThat Robot"));
+		TextRenderer->SetText(FText::FromString("Watch Out\nThat Robot"));
 		break;
 	case ENotifyType::E_TrapFire:
-		TextRenderer->SetText(TEXT("Be Careful\nFire Ball"));
+		TextRenderer->SetText(FText::FromString("Be Careful\nFire Ball"));
 		break;
 	case ENotifyType::E_Trap_Shutter:
-		TextRenderer->SetText(TEXT("Spear Could\nBe Destroy"));
+		TextRenderer->SetText(FText::FromString("Spear Could\nBe Destroy"));
 		break;
 	case ENotifyType::E_Lightning:
-		TextRenderer->SetText(TEXT("Don't Touch\nLightning"));
+		TextRenderer->SetText(FText::FromString("Don't Touch\nLightning"));
 			break;
 	case ENotifyType::E_HealBox:
-		TextRenderer->SetText(TEXT("Contact Box\nYou'll Recover"));
+		TextRenderer->SetText(FText::FromString("Contact Box\nYou'll Recover"));
 		break;
 	case ENotifyType::E_Claymore:
-		TextRenderer->SetText(TEXT("Claymore is\nNot Your\nFriend"));
+		TextRenderer->SetText(FText::FromString("Claymore is\nNot Your\nFriend"));
 		break;
 	case ENotifyType::E_ChargeAttack:
-		TextRenderer->SetText(TEXT("While Attack\nClick RMB\nCharge Attack"));
+		TextRenderer->SetText(FText::FromString("While Attack\nClick RMB\nCharge Attack"));
 		break;
 
 	case ENotifyType::E_None:
@@ -153,11 +157,29 @@ void ATutorialNotify::setInfo()
 	}
 }
 
+void ATutorialNotify::rotateTextToPlayer()
+{
+	if (EnteredPlayer == nullptr)
+	{
+		EGLOG(Warning, TEXT("Entered is nullptr"));
+		return;
+	}
+	EGLOG(Warning, TEXT("Entered is not nullptr"));
+	FVector Start = GetActorLocation() + TextRenderer->GetRelativeLocation();
+	FVector Target = EnteredPlayer ->GetActorLocation();
+
+	//Start지점에서 Target지점을 바라볼 때 벡터를 연산한다
+	FRotator rotateTo = UKismetMathLibrary::FindLookAtRotation(Start, Target)/*+FRotator(0.0f,180.0f,0.0f)*/;
+	//FRotator rotateTo = OtherActor->GetActorRotation();
+	TextRenderer->SetWorldRotation(rotateTo);
+	//SetActorRotation(rotateTo);
+}
+
 
 //// Called every frame
-//void ATutorialNotify::Tick(float DeltaTime)
-//{
-//	Super::Tick(DeltaTime);
-//
-//}
+void ATutorialNotify::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
 
