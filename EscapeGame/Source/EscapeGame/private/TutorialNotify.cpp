@@ -86,7 +86,7 @@ void ATutorialNotify::OnOverlapEnd(AActor * OvelappedActor, AActor * OtherActor)
 
 void ATutorialNotify::initTextRenderer()
 {
-	ff
+	
 	TextRenderer = CreateDefaultSubobject<UTextRenderComponent>(TEXT("TextRenderer"));
 	TextRenderer->SetupAttachment(RootComponent);
 	TextRenderer->SetRelativeLocation(FVector(0.0f, 60.0f, 0.0f));
