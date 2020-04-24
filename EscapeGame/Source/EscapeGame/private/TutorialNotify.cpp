@@ -4,6 +4,7 @@
 #include "TutorialNotify.h"
 #include "EGPlayerController.h"
 #include "EGPlayerCharacter.h"
+#include "Engine/Font.h"
 //#include "Components/BoxComponent.h"
 
 // Sets default values
@@ -91,6 +92,9 @@ void ATutorialNotify::initTextRenderer()
 	TextRenderer->SetRelativeLocation(FVector(0.0f, 60.0f, 0.0f));
 	//TextRenderer->bHiddenInGame = true;
 	
+	static ConstructorHelpers::FObjectFinder<UFont>FONT(TEXT("Font'/Game/MyFolder/Font/D2Font.D2Font'"));
+	if(FONT.Succeeded())
+	TextRenderer->SetFont(FONT.Object);
 
 	TextRenderer->SetHiddenInGame(true);
 
