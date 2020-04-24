@@ -86,13 +86,13 @@ void ATutorialNotify::OnOverlapEnd(AActor * OvelappedActor, AActor * OtherActor)
 
 void ATutorialNotify::initTextRenderer()
 {
-
+	ff
 	TextRenderer = CreateDefaultSubobject<UTextRenderComponent>(TEXT("TextRenderer"));
 	TextRenderer->SetupAttachment(RootComponent);
 	TextRenderer->SetRelativeLocation(FVector(0.0f, 60.0f, 0.0f));
 	//TextRenderer->bHiddenInGame = true;
 	
-	static ConstructorHelpers::FObjectFinder<UFont>FONT(TEXT("Font'/Game/MyFolder/Font/D2Font.D2Font'"));
+	static ConstructorHelpers::FObjectFinder<UFont>FONT(TEXT("Font'/Game/MyFolder/Font/NanumGothic.NanumGothic'"));
 	if(FONT.Succeeded())
 	TextRenderer->SetFont(FONT.Object);
 
