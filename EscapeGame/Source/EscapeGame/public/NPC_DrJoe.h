@@ -45,4 +45,6 @@ protected:
 	//말을 걸려고 하는 대상. Camera Pawn이 된다
 	UPROPERTY(VisibleAnywhere, Category = "Communication")
 	TWeakObjectPtr<APawn>OtherPlayer;
+	UPROPERTY(EditAnywhere, Category = "dialogue", meta = (AllowPrivateAccess = "true"))
+		TArray<FText>Script;
 };
