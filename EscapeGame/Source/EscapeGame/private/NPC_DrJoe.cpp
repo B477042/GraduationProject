@@ -102,48 +102,7 @@ void ANPC_DrJoe::TalkTo()
 
 	tempPlayer->ListenTalk(this, FText::FromString("SyncTest"));
 	
-	/*
-	////switch (TalkingCount)
-	////{
-	////case 0:
-
-	////	우리가 여기 갖힌지 5일이나 됐다네.이 외계인 놈들은 우리를 감시하지도 않아
-	////	
-	////	break;
-	/////*case 1:
-
-	////		diagram = "그 덕분에 컨트롤러가 완성 되었다네.\n외계인들이 사용하는 로봇 중에 하나를 조종할 수 있을걸세";
-	////		
-	////		break;
-	////case 2:
-
-	////		diagram = "이 HMD를 쓰고 노트북 앞으로 와서 앉아주게나.\n어떻게 조종하는지는 HMD로 메시지를 적어줄게";
-
-	////		break;
-	////case 3:
-	////		diagram = "내가 다른 로봇들로 미리 테스틀 해서 얻은 정보도 보내줄테니\n참고 해서 여기로 로봇을 대리고 오면 된다네";
-
-	////		break;
-	////case 4:
-
-	////		diagram = "우리가 조종할 로봇은 딱 한기 뿐이라 신중하게 움직여줘야한다.\n왜 내가 안 하냐고? ";
-
-	////		break;
-	////case 5:
-
-	////		diagram = "직접 조종하는 것보다 옆에서 훈수 두는게 더 재밌을거 같아서";
-
-	////		break;
-	////case 6:
-
-	////		diagram = "아무튼 빨리 탈출해야돼. 곧 달을 떠날려고 하는 것 같으니까";
-
-	////		break;
-	////default:
-	////	break;
-	////}
-	////
-	*/
+	
 }
 
 void ANPC_DrJoe::OnNextClicked()

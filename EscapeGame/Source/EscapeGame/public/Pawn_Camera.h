@@ -5,7 +5,7 @@
 #include "EscapeGame.h"
 #include "GameFramework/Pawn.h"
 
-
+#include "Engine/DataTable.h"
 
 #include "Pawn_Camera.generated.h"
 
@@ -42,12 +42,40 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void OnPrevClicked();
 
+private:
+	//게임이 시작되면 스캔해서 찾아냅니다.
+	void findTalkers();
 
 private:
 	UPROPERTY(EditAnywhere)
 		UCameraComponent* Cam;
 	UPROPERTY(EditAnywhere)
 		UBoxComponent* BoxCollision;
+	//Array of Talkers. 
+	UPROPERTY(VisibleAnywhere, Category = "DialogueInfo")
+		TArray<TWeakObjectPtr<ACharacter>>a_Talkers;
+	
+	UPROPERTY(VisibleAnywhere, Category = "DialogueInfo", meta = (AllowPrivateAccess = "true"))
+		class UDataTable* dialogueTable;
 
-	TWeakObjectPtr<ACharacter>CurrentTalker;
+};
+
+
+USTRUCT(BlueprintType)
+struct FDialogueTableRow : public FTableRowBase
+{
+	GENERATED_BODY()
+public:
+	//대사 내용
+	UPROPERTY(VisibleAnywhere)
+		FText Dialogue;
+	//화자
+	UPROPERTY(VisibleAnywhere)
+		FText Talker;
+	//몇 번재 Act인지
+	UPROPERTY(VisibleAnywhere)
+		int32 n_Act;
+	//몇 번째 대사인지
+	UPROPERTY(VisibleAnywhere)
+		int32 Line;
 };
