@@ -11,7 +11,7 @@ void UDialogueWidget::RecieveDiagram(FText Diagram)
 	if (TextDiagram!=nullptr)
 		TextDiagram->SetText(Diagram);
 		//->SetText(Diagram);
-	EGLOG(Warning, *Diagram.ToString());
+//	EGLOG(Warning, *Diagram.ToString());
 
 }
 

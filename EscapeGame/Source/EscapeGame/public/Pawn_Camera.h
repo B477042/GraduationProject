@@ -10,8 +10,33 @@
 #include "Pawn_Camera.generated.h"
 
 
+
+USTRUCT(BlueprintType)
+struct FDialogueTableRow : public FTableRowBase
+{
+	GENERATED_BODY()
+	public:
+	//대사 내용
+	UPROPERTY(VisibleAnywhere)
+	FText Dialogue;
+	//화자
+	UPROPERTY(VisibleAnywhere)
+	FText Talker;
+	//몇 번재 Act인지
+	UPROPERTY(VisibleAnywhere)
+	int32 n_Act;
+	//몇 번째 대사인지
+	UPROPERTY(VisibleAnywhere)
+	int32 Line;
+};
+
 /*
-	Dr.Joe를 촬영하는데만 이용될 pawn
+	대화를 하는 장면을 촬영하는 pawn
+	대화가 일어나는 스크립트는 여기에 저장되고
+	next prev 버튼에 대한 상호작용으로
+	넘어가는 대화도 여기서 처리한다.
+	버튼을 누르는 이벤트로 대상이 되는 캐릭터에 움직임을 준다.
+
 
 */
 UCLASS()
@@ -26,7 +51,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -45,7 +70,10 @@ public:
 private:
 	//게임이 시작되면 스캔해서 찾아냅니다.
 	void findTalkers();
-
+	//상황에 맞는 대화 목록을 불러옵니다.
+	void loadDialogue();
+	//대화를 시작하는 상황에서 호출된다.
+	void startTalk();
 private:
 	UPROPERTY(EditAnywhere)
 		UCameraComponent* Cam;
@@ -57,25 +85,10 @@ private:
 	
 	UPROPERTY(VisibleAnywhere, Category = "DialogueInfo", meta = (AllowPrivateAccess = "true"))
 		class UDataTable* dialogueTable;
-
+	UPROPERTY(VisibleAnywhere, Category = "DialogueInfo", meta = (AllowPrivateAccess = "true"))
+		TArray< FDialogueTableRow>dialogues;
+	//막의 구성을 n_Act로 구현한다
+	static int n_Act;
 };
 
 
-USTRUCT(BlueprintType)
-struct FDialogueTableRow : public FTableRowBase
-{
-	GENERATED_BODY()
-public:
-	//대사 내용
-	UPROPERTY(VisibleAnywhere)
-		FText Dialogue;
-	//화자
-	UPROPERTY(VisibleAnywhere)
-		FText Talker;
-	//몇 번재 Act인지
-	UPROPERTY(VisibleAnywhere)
-		int32 n_Act;
-	//몇 번째 대사인지
-	UPROPERTY(VisibleAnywhere)
-		int32 Line;
-};

@@ -23,16 +23,7 @@
         "CoreUObject"
       ]
     },
-    {
-      "Name": "PCG",
-      "Type": "Runtime",
-      "LoadingPhase": "PreDefault",
-      "AdditionalDependencies": [
-        "Engine",
-        "CoreUObject"
-          ,"Building"
-      ]
-    },
+   
     {
       "Name": "EscapeGame",
       "Type": "Runtime",
@@ -41,7 +32,7 @@
         "Engine",
         "GameSetting",
         "Building",
-        "PCG",
+        
         "UMG",
         "AIModule"
       ]
