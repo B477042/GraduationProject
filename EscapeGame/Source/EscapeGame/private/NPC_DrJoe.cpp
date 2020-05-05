@@ -100,7 +100,7 @@ void ANPC_DrJoe::TalkTo()
 	auto tempPlayer = Cast<APawn_Camera>(OtherPlayer);
 	if (tempPlayer == nullptr)return;
 
-	tempPlayer->ListenTalk(this, FText::FromString("SyncTest"));
+	tempPlayer->AddTalkingActor(this);
 	
 	
 }

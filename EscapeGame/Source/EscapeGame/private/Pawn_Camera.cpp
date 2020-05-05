@@ -2,7 +2,7 @@
 
 
 #include "Pawn_Camera.h"
-#include "NPCCharacter.h"
+
 #include "DialogueWidget.h"
 #include "Tutorial_Controller.h"
 
@@ -22,12 +22,12 @@ APawn_Camera::APawn_Camera()
 	BoxCollision->SetBoxExtent(FVector(1.0f, 1.0f, 1.0f));
 	BoxCollision -> SetCollisionProfileName(TEXT("PlayerCharacter"));
 	//BoxCollision->SetGenerateOverlapEvents(true);
-
 	
-	static ConstructorHelpers::FObjectFinder<UDataTable>DT_DIALOGUE(TEXT("DataTable'/Game/MyFolder/DataTable/Dialogue.Dialogue'"));
-	if (DT_DIALOGUE.Succeeded())
+	
+	static ConstructorHelpers::FObjectFinder<UDataTable>DT_DIALOGUE00(TEXT("DataTable'/Game/MyFolder/DataTable/Dialogue_Tutorial.Dialogue_Tutorial'"));
+	if (DT_DIALOGUE00.Succeeded())
 	{
-		dialogueTable = DT_DIALOGUE.Object;
+		dialogueTable.Add( DT_DIALOGUE00.Object);
 	}
 }
 
@@ -37,9 +37,8 @@ void APawn_Camera::BeginPlay()
 	Super::BeginPlay();
 	float X, Y, Z, Roll, Yaw, Pitch;
 	SetActorLocationAndRotation(FVector(X = -10.000000, Y = 230.000000, Z = 40.000000), FRotator(Pitch = 0.000000, Yaw = -90.000114, Roll = 0.000000));
-	/*auto tempCon = Cast<ATutorial_Controller>(GetController());
-	if (tempCon != nullptr)
-		MyController = tempCon;*/
+	//findTalkers();
+	loadDialogue();
 }
 
 
@@ -58,53 +57,34 @@ void APawn_Camera::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 }
 
-void APawn_Camera::ListenTalk(TWeakObjectPtr<ACharacter> Talker, FText Diagram)
+void APawn_Camera::AddTalkingActor(TWeakObjectPtr<ANPCCharacter> Talker)
 {
-	auto tempController = Cast<ATutorial_Controller>(Controller);
-	if (tempController == nullptr)
-	{
-		EGLOG(Warning, TEXT("Temp Controller failed"));
-		return;
-	}
-
-
-	auto widget = Cast<UDialogueWidget>(tempController->UIWidgetInstance);
-	if (widget == nullptr)
-	{
-		EGLOG(Warning, TEXT("Temp widget failed"));
-		return;
-	}
+	
 	//EGLOG(Warning,*FString::Printf(Diagram) );
-	widget->RecieveDiagram(Diagram);
-
+	//widget->PrintLog(Diagram);
+	
+	auto tempActor = Cast<ANPCCharacter>(Talker);
+	if(tempActor!=nullptr)
+		a_Talkers.Add(Talker);
+	EGLOG(Warning, TEXT("%s joined to talking"), *Talker->GetName());
 }
 
-void APawn_Camera::StartListenTo(TWeakObjectPtr<ACharacter>Talker)
+void APawn_Camera::StartListenTo(TWeakObjectPtr<ANPCCharacter>Talker)
 {
-	auto tempTalker = Cast<ANPCCharacter>(Talker);
-	//Casting Test
-	if (tempTalker==nullptr)
-	{
-		EGLOG(Warning, TEXT("Temp Talker failed"));
-		return;
-	}
-	//player의 컨트롤러를 casting한다
-	auto tempController = Cast<ATutorial_Controller>(Controller);
-	if (tempController==nullptr)
-	{ 
-		EGLOG(Warning, TEXT("Temp Controller failed"));
-		return;
-	}
+	//auto tempTalker = Cast<ANPCCharacter>(Talker);
+	////Casting Test
+	//if (tempTalker==nullptr)
+	//{
+	//	EGLOG(Warning, TEXT("Temp Talker failed"));
+	//	return;
+	//}
+	
 
 	
-	auto widget = Cast<UDialogueWidget>(tempController->UIWidgetInstance);
-	if (widget == nullptr)
-	{
-		EGLOG(Warning, TEXT("Temp widget failed"));
-		return;
-	}
+	auto widget = getWidget();
+	if (!widget)return;
 	//Widget에 이름을 적어준다
-	widget->SetTalker(tempTalker, FText::FromString(tempTalker->GetName()));
+	//widget->SetTalker(Talker, FText::FromString(Talker->GetName()));
 	
 	EGLOG(Error, TEXT("I Told U!!!!!"));
 }
@@ -117,47 +97,59 @@ void APawn_Camera::OnPrevClicked()
 {
 }
 
-void APawn_Camera::findTalkers()
-{
-	auto Center = GetActorLocation();
 
-	auto World = GetWorld();
-	if (World == nullptr)return;
-	// Scan 8m
-	float DetectRadius = 800.0f;
-
-
-
-
-	//탐지된 여러가지의 결과들
-	TArray<FOverlapResult>OverlapResults;
-	FCollisionQueryParams CollisionQueryParam(NAME_None, false, this);
-
-
-	//모든 엑터를 Overlap 반응으로 찾아낸다. 모양은 DetectRadius만한 구
-	bool bResult = World->OverlapMultiByChannel(OverlapResults, Center, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel6,
-		FCollisionShape::MakeSphere(DetectRadius), CollisionQueryParam);
-
-
-
-	if (bResult)
-	{
-		//탐지한 엑터들에서 npc character를 찾아 a_Talker에 넣어줍니다
-		for (auto OverlapResult : OverlapResults)
-		{
-			auto tempActor = Cast<ANPCCharacter>(OverlapResult.Actor);
-			if(tempActor==nullptr)continue;
-			a_Talkers.Add(tempActor);
-
-		}
-	}
-
-
-}
 
 void APawn_Camera::loadDialogue()
 {
+	
+	for (int i = 0; i < 100; i++)
+	{
+		auto tempData = dialogueTable[n_Act]->FindRow<FDialogueTableRow>(FName(*FString::FormatAsNumber(i)), FString(""));
+		if (tempData == nullptr) { 
+			EGLOG(Warning, TEXT("Load Dialouge failed at : %d"), i);
+			break; }
+		
+		dialogues.Add(*tempData);
 
+		EGLOG(Warning, TEXT("Load Dialouge times: %d"),i);
+		
+		
+	}
+	
+
+	n_Act++;
+}
+
+void APawn_Camera::startTalk()
+{
+
+}
+
+void APawn_Camera::nextLog()
+{
+}
+
+void APawn_Camera::prevLog()
+{
+}
+
+UDialogueWidget * APawn_Camera::getWidget()
+{
+	auto tempController = Cast<ATutorial_Controller>(Controller);
+	if (tempController == nullptr)
+	{
+		EGLOG(Warning, TEXT("Temp Controller failed"));
+		return nullptr;
+	}
+
+
+	auto widget = Cast<UDialogueWidget>(tempController->UIWidgetInstance);
+	if (widget == nullptr)
+	{
+		EGLOG(Warning, TEXT("Temp widget failed"));
+		return nullptr;
+	}
+	return widget;
 }
 
 

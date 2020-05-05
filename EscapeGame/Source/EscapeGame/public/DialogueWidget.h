@@ -33,7 +33,7 @@ public:
 	UFUNCTION(BlueprintCallable,Category=Talker)
 		void SetTalker(AActor* Other,FText Name);
 	UFUNCTION(BlueprintCallable, Category = Talker)
-	void RecieveDiagram(FText Diagram);
+	void PrintLog(FText Diagram);
 	
 	FOnTalkeInvoke OnTalkeInvokeDelegate;
 	FOnClickNext OnClickNextDelegate;

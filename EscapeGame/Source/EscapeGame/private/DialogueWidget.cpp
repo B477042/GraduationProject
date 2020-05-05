@@ -6,7 +6,7 @@
 
 
 
-void UDialogueWidget::RecieveDiagram(FText Diagram)
+void UDialogueWidget::PrintLog(FText Diagram)
 {
 	if (TextDiagram!=nullptr)
 		TextDiagram->SetText(Diagram);
