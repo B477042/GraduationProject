@@ -18,11 +18,13 @@
  *
  */
 //대화가 일어날 때 호출시킬 델리게이트. 처음으로 호출된다
-DECLARE_MULTICAST_DELEGATE(FOnTalkeInvoke);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTalkeInvoke);
 //next 버튼이 클릭되면 호출 시킬 델리게이트
-DECLARE_MULTICAST_DELEGATE(FOnClickNext);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnClickNext);
 //prev 버튼이 클릭되면 호출 될 델리게이트
-DECLARE_MULTICAST_DELEGATE(FOnClickPrev);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnClickPrev);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnClickSkip);
 
 UCLASS()
 class ESCAPEGAME_API UDialogueWidget : public UUserWidget
@@ -31,13 +33,14 @@ class ESCAPEGAME_API UDialogueWidget : public UUserWidget
 public:
 
 	UFUNCTION(BlueprintCallable,Category=Talker)
-		void SetTalker(AActor* Other,FText Name);
+		void SetTalkerName(FText Name);
 	UFUNCTION(BlueprintCallable, Category = Talker)
 	void PrintLog(FText Diagram);
 	
 	FOnTalkeInvoke OnTalkeInvokeDelegate;
 	FOnClickNext OnClickNextDelegate;
 	FOnClickPrev OnClickPrevDelegate;
+	FOnClickSkip OnClickSkipDelegate;
 protected:
 	virtual void NativeConstruct()override;
 
@@ -52,8 +55,8 @@ protected:
 		class UEditableTextBox* TalkerBox;
 	UPROPERTY()
 	class UEditableText* TextDiagram;
-	UPROPERTY()
-		TWeakObjectPtr<AActor> Talker;
+	/*UPROPERTY()
+		TWeakObjectPtr<AActor> Talker;*/
 		
 
 	

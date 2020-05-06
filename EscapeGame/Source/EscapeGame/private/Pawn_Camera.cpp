@@ -2,11 +2,11 @@
 
 
 #include "Pawn_Camera.h"
-
+#include "NPCCharacter.h"
 #include "DialogueWidget.h"
 #include "Tutorial_Controller.h"
 
-int APawn_Camera::n_Act = 0;
+//int APawn_Camera::n_Act = 0;
 
 // Sets default values
 APawn_Camera::APawn_Camera()
@@ -23,12 +23,19 @@ APawn_Camera::APawn_Camera()
 	BoxCollision -> SetCollisionProfileName(TEXT("PlayerCharacter"));
 	//BoxCollision->SetGenerateOverlapEvents(true);
 	
-	
+	c_Talk = 0;
+	maxLine = 0;
+
 	static ConstructorHelpers::FObjectFinder<UDataTable>DT_DIALOGUE00(TEXT("DataTable'/Game/MyFolder/DataTable/Dialogue_Tutorial.Dialogue_Tutorial'"));
 	if (DT_DIALOGUE00.Succeeded())
 	{
-		dialogueTable.Add( DT_DIALOGUE00.Object);
+		dialogueTable =DT_DIALOGUE00.Object;
 	}
+	//static ConstructorHelpers::FObjectFinder<UDataTable>DT_DIALOGUE00(TEXT("DataTable'/Game/MyFolder/DataTable/Dialogue_Tutorial.Dialogue_Tutorial'"));
+	//if (DT_DIALOGUE00.Succeeded())
+	//{
+	//	dialogueTable.Add( DT_DIALOGUE00.Object);
+	//}
 }
 
 // Called when the game starts or when spawned
@@ -63,9 +70,8 @@ void APawn_Camera::AddTalkingActor(TWeakObjectPtr<ANPCCharacter> Talker)
 	//EGLOG(Warning,*FString::Printf(Diagram) );
 	//widget->PrintLog(Diagram);
 	
-	auto tempActor = Cast<ANPCCharacter>(Talker);
-	if(tempActor!=nullptr)
-		a_Talkers.Add(Talker);
+	a_Talkers.Add(Talker);
+	
 	EGLOG(Warning, TEXT("%s joined to talking"), *Talker->GetName());
 }
 
@@ -91,10 +97,12 @@ void APawn_Camera::StartListenTo(TWeakObjectPtr<ANPCCharacter>Talker)
  
 void APawn_Camera::OnNextClicked()
 {
+	nextLog();
 }
 
 void APawn_Camera::OnPrevClicked()
 {
+	prevLog();
 }
 
 
@@ -104,20 +112,20 @@ void APawn_Camera::loadDialogue()
 	
 	for (int i = 0; i < 100; i++)
 	{
-		auto tempData = dialogueTable[n_Act]->FindRow<FDialogueTableRow>(FName(*FString::FormatAsNumber(i)), FString(""));
+		auto tempData = dialogueTable->FindRow<FDialogueTableRow>(FName(*FString::FormatAsNumber(i)), FString(""));
 		if (tempData == nullptr) { 
 			EGLOG(Warning, TEXT("Load Dialouge failed at : %d"), i);
 			break; }
 		
-		dialogues.Add(*tempData);
-
+		dialogues.Add(tempData);
+		maxLine++;
 		EGLOG(Warning, TEXT("Load Dialouge times: %d"),i);
 		
 		
 	}
 	
 
-	n_Act++;
+	//n_Act++;
 }
 
 void APawn_Camera::startTalk()
@@ -127,10 +135,33 @@ void APawn_Camera::startTalk()
 
 void APawn_Camera::nextLog()
 {
+	if (c_Talk > maxLine)
+	{
+
+	}
+	printLog();
+	c_Talk++;
+	
 }
+
 
 void APawn_Camera::prevLog()
 {
+	
+	printLog();
+	if(c_Talk>=1)
+		c_Talk--;
+	
+}
+
+void APawn_Camera::printLog()
+{
+	auto tempDialogue = dialogues[c_Talk];
+	auto widget = getWidget();
+	if (tempDialogue == nullptr || widget == nullptr)return;
+
+	widget->SetTalkerName();
+	widget->PrintLog(tempDialogue->Dialogue);
 }
 
 UDialogueWidget * APawn_Camera::getWidget()

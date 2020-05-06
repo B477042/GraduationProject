@@ -63,9 +63,8 @@ void UDialogueWidget::NativeConstruct()
 
 
 
-void UDialogueWidget::SetTalker(AActor * Other, FText Name)
+void UDialogueWidget::SetTalkerName( FText Name)
 {
-	Talker = Other;
 	
 	TalkerBox->SetText(Name);
 	
@@ -73,28 +72,29 @@ void UDialogueWidget::SetTalker(AActor * Other, FText Name)
 
 void UDialogueWidget::OnNextClicked()
 {
-	if (Talker == nullptr)
+	/*if (Talker == nullptr)
 	{
 		EGLOG(Error, TEXT("Who is Talker??"));
 		return;
-	}
-
+	}*/
+	OnClickNextDelegate.Broadcast();
 	EGLOG(Error, TEXT("HITTTTTTTTTTTT"));
 }
 
 void UDialogueWidget::OnPrevClicked()
 {
-	if (Talker == nullptr)
+	/*if (Talker == nullptr)
 	{
 		EGLOG(Error, TEXT("Who is Talker??"));
 		return;
-	}
-
+	}*/
+	OnClickPrevDelegate.Broadcast();
 	EGLOG(Error, TEXT("RUNNNNNNNNN"));
 }
 
 void UDialogueWidget::OnContinueClicked()
 {
 	if (!bIsAllowToNext)return;
+	OnClickSkipDelegate.Broadcast();
 	UGameplayStatics::OpenLevel(this,"Stage1");
 }
