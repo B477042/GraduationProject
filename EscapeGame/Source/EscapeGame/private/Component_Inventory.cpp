@@ -32,3 +32,13 @@ void UComponent_Inventory::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
+bool UComponent_Inventory::AddItem(AItemActor * AddItem)
+{
+	return false;
+}
+
+bool UComponent_Inventory::UseItem(AItemActor * UsedItem)
+{
+	return false;
+}
+
