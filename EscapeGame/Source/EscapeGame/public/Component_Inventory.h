@@ -30,5 +30,16 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	//Add Item Actor To Inventory
+	UFUNCTION()
+		bool AddItem(class AItemActor* AddItem);
+	//Use Item From Inventory
+	UFUNCTION()
+		bool UseItem(class AItemActor* UsedItem);
+
+private:
+
+	UPROPERTY(VisibleAnywhere, Category = "Items")
+		TArray<class AItemActor>Items;
+
 };
