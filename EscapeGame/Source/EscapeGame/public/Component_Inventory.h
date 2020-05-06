@@ -1,8 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
+/*
+	Item Inventory Component.
+	Save Item into Array
 
+*/
 #pragma once
 
-#include "CoreMinimal.h"
+#include "EscapeGame.h"
 #include "Components/ActorComponent.h"
 #include "Component_Inventory.generated.h"
 
