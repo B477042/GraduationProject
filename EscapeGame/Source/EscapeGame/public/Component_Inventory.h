@@ -10,6 +10,8 @@
 #include "Components/ActorComponent.h"
 #include "Component_Inventory.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnItemAdded);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnItemUsed);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ESCAPEGAME_API UComponent_Inventory : public UActorComponent
