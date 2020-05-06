@@ -25,7 +25,8 @@ APawn_Camera::APawn_Camera()
 	
 	c_Talk = 0;
 	maxLine = 0;
-
+	bIsDelegateRegist = false;
+	
 	static ConstructorHelpers::FObjectFinder<UDataTable>DT_DIALOGUE00(TEXT("DataTable'/Game/MyFolder/DataTable/Dialogue_Tutorial.Dialogue_Tutorial'"));
 	if (DT_DIALOGUE00.Succeeded())
 	{
@@ -55,7 +56,10 @@ void APawn_Camera::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
+	if (!bIsDelegateRegist)registDelegateToWidget();
 }
+
+
 
 // Called to bind functionality to input
 void APawn_Camera::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -93,6 +97,8 @@ void APawn_Camera::StartListenTo(TWeakObjectPtr<ANPCCharacter>Talker)
 	//widget->SetTalker(Talker, FText::FromString(Talker->GetName()));
 	
 	EGLOG(Error, TEXT("I Told U!!!!!"));
+	//하나라도 참가 했으니 한번 출력한다
+	startTalk();
 }
  
 void APawn_Camera::OnNextClicked()
@@ -117,7 +123,7 @@ void APawn_Camera::loadDialogue()
 			EGLOG(Warning, TEXT("Load Dialouge failed at : %d"), i);
 			break; }
 		
-		dialogues.Add(tempData);
+		dialogues.Add(*tempData);
 		maxLine++;
 		EGLOG(Warning, TEXT("Load Dialouge times: %d"),i);
 		
@@ -130,7 +136,8 @@ void APawn_Camera::loadDialogue()
 
 void APawn_Camera::startTalk()
 {
-
+	printLog();
+	c_Talk++;
 }
 
 void APawn_Camera::nextLog()
@@ -156,13 +163,41 @@ void APawn_Camera::prevLog()
 
 void APawn_Camera::printLog()
 {
-	auto tempDialogue = dialogues[c_Talk];
+	//대화를 다 읽었을경우
+	if (c_Talk >= maxLine)
+	{
+		//n_Act++;
+		UGameplayStatics::OpenLevel(this, "Stage1");
+		return;
+	}
+	FDialogueTableRow* tempDialogue = &dialogues[c_Talk];
 	auto widget = getWidget();
-	if (tempDialogue == nullptr || widget == nullptr)return;
+	if (tempDialogue==nullptr || widget == nullptr)return;
 
-	widget->SetTalkerName();
-	widget->PrintLog(tempDialogue->Dialogue);
+	widget->SetTalkerName(tempDialogue->Talker);
+	widget->PrintLog(FText::FromString(tempDialogue->Dialogue));
+	
 }
+
+void APawn_Camera::registDelegateToWidget()
+{
+
+
+	auto tempWidget = getWidget();
+	if (!tempWidget)
+	{
+		EGLOG(Error, TEXT("Can't Access Widget"));
+		return;
+	}
+
+	tempWidget->OnClickNextDelegate.AddDynamic(this, &APawn_Camera::OnNextClicked);
+	tempWidget->OnClickPrevDelegate.AddDynamic(this, &APawn_Camera::OnPrevClicked);
+	bIsDelegateRegist = true;
+
+
+	
+}
+
 
 UDialogueWidget * APawn_Camera::getWidget()
 {

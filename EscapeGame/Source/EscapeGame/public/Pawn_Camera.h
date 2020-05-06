@@ -18,7 +18,7 @@ struct FDialogueTableRow : public FTableRowBase
 	public:
 	//대사 내용
 	UPROPERTY(VisibleAnywhere)
-	FText Dialogue;
+	FString Dialogue;
 	//화자
 	UPROPERTY(VisibleAnywhere)
 	FText Talker;
@@ -55,15 +55,18 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	//대화하는 상대의 말을 듣게 된다
 	void AddTalkingActor(TWeakObjectPtr<class ANPCCharacter> Talker);
 	//말을 걸어오기 시작할 때 호출합니다
 	void StartListenTo(TWeakObjectPtr<class ANPCCharacter>Talker);
+	
+	//빙의될 때 위젯에 델리게이트를 등록한다
 	UFUNCTION(BlueprintCallable)
 	void OnNextClicked();
+	//빙의될 때 위젯에 델리게이트를 등록한다
 	UFUNCTION(BlueprintCallable)
 	void OnPrevClicked();
 
@@ -71,13 +74,13 @@ private:
 	
 	//상황에 맞는 대화 목록을 불러옵니다.
 	void loadDialogue();
-	//대화를 시작하는 상황에서 호출된다.
+	//처음 화면에 띄울때만 사용한다
 	void startTalk();
 	void nextLog();
 	void prevLog();
 	//지금 출력해야될 내용 출력
 	void printLog();
-	
+	void registDelegateToWidget();
 	class UDialogueWidget* getWidget();
 private:
 	UPROPERTY(EditAnywhere)
@@ -92,15 +95,18 @@ private:
 	/*UPROPERTY(VisibleAnywhere, Category = "DialogueInfo", meta = (AllowPrivateAccess = "true"))
 		TArray< class UDataTable* > dialogueTable;*/
 	UPROPERTY(VisibleAnywhere, Category = "DialogueInfo", meta = (AllowPrivateAccess = "true"))
-		TArray< FDialogueTableRow*>dialogues;
+		TArray< FDialogueTableRow>dialogues;
 	//막의 구성을 n_Act로 구현한다
 	//static int n_Act;
 	//대화를 Log로 출력할 때 줄의 숫자. 대화에서 처음 대사는 0번이 된다
+	UPROPERTY(Transient, VisibleAnywhere, Category = "DialogueInfo")
 	uint32 c_Talk;
 	//지금 다이얼로그의 대사 총 대사 갯수. 6줄이면 5가 될 것이다
+	UPROPERTY(Transient, VisibleAnywhere, Category = "DialogueInfo")
 	uint32 maxLine;
 
-
+	bool bIsDelegateRegist;
+	
 };
 
 

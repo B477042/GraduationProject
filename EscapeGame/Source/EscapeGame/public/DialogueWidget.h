@@ -17,6 +17,9 @@
  *
  *
  */
+
+
+
 //대화가 일어날 때 호출시킬 델리게이트. 처음으로 호출된다
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTalkeInvoke);
 //next 버튼이 클릭되면 호출 시킬 델리게이트
