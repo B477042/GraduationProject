@@ -40,6 +40,6 @@ public:
 private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Items")
-		TArray<class AItemActor>Items;
+		TArray<class AItemActor* >Items;
 
 };

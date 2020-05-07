@@ -24,6 +24,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
+
+	 void useMe();
+
+protected:
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
 		UStaticMeshComponent* Body;
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
