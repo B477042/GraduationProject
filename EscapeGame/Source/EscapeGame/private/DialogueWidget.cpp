@@ -78,7 +78,8 @@ void UDialogueWidget::OnNextClicked()
 		return;
 	}*/
 	OnClickNextDelegate.Broadcast();
-	EGLOG(Error, TEXT("HITTTTTTTTTTTT"));
+
+	//EGLOG(Error, TEXT("HITTTTTTTTTTTT"));
 }
 
 void UDialogueWidget::OnPrevClicked()
@@ -89,7 +90,8 @@ void UDialogueWidget::OnPrevClicked()
 		return;
 	}*/
 	OnClickPrevDelegate.Broadcast();
-	EGLOG(Error, TEXT("RUNNNNNNNNN"));
+	//TextDiagram->linercolor
+	//EGLOG(Error, TEXT("RUNNNNNNNNN"));
 }
 
 void UDialogueWidget::OnContinueClicked()

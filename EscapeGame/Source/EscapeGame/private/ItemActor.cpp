@@ -6,13 +6,16 @@
 AItemActor::AItemActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BODY"));
 	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EFFECT"));
+	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BOX"));
 
-	RootComponent = Body;
+	BoxCollision->SetCollisionProfileName(FName("OnTrapTrigger"));
+
+	RootComponent = BoxCollision;
 	Effect->SetupAttachment(RootComponent);
-
+	Body->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -28,4 +31,31 @@ void AItemActor::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
+
+void AItemActor::BePickedUp(ACharacter * OtherActor)
+{
+	OwnerActor = OtherActor;
+	
+}
+
+void AItemActor::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AItemActor::OnPlayerOverlap);
+
+}
+
+void AItemActor::OnPlayerOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	EGLOG(Warning, TEXT("item overlap test"));
+}
+
+void  AItemActor::setHideState()
+{
+	SetHidden(true);
+	BoxCollision->SetCollisionProfileName(FName("NoCollision"));
+
+}
+
 

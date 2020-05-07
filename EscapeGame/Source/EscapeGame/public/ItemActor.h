@@ -22,15 +22,28 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+	//Character에게 주워졌다
+	virtual void BePickedUp(ACharacter* OtherActor);
+	virtual void PostInitializeComponents()override;
 protected:
+	UFUNCTION()
+	void OnPlayerOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 
-	 void useMe();
+
+	//Use This Item
+	virtual void useMe() PURE_VIRTUAL(AItemActor::useMe,  ;);
+	//월드에서 숨겨주고 충돌판정도 없앱니다.
+	virtual void setHideState();
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
 		UStaticMeshComponent* Body;
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
 		UParticleSystemComponent* Effect;
+	UPROPERTY(VisibleAnywhere, Category = "Mesh")
+		UBoxComponent* BoxCollision;
+	//이 아이템을 가지고 있는 엑터
+	UPROPERTY(VisibleAnywhere)
+		ACharacter* OwnerActor;
 
 };
