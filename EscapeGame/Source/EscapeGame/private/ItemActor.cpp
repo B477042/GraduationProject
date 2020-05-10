@@ -51,11 +51,10 @@ void AItemActor::OnPlayerOverlap(UPrimitiveComponent * OverlappedComp, AActor * 
 	EGLOG(Warning, TEXT("item overlap test"));
 }
 
-void  AItemActor::setHideState()
+void AItemActor::setActorHide()
 {
 	SetHidden(true);
 	BoxCollision->SetCollisionProfileName(FName("NoCollision"));
 
 }
-
 

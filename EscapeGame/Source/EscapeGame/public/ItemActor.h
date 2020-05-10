@@ -25,6 +25,8 @@ public:
 	//Character에게 주워졌다
 	virtual void BePickedUp(ACharacter* OtherActor);
 	virtual void PostInitializeComponents()override;
+
+	FString GetTag() { return Tag; }
 protected:
 	UFUNCTION()
 	void OnPlayerOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
@@ -32,8 +34,12 @@ protected:
 
 	//Use This Item
 	virtual void useMe() PURE_VIRTUAL(AItemActor::useMe,  ;);
+
+	
+	// void setHideState();
 	//월드에서 숨겨주고 충돌판정도 없앱니다.
-	virtual void setHideState();
+	UFUNCTION()
+	void setActorHide();
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
@@ -45,5 +51,6 @@ protected:
 	//이 아이템을 가지고 있는 엑터
 	UPROPERTY(VisibleAnywhere)
 		ACharacter* OwnerActor;
-
+	UPROPERTY(VisibleAnywhere)
+		FString Tag;
 };
