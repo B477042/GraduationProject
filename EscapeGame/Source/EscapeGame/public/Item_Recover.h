@@ -20,18 +20,20 @@ public:
 	AItem_Recover();
 	virtual void BePickedUp(ACharacter* OtherActor)override;
 	virtual void PostInitializeComponents()override;
-
+	virtual void UseMe(ACharacter* UserActor)override;
+	virtual FName GetTag()override;
+	static const FName Tag;
 protected:
-	virtual void useMe()override;
+
 	UFUNCTION(BlueprintCallable)
 	 void OnPlayerOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 private:
 	void loadAsset();
 private:
 	//if true, this actor hide from world
-	UPROPERTY(EditAnywhere)
-	bool bIsActivate;    
+	   
 	UPROPERTY(VisibleAnywhere)
-	uint32 amount_Recover;
+	int amount_Recovery;
 
+	
 };

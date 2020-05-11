@@ -3,6 +3,7 @@
 #include "EGPlayerCharacter.h"
 #include "Engine/SceneCapture2D.h"
 #include "EGPlayerController.h"
+#include "Item_Recover.h"
 #include"Components/InputComponent.h"
 #include "GameSetting/public/EGCharacterSetting.h"
 #include "..\public\EGPlayerCharacter.h"
@@ -76,6 +77,8 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Released, this, &AEGPlayerCharacter::StopRunning);
 	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::Running);
 	PlayerInputComponent->BindAction(TEXT("Roll"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::Roll);
+	PlayerInputComponent->BindAction(TEXT("Recovery"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::UseRecoveryItem);
+	
 	EGLOG(Warning, TEXT("Player input component"));
 }
 
@@ -138,6 +141,11 @@ void AEGPlayerCharacter::HealHP(float addHP)
 UStatComponent_Player* AEGPlayerCharacter::GetStatComponent()
 {
 	return Stat;
+}
+
+UComponent_Inventory * AEGPlayerCharacter::GetInventory()
+{
+	return Inventory;
 }
 
 void AEGPlayerCharacter::ChargeAttack()
@@ -237,6 +245,12 @@ void AEGPlayerCharacter::Roll()
 	//입력을 제한 시킨다
 	RestricInput();
 
+}
+//회복 아이템을 사용한다. 기본적으로 키를 입력하면 호출된다. 강제로 사용하게 만드는 방법도 만들 수 있을 것 같다
+void AEGPlayerCharacter::UseRecoveryItem()
+{
+	Inventory->UseItem(AItem_Recover::Tag,this);
+	
 }
 
 void AEGPlayerCharacter::RestricInput()

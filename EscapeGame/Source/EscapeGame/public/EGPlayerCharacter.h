@@ -47,7 +47,7 @@ public:
 		class AController* EventInstigator, AActor* DamageCauser)override;
 	void HealHP(float addHP);
 	 UStatComponent_Player* GetStatComponent();
-	
+	 UComponent_Inventory* GetInventory();
 	 //Actions
 	 void ChargeAttack();
 	 void ComboAttack();
@@ -56,6 +56,7 @@ public:
 	 void Running();
 	 void StopRunning();
 	 void Roll();
+	 void UseRecoveryItem();
 
 	 //User Input Disable
 	 void RestricInput();
@@ -85,7 +86,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Damage")
 		UComponent_SelfDamage* SelfDamage;
 	UPROPERTY(VisibleAnywhere, Category = "inventory")
-	class UCompnent_Inventory Inventory;
+		UComponent_Inventory* Inventory;
+
 private:
 	void InitComponents();
 	void LoadAssets();

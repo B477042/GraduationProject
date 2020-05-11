@@ -18,6 +18,8 @@ AItemActor::AItemActor()
 	//Body->SetupAttachment(RootComponent);
 }
 
+
+
 // Called when the game starts or when spawned
 void AItemActor::BeginPlay()
 {
@@ -45,6 +47,11 @@ void AItemActor::PostInitializeComponents()
 	//BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AItemActor::OnPlayerOverlap);
 
 }
+
+//FName AItemActor::GetTag()
+//{
+//	return Tag;
+//}
 
 
 
