@@ -26,6 +26,7 @@ public:
 	virtual void BePickedUp(ACharacter* OtherActor);
 	virtual void PostInitializeComponents()override;
 
+	FString GetTag() { return Tag; }
 protected:
 	/*UFUNCTION()
 	void OnPlayerOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
@@ -45,5 +46,6 @@ protected:
 	//이 아이템을 가지고 있는 엑터
 	UPROPERTY(VisibleAnywhere)
 		ACharacter* OwnerActor;
-
+	UPROPERTY(VisibleAnywhere)
+		FString Tag;
 };
