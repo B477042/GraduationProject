@@ -10,7 +10,7 @@
 #include "StatComponent_Player.h"
 #include "Anim_Player.h"
 #include "Component_SelfDamage.h"
-
+#include "Component_Inventory.h"
 #include "EGPlayerCharacter.generated.h"
 
 //DECLARE_DELEGATE(FOnKeyPressed);
@@ -84,6 +84,8 @@ public:
 		UStatComponent_Player* Stat;
 	UPROPERTY(EditAnywhere, Category = "Damage")
 		UComponent_SelfDamage* SelfDamage;
+	UPROPERTY(VisibleAnywhere, Category = "inventory")
+	class UCompnent_Inventory Inventory;
 private:
 	void InitComponents();
 	void LoadAssets();

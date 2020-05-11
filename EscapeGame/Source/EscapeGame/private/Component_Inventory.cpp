@@ -9,7 +9,7 @@ UComponent_Inventory::UComponent_Inventory()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 
 	//Tag = "Item";
@@ -65,6 +65,8 @@ bool UComponent_Inventory::AddItem(AItemActor * AddItem, int Amount)
 		return true;
 	}
 	return false;
+
+
 }
 
 bool UComponent_Inventory::UseItem(AItemActor * UsedItem)

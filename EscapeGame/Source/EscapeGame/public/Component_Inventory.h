@@ -77,10 +77,14 @@ public:
 	//Use Item From Inventory
 	UFUNCTION()
 		bool UseItem(class AItemActor* UsedItem);
-
+	
+	
 private:
 	//FString으로 아이템 이름을 받고 리턴해서 사용한다
 	UPROPERTY(VisibleAnywhere, Category = "Items")
 		TMap<FString,  FItemDataInfo> Items;
+	//
+	UPROPERTY(VisibleAnywhere, Category = "Capacity")
+		int32 CurrnetCapacity;
 
 };

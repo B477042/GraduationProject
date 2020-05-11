@@ -272,6 +272,7 @@ void AEGPlayerCharacter::InitComponents()
 	MapRenderer = CreateDefaultSubobject<UMiniMapRenderComponent>(TEXT("MAPRENDERER"));
 	Stat = CreateDefaultSubobject <UStatComponent_Player>(TEXT("STAT"));
 	SelfDamage = CreateDefaultSubobject<UComponent_SelfDamage>(TEXT("SelfDAMAGE"));
+	Inventory = CreateDefaultSubobject<UComponent_Inventory>(TEXT("INVENTORY"));
 
 	//Components Tree
 	
