@@ -12,7 +12,7 @@ UComponent_Inventory::UComponent_Inventory()
 	PrimaryComponentTick.bCanEverTick = true;
 
 
-	Tag = "Item";
+	//Tag = "Item";
 	// ...
 }
 
@@ -52,16 +52,16 @@ bool UComponent_Inventory::AddItem(AItemActor * AddItem, int Amount)
 	if (Items.Contains(AddItem->GetTag()))
 	{
 		auto tempData = Items[AddItem->GetTag()];
-		tempData->AddItem(Amount);
+		tempData.AddItem(Amount);
 
 		return true;
 	}
 
 	else
 	{
-		auto tempData = new FItemDataInfo();
-		tempData->SetItemInfo(AddItem, Amount);
-		Items.Add(tempData->GetItem()->GetTag(), tempData);
+		FItemDataInfo tempData ;
+		tempData.SetItemInfo(AddItem, Amount);
+		Items.Add(tempData.GetItem()->GetTag(), tempData);
 		return true;
 	}
 	return false;
