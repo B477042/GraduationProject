@@ -39,6 +39,8 @@ void UGameWidget::UpdateCharacterStat()
 
 		PlayerHP=CurrentCharacterStat->GetHP();
 
+
+		//이미지들은 BP에서 불러와진 것들이다
 		if (PlayerHP > 90)
 			Img_Battery->SetBrushFromTexture(Imgs_Battary[0]);
 		else if (PlayerHP >= 80)
