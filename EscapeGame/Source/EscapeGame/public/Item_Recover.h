@@ -29,11 +29,15 @@ protected:
 	 void OnPlayerOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 private:
 	void loadAsset();
+	UFUNCTION()
+	void turnOffEffect();
 private:
 	//if true, this actor hide from world
 	   
 	UPROPERTY(VisibleAnywhere)
 	int amount_Recovery;
-
+	//아이템을 사용하면 출력될 소리를 다룬다
+	UPROPERTY(VisibleAnywhere, Category = Content)
+		UAudioComponent* Sound;
 	
 };

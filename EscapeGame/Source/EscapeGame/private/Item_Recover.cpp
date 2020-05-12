@@ -9,6 +9,7 @@ const FName AItem_Recover::Tag = TEXT("Recover");
 AItem_Recover::AItem_Recover()
 {
 	amount_Recovery = 40;
+	Sound = CreateDefaultSubobject<UAudioComponent>(TEXT("SOUND"));
 	loadAsset();
 	//Tag = TEXT("Recover");
 }
@@ -24,7 +25,8 @@ void AItem_Recover::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	Body->OnComponentBeginOverlap.AddDynamic(this, &AItem_Recover::OnPlayerOverlap);
-
+	Sound->OnAudioFinished.AddDynamic(this, &AItem_Recover::turnOffEffect);
+	//Sound->OnAudio
 	//EGLOG(Warning, TEXT("I am Item. my tag is :%s"),*Tag.ToString());
 	//Body->collision
 }
@@ -39,6 +41,10 @@ void AItem_Recover::UseMe(ACharacter*UserActor)
 		return;
 	}
 	player->HealHP(amount_Recovery);
+	Effect->SetWorldLocation(player->GetActorLocation());
+	Effect->SetHiddenInGame(false);
+	Effect->Activate(true);
+	Sound->Play();
 }
 
 FName AItem_Recover::GetTag()
@@ -57,7 +63,8 @@ void AItem_Recover::OnPlayerOverlap(UPrimitiveComponent * OverlappedComp, AActor
 	}
 	//게임에서 표시되지 않고 overlap이벤트도 꺼준다
 	Body->SetCollisionProfileName(FName("No collision"));
-	SetActorHiddenInGame(true);
+	//SetActorHiddenInGame(true);
+	Body->SetHiddenInGame(true);
 	Body->SetGenerateOverlapEvents(false);
 
 	//회복 아이템은 한번에 1개에서 3개 획득
@@ -93,8 +100,32 @@ void AItem_Recover::loadAsset()
 	{
 		Effect->SetTemplate(U_EFFECT.Object);
 		Effect->bAutoActivate = false;
+		Effect->bAllowRecycling = true;
+		
 	}
 
 	
-	
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_SOUND(TEXT("SoundWave'/Game/MagicModule/SFX/WAV/WAV_Healing.WAV_Healing'"));
+	if (SB_SOUND.Succeeded())
+	{
+		//SB_SOUND.Object->set;
+		Sound->SetSound(SB_SOUND.Object);
+		Sound->bAutoActivate = false;
+		Sound->SetupAttachment(Effect);
+		//Sound->SoundWavePlaybackTimes(0);
+	}
+
+	static ConstructorHelpers::FObjectFinder<USoundAttenuation>SA_ATTENUATION(TEXT("SoundAttenuation'/Game/MyFolder/Sound/SparkAttenuation.SparkAttenuation'"));
+	if (SA_ATTENUATION.Succeeded())
+	{
+		Sound->AttenuationSettings = SA_ATTENUATION.Object;
+	}
+}
+
+//사운드가 종료될 때 실행되고 effect를 게임에서 안 보이게 하고 재생도 종료하니다
+void AItem_Recover::turnOffEffect()
+{
+	Effect->SetHiddenInGame(true);
+	//Effect->Activate(false);
+	//Effect->Deactivate();
 }

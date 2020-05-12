@@ -14,7 +14,7 @@ AItemActor::AItemActor()
 	//BoxCollision->SetCollisionProfileName(FName("OnTrapTrigger"));
 
 	RootComponent = Body;
-	Effect->SetupAttachment(RootComponent);
+	//Effect->SetupAttachment(RootComponent);
 	//Body->SetupAttachment(RootComponent);
 }
 
