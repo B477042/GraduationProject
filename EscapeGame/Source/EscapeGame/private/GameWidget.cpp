@@ -35,7 +35,23 @@ void UGameWidget::UpdateCharacterStat()
 		{
 			HPAmount->
 		}*/
+
+
 		PlayerHP=CurrentCharacterStat->GetHP();
+
+		if (PlayerHP > 90)
+			Img_Battery->SetBrushFromTexture(Imgs_Battary[0]);
+		else if (PlayerHP >= 80)
+			Img_Battery->SetBrushFromTexture(Imgs_Battary[1]);
+		else if(PlayerHP>=60)
+			Img_Battery->SetBrushFromTexture(Imgs_Battary[2]);
+		else if(PlayerHP>=40)
+			Img_Battery->SetBrushFromTexture(Imgs_Battary[3]);
+		else if(PlayerHP>=20)
+			Img_Battery->SetBrushFromTexture(Imgs_Battary[4]);
+		else if(PlayerHP<=0)
+			Img_Battery->SetBrushFromTexture(Imgs_Battary[5]);
+
 	}
 
 }
@@ -54,6 +70,11 @@ float UGameWidget::CheackTimeOut(float NewValue)
 {
 	return (NewValue >= 0.0f) ? NewValue: 0.0f;
 }
+//UI에서 사용될 이미지들을 불러옵니다
+void UGameWidget::loadImages()
+{
+	//static ConstructorHelpers::FObjectFinder<UImage>(TEXT(""))
+}
 
 void UGameWidget::TimeExtend(float addTime)
 {
@@ -69,6 +90,8 @@ void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 	CurrentCharacterStat = newStat;
 	CurrentCharacterStat->HPChangedDelegate.AddUObject(this, &UGameWidget::UpdateCharacterStat);
 	CurrentCharacterStat->StaminaChangedDelegate.AddUObject(this, &UGameWidget::UpdateStamina);
+
+
 	/*CurrentCharacterStat->HPChangedDelegate.AddLambda([this]()->void {
 		if (CurrentCharacterStat.IsValid())
 		{

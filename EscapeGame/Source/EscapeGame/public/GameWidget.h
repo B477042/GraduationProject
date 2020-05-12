@@ -4,6 +4,7 @@
 
 #include "EscapeGame.h"
 #include "Blueprint/UserWidget.h"
+#include "UMG/Public/Components/Image.h"
 #include "StatComponent_Player.h"
 #include "GameWidget.generated.h"
 
@@ -14,6 +15,8 @@
  */
 
 //DECLARE_DELEGATE_OneParam(FBindStat,UCharacterStatComponent);
+
+
 
 UCLASS()
 class ESCAPEGAME_API UGameWidget : public UUserWidget
@@ -36,6 +39,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		float CheackTimeOut(float NewValue);
 
+
+	
+
 private:
 	void loadImages();
 
@@ -48,11 +54,11 @@ private:
 	//Image Box of Player's Hp
 	UPROPERTY()
 		class UImage* Img_Battery;
-	//Display Player's HP Statue as Image.
-	UPROPERTY(BlueprintReadWrite, Category = "Images")
-		class TMap<FName, UTexture2D*> Imgs_Battary;
+	//Display Player's HP Statue as Image. Set images on BP
+	UPROPERTY(BlueprintReadWrite, Category = "Images", meta = (AllowPrivateAccess = "true"))
+		 TArray<UTexture2D*> Imgs_Battary;
 	//Image of Itme Recovery Item
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	class UImage* Img_RecoveryItem;
 
 
@@ -72,5 +78,8 @@ private:
 
 	UPROPERTY(BlueprintReadOnly, Category = Camera, Meta = (AllowPrivateAccess = true))
 		UCameraComponent* MiniMapCapture;
+
+
+
 	
 };
