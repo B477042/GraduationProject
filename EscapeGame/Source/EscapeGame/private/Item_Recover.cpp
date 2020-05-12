@@ -42,6 +42,7 @@ void AItem_Recover::UseMe(ACharacter*UserActor)
 	}
 	player->HealHP(amount_Recovery);
 	Effect->SetWorldLocation(player->GetActorLocation());
+
 	Effect->SetHiddenInGame(false);
 	Effect->Activate(true);
 	Sound->Play();

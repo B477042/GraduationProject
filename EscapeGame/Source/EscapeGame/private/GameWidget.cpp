@@ -15,8 +15,10 @@
 void UGameWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-	PB_HP = Cast<UProgressBar>(GetWidgetFromName(TEXT("HPBar")));
+	//PB_HP = Cast<UProgressBar>(GetWidgetFromName(TEXT("HPBar")));
 	PB_Stamina = Cast<UProgressBar>(GetWidgetFromName(TEXT("StaminaBar")));
+	Img_Battery = Cast<UImage>(GetWidgetFromName(TEXT("HPImage")));
+	Img_RecoveryItem = Cast<UImage>(GetWidgetFromName(TEXT("RecoveryItemImage")));
 	//HPAmount = Cast<UTextBlock>(GetWidgetFromName(TEXT("HPTEXT")));
 	GameTimer = 60.0f;
 	PlayerHP = 100.0f;
@@ -27,8 +29,8 @@ void UGameWidget::UpdateCharacterStat()
 {
 	if (CurrentCharacterStat.IsValid())
 	{
-		if (PB_HP != nullptr)
-			PB_HP->SetPercent(CurrentCharacterStat->GetHPRatio());
+		/*if (PB_HP != nullptr)
+			PB_HP->SetPercent(CurrentCharacterStat->GetHPRatio());*/
 		/*if (HPAmount != nullptr)
 		{
 			HPAmount->

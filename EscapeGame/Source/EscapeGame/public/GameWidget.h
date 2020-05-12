@@ -35,12 +35,27 @@ public:
 		void UpdateStamina();
 	UFUNCTION(BlueprintCallable)
 		float CheackTimeOut(float NewValue);
+
+private:
+	void loadImages();
+
 private:
 	TWeakObjectPtr<class UStatComponent_Player>CurrentCharacterStat;
-	UPROPERTY()
-		class UProgressBar* PB_HP;
+	/*UPROPERTY()
+		class UProgressBar* PB_HP;*/
 	UPROPERTY()
 		class UProgressBar* PB_Stamina;
+	//Image Box of Player's Hp
+	UPROPERTY()
+		class UImage* Img_Battery;
+	//Display Player's HP Statue as Image.
+	UPROPERTY(BlueprintReadWrite, Category = "Images")
+		class TMap<FName, UTexture2D*> Imgs_Battary;
+	//Image of Itme Recovery Item
+	UPROPERTY()
+	class UImage* Img_RecoveryItem;
+
+
 	//UPROPERTY()
 	//	class UTextBlock* HPAmount;//Write 'HP'
 	//
@@ -50,8 +65,8 @@ private:
 		float PlayerHP;
 	UPROPERTY(BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		float PlayerStamina;
-
-
+	UPROPERTY(BlueprintReadOnly, Category = Inventory, Meta = (AllowPrivateAccess = true))
+		int RecoveryItemEA;
 	UPROPERTY(BlueprintReadWrite, Category = Timer, Meta = (AllowPrivateAccess = true))
 		float GameTimer;
 
