@@ -29,6 +29,7 @@ void AItem_Recover::PostInitializeComponents()
 	//Sound->OnAudio
 	//EGLOG(Warning, TEXT("I am Item. my tag is :%s"),*Tag.ToString());
 	//Body->collision
+	
 }
 
 void AItem_Recover::UseMe(ACharacter*UserActor)
@@ -101,7 +102,7 @@ void AItem_Recover::loadAsset()
 	{
 		Effect->SetTemplate(U_EFFECT.Object);
 		Effect->bAutoActivate = false;
-		Effect->bAllowRecycling = true;
+		Effect->bAllowRecycling = false;
 		
 	}
 
@@ -109,10 +110,13 @@ void AItem_Recover::loadAsset()
 	static ConstructorHelpers::FObjectFinder<USoundBase>SB_SOUND(TEXT("SoundWave'/Game/MagicModule/SFX/WAV/WAV_Healing.WAV_Healing'"));
 	if (SB_SOUND.Succeeded())
 	{
-		//SB_SOUND.Object->set;
+		
+		
 		Sound->SetSound(SB_SOUND.Object);
 		Sound->bAutoActivate = false;
 		Sound->SetupAttachment(Effect);
+		
+		
 		//Sound->SoundWavePlaybackTimes(0);
 	}
 
@@ -128,5 +132,6 @@ void AItem_Recover::turnOffEffect()
 {
 	Effect->SetHiddenInGame(true);
 	//Effect->Activate(false);
-	//Effect->Deactivate();
+	Effect->Deactivate();
+	
 }

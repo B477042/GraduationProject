@@ -1,13 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "DoorPath.h"
+#include "EGPlayerCharacter.h"
+#include "Item_CardKey.h"
 
 ADoorPath::ADoorPath()
 {
 	Door1 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DOOR1"));
 	Door2 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DOOR2"));
 	DoorGate = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DOORGATE"));
-
+	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("TRIGGER"));
 	
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_GATE(TEXT("/Game/StarterBundle/ModularScifiProps/Meshes/SM_GlassDoorway.SM_GlassDoorway"));
 	if (SM_GATE.Succeeded())
@@ -27,7 +29,11 @@ ADoorPath::ADoorPath()
 	DoorGate->SetupAttachment(RootComponent);
 	Door1->SetupAttachment(RootComponent);
 	Door2->SetupAttachment(RootComponent);
+	Trigger->SetupAttachment(RootComponent);
 
+	Trigger->SetCollisionProfileName(TEXT("OnTrapTrigger"));
+	Trigger->SetRelativeLocation(FVector(-160.0f, -320.0f, 110.0f));
+	Trigger->SetBoxExtent(FVector(130.0f, 68.0f, 80.0f));
 	
 
 }
@@ -57,6 +63,12 @@ void ADoorPath::CloseTheDoor()
 
 }
 
+void ADoorPath::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ADoorPath::OnPlayerOverlap);
+}
+
 void ADoorPath::SetRelativePos()
 {
 	float X = 0.0f, Y = 0.0f, Z = 0.0f;
@@ -70,5 +82,15 @@ void ADoorPath::SetRelativePos()
 	
 
 	DoorGate->SetRelativeLocation(FVector(X = 20.000000f, Y = -10.000000f, Z = 0.000000f));
+	
+}
+
+void ADoorPath::OnPlayerOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	auto player = Cast<AEGPlayerCharacter>(OtherActor);
+	if (!player)return;
+
+	if (player->GetInventory()->UseItem(AItem_CardKey::Tag, player))
+		OpenTheDoor();
 	
 }
