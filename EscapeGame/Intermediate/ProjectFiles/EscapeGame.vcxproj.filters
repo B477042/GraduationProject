@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\EscapeGame.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{6A23DC8F-5DE4-4DCC-83C2-8EFE878766D1}</UniqueIdentifier>
+      <UniqueIdentifier>{49E514A7-9EFF-46BB-BEE0-3F0F3E365AA7}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\EscapeGame.Target.cs">
       <Filter>Source</Filter>
@@ -14,7 +14,7 @@
     <None Include="..\..\.gitignore" />
     <None Include="..\..\EscapeGame.code-workspace" />
     <Filter Include="Config">
-      <UniqueIdentifier>{8894DBD6-075B-4DF5-B43A-A9921CA6B5FE}</UniqueIdentifier>
+      <UniqueIdentifier>{ED890BEE-2B1E-4FF6-A265-B5EDE082E520}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
@@ -32,13 +32,13 @@
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\EscapeGame">
-      <UniqueIdentifier>{BF2A3868-7FE9-45F9-BD72-B087F009CE60}</UniqueIdentifier>
+      <UniqueIdentifier>{34E28273-7760-4692-AFDC-71E0F2C29805}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\EscapeGame\EscapeGame.Build.cs">
       <Filter>Source\EscapeGame</Filter>
     </None>
     <Filter Include="Source\EscapeGame\private">
-      <UniqueIdentifier>{45E00876-0CA8-48DF-BAAE-2AAEF16A409B}</UniqueIdentifier>
+      <UniqueIdentifier>{9B7F2D51-DD9D-4F6D-A734-6FC6758953B6}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\EscapeGame\private\AICtrl_Grunt.cpp">
       <Filter>Source\EscapeGame\private</Filter>
@@ -203,7 +203,7 @@
       <Filter>Source\EscapeGame\private</Filter>
     </ClCompile>
     <Filter Include="Source\EscapeGame\public">
-      <UniqueIdentifier>{898407EF-1D6A-47D6-BBFD-EF77EF8F0FA3}</UniqueIdentifier>
+      <UniqueIdentifier>{E4B3DA1D-DBBB-4A1B-B3B2-676477B7C6DD}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\Source\EscapeGame\public\AICtrl_Grunt.h">
       <Filter>Source\EscapeGame\public</Filter>
@@ -368,13 +368,13 @@
       <Filter>Source\EscapeGame\public</Filter>
     </ClInclude>
     <Filter Include="Source\GameSetting">
-      <UniqueIdentifier>{4E3C9014-B0E1-466E-B902-2729835CAF7E}</UniqueIdentifier>
+      <UniqueIdentifier>{0A700C55-5CC0-4388-B30B-9623080C08C4}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\GameSetting\GameSetting.Build.cs">
       <Filter>Source\GameSetting</Filter>
     </None>
     <Filter Include="Source\GameSetting\private">
-      <UniqueIdentifier>{5917E607-5DF0-4283-9254-4E26C02A5D03}</UniqueIdentifier>
+      <UniqueIdentifier>{12BECC82-EA86-4493-B35B-692B35ED8971}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\GameSetting\private\EGCharacterSetting.cpp">
       <Filter>Source\GameSetting\private</Filter>
@@ -386,7 +386,7 @@
       <Filter>Source\GameSetting\private</Filter>
     </ClCompile>
     <Filter Include="Source\GameSetting\public">
-      <UniqueIdentifier>{BEBE5C48-75BD-456C-B5B7-60A480C95C0E}</UniqueIdentifier>
+      <UniqueIdentifier>{2FB27E5B-AFBD-460B-8920-95E8C1EE1625}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\Source\GameSetting\public\EGCharacterSetting.h">
       <Filter>Source\GameSetting\public</Filter>
@@ -398,25 +398,25 @@
       <Filter>Source\GameSetting\public</Filter>
     </ClInclude>
     <Filter Include="Source\GameSetting\public\.vscode">
-      <UniqueIdentifier>{1296BF81-4709-468D-A3A8-C30442D50DFD}</UniqueIdentifier>
+      <UniqueIdentifier>{18BA0E46-C8EC-48ED-B4E1-22E6B0D2AF80}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\GameSetting\public\.vscode\c_cpp_properties.json">
       <Filter>Source\GameSetting\public\.vscode</Filter>
     </None>
     <Filter Include="Source\Structure">
-      <UniqueIdentifier>{767F95BB-CA06-44D7-9505-0EA24157D48D}</UniqueIdentifier>
+      <UniqueIdentifier>{22FA2B35-6ACC-4CFE-BE05-41FCEC031FDE}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\Structure\Building.Build.cs">
       <Filter>Source\Structure</Filter>
     </None>
     <Filter Include="Source\Structure\private">
-      <UniqueIdentifier>{DBE584A2-B26F-4408-9C4B-EC3FCD25F89E}</UniqueIdentifier>
+      <UniqueIdentifier>{80459CFF-7274-455B-AE6A-7756E1709CDE}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\Structure\private\Building.cpp">
       <Filter>Source\Structure\private</Filter>
     </ClCompile>
     <Filter Include="Source\Structure\public">
-      <UniqueIdentifier>{2DAC8E7B-669E-44EB-AA82-905D61AFDFA7}</UniqueIdentifier>
+      <UniqueIdentifier>{C9A53E92-5B9B-4D94-8CBC-5C6CDF130BFF}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\Source\Structure\public\Building.h">
       <Filter>Source\Structure\public</Filter>
