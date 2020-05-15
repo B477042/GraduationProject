@@ -52,6 +52,7 @@ void AFireBallActor::PostInitializeComponents()
 
 void AFireBallActor::initComponents()
 {
+	Root = CreateDefaultSubobject<USceneComponent>(TEXT("ROOT"));
 	FireBall = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("FIREBALL"));
 	ExplosionEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EXPLOSION"));
 	HitEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("HIT"));
@@ -60,7 +61,8 @@ void AFireBallActor::initComponents()
 	SoundCast = CreateDefaultSubobject<UAudioComponent >(TEXT("SOUNDCAST"));
 	SoundExplosion= CreateDefaultSubobject<UAudioComponent >(TEXT("SOUNDEXPLOSION"));
 
-	RootComponent = Collision;
+	RootComponent = Root;
+	Collision->SetupAttachment(RootComponent);
 	FireBall->SetupAttachment(RootComponent);
 	HitEffect->SetupAttachment(RootComponent);
 	HitEffect->SetupAttachment(RootComponent);

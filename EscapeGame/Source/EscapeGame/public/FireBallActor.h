@@ -48,7 +48,9 @@ private:
 	const float MaxFlyingTime=4.0f;
 	
 private:
-	
+	//Light빌드용으로 만든 Root 컴포넌트를 위한 신 컴포넌트
+	UPROPERTY(VisibleAnywhere)
+		USceneComponent* Root;
 	UPROPERTY(VisibleAnywhere, Category = effect)
 		UParticleSystemComponent* FireBall;
 	UPROPERTY(VisibleAnywhere, Category = effect)

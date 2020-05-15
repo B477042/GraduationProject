@@ -15,6 +15,7 @@ AEnemyCharacter::AEnemyCharacter()
 	GetCharacterMovement()->bOrientRotationToMovement = false;
 	GetCharacterMovement()->bUseControllerDesiredRotation = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 480.0f, 0.0f);
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("EnemyCharacter"));
 }
 
 // Called when the game starts or when spawned
