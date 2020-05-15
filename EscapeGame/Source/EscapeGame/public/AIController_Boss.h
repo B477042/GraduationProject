@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "EscapeGame.h"
 #include "AIController.h"
 #include "AIController_Boss.generated.h"
 
@@ -13,5 +13,11 @@ UCLASS()
 class ESCAPEGAME_API AAIController_Boss : public AAIController
 {
 	GENERATED_BODY()
-	
+public:
+	AAIController_Boss();
+	void RunBT();
+	void StopBT();
+private:
+
+
 };

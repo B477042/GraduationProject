@@ -13,5 +13,15 @@ UCLASS()
 class ESCAPEGAME_API AEnermyBossCharacter : public AEnemyCharacter
 {
 	GENERATED_BODY()
+public:
+
+	AEnermyBossCharacter();
+
+private:
+	void initComponents();
+	void loadAsset();
+
+private:
 	
+
 };
