@@ -16,13 +16,17 @@ class ESCAPEGAME_API AAICtrl_Grunt : public AEnemyAIController
 public:
 	AAICtrl_Grunt();
 
+	const class UDataTable* GetDT_Grunt();
 
-protected:
 	virtual void BeginPlay()override;
 	virtual void PostInitializeComponents()override;
 
 	virtual void RunAI()override;
 	virtual void StopAI()override;
+protected:
+	//Data Table for Grunt Enemy
+	UPROPERTY(VisibleAnywhere, Category = DataTable)
+		class UDataTable* DT_Grunt;
 
 
 };

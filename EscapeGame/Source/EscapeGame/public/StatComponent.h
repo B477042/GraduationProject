@@ -63,6 +63,7 @@ public:
 
 	float GetATK()const;
 	float GetHPRatio()const;
+	
 	float GetHP()const;
 	
 	bool IsAttacking()const;

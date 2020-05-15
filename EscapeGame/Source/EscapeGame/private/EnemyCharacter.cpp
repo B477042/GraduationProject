@@ -8,7 +8,7 @@ AEnemyCharacter::AEnemyCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	Stat = CreateDefaultSubobject<UStatComponent_Enemy>(TEXT("STAT"));
+	//Stat = CreateDefaultSubobject<UStatComponent_Enemy>(TEXT("STAT"));
 	//if(Stat==nullptr)EGLOG(Warning,TEXT("Enemy's Stat is null"));
 	
 	bUseControllerRotationYaw = false;
@@ -28,7 +28,7 @@ float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Damag
 {
 	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
-	Stat->TakeDamage(DamageAmount);
+	//Stat->TakeDamage(DamageAmount);
 
 	return FinalDamage;
 }

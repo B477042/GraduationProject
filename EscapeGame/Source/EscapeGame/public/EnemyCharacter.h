@@ -9,7 +9,7 @@
 
 
 
-UCLASS()
+UCLASS(Abstract)
 class ESCAPEGAME_API AEnemyCharacter : public ACharacter
 {
 	GENERATED_BODY()
@@ -29,8 +29,7 @@ protected:
 		float GetCurrentSpeed();*/
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,class AController* EventInstigator, AActor* DamageCauser)override;
 
-	UPROPERTY(VisibleInstanceOnly, Category = Stat)
-		UStatComponent_Enemy* Stat;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

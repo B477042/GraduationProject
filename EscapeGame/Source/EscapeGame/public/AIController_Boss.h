@@ -2,22 +2,28 @@
 
 #pragma once
 
-#include "EscapeGame.h"
-#include "AIController.h"
+#include "EnemyAIController.h"
 #include "AIController_Boss.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ESCAPEGAME_API AAIController_Boss : public AAIController
+class ESCAPEGAME_API AAIController_Boss : public AEnemyAIController
 {
 	GENERATED_BODY()
 public:
 	AAIController_Boss();
-	void RunBT();
-	void StopBT();
-private:
+	virtual void BeginPlay()override;
+	virtual void PostInitializeComponents()override;
 
+	virtual void RunAI()override;
+	virtual void StopAI()override;
+private:
+	//UPROPERTY(VisibleAnywhere, Category = AI)
+	//	class UBlackboardData* BBData;
+	////Behavior Tree File Data
+	//UPROPERTY(VisibleAnywhere, Category = AI)
+	//	class UBehaviorTree* BTData;
 
 };

@@ -21,13 +21,13 @@ AGruntCharacter::AGruntCharacter()
 	//Set AI Controller
 	AIControllerClass = AAICtrl_Grunt::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
-	/*if(Stat==nullptr)
-	Stat = CreateDefaultSubobject<UStatComponent_Enemy>(TEXT("STAT"));*/
-
+	
+	Stat = CreateDefaultSubobject<UStatComponent_EGrunt>(TEXT("STAT"));
+	
 	//Set Attack Range To 100cm
-	AttackRange = 100.0f;
+	AttackRange = 240.0f;
 	AttackExtent = FVector(100.0f,50.0f,50.0f);
-	ATK = 40.0f;
+	ATK = 10.0f;
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh>SM_Body(TEXT("SkeletalMesh'/Game/ParagonHowitzer/Characters/Heroes/Howitzer/Skins/Tier_2/Domed/Meshes/Howitzer_Domed.Howitzer_Domed'"));
 	if (SM_Body.Succeeded())
 	{
@@ -67,21 +67,58 @@ void AGruntCharacter::PostInitializeComponents()
 
 	//Stat->LoadDBfromOwner(MaxHP, MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
 
-	Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
-	if (Anim == nullptr)
-	{
-		EGLOG(Warning, TEXT("Anim is null"));
-	}
+	
 	//Anim->AttackEvent_Delegate.AddDynamic(&AGruntCharacter::Attack);
 	//Set Limit of Speeds
 
 	if(Stat!=nullptr)
 	Stat->SetSpeedLimits(MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
+
+	auto Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
+	if (!Anim)return;
+
+	//공격을 플레이할 때 호출되고 공격에 대한 판정을 시도합니다. 이걸 넣어줍니다
+	Anim->AttackEvent_Delegate.AddLambda([this]()->void {
+		
+	EGLOG(Error, TEXT("ANIm notify test start"));
+	FHitResult HitResult;
+	FVector EndPoint = GetActorLocation() + GetActorForwardVector()*AttackRange;
+	FCollisionQueryParams Params(NAME_None, false, this);
+
+	//ECC_EngineTraceChannel2 = 'Player' Trace
+	bool bResult = GetWorld()->SweepSingleByObjectType(HitResult, GetActorLocation(), EndPoint,
+			FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeBox(AttackExtent),Params);
+
+	//if hit
+	if (bResult)
+	{
+		auto Player = Cast<AEGPlayerCharacter>(HitResult.GetActor());
+		if (Player == nullptr)
+		{
+			EGLOG(Warning, TEXT("Casting Error"));
+			return;
+		}
+
+		FDamageEvent DamageEvent;
+		Player->TakeDamage(ATK, DamageEvent, GetController(), this);
+		EGLOG(Warning, TEXT("Give Damgae : %d"), ATK);
+	}
+	else
+		EGLOG(Error, TEXT("Notjhiog"));
+
+	});
+
+	//체력이 0이 됐을 때 호출될 함수들을 엮어줍니다
+	Stat->HPZeroDelegate.AddUObject(this, &AGruntCharacter::ReadToDead);
+	//Stat->HPZeroDelegate.AddUObject(this, UAnim_Grunt::playDeadAnim);
+	
 }
 
 float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
 {
 	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	Stat->TakeDamage(FinalDamage);
+	
 
 	return FinalDamage;
 }
@@ -89,11 +126,7 @@ float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Damag
 void AGruntCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (Anim == nullptr)
-	{
-		EGLOG(Warning, TEXT("Anim is Null"));
-		return;
-	}
+	
 	
 	//FVector DPoint = GetActorLocation()+GetMesh()->GetForwardVector()*500.0f;
 	//DrawDebugLine(GetWorld(), GetActorLocation(), DPoint, FColor::Cyan, false);
@@ -101,46 +134,38 @@ void AGruntCharacter::Tick(float DeltaTime)
 
 void AGruntCharacter::Attack()
 {
-	EGLOG(Warning, TEXT("Attack! Grunt"));
+	//EGLOG(Warning, TEXT("Attack! Grunt"));
 
 	
+	auto Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
+	if (!Anim)return;
 	Anim->PlayAttackMontage();
 
 
 
-	/*
-	*	Scan Enemy By Attack Range -> Using Sweep by cube
-	*	and Take Damage At Scanned Actors
-	*	Player Only Can be Damaged
-	*/
-
-	//2020 02 12 중단점 16:05
-	//Attack에서 잘못 짰다
-	//이하 코드는 AnimNotify에서 실행되야할 것들이다. 
-	//이 코드를 그 쪽으로 옮긴다.
-
-	////Model 1 Not Access To Stat Component Way
-	//FHitResult HitResult;
-	//FVector EndPoint = GetActorLocation() + GetActorForwardVector()*AttackRange;
-	//FCollisionQueryParams Params(NAME_None, false, this);
-
-	////ECC_EngineTraceChannel2 = 'Player' Trace
-	//bool bResult = GetWorld()->SweepSingleByObjectType(HitResult, GetActorLocation(), EndPoint,
-	//		FQuat::Identity,ECollisionChannel::ECC_EngineTraceChannel2, FCollisionShape::MakeBox(AttackExtent),Params);
-
-	////if hit
-	//if (bResult)
-	//{
-	//	auto Player = Cast<AEGPlayerCharacter>(HitResult.GetActor());
-	//	if (Player == nullptr)
-	//	{
-	//		EGLOG(Warning, TEXT("Casting Error"));
-	//		return;
-	//	}
-
-	//	FDamageEvent DamageEvent;
-	//	Player->TakeDamage(ATK,DamageEvent, GetController(),this);
-	//	
-	//}
+	
+	
 
 }
+
+void AGruntCharacter::Dead()
+{
+	Destroy();
+}
+//삭제하기 전에 컨트롤러의 BT를 꺼준다
+//콜리전은 꺼준다
+//anim의 Dead Animation을 재생시키게 해준다
+void AGruntCharacter::ReadToDead()
+{
+	auto con = Cast<AAICtrl_Grunt>(Controller);
+	if (!con)return;
+
+
+	con->StopAI();
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("NoCollision"));
+	
+	auto Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
+	if (!Anim)return;
+	Anim->PlayDeadAnim();
+}
+

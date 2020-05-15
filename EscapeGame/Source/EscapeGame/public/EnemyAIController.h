@@ -28,7 +28,7 @@ public:
 		static const FName HomePos;
 		static const FName PatrolPos;
 
-		const class UDataTable* GetDT_Grunt();
+		
 protected:
 	virtual void BeginPlay()override;
 	virtual void PostInitializeComponents()override;
@@ -43,7 +43,5 @@ protected:
 	//Behavior Tree File Data
 	UPROPERTY(VisibleAnywhere, Category = AI)
 		class UBehaviorTree* BTData;
-	//Data Table for Grunt Enemy
-	UPROPERTY(VisibleAnywhere, Category = DataTable)
-	class UDataTable* DT_Grunt;
+	
 };

@@ -11,6 +11,7 @@
  */
 
 
+
 UCLASS()
 class ESCAPEGAME_API UAnim_Grunt : public UCharacterAnimInstance
 {
@@ -23,9 +24,16 @@ public:
 	FAttackEventDelegate AttackEvent_Delegate;
 
 	UFUNCTION()
-	void AnimNotify_CheckRange();
+	void AnimNotify_Notify_CheckRange();
+	UFUNCTION()
+	void PlayDeadAnim();
+
 protected:
 	
+
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		bool bIsDead;
+
 private:
 
 };

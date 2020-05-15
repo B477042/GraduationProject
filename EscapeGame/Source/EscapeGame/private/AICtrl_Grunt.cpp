@@ -2,7 +2,7 @@
 
 
 #include "AICtrl_Grunt.h"
-
+#include "DT_DataStruct.h"
 
 
 
@@ -20,7 +20,17 @@ AAICtrl_Grunt::AAICtrl_Grunt()
 	{
 		BTData = BT.Object;
 	}
+	static ConstructorHelpers::FObjectFinder<UDataTable>DT_GRUNT(TEXT("DataTable'/Game/MyFolder/DataTable/DT_GruntType.DT_GruntType'"));
+	if (DT_GRUNT.Succeeded())
+	{
+		DT_Grunt = DT_GRUNT.Object;
+	}
 
+}
+
+const UDataTable * AAICtrl_Grunt::GetDT_Grunt()
+{
+	return DT_Grunt;
 }
 
 void AAICtrl_Grunt::BeginPlay()

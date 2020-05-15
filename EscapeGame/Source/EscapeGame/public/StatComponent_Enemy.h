@@ -30,9 +30,8 @@ public:
 	int32 GetDropExp();
 	
 
-private:
-	//data table에서 level에 맞는 data를 가져온다
-	void loadDataTable();
+protected:
+	
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
 		int32 DropExp;

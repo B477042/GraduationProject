@@ -5,7 +5,7 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include "DT_DataStruct.h"
+
 
 
 
@@ -16,11 +16,7 @@ const FName AEnemyAIController::PatrolPos(TEXT("PatrolPos"));
 
 AEnemyAIController::AEnemyAIController()
 {
-	static ConstructorHelpers::FObjectFinder<UDataTable>DT_GRUNT(TEXT("DataTable'/Game/MyFolder/DataTable/DT_GruntType.DT_GruntType'"));
-	if (DT_GRUNT.Succeeded())
-	{
-		DT_Grunt = DT_GRUNT.Object;
-	}
+	
 }
 
 void AEnemyAIController::OnPossess(APawn * InPawn)
@@ -34,10 +30,7 @@ void AEnemyAIController::OnUnPossess()
 	Super::OnUnPossess();
 }
 
-const UDataTable * AEnemyAIController::GetDT_Grunt()
-{
-	return DT_Grunt;
-}
+
 
 void AEnemyAIController::BeginPlay()
 {

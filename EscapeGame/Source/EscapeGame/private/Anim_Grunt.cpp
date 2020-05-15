@@ -13,6 +13,7 @@ UAnim_Grunt::UAnim_Grunt()
 		AttackMontage = M_ATTACK.Object;
 		EGLOG(Warning, TEXT("G Anim!!!!"));
 	}
+	bIsDead = false;
 }
 
 void UAnim_Grunt::JumpToComboAttackSection(int32 NewSection)
@@ -25,10 +26,9 @@ void UAnim_Grunt::PlayAttackMontage()
 	Super::PlayAttackMontage();
 	
 
-	
 }
 
-void UAnim_Grunt::AnimNotify_CheckRange()
+void UAnim_Grunt::AnimNotify_Notify_CheckRange()
 {
 	EGLOG(Warning, TEXT("Notify!"));
 	//Excute Delegate 
@@ -38,5 +38,10 @@ void UAnim_Grunt::AnimNotify_CheckRange()
 	//스캔한 결과에서 player인지 검사하고 player에게 데미지를 준다
 	
 
+}
+
+void UAnim_Grunt::PlayDeadAnim()
+{
+	bIsDead = true;
 }
 
