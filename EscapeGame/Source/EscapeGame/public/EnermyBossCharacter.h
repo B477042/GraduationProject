@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+
 #include "EnemyCharacter.h"
 #include "EnermyBossCharacter.generated.h"
 
