@@ -109,7 +109,7 @@ void AGruntCharacter::PostInitializeComponents()
 	});
 
 	//체력이 0이 됐을 때 호출될 함수들을 엮어줍니다
-	Stat->HPZeroDelegate.AddUObject(this, &AGruntCharacter::ReadToDead);
+	//Stat->HPZeroDelegate.AddUObject(this, &AGruntCharacter::ReadToDead);
 	//Stat->HPZeroDelegate.AddUObject(this, UAnim_Grunt::playDeadAnim);
 	
 }

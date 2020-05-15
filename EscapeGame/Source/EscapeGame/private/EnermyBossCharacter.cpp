@@ -21,7 +21,7 @@ void AEnermyBossCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-
+	
 }
 
 float AEnermyBossCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
