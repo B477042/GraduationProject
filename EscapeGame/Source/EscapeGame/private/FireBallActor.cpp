@@ -130,7 +130,7 @@ void AFireBallActor::loadAssetes()
 void AFireBallActor::setupCollision()
 {
 	Collision->SetSphereRadius(40.3f);
-	Collision->SetCollisionProfileName(TEXT("NoCollision"));
+	Collision->SetCollisionProfileName(TEXT("BlockAll"));
 	SoundTrigger->SetCollisionProfileName(TEXT("OnTrapTrigger"));
 	SoundTrigger->SetSphereRadius(200.0f);
 }

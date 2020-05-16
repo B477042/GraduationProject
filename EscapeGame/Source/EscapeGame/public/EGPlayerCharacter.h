@@ -57,6 +57,8 @@ public:
 	 void StopRunning();
 	 void Roll();
 	 void UseRecoveryItem();
+	 void ToggleMap();
+
 
 	 //User Input Disable
 	 void RestricInput();
@@ -127,8 +129,9 @@ private:
 		void ChargeAttackEnd();*/
 
 //==================================================
-
-
+	float minMapArmLength;
+	float maxMapArmLength;
+	bool bSetMapArm;
 	//private PROPERTY
 private:
 

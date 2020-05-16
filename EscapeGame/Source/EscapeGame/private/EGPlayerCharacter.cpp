@@ -28,7 +28,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("PlayerCharacter"));
 	//EGLOG(Warning, TEXT("Character Constroucter"));
 
-	
+	bSetMapArm = false;
 	
 }
 
@@ -78,7 +78,8 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::Running);
 	PlayerInputComponent->BindAction(TEXT("Roll"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::Roll);
 	PlayerInputComponent->BindAction(TEXT("Recovery"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::UseRecoveryItem);
-	
+	PlayerInputComponent->BindAction(TEXT("ToggleMap"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::ToggleMap);
+
 	EGLOG(Warning, TEXT("Player input component"));
 }
 
@@ -253,6 +254,30 @@ void AEGPlayerCharacter::UseRecoveryItem()
 	
 }
 
+//mini map Spring arm.의 길이를 조절한다
+void AEGPlayerCharacter::ToggleMap()
+{
+	
+	if (bSetMapArm==false)
+	{
+		MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, maxMapArmLength));
+		EGLOG(Error, TEXT("Change To Max"));
+		bSetMapArm = true;
+		return;
+	}
+	if (bSetMapArm==true)
+	{
+		MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, minMapArmLength));
+		bSetMapArm = false;
+		EGLOG(Error, TEXT("Change To Min"));
+		return;
+	}
+	else
+	{
+		EGLOG(Error, TEXT("Error"));
+	}
+}
+
 void AEGPlayerCharacter::RestricInput()
 {
 	auto myCon = Cast<APlayerController>(GetController());
@@ -295,8 +320,8 @@ void AEGPlayerCharacter::InitComponents()
 	MiniMapArm->SetupAttachment(GetCapsuleComponent());
 	MapRenderer->SetupAttachment(MiniMapArm);
 	 
-
-
+	minMapArmLength = 320.0f;
+	maxMapArmLength = 1000.0f;
 
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 	SpringArm->TargetArmLength = 400.0f;

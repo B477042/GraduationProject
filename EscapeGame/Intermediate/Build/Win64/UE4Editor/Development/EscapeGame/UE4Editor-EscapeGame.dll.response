@@ -33,10 +33,10 @@
 /NODEFAULTLIB:"LIBCPD"
 /FUNCTIONPADMIN
 "I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\EscapeGameEditor\Development\Engine\SharedPCH.Engine.h.obj"
-"I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\AIController_Boss.cpp.obj"
-"I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\BTService_Detect.cpp.obj"
+"I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\EGPlayerCharacter.cpp.obj"
+"I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\FireBallActor.cpp.obj"
+"I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\GruntCharacter.cpp.obj"
 "I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\Module.EscapeGame.cpp.obj"
-"I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\EscapeGame.init.gen.cpp.obj"
 "I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\Module.EscapeGame.gen.cpp.obj"
 "I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\Default.rc2.res"
 "delayimp.lib"
