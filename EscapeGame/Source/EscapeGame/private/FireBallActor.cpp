@@ -42,8 +42,11 @@ void AFireBallActor::Tick(float DeltaTime)
 void AFireBallActor::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+
 	SoundTrigger->OnComponentBeginOverlap.AddDynamic(this, &AFireBallActor::OnCharacterEntered);
+
 	Collision->OnComponentBeginOverlap.AddDynamic(this, &AFireBallActor::OnCharacterHit);
+
 	SoundExplosion->OnAudioFinished.AddDynamic(this,& AFireBallActor::DestroyMe);
 }
 
@@ -139,9 +142,11 @@ void AFireBallActor::OnCharacterHit(UPrimitiveComponent* OverlappedComp, AActor*
 	//EGLOG(Error, TEXT("Hit"));
 
 		FDamageEvent damageEvent;
+		if(GetWorld()->GetFirstPlayerController())
 		OtherActor->TakeDamage(Damage, damageEvent, GetWorld()->GetFirstPlayerController(), this);
 	
-	ExplosionMe();
+		//Collision->SetCollisionProfileName(TEXT("NoCollision"));
+		ExplosionMe();
 
 
 }
@@ -166,7 +171,7 @@ void AFireBallActor::ExplosionMe()
 	SoundCast->Deactivate();
 	SoundExplosion->Play();
 
-	
+	Collision->SetCollisionProfileName(TEXT("NoCollision"));
 }
 
 void AFireBallActor::DestroyMe()
