@@ -3,22 +3,32 @@
 
 #include "AIController_Boss.h"
 
+FName AAIController_Boss::DebugMode = TEXT("DebugMode");
+FName AAIController_Boss::DetectRange = TEXT("DetectRange");
+
 AAIController_Boss::AAIController_Boss()
 {
 
-	/*static ConstructorHelpers::FObjectFinder<UBlackboardData>BB_Data(TEXT("BlackboardData'/Game/MyFolder/AIData/BB_BossBoard.BB_BossBoard'"));
+	static ConstructorHelpers::FObjectFinder<UBlackboardData>BB_Data(TEXT("BlackboardData'/Game/MyFolder/AIData/BB_BossBoard.BB_BossBoard'"));
 	if (BB_Data.Succeeded())
 	{
-		BlackBoard = BB_Data.Object;
-	}*/
+		BBData = BB_Data.Object;
+	}
+	static ConstructorHelpers::FObjectFinder<UBehaviorTree>BT_DATA(TEXT("BehaviorTree'/Game/MyFolder/AIData/BT_BossTree.BT_BossTree'"));
+	if (BT_DATA.Succeeded())
+	{
+		BTData = BT_DATA.Object;
+	}
 
-
-		
+	bIsDebugMode = true;
+	n_DetectRange = 1000.0f;
 }
 
 void AAIController_Boss::BeginPlay()
 {
 	Super::BeginPlay();
+
+	RunAI();
 
 }
 
@@ -30,7 +40,10 @@ void AAIController_Boss::PostInitializeComponents()
 void AAIController_Boss::RunAI()
 {
 	Super::RunAI();
-
+	if (UseBlackboard(BBData, Blackboard))
+	{
+		Blackboard->SetValueAsVector(HomePos, GetPawn()->GetActorLocation());
+	}
 }
 
 void AAIController_Boss::StopAI()

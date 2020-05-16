@@ -22,7 +22,10 @@ public:
 	UBTService_Detect();
 protected:
 	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8 * NodeMemory, float DeltaSeconds)override;
-	
+	UPROPERTY(BlueprintReadWrite, Category = "Service", meta = (AllowPrivateAccess = "true"))
+		bool bIsDebugMode;
+	UPROPERTY(BlueprintReadWrite, Category = "Service", meta = (AllowPrivateAccess = "true"))
+		float DetectRadius;
 private:
 	//AActor* FindNearest(const TArray<FOverlapResult>& Results);
 };
