@@ -142,8 +142,12 @@ void AFireBallActor::OnCharacterHit(UPrimitiveComponent* OverlappedComp, AActor*
 	//EGLOG(Error, TEXT("Hit"));
 
 		FDamageEvent damageEvent;
-		if(GetWorld()->GetFirstPlayerController())
-		OtherActor->TakeDamage(Damage, damageEvent, GetWorld()->GetFirstPlayerController(), this);
+		auto isPawn = Cast<APawn>(OtherActor);
+		if (GetWorld()->GetFirstPlayerController()&&isPawn!=nullptr)
+		{
+
+			OtherActor->TakeDamage(Damage, damageEvent, GetWorld()->GetFirstPlayerController(), this);
+		}
 	
 		//Collision->SetCollisionProfileName(TEXT("NoCollision"));
 		ExplosionMe();
@@ -170,13 +174,13 @@ void AFireBallActor::ExplosionMe()
 
 	SoundCast->Deactivate();
 	SoundExplosion->Play();
-
+	SoundTrigger->SetCollisionProfileName(TEXT("NoCollision"));
 	Collision->SetCollisionProfileName(TEXT("NoCollision"));
 }
 
 void AFireBallActor::DestroyMe()
 {
-	Destroy();
+	//Destroy();
 
 }
 

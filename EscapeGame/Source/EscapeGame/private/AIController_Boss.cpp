@@ -3,8 +3,10 @@
 
 #include "AIController_Boss.h"
 
-FName AAIController_Boss::DebugMode = TEXT("DebugMode");
-FName AAIController_Boss::DetectRange = TEXT("DetectRange");
+FName AAIController_Boss::TargetPos = TEXT("TargetPos");
+FName AAIController_Boss::ActionTimer = TEXT("ActionTimer");
+FName AAIController_Boss::IsDash = TEXT("IsDash?");
+
 
 AAIController_Boss::AAIController_Boss()
 {

@@ -11,10 +11,10 @@
 UBTService_Detect::UBTService_Detect()
 {
 	NodeName = TEXT("Try Scanning Player as Target");
-	Interval = 1.0f;
+	Interval = 0.5f;
 	// Scan 7m - > default
 	DetectRadius = 700.0f;
-	bIsDebugMode = true;
+	//bIsDebugMode = true;
 
 }
 
@@ -59,7 +59,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, uint8 * Nod
 			if (resultChara->GetController()->IsPlayerController())
 			{
 				//Debug 모드라면 그려서 표시해준다
-				if (bIsDebugMode)
+				if (DrawingDebugMode)
 				{
 				DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Purple, false, 0.2f);
 				//Draw Point Detected Player
@@ -86,7 +86,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, uint8 * Nod
 				
 		}
 	//draw detect range
-	if (bIsDebugMode)
+	if (DrawingDebugMode)
 		DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Yellow, false, 0.2f);
 
 

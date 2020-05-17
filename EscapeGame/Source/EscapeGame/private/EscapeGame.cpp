@@ -7,3 +7,4 @@
 IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, EscapeGame, "EscapeGame" );
 
 DEFINE_LOG_CATEGORY(EGgame)
+

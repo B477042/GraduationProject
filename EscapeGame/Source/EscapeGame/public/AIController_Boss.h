@@ -20,9 +20,9 @@ public:
 	virtual void RunAI()override;
 	virtual void StopAI()override;
 
-	static FName DebugMode;
-	static FName DetectRange;
-	
+	static FName TargetPos;
+	static FName ActionTimer;
+	static FName IsDash;
 private:
 	//UPROPERTY(VisibleAnywhere, Category = AI)
 	//	class UBlackboardData* BBData;
