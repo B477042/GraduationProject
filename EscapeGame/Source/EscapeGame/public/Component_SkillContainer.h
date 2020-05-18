@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "EscapeGame.h"
 #include "Components/ActorComponent.h"
 #include "Component_SkillContainer.generated.h"
 
@@ -32,7 +32,22 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	virtual void UseSkill(const AActor& TargetActor, int n_Count) PURE_VIRTUAL(UComponent_SkillContainer::UseSkill,  );
+
+	//주어진 수 만큼 queue에 밀어 넣는다
+	template <typename T>
+	void AddSkillObj(T* Input, int num);
+
 protected:
+	void revolve();
 	
+
+protected:
+	UPROPERTY(VisibleAnywhere,  Category = "contents", meta = (AllowPrivateAccess = "true"))
+		TArray< TWeakObjectPtr< AActor > > SkillObjects;
+	UPROPERTY(VisibleAnywhere, Category = "contents", meta = (AllowPrivateAccess = "true"))
+		TWeakObjectPtr<AActor> CurrentIndex;
+	UPROPERTY(VisibleAnywhere, Category = "contents", meta = (AllowPrivateAccess = "true"))
+		int Index;
 
 };

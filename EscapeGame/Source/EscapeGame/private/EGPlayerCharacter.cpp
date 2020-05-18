@@ -328,7 +328,7 @@ void AEGPlayerCharacter::InitComponents()
 	SpringArm->SetRelativeRotation(FRotator(-15.0f, 0.0f, 0.0f));
 
 	MiniMapArm->TargetArmLength = 0.0f;
-	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, 320.0f));
+	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, 280.0f));
 	MiniMapArm->SetRelativeRotation(FRotator(-90.0f, 0.0f,0.0f));
 
 	
