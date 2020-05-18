@@ -46,6 +46,7 @@ void AEnemyBossCharacter::Attack()
 */
 void AEnemyBossCharacter::ThrowFireBall()
 {
+	EGLOG(Error, TEXT("FIRRRRR"));
 	OnFireballThrow.Broadcast();
 
 }
@@ -78,4 +79,9 @@ void AEnemyBossCharacter::loadAsset()
 
 
 
+}
+
+void AEnemyBossCharacter::attachParticle()
+{
+	
 }

@@ -37,7 +37,7 @@ public:
 	void SetState(EBossState NewState) { State = NewState; }
 	EBossState GetState() { return State; }
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = "Custom")
 		void ThrowFireBall();
 
 	UPROPERTY(BlueprintAssignable)
@@ -46,7 +46,7 @@ public:
 private:
 	void initComponents();
 	void loadAsset();
-
+	void attachParticle();
 
 
 private:
