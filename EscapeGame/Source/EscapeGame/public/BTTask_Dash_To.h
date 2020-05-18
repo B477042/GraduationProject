@@ -7,8 +7,8 @@
 #include "BTTask_Dash_To.generated.h"
 
 /**
- * ¶Ù¾î³ª°¥ ÁØºñ¸¦ ÇÕ´Ï´Ù.
- * ¿À³ÊÀÇ Charactor movementÀÇ max speed ¿Ã·ÁÁİ´Ï´Ù
+ * ë›°ì–´ë‚˜ê°ˆ ì¤€ë¹„ë¥¼ í•©ë‹ˆë‹¤.
+ * ì˜¤ë„ˆì˜ Charactor movementì˜ max speed ì˜¬ë ¤ì¤ë‹ˆë‹¤
  */
 UCLASS()
 class ESCAPEGAME_API UBTTask_Dash_To : public UBTTaskNode
