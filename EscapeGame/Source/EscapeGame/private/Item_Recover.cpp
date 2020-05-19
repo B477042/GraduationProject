@@ -83,7 +83,7 @@ void AItem_Recover::OnPlayerOverlap(UPrimitiveComponent * OverlappedComp, AActor
 	//SetActorHiddenInGame(true);
 	Body->SetHiddenInGame(true);
 	Body->SetGenerateOverlapEvents(false);
-
+	PickupSound->Play();
 	//회복 아이템은 한번에 1개에서 3개 획득
 	int amount = FMath::RandRange(1.0f, 4.0f);
 
@@ -150,6 +150,7 @@ void AItem_Recover::loadAsset()
 		Sound->AttenuationSettings = SA_ATTENUATION.Object;
 		PickupSound->AttenuationSettings = SA_ATTENUATION.Object;
 	}
+	Sound->SetupAttachment(RootComponent);
 	Effect->SetupAttachment(Sound);
 	PickupSound->SetupAttachment(RootComponent);
 }
