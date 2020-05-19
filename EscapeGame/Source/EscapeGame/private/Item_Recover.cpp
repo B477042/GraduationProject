@@ -8,10 +8,23 @@ const FName AItem_Recover::Tag = TEXT("Recover");
 
 AItem_Recover::AItem_Recover()
 {
+	PrimaryActorTick.bCanEverTick = true;
 	amount_Recovery = 40;
 	Sound = CreateDefaultSubobject<UAudioComponent>(TEXT("SOUND"));
+	PickupSound = CreateDefaultSubobject<UAudioComponent>(TEXT("PickupSOUND"));
 	loadAsset();
 	//Tag = TEXT("Recover");
+}
+
+void AItem_Recover::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (TargetActor.IsValid())
+	{
+		Sound->SetWorldLocation(TargetActor->GetActorLocation());
+	}
+
 }
 
 void AItem_Recover::BePickedUp(ACharacter * OtherActor)
@@ -46,6 +59,8 @@ void AItem_Recover::UseMe(ACharacter*UserActor)
 
 	Effect->SetHiddenInGame(false);
 	Effect->Activate(true);
+	if (!TargetActor.IsValid())TargetActor = UserActor;
+
 	Sound->Play();
 }
 
@@ -105,6 +120,7 @@ void AItem_Recover::loadAsset()
 		Effect->bAllowRecycling = false;
 		
 	}
+	Effect->SetupAttachment(Sound);
 
 	
 	static ConstructorHelpers::FObjectFinder<USoundBase>SB_SOUND(TEXT("SoundWave'/Game/MagicModule/SFX/WAV/WAV_Healing.WAV_Healing'"));
@@ -114,16 +130,25 @@ void AItem_Recover::loadAsset()
 		
 		Sound->SetSound(SB_SOUND.Object);
 		Sound->bAutoActivate = false;
-		Sound->SetupAttachment(Effect);
+		//Sound->SetupAttachment(Effect);
 		
 		
 		//Sound->SoundWavePlaybackTimes(0);
+	}
+
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_PICKSOUND(TEXT("SoundWave'/Game/MyFolder/Sound/PickUpBoxSFX.PickUpBoxSFX'"));
+	if (SB_PICKSOUND.Succeeded())
+	{
+		PickupSound->SetSound(SB_PICKSOUND.Object);
+		PickupSound->bAutoActivate = false;
+		PickupSound->SetupAttachment(RootComponent);
 	}
 
 	static ConstructorHelpers::FObjectFinder<USoundAttenuation>SA_ATTENUATION(TEXT("SoundAttenuation'/Game/MyFolder/Sound/SparkAttenuation.SparkAttenuation'"));
 	if (SA_ATTENUATION.Succeeded())
 	{
 		Sound->AttenuationSettings = SA_ATTENUATION.Object;
+		PickupSound->AttenuationSettings = SA_ATTENUATION.Object;
 	}
 }
 

@@ -130,8 +130,8 @@ void AFireBallActor::loadAssetes()
 void AFireBallActor::setupCollision()
 {
 	Collision->SetSphereRadius(40.3f);
-	Collision->SetCollisionProfileName(TEXT("BlockAll"));
-	SoundTrigger->SetCollisionProfileName(TEXT("OnTrapTrigger"));
+	Collision->SetCollisionProfileName(TEXT("NoCollision"));
+	SoundTrigger->SetCollisionProfileName(TEXT("NoCollision"));
 	SoundTrigger->SetSphereRadius(200.0f);
 }
 
@@ -209,5 +209,6 @@ void AFireBallActor::Fire()
 	bIsFlying = true;
 	FireBall->bHiddenInGame=false;
 	Collision->SetCollisionProfileName(TEXT("OverlapAll"));
+	SoundTrigger->SetCollisionProfileName(TEXT("OnTrapTrigger"));
 
 }

@@ -40,7 +40,10 @@ void ASpearActor::BeginPlay()
 float ASpearActor::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
 {
 	Durability -= DamageAmount;
-	if (Durability <= 0.0f)Destroy();
+	if (Durability <= 0.0f)
+
+		Body->SetCollisionProfileName(TEXT("NoCollision"));
+	SetActorHiddenInGame(true);
 
 	return DamageAmount;
 }

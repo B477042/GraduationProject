@@ -18,6 +18,9 @@ class ESCAPEGAME_API AItem_Recover : public AItemActor
 public:
 
 	AItem_Recover();
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 	virtual void BePickedUp(ACharacter* OtherActor)override;
 	virtual void PostInitializeComponents()override;
 	virtual void UseMe(ACharacter* UserActor)override;
@@ -39,5 +42,10 @@ private:
 	//아이템을 사용하면 출력될 소리를 다룬다
 	UPROPERTY(VisibleAnywhere, Category = Content)
 		UAudioComponent* Sound;
-	
+	UPROPERTY(VisibleAnywhere, Category = Content)
+		UAudioComponent* PickupSound;
+
+	//Effect를 재생할 때 쓰는 용도다. 이 위치로 접근해서 위치를 업데이트 시킨다
+	UPROPERTY(VisibleAnywhere, Category = Content)
+		TWeakObjectPtr<AActor>TargetActor;
 };

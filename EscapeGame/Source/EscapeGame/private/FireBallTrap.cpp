@@ -52,11 +52,13 @@ void AFireBallTrap::initComponents()
 	if (SM_Mesh.Succeeded())
 	{
 		Root->SetStaticMesh(SM_Mesh.Object);
+		
 	}
 }
 
 void AFireBallTrap::setupCollision()
 {
+	Root->SetCollisionProfileName(TEXT("OnTrapTrigger"));
 	Trigger->SetCollisionProfileName(TEXT("OnTrapTrigger"));
 	Trigger->SetRelativeLocation(FVector(0.0f, 0.0f, 70.0f));
 	Trigger->SetBoxExtent(FVector(150.000000f, 70.000000f, 67.991219f));
