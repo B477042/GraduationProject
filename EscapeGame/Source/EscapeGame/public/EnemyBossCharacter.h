@@ -4,6 +4,7 @@
 
 
 #include "EnemyCharacter.h"
+#include "SkillComponent_ProjectileType.h"
 #include "EnemyBossCharacter.generated.h"
 
 /**
@@ -54,4 +55,10 @@ private:
 		bool bIsDamaged;
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		EBossState State;
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	USkillComponent_ProjectileType* Comp_Fireball;
+
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TMap<FName,USoundWave*> SoundMap;
+
 };

@@ -6,7 +6,7 @@
 #include "Component_SkillContainer.h"
 #include "SkillComponent_ProjectileType.generated.h"
 
-/**TArray 내부에서 회전하듯 돌아가야 된다
+/**
  * 
  */
 UCLASS()
@@ -23,11 +23,11 @@ protected:
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	
+	//발사체 스킬을 사용한다.
+	virtual void UseSkill(const AActor& TargetActor, const FVector& Dir_Vector, int n_Count = 1);
 
 protected:
-
+	void aimTo(const FVector& Dir_Vector,int n_Count);
 	
 
 };

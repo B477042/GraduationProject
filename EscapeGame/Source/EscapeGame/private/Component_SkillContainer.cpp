@@ -55,6 +55,7 @@ void UComponent_SkillContainer::AddSkillObj(T * Input, int num)
 	CurrentIndex = SkillObjects[Index];
 }
 
+//슬롯에 있는 다음 엑터를 준비시킨다
 void UComponent_SkillContainer::revolve()
 {
 	
@@ -69,5 +70,11 @@ void UComponent_SkillContainer::revolve()
 	Index++;
 	CurrentIndex = SkillObjects[Index];
 	
+}
+
+void UComponent_SkillContainer::clear()
+{
+	SkillObjects.Empty();
+
 }
 
