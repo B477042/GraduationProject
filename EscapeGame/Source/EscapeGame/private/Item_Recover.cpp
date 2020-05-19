@@ -120,7 +120,7 @@ void AItem_Recover::loadAsset()
 		Effect->bAllowRecycling = false;
 		
 	}
-	Effect->SetupAttachment(Sound);
+
 
 	
 	static ConstructorHelpers::FObjectFinder<USoundBase>SB_SOUND(TEXT("SoundWave'/Game/MagicModule/SFX/WAV/WAV_Healing.WAV_Healing'"));
@@ -130,7 +130,7 @@ void AItem_Recover::loadAsset()
 		
 		Sound->SetSound(SB_SOUND.Object);
 		Sound->bAutoActivate = false;
-		//Sound->SetupAttachment(Effect);
+		
 		
 		
 		//Sound->SoundWavePlaybackTimes(0);
@@ -141,7 +141,7 @@ void AItem_Recover::loadAsset()
 	{
 		PickupSound->SetSound(SB_PICKSOUND.Object);
 		PickupSound->bAutoActivate = false;
-		PickupSound->SetupAttachment(RootComponent);
+		
 	}
 
 	static ConstructorHelpers::FObjectFinder<USoundAttenuation>SA_ATTENUATION(TEXT("SoundAttenuation'/Game/MyFolder/Sound/SparkAttenuation.SparkAttenuation'"));
@@ -150,6 +150,8 @@ void AItem_Recover::loadAsset()
 		Sound->AttenuationSettings = SA_ATTENUATION.Object;
 		PickupSound->AttenuationSettings = SA_ATTENUATION.Object;
 	}
+	Effect->SetupAttachment(Sound);
+	PickupSound->SetupAttachment(RootComponent);
 }
 
 //사운드가 종료될 때 실행되고 effect를 게임에서 안 보이게 하고 재생도 종료하니다
