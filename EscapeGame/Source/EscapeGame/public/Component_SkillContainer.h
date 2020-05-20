@@ -35,11 +35,11 @@ public:
 
 	virtual void UseSkill(const AActor& TargetActor,const FVector& Direction , int n_Count=1) PURE_VIRTUAL(UComponent_SkillContainer::UseSkill,  );
 
-	//주어진 수 만큼 queue에 밀어 넣는다. 같은 타입으로 만들어야 돼서 템플릿을 사용한다
-	template <typename T>
-	void AddSkillObj(T* Input, int num);
-	//TArray< TWeakObjectPtr< ASkillActor > >GetObjs() { return SkillObjects; }
 	
+
+	void AddSkillObj(TWeakObjectPtr<ASkillActor> Input);
+	//TArray< TWeakObjectPtr< ASkillActor > >GetObjs() { return SkillObjects; }
+	int GetCapacity() { return ArraySize; }
 
 protected:
 	
@@ -50,8 +50,11 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "contents", meta = (AllowPrivateAccess = "true"))
 		TArray< TWeakObjectPtr< ASkillActor > > SkillObjects;
 	UPROPERTY(VisibleAnywhere, Category = "contents", meta = (AllowPrivateAccess = "true"))
-		TWeakObjectPtr<AActor> CurrentIndex;
+		TWeakObjectPtr < ASkillActor> CurrentIndex;
 	UPROPERTY(VisibleAnywhere, Category = "contents", meta = (AllowPrivateAccess = "true"))
 		int Index;
+	//배열 초기화 크기. 늘어나진 않는다
+	UPROPERTY(VisibleAnywhere, Category = "contents", meta = (AllowPrivateAccess = "true"))
+		int ArraySize;
 
 };

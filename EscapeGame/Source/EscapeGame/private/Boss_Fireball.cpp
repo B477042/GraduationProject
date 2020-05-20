@@ -36,6 +36,7 @@ void ABoss_Fireball::loadAssets()
 	{
 		MainEffect->SetTemplate(P_MAINEFFECT.Object);
 		MainEffect->bAutoActivate = false;
+
 	}
 	static ConstructorHelpers::FObjectFinder<UParticleSystem>P_HITEFFECT(TEXT("ParticleSystem'/Game/ParagonGideon/FX/Particles/Gideon/Abilities/Primary/FX/P_Gideon_Primary_HitCharacter.P_Gideon_Primary_HitCharacter'"));
 	if (P_HITEFFECT.Succeeded())

@@ -10,24 +10,46 @@ AProjectile::AProjectile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	Acceleration = 10.5f;
 	//initComponents();
 	
 }
 
+// Called every frame
+void AProjectile::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	//EGLOG(Warning, TEXT("d"));
+	gliding();
+}
+
+
+
 void AProjectile::ReadyToFire(const FVector & Dir_Vector, const FVector& Location, const FRotator& Rotate)
 {
 	FireDir = Dir_Vector;
+	SetActorHiddenInGame(false);
 	Root->SetHiddenInGame(false);
 	MainEffect->SetHiddenInGame(false);
+	
 	SoundTrigger->SetCollisionProfileName("OnTrapTrigger");
 	Collision->SetSphereRadius(40.3f);
 	
+
 	SoundTrigger->SetCollisionProfileName(TEXT("OnTrapTrigger"));
 	SoundTrigger->SetSphereRadius(200.0f);
 
-	bIsFire = true;
+	
 	SetActorLocationAndRotation(Location, Rotate);
+	Fire();
+}
 
+void AProjectile::Fire()
+{
+	bIsFire = true;
+	//EGLOG(Error, TEXT("Free fire"));
+	MainEffect->Activate();
+	Collision->SetCollisionProfileName("OnTrapTrigger");
 }
 
 void AProjectile::PostInitializeComponents()
@@ -72,17 +94,10 @@ void AProjectile::BeginPlay()
 void AProjectile::gliding()
 {
 	if (!bIsFire)return;
+	//EGLOG(Error, TEXT("Gliding"));
 	FVector NewLocation = GetActorLocation() + (FireDir*Acceleration);
 	SetActorLocation(NewLocation);
 
 }
 
-
-
-// Called every frame
-void AProjectile::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-	gliding();
-}
 

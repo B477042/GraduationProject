@@ -18,6 +18,7 @@ public:
 	// Sets default values for this actor's properties
 	AProjectile();
 	virtual void ReadyToFire(const FVector &Dir_Vector, const FVector& Location,const FRotator& Rotate);
+	void Fire();
 	virtual void PostInitializeComponents()override;
 	//메인 이펙트에 맞았을 때
 	UFUNCTION()

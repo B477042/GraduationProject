@@ -22,7 +22,7 @@ void AEnemyBossCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-
+	reloadSkillObjs();
 	
 }
 
@@ -53,11 +53,10 @@ void AEnemyBossCharacter::Attack()
 */
 void AEnemyBossCharacter::ThrowFireBall()
 {
-	EGLOG(Error, TEXT("FIRRRRR"));
-	OnFireballThrow.Broadcast();
-
-	auto tempCon = Cast<AAIController_Boss>(AIControllerClass);
-	if (!tempCon)return;
+	auto tempCon = Cast<AAIController_Boss>(GetController());
+	if (!tempCon) { 
+		EGLOG(Warning, TEXT("Casting faile"));
+		return; }
 
 	AActor* tempObj = Cast<AActor>(tempCon->GetBlackboardComponent()->GetValueAsObject(AAIController_Boss::TargetPlayer));
 	if (!tempObj)
@@ -65,8 +64,13 @@ void AEnemyBossCharacter::ThrowFireBall()
 		EGLOG(Error, TEXT("fail to get value "));
 		return;
 	}
+	EGLOG(Warning, TEXT("Target Name : %s"), *tempObj->GetName());
 	//tempCon->GetBlackBoard()->get (AAIController_Boss::TargetPlayer);
 	Comp_Fireball->UseSkill(*tempObj,GetActorForwardVector());
+	//EGLOG(Error, TEXT("FIRRRRR"));
+	OnFireballThrow.Broadcast();
+
+	
 }
 
 void AEnemyBossCharacter::initComponents()
@@ -104,4 +108,21 @@ void AEnemyBossCharacter::loadAsset()
 void AEnemyBossCharacter::attachParticle()
 {
 	
+}
+
+void AEnemyBossCharacter::reloadSkillObjs()
+{
+	if (!GetWorld()) {
+		EGLOG(Error, TEXT("Not World"));
+		return;
+	}
+
+	int fbCapacity = Comp_Fireball->GetCapacity();
+	EGLOG(Error, TEXT("Fb Cap[aitcy : %d"), fbCapacity);
+
+	for (int i = 0; i < fbCapacity; i++)
+	{
+		Comp_Fireball->AddSkillObj(GetWorld()->SpawnActor<ABoss_Fireball>());
+	}
+
 }

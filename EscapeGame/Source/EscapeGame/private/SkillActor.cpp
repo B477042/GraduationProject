@@ -24,6 +24,7 @@ void ASkillActor::ActivateHitEffect()
 	MainEffect->Deactivate();
 	HitEffect->SetHiddenInGame(false);
 	HitEffect->Activate();
+	SoundHit->Play();
 }
 
 
@@ -53,6 +54,7 @@ void ASkillActor::SetSafety()
 	MainEffect->SetHiddenInGame(true);
 	ReactEffect->SetHiddenInGame(true);
 	ReactEffect->bAutoActivate = false;
+
 }
 
 void ASkillActor::initComponents()

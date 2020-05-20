@@ -32,42 +32,58 @@ void UComponent_SkillContainer::TickComponent(float DeltaTime, ELevelTick TickTy
 	// ...
 }
 
-template <typename T>
-void UComponent_SkillContainer::AddSkillObj(T * Input, int num)
-{
-	auto typeTest = Cast<AActor>(Input);
+//template <typename T>
+//void UComponent_SkillContainer::AddSkillObj(T * Input, int num)
+//{
+//	auto typeTest = Cast<AActor>(Input);
+//
+//	if (!typeTest)
+//	{
+//		EGLOG(Warning, TEXT("typeTest Failed"));
+//		return;
+//	}
+//
+//	for (int i = 0; i < num; i++)
+//	{
+//		SkillObjects.Emplace(GetWorld()->SpawnActor<T>());
+//		
+//	}
+//
+//	
+//	Index = 0;
+//	CurrentIndex = SkillObjects[Index];
+//}
 
-	if (!typeTest)
+void UComponent_SkillContainer::AddSkillObj(TWeakObjectPtr<ASkillActor> Input)
+{
+	if (!Input.IsValid())
 	{
-		EGLOG(Warning, TEXT("typeTest Failed"));
+		EGLOG(Error, TEXT("input actor is null"));
 		return;
 	}
+	SkillObjects[Index] = Input.Get();
 
-	for (int i = 0; i < num; i++)
-	{
-		SkillObjects.Emplace(GetWorld()->SpawnActor<T>());
-		
-	}
+	revolve();
 
-	
-	Index = 0;
-	CurrentIndex = SkillObjects[Index];
 }
 
 //슬롯에 있는 다음 엑터를 준비시킨다
 void UComponent_SkillContainer::revolve()
 {
 	
-	int lastNum = 0;
-	TWeakObjectPtr<ASkillActor> tempActor;
-	if (!SkillObjects.FindLast(tempActor, lastNum))return;
+	EGLOG(Error, TEXT("Rolling"));
+	if(!CurrentIndex.IsValid())
+		CurrentIndex = SkillObjects[Index];
 
-	if (Index+1 >= lastNum)
+	Index++;
+
+	if (Index >= ArraySize)
 		Index = 0;
 	
+		
+	EGLOG(Error, TEXT("Index : %d"), Index);
 	
-	Index++;
-	CurrentIndex = SkillObjects[Index];
+	EGLOG(Warning, TEXT("CIndex Name : %s"), *CurrentIndex->GetName());
 	
 }
 

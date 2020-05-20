@@ -48,7 +48,7 @@ private:
 	void initComponents();
 	void loadAsset();
 	void attachParticle();
-
+	void reloadSkillObjs();
 
 private:
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
