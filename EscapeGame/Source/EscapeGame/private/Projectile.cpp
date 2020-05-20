@@ -39,6 +39,8 @@ void AProjectile::PostInitializeComponents()
 	Collision->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnSomethingHit);
 
 	SoundTrigger->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnCharacterEntered);;
+	SoundHit->OnAudioFinished.AddDynamic(this, &AProjectile::setSafety);
+
 }
 
 void AProjectile::OnSomethingHit(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
@@ -69,7 +71,7 @@ void AProjectile::ActivateEffect()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	setSafety();
 }
 
 void AProjectile::setSafety()
@@ -112,7 +114,7 @@ void AProjectile::initComponents()
 	MainEffect->SetupAttachment(RootComponent);
 	ReactEffect->SetupAttachment(RootComponent);
 	HitEffect->SetupAttachment(RootComponent);
-	HitEffect->SetupAttachment(RootComponent);
+	MainEffect->SetupAttachment(RootComponent);
 	SoundPassing->SetupAttachment(RootComponent);
 	SoundHit->SetupAttachment(RootComponent);
 	SoundTrigger->SetupAttachment(RootComponent);

@@ -3,14 +3,14 @@
 #pragma once
 
 #include "EscapeGame.h"
-#include "GameFramework/Actor.h"
+#include "SkillActor.h"
 #include "Projectile.generated.h"
 
 /*
 	발사체 클래스
 */
 UCLASS()
-class ESCAPEGAME_API AProjectile : public AActor
+class ESCAPEGAME_API AProjectile : public  ASkillActor
 {
 	GENERATED_BODY()
 	
