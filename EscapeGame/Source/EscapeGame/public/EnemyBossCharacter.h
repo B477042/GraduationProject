@@ -5,6 +5,7 @@
 
 #include "EnemyCharacter.h"
 #include "SkillComponent_ProjectileType.h"
+#include "StatComponent_Enemy.h"
 #include "EnemyBossCharacter.generated.h"
 
 /**
@@ -16,6 +17,7 @@ enum class EBossState:uint8
 	Walk=0,
 	Dash
 };
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnFireballThrow);
 
 UCLASS(BlueprintType)
@@ -51,6 +53,9 @@ private:
 	void reloadSkillObjs();
 
 private:
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UStatComponent_Enemy* Stat;
+
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		bool bIsDamaged;
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))

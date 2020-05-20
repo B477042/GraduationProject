@@ -20,7 +20,7 @@ class ESCAPEGAME_API UStatComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UStatComponent();
 
@@ -29,19 +29,19 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	
+
 	void TakeDamage(float NewDamage);
 	//set new hp. 
 	void SetHP(float NewHP);
-
+	void SetMaxHP(float NewHP) { MaxHP = NewHP; }
 	//Add HP to Current HP
 	void HealHP(float AddHP);
-	
+
 	//void BasicDamage();//자신이 초당 입는 기본 데미지
-	void OnAttacking( bool bResult);
+	void OnAttacking(bool bResult);
 
 	//Set Actor Can't Move Around using MinWalkingSpeed
 	void SetDontMove();
@@ -59,11 +59,12 @@ public:
 
 
 	//int32 GetDropExp()const;
-	
+
 
 	float GetATK()const;
 	float GetHPRatio()const;
-	
+	float GetMaxHP()
+	{return MaxHP;}
 	float GetHP()const;
 	
 	bool IsAttacking()const;

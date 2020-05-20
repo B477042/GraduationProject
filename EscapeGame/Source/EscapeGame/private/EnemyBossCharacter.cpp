@@ -77,8 +77,10 @@ void AEnemyBossCharacter::initComponents()
 {
 	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
 	Comp_Fireball = CreateDefaultSubobject<USkillComponent_ProjectileType>(TEXT("FireballComp"));
-
+	Stat = CreateDefaultSubobject<UStatComponent_Enemy>(TEXT("STAT"));
 	
+	Stat->SetHP(3000.0f);
+	Stat->SetMaxHP(3000.0f);
 }
 
 void AEnemyBossCharacter::loadAsset()

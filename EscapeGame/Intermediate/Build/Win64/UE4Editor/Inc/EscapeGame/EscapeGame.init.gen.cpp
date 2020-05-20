@@ -35,7 +35,7 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGame_init() {}
 				SingletonFuncArray,
 				UE_ARRAY_COUNT(SingletonFuncArray),
 				PKG_CompiledIn | 0x00000000,
-				0x76567875,
+				0x887C42B5,
 				0x375D61FD,
 				METADATA_PARAMS(nullptr, 0)
 			};
