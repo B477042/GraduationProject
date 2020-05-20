@@ -122,8 +122,8 @@ void UStatComponent_Player::UseStamina(float DeltaTime)
 		Stamina = 0.0f;
 		return;
 	}
-	Stamina -= DeltaTime * 10.0f;
-	
+	Stamina -= DeltaTime * 300.0f;
+	StaminaChangedDelegate.Broadcast();
 }
 
 //Call when Running Start
@@ -211,6 +211,14 @@ bool UStatComponent_Player::SetStaminaUsing(bool bResult)
 {
 	bIsStaminaUsing = bResult;
 	return bIsStaminaUsing;
+}
+
+bool UStatComponent_Player::CanUsingStamina()
+{
+	if (Stamina <= 0)
+		return false;
+	else
+		return true;
 }
 
 float UStatComponent_Player::GetStamina()

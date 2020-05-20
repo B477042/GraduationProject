@@ -6,6 +6,9 @@
 ABoss_Fireball::ABoss_Fireball()
 {
 	loadAssets();
+	SetActorScale3D(FVector(2.0f, 2.0f, 2.0f));
+	Damage = 6;
+	Acceleration = 30.0f;
 }
 
 void ABoss_Fireball::ReadyToFire(const FVector & Dir_Vector, const FVector & Location, const FRotator & Rotate)

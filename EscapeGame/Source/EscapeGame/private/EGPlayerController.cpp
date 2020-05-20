@@ -44,6 +44,22 @@ void AEGPlayerController::BeginPlay()
 	
 	FInputModeGameOnly GameOnly;
 	SetInputMode(GameOnly);
+
+
+	
+	auto tempChara = Cast<AEGPlayerCharacter>(GetPawn());
+	if (!tempChara)
+	{
+	
+		return;
+	}
+
+	
+	HUD->BindCharacterInven(tempChara->GetInventory());
+
+	
+
+
 }
 
 void AEGPlayerController::PostInitializeComponents()
@@ -57,7 +73,7 @@ void AEGPlayerController::OnPossess(APawn * aPawn)
 {
 	Super::OnPossess(aPawn);
 	
-	EGLOG(Warning, TEXT("possessed complete") );
+	
 }
 
 

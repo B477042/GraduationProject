@@ -28,6 +28,7 @@ public:
 	virtual void NativeConstruct() override;
 	void TimeExtend(float addTime);
 	void BindCharacterStat( UStatComponent_Player* newStat);
+	void BindCharacterInven(class UComponent_Inventory* newInven);
 	float GetGameTimer();
 	//FBindStat BindStatDelegate;
 	//Update UI's Hp
@@ -46,7 +47,13 @@ private:
 	void loadImages();
 
 private:
+	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
 	TWeakObjectPtr<class UStatComponent_Player>CurrentCharacterStat;
+	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
+	TWeakObjectPtr<class UComponent_Inventory>CurrenPlayerInventory;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
+	TWeakObjectPtr<ACharacter>OwnerChara;
 	/*UPROPERTY()
 		class UProgressBar* PB_HP;*/
 	UPROPERTY()
@@ -62,8 +69,10 @@ private:
 	class UImage* Img_RecoveryItem;
 
 
-	//UPROPERTY()
-	//	class UTextBlock* HPAmount;//Write 'HP'
+	UPROPERTY()
+		class UTextBlock* RecoveryItemNum;//Write 'HP'
+	UPROPERTY(BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
+		int HPAmount;
 	//
 	//UPROPERTY()
 	//	class UTextBlock* TimerText;

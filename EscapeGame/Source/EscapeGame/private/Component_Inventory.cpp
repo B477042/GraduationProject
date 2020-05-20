@@ -2,6 +2,7 @@
 
 
 #include "Component_Inventory.h"
+
 #include"ItemActor.h"
 
 // Sets default values for this component's properties
@@ -62,6 +63,7 @@ bool UComponent_Inventory::AddItem(AItemActor * AddItem, int Amount)
 		return true;
 	}
 
+	//처음 생성할 때
 	else
 	{
 		
@@ -69,6 +71,15 @@ bool UComponent_Inventory::AddItem(AItemActor * AddItem, int Amount)
 		tempData.SetItemInfo(AddItem, Amount);
 		//EGLOG(Warning, TEXT("Item Tag Name : %s"), *tempData.GetItem()->GetTag().ToString());
 		Items.Add(tempData.GetItem()->GetTag(), tempData);
+		
+		////widget에서 inventory를 호출할 수 있게 연결한다
+		////연결되있다면 그만둔다
+		//auto tempChara = Cast<ACharacter>(GetOwner());
+		//if (!tempChara)return true;
+		//auto tempCon = Cast<AEGPlayerController>(tempChara->Controller);
+		//if (!tempCon)return true;
+		//tempCon->GetHUDWidget()->BindCharacterInven(this);
+
 		//EGLOG(Warning, TEXT("Current Amount : %d"), tempData.GetAmountItems());
 		return true;
 	}
@@ -89,5 +100,23 @@ bool UComponent_Inventory::UseItem(FName ItemName, ACharacter* UserActor)
 	}
 	return true;
 }
+
+int UComponent_Inventory::GetAmountItem(FName Name)
+{	
+	//없으면 음수로 보낸다
+	if (!Items.Contains(Name))return -1;
+
+	return Items[Name].GetAmountItems();
+}
+
+////nullptr 체크 꼭 해야됨. 아이템이 가지고 있는 델리게이틀 호출해서 엮어줄 것
+//FOnItemChanged UComponent_Inventory::GetItemChangeDelegate(FName ItemName)
+//{
+//
+//	if(!Items.Contains(ItemName))
+//	return ;
+//
+//	return Items[ItemName].OnItemChanged;
+//}
 
 

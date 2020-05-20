@@ -4,6 +4,8 @@
 #include "Engine/SceneCapture2D.h"
 #include "EGPlayerController.h"
 #include "Item_Recover.h"
+//#include "EGPlayerController.h"
+#include "GameWidget.h"
 #include"Components/InputComponent.h"
 #include "GameSetting/public/EGCharacterSetting.h"
 #include "..\public\EGPlayerCharacter.h"
@@ -108,8 +110,8 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	}
 
 	Stat->HPZeroDelegate.AddUObject(this,&AEGPlayerCharacter::SetDeath );
-	
 
+	
 	//Stat->SetSpeedLimits( MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
 	
 }
@@ -208,7 +210,13 @@ void AEGPlayerCharacter::StartRunning()
 	//if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::ZeroVector)return;
 	//Stat->SetRunning();//달릴 상태로 만들어 준다
 	//
-	
+	if (Stat->CanUsingStamina())
+	{
+		Stat->SetStaminaUsing(true);
+		GetCharacterMovement()->MaxWalkSpeed = 1200.0f;
+	}
+
+
 }
 
 //호출 시점 IE_Repeated
@@ -216,12 +224,18 @@ void AEGPlayerCharacter::StartRunning()
 void AEGPlayerCharacter::Running()
 {
 	EGLOG(Warning, TEXT("Run to"));
+	if (!Stat->CanUsingStamina())
+		StopRunning();
+	else
+	Stat->UseStamina(GetWorld()->DeltaTimeSeconds);
 }
 //호출시점IE_Released
 //키에서 때면 바로 호출된다
 void AEGPlayerCharacter::StopRunning()
 {
 	EGLOG(Warning, TEXT("Run Key Released"));
+	Stat->SetStaminaUsing(false);
+	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 	/*if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::ZeroVector)return;
 	Stat->SetWalking();*/
 }

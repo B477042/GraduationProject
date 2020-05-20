@@ -61,8 +61,13 @@ void UComponent_SkillContainer::AddSkillObj(TWeakObjectPtr<ASkillActor> Input)
 		EGLOG(Error, TEXT("input actor is null"));
 		return;
 	}
+	
 	SkillObjects[Index] = Input.Get();
 
+	/*Index++;
+
+	if (Index >= ArraySize)
+		Index = 0;*/
 	revolve();
 
 }
@@ -79,8 +84,11 @@ void UComponent_SkillContainer::revolve()
 
 	if (Index >= ArraySize)
 		Index = 0;
+
+	if(SkillObjects[ArraySize-1]!=nullptr)
+		CurrentIndex = SkillObjects[Index];
 	
-		
+	//CurrentIndex = SkillObjects[Index];
 	EGLOG(Error, TEXT("Index : %d"), Index);
 	
 	EGLOG(Warning, TEXT("CIndex Name : %s"), *CurrentIndex->GetName());

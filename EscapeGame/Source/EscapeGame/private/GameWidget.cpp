@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "GameWidget.h"
+#include "Component_Inventory.h"
 #include"Components/ProgressBar.h"
 #include"Components/TextBlock.h"
 //#include"GameStat.h"
@@ -19,10 +20,12 @@ void UGameWidget::NativeConstruct()
 	PB_Stamina = Cast<UProgressBar>(GetWidgetFromName(TEXT("StaminaBar")));
 	Img_Battery = Cast<UImage>(GetWidgetFromName(TEXT("HPImage")));
 	Img_RecoveryItem = Cast<UImage>(GetWidgetFromName(TEXT("RecoveryItemImage")));
-	//HPAmount = Cast<UTextBlock>(GetWidgetFromName(TEXT("HPTEXT")));
+	
+	RecoveryItemNum = Cast<UTextBlock>(GetWidgetFromName(TEXT("RecoveryItemNum0")));
 	GameTimer = 60.0f;
 	PlayerHP = 100.0f;
 	PlayerStamina = 100.0f;
+	HPAmount = 0;
 }
 //연동된 character의 stat component에서 채력이 바뀔 때, 호출된다. 
 void UGameWidget::UpdateCharacterStat()
@@ -92,7 +95,11 @@ void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 	CurrentCharacterStat = newStat;
 	CurrentCharacterStat->HPChangedDelegate.AddUObject(this, &UGameWidget::UpdateCharacterStat);
 	CurrentCharacterStat->StaminaChangedDelegate.AddUObject(this, &UGameWidget::UpdateStamina);
-
+	auto temp = Cast<ACharacter>(CurrentCharacterStat->GetOwner());
+	if(temp)
+		{
+		OwnerChara = temp;
+		}
 
 	/*CurrentCharacterStat->HPChangedDelegate.AddLambda([this]()->void {
 		if (CurrentCharacterStat.IsValid())
@@ -103,6 +110,23 @@ void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 
 	
 }
+
+void UGameWidget::BindCharacterInven(UComponent_Inventory * newInven)
+{
+	if (newInven == nullptr) {
+		EGLOG(Error, TEXT("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"));
+		return;
+	}
+	//이미 설정 됐으면 튕긴다
+	if (CurrenPlayerInventory!=nullptr) {
+		EGLOG(Error, TEXT("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"));
+		return;
+	}
+	EGLOG(Warning, TEXT("Player Post init compo4*************************************ns"));
+	CurrenPlayerInventory = newInven;
+
+}
+
 
 float UGameWidget::GetGameTimer()
 {

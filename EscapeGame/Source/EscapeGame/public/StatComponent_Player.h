@@ -49,10 +49,11 @@ public:
 	void UseStamina(float DeltaTime);
 	void SetRunning();
 	bool SetStaminaUsing(bool bResult);
-	
+	bool CanUsingStamina();
+
 	float GetStamina();
 	float GetStaminaRatio();
-
+	
 	void AddCombo(int32 Amount);
 	void ResetCombo();
 
@@ -61,6 +62,8 @@ public:
 
 	FStaminaChangedDelegate StaminaChangedDelegate;
 	//virtual  void LoadDataTable()override ;
+
+	
 
 
 private:
