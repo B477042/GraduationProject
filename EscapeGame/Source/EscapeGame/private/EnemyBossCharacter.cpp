@@ -3,6 +3,7 @@
 
 #include "EnemyBossCharacter.h"
 #include "AIController_Boss.h"
+#include "Boss_Fireball.h"
 #include "..\public\EnemyBossCharacter.h"
 
 AEnemyBossCharacter::AEnemyBossCharacter()
@@ -17,13 +18,19 @@ AEnemyBossCharacter::AEnemyBossCharacter()
 	State = EBossState::Walk;
 }
 
+void AEnemyBossCharacter::BeginPlay()
+{
+	Super::BeginPlay();
 
+
+	
+}
 
 void AEnemyBossCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-
 	
+	//Comp_Fireball->AddSkillObj(ABoss_Fireball::CreateDefaultSubobject,10);
 }
 
 float AEnemyBossCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
@@ -49,6 +56,17 @@ void AEnemyBossCharacter::ThrowFireBall()
 	EGLOG(Error, TEXT("FIRRRRR"));
 	OnFireballThrow.Broadcast();
 
+	auto tempCon = Cast<AAIController_Boss>(AIControllerClass);
+	if (!tempCon)return;
+
+	AActor* tempObj = Cast<AActor>(tempCon->GetBlackboardComponent()->GetValueAsObject(AAIController_Boss::TargetPlayer));
+	if (!tempObj)
+	{
+		EGLOG(Error, TEXT("fail to get value "));
+		return;
+	}
+	//tempCon->GetBlackBoard()->get (AAIController_Boss::TargetPlayer);
+	Comp_Fireball->UseSkill(*tempObj,GetActorForwardVector());
 }
 
 void AEnemyBossCharacter::initComponents()

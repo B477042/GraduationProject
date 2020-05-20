@@ -27,7 +27,7 @@ public:
 		static const FName TargetPlayer;
 		static const FName HomePos;
 		static const FName PatrolPos;
-
+		const class UBlackboardData* GetBlackBoard() { return BBData; }
 		
 protected:
 	virtual void BeginPlay()override;

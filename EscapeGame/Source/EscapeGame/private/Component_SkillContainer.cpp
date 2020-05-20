@@ -20,8 +20,7 @@ void UComponent_SkillContainer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+
 }
 
 
@@ -60,7 +59,7 @@ void UComponent_SkillContainer::revolve()
 {
 	
 	int lastNum = 0;
-	TWeakObjectPtr<AActor> tempActor;
+	TWeakObjectPtr<ASkillActor> tempActor;
 	if (!SkillObjects.FindLast(tempActor, lastNum))return;
 
 	if (Index+1 >= lastNum)

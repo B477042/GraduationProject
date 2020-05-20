@@ -3,6 +3,7 @@
 #pragma once
 
 #include "EscapeGame.h"
+#include "SkillActor.h"
 #include "Components/ActorComponent.h"
 #include "Component_SkillContainer.generated.h"
 
@@ -37,7 +38,8 @@ public:
 	//주어진 수 만큼 queue에 밀어 넣는다. 같은 타입으로 만들어야 돼서 템플릿을 사용한다
 	template <typename T>
 	void AddSkillObj(T* Input, int num);
-
+	//TArray< TWeakObjectPtr< ASkillActor > >GetObjs() { return SkillObjects; }
+	
 
 protected:
 	
@@ -45,8 +47,8 @@ protected:
 	void clear();
 
 protected:
-	UPROPERTY(VisibleAnywhere,  Category = "contents", meta = (AllowPrivateAccess = "true"))
-		TArray< TWeakObjectPtr< AActor > > SkillObjects;
+	UPROPERTY(EditAnywhere, Category = "contents", meta = (AllowPrivateAccess = "true"))
+		TArray< TWeakObjectPtr< ASkillActor > > SkillObjects;
 	UPROPERTY(VisibleAnywhere, Category = "contents", meta = (AllowPrivateAccess = "true"))
 		TWeakObjectPtr<AActor> CurrentIndex;
 	UPROPERTY(VisibleAnywhere, Category = "contents", meta = (AllowPrivateAccess = "true"))

@@ -25,7 +25,7 @@ class ESCAPEGAME_API AEnemyBossCharacter : public AEnemyCharacter
 public:
 
 	AEnemyBossCharacter();
-
+	virtual void BeginPlay()override;
 	
 	//float TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser);
 	virtual void PostInitializeComponents()override;
