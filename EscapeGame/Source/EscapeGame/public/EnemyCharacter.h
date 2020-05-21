@@ -38,7 +38,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void Turn(float NewAxisValue);
 
-	//Change Name if need. refed at GruntChara, BTTask Attack. 
+	//Change Name if need. reefed at GruntChara, BTTask Attack. 
+	//UFUNCTION(BlueprintNativeEvent)
 	virtual void Attack() PURE_VIRTUAL(AEnemyCharacter::Attack,);
 
 };

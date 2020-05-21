@@ -21,7 +21,7 @@ void UBTService_Advanced_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, ui
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
 
-	auto ControllingPawn = Cast<AEnemyBossCharacter>(OwnerComp.GetAIOwner()->GetPawn());
+	auto ControllingPawn = Cast<AEnemyCharacter>(OwnerComp.GetAIOwner()->GetPawn());
 	if (ControllingPawn == nullptr)return;
 	
 
@@ -81,8 +81,14 @@ void UBTService_Advanced_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, ui
 	
 	OwnerComp.GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, nullptr);
 	OwnerComp.GetBlackboardComponent()->SetValueAsBool(AAIController_Boss::IsDash, false);
-	ControllingPawn->SetState(EBossState::Walk);
-	ControllingPawn->GetCharacterMovement()->MaxWalkSpeed = 300.0f;
+	auto temp = Cast<AEnemyBossCharacter>(ControllingPawn);
+	if (temp)
+	{
+	temp->SetState(EBossState::Walk);
+	temp->GetCharacterMovement()->MaxWalkSpeed = 300.0f;
+
+	}
+	
 
 	//draw detect range
 	if (DrawingDebugMode)

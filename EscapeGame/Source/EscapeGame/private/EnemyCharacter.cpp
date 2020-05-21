@@ -46,6 +46,7 @@ void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AEnemyCharacter::Turn);
+	EGLOG(Warning, TEXT("Turn Synced"));
 }
 
 void AEnemyCharacter::Turn(float NewAxisValue)
