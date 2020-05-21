@@ -38,10 +38,10 @@ protected:
 	virtual	void StopAI();
 //private:
 	//Blackboard Data File Data
-	UPROPERTY(VisibleAnywhere,Category=AI)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 		class UBlackboardData* BBData;
 	//Behavior Tree File Data
-	UPROPERTY(VisibleAnywhere, Category = AI)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 		class UBehaviorTree* BTData;
 	
 };

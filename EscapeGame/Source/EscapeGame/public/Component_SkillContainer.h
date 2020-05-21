@@ -35,7 +35,6 @@ public:
 
 	virtual void UseSkill(const AActor& TargetActor,const FVector& Direction , int n_Count=1) PURE_VIRTUAL(UComponent_SkillContainer::UseSkill,  );
 
-	
 
 	void AddSkillObj(TWeakObjectPtr<ASkillActor> Input);
 	//TArray< TWeakObjectPtr< ASkillActor > >GetObjs() { return SkillObjects; }
@@ -47,7 +46,7 @@ protected:
 	void clear();
 
 protected:
-	UPROPERTY(EditAnywhere, Category = "contents", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere,  Category = "contents", meta = (AllowPrivateAccess = "true"))
 		TArray< TWeakObjectPtr< ASkillActor > > SkillObjects;
 	UPROPERTY(VisibleAnywhere, Category = "contents", meta = (AllowPrivateAccess = "true"))
 		TWeakObjectPtr < ASkillActor> CurrentIndex;
