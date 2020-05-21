@@ -30,6 +30,7 @@ void AEnemyBossCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	
+	GetCharacterMovement()->JumpZVelocity = 1000.0f;
 	//Comp_Fireball->AddSkillObj(ABoss_Fireball::CreateDefaultSubobject,10);
 }
 
