@@ -12,7 +12,7 @@ UBTService_Advanced_Detect::UBTService_Advanced_Detect()
 {
 	NodeName = TEXT("Search Palyer using Box ");
 
-	DetectBoxSize = FVector(1000.0f,1000.0f,100.0f);
+	DetectBoxSize = FVector(1000.0f,1000.0f, 500.0f);
 
 }
 

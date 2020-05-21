@@ -62,9 +62,12 @@ public:
 
 
 	float GetATK()const;
+	UFUNCTION(BlueprintCallable)
 	float GetHPRatio()const;
+	UFUNCTION(BlueprintCallable)
 	float GetMaxHP()
 	{return MaxHP;}
+	UFUNCTION(BlueprintCallable)
 	float GetHP()const;
 	
 	bool IsAttacking()const;
@@ -91,7 +94,7 @@ protected:
 	//save current HP,
 	//Transient 이 프로퍼티는 휘발성이라, 저장 또는 로드되지 않습니다. 
 	//이런 식의 지정자가 붙은 프로퍼티는 로드 시간에 0 으로 채워집니다.
-	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
+	UPROPERTY(Transient, VisibleInstanceOnly, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
 		float CurrentHP;
 	UPROPERTY(VisibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		float CurrentATK;
