@@ -2,15 +2,14 @@
 
 #pragma once
 
-#include "EscapeGame.h"
-#include "GameFramework/Actor.h"
+#include"TrapType.h"
 #include "LightningTrap_Origin.generated.h"
 
 //파생형은 4가지. 가로, 세로, 상향,하향
 //충돌은 캡슐 컴포넌트
 //데미지 프레임은 tick time마다 0.1씩
 UCLASS()
-class ESCAPEGAME_API ALightningTrap_Origin : public AActor
+class ESCAPEGAME_API ALightningTrap_Origin : public ATrapType
 {
 	GENERATED_BODY()
 	
