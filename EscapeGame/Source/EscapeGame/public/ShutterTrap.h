@@ -2,8 +2,7 @@
 
 #pragma once
 
-#include "EscapeGame.h"
-#include "GameFramework/Actor.h"
+#include "TrapType.h"
 #include "SpearActor.h"
 #include "ShutterTrap.generated.h"
 
@@ -11,7 +10,7 @@
 DECLARE_DELEGATE_OneParam (FOnSpearDurabilityChange, TWeakObjectPtr<ASpearActor>)
 
 UCLASS()
-class ESCAPEGAME_API AShutterTrap : public AActor
+class ESCAPEGAME_API AShutterTrap : public ATrapType
 {
 	GENERATED_BODY()
 	

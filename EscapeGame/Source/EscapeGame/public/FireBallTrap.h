@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "EscapeGame.h"
+#include "TrapType.h"
 #include "FireBallActor.h"
 #include "GameFramework/Actor.h"
 #include "FireBallTrap.generated.h"
@@ -10,7 +10,7 @@
 //DECLARE_DELEGATE(FOnCharacterEntered,void);
 
 UCLASS()
-class ESCAPEGAME_API AFireBallTrap : public AActor
+class ESCAPEGAME_API AFireBallTrap : public ATrapType
 {
 	GENERATED_BODY()
 	

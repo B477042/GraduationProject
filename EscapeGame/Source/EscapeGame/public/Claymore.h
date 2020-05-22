@@ -3,7 +3,7 @@
 #pragma once
 
 //#include "CoreMinimal.h"
-#include"EscapeGame.h"
+#include "TrapType.h"
 #include"EGPlayerCharacter.h"
 #include "DrawDebugHelpers.h"
 #include "Claymore.generated.h"
@@ -35,7 +35,7 @@ void DrawDebugBox
 DECLARE_MULTICAST_DELEGATE(FOnExplosion);
 
 UCLASS()
-class ESCAPEGAME_API AClaymore : public AActor
+class ESCAPEGAME_API AClaymore : public ATrapType
 {
 	GENERATED_BODY()
 public:

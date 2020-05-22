@@ -1,0 +1,577 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="함정 타입 엑터들">
+    <Position X="6.89" Y="1.185" Height="0.589" Width="1.449" />
+  </Comment>
+  <Comment CommentText="스킬 Obj&#xD;&#xA;">
+    <Position X="2.5" Y="10.5" Height="0.75" Width="1.7" />
+  </Comment>
+  <Comment CommentText="투척, 발사되는&#xD;&#xA;타입의 스킬&#xD;&#xA;오브젝트들을&#xD;&#xA;정의합니다&#xD;&#xA;">
+    <Position X="1.605" Y="14.9" Height="0.84" Width="1.047" />
+  </Comment>
+  <Comment CommentText="스킬 OBJ들을 약포인터&#xD;&#xA;배열로 저장하는 컴포넌트&#xD;&#xA;메모리 풀의 역할을 합니다">
+    <Position X="8.086" Y="15.452" Height="0.857" Width="1.816" />
+  </Comment>
+  <Comment CommentText="일정 시간이 지나면&#xD;&#xA;스스로에게 데미지를 입힙니다.&#xD;&#xA;">
+    <Position X="16.799" Y="25.16" Height="0.75" Width="2.472" />
+  </Comment>
+  <Comment CommentText="미니맵을 그려줍니다&#xD;&#xA;">
+    <Position X="7.872" Y="25.013" Height="0.451" Width="1.535" />
+  </Comment>
+  <Comment CommentText="아이템 Actor들을 저장합니다&#xD;&#xA;빠르게 검색하기 위해서 Map 형식으로 만들었습니다.">
+    <Position X="5.769" Y="27.712" Height="0.904" Width="2.143" />
+  </Comment>
+  <Comment CommentText="플레이어 캐릭터&#xD;&#xA;">
+    <Position X="12.074" Y="21.14" Height="0.39" Width="1.7" />
+  </Comment>
+  <Comment CommentText="Animation을 제어합니다">
+    <Position X="15.51" Y="16.734" Height="0.575" Width="1.7" />
+  </Comment>
+  <Comment CommentText="로봇 형태의 적&#xD;&#xA;">
+    <Position X="12.415" Y="2.999" Height="0.328" Width="1.278" />
+  </Comment>
+  <Comment CommentText="메인 UI 클래스">
+    <Position X="22.573" Y="2.325" Height="0.349" Width="1.319" />
+  </Comment>
+  <Comment CommentText="타이틀 화면 조작을 위한 컨트롤러&#xD;&#xA;">
+    <Position X="12.177" Y="17.734" Height="0.75" Width="1.7" />
+  </Comment>
+  <Comment CommentText="회복하는 아이템과&#xD;&#xA;문을 여는 열쇠 아이템&#xD;&#xA;">
+    <Position X="9.728" Y="11.606" Height="0.75" Width="1.7" />
+  </Comment>
+  <Class Name="AAIController_Boss">
+    <Position X="15.5" Y="12.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAkQAAAAAAAAAwQAAAAAAQAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\AIController_Boss.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AAICtrl_Grunt">
+    <Position X="18.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAEQAAAAgAAAAAAAAAAAAgAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\AICtrl_Grunt.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UAnimInstance_Boss">
+    <Position X="14.5" Y="8.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAACEAACAAAAAAEAAAAIAAAABAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\AnimInstance_Boss.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UAnim_DrJoe">
+    <Position X="22.25" Y="19.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Anim_DrJoe.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UAnim_Grunt">
+    <Position X="15.5" Y="20" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAgBAAAAEAAACAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Anim_Grunt.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UAnim_Player">
+    <Position X="17.75" Y="20" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAwAAhAAAgAAAAgAAAAQQACQAAIAAAABAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Anim_Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ABoss_Fireball">
+    <Position X="0.5" Y="18.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAQAAIAAAAAAAAAAAAAAAAAAAAAAAAAAgQAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Boss_Fireball.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UBTDecorator_Boss_IsDashing" Collapsed="true">
+    <Position X="26" Y="12.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\BTDecorator_Boss_IsDashing.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UBTService_Advanced_Detect" Collapsed="true">
+    <Position X="28.25" Y="11" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\BTService_Advanced_Detect.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UBTService_Detect" Collapsed="true">
+    <Position X="26" Y="11" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\BTService_Detect.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UBTTask_Attack" Collapsed="true">
+    <Position X="25.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\BTTask_Attack.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UBTTask_Boss_DashATK" Collapsed="true">
+    <Position X="27.75" Y="9.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\BTTask_Boss_DashATK.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UBTTask_Dash_To" Collapsed="true">
+    <Position X="30.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\BTTask_Dash_To.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UBTTask_MoveAround" Collapsed="true">
+    <Position X="32.25" Y="9.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\BTTask_MoveAround.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UBTTask_TurnToForward" Collapsed="true">
+    <Position X="34.75" Y="9.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\BTTask_TurnToForward.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UCharacterAnimInstance">
+    <Position X="16.25" Y="16.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAEAAAAAAiAEAAEAAQAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\CharacterAnimInstance.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AClaymore">
+    <Position X="9.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CEgACAAVgAgAoAFAIABBAAAAAAECBIQEAAQAAAAmwAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Claymore.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UComponent_Inventory">
+    <Position X="8.25" Y="27.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAACAQAAgAACACAAAAAAAAAgAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Component_Inventory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UComponent_SelfDamage">
+    <Position X="14.75" Y="25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAgAAAAAAAEAAAAAAAAAAAAAAAAAAAEAgAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Component_SelfDamage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UComponent_SkillContainer">
+    <Position X="18.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAgAgAAAAgAEAgAAIAAAAAAAAgAEAAAAgAQA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Component_SkillContainer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UComponent_State" Collapsed="true">
+    <Position X="29" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Component_State.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ADialogueUIController">
+    <Position X="10.5" Y="19.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\DialogueUIController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UDialogueWidget" Collapsed="true">
+    <Position X="31" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAEAAAAAgAAAAAIAAgAAAIAgAIAQABEABAIgAAQAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\DialogueWidget.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ADoorPath">
+    <Position X="0.5" Y="25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIEAAAAABAAAAAAiAAIAQAAAAIEAAAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\DoorPath.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ADT_DataStruct" Collapsed="true">
+    <Position X="31.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\DT_DataStruct.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UEGGameInstance">
+    <Position X="34.75" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EGGameInstance.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AEGPlayerCharacter">
+    <Position X="11.75" Y="21.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>oAiDAAAEAhBBAYABACHiABYAoAAAABAIIAICtgGoSgA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EGPlayerCharacter.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Anim" />
+      <Field Name="Inventory" />
+      <Field Name="MapRenderer" />
+      <Field Name="Stat" />
+      <Field Name="SelfDamage" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AEGPlayerController">
+    <Position X="26.25" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAEABABAAAAAAAAAAACACABAABAAAAAEAAggAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EGPlayerController.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="HUD" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AEnemyAIController">
+    <Position X="17" Y="8.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAEQAAgAAAAAAAggEACAACAACAAAAAAAAggAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EnemyAIController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AEnemyBossCharacter">
+    <Position X="14.75" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAkABEAEAABAAAAAAAACAAAAAIAQQAABAIIAhAAgAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EnemyBossCharacter.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Stat" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AEnemyCharacter">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAECAAAAAAAAAAAAAAAAgAAgQAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EnemyCharacter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AEscapeGameGameModeBase" Collapsed="true">
+    <Position X="22.25" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EscapeGameGameModeBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AFireBallActor">
+    <Position X="3" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAGEBoYAkCAAQAAIIAIRwAAEAACAAAAAAAAgQAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\FireBallActor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AFireBallTrap">
+    <Position X="3" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAoAAAAEAAAAgDAAAAAAAAAQAAAEAAAAAAAAAAAgQAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\FireBallTrap.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UGameWidget">
+    <Position X="23.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABABAEEAIAAUECQAGAQIAQAAAQAAEAQAAAAAAAAhAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\GameWidget.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AGruntCharacter">
+    <Position X="12.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAQAEAQAAAAAQAAAAAAAAAIIAAAAABAIAiAAgQAE=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\GruntCharacter.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Stat" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AHPBox">
+    <Position X="7.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAkgCgA4ACQAAABAAAAACAAAQAAAAAAABAgQAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\HPBox.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AItemActor">
+    <Position X="11.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAgQAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\ItemActor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AItem_CardKey">
+    <Position X="10.5" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAEAAAkIAAAEAAACAAAAAAAEAAABAAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Item_CardKey.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AItem_Recover">
+    <Position X="12.75" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAEAAAkAAAAEAAALAABAAAQAAAABAAAAAAAYAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Item_Recover.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ALightningTrap_Origin">
+    <Position X="0.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAEACRwAgAoAACcQAAgAAAEIACAAAAAAAAAAAkQBA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\LightningTrap_Origin.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMiniMapRenderComponent">
+    <Position X="8.25" Y="25.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\MiniMapRenderComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ANormalPath">
+    <Position X="0.5" Y="21.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAREggAEA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\NormalPath.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ANPCCharacter">
+    <Position X="20.5" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAgRAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\NPCCharacter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ANPC_DrJoe">
+    <Position X="20.5" Y="19.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAgAAAAAAAQAAAAYAAAAgQAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\NPC_DrJoe.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AOneSideBlockedPath" Collapsed="true">
+    <Position X="34.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACABAAAAAAAAAAAAAAQEggAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\OneSideBlockedPath.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AOneSideOpendPath" Collapsed="true">
+    <Position X="36.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACABAAAAAAAAAAAAAAREggAEA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\OneSideOpendPath.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APawn_Camera" Collapsed="true">
+    <Position X="38" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAgABAAAQBAAMAEEABAAQIEAAAAAABAAIgQAAxYAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Pawn_Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AProjectile">
+    <Position X="0.5" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAQAAEAAAAAAAAAAAAAAEAAACAgAAAAAgQAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Projectile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ARightAnglePath" Collapsed="true">
+    <Position X="32.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAREggAEA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\RightAnglePath.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AShutterTrap">
+    <Position X="5.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAEgAiAoDAAQAABAAAAIAKAAAgAAAAACAAkQAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\ShutterTrap.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ASkillActor">
+    <Position X="0.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAACFAIQQAiIgAAAAAAAIgAAAgAAAACAUAAAgQAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\SkillActor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="USkillComponent_ProjectileType">
+    <Position X="18.5" Y="4.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAgAAAAAAAAAAEAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\SkillComponent_ProjectileType.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ASpearActor" Collapsed="true">
+    <Position X="5.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACACAAAAABAAAAAAAAAAAAAAAAgBAgQAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\SpearActor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AStairPath" Collapsed="true">
+    <Position X="32.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAQAAAAAAAAACAAACQGAIBAEgAAgAAAAAAAFFggAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\StairPath.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AStairPath2" Collapsed="true">
+    <Position X="34.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAQAAAAAAAAACAAACQGAIBAEgAAgAAAAAAAFFggAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\StairPath2.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UStatComponent">
+    <Position X="5.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAoAIAAhxkAAQAQIICAEAACAAAIAAIAwAAAgABgAAE=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\StatComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UStatComponent_EGrunt">
+    <Position X="3.5" Y="19" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\StatComponent_EGrunt.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UStatComponent_Enemy">
+    <Position X="3.5" Y="15.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAIAAAAAAACAAIAAAAAAQAAAAAgAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\StatComponent_Enemy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UStatComponent_Player">
+    <Position X="6.25" Y="15.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AgACCYAARgAgEA4DAIAAALASQMAIAQABKgAQSEAgBIA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\StatComponent_Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UTittleWidget" Collapsed="true">
+    <Position X="29.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAEIAgAAAAACAAAAAABAAAAAAAAAAAIAE=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\TittleWidget.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ATrapType">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgQAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\TrapType.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ATutorialNotify" Collapsed="true">
+    <Position X="38" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAAEgAQAQCAAAAABEAEACAAAAAAAAAAAgQAQ=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\TutorialNotify.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ATutorial_Controller" Collapsed="true">
+    <Position X="36.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAACAAAAACAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Tutorial_Controller.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AUIController">
+    <Position X="10.5" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAACAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\UIController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AWeapon" Collapsed="true">
+    <Position X="29" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAACEAAgAACAAAAABAAAAAAAgAIAAAAAABAAgQAQ=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Weapon.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UEGCharacterSetting" Collapsed="true">
+    <Position X="32.75" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAABAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\GameSetting\public\EGCharacterSetting.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="FItemDataInfo" Collapsed="true">
+    <Position X="31.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Component_Inventory.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FPlayerTableRow" Collapsed="true">
+    <Position X="33" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAARAAAAAAAAAABAAAAAAAAACAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\DT_DataStruct.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FEnemyTableRow" Collapsed="true">
+    <Position X="29.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAIAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\DT_DataStruct.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FDialogueTableRow" Collapsed="true">
+    <Position X="34.75" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Pawn_Camera.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="EState" Collapsed="true">
+    <Position X="32.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAABAAAAAAgAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Anim_DrJoe.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EBossState" Collapsed="true">
+    <Position X="29.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAgAAAAAAAAAAA=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EnemyBossCharacter.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ENotifyType" Collapsed="true">
+    <Position X="31" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIQAAAAAAIEAAAAAAAEADAAAIACAAAgAAAAAAIAI=</HashCode>
+      <FileName>E:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\TutorialNotify.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

@@ -2,13 +2,13 @@
 
 #pragma once
 
-#include "EscapeGame.h"
+#include "TrapType.h"
 #include "GameFramework/Actor.h"
 #include "HPBox.generated.h"
 
 
 UCLASS()
-class ESCAPEGAME_API AHPBox : public AActor
+class ESCAPEGAME_API AHPBox : public ATrapType
 {
 	GENERATED_BODY()
 	
