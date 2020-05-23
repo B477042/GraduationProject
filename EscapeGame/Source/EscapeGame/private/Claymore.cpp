@@ -235,7 +235,7 @@ bool AClaymore::bIsActorInFrontSide(FHitResult &hitResult)
 		//디버그 로깅용
 		DrawDebugLine(GetWorld(), ClaymorePos, myTargetVec, FColor::Red, true,300.0f);*/
 
-		//아무튼 이 식은 맞다
+		
 
 		//전방으로 detecte range만큼 탐색한다. 레이를 쏜다
 		bool bResult = GetWorld()->LineTraceSingleByChannel(hitResult, ClaymorePos , myTargetVec,
@@ -259,6 +259,7 @@ bool AClaymore::bIsActorInFrontSide(FHitResult &hitResult)
 //앞서 얻은 결과를 바탕으로 박스를 다시 수정한다. 박스의 길이를 
 void AClaymore::changeBoxExtent(const FHitResult& hitResult)
 {
+	//탐지에 닿은 지점
 	const auto impactPoint = hitResult.ImpactPoint;
 
 	float newBoxYPos=0.0f;

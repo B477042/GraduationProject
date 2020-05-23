@@ -9,6 +9,7 @@
 #include"Components/InputComponent.h"
 #include "GameSetting/public/EGCharacterSetting.h"
 #include "..\public\EGPlayerCharacter.h"
+#include"Sound/SoundCue.h"
 //#include "DT_DataStruct.h"
 //#include "GameWidget.h"
 
@@ -47,6 +48,9 @@ void AEGPlayerCharacter::BeginPlay()
 		return;
 	}
 	//Stat->LoadDataTable(Con->GetDT_Player());
+
+
+	loadHitEffects();
 	
 }
 
@@ -81,6 +85,9 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction(TEXT("Roll"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::Roll);
 	PlayerInputComponent->BindAction(TEXT("Recovery"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::UseRecoveryItem);
 	PlayerInputComponent->BindAction(TEXT("ToggleMap"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::ToggleMap);
+	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::SetGuard);
+	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Released, this, &AEGPlayerCharacter::ReleaseGuard);
+
 
 	EGLOG(Warning, TEXT("Player input component"));
 }
@@ -111,9 +118,15 @@ void AEGPlayerCharacter::PostInitializeComponents()
 
 	Stat->HPZeroDelegate.AddUObject(this,&AEGPlayerCharacter::SetDeath );
 
+
+
+	//Weapon Hit 판정
+	WeaponCollision->OnComponentBeginOverlap.AddDynamic(this, &AEGPlayerCharacter::OnWeaponBeginOverlap);
+
 	
 	//Stat->SetSpeedLimits( MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
-	
+
+
 }
 
 
@@ -162,6 +175,7 @@ void AEGPlayerCharacter::ComboAttack()
 {
 	if (GetCharacterMovement()->IsFalling())
 	{
+		AttackSound->Play();
 		AirAttack();
 		return;
 	}
@@ -174,7 +188,7 @@ void AEGPlayerCharacter::ComboAttack()
 		Anim->JumpToComboAttackSection(Stat->GetCurrentCombo());
 		Anim->PlayAttackMontage();//시동이니 ComboAttack1이 재생된다
 		//Stat->OnAttacking(true);
-		
+		AttackSound->Play();
 	}
 	//이미 공격중인 상태
 	else
@@ -183,7 +197,7 @@ void AEGPlayerCharacter::ComboAttack()
 		//input이 안 걸렸다면 걸어준다
 		if (!Stat->CheckCanComboAttack())
 		{
-			
+			AttackSound->Play();
 			Stat->SetComboAttackInput(true);//다음 몽타쥬가 재생될 수 있게 해준다
 			Stat->SetChargeAttackInput(false);//대신 차지 공격은 불가능하다
 		}
@@ -292,6 +306,16 @@ void AEGPlayerCharacter::ToggleMap()
 	}
 }
 
+void AEGPlayerCharacter::SetGuard()
+{
+	EGLOG(Error, TEXT("Guard start"));
+}
+
+void AEGPlayerCharacter::ReleaseGuard()
+{
+	EGLOG(Error, TEXT("Guard Release"));
+}
+
 void AEGPlayerCharacter::RestricInput()
 {
 	auto myCon = Cast<APlayerController>(GetController());
@@ -326,17 +350,25 @@ void AEGPlayerCharacter::InitComponents()
 	Stat = CreateDefaultSubobject <UStatComponent_Player>(TEXT("STAT"));
 	SelfDamage = CreateDefaultSubobject<UComponent_SelfDamage>(TEXT("SelfDAMAGE"));
 	Inventory = CreateDefaultSubobject<UComponent_Inventory>(TEXT("INVENTORY"));
-
+	SwordEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("PS_Sword"));
+	WeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("WeaponCollision"));
+	Container_Hit=CreateDefaultSubobject < USkillContainer_PlayerHitEffect>(TEXT("HitEffects"));
+	AttackSound = CreateDefaultSubobject<UAudioComponent>(TEXT("AttackSound"));
 	//Components Tree
+	
 	
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	Camera->SetupAttachment(SpringArm);
 	MiniMapArm->SetupAttachment(GetCapsuleComponent());
 	MapRenderer->SetupAttachment(MiniMapArm);
-	 
+	WeaponCollision->SetupAttachment(SwordEffect);
+	AttackSound->SetupAttachment(RootComponent);
+
+
 	minMapArmLength = 320.0f;
 	maxMapArmLength = 1000.0f;
-
+	float X=0, Y=0, Z=0,Pitch=0,Yaw=0,Roll=0;
+	
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 	SpringArm->TargetArmLength = 400.0f;
 	SpringArm->SetRelativeRotation(FRotator(-15.0f, 0.0f, 0.0f));
@@ -345,8 +377,10 @@ void AEGPlayerCharacter::InitComponents()
 	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, 280.0f));
 	MiniMapArm->SetRelativeRotation(FRotator(-90.0f, 0.0f,0.0f));
 
-	
-	
+	WeaponCollision->SetRelativeLocation(FVector(X = 0.976299f, Y = 1.777855f, Z = 66.010002f));
+	WeaponCollision->SetRelativeRotation(FRotator(Pitch = -1.184324, Yaw = 155.845551, Roll = 0.682941));
+	WeaponCollision->SetBoxExtent(FVector(X = 9.093354, Y = 6.199887, Z = 63.501183));
+	WeaponCollision->SetCollisionProfileName(TEXT("PlayerWeapon"));
 	SetupSpringArm();
 }
 
@@ -369,6 +403,28 @@ void AEGPlayerCharacter::LoadAssets()
 	{
 		GetMesh()->SetAnimInstanceClass(ANI_CHARACTER.Class);
 	}
+
+	
+	//ParticleSystem'/Game/ParagonKwang/FX/Particles/Abilities/Sword/FX/P_Kwang_Sword_Bolts.P_Kwang_Sword_Bolts'
+	static ConstructorHelpers::FObjectFinder<UParticleSystem>PS_SwordBolt(TEXT("ParticleSystem'/Game/ParagonKwang/FX/Particles/Abilities/Sword/FX/P_Kwang_Sword_Bolts.P_Kwang_Sword_Bolts'"));
+	if (PS_SwordBolt.Succeeded())
+	{
+		SwordEffect->SetTemplate(PS_SwordBolt.Object);
+		if (GetMesh()->DoesSocketExist(TEXT("FX_weapon_base")))
+		{
+			SwordEffect->SetupAttachment(GetMesh(), TEXT("FX_weapon_base"));
+		}
+	}
+
+	//SoundCue'/Game/ParagonKwang/Characters/Heroes/Kwang/Sounds/SoundCues/Kwang_Effort_Attack.Kwang_Effort_Attack'
+
+	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Attack(TEXT("SoundCue'/Game/ParagonKwang/Characters/Heroes/Kwang/Sounds/SoundCues/Kwang_Effort_Attack.Kwang_Effort_Attack'"));
+	if (SC_Attack.Succeeded())
+	{
+		AttackSound->SetSound(SC_Attack.Object);
+		AttackSound->bAutoActivate = false;
+	}
+
 }
 
 
@@ -469,6 +525,20 @@ void AEGPlayerCharacter::SetDeath()
 	EGLOG(Error, TEXT("Im Dead~"));
 }
 
+//Player가 아닌 모든 것에 Take Damage를 일으킵니다
+void AEGPlayerCharacter::OnWeaponBeginOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	auto target = Cast<AEGPlayerCharacter>(OtherActor);
+	if (target) { 
+		EGLOG(Error, TEXT("that's player character"));
+		return; }
+	FDamageEvent DamageEvent;
+	EGLOG(Error, TEXT("Hit : %s"), *OtherActor->GetName());
+	OtherActor->TakeDamage(Stat->GetATK(),DamageEvent,Controller,this );
+
+	Container_Hit->UseSkill(*OtherActor, OtherActor->GetActorForwardVector());
+}
+
 void AEGPlayerCharacter::OnAttackMontageEnded(UAnimMontage * Montage, bool bInterrupted)
 {
 	//if (!Stat->IsAttacking())return;
@@ -487,4 +557,12 @@ void AEGPlayerCharacter::ComboAttackEnd()
 {
 	if (Stat == nullptr)return;
 	Stat->SetComboEndState();
+}
+
+void AEGPlayerCharacter::loadHitEffects()
+{
+	if (!GetWorld()) { EGLOG(Warning, TEXT("No0 world")); return; }
+	int cap = Container_Hit->GetCapacity();
+	for(int i=0;i<cap;i++)
+		Container_Hit->AddSkillObj( GetWorld()->SpawnActor<ASkillActor_Hit>());
 }

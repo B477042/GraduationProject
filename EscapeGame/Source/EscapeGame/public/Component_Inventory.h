@@ -110,11 +110,11 @@ public:
 		FOnItemChanged GetItemChangeDelegate(FName ItemName);*/
 
 private:
-	//FString으로 아이템 이름을 받고 리턴해서 사용한다
+	//FName으로 아이템 이름을 받고 리턴해서 사용한다
 	UPROPERTY(EditAnywhere, Category = "Items")
 		TMap<FName,  FItemDataInfo> Items;
 	//
-	UPROPERTY(VisibleAnywhere, Category = "Capacity")
-		int32 CurrnetCapacity;
+	/*UPROPERTY(VisibleAnywhere, Category = "Capacity")
+		int32 CurrnetCapacity;*/
 
 };

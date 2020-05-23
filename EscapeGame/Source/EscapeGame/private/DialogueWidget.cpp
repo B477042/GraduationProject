@@ -5,11 +5,36 @@
 
 
 
-
+//Diagram ÀÇ TEXT ³»¿ë
 void UDialogueWidget::PrintLog(FText Diagram)
 {
-	if (TextDiagram!=nullptr)
+	if (!TextDiagram)return;
+
+	auto strDia = Diagram.ToString();
+	int num=0;
+	if (strDia.FindChar('\\', num))
+	{
+		EGLOG(Error, TEXT("Find \\"));
+		strDia.ReplaceInline(TEXT("\\n"), /*TEXT("opop")*/LINE_TERMINATOR);
+		
+		Diagram = FText::FromString(strDia);
+		EGLOG(Error, TEXT("%s"), *Diagram.ToString());
+		EGLOG(Error, TEXT("%s"), *strDia);
+	}
+	
 		TextDiagram->SetText(Diagram);
+		
+		//TextDiagram->ColorAndOpacity_DEPRECATED;
+		
+			//FSlateColor::FSlateColor(FLinearColor::Blue);
+		
+		//FSlateColor newColor(FLinearColor::Blue);
+		//TextDiagram->ColorAndOpacity_DEPRECATED.GetSpecifiedColor().Blue;
+		//	Font_DEPRECATED = FSlateColor::FSlateColor(FLinearColor::Blue);
+		
+
+	
+
 		//->SetText(Diagram);
 //	EGLOG(Warning, *Diagram.ToString());
 

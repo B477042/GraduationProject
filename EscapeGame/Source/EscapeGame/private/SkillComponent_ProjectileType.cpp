@@ -25,7 +25,7 @@ void USkillComponent_ProjectileType::TickComponent(float DeltaTime, ELevelTick T
 
 void USkillComponent_ProjectileType::UseSkill(const AActor & TargetActor, const FVector & Dir_Vector, int n_Count)
 {
-	EGLOG(Warning, TEXT("Aimming"));
+	
 	aimTo(Dir_Vector, n_Count);
 
 }
@@ -34,14 +34,14 @@ void USkillComponent_ProjectileType::aimTo( const FVector & Dir_Vector, int n_Co
 {
 	
 	//πﬂªÁ√º
-	EGLOG(Warning, TEXT("Aim Down Sight"));
+	
 	auto something=Cast<AProjectile>(CurrentIndex);
 	if (!something) { 
 		return;
 		CurrentIndex = SkillObjects[Index];
 	}
 
-	EGLOG(Warning, TEXT("Aim Down Sight~"));
+	
 	something->ReadyToFire(Dir_Vector,GetOwner()->GetActorLocation(),GetOwner()->GetActorRotation());
 	//someThing->
 	

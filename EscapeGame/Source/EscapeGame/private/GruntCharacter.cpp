@@ -120,6 +120,8 @@ float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Damag
 	Stat->TakeDamage(FinalDamage);
 	
 
+
+
 	return FinalDamage;
 }
 

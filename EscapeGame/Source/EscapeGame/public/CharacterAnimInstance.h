@@ -75,7 +75,7 @@ protected:
 
 	
 	//통상공격 몽타주
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Montage", meta = (AllowPrivateAccess = "true"))
 		UAnimMontage* AttackMontage;
 	//
 	////공중공격 몽타주

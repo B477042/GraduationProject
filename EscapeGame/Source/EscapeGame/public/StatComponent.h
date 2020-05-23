@@ -51,7 +51,7 @@ public:
 	//Set Actor Speed To MaxWalingSpeed
 	void SetWalking();
 	//Check Hp is under 0
-	bool IsDead();
+	virtual bool IsDead();
 
 	void SetSpeedLimits(const float&maxWalk, const float&minWalk, const float&maxRunning);
 	//Load Movement Data form owner's static data

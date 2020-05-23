@@ -48,3 +48,12 @@ void UStatComponent_EGrunt::loadDataTable()
 	DropExp = MyTable->DropExp;
 
 }
+
+bool UStatComponent_EGrunt::IsDead()
+{
+	bool bResult = Super::IsDead();
+
+
+	EGLOG(Warning, TEXT("Test Dead"));
+	return bResult;
+}

@@ -11,6 +11,7 @@
 #include "Anim_Player.h"
 #include "Component_SelfDamage.h"
 #include "Component_Inventory.h"
+#include "SkillContainer_PlayerHitEffect.h"
 #include "EGPlayerCharacter.generated.h"
 
 //DECLARE_DELEGATE(FOnKeyPressed);
@@ -58,6 +59,8 @@ public:
 	 void Roll();
 	 void UseRecoveryItem();
 	 void ToggleMap();
+	 void SetGuard();
+	 void ReleaseGuard();
 
 
 	 //User Input Disable
@@ -89,7 +92,17 @@ public:
 		UComponent_SelfDamage* SelfDamage;
 	UPROPERTY(VisibleAnywhere, Category = "inventory")
 		UComponent_Inventory* Inventory;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WeaponBox", meta = (AllowPrivateAccess = "true"))
+		UBoxComponent* WeaponCollision;
+	//SoundCue'/Game/ParagonKwang/Characters/Heroes/Kwang/Sounds/SoundCues/Kwang_Effort_Attack.Kwang_Effort_Attack'
+	UPROPERTY(VisibleAnywhere, Category = "Sound")
+		UAudioComponent* AttackSound;
+	UPROPERTY(VisibleAnywhere, meta = (AllowClasses))
+		USkillContainer_PlayerHitEffect* Container_Hit;
 
+
+	UPROPERTY(VisibleAnywhere)
+		UParticleSystemComponent * SwordEffect;
 private:
 	void InitComponents();
 	void LoadAssets();
@@ -113,6 +126,9 @@ private:
 	//======================
 	void SetDeath();
 
+
+	UFUNCTION()
+		void OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 	//============================
 	UFUNCTION()
 	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
@@ -132,6 +148,8 @@ private:
 	float minMapArmLength;
 	float maxMapArmLength;
 	bool bSetMapArm;
+
+	void loadHitEffects();
 	//private PROPERTY
 private:
 
