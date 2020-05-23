@@ -15,6 +15,7 @@ UBTService_Detect::UBTService_Detect()
 	// Scan 7m - > default
 	DetectRadius = 700.0f;
 	//bIsDebugMode = true;
+	
 
 }
 
@@ -58,17 +59,17 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, uint8 * Nod
 
 			if (resultChara->GetController()->IsPlayerController())
 			{
-				//Debug 모드라면 그려서 표시해준다
-				if (DrawingDebugMode)
-				{
-				DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Purple, false, 0.2f);
-				//Draw Point Detected Player
-				DrawDebugPoint(World, resultChara->GetTargetLocation(), 100.0f, FColor::Red, false, 0.2f);
-				
-				FVector DebugFVPoint = ControllingPawn->GetActorLocation() + ControllingPawn->GetActorForwardVector()/**FVector(1.0f,1.0f,1.0f)*/*600.0f;
-				DrawDebugLine(World, ControllingPawn->GetActorLocation(), DebugFVPoint, FColor::Red, false, 2.0f);
-				}
-				
+				////Debug 모드라면 그려서 표시해준다
+				//if (DrawingDebugMode)
+				//{
+				//DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Purple, false, 0.2f);
+				////Draw Point Detected Player
+				//DrawDebugPoint(World, resultChara->GetTargetLocation(), 100.0f, FColor::Red, false, 0.2f);
+				//
+				//FVector DebugFVPoint = ControllingPawn->GetActorLocation() + ControllingPawn->GetActorForwardVector()/**FVector(1.0f,1.0f,1.0f)*/*600.0f;
+				//DrawDebugLine(World, ControllingPawn->GetActorLocation(), DebugFVPoint, FColor::Red, false, 2.0f);
+				//}
+				//
 
 				OwnerComp.GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer,resultChara);
 				OwnerComp.GetBlackboardComponent()->SetValueAsVector(AEnemyAIController::PatrolPos, resultChara->GetActorLocation());

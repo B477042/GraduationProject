@@ -35,3 +35,16 @@ void USkillContainer_PlayerHitEffect::UseSkill(const AActor & TargetActor, const
 	something->UseSkill(TargetActor.GetActorLocation());
 	revolve();
 }
+
+void USkillContainer_PlayerHitEffect::SetEffectAt(const FVector & At, int n_Count)
+{
+	auto something = Cast<ASkillActor_Hit>(CurrentIndex);
+	if (!something) {
+		return;
+		CurrentIndex = SkillObjects[Index];
+	}
+
+	something->UseSkill(At);
+	revolve();
+
+}

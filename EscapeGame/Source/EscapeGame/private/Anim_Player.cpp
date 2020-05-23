@@ -3,11 +3,13 @@
 
 #include "Anim_Player.h"
 #include "EGPlayerCharacter.h"
+#include "Sound\SoundCue.h"
 #include "..\public\Anim_Player.h"
 
 
 UAnim_Player::UAnim_Player()
 {
+	SoundLaugh = CreateDefaultSubobject<UAudioComponent>(TEXT("LAUGH"));
 
 	static ConstructorHelpers::FObjectFinder <UAnimMontage>NORMAL_ATTACK(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/m_NormalAttack.m_NormalAttack'"));
 	if (NORMAL_ATTACK.Succeeded())
@@ -15,14 +17,26 @@ UAnim_Player::UAnim_Player()
 		AttackMontage = NORMAL_ATTACK.Object;
 	
 	}
-	
+	//AnimMontage'/Game/MyFolder/AnimationBlueprint/Montage_Skill1.Montage_Skill1'
+
+	static ConstructorHelpers::FObjectFinder <UAnimMontage>Skill_1(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/Montage_Skill1.Montage_Skill1'"));
+	if (Skill_1.Succeeded())
+	{
+		SkillMontages.Add(Skill_1.Object);
+	}
+
 
 	static ConstructorHelpers::FObjectFinder <UAnimMontage>AIR_ATTACK(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/m_AirAttackMontage.m_AirAttackMontage'"));
 	if (AIR_ATTACK.Succeeded())
 	{
 		AirAttackMontage = AIR_ATTACK.Object;
 	}
-
+	static ConstructorHelpers:: FObjectFinder<USoundCue>SC_Laugh(TEXT("SoundCue'/Game/ParagonKwang/Characters/Heroes/Kwang/Sounds/SoundCues/Kwang_Effort_Laugh.Kwang_Effort_Laugh'"));
+	if (SC_Laugh.Succeeded())
+	{
+		SoundLaugh->SetSound(SC_Laugh.Object);
+		SoundLaugh->bAutoActivate = false;
+	}
 	
 	
 	//UCharacterAnimInstance::StartCombo = 1;
@@ -137,4 +151,65 @@ void UAnim_Player::AnimNotify_AnimEnd()
 	EGLOG(Warning, TEXT("Mesh Location : %s"), *(Owner->GetActorLocation() + Owner->GetMesh()->GetRelativeLocation()).ToString());
 
 	Owner->RecoverInput();
+}
+
+void UAnim_Player::AnimNotify_PlaySound()
+{
+	auto Owner = Cast<AEGPlayerCharacter>(GetOwningActor());
+	if (Owner == nullptr)
+	{
+		
+		return;
+	}
+	
+	Owner->AttackSound->Play();
+
+
+}
+
+void UAnim_Player::AnimNotify_Skill1Start()
+{
+	EGLOG(Warning, TEXT("Jot na gin name "));
+	SoundLaugh->Play();
+}
+
+void UAnim_Player::AnimNotify_SkillEnd()
+{
+	auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
+
+	if (!player)return;
+
+	player->RecoverInput();
+	StopAllMontages(0.0f);
+	player->Stat->ResetCombo();
+}
+
+void UAnim_Player::AnimNotify_AnimNotify_ThunderStart()
+{
+	auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
+
+	if (!player)return;
+	player->ActiveThunder();
+}
+
+//Input °ªÀº PlayerÀÇ Combo
+void UAnim_Player::PlaySkillMontage(int Combo)
+{
+	int playNum = Combo - 1;
+	if (SkillMontages.IsValidIndex(playNum))
+	{
+		auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
+
+		if (!player)return;
+
+		player->RestricInput();
+
+
+		Montage_Play(SkillMontages[playNum],1.0f);
+
+		
+
+	}
+
+
 }

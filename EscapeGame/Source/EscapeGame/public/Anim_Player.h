@@ -12,6 +12,7 @@
 DECLARE_MULTICAST_DELEGATE(FPlayerRollingStartDelegate);
 DECLARE_MULTICAST_DELEGATE(FPlayerRollingEndDelegate);
 
+
 UCLASS()
 class ESCAPEGAME_API UAnim_Player : public UCharacterAnimInstance
 {
@@ -35,6 +36,19 @@ public:
 		void AnimNotify_RollingEnd();
 	UFUNCTION()
 		void AnimNotify_AnimEnd();
+	UFUNCTION()
+		void AnimNotify_PlaySound();
+
+	UFUNCTION()
+		void AnimNotify_Skill1Start();
+	UFUNCTION()
+		void AnimNotify_SkillEnd();
+	UFUNCTION()
+		void AnimNotify_AnimNotify_ThunderStart();
+
+	//Input 값은 Player의 Combo
+	void PlaySkillMontage(int Combo);
+
 	float GetRollingLength() { return RollingLength; }
 private:
 	//const int32 StartCombo = 1;//Attack Montage에서 처음 액션 번호
@@ -46,6 +60,11 @@ private:
 	//Charge Attack Montage
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
 		UAnimMontage* ChargeAttackMontage;
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
+		TArray<UAnimMontage*> SkillMontages;
+	UPROPERTY()
+		UAudioComponent* SoundLaugh;
+
 	////통상공격 몽타주
 	//UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
 	//	UAnimMontage* AttackMontage;

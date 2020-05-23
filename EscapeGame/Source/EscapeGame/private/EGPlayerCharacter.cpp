@@ -10,6 +10,7 @@
 #include "GameSetting/public/EGCharacterSetting.h"
 #include "..\public\EGPlayerCharacter.h"
 #include"Sound/SoundCue.h"
+#include "SkillActor_ThunderType.h"
 //#include "DT_DataStruct.h"
 //#include "GameWidget.h"
 
@@ -51,6 +52,7 @@ void AEGPlayerCharacter::BeginPlay()
 
 
 	loadHitEffects();
+
 	
 }
 
@@ -167,15 +169,21 @@ UComponent_Inventory * AEGPlayerCharacter::GetInventory()
 void AEGPlayerCharacter::ChargeAttack()
 {
 	//Charge Attack은 시동이 걸린 상태에서만 실행될 것이다
-	if(Stat->IsAttacking())
-		EGLOG(Warning, TEXT("Charge Attack"));
+	if (!Stat->IsAttacking())return;
+
+	Anim->PlaySkillMontage(Stat->GetCurrentCombo());
+	
+	
+	
+	
+		
 }
 
 void AEGPlayerCharacter::ComboAttack()
 {
 	if (GetCharacterMovement()->IsFalling())
 	{
-		AttackSound->Play();
+		
 		AirAttack();
 		return;
 	}
@@ -188,7 +196,7 @@ void AEGPlayerCharacter::ComboAttack()
 		Anim->JumpToComboAttackSection(Stat->GetCurrentCombo());
 		Anim->PlayAttackMontage();//시동이니 ComboAttack1이 재생된다
 		//Stat->OnAttacking(true);
-		AttackSound->Play();
+		
 	}
 	//이미 공격중인 상태
 	else
@@ -197,11 +205,12 @@ void AEGPlayerCharacter::ComboAttack()
 		//input이 안 걸렸다면 걸어준다
 		if (!Stat->CheckCanComboAttack())
 		{
-			AttackSound->Play();
+			
 			Stat->SetComboAttackInput(true);//다음 몽타쥬가 재생될 수 있게 해준다
 			Stat->SetChargeAttackInput(false);//대신 차지 공격은 불가능하다
 		}
 	}
+	EGLOG(Error, TEXT("Current Combo : %d"), Stat->GetCurrentCombo());
 	
 }
 
@@ -316,11 +325,17 @@ void AEGPlayerCharacter::ReleaseGuard()
 	EGLOG(Error, TEXT("Guard Release"));
 }
 
+void AEGPlayerCharacter::ActiveThunder()
+{
+	Skill_Thunder->UseSkill(GetActorLocation());
+}
+
 void AEGPlayerCharacter::RestricInput()
 {
 	auto myCon = Cast<APlayerController>(GetController());
 	if (myCon != nullptr)
 	{
+		
 		DisableInput(myCon);
 	}
 }
@@ -536,7 +551,7 @@ void AEGPlayerCharacter::OnWeaponBeginOverlap(UPrimitiveComponent * OverlappedCo
 	EGLOG(Error, TEXT("Hit : %s"), *OtherActor->GetName());
 	OtherActor->TakeDamage(Stat->GetATK(),DamageEvent,Controller,this );
 
-	Container_Hit->UseSkill(*OtherActor, OtherActor->GetActorForwardVector());
+	Container_Hit->SetEffectAt(OtherActor->GetActorLocation());
 }
 
 void AEGPlayerCharacter::OnAttackMontageEnded(UAnimMontage * Montage, bool bInterrupted)
@@ -565,4 +580,7 @@ void AEGPlayerCharacter::loadHitEffects()
 	int cap = Container_Hit->GetCapacity();
 	for(int i=0;i<cap;i++)
 		Container_Hit->AddSkillObj( GetWorld()->SpawnActor<ASkillActor_Hit>());
+
+	Skill_Thunder = GetWorld()->SpawnActor < ASkillActor_ThunderType>();
+
 }

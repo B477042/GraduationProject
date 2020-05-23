@@ -62,7 +62,7 @@ public:
 	 void SetGuard();
 	 void ReleaseGuard();
 
-
+	 void ActiveThunder();
 	 //User Input Disable
 	 void RestricInput();
 	 //User Input Enable
@@ -155,5 +155,6 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly,/*BlueprintReadOnly,*/ Category = Anim, Meta=(AllowPrivateAccess=true))
 		class UAnim_Player* Anim;
-
+	UPROPERTY(VisibleInstanceOnly, Category = "SkillActor", meta = (AllowPrivateAccess = "true"))
+		TWeakObjectPtr<class ASkillActor_ThunderType> Skill_Thunder;
 };
