@@ -55,3 +55,7 @@ void AEnemyCharacter::Turn(float NewAxisValue)
 }
 
 
+void AEnemyCharacter::Dead()
+{
+	Destroy();
+}

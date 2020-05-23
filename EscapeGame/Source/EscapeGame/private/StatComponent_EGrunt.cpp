@@ -4,6 +4,7 @@
 #include "StatComponent_EGrunt.h"
 #include "AICtrl_Grunt.h"
 #include "DT_DataStruct.h"
+#include "EnemyCharacter.h"
 
 
 UStatComponent_EGrunt::UStatComponent_EGrunt()
@@ -53,7 +54,16 @@ bool UStatComponent_EGrunt::IsDead()
 {
 	bool bResult = Super::IsDead();
 
-
+	/*
 	EGLOG(Warning, TEXT("Test Dead"));
+	if (bResult)
+	{
+		auto owner = Cast<AEnemyCharacter>(GetOwner());
+		if (!owner)return bResult;
+
+		
+
+	}*/
+
 	return bResult;
 }

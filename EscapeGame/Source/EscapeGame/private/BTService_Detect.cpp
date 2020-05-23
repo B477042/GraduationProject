@@ -72,7 +72,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, uint8 * Nod
 
 				OwnerComp.GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer,resultChara);
 				OwnerComp.GetBlackboardComponent()->SetValueAsVector(AEnemyAIController::PatrolPos, resultChara->GetActorLocation());
-				EGLOG(Warning,TEXT("Detect : %s") , *OwnerComp.GetBlackboardComponent()->GetValueAsObject(AEnemyAIController::TargetPlayer)->GetName());
+				//EGLOG(Warning,TEXT("Detect : %s") , *OwnerComp.GetBlackboardComponent()->GetValueAsObject(AEnemyAIController::TargetPlayer)->GetName());
 				return;
 			}
 			

@@ -76,7 +76,7 @@ void UComponent_SkillContainer::AddSkillObj(TWeakObjectPtr<ASkillActor> Input)
 void UComponent_SkillContainer::revolve()
 {
 	
-	EGLOG(Error, TEXT("Rolling"));
+	//EGLOG(Error, TEXT("Rolling"));
 	if(!CurrentIndex.IsValid())
 		CurrentIndex = SkillObjects[Index];
 
@@ -89,9 +89,9 @@ void UComponent_SkillContainer::revolve()
 		CurrentIndex = SkillObjects[Index];
 	
 	//CurrentIndex = SkillObjects[Index];
-	EGLOG(Error, TEXT("Index : %d"), Index);
+	//EGLOG(Error, TEXT("Index : %d"), Index);
 	
-	EGLOG(Warning, TEXT("CIndex Name : %s"), *CurrentIndex->GetName());
+//	EGLOG(Warning, TEXT("CIndex Name : %s"), *CurrentIndex->GetName());
 	
 }
 

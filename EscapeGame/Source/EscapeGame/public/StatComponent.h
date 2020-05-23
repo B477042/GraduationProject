@@ -50,8 +50,7 @@ public:
 	void SetRunning();
 	//Set Actor Speed To MaxWalingSpeed
 	void SetWalking();
-	//Check Hp is under 0
-	virtual bool IsDead();
+	
 
 	void SetSpeedLimits(const float&maxWalk, const float&minWalk, const float&maxRunning);
 	//Load Movement Data form owner's static data
@@ -87,7 +86,9 @@ protected:
 	float MaxRunningSpeed ;
 	float MinWalkingSpeed ;
 	//float timer;
-	
+	//Check Hp is under 0
+	UFUNCTION(BlueprintCallable)
+	virtual bool IsDead();
 
 protected:
 	

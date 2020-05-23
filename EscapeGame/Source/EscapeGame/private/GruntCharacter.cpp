@@ -111,7 +111,19 @@ void AGruntCharacter::PostInitializeComponents()
 	//체력이 0이 됐을 때 호출될 함수들을 엮어줍니다
 	//Stat->HPZeroDelegate.AddUObject(this, &AGruntCharacter::ReadToDead);
 	//Stat->HPZeroDelegate.AddUObject(this, UAnim_Grunt::playDeadAnim);
-	
+	Stat->HPZeroDelegate.AddLambda([this]()->void {
+		auto anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
+		if (!anim)
+		{
+			EGLOG(Warning, TEXT("Dead failed555555555555555555555555555555555555555555555555555555"));
+			return;
+		}
+
+		EGLOG(Error, TEXT("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"));
+
+		anim->PlayDeadAnim();
+	});
+
 }
 
 float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
@@ -150,10 +162,7 @@ void AGruntCharacter::Attack()
 
 }
 
-void AGruntCharacter::Dead()
-{
-	Destroy();
-}
+
 //삭제하기 전에 컨트롤러의 BT를 꺼준다
 //콜리전은 꺼준다
 //anim의 Dead Animation을 재생시키게 해준다

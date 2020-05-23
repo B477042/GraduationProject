@@ -42,7 +42,9 @@ void USkillComponent_ProjectileType::aimTo( const FVector & Dir_Vector, int n_Co
 	}
 
 	
-	something->ReadyToFire(Dir_Vector,GetOwner()->GetActorLocation(),GetOwner()->GetActorRotation());
+	FVector FirePos = GetOwner()->GetActorLocation() + FVector(0.0f, 0.0f, 30.0f);
+
+	something->ReadyToFire(Dir_Vector,FirePos,GetOwner()->GetActorRotation());
 	//someThing->
 	
 

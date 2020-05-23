@@ -37,7 +37,9 @@ void AEnemyBossCharacter::PostInitializeComponents()
 float AEnemyBossCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
 {
 	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	Stat->TakeDamage(FinalDamage);
 
+	EGLOG(Warning, TEXT("HP : %d"), Stat->GetHP());
 	return FinalDamage;
 }
 

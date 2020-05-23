@@ -19,6 +19,8 @@ public:
 	virtual void BeginPlay()override;
 
 	virtual bool IsDead()override;
+
+	
 private:
 		//data table에서 level에 맞는 data를 가져온다
 		void loadDataTable();

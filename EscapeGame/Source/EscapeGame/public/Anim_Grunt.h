@@ -27,6 +27,8 @@ public:
 	void AnimNotify_Notify_CheckRange();
 	UFUNCTION()
 	void PlayDeadAnim();
+	
+
 
 protected:
 	

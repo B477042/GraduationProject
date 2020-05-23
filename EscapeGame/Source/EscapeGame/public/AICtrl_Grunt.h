@@ -20,8 +20,9 @@ public:
 
 	virtual void BeginPlay()override;
 	virtual void PostInitializeComponents()override;
-
+	UFUNCTION(BlueprintCallable)
 	virtual void RunAI()override;
+	UFUNCTION(BlueprintCallable)
 	virtual void StopAI()override;
 protected:
 	//Data Table for Grunt Enemy

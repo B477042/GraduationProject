@@ -56,8 +56,9 @@ public:
 	
 	void AddCombo(int32 Amount);
 	void ResetCombo();
-
+	
 	//Get Exp form enemy's Drop Exp
+	UFUNCTION(BlueprintCallable)
 	void GetExp(const int32 &DropExp );
 
 	FStaminaChangedDelegate StaminaChangedDelegate;

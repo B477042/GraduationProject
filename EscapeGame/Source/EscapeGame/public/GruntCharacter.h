@@ -38,19 +38,21 @@ public:
 	const static float MinWalkingSpeed;
 
 	
-	
+	UFUNCTION(BlueprintCallable)
+		float DropExp() { return Stat->GetDropExp(); }
 
 private:
 	//죽어야 될 때 호출된다.
 	//Stat의 hp 0 delegate에 연동할게 아니라 anim의 dead 모션이 끝나면 사라지게 해야겠구나
-	UFUNCTION()
-		void Dead();
+	
 	//사망처리 사전작업
 	UFUNCTION()
 		void ReadToDead();
 	
 	UPROPERTY(VisibleInstanceOnly, Category = Stat)
 	UStatComponent_EGrunt* Stat;
+
+	
 
 	//Stat Component 정리되면 거기에 넣는다. 전방 탐지 범위
 	UPROPERTY(VisibleInstanceOnly, Category = Stat)

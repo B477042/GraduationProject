@@ -43,5 +43,6 @@ void UAnim_Grunt::AnimNotify_Notify_CheckRange()
 void UAnim_Grunt::PlayDeadAnim()
 {
 	bIsDead = true;
+	StopAllMontages(0);
 }
 
