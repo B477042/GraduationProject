@@ -122,24 +122,24 @@ void UStatComponent_Player::UseStamina(float DeltaTime)
 		Stamina = 0.0f;
 		return;
 	}
-	Stamina -= DeltaTime * 300.0f;
+	Stamina -= DeltaTime * 150.0f;
 	StaminaChangedDelegate.Broadcast();
 }
 
-//Call when Running Start
-void UStatComponent_Player::SetRunning()
-{
-	if (!bCanUsingStamina)return;
-	//if (!GetWorld())return;
-
-
-	//켜준다
-	bIsStaminaUsing = true;
-	/*float DeltaTime = GetWorld()->GetDeltaSeconds();
-	UseStamina(DeltaTime);*/
-	
-
-}
+////Call when Running Start
+//void UStatComponent_Player::SetRunning()
+//{
+//	if (!bCanUsingStamina)return;
+//	//if (!GetWorld())return;
+//
+//
+//	//켜준다
+//	bIsStaminaUsing = true;
+//	/*float DeltaTime = GetWorld()->GetDeltaSeconds();
+//	UseStamina(DeltaTime);*/
+//	
+//
+//}
 /*
 	will Call in Tick
 */

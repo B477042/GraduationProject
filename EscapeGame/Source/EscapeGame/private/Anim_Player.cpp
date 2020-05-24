@@ -10,7 +10,7 @@
 UAnim_Player::UAnim_Player()
 {
 	SoundLaugh = CreateDefaultSubobject<UAudioComponent>(TEXT("LAUGH"));
-
+	bIsGuarding = false;
 	static ConstructorHelpers::FObjectFinder <UAnimMontage>NORMAL_ATTACK(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/m_NormalAttack.m_NormalAttack'"));
 	if (NORMAL_ATTACK.Succeeded())
 	{

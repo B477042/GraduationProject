@@ -9,6 +9,7 @@
 
 DECLARE_MULTICAST_DELEGATE(FOnHPChangeDelegate);
 DECLARE_MULTICAST_DELEGATE(FIsHPZero);
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDamageOcureDelegate,void);
 
 
 /*
@@ -55,7 +56,7 @@ public:
 	void SetSpeedLimits(const float&maxWalk, const float&minWalk, const float&maxRunning);
 	//Load Movement Data form owner's static data
 	//void LoadDBfromOwner(const float&maxWalk, const float&minWalk, const float&maxRunning);
-
+	void SetDamageable(bool bResult) { bIsDamageable = bResult; }
 
 	//int32 GetDropExp()const;
 
@@ -89,6 +90,9 @@ protected:
 	//Check Hp is under 0
 	UFUNCTION(BlueprintCallable)
 	virtual bool IsDead();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		bool bIsDamageable;
 
 protected:
 	

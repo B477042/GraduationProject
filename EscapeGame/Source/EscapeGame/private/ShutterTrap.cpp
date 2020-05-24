@@ -33,9 +33,10 @@ void AShutterTrap::BeginPlay()
 			//?????? ??? ???
 			//??? ?????? ??? ??? ??????? ????? ?????? ???ве?
 			//??? ???? ?? -> ?? ???????? ?????? ???. x,y????? ??? ???????
-			FVector location = Root->GetComponentLocation() + FVector(100.0f - (50.0f*i), -10.0f, -120.0f);
+			SoundEffect->SetRelativeLocation(SoundEffect->GetRelativeLocation() + FVector(-90 + (30 * i), -6.0f + (1.5*i), -120.0f));
+			FVector finallocation = SoundEffect->GetComponentLocation() ;
 
-			Spears[i]->SetActorRelativeLocation(location);
+			Spears[i]->SetActorRelativeLocation(finallocation);
 			Spears[i]->SetCollisionProfileTo(TEXT("NoCollision"));
 		}
 
@@ -105,6 +106,7 @@ void AShutterTrap::OnPlayerEntered(UPrimitiveComponent * OverlappedComp, AActor 
 	SoundEffect->Play();
 	bIsActivated = true;
 	Trigger->SetCollisionProfileName(TEXT("NoCollision"));
+	Root->SetCollisionProfileName(TEXT("NoCollision"));
 }
 
 void AShutterTrap::initComponents()
@@ -117,7 +119,7 @@ void AShutterTrap::initComponents()
 	Trigger->SetupAttachment(RootComponent);
 	
 	float X, Y, Z;
-	Trigger->SetRelativeLocation(FVector(X = 0.000000f, Y = -680.000000f, Z = 90.000000f));
+	Trigger->SetRelativeLocation(FVector(X = 27.000027, Y = -337.981323, Z = 74.000000));
 
 	
 

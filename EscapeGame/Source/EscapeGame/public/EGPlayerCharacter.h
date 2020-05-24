@@ -54,7 +54,7 @@ public:
 	 void ComboAttack();
 	 void AirAttack();
 	 void StartRunning();
-	 void Running();
+	 void UsingStaminaTick();
 	 void StopRunning();
 	 void Roll();
 	 void UseRecoveryItem();
@@ -64,8 +64,10 @@ public:
 
 	 void ActiveThunder();
 	 //User Input Disable
+	 UFUNCTION(BlueprintCallable)
 	 void RestricInput();
 	 //User Input Enable
+	 UFUNCTION(BlueprintCallable)
 	 void RecoverInput();
 	//const AController* GetController();
 

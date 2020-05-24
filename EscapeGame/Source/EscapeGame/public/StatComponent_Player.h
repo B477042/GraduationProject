@@ -47,7 +47,7 @@ public:
 	//Stamina°ü·Ã
 	//============
 	void UseStamina(float DeltaTime);
-	void SetRunning();
+	//void SetRunning();
 	bool SetStaminaUsing(bool bResult);
 	bool CanUsingStamina();
 

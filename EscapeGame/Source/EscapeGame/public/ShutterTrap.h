@@ -41,7 +41,7 @@ private:
 
 
 	const float StreachTime = 0.3f;
-	const int n_spears = 4;
+	const int n_spears = 8;
 	const float spear_start = -120.0f;
 	const float spear_last = 12.0f;
 private:

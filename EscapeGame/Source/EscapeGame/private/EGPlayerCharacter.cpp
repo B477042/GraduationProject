@@ -50,9 +50,11 @@ void AEGPlayerCharacter::BeginPlay()
 	}
 	//Stat->LoadDataTable(Con->GetDT_Player());
 
+	SetActorHiddenInGame(true);
 
 	loadHitEffects();
 
+	
 	
 }
 
@@ -83,12 +85,13 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction(TEXT("ChargeAttack"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::ChargeAttack);
 	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::StartRunning);
 	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Released, this, &AEGPlayerCharacter::StopRunning);
-	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::Running);
+	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::UsingStaminaTick);
 	PlayerInputComponent->BindAction(TEXT("Roll"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::Roll);
 	PlayerInputComponent->BindAction(TEXT("Recovery"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::UseRecoveryItem);
 	PlayerInputComponent->BindAction(TEXT("ToggleMap"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::ToggleMap);
 	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::SetGuard);
 	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Released, this, &AEGPlayerCharacter::ReleaseGuard);
+	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::UsingStaminaTick);
 
 
 	EGLOG(Warning, TEXT("Player input component"));
@@ -244,13 +247,20 @@ void AEGPlayerCharacter::StartRunning()
 
 //호출 시점 IE_Repeated
 //누르고 있는지 좀 돼야 반응한다
-void AEGPlayerCharacter::Running()
+void AEGPlayerCharacter::UsingStaminaTick()
 {
-	EGLOG(Warning, TEXT("Run to"));
+	
 	if (!Stat->CanUsingStamina())
+	{
 		StopRunning();
+		ReleaseGuard();
+	}
 	else
-	Stat->UseStamina(GetWorld()->DeltaTimeSeconds);
+	{
+		EGLOG(Warning, TEXT("Using Stamina"));
+		Stat->UseStamina(GetWorld()->DeltaTimeSeconds);
+	}
+
 }
 //호출시점IE_Released
 //키에서 때면 바로 호출된다
@@ -317,12 +327,33 @@ void AEGPlayerCharacter::ToggleMap()
 
 void AEGPlayerCharacter::SetGuard()
 {
-	EGLOG(Error, TEXT("Guard start"));
+
+	if (Stat->CanUsingStamina())
+	{
+		EGLOG(Error, TEXT("Guard start"));
+		Stat->SetStaminaUsing(true);
+		
+		Stat->SetDamageable(false);
+		Stat->SetDontMove();
+	//GetCharacterMovement()
+	//RestricInput();
+	
+		Anim->SetGuarding(true);
+	}
+
+	
+
 }
 
 void AEGPlayerCharacter::ReleaseGuard()
 {
+	
 	EGLOG(Error, TEXT("Guard Release"));
+	Stat->SetDamageable(true);
+	Stat->SetWalking();
+	
+	//RecoverInput();
+	Anim->SetGuarding(false);
 }
 
 void AEGPlayerCharacter::ActiveThunder()
@@ -378,7 +409,7 @@ void AEGPlayerCharacter::InitComponents()
 	MapRenderer->SetupAttachment(MiniMapArm);
 	WeaponCollision->SetupAttachment(SwordEffect);
 	AttackSound->SetupAttachment(RootComponent);
-
+	
 
 	minMapArmLength = 320.0f;
 	maxMapArmLength = 1000.0f;
@@ -395,7 +426,7 @@ void AEGPlayerCharacter::InitComponents()
 	WeaponCollision->SetRelativeLocation(FVector(X = 0.976299f, Y = 1.777855f, Z = 66.010002f));
 	WeaponCollision->SetRelativeRotation(FRotator(Pitch = -1.184324, Yaw = 155.845551, Roll = 0.682941));
 	WeaponCollision->SetBoxExtent(FVector(X = 9.093354, Y = 6.199887, Z = 63.501183));
-	WeaponCollision->SetCollisionProfileName(TEXT("PlayerWeapon"));
+	WeaponCollision->SetCollisionProfileName(TEXT("NoCollision"));
 	SetupSpringArm();
 }
 

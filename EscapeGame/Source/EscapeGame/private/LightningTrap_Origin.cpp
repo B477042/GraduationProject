@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "LightningTrap_Origin.h"
-
+#include "EGPlayerCharacter.h"
 // Sets default values
 ALightningTrap_Origin::ALightningTrap_Origin()
 {
@@ -175,6 +175,8 @@ void ALightningTrap_Origin::turnOffTrap()
 void ALightningTrap_Origin::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	//EGLOG(Error, TEXT("Overlap Actor : %s"),* OtherActor->GetName());
+
+
 	OtherActor->TakeDamage(Damage, ActorTakeDamageEvent, OtherActor->GetInstigatorController(), this);
 	
 	/*auto newPos = OtherActor->GetActorLocation() - OtherActor->GetActorForwardVector()*KnockBackRange;
@@ -184,7 +186,8 @@ void ALightningTrap_Origin::OnCharacterOverlap(UPrimitiveComponent * OverlappedC
 
 void ALightningTrap_Origin::OnCharacterHit(UPrimitiveComponent * HitComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit)
 {
-	EGLOG(Error, TEXT("Hit Actor : %s"), *OtherActor->GetName());
-	OtherActor->TakeDamage(Damage, ActorTakeDamageEvent, OtherActor->GetInstigatorController(), this);
+	auto player = Cast<AEGPlayerCharacter>(OtherActor);
+	if(player)
+		OtherActor->TakeDamage(Damage, ActorTakeDamageEvent, OtherActor->GetInstigatorController(), this);
 }
 

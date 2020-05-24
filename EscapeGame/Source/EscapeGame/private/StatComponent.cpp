@@ -18,7 +18,7 @@ UStatComponent::UStatComponent()
 	CurrentATK = 10.0f;
 
 	bIsAttacking = false;
-	
+	bIsDamageable = true;
 	//EGLOG(Warning, TEXT("Stat component!"));
 	// ...
 }
@@ -59,7 +59,10 @@ void UStatComponent::TakeDamage(float NewDamage)
 		EGLOG(Warning, TEXT("Minors Number Input in Take Damage!"));
 		return;
 	}
-	CurrentHP -= NewDamage;
+
+
+	if(bIsDamageable)
+		CurrentHP -= NewDamage;
 	if(!IsDead())
 	HPChangedDelegate.Broadcast();
 }

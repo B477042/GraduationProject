@@ -21,12 +21,13 @@ ASpearActor::ASpearActor()
 		Body->SetStaticMesh(SM_BODY.Object);
 	}
 
-	Body->SetCollisionProfileName(TEXT("BlockAll"));
+	Body->SetCollisionProfileName(TEXT("OnBlockingTypeTrap"));
 
 }
 
 void ASpearActor::SetCollisionProfileTo(FName profile)
 {
+	Root->SetCollisionProfileName(profile);
 	Body->SetCollisionProfileName(profile);
 }
 
@@ -40,10 +41,13 @@ void ASpearActor::BeginPlay()
 float ASpearActor::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
 {
 	Durability -= DamageAmount;
+	
 	if (Durability <= 0.0f)
-
-		Body->SetCollisionProfileName(TEXT("NoCollision"));
-	SetActorHiddenInGame(true);
+	{
+		Root->SetCollisionProfileName(TEXT("NoCollision"));
+		SetActorHiddenInGame(true);
+		Destroy();
+	}
 
 	return DamageAmount;
 }

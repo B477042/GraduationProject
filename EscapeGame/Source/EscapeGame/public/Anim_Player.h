@@ -48,6 +48,7 @@ public:
 
 	//Input °ªÀº PlayerÀÇ Combo
 	void PlaySkillMontage(int Combo);
+	void SetGuarding(bool bResult) { bIsGuarding = bResult; }
 
 	float GetRollingLength() { return RollingLength; }
 private:
@@ -75,4 +76,6 @@ private:
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
 		bool bIsRolling;
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
+		bool bIsGuarding;
 };

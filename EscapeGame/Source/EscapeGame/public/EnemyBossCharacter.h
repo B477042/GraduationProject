@@ -18,6 +18,7 @@ enum class EBossState:uint8
 	Dash
 };
 
+DECLARE_MULTICAST_DELEGATE(FOnTeleportCalled);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnFireballThrow);
 
 UCLASS(BlueprintType)
@@ -36,6 +37,10 @@ public:
 	//BT에서 Attack 명령이 떨어졌을 때 호출된다
 	UFUNCTION()
 	virtual void Attack()override;
+	UFUNCTION(BlueprintCallable)
+		virtual bool TeleportTo(const FVector & DestLocation,const FRotator & DestRotation,	bool bIsATest,	bool bNoCheck);
+
+
 
 	void SetState(EBossState NewState) { State = NewState; }
 	EBossState GetState() { return State; }
@@ -46,12 +51,17 @@ public:
 	UPROPERTY(BlueprintAssignable)
 		FOnFireballThrow OnFireballThrow;
 
+	FOnTeleportCalled OnTeleportCalled;
 private:
 	void initComponents();
 	void loadAsset();
 	void attachParticle();
 	void reloadSkillObjs();
 
+UFUNCTION(BlueprintCallable)
+		void ReadyToDie();
+	UFUNCTION(BlueprintCallable)
+		void Die();
 private:
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		UStatComponent_Enemy* Stat;

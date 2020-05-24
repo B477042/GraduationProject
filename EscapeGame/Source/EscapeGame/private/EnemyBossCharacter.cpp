@@ -47,6 +47,16 @@ void AEnemyBossCharacter::Attack()
 {
 }
 
+bool AEnemyBossCharacter::TeleportTo(const FVector & DestLocation, const FRotator & DestRotation, bool bIsATest, bool bNoCheck)
+{
+	bool bResult = Super::TeleportTo(DestLocation, DestRotation, bIsATest, bNoCheck);
+	EGLOG(Error, TEXT("Im here"));
+
+	OnTeleportCalled.Broadcast();
+	return bResult;
+
+}
+
 
 /*
 불을 던지는 엑션
@@ -130,4 +140,12 @@ void AEnemyBossCharacter::reloadSkillObjs()
 		Comp_Fireball->AddSkillObj(GetWorld()->SpawnActor<ABoss_Fireball>());
 	}
 
+}
+
+void AEnemyBossCharacter::ReadyToDie()
+{
+}
+
+void AEnemyBossCharacter::Die()
+{
 }
