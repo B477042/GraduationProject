@@ -20,8 +20,9 @@ AEnemyCharacter::AEnemyCharacter()
 
 	HPBarWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HPBARWIDGET"));
 	HPBarWidget->SetupAttachment(GetMesh());
-	HPBarWidget->SetRelativeLocation(FVector(0.0f, 0.0f, 400.0f));
-	HPBarWidget->SetWidgetSpace(EWidgetSpace::Screen);
+	HPBarWidget->SetRelativeLocation(FVector(0.0f, 0.0f, 200.0f));
+	HPBarWidget->SetWidgetSpace(EWidgetSpace::World);
+	HPBarWidget->SetRelativeRotation(FRotator(0.0f, 90.0f, 0.0f));
 
 	static ConstructorHelpers::FClassFinder<UUserWidget>UI_HUD(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_DisplayHP.UI_DisplayHP_C'"));
 	if (UI_HUD.Succeeded())
