@@ -13,6 +13,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeEscapeGame_init() {}
 	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnFireballThrow__DelegateSignature();
 	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnBossIsDeadDelegate__DelegateSignature();
+	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnThunderbolt__DelegateSignature();
 	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnItemChanged__DelegateSignature();
 	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnTalkeInvoke__DelegateSignature();
 	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnClickNext__DelegateSignature();
@@ -26,6 +27,7 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGame_init() {}
 			static UObject* (*const SingletonFuncArray[])() = {
 				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnFireballThrow__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnBossIsDeadDelegate__DelegateSignature,
+				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnThunderbolt__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnItemChanged__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnTalkeInvoke__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnClickNext__DelegateSignature,
@@ -37,8 +39,8 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGame_init() {}
 				SingletonFuncArray,
 				UE_ARRAY_COUNT(SingletonFuncArray),
 				PKG_CompiledIn | 0x00000000,
-				0x49818975,
-				0xB4BDB4ED,
+				0x71457856,
+				0x1C614831,
 				METADATA_PARAMS(nullptr, 0)
 			};
 			UE4CodeGen_Private::ConstructUPackage(ReturnPackage, PackageParams);

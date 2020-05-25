@@ -55,6 +55,8 @@ void ASkillActor::SetSafety()
 	ReactEffect->SetHiddenInGame(true);
 	ReactEffect->bAutoActivate = false;
 
+	SoundHit->Deactivate();
+	SoundPassing->Deactivate();
 }
 
 void ASkillActor::initComponents()

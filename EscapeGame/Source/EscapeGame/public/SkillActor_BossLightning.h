@@ -24,9 +24,15 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	bool UseSkill(const FVector& Loc, const FRotator& Rot);
 
-protected:
-//빔을 발사한다
+	bool IsActivate() { return bIsActivated; }
+	//빔을 발사한다
+	UFUNCTION()
 	void ActivateEffect();
+	UFUNCTION()
+	void DeactivateEffect();
+
+protected:
+
 	UFUNCTION()
 	void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 	
@@ -42,6 +48,6 @@ private:
 		float Timer;
 	UPROPERTY(meta = (AllowPrivateAccess = "true"))
 		float Limit;
-
+	
 	
 };

@@ -23,7 +23,7 @@ ASkillActor_BossLightning::ASkillActor_BossLightning()
 	Capsule->SetRelativeRotation(FRotator(Pitch = -90.000000, Yaw = 0.000000, Roll = 0.000061));
 	Timer = 0.0f;
 	Limit = 3.0f;
-
+	Damage = 17.0f;
 }
 
 void ASkillActor_BossLightning::BeginPlay()
@@ -46,11 +46,11 @@ void ASkillActor_BossLightning::Tick(float DeltaTime)
 
 	if (!bIsActivated)return;
 	//Rand하게 더해서 종료 시간을 다르게 한다
-	Timer += DeltaTime +FMath::RandRange(0.8f, 1.6f);
+	Timer += DeltaTime ;
 	if (Timer >= Limit)
 	{
 		Timer = 0;
-		SetSafety();
+		DeactivateEffect();
 	}
 
 
@@ -74,8 +74,18 @@ void ASkillActor_BossLightning::ActivateEffect()
 	bIsActivated = true;
 }
 
+void ASkillActor_BossLightning::DeactivateEffect()
+{
+	SoundHit->Stop();
+	MainEffect->SetHiddenInGame(true);
+
+	bIsActivated = false;
+}
+
 void ASkillActor_BossLightning::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
+	FDamageEvent DamageEvent;
+	OtherActor->TakeDamage(Damage, DamageEvent,GetWorld()->GetFirstPlayerController() ,this );
 }
 
 void ASkillActor_BossLightning::loadAsset()

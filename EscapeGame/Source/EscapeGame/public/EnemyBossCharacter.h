@@ -21,6 +21,7 @@ enum class EBossState:uint8
 DECLARE_MULTICAST_DELEGATE(FOnTeleportCalled);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnFireballThrow);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnBossIsDeadDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnThunderbolt);
 
 UCLASS(BlueprintType)
 class ESCAPEGAME_API AEnemyBossCharacter : public AEnemyCharacter
@@ -41,14 +42,20 @@ public:
 	UFUNCTION(BlueprintCallable)
 		virtual bool TeleportTo(const FVector & DestLocation,const FRotator & DestRotation,	bool bIsATest,	bool bNoCheck);
 
+	UFUNCTION(BlueprintCallable, Category = "Custom")
+		void ThrowFireBall();
+	UFUNCTION(BlueprintCallable)
+		void Thunderbolt();
+	//Thunderbolt가 플레이될 때 실행시킬 것
+	UFUNCTION(BlueprintCallable)
+		void AtPlayThunderblotAnim();
 
 
 	void SetState(EBossState NewState) { State = NewState; }
 	EBossState GetState() { return State; }
 
-	UFUNCTION(BlueprintCallable, Category = "Custom")
-		void ThrowFireBall();
-
+	UPROPERTY(BlueprintAssignable)
+		FOnThunderbolt OnThunderbolt;
 	UPROPERTY(BlueprintAssignable)
 		FOnFireballThrow OnFireballThrow;
 	UPROPERTY(BlueprintAssignable)
@@ -80,6 +87,21 @@ private:
 	USkillComponent_ProjectileType* Comp_Fireball;
 
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	TMap<FName,USoundWave*> SoundMap;
+		UParticleSystemComponent* TeleportEnter;
+
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UParticleSystemComponent* TeleportExit;
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UAudioComponent* TeleportSound;
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		 TWeakObjectPtr<class ASkillActor_BossLightning> SA_Thunder;
+
+/*
+
+
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TMap<FName,USoundBase*> SoundMap;*/
+
+
 
 };
