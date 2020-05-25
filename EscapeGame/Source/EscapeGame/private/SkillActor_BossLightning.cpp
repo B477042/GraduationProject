@@ -24,6 +24,8 @@ ASkillActor_BossLightning::ASkillActor_BossLightning()
 	Timer = 0.0f;
 	Limit = 3.0f;
 	Damage = 17.0f;
+
+	SetActorScale3D(FVector(1.295000, 2.265000, 1.275000));
 }
 
 void ASkillActor_BossLightning::BeginPlay()
