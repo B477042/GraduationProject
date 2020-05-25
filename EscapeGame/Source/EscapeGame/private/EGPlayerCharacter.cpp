@@ -34,6 +34,8 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 
 	bSetMapArm = false;
 	
+
+	bIsDebugMode = true;
 }
 
 // Called when the game starts or when spawned
@@ -568,7 +570,12 @@ void AEGPlayerCharacter::KeyInputTest()
 
 void AEGPlayerCharacter::SetDeath()
 {
-	EGLOG(Error, TEXT("Im Dead~"));
+	//디버깅 모드라면 죽지 않는다
+	if (bIsDebugMode)return;
+	
+	Anim->SetDead();
+
+
 }
 
 //Player가 아닌 모든 것에 Take Damage를 일으킵니다

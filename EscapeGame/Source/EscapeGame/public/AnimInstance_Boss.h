@@ -9,12 +9,22 @@
 /**
  * 
  */
+
+
+
 UCLASS()
 class ESCAPEGAME_API UAnimInstance_Boss : public UAnimInstance
 {
 	GENERATED_BODY()
 public:
 	UAnimInstance_Boss();
+
+	//void NativeBeginPlay();
+
+	UFUNCTION()
+	void AnimNotify_DeadStart();
+	UFUNCTION()
+	void AnimNotify_DeadEnd();
 
 
 private:
@@ -30,7 +40,8 @@ private:
 		float Roll;
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		float YawDelta;
-	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		AEnemyBossCharacter* OwnerChara;
+
+	//AnimSequence'/Game/ParagonGideon/Characters/Heroes/Gideon/Animations/Death_Back.Death_Back'
+
 
 };

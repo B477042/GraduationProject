@@ -75,6 +75,7 @@ public:
 	//virtual void LoadDataTable() PURE_VIRTUAL(StatComponent::LoadDataTable, ;);
 
 	FOnHPChangeDelegate HPChangedDelegate;
+	//UPROPERTY(BlueprintAssignable)
 	FIsHPZero HPZeroDelegate;
 
 protected:

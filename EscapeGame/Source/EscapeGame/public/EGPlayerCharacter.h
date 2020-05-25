@@ -159,4 +159,8 @@ private:
 		class UAnim_Player* Anim;
 	UPROPERTY(VisibleInstanceOnly, Category = "SkillActor", meta = (AllowPrivateAccess = "true"))
 		TWeakObjectPtr<class ASkillActor_ThunderType> Skill_Thunder;
+
+	//디버그 모드면 플레이어는 죽지 않는다
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Debug", meta = (AllowPrivateAccess = "true"))
+	bool bIsDebugMode;
 };
