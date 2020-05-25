@@ -3,6 +3,8 @@
 
 #include "SkillActor_Hit.h"
 #include "Sound/SoundCue.h"
+#include "EGPlayerCharacter.h"
+
 
 ASkillActor_Hit::ASkillActor_Hit()
 {
@@ -51,8 +53,25 @@ void ASkillActor_Hit::UseSkill(const FVector & Point)
 	//SoundHit->SetHiddenInGame(false);
 	SoundHit->Play();
 	Collision->SetCollisionProfileName(TEXT("NoCollision"));
-	//SetActorHiddenInGame(false);
-	EGLOG(Warning, TEXT("Play : %s"),*Point.ToString());
+	
+	//탐지된 여러가지의 결과들
+	TArray<FOverlapResult>OverlapResults;
+	FCollisionQueryParams CollisionQueryParam(NAME_None, false, this);
+	FDamageEvent DamageEvent;
+	auto playerCon = GetWorld()->GetFirstPlayerController();
+	//PlayerCharacter를 Overlap 반응으로 찾아낸다. 모양은 DetectRadius만한 구
+	bool bResult = GetWorld()->OverlapMultiByChannel(OverlapResults, Point, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2,
+		FCollisionShape::MakeSphere(50.0f), CollisionQueryParam);
+	if (bResult)
+	{
+		for (auto it : OverlapResults)
+		{
+			it.GetActor()->TakeDamage(10.0f, DamageEvent, playerCon, this);
+			EGLOG(Error, TEXT("Additional Damage To : %s"), *it.GetActor()->GetName());
+		}
+	}
+
+
 }
 
 void ASkillActor_Hit::OnSystemEnd(UParticleSystemComponent * PS)

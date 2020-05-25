@@ -28,14 +28,14 @@ public:
 		static const FName HomePos;
 		static const FName PatrolPos;
 		const class UBlackboardData* GetBlackBoard() { return BBData; }
-		
+			virtual	void RunAI();
+	virtual	void StopAI();
 protected:
 	virtual void BeginPlay()override;
 	virtual void PostInitializeComponents()override;
 	
 //private:
-	virtual	void RunAI();
-	virtual	void StopAI();
+
 //private:
 	//Blackboard Data File Data
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))

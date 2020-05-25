@@ -4,12 +4,15 @@
 #include "Anim_Player.h"
 #include "EGPlayerCharacter.h"
 #include "Sound\SoundCue.h"
+#include "Kismet/GameplayStatics.h"
 #include "..\public\Anim_Player.h"
 
 
 UAnim_Player::UAnim_Player()
 {
 	SoundLaugh = CreateDefaultSubobject<UAudioComponent>(TEXT("LAUGH"));
+	SoundDeath = CreateDefaultSubobject<UAudioComponent>(TEXT("S_DEATH"));
+
 	bIsGuarding = false;
 	static ConstructorHelpers::FObjectFinder <UAnimMontage>NORMAL_ATTACK(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/m_NormalAttack.m_NormalAttack'"));
 	if (NORMAL_ATTACK.Succeeded())
@@ -37,12 +40,19 @@ UAnim_Player::UAnim_Player()
 		SoundLaugh->SetSound(SC_Laugh.Object);
 		SoundLaugh->bAutoActivate = false;
 	}
+
+	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Death(TEXT("SoundCue'/Game/ParagonKwang/Characters/Heroes/Kwang/Sounds/SoundCues/Kwang_Death.Kwang_Death'"));
+	if (SC_Death.Succeeded())
+	{
+		SoundDeath->SetSound(SC_Death.Object);
+		SoundDeath->bAutoActivate = false;
+	}
 	
 	
 	//UCharacterAnimInstance::StartCombo = 1;
 	StartCombo = 1;
 	EndCombo = 4;
-
+	bIsDead = false;
 	bIsRolling = false;
 }
 
@@ -192,6 +202,31 @@ void UAnim_Player::AnimNotify_AnimNotify_ThunderStart()
 	player->ActiveThunder();
 }
 
+void UAnim_Player::AnimNotify_DeadStart()
+{
+	auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
+
+	if (!player)return;
+	SoundDeath->Play();
+	player->RestricInput();
+	player->GetCapsuleComponent()->SetCollisionProfileName(TEXT("NoCollision"));
+	
+
+}
+
+void UAnim_Player::AnimNotify_DeadEnd()
+{
+	auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
+
+	if (!player)return;
+	player->SetActorHiddenInGame(true);
+	
+	//FLatentActionInfo LatentInfo;
+	UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+	
+
+}
+
 //Input °ªÀº PlayerÀÇ Combo
 void UAnim_Player::PlaySkillMontage(int Combo)
 {
@@ -212,4 +247,9 @@ void UAnim_Player::PlaySkillMontage(int Combo)
 	}
 
 
+}
+
+void UAnim_Player::SetDead()
+{
+	bIsDead = true;
 }

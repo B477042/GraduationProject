@@ -20,6 +20,7 @@ enum class EBossState:uint8
 
 DECLARE_MULTICAST_DELEGATE(FOnTeleportCalled);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnFireballThrow);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnBossIsDeadDelegate);
 
 UCLASS(BlueprintType)
 class ESCAPEGAME_API AEnemyBossCharacter : public AEnemyCharacter
@@ -50,8 +51,13 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 		FOnFireballThrow OnFireballThrow;
+	UPROPERTY(BlueprintAssignable)
+	FOnBossIsDeadDelegate OnBossIsDead;
 
 	FOnTeleportCalled OnTeleportCalled;
+
+	UStatComponent_Enemy* GetStat() { return Stat; }
+
 private:
 	void initComponents();
 	void loadAsset();

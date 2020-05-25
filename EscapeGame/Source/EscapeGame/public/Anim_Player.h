@@ -45,12 +45,18 @@ public:
 		void AnimNotify_SkillEnd();
 	UFUNCTION()
 		void AnimNotify_AnimNotify_ThunderStart();
+	UFUNCTION()
+	void AnimNotify_DeadStart();
+	UFUNCTION()
+	void AnimNotify_DeadEnd();
+
 
 	//Input 값은 Player의 Combo
 	void PlaySkillMontage(int Combo);
 	void SetGuarding(bool bResult) { bIsGuarding = bResult; }
 
 	float GetRollingLength() { return RollingLength; }
+	void SetDead();
 private:
 	//const int32 StartCombo = 1;//Attack Montage에서 처음 액션 번호
 	//const int32 EndCombo = 4;//Attack Montage에서 마지막 액션 번호
@@ -66,6 +72,9 @@ private:
 	UPROPERTY()
 		UAudioComponent* SoundLaugh;
 
+	UPROPERTY()
+	UAudioComponent* SoundDeath;
+
 	////통상공격 몽타주
 	//UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
 	//	UAnimMontage* AttackMontage;
@@ -78,4 +87,7 @@ private:
 		bool bIsRolling;
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
 		bool bIsGuarding;
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
+	bool bIsDead;
+
 };

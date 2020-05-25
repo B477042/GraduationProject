@@ -119,10 +119,11 @@ void UStatComponent_Player::UseStamina(float DeltaTime)
 	}
 	if (Stamina < 0.0f)
 	{
+		bIsStaminaUsing = false;
 		Stamina = 0.0f;
 		return;
 	}
-	Stamina -= DeltaTime * 150.0f;
+	Stamina -= DeltaTime * 100.0f;
 	StaminaChangedDelegate.Broadcast();
 }
 
