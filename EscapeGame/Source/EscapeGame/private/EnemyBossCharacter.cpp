@@ -24,6 +24,19 @@ void AEnemyBossCharacter::BeginPlay()
 
 	reloadSkillObjs();
 	
+
+	/*UProgressBar**/
+
+	HPBar = Cast<UProgressBar>(HPBarWidget->GetUserWidgetObject()->GetWidgetFromName(TEXT("HPBar")));
+	if (!HPBar)
+	{
+		EGLOG(Warning, TEXT(" HPBar Failed"));
+		return;
+	}
+	Stat->HPChangedDelegate.AddLambda([this]()->void {
+		HPBar->SetPercent(Stat->GetHPRatio());
+	});
+	HPBar->SetPercent(Stat->GetHPRatio());
 }
 
 void AEnemyBossCharacter::PostInitializeComponents()

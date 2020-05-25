@@ -59,6 +59,17 @@ void AGruntCharacter::BeginPlay()
 	Super::BeginPlay();
 	//Check Direction of This Actor. Will Draw a line that point to Front 2m
 	//DrawDebugLine(GetWorld(), GetActorLocation(), GetActorLocation() + GetActorForwardVector()*200.0f,FColor ::Red, true);
+	
+	HPBar = Cast<UProgressBar>(HPBarWidget->GetUserWidgetObject()->GetWidgetFromName(TEXT("HPBar")));
+	if (!HPBar)
+	{
+		EGLOG(Warning, TEXT(" HPBar Failed"));
+		return;
+	}
+	Stat->HPChangedDelegate.AddLambda([this]()->void {
+		HPBar->SetPercent(Stat->GetHPRatio());
+	});
+	HPBar->SetPercent(Stat->GetHPRatio());
 }
 
 void AGruntCharacter::PostInitializeComponents()

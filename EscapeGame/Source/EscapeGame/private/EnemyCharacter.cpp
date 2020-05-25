@@ -2,6 +2,7 @@
 
 #include "EnemyCharacter.h"
 
+
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
 {
@@ -16,6 +17,22 @@ AEnemyCharacter::AEnemyCharacter()
 	GetCharacterMovement()->bUseControllerDesiredRotation = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 480.0f, 0.0f);
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("EnemyCharacter"));
+
+	HPBarWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HPBARWIDGET"));
+	HPBarWidget->SetupAttachment(GetMesh());
+	HPBarWidget->SetRelativeLocation(FVector(0.0f, 0.0f, 400.0f));
+	HPBarWidget->SetWidgetSpace(EWidgetSpace::Screen);
+
+	static ConstructorHelpers::FClassFinder<UUserWidget>UI_HUD(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_DisplayHP.UI_DisplayHP_C'"));
+	if (UI_HUD.Succeeded())
+	{
+		HPBarWidget->SetWidgetClass(UI_HUD.Class);
+		HPBarWidget->SetDrawSize(FVector2D(100.0f, 25.0f));
+	}
+	HPBarWidget->SetHiddenInGame(false);
+	
+
+	
 }
 
 // Called when the game starts or when spawned
@@ -23,6 +40,15 @@ void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	HPBar = Cast<UProgressBar>(HPBarWidget->GetUserWidgetObject()->GetWidgetFromName(TEXT("HPBar")));
+	if (!HPBar)
+	{
+		EGLOG(Warning, TEXT(" HPBar Failed"));
+		return;
+	}
+	
+	
+
 }
 
 float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
@@ -59,3 +85,4 @@ void AEnemyCharacter::Dead()
 {
 	Destroy();
 }
+

@@ -5,6 +5,8 @@
 #include "EscapeGame.h"
 #include "GameFramework/Character.h"
 #include "StatComponent_Enemy.h"
+#include "Components/WidgetComponent.h"
+#include "ProgressBar.h"
 #include "EnemyCharacter.generated.h"
 
 
@@ -31,6 +33,8 @@ protected:
 	UFUNCTION(BlueprintCallable)
 		void Dead();
 
+
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -42,5 +46,12 @@ public:
 	//Change Name if need. reefed at GruntChara, BTTask Attack. 
 	//UFUNCTION(BlueprintNativeEvent)
 	virtual void Attack() PURE_VIRTUAL(AEnemyCharacter::Attack,);
+
+protected:
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowClasses))
+		class UWidgetComponent* HPBarWidget;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowClasses))
+		UProgressBar*HPBar;
 
 };
