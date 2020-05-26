@@ -21,6 +21,7 @@ protected:
 	//적의 위치가 셋팅된 상태라면 실행시켜준다. 
 	FVector CalcTeleportPos(const FVector& TargetPos);
 	//얼마나 텔레포트 할지 길이
+	UPROPERTY(BlueprintReadWrite, Category = "Custom", meta = (AllowPrivateAccess = "true"))
 	float TeleportDistance;
 	bool CanTeleportThere(const FVector & TeleportPos);
 

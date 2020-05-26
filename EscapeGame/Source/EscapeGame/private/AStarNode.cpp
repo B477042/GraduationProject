@@ -1,31 +1,35 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "AStarNode.h"
 #include "EGPlayerCharacter.h"
 
 // Sets default values
 AAStarNode::AAStarNode()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 	initComponents();
 	bIsPath = false;
 	bIsVisited = false;
+
+	Count_F = 0;
+	Count_G = 0;
+	Count_H = 0;
+
 }
 
 // Called when the game starts or when spawned
 void AAStarNode::BeginPlay()
 {
 	Super::BeginPlay();
-	
 
+	Deactivate();
 }
 
 void AAStarNode::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-	BoxTrigger->OnComponentBeginOverlap.AddDynamic(this,&AAStarNode::OnActorOverlap);
+	BoxTrigger->OnComponentBeginOverlap.AddDynamic(this, &AAStarNode::OnActorOverlap);
 	BoxTrigger->OnComponentEndOverlap.AddDynamic(this, &AAStarNode::OnActorOverlapEnd);
 }
 
@@ -34,15 +38,17 @@ void AAStarNode::OnActorOverlap(UPrimitiveComponent * OverlappedComp, AActor * O
 	auto player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (!player)return;
 
-	
 	Deactivate();
+	
+
+
 
 }
-//경로라면 다시 띄워준다.
+
 void AAStarNode::OnActorOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
 	if (bIsPath)
-		Activate();
+			Activate();
 }
 
 // Called every frame
@@ -52,20 +58,55 @@ void AAStarNode::Tick(float DeltaTime)
 
 }
 
+bool AAStarNode::operator<(const AAStarNode & lhs)
+{
+
+	return Count_F<lhs.Count_F;
+}
+
+//bool AAStarNode::operator<(const AAStarNode & lhs, const AAStarNode & rhs)
+//{
+//	return lhs.Count_F<rhs.Count_F;
+//}
+
+
+
+bool AAStarNode::operator>(const AAStarNode & lhs)
+{
+	return Count_F > lhs.Count_F;
+}
+
+bool AAStarNode::operator==(const AAStarNode & lhs)
+{
+	return  Count_F == lhs.Count_F;
+}
+
+void AAStarNode::SortNearNodes()
+{
+	
+	
+
+
+}
+
+
+
 void AAStarNode::Activate()
 {
-	SetActorHiddenInGame(true);
+	BodyMesh->SetHiddenInGame(false);
 }
 
 void AAStarNode::Deactivate()
 {
-	SetActorHiddenInGame(false);
+	BodyMesh->SetHiddenInGame(true);
 }
 
 void AAStarNode::SetRoad(bool bResult)
 {
 	bIsPath = bResult;
 }
+
+
 
 
 
@@ -78,7 +119,7 @@ void AAStarNode::initComponents()
 	RootComponent = BoxTrigger;
 	BodyMesh->SetupAttachment(RootComponent);
 
-	BoxTrigger->SetCollisionProfileName(TEXT("NoCollision"));
+	BoxTrigger->SetCollisionProfileName(TEXT("OnTrapTrigger"));
 	BodyMesh->SetCollisionProfileName(TEXT("NoCollision"));
 	float X, Y, Z;
 	BoxTrigger->SetBoxExtent(FVector(X = 70.225533f, Y = 62.159767f, Z = 37.897743f));
@@ -93,11 +134,47 @@ void AAStarNode::initComponents()
 	static ConstructorHelpers::FObjectFinder <UMaterialInstance>MATERIAL_GREEN(TEXT("MaterialInstanceConstant'/AnimationSharing/AnimSharingGreen.AnimSharingGreen'"));
 	if (MATERIAL_GREEN.Succeeded())
 	{
-		BodyMesh->SetMaterial(0,MATERIAL_GREEN.Object);
-		
+		BodyMesh->SetMaterial(0, MATERIAL_GREEN.Object);
+
 	}
 
 	NearNodes.Init(nullptr, 4);
 
 }
 
+int AAStarNode::CalcGCount(const FVector & Start)
+{
+	Count_G = FVector::Distance(Start, GetActorLocation());
+	return Count_G;
+}
+
+int AAStarNode::CalcHCount(const FVector & Goal)
+{
+	Count_H = FVector::Distance(Goal, GetActorLocation());
+	return Count_H;
+}
+
+void AAStarNode::SetNearNodesPrevAsMe()
+{
+	for (auto it : NearNodes)
+		it->PrevNode = this;
+}
+
+
+void AAStarNode::ResetAStarValue()
+{
+	bIsPath = false;
+	bIsVisited = false;
+
+	Count_F = 0;
+	Count_G = 0;
+	Count_H = 0;
+
+	PrevNode.Get();
+}
+
+int AAStarNode::CalcFCount(const FVector & Start, const FVector & Goal)
+{
+	Count_F = CalcGCount(Start) + CalcHCount(Goal);
+	return Count_F;
+}

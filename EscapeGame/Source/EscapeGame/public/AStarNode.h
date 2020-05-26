@@ -2,34 +2,9 @@
 
 #pragma once
 
-#include  "EscapeGame.h"
+#include "EscapeGame.h"
 #include "GameFramework/Actor.h"
 #include "AStarNode.generated.h"
-
-/*
-	사용 방법 : 월드에 배치해서 직접 이어 붙인다
-
-*/
-
-USTRUCT()
-struct FAstarCount
-{
-	GENERATED_BODY()
-public:
-	FAstarCount(){
-		Count_F = 0;
-		Count_G = 0;
-		Count_H = 0;
-	}
-
-	//G+H
-	int Count_F;
-	//왔던 비용
-	int Count_G;
-	//예상비용
-	int Count_H;
-
-};
 
 UCLASS()
 class ESCAPEGAME_API AAStarNode : public AActor
@@ -39,52 +14,88 @@ class ESCAPEGAME_API AAStarNode : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AAStarNode();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	virtual void BeginPlay()override;
 	virtual void PostInitializeComponents()override;
 	UFUNCTION()
-	void OnActorOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
+		void OnActorOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 	UFUNCTION()
-	void OnActorOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-public:	
+		void OnActorOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	//화면에 띄워준다.
+	bool operator<(const AAStarNode& lhs);
+	//bool operator<(const AAStarNode& lhs, const AAStarNode& rhs);
+	bool operator>(const AAStarNode& lhs);
+	bool operator==(const AAStarNode& lhs);
+	//FCount가 적은 순으로 정렬한다.->기각
+	void SortNearNodes();
+
+	//
 	UFUNCTION()
-	void Activate();
-	//화면에서 지워준다 
+		void Activate();
+	//
 	UFUNCTION()
-	void Deactivate();
-	//길로 설정한다.
+		void Deactivate();
+	//
 	UFUNCTION()
-	void SetRoad(bool bResult);
-	//노드를 방문한 노드로 바꾼다. 
+		void SetRoad(bool bResult);
+	//
 	void VisitNode() { bIsVisited = true; }
+	void SetToPath() { bIsPath = true; }
 
 	bool IsPath() { return bIsPath; }
-
 	bool IsVisitedNode() { return bIsVisited; }
 
-	FAstarCount& GetAstarCount() { return AstarCount; }
-protected:
-	void initComponents();
+	void SetPrevNode(AAStarNode* prev) { PrevNode = prev; }
+
+	TWeakObjectPtr<AAStarNode> GetPrevNode() { return PrevNode; }
+
+	//주변 노드들의 이전 노드들을 자신의 노드로한다. 
+	void SetNearNodesPrevAsMe();
+
+	 int GetF() { return Count_F; }
+	const int GetH() { return Count_H; }
+	const int GetG() { return Count_G; }
+
+	//A* 연산과 관련된 연산 내용들을 초기화 시킨다. 다시 찾기 전에
+	void ResetAStarValue();
+
+
+	//G와 H카운트도 같이 계산된다
+	int CalcFCount(const FVector & Start, const FVector & Goal);
+	
+	UPROPERTY(EditAnywhere, Category = "Astar Data",meta = (AllowPrivateAccess = "true"))
+	TArray<TWeakObjectPtr<AAStarNode>>NearNodes;
+
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* BodyMesh;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	UBoxComponent* BoxTrigger;
-	//붙어 있는 노드들. 에디터에서 설정해서 붙이거나 탐지해서 붙인다. 
-	UPROPERTY(EditAnywhere,  meta = (AllowPrivateAccess = "true"))
-	TArray<TWeakObjectPtr<AAStarNode>>NearNodes;
+	void initComponents();
+	int CalcGCount(const FVector& Start);
+	int CalcHCount(const FVector& Goal);
 	
-	//경로로 뽑혔는지//SetRoad에서만 true로 만들 것
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	bool bIsPath;
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	bool bIsVisited;
-	UPROPERTY(VisibleAnywhere)
-	FAstarCount AstarCount;
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UStaticMeshComponent* BodyMesh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UBoxComponent* BoxTrigger;
+	//
+
+
+	//
+	UPROPERTY(EditAnywhere, Category = "Astar Data",meta = (AllowPrivateAccess = "true"))
+		bool bIsPath;
+	UPROPERTY(EditAnywhere, Category = "Astar Data", meta = (AllowPrivateAccess = "true"))
+		bool bIsVisited;
+
+	UPROPERTY(VisibleAnywhere, Category = "Astar Data", meta = (AllowPrivateAccess = "true"))
+		TWeakObjectPtr<AAStarNode>PrevNode;
+	//G+H
+	UPROPERTY(VisibleAnywhere, Category = "Astar Data")
+	int Count_F;
+	//지금까지 비용
+	UPROPERTY(VisibleAnywhere, Category = "Astar Data")
+	int Count_G;
+	//예상비용
+	UPROPERTY(VisibleAnywhere, Category = "Astar Data")
+	int Count_H;
 };

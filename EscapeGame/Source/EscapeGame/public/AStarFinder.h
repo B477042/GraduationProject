@@ -2,18 +2,22 @@
 
 #pragma once
 
+#include "EscapeGame.h"
 #include "AStarNode.h"
+#include "Containers/Queue.h"
+//#include "Containers/pri"
+//#include "Containers/"
 #include "GameFramework/Actor.h"
-#include "AStarFinder.generated.h"
+#include "AstarFinder.generated.h"
 
 UCLASS()
-class ESCAPEGAME_API AAStarFinder : public AActor
+class ESCAPEGAME_API AAstarFinder : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AAStarFinder();
+	AAstarFinder();
 
 protected:
 	// Called when the game starts or when spawned
@@ -22,15 +26,19 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	bool FindPath(const FVector& Start, const FVector& Goal);
 
+	void  AStar( AAStarNode* Start,  AAStarNode* Goal);
+	//Activate PathNodes
+	void ShowPath();
 
 private:
-	//방문을 해야될 노드
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	TQueue<AAStarNode>Que_ToVisit;
 	
-	//경로
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	TList<AAStarNode>Que_Path;
+
+
+	//방문해야될 노드
+	TQueue<TWeakObjectPtr<AAStarNode>>ToVisiteNodes;
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+	TWeakObjectPtr<AAStarNode> GoalNode;
+	
+
 };

@@ -24,5 +24,5 @@ protected:
 	UFUNCTION()
 		void OnSystemEnd(UParticleSystemComponent *PS);
 	//
-	float DamageRate;
+	
 };
