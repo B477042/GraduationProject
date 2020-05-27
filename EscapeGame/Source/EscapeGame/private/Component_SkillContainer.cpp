@@ -23,6 +23,17 @@ void UComponent_SkillContainer::BeginPlay()
 
 }
 
+void UComponent_SkillContainer::BeginDestroy()
+{
+	Super::BeginDestroy();
+	/*for (auto it : SkillObjects)
+	{
+		it->Destroy();
+	}
+	SkillObjects.Empty();
+*/
+}
+
 
 // Called every frame
 void UComponent_SkillContainer::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)

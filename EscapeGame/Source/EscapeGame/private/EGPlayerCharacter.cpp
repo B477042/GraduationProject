@@ -7,6 +7,7 @@
 //#include "EGPlayerController.h"
 #include "GameWidget.h"
 #include"Components/InputComponent.h"
+#include "Projectile.h"
 #include "GameSetting/public/EGCharacterSetting.h"
 #include "..\public\EGPlayerCharacter.h"
 #include"Sound/SoundCue.h"
@@ -34,7 +35,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 
 	bSetMapArm = false;
 	
-
+	bIsGuarding = false;
 	bIsDebugMode = true;
 }
 
@@ -149,6 +150,21 @@ float AEGPlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent con
 		EGLOG(Error, TEXT("Can't Take Damage"));
 		return 0.0f;
 	}*/
+	//투사체 반사
+	if (bIsGuarding)
+	{
+		auto projectile = Cast<AProjectile>(DamageCauser);
+		//투사체가 맞다면, 반대로 튕겨낸다
+		if (projectile)
+		{
+			projectile->ReadyToFire(projectile->GetFireDir()*-1.0f, projectile->GetActorLocation(), projectile->GetActorRotation());
+			projectile->SetCollision("PlayerWeapon");
+			
+			EGLOG(Error, TEXT("Ting"));
+			return FinalDamage;
+		}
+
+	}
 
 	Stat->TakeDamage(DamageAmount);
 
@@ -259,7 +275,7 @@ void AEGPlayerCharacter::UsingStaminaTick()
 	}
 	else
 	{
-		EGLOG(Warning, TEXT("Using Stamina"));
+		//EGLOG(Warning, TEXT("Using Stamina"));
 		Stat->UseStamina(GetWorld()->DeltaTimeSeconds);
 	}
 
@@ -341,6 +357,8 @@ void AEGPlayerCharacter::SetGuard()
 	//RestricInput();
 	
 		Anim->SetGuarding(true);
+		bIsGuarding = true;
+
 	}
 
 	
@@ -356,6 +374,7 @@ void AEGPlayerCharacter::ReleaseGuard()
 	
 	//RecoverInput();
 	Anim->SetGuarding(false);
+	bIsGuarding = false;
 }
 
 void AEGPlayerCharacter::ActiveThunder()

@@ -163,4 +163,8 @@ private:
 	//디버그 모드면 플레이어는 죽지 않는다
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Debug", meta = (AllowPrivateAccess = "true"))
 	bool bIsDebugMode;
+	//가드하고 있으면 투사체를 튕겨낸다.
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Debug", meta = (AllowPrivateAccess = "true"))
+		bool bIsGuarding;
+
 };

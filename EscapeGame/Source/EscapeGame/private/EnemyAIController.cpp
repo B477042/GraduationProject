@@ -55,6 +55,11 @@ void AEnemyAIController::StopAI()
 	auto BehaviorTreeComponent = Cast<UBehaviorTreeComponent>(BrainComponent);
 	if (nullptr != BehaviorTreeComponent)
 	{
+		EGLOG(Warning, TEXT("PLz stop"));
 		BehaviorTreeComponent->StopTree(EBTStopMode::Safe);
+		return;
 	}
+
+	EGLOG(Warning, TEXT("You Fucking racist"));
+
 }

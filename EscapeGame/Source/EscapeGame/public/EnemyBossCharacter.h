@@ -73,6 +73,10 @@ public:
 	UStatComponent_Enemy* GetStat() { return Stat; }
 
 	void SetCharging(bool bResult) { bIsMpCharging = bResult; }
+	void PlayChargeEffect(bool Power);
+
+
+
 
 private:
 	void initComponents();

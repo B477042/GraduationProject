@@ -29,20 +29,16 @@ UAnimInstance_Boss::UAnimInstance_Boss()
 
 void UAnimInstance_Boss::AnimNotify_DeadStart()
 {
+	EGLOG(Error, TEXT("*****"));
 	auto Chara = Cast<AEnemyBossCharacter>(GetOwningActor());
 	if (!Chara)return;
-	auto OwnerCon = Cast<AEnemyAIController>(Chara->GetController());
-	if (!OwnerCon)
-	{
-		EGLOG(Warning, TEXT("DEAD"));
-		return;
-	}
-
+	
+	EGLOG(Error, TEXT("**hhh***"));
 	Chara->GetCapsuleComponent()->SetCollisionProfileName(TEXT("NoCollision"));
-
-
+//	StopAllMontages(0.0f);
+	
 	Chara->OnBossIsDead.Broadcast();
-	OwnerCon->StopAI();
+	
 	StopAllMontages(0.0f);
 	
 
@@ -64,7 +60,10 @@ void UAnimInstance_Boss::AnimNotify_DeadEnd()
 
 void UAnimInstance_Boss::AnimNotify_ChargeStart()
 {
-	EGLOG(Error, TEXT(" hi??"));
+	auto Chara = Cast<AEnemyBossCharacter>(GetOwningActor());
+	if (!Chara)return;
+	Chara->PlayChargeEffect(true);
+
 }
 
 void UAnimInstance_Boss::AnimNotify_ChargeEnd()
@@ -72,6 +71,12 @@ void UAnimInstance_Boss::AnimNotify_ChargeEnd()
 	auto Chara = Cast<AEnemyBossCharacter>(GetOwningActor());
 	if (!Chara)return;
 	Chara->SetCharging(false);
+
+	auto AICon = Cast<AEnemyAIController>(Chara->GetController());
+	if (!AICon)
+		return;
+	Chara->PlayChargeEffect(false);
+	AICon->GetBlackboardComponent()->SetValueAsFloat(TEXT("MP"), 200.0f);
 }
 
 void UAnimInstance_Boss::PlayChargeAnim()

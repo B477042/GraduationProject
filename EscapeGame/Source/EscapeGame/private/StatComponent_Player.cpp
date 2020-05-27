@@ -108,7 +108,7 @@ void UStatComponent_Player::UseStamina(float DeltaTime)
 {
 	if (!bCanUsingStamina)
 	{
-		EGLOG(Warning, TEXT("Can't use Stamina"));
+		//EGLOG(Warning, TEXT("Can't use Stamina"));
 		return;
 	}
 	//if (!bIsStaminaUsing)SetStaminaUsing(true);

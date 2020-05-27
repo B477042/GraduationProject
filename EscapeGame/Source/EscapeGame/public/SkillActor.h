@@ -35,7 +35,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+	FVector GetFireDir() { return FireDir; }
 
 protected:
 	UPROPERTY(VisibleAnywhere)

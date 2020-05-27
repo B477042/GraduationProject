@@ -53,8 +53,18 @@ void AEnemyBossCharacter::PostInitializeComponents()
 	Super::PostInitializeComponents();
 	
 	GetCharacterMovement()->JumpZVelocity = 1000.0f;
+	//Á×À» ÁØºñ¸¦ ½ÃÅ²´Ù
+	Stat->HPZeroDelegate.AddLambda([this]()->void {
+		auto OwnerCon = Cast<AEnemyAIController>(GetController());
+		if (!OwnerCon)
+		{
+			EGLOG(Warning, TEXT("DEAD"));
+			return;
+		}OwnerCon->StopAI();
 
-	
+		
+
+	});
 
 
 	//Comp_Fireball->AddSkillObj(ABoss_Fireball::CreateDefaultSubobject,10);
@@ -65,7 +75,7 @@ float AEnemyBossCharacter::TakeDamage(float DamageAmount, FDamageEvent const & D
 	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	Stat->TakeDamage(FinalDamage);
 
-	EGLOG(Warning, TEXT("HP : %d"), Stat->GetHP());
+	EGLOG(Warning, TEXT("HP : %f"),Stat->GetHP());
 	return FinalDamage;
 }
 
@@ -191,6 +201,21 @@ void AEnemyBossCharacter::ChargeMP()
 }
 
 
+void AEnemyBossCharacter::PlayChargeEffect(bool Power)
+{
+	//ÀÌÆåÆ® ÄÑ±â
+	if (Power)
+	{
+		MpChargingEffect->Activate();
+		MpChargingSound->Play();
+	}
+	//ÀÌÆåÆ® ²ô±â
+	MpChargingEffect->Deactivate();
+	MpChargingSound->Stop();
+
+
+}
+
 void AEnemyBossCharacter::initComponents()
 {
 	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
@@ -256,6 +281,7 @@ void AEnemyBossCharacter::loadAsset()
 		MpChargingEffect->SetTemplate(CHARGING_EFFECT.Object);
 		MpChargingEffect->bAutoActivate = false;
 		MpChargingEffect->SetupAttachment(RootComponent);
+		MpChargingEffect->bAllowRecycling = true;
 
 	}
 	static ConstructorHelpers::FObjectFinder<USoundCue>SC_MP(TEXT("SoundCue'/Game/MagicModule/SFX/CUE/CUE_Healing.CUE_Healing'"));
@@ -264,6 +290,7 @@ void AEnemyBossCharacter::loadAsset()
 		MpChargingSound->SetSound(SC_MP.Object);
 		MpChargingSound->bAutoActivate = false;
 		MpChargingSound->SetupAttachment(MpChargingEffect);
+	
 	}
 
 

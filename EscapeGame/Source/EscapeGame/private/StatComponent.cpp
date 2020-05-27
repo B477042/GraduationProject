@@ -72,6 +72,7 @@ void UStatComponent::SetHP(float NewHP)
 {
 	//EGLOG(Warning, TEXT("HP : %f"), GetHPRatio());
 	CurrentHP = NewHP;
+	if (CurrentHP > MaxHP)MaxHP = CurrentHP;
 	if (!IsDead())
 	HPChangedDelegate.Broadcast();
 }
@@ -136,7 +137,7 @@ bool UStatComponent::IsDead()
 {
 	if (CurrentHP > 0)return false;
 	CurrentHP = 0.0f;
-	//EGLOG(Error, TEXT("He is Dead"));
+//	EGLOG(Error, TEXT("%s is Dead"),*GetOwner()->GetName());
 	
 	HPChangedDelegate.Broadcast();
 	HPZeroDelegate.Broadcast();

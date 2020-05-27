@@ -28,7 +28,8 @@ AEnemyCharacter::AEnemyCharacter()
 	if (UI_HUD.Succeeded())
 	{
 		HPBarWidget->SetWidgetClass(UI_HUD.Class);
-		HPBarWidget->SetDrawSize(FVector2D(100.0f, 25.0f));
+		HPBarWidget->SetDrawSize(FVector2D(300.0f, 25.0f));
+	
 	}
 	HPBarWidget->SetHiddenInGame(false);
 	

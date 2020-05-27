@@ -41,6 +41,8 @@ void AProjectile::ReadyToFire(const FVector & Dir_Vector, const FVector& Locatio
 
 	
 	SetActorLocationAndRotation(Location, Rotate);
+
+	Collision->SetCollisionProfileName("OnTrapTrigger");
 	Fire();
 }
 
@@ -49,7 +51,7 @@ void AProjectile::Fire()
 	bIsFire = true;
 	//EGLOG(Error, TEXT("Free fire"));
 	MainEffect->Activate();
-	Collision->SetCollisionProfileName("OnTrapTrigger");
+
 }
 
 void AProjectile::PostInitializeComponents()

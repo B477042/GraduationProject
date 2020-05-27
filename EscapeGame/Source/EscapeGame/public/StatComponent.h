@@ -83,6 +83,7 @@ protected:
 	const float MaxWalkingSpeed = 500.0f;
 	const float MaxRunningSpeed = 1000.0f;
 	const float MinWalkingSpeed = 1.0f;*/
+	UPROPERTY(Transient, VisibleInstanceOnly, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
 	float MaxHP ;
 	float MaxWalkingSpeed ;
 	float MaxRunningSpeed ;
