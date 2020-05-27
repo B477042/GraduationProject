@@ -4,6 +4,7 @@
 #include "EnemyBossCharacter.h"
 #include "AIController_Boss.h"
 #include "Boss_Fireball.h"
+#include "AnimInstance_Boss.h"
 #include "SkillActor_BossLightning.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "..\public\EnemyBossCharacter.h"
@@ -18,6 +19,7 @@ AEnemyBossCharacter::AEnemyBossCharacter()
 
 	bIsDamaged = false;
 	State = EBossState::Walk;
+	bIsMpCharging = false;
 }
 
 void AEnemyBossCharacter::BeginPlay()
@@ -51,6 +53,10 @@ void AEnemyBossCharacter::PostInitializeComponents()
 	Super::PostInitializeComponents();
 	
 	GetCharacterMovement()->JumpZVelocity = 1000.0f;
+
+	
+
+
 	//Comp_Fireball->AddSkillObj(ABoss_Fireball::CreateDefaultSubobject,10);
 }
 
@@ -102,7 +108,7 @@ void AEnemyBossCharacter::ThrowFireBall()
 		EGLOG(Error, TEXT("fail to get value "));
 		return;
 	}
-	EGLOG(Warning, TEXT("Target Name : %s"), *tempObj->GetName());
+	//EGLOG(Warning, TEXT("Target Name : %s"), *tempObj->GetName());
 	//tempCon->GetBlackBoard()->get (AAIController_Boss::TargetPlayer);
 	Comp_Fireball->UseSkill(*tempObj,GetActorForwardVector());
 	//EGLOG(Error, TEXT("FIRRRRR"));
@@ -152,6 +158,38 @@ void AEnemyBossCharacter::AtPlayThunderblotAnim()
 
 }
 
+//Called By Task Node
+void AEnemyBossCharacter::ChargeMP()
+{
+	//auto tempCon = Cast<AAIController_Boss>(GetController());
+	//if (!tempCon) {
+	//	EGLOG(Warning, TEXT("Casting faile"));
+	//	return;
+	//}
+
+	
+	//
+	//EGLOG(Error, TEXT("Hi"));
+	//	auto anim = Cast<UAnimInstance_Boss>(GetMesh()->GetAnimInstance());
+	//	if (!anim)return;
+	//	
+	//	//anim->StopAllMontages(0.0f);
+
+	//	anim->PlayChargeAnim();
+
+	if (bIsMpCharging)return;
+		OnChargeCalled.Broadcast();
+
+		//bIsMpCharging = true;
+		
+	EGLOG(Error, TEXT("Hpi"));
+	
+	//tempCon->GetBlackBoard()->Get
+
+
+
+}
+
 
 void AEnemyBossCharacter::initComponents()
 {
@@ -162,6 +200,11 @@ void AEnemyBossCharacter::initComponents()
 	TeleportExit = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("TELEEXIT"));
 	TeleportSound = CreateDefaultSubobject<UAudioComponent>(TEXT("TeleAUDIO"));
 	TeleportSound->SetupAttachment(TeleportEnter);
+	MpChargingEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("MPCHARGING"));
+	MpChargingSound = CreateDefaultSubobject<UAudioComponent>(TEXT("MPCHARGINUDIO"));
+
+
+
 	Stat->SetHP(3000.0f);
 	Stat->SetMaxHP(3000.0f);
 }
@@ -207,13 +250,27 @@ void AEnemyBossCharacter::loadAsset()
 		TeleportSound->bAutoActivate = false;
 	}
 
+	static ConstructorHelpers::FObjectFinder<UParticleSystem>CHARGING_EFFECT(TEXT("ParticleSystem'/Game/MagicModule/VFX/P_InstantHeal.P_InstantHeal'"));
+	if (CHARGING_EFFECT.Succeeded())
+	{
+		MpChargingEffect->SetTemplate(CHARGING_EFFECT.Object);
+		MpChargingEffect->bAutoActivate = false;
+		MpChargingEffect->SetupAttachment(RootComponent);
+
+	}
+	static ConstructorHelpers::FObjectFinder<USoundCue>SC_MP(TEXT("SoundCue'/Game/MagicModule/SFX/CUE/CUE_Healing.CUE_Healing'"));
+	if (SC_MP.Succeeded())
+	{
+		MpChargingSound->SetSound(SC_MP.Object);
+		MpChargingSound->bAutoActivate = false;
+		MpChargingSound->SetupAttachment(MpChargingEffect);
+	}
+
+
 
 }
 
-void AEnemyBossCharacter::attachParticle()
-{
-	
-}
+
 
 void AEnemyBossCharacter::reloadSkillObjs()
 {
@@ -232,10 +289,3 @@ void AEnemyBossCharacter::reloadSkillObjs()
 
 }
 
-void AEnemyBossCharacter::ReadyToDie()
-{
-}
-
-void AEnemyBossCharacter::Die()
-{
-}

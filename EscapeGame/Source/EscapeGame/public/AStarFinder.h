@@ -31,10 +31,10 @@ public:
 	//Activate PathNodes
 	void ShowPath();
 
+
+
 private:
 	
-
-
 	//방문해야될 노드
 	TQueue<TWeakObjectPtr<AAStarNode>>ToVisiteNodes;
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))

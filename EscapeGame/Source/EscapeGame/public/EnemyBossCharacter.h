@@ -6,6 +6,7 @@
 #include "EnemyCharacter.h"
 #include "SkillComponent_ProjectileType.h"
 #include "StatComponent_Enemy.h"
+#include "Animation/AnimMontage.h"
 #include "EnemyBossCharacter.generated.h"
 
 /**
@@ -19,6 +20,7 @@ enum class EBossState:uint8
 };
 
 DECLARE_MULTICAST_DELEGATE(FOnTeleportCalled);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOChargeCalled);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnFireballThrow);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnBossIsDeadDelegate);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnThunderbolt);
@@ -49,6 +51,9 @@ public:
 	//Thunderbolt가 플레이될 때 실행시킬 것
 	UFUNCTION(BlueprintCallable)
 		void AtPlayThunderblotAnim();
+	UFUNCTION(BlueprintCallable)
+	void ChargeMP();
+
 
 
 	void SetState(EBossState NewState) { State = NewState; }
@@ -60,21 +65,25 @@ public:
 		FOnFireballThrow OnFireballThrow;
 	UPROPERTY(BlueprintAssignable)
 	FOnBossIsDeadDelegate OnBossIsDead;
+	UPROPERTY(BlueprintAssignable)
+	FOChargeCalled OnChargeCalled;
 
 	FOnTeleportCalled OnTeleportCalled;
 
 	UStatComponent_Enemy* GetStat() { return Stat; }
 
+	void SetCharging(bool bResult) { bIsMpCharging = bResult; }
+
 private:
 	void initComponents();
 	void loadAsset();
-	void attachParticle();
+
 	void reloadSkillObjs();
 
-UFUNCTION(BlueprintCallable)
-		void ReadyToDie();
-	UFUNCTION(BlueprintCallable)
-		void Die();
+//UFUNCTION(BlueprintCallable)
+//		void ReadyToDie();
+//	UFUNCTION(BlueprintCallable)
+//		void Die();
 private:
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		UStatComponent_Enemy* Stat;
@@ -95,6 +104,18 @@ private:
 		UAudioComponent* TeleportSound;
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		 TWeakObjectPtr<class ASkillActor_BossLightning> SA_Thunder;
+
+	//MPHealing Motion
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UParticleSystemComponent* MpChargingEffect;
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UAudioComponent* MpChargingSound;
+
+	//MP를 충전하는지
+	UPROPERTY(BlueprintReadWrite, Category = "Mp", meta = (AllowPrivateAccess = "true"))
+	bool bIsMpCharging;
+
+
 
 /*
 

@@ -9,6 +9,13 @@
 UAnimInstance_Boss::UAnimInstance_Boss()
 {
 
+	//static ConstructorHelpers::FObjectFinder <UAnimMontage>MON_CHARGE(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/Charge_Montage.Charge_Montage'"));
+	//if (MON_CHARGE.Succeeded())
+	//{
+	//	HealMontage = MON_CHARGE.Object;
+	//	EGLOG(Error, TEXT("ASDFFFFFFFFFFFFFFSADFSADFASDFASDGASDGAWSFBDFEBREWRGWEg"));
+	//}
+
 }
 
 //void UAnimInstance_Boss::NativeBeginPlay()
@@ -53,4 +60,21 @@ void UAnimInstance_Boss::AnimNotify_DeadEnd()
 	Chara->OnBossIsDead.Broadcast();
 	
 	Chara->Destroy();
+}
+
+void UAnimInstance_Boss::AnimNotify_ChargeStart()
+{
+	EGLOG(Error, TEXT(" hi??"));
+}
+
+void UAnimInstance_Boss::AnimNotify_ChargeEnd()
+{
+	auto Chara = Cast<AEnemyBossCharacter>(GetOwningActor());
+	if (!Chara)return;
+	Chara->SetCharging(false);
+}
+
+void UAnimInstance_Boss::PlayChargeAnim()
+{
+	//Montage_Play(HealMontage,1.0f);
 }

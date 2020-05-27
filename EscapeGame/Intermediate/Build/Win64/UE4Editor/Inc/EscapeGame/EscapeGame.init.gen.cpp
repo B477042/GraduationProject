@@ -11,6 +11,7 @@
 #endif
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeEscapeGame_init() {}
+	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OChargeCalled__DelegateSignature();
 	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnFireballThrow__DelegateSignature();
 	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnBossIsDeadDelegate__DelegateSignature();
 	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnThunderbolt__DelegateSignature();
@@ -25,6 +26,7 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGame_init() {}
 		if (!ReturnPackage)
 		{
 			static UObject* (*const SingletonFuncArray[])() = {
+				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OChargeCalled__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnFireballThrow__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnBossIsDeadDelegate__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnThunderbolt__DelegateSignature,
@@ -39,8 +41,8 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGame_init() {}
 				SingletonFuncArray,
 				UE_ARRAY_COUNT(SingletonFuncArray),
 				PKG_CompiledIn | 0x00000000,
-				0xF185B12A,
-				0x280DE5D2,
+				0xEB8D8483,
+				0x0BAFA9FB,
 				METADATA_PARAMS(nullptr, 0)
 			};
 			UE4CodeGen_Private::ConstructUPackage(ReturnPackage, PackageParams);
