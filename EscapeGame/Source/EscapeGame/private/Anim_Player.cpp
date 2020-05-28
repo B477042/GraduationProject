@@ -230,7 +230,9 @@ void UAnim_Player::AnimNotify_DeadEnd()
 //Input °ªÀº PlayerÀÇ Combo
 void UAnim_Player::PlaySkillMontage(int Combo)
 {
-	int playNum = Combo - 1;
+	Montage_Play(SkillMontages[0], 1.0f);
+
+	/*int playNum = Combo - 1;
 	if (SkillMontages.IsValidIndex(playNum))
 	{
 		auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
@@ -240,11 +242,11 @@ void UAnim_Player::PlaySkillMontage(int Combo)
 		player->RestricInput();
 
 
-		Montage_Play(SkillMontages[playNum],1.0f);
+		Montage_Play(SkillMontages[0],1.0f);
 
 		
 
-	}
+	}*/
 
 
 }

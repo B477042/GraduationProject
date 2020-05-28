@@ -4,7 +4,7 @@
 #include "GruntCharacter.h"
 #include "AICtrl_Grunt.h"
 #include "CharacterAnimInstance.h"
-#include "DrawDebugHelpers.h"
+//#include "DrawDebugHelpers.h"
 #include "EGPlayerCharacter.h"
 
 //const float AGruntCharacter::MaxHP = 200.0f;

@@ -277,6 +277,9 @@
     <None Include="..\..\Config\DefaultGame.ini"/>
     <None Include="..\..\Config\DefaultGameSetting.ini"/>
     <None Include="..\..\Config\DefaultInput.ini"/>
+    <None Include="..\..\Source\Structure\Building.Build.cs"/>
+    <ClCompile Include="..\..\Source\Structure\private\Building.cpp"/>
+    <ClInclude Include="..\..\Source\Structure\public\Building.h"/>
     <None Include="..\..\Source\EscapeGame\EscapeGame.Build.cs"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\AIController_Boss.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\AICtrl_Grunt.cpp"/>
@@ -284,9 +287,8 @@
     <ClCompile Include="..\..\Source\EscapeGame\private\Anim_DrJoe.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\Anim_Grunt.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\Anim_Player.cpp"/>
-    <ClCompile Include="..\..\Source\EscapeGame\private\AstarComponent.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\AstarFinder.cpp"/>
-    <ClCompile Include="..\..\Source\EscapeGame\private\AStarNode.cpp"/>
+    <ClCompile Include="..\..\Source\EscapeGame\private\AstarNode.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\Boss_Fireball.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\BTDecorator_Boss_IsDashing.cpp"/>
     <ClCompile Include="..\..\Source\EscapeGame\private\BTService_Advanced_Detect.cpp"/>
@@ -363,9 +365,8 @@
     <ClInclude Include="..\..\Source\EscapeGame\public\Anim_DrJoe.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\Anim_Grunt.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\Anim_Player.h"/>
-    <ClInclude Include="..\..\Source\EscapeGame\public\AstarComponent.h"/>
-    <ClInclude Include="..\..\Source\EscapeGame\public\AStarFinder.h"/>
-    <ClInclude Include="..\..\Source\EscapeGame\public\AStarNode.h"/>
+    <ClInclude Include="..\..\Source\EscapeGame\public\AstarFinder.h"/>
+    <ClInclude Include="..\..\Source\EscapeGame\public\AstarNode.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\Boss_Fireball.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\BTDecorator_Boss_IsDashing.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\BTService_Advanced_Detect.h"/>
@@ -436,9 +437,6 @@
     <ClInclude Include="..\..\Source\EscapeGame\public\Tutorial_Controller.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\UIController.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\Weapon.h"/>
-    <None Include="..\..\Source\Structure\Building.Build.cs"/>
-    <ClCompile Include="..\..\Source\Structure\private\Building.cpp"/>
-    <ClInclude Include="..\..\Source\Structure\public\Building.h"/>
     <None Include="..\..\Source\GameSetting\GameSetting.Build.cs"/>
     <ClCompile Include="..\..\Source\GameSetting\private\EGCharacterSetting.cpp"/>
     <ClCompile Include="..\..\Source\GameSetting\private\GameSetting.cpp"/>

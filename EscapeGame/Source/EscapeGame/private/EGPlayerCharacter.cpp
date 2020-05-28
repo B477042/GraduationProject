@@ -36,7 +36,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	bSetMapArm = false;
 	
 	bIsGuarding = false;
-	bIsDebugMode = true;
+	bIsDebugMode = false;
 }
 
 // Called when the game starts or when spawned
@@ -159,7 +159,7 @@ float AEGPlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent con
 		{
 			projectile->ReadyToFire(projectile->GetFireDir()*-1.0f, projectile->GetActorLocation(), projectile->GetActorRotation());
 			projectile->SetCollision("PlayerWeapon");
-			
+			projectile->TripleDamage();
 			EGLOG(Error, TEXT("Ting"));
 			return FinalDamage;
 		}
@@ -441,7 +441,7 @@ void AEGPlayerCharacter::InitComponents()
 	SpringArm->SetRelativeRotation(FRotator(-15.0f, 0.0f, 0.0f));
 
 	MiniMapArm->TargetArmLength = 0.0f;
-	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, 280.0f));
+	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, 1000.0f));
 	MiniMapArm->SetRelativeRotation(FRotator(-90.0f, 0.0f,0.0f));
 
 	WeaponCollision->SetRelativeLocation(FVector(X = 0.976299f, Y = 1.777855f, Z = 66.010002f));

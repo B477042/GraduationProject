@@ -5,7 +5,7 @@
 #include "EGPlayerCharacter.h"
 #include "EnemyCharacter.h"
 #include "EnemyAIController.h"
-#include "DrawDebugHelpers.h"
+//#include "DrawDebugHelpers.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 UBTService_Detect::UBTService_Detect()
@@ -87,8 +87,8 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, uint8 * Nod
 				
 		}
 	//draw detect range
-	if (DrawingDebugMode)
-		DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Yellow, false, 0.2f);
+	//if (DrawingDebugMode)
+	//	DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Yellow, false, 0.2f);
 
 
 	//OwnerComp.GetBlackboardComponent()->Getvalue

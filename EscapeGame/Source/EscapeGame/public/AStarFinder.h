@@ -3,42 +3,57 @@
 #pragma once
 
 #include "EscapeGame.h"
-#include "AStarNode.h"
+#include "AstarNode.h"
 #include "Containers/Queue.h"
 //#include "Containers/pri"
 //#include "Containers/"
-#include "GameFramework/Actor.h"
+#include "UObject/NoExportTypes.h"
 #include "AstarFinder.generated.h"
 
+
+
 UCLASS()
-class ESCAPEGAME_API AAstarFinder : public AActor
+class ESCAPEGAME_API UAstarFinder : public UObject
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AAstarFinder();
+	UAstarFinder();
+	static UAstarFinder* GetInstance();
 
 protected:
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
+	/*virtual void BeginPlay() override;
+	virtual void PostInitializeComponents()override;*/
 public:	
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	//virtual void Tick(float DeltaTime) override;
 
-	void  AStar( AAStarNode* Start,  AAStarNode* Goal);
+	void  AStar( AAstarNode* Start,  AAstarNode* Goal);
 	//Activate PathNodes
 	void ShowPath();
-
+	void SetStartPoint(AAstarNode* Other);
+	void ResetResult();
+	//Add Node To Tarray
+	void AddNode(AAstarNode* Other);
+	void ClearNodes();
+private:
+	
 
 
 private:
 	
 	//방문해야될 노드
-	TQueue<TWeakObjectPtr<AAStarNode>>ToVisiteNodes;
-	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
-	TWeakObjectPtr<AAStarNode> GoalNode;
+	//UPROPERTY(Transient)
+	TQueue<TWeakObjectPtr<AAstarNode>>ToVisiteNodes;
+
+	//Goal Node in map
+	UPROPERTY(Transient, EditInstanceOnly, meta = (AllowPrivateAccess = "true", DisplayName = "Nodes"))
+	TWeakObjectPtr<AAstarNode> GoalNode;
+	
+	UPROPERTY(Transient, meta = (DisplayName = "Nodes"))
+		TArray< TWeakObjectPtr<AAstarNode>>AllNodes;
 	
 
 };

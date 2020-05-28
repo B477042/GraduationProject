@@ -1,10 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "AStarNode.h"
+#include "AstarNode.h"
 #include "EGPlayerCharacter.h"
+#include "AstarFinder.h"
 
 // Sets default values
-AAStarNode::AAStarNode()
+AAstarNode::AAstarNode()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
@@ -19,22 +20,36 @@ AAStarNode::AAStarNode()
 }
 
 // Called when the game starts or when spawned
-void AAStarNode::BeginPlay()
+void AAstarNode::BeginPlay()
 {
 	Super::BeginPlay();
+	UAstarFinder::GetInstance()->AddNode(this);
+	//Deactivate();
+	//UAstarComponent::A_AstarNodes.Add(this);
 
-	Deactivate();
 }
 
-void AAStarNode::PostInitializeComponents()
+void AAstarNode::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-	BoxTrigger->OnComponentBeginOverlap.AddDynamic(this, &AAStarNode::OnActorOverlap);
-	BoxTrigger->OnComponentEndOverlap.AddDynamic(this, &AAStarNode::OnActorOverlapEnd);
+	BoxTrigger->OnComponentBeginOverlap.AddDynamic(this, &AAstarNode::OnActorOverlap);
+	BoxTrigger->OnComponentEndOverlap.AddDynamic(this, &AAstarNode::OnActorOverlapEnd);
+	
+	
+	//OnPlayerEnter.AddUObject(this, &UAstarFinder::GetInstance()->SetStartPoint);
 }
 
-void AAStarNode::OnActorOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+void AAstarNode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	Super::EndPlay(EndPlayReason);
+	UAstarFinder::GetInstance()->ClearNodes();
+	EGLOG(Error, TEXT("End Play"));
+}
+
+void AAstarNode::OnActorOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	OnPlayerEnter.Broadcast(this);
+	UAstarFinder::GetInstance()->SetStartPoint(this);
 	auto player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (!player)return;
 
@@ -45,43 +60,44 @@ void AAStarNode::OnActorOverlap(UPrimitiveComponent * OverlappedComp, AActor * O
 
 }
 
-void AAStarNode::OnActorOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
+void AAstarNode::OnActorOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
+	OnPlayerExit.Broadcast();
 	if (bIsPath)
 			Activate();
 }
 
 // Called every frame
-void AAStarNode::Tick(float DeltaTime)
+void AAstarNode::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
-bool AAStarNode::operator<(const AAStarNode & lhs)
+bool AAstarNode::operator<(const AAstarNode & lhs)
 {
 
 	return Count_F<lhs.Count_F;
 }
 
-//bool AAStarNode::operator<(const AAStarNode & lhs, const AAStarNode & rhs)
+//bool AAstarNode::operator<(const AAstarNode & lhs, const AAstarNode & rhs)
 //{
 //	return lhs.Count_F<rhs.Count_F;
 //}
 
 
 
-bool AAStarNode::operator>(const AAStarNode & lhs)
+bool AAstarNode::operator>(const AAstarNode & lhs)
 {
 	return Count_F > lhs.Count_F;
 }
 
-bool AAStarNode::operator==(const AAStarNode & lhs)
+bool AAstarNode::operator==(const AAstarNode & lhs)
 {
 	return  Count_F == lhs.Count_F;
 }
 
-void AAStarNode::SortNearNodes()
+void AAstarNode::SortNearNodes()
 {
 	
 	
@@ -91,17 +107,17 @@ void AAStarNode::SortNearNodes()
 
 
 
-void AAStarNode::Activate()
+void AAstarNode::Activate()
 {
 	BodyMesh->SetHiddenInGame(false);
 }
 
-void AAStarNode::Deactivate()
+void AAstarNode::Deactivate()
 {
 	BodyMesh->SetHiddenInGame(true);
 }
 
-void AAStarNode::SetRoad(bool bResult)
+void AAstarNode::SetRoad(bool bResult)
 {
 	bIsPath = bResult;
 }
@@ -111,7 +127,7 @@ void AAStarNode::SetRoad(bool bResult)
 
 
 
-void AAStarNode::initComponents()
+void AAstarNode::initComponents()
 {
 	BodyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BodyMESH"));
 	BoxTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("BOXTRigger"));
@@ -142,26 +158,26 @@ void AAStarNode::initComponents()
 
 }
 
-int AAStarNode::CalcGCount(const FVector & Start)
+int AAstarNode::CalcGCount(const FVector & Start)
 {
 	Count_G = FVector::Distance(Start, GetActorLocation());
 	return Count_G;
 }
 
-int AAStarNode::CalcHCount(const FVector & Goal)
+int AAstarNode::CalcHCount(const FVector & Goal)
 {
 	Count_H = FVector::Distance(Goal, GetActorLocation());
 	return Count_H;
 }
 
-void AAStarNode::SetNearNodesPrevAsMe()
+void AAstarNode::SetNearNodesPrevAsMe()
 {
 	for (auto it : NearNodes)
 		it->PrevNode = this;
 }
 
 
-void AAStarNode::ResetAStarValue()
+void AAstarNode::ResetAStarValue()
 {
 	bIsPath = false;
 	bIsVisited = false;
@@ -173,7 +189,7 @@ void AAStarNode::ResetAStarValue()
 	PrevNode.Get();
 }
 
-int AAStarNode::CalcFCount(const FVector & Start, const FVector & Goal)
+int AAstarNode::CalcFCount(const FVector & Start, const FVector & Goal)
 {
 	Count_F = CalcGCount(Start) + CalcHCount(Goal);
 	return Count_F;

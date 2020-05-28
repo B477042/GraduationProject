@@ -28,7 +28,12 @@ public:
 	UFUNCTION()
 	void OnCharacterEntered(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 	
+	void TripleDamage() { Damage *= 3.0f; }
+
 	void SetCollision(const FName&name) { Collision->SetCollisionProfileName(name); }
+	UFUNCTION(BlueprintCallable)
+		void BP_Fire(FVector Location, FRotator Rotation, FVector Dir);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -66,9 +66,9 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	FVector FireDir;
 	//¼Óµµ
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	float Acceleration;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	float Damage;
 
 

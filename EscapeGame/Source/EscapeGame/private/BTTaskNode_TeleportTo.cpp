@@ -68,7 +68,7 @@ bool UBTTaskNode_TeleportTo::CanTeleportThere(const FVector & TeleportPos)
 
 
 	//¹ØÀ¸·Î 150cm±îÁö ¶óÀÎÀ» ½ð´Ù
-	bool bResult = GetWorld()->LineTraceSingleByChannel(hitResult, TeleportPos, TeleportPos + FVector(0.0f,0.0f,500.0f),
+	bool bResult = GetWorld()->LineTraceSingleByChannel(hitResult, TeleportPos, TeleportPos - FVector(0.0f,0.0f,500.0f),
 		//All Block Trace
 		ECollisionChannel::ECC_GameTraceChannel2);
 	//EdgePos = myTargetVec;

@@ -30,6 +30,26 @@ void USkillComponent_ProjectileType::UseSkill(const AActor & TargetActor, const 
 
 }
 
+void USkillComponent_ProjectileType::BP_UseSkill(FVector Loc, FRotator Rot, FVector Dir)
+{
+
+	auto something = Cast<AProjectile>(CurrentIndex);
+	if (!something) {
+		return;
+		CurrentIndex = SkillObjects[Index];
+	}
+
+
+	
+
+	something->ReadyToFire(Dir, Loc, GetOwner()->GetActorRotation());
+	//someThing->
+
+
+	revolve();
+
+}
+
 void USkillComponent_ProjectileType::aimTo( const FVector & Dir_Vector, int n_Count)
 {
 	

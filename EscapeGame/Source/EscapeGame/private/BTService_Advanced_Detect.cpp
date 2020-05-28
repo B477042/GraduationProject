@@ -5,7 +5,7 @@
 #include "EGPlayerCharacter.h"
 #include "EnemyBossCharacter.h"
 #include "AIController_Boss.h"
-#include "DrawDebugHelpers.h"
+//#include "DrawDebugHelpers.h"
 #include "..\public\BTService_Advanced_Detect.h"
 
 UBTService_Advanced_Detect::UBTService_Advanced_Detect()
@@ -90,9 +90,9 @@ void UBTService_Advanced_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, ui
 	}
 	
 
-	//draw detect range
-	if (DrawingDebugMode)
-		DrawDebugBox(World, Center, DetectBoxSize, FColor::Yellow, false, 0.4f);
+	////draw detect range
+	//if (DrawingDebugMode)
+	//	DrawDebugBox(World, Center, DetectBoxSize, FColor::Yellow, false, 0.4f);
 
 
 }

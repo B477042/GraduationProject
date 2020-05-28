@@ -4,18 +4,20 @@
 
 #include "EscapeGame.h"
 #include "GameFramework/Actor.h"
-#include "AStarNode.generated.h"
+#include "AstarNode.generated.h"
+
 
 UCLASS()
-class ESCAPEGAME_API AAStarNode : public AActor
+class ESCAPEGAME_API AAstarNode : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AAStarNode();
+	AAstarNode();
 	virtual void BeginPlay()override;
 	virtual void PostInitializeComponents()override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason)override;
 	UFUNCTION()
 		void OnActorOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 	UFUNCTION()
@@ -23,14 +25,15 @@ public:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	bool operator<(const AAStarNode& lhs);
-	//bool operator<(const AAStarNode& lhs, const AAStarNode& rhs);
-	bool operator>(const AAStarNode& lhs);
-	bool operator==(const AAStarNode& lhs);
+	bool operator<(const AAstarNode& lhs);
+	//bool operator<(const AAstarNode& lhs, const AAstarNode& rhs);
+	bool operator>(const AAstarNode& lhs);
+	bool operator==(const AAstarNode& lhs);
 	//FCount가 적은 순으로 정렬한다.->기각
 	void SortNearNodes();
+	
 
-	//
+	//	
 	UFUNCTION()
 		void Activate();
 	//
@@ -46,9 +49,9 @@ public:
 	bool IsPath() { return bIsPath; }
 	bool IsVisitedNode() { return bIsVisited; }
 
-	void SetPrevNode(AAStarNode* prev) { PrevNode = prev; }
+	void SetPrevNode(AAstarNode* prev) { PrevNode = prev; }
 
-	TWeakObjectPtr<AAStarNode> GetPrevNode() { return PrevNode; }
+	TWeakObjectPtr<AAstarNode> GetPrevNode() { return PrevNode; }
 
 	//주변 노드들의 이전 노드들을 자신의 노드로한다. 
 	void SetNearNodesPrevAsMe();
@@ -65,7 +68,7 @@ public:
 	int CalcFCount(const FVector & Start, const FVector & Goal);
 	
 	UPROPERTY(EditAnywhere, Category = "Astar Data",meta = (AllowPrivateAccess = "true"))
-	TArray<TWeakObjectPtr<AAStarNode>>NearNodes;
+	TArray<TWeakObjectPtr<AAstarNode>>NearNodes;
 
 
 protected:
@@ -88,7 +91,7 @@ protected:
 		bool bIsVisited;
 
 	UPROPERTY(VisibleAnywhere, Category = "Astar Data", meta = (AllowPrivateAccess = "true"))
-		TWeakObjectPtr<AAStarNode>PrevNode;
+		TWeakObjectPtr<AAstarNode>PrevNode;
 	//G+H
 	UPROPERTY(VisibleAnywhere, Category = "Astar Data")
 	int Count_F;
@@ -99,3 +102,11 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Astar Data")
 	int Count_H;
 };
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerEnter, AAstarNode*);
+DECLARE_MULTICAST_DELEGATE(FOnPlayerExit);
+
+//경로 업데이트 델리게이트
+static FOnPlayerEnter OnPlayerEnter;
+//Finder의 Start노드 초기화
+static FOnPlayerExit OnPlayerExit;

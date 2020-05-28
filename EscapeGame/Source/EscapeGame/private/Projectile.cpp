@@ -82,6 +82,28 @@ void AProjectile::OnCharacterEntered(UPrimitiveComponent * OverlappedComp, AActo
 	SoundPassing->Play();
 }
 
+void AProjectile::BP_Fire(FVector  Location, FRotator  Rotation, FVector  Dir)
+{
+	FireDir = Dir;
+	SetActorHiddenInGame(false);
+	Root->SetHiddenInGame(false);
+	MainEffect->SetHiddenInGame(false);
+
+	SoundTrigger->SetCollisionProfileName("OnTrapTrigger");
+	Collision->SetSphereRadius(40.3f);
+
+
+	SoundTrigger->SetCollisionProfileName(TEXT("OnTrapTrigger"));
+	SoundTrigger->SetSphereRadius(200.0f);
+
+
+	SetActorLocationAndRotation(Location, Rotation);
+
+	Collision->SetCollisionProfileName("EnemyWeapon");
+	Fire();
+
+}
+
 
 
 // Called when the game starts or when spawned

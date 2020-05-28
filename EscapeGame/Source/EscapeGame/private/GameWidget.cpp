@@ -41,20 +41,20 @@ void UGameWidget::UpdateCharacterStat()
 
 
 		PlayerHP=CurrentCharacterStat->GetHP();
-
+		float PlayerHPRatio = CurrentCharacterStat->GetHPRatio()*100.0f;
 
 		//이미지들은 BP에서 불러와진 것들이다
-		if (PlayerHP > 90)
+		if (PlayerHPRatio > 90.0f)
 			Img_Battery->SetBrushFromTexture(Imgs_Battary[0]);
-		else if (PlayerHP >= 80)
+		else if (PlayerHPRatio >= 80.0f)
 			Img_Battery->SetBrushFromTexture(Imgs_Battary[1]);
-		else if(PlayerHP>=60)
+		else if(PlayerHPRatio>=60.0f)
 			Img_Battery->SetBrushFromTexture(Imgs_Battary[2]);
-		else if(PlayerHP>=40)
+		else if(PlayerHPRatio >=40.0f)
 			Img_Battery->SetBrushFromTexture(Imgs_Battary[3]);
-		else if(PlayerHP>=20)
+		else if(PlayerHPRatio >=20.0f)
 			Img_Battery->SetBrushFromTexture(Imgs_Battary[4]);
-		else if(PlayerHP<=0)
+		else if(PlayerHPRatio <=0.0f)
 			Img_Battery->SetBrushFromTexture(Imgs_Battary[5]);
 
 	}
@@ -73,6 +73,10 @@ void UGameWidget::UpdateStamina()
 
 float UGameWidget::CheackTimeOut(float NewValue)
 {
+	if (GameTimer <= 0.0f)
+		CurrentCharacterStat->SetHP(0.0f);
+
+
 	return (NewValue >= 0.0f) ? NewValue: 0.0f;
 }
 //UI에서 사용될 이미지들을 불러옵니다

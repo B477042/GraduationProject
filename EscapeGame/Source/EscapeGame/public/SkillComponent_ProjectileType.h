@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+UCLASS(Blueprintable, meta = (BlueprintSpawnableComponent))
 class ESCAPEGAME_API USkillComponent_ProjectileType : public UComponent_SkillContainer
 {
 	GENERATED_BODY()
@@ -26,6 +26,9 @@ public:
 	//발사체 스킬을 사용한다.
 	
 	virtual void UseSkill(const AActor& TargetActor, const FVector& Dir_Vector, int n_Count = 1);
+
+	UFUNCTION(BlueprintCallable)
+		void BP_UseSkill(FVector Loc, FRotator Rot, FVector Dir);
 
 protected:
 	void aimTo(const FVector& Dir_Vector,int n_Count);

@@ -2,37 +2,57 @@
 
 
 #include "AstarFinder.h"
-
+#include "Engine/Engine.h"
 // Sets default values
-AAstarFinder::AAstarFinder()
+UAstarFinder::UAstarFinder()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+	//PrimaryActorTick.bCanEverTick = false;
 
 }
 
 // Called when the game starts or when spawned
-void AAstarFinder::BeginPlay()
+//void UAstarFinder::BeginPlay()
+//{
+//	Super::BeginPlay();
+//	EGLOG(Error, TEXT("Ganag nam style"));
+//}
+//
+//void UAstarFinder::PostInitializeComponents()
+//{
+//	Super::PostInitializeComponents();
+//	
+//}
+//
+//// Called every frame
+//void UAstarFinder::Tick(float DeltaTime)
+//{
+//	Super::Tick(DeltaTime);
+//
+//}
+
+UAstarFinder * UAstarFinder::GetInstance()
 {
-	Super::BeginPlay();
+	{
+		if (GEngine)
+		{
+			UAstarFinder* instance = Cast<UAstarFinder>(GEngine->GameSingleton);
+			
+			return instance;
+		}
 	
+		return nullptr;
+	}
 }
 
-// Called every frame
-void AAstarFinder::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-void AAstarFinder::AStar(AAStarNode * Start, AAStarNode *Goal)
+void UAstarFinder::AStar(AAstarNode * Start, AAstarNode *Goal)
 {
 	if (ToVisiteNodes.IsEmpty())
 	{
 		ToVisiteNodes.Enqueue(Start);
 
 	}
-	TWeakObjectPtr<AAStarNode> PopedNode;
+	TWeakObjectPtr<AAstarNode> PopedNode;
 	//방문해야될 노드가 비워질 때까지
 	while (ToVisiteNodes.IsEmpty())
 	{
@@ -89,9 +109,9 @@ void AAstarFinder::AStar(AAStarNode * Start, AAStarNode *Goal)
 	ShowPath();
 }
 
-void AAstarFinder::ShowPath()
+void UAstarFinder::ShowPath()
 {
-	TWeakObjectPtr<AAStarNode> temp = GoalNode;
+	TWeakObjectPtr<AAstarNode> temp = GoalNode;
 	
 	//처음 시작점으로 온다면 
 	while (temp.IsValid())
@@ -107,6 +127,33 @@ void AAstarFinder::ShowPath()
 		temp = temp.Get()->GetPrevNode();
 		
 	}
+}
+
+void UAstarFinder::SetStartPoint(AAstarNode * Other)
+{
+	
+	
+	
+}
+
+void UAstarFinder::ResetResult()
+{
+
+}
+
+void UAstarFinder::AddNode(AAstarNode * Other)
+{
+	AllNodes.Add(Other);
+	EGLOG(Warning, TEXT("Add : %s"), *AllNodes.Top()->GetName());
+	EGLOG(Warning, TEXT("Capacity : %d"), AllNodes.Num());
+	for (auto it : AllNodes)
+		if (it.IsValid())
+			EGLOG(Warning, TEXT("in node : %s"), *it->GetName());
+}
+
+void UAstarFinder::ClearNodes()
+{
+	AllNodes.Empty();
 }
 
 
