@@ -53,6 +53,13 @@ void AEnemyCharacter::BeginPlay()
 
 }
 
+void AEnemyCharacter::BeginDestroy()
+{
+	Super::BeginDestroy();
+
+
+}
+
 float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
 {
 	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);

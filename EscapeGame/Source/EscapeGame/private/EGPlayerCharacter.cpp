@@ -36,7 +36,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	bSetMapArm = false;
 	
 	bIsGuarding = false;
-	bIsDebugMode = false;
+	bIsDebugMode = true;
 }
 
 // Called when the game starts or when spawned
@@ -499,6 +499,7 @@ void AEGPlayerCharacter::SetupSpringArm()
 {
 	//ĳ���Ϳ� �Ÿ�
 	ArmLengthTo = 300.0f;
+	SpringArm->SetRelativeRotation(FRotator(-65.667404f, -9.943956f, 0.771690f));
 	SpringArm->bUsePawnControlRotation = true;
 	SpringArm->bInheritPitch = true;
 	SpringArm->bInheritRoll = true;
