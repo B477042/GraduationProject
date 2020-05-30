@@ -24,7 +24,10 @@ void AAstarNode::BeginPlay()
 {
 	Super::BeginPlay();
 	UAstarFinder::GetInstance()->AddNode(this);
-	//Deactivate();
+
+	if (bIsGoalNode)
+		UAstarFinder::GetInstance()->SetGoalPoint(this);
+	Deactivate();
 	//UAstarComponent::A_AstarNodes.Add(this);
 
 }
@@ -62,9 +65,7 @@ void AAstarNode::OnActorOverlap(UPrimitiveComponent * OverlappedComp, AActor * O
 
 void AAstarNode::OnActorOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
-	OnPlayerExit.Broadcast();
-	if (bIsPath)
-			Activate();
+	UAstarFinder::GetInstance()->ResetResult();
 }
 
 // Called every frame
@@ -173,7 +174,13 @@ int AAstarNode::CalcHCount(const FVector & Goal)
 void AAstarNode::SetNearNodesPrevAsMe()
 {
 	for (auto it : NearNodes)
+	{
+		//it가 유효하고
+		if (!it.IsValid())continue;
+		//방문하지 않은 노드여야 한다
+		if(!it->bIsVisited)
 		it->PrevNode = this;
+	}
 }
 
 
@@ -186,7 +193,7 @@ void AAstarNode::ResetAStarValue()
 	Count_G = 0;
 	Count_H = 0;
 
-	PrevNode.Get();
+	PrevNode=nullptr;
 }
 
 int AAstarNode::CalcFCount(const FVector & Start, const FVector & Goal)

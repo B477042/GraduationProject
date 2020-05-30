@@ -47,25 +47,43 @@ UAstarFinder * UAstarFinder::GetInstance()
 
 void UAstarFinder::AStar(AAstarNode * Start, AAstarNode *Goal)
 {
-	if (ToVisiteNodes.IsEmpty())
-	{
+	EGLOG(Error, TEXT("AStar Lunched At :%s"),*Start->GetName());
+	ToVisiteNodes.Empty();
+		EGLOG(Error, TEXT("AStar Start"));
 		ToVisiteNodes.Enqueue(Start);
 
-	}
+	
 	TWeakObjectPtr<AAstarNode> PopedNode;
+	int i = 0;
 	//방문해야될 노드가 비워질 때까지
-	while (ToVisiteNodes.IsEmpty())
+	while (!ToVisiteNodes.IsEmpty())
 	{
-		
+		EGLOG(Warning, TEXT("%d Try"), i);
+		i++;
 		//Queue에서 하나를 꺼낸다
 		ToVisiteNodes.Dequeue(PopedNode);
-		
+		EGLOG(Warning, TEXT("Current Node : %s"), *PopedNode->GetName());
+		//노드의 방문을 마친다
+		PopedNode->VisitNode();
+
+		//꺼낸 노드가 Goal과 위치가 같다면 -> 안먹힌다면 같은 객체를 가리키는지 검사
+		if (PopedNode->GetActorLocation() == Goal->GetActorLocation())
+		{
+			//GoalNode를 설정해주고 ToVisiteNode를 비워준다
+			EGLOG(Error, TEXT("Goal Find! : %s"), *PopedNode->GetName());
+			GoalNode = PopedNode.Get();
+			ToVisiteNodes.Empty();
+			break;
+		}
+
 	//인근노드들의 주변 노드들이 있다면
 		if (PopedNode->NearNodes.GetData() != nullptr)
 			//인근 노드들의 값을 계산한다
 		{
 			for (auto it : PopedNode->NearNodes)
 			{
+				//유효하지 않다면 넘어간다
+				if(!it.IsValid())continue;
 				//방문했던 노드면 넘어간다.
 				if (it->IsVisitedNode())continue;
 
@@ -80,26 +98,22 @@ void UAstarFinder::AStar(AAstarNode * Start, AAstarNode *Goal)
 			PopedNode->SetNearNodesPrevAsMe();
 
 			//주변 노드들을 FCount가 작은 순으로 넣어야 된다. ->연산자 오퍼레이터가 잘 안 된다 그냥 패스
-			
-			//PopedNode->SortNearNodes();
-
 			for (auto it : PopedNode->NearNodes)
 			{
+				//유효하지 않다면 넘어간다
+				if (!it.IsValid())continue;
+				//방문했던 노드면 다시 안 넣어도 된다
+				if (it->IsVisitedNode())continue;
+				//PopedNode->VisitNode();
+				EGLOG(Warning, TEXT("Enqueue : %s"),*it->GetName());
 				ToVisiteNodes.Enqueue(it.Get());
+				
 			}
-
+		
+			
 		}
 
-		//노드의 방문을 마친다
-		PopedNode->VisitNode();
-
-		//꺼낸 노드가 Goal과 위치가 같다면 -> 안먹힌다면 같은 객체를 가리키는지 검사
-		if (PopedNode->GetActorLocation() == Goal->GetActorLocation())
-		{
-			//GoalNode를 설정해주고 ToVisiteNode를 비워준다
-			GoalNode = PopedNode.Get();
-			ToVisiteNodes.Empty();
-		}
+	
 
 		
 	}
@@ -111,8 +125,9 @@ void UAstarFinder::AStar(AAstarNode * Start, AAstarNode *Goal)
 
 void UAstarFinder::ShowPath()
 {
+
 	TWeakObjectPtr<AAstarNode> temp = GoalNode;
-	
+	if (!temp.IsValid())EGLOG(Error, TEXT("Goal node is null"));
 	//처음 시작점으로 온다면 
 	while (temp.IsValid())
 	{
@@ -124,7 +139,8 @@ void UAstarFinder::ShowPath()
 
 		temp->SetToPath();
 		temp->Activate();
-		temp = temp.Get()->GetPrevNode();
+		if (!temp->GetPrevNode().IsValid())break;
+		temp = temp->GetPrevNode();
 		
 	}
 }
@@ -132,12 +148,22 @@ void UAstarFinder::ShowPath()
 void UAstarFinder::SetStartPoint(AAstarNode * Other)
 {
 	
-	
+		AStar(Other, GoalNode.Get());
 	
 }
-
+//Game instance에서 목표가 되는 오브젝트를 우선적으로 불러와서 찾아준다. 
+void UAstarFinder::SetGoalPoint(AAstarNode * Other)
+{
+	GoalNode = Other;
+}
+//모든 노드의 AStar 연산값을 지워준다
 void UAstarFinder::ResetResult()
 {
+	for (auto it : AllNodes)
+	{
+		it->ResetAStarValue();
+		it->Deactivate();
+	}
 
 }
 
@@ -149,6 +175,10 @@ void UAstarFinder::AddNode(AAstarNode * Other)
 	for (auto it : AllNodes)
 		if (it.IsValid())
 			EGLOG(Warning, TEXT("in node : %s"), *it->GetName());
+	if(GoalNode.IsValid())
+	EGLOG(Warning, TEXT("GoalNode is : %s"), *GoalNode->GetName());
+
+	EGLOG(Warning, TEXT("ToVisiteNodes : %d "), ToVisiteNodes.IsEmpty());
 }
 
 void UAstarFinder::ClearNodes()

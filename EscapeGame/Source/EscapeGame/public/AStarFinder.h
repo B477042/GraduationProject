@@ -34,7 +34,9 @@ public:
 	//Activate PathNodes
 	void ShowPath();
 	void SetStartPoint(AAstarNode* Other);
+	void SetGoalPoint(AAstarNode * Other);
 	void ResetResult();
+	
 	//Add Node To Tarray
 	void AddNode(AAstarNode* Other);
 	void ClearNodes();

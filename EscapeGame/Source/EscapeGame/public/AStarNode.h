@@ -89,6 +89,8 @@ protected:
 		bool bIsPath;
 	UPROPERTY(EditAnywhere, Category = "Astar Data", meta = (AllowPrivateAccess = "true"))
 		bool bIsVisited;
+	UPROPERTY(EditAnywhere, Category = "Astar Data", meta = (AllowPrivateAccess = "true"))
+		bool bIsGoalNode;
 
 	UPROPERTY(VisibleAnywhere, Category = "Astar Data", meta = (AllowPrivateAccess = "true"))
 		TWeakObjectPtr<AAstarNode>PrevNode;
