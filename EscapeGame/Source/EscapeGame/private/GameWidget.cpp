@@ -22,7 +22,7 @@ void UGameWidget::NativeConstruct()
 	Img_RecoveryItem = Cast<UImage>(GetWidgetFromName(TEXT("RecoveryItemImage")));
 	
 	RecoveryItemNum = Cast<UTextBlock>(GetWidgetFromName(TEXT("RecoveryItemNum0")));
-	GameTimer = 60.0f;
+	GameTimer = 10.0f;
 	PlayerHP = 100.0f;
 	PlayerStamina = 100.0f;
 	HPAmount = 0;
@@ -57,6 +57,13 @@ void UGameWidget::UpdateCharacterStat()
 		else if(PlayerHPRatio <=0.0f)
 			Img_Battery->SetBrushFromTexture(Imgs_Battary[5]);
 
+		//timer가 0이 되면
+	/*	if (GameTimer <= 0.0f)
+		{
+			EGLOG(Error, TEXT("Time out"));
+			CurrentCharacterStat->TakeDamage(200.0f);
+		}*/
+
 	}
 
 }
@@ -73,8 +80,11 @@ void UGameWidget::UpdateStamina()
 
 float UGameWidget::CheackTimeOut(float NewValue)
 {
-	if (GameTimer <= 0.0f)
-		CurrentCharacterStat->SetHP(0.0f);
+	if (NewValue == 0.0f)
+	{
+		//EGLOG(Error, TEXT("DIEEE"));
+		CurrentCharacterStat->TakeDamage(100.0f);
+	}
 
 
 	return (NewValue >= 0.0f) ? NewValue: 0.0f;

@@ -33,7 +33,7 @@ protected:
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
+	UFUNCTION(BlueprintCallable)
 	void TakeDamage(float NewDamage);
 	//set new hp. 
 	void SetHP(float NewHP);

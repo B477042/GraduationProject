@@ -56,7 +56,7 @@ void AAstarNode::OnActorOverlap(UPrimitiveComponent * OverlappedComp, AActor * O
 	auto player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (!player)return;
 
-	Deactivate();
+	//Deactivate();
 	
 
 
