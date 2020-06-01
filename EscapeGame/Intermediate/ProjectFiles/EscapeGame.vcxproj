@@ -434,9 +434,6 @@
     <ClInclude Include="..\..\Source\EscapeGame\public\Tutorial_Controller.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\UIController.h"/>
     <ClInclude Include="..\..\Source\EscapeGame\public\Weapon.h"/>
-    <None Include="..\..\Source\Structure\Building.Build.cs"/>
-    <ClCompile Include="..\..\Source\Structure\private\Building.cpp"/>
-    <ClInclude Include="..\..\Source\Structure\public\Building.h"/>
     <None Include="..\..\Source\GameSetting\GameSetting.Build.cs"/>
     <ClCompile Include="..\..\Source\GameSetting\private\EGCharacterSetting.cpp"/>
     <ClCompile Include="..\..\Source\GameSetting\private\GameSetting.cpp"/>

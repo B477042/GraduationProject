@@ -254,10 +254,12 @@ void AEGPlayerCharacter::StartRunning()
 	//if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::ZeroVector)return;
 	//Stat->SetRunning();//달릴 상태로 만들어 준다
 	//
+	if (Stat->IsAttacking())return;
+
 	if (Stat->CanUsingStamina())
 	{
 		Stat->SetStaminaUsing(true);
-		GetCharacterMovement()->MaxWalkSpeed = 1200.0f;
+		GetCharacterMovement()->MaxWalkSpeed = 2000.0f;
 	}
 
 
