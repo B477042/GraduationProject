@@ -20,7 +20,7 @@ AEnemyCharacter::AEnemyCharacter()
 
 	HPBarWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HPBARWIDGET"));
 	HPBarWidget->SetupAttachment(GetMesh());
-	HPBarWidget->SetRelativeLocation(FVector(0.0f, 0.0f, 200.0f));
+	HPBarWidget->SetRelativeLocation(FVector(0.0f, 0.0f, 240.0f));
 	HPBarWidget->SetWidgetSpace(EWidgetSpace::World);
 	HPBarWidget->SetRelativeRotation(FRotator(0.0f, 90.0f, 0.0f));
 
@@ -28,7 +28,9 @@ AEnemyCharacter::AEnemyCharacter()
 	if (UI_HUD.Succeeded())
 	{
 		HPBarWidget->SetWidgetClass(UI_HUD.Class);
-		HPBarWidget->SetDrawSize(FVector2D(300.0f, 25.0f));
+		HPBarWidget->SetDrawSize(FVector2D(300.0f, 50.0f));
+		//HPBarWidget->
+		//HPBarWidget->
 	
 	}
 	HPBarWidget->SetHiddenInGame(false);
@@ -50,6 +52,13 @@ void AEnemyCharacter::BeginPlay()
 	}
 	
 	
+
+}
+
+void AEnemyCharacter::BeginDestroy()
+{
+	Super::BeginDestroy();
+
 
 }
 

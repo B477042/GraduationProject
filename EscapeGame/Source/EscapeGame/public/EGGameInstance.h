@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "EscapeGame.h"
 #include "Engine/GameInstance.h"
 #include "EGGameInstance.generated.h"
 
@@ -13,5 +13,10 @@ UCLASS()
 class ESCAPEGAME_API UEGGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
+public:
+	UEGGameInstance();
+
+private:
+
 	
 };
