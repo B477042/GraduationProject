@@ -30,6 +30,9 @@ private:
 		UStaticMeshComponent*Door2;
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
 		UStaticMeshComponent*DoorGate;
+	UPROPERTY(VisibleAnywhere, Category = Mesh)
+	bool bIsOpened;
+
 
 	UPROPERTY(EditAnywhere)
 		UBoxComponent* Trigger;

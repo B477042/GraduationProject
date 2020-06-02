@@ -109,6 +109,7 @@ void UStatComponent::SetDontMove()
 	{
 		auto Movement = Character->GetCharacterMovement();
 		Movement->MaxWalkSpeed = MinWalkingSpeed;
+		//Movement->JumpZVelocity = 0.0f;
 	}
 
 }
@@ -118,6 +119,8 @@ void UStatComponent::SetRunning()
 	auto Character = Cast<ACharacter>(GetOwner());
 	if (Character != nullptr)
 	{
+		//공격중이면 뛰지 못하게
+		if (bIsAttacking)return;
 		auto Movement = Character->GetCharacterMovement();
 		Movement->MaxWalkSpeed = MaxRunningSpeed;
 	}

@@ -61,9 +61,13 @@ private:
 	//Image Box of Player's Hp
 	UPROPERTY()
 		class UImage* Img_Battery;
+	UPROPERTY()
+	class UImage* Img_Cardkey;
 	//Display Player's HP Statue as Image. Set images on BP
 	UPROPERTY(BlueprintReadWrite, Category = "Images", meta = (AllowPrivateAccess = "true"))
 		 TArray<UTexture2D*> Imgs_Battary;
+	UPROPERTY(BlueprintReadWrite, Category = "Images", meta = (AllowPrivateAccess = "true"))
+		TArray<UTexture2D*> Img_Cardkeys;
 	//Image of Itme Recovery Item
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	class UImage* Img_RecoveryItem;

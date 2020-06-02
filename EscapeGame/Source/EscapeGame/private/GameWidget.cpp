@@ -20,8 +20,10 @@ void UGameWidget::NativeConstruct()
 	PB_Stamina = Cast<UProgressBar>(GetWidgetFromName(TEXT("StaminaBar")));
 	Img_Battery = Cast<UImage>(GetWidgetFromName(TEXT("HPImage")));
 	Img_RecoveryItem = Cast<UImage>(GetWidgetFromName(TEXT("RecoveryItemImage")));
+	Img_Cardkey = Cast<UImage>(GetWidgetFromName(TEXT("img_Cardkey")));
 	
 	RecoveryItemNum = Cast<UTextBlock>(GetWidgetFromName(TEXT("RecoveryItemNum0")));
+	
 	GameTimer = 45.0f;
 	PlayerHP = 100.0f;
 	PlayerStamina = 100.0f;

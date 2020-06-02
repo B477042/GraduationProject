@@ -36,7 +36,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	bSetMapArm = false;
 	
 	bIsGuarding = false;
-	bIsDebugMode = false;
+	bIsDebugMode = true;
 }
 
 // Called when the game starts or when spawned
@@ -254,10 +254,12 @@ void AEGPlayerCharacter::StartRunning()
 	//if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::ZeroVector)return;
 	//Stat->SetRunning();//달릴 상태로 만들어 준다
 	//
+	if (Stat->IsAttacking())return;
+
 	if (Stat->CanUsingStamina())
 	{
 		Stat->SetStaminaUsing(true);
-		GetCharacterMovement()->MaxWalkSpeed = 1200.0f;
+		GetCharacterMovement()->MaxWalkSpeed = 2000.0f;
 	}
 
 
@@ -437,7 +439,8 @@ void AEGPlayerCharacter::InitComponents()
 	minMapArmLength = 320.0f;
 	maxMapArmLength = 1000.0f;
 	float X=0, Y=0, Z=0,Pitch=0,Yaw=0,Roll=0;
-	Camera->SetRelativeLocationAndRotation(FVector(X = 119.325928f, Y = 143.606781f, Z = 134.770874f),FRotator(Pitch = -10.796335f, Yaw = -6.558897f, Roll = 1.233861f));
+	Camera->SetRelativeLocation(FVector(0.0f, 30.0f, 90.0f));
+	//Camera->SetRelativeLocationAndRotation(FVector(X = 119.325928f, Y = 143.606781f, Z = 134.770874f),FRotator(Pitch = -10.796335f, Yaw = -6.558897f, Roll = 1.233861f));
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 	SpringArm->TargetArmLength = 500.0f;
 	//SpringArm->SetRelativeRotation(FRotator(-15.0f, 0.0f, 0.0f));

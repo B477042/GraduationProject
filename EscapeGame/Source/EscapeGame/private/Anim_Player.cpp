@@ -179,7 +179,11 @@ void UAnim_Player::AnimNotify_PlaySound()
 
 void UAnim_Player::AnimNotify_Skill1Start()
 {
-	EGLOG(Warning, TEXT("Jot na gin name "));
+//	EGLOG(Warning, TEXT("Jot na gin name "));
+	auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
+
+	if (!player)return;
+	player->RestricInput();
 	SoundLaugh->Play();
 }
 

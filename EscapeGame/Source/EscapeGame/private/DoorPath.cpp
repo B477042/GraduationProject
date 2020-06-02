@@ -34,12 +34,13 @@ ADoorPath::ADoorPath()
 	Trigger->SetCollisionProfileName(TEXT("OnTrapTrigger"));
 	Trigger->SetRelativeLocation(FVector(-160.0f, -320.0f, 110.0f));
 	Trigger->SetBoxExtent(FVector(130.0f, 68.0f, 80.0f));
-	
+	bIsOpened = false;
 
 }
 //2019 10 07 나중에 시간에 따라 천천히 열리도록 조정
 void ADoorPath::OpenTheDoor()
 {
+	bIsOpened = true;
 	float X = 0.0f, Y = 0.0f, Z = 0.0f;
 	float Pitch = 0.0f, Yaw = 0.0f, Roll = 0.0f;
 	Door1->SetRelativeLocation(FVector(X = -40.000000, Y = 20.000000, Z = 0.000000));
@@ -48,7 +49,7 @@ void ADoorPath::OpenTheDoor()
 	Door2->SetRelativeLocation(FVector(X = -360.000000f, Y = 0.000000f, Z = 0.000000f));
 	Door2->SetRelativeRotation(FRotator(Pitch = 0.000000f, Yaw = -90.000000f, Roll = 0.000000f));
 
-
+	
 }
 //2019 10 07 나중에 시간에 따라 천천히 닫히도록 조정
 void ADoorPath::CloseTheDoor()
@@ -89,8 +90,11 @@ void ADoorPath::OnPlayerOverlap(UPrimitiveComponent * OverlappedComp, AActor * O
 {
 	auto player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (!player)return;
+	//이미 열린 상태라면 반환
+	if (bIsOpened)return;
 
 	if (player->GetInventory()->UseItem(AItem_CardKey::Tag, player))
 		OpenTheDoor();
+	Trigger->SetCollisionProfileName(TEXT("NoCollision"));
 	
 }
