@@ -61,7 +61,7 @@ public:
 	 void ToggleMap();
 	 void SetGuard();
 	 void ReleaseGuard();
-	 void Pause();
+	 
 
 	 void ActiveThunder();
 	 //User Input Disable

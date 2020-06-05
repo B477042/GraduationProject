@@ -20,10 +20,15 @@ class ESCAPEGAME_API AEGPlayerController : public APlayerController
 public:
 	AEGPlayerController();
 	void BeginPlay();
+	void SetupInputComponent()override;
 
 	virtual void PostInitializeComponents()override;
 	virtual void OnPossess(APawn* aPawn)override;
-	
+	UFUNCTION(BlueprintCallable)
+	void ChangeInputMode(bool bGameMode = true);
+	//UFUNCTION(BlueprintCallable)
+	void OnGamePaused();
+	void OnKillMode();
 
 	class UGameWidget* GetHUDWidget()const;
 
@@ -31,6 +36,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UGameWidget>HUDWidgetClass;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
+		TSubclassOf<class UUserWidget>PAUSEWidgetClass;
+
 
 
 	void SyncStatToHUD();
@@ -41,11 +49,17 @@ private:
 	UPROPERTY(meta=(AllowPrivateAccess=true))
 		class UGameWidget* HUD;
 
+	UPROPERTY()
+		class UUserWidget* PauseUI;
+
+	
+
 	//Data Table For Player Stat
 	UPROPERTY(VisibleAnywhere, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
 	class UDataTable* DT_Player;
-	/*UPROPERTY()
-		 USceneCaptureComponent2D* MapCam;*/
-	/*UPROPERTY()
-		class UGameStat* PlayerStat;*/
+
+
+	FInputModeGameOnly GameInputMode;
+	FInputModeUIOnly UIInputMode;
+
 };

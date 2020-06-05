@@ -56,6 +56,9 @@ void UAnimInstance_Boss::AnimNotify_DeadEnd()
 	Chara->OnBossIsDead.Broadcast();
 	
 	Chara->Destroy();
+
+	UGameplayStatics::OpenLevel(this,TEXT("Ending"));
+
 }
 
 void UAnimInstance_Boss::AnimNotify_ChargeStart()

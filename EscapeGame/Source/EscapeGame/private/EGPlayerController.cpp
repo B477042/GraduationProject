@@ -23,13 +23,22 @@ AEGPlayerController::AEGPlayerController()
 		DT_Player = DT_PLAYER.Object;
 	}
 	
+	static ConstructorHelpers::FClassFinder<UUserWidget>UI_PAUSE_C(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Pause.UI_Pause_C'"));
+	if (UI_PAUSE_C.Succeeded())
+	{
+		PAUSEWidgetClass = UI_PAUSE_C.Class;
+	}
+
 }
 
 void AEGPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+	ChangeInputMode(true);
 	HUD = CreateWidget<UGameWidget>(this, HUDWidgetClass);
-	HUD->AddToViewport();
+
+	//번호가 높을수록 위에 뜨는 ui 가 된다
+	HUD->AddToViewport(1);
 
 	
 	//PlayerStat = Cast<UGameStat>(PlayerStat);
@@ -62,6 +71,14 @@ void AEGPlayerController::BeginPlay()
 
 }
 
+void AEGPlayerController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+	InputComponent->BindAction(TEXT("Pause"), EInputEvent::IE_Pressed, this, &AEGPlayerController::OnGamePaused);
+	InputComponent->BindAction(TEXT("KillAll"), EInputEvent::IE_Pressed, this, &AEGPlayerController::OnKillMode);
+
+}
+
 void AEGPlayerController::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
@@ -74,6 +91,60 @@ void AEGPlayerController::OnPossess(APawn * aPawn)
 	Super::OnPossess(aPawn);
 	
 	
+}
+
+void AEGPlayerController::ChangeInputMode(bool bGameMode)
+{
+	if (bGameMode)
+	{
+		SetInputMode(GameInputMode);
+		bShowMouseCursor = false;
+	}
+	else
+	{
+		SetInputMode(UIInputMode);
+		bShowMouseCursor = true;
+	}
+
+}
+
+void AEGPlayerController::OnGamePaused()
+{
+	
+	//
+	//EGLOG(Warning, TEXT("TIMEEE"));
+	PauseUI = CreateWidget<UUserWidget>(this, PAUSEWidgetClass);
+	if (!PauseUI)return;
+	PauseUI->AddToViewport(3);
+	SetPause(true);
+	//UIInput mode로 전환
+	ChangeInputMode(false);
+	//EGLOG(Warning, TEXT("TIMEEE2"));
+}
+
+void AEGPlayerController::OnKillMode()
+{
+	auto chara = GetCharacter();
+	if (!chara)return;
+
+	//탐지된 여러가지의 결과들
+	TArray<FOverlapResult>OverlapResults;
+	FCollisionQueryParams CollisionQueryParam(NAME_None, false, this);
+	FDamageEvent DamageEvent;
+	
+	
+	bool bResult = GetWorld()->OverlapMultiByChannel(OverlapResults, chara->GetActorLocation(), FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2,
+		FCollisionShape::MakeSphere(10000.0f), CollisionQueryParam);
+	if (bResult)
+	{
+		for (auto it : OverlapResults)
+		{
+			it.GetActor()->TakeDamage(1000.0f, DamageEvent, this, this);
+			//EGLOG(Error, TEXT("Additional Damage To : %s"), *it.GetActor()->GetName());
+		}
+	}
+
+
 }
 
 

@@ -95,7 +95,7 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::SetGuard);
 	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Released, this, &AEGPlayerCharacter::ReleaseGuard);
 	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::UsingStaminaTick);
-	PlayerInputComponent->BindAction(TEXT("Pause"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::Pause);
+
 
 	EGLOG(Warning, TEXT("Player input component"));
 }
@@ -379,12 +379,6 @@ void AEGPlayerCharacter::ReleaseGuard()
 	bIsGuarding = false;
 }
 
-//일시정지
-void AEGPlayerCharacter::Pause()
-{
-	
-
-}
 
 void AEGPlayerCharacter::ActiveThunder()
 {
