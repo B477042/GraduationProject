@@ -5,6 +5,11 @@
 #include "EGPlayerCharacter.h"
 #include "..\public\EGPlayerController.h"
 #include "DT_DataStruct.h"
+#include "MySaveGame.h"
+#include "Item_Recover.h"
+#include "Item_CardKey.h"
+#include "EGGameState.h"
+
 //#include"GameStat.h"
 
 
@@ -90,7 +95,12 @@ void AEGPlayerController::OnPossess(APawn * aPawn)
 {
 	Super::OnPossess(aPawn);
 	
-	
+	if (LoadGame())
+	{
+		EGLOG(Error, TEXT("Loading Complete"));
+	}
+	else
+		EGLOG(Error, TEXT("No Save File"));
 }
 
 void AEGPlayerController::ChangeInputMode(bool bGameMode)
@@ -195,6 +205,73 @@ void AEGPlayerController::IsMoveKeyPressed()
 const UDataTable * AEGPlayerController::GetDT_Player()
 {
 	return DT_Player;
+}
+
+void AEGPlayerController::SaveGame()
+{
+	auto SaveInstance = NewObject<UMySaveGame>();
+	if (!SaveInstance)return;
+	
+
+	auto tempChara = Cast<AEGPlayerCharacter>(GetPawn());
+	if (!tempChara)return;
+
+	tempChara->GetStatComponent()->SaveGame(SaveInstance);
+	
+	SaveInstance->LastLocation = tempChara->GetActorLocation();
+	SaveInstance->LastRotator = tempChara->GetActorRotation();
+
+
+	SaveInstance->RemainTime = HUD->RemainTime;
+
+	SaveInstance->n_RecoveryItem = tempChara->Inventory->GetAmountItem(AItem_Recover::Tag);
+	SaveInstance->n_CardKey= tempChara->Inventory->GetAmountItem(AItem_CardKey::Tag);
+	//SaveInstance.Level = statComp.
+
+	SaveInstance->WorldName =  FName(*GetWorld()->GetName());
+
+
+	UGameplayStatics::SaveGameToSlot(SaveInstance, SaveInstance->SaveSlotName, SaveInstance->UserIndex);
+
+}
+
+bool AEGPlayerController::LoadGame()
+{
+	UMySaveGame* LoadGameInstance = Cast<UMySaveGame>(UGameplayStatics::CreateSaveGameObject(UMySaveGame::StaticClass()));
+	LoadGameInstance = Cast<UMySaveGame>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
+
+	if (!LoadGameInstance) { EGLOG(Error, TEXT("No Save File")); return false; }
+
+	
+
+	auto tempChara = Cast<AEGPlayerCharacter>(GetPawn());
+	if (!tempChara)return false;
+
+
+	//HUD->LoadGame(LoadGameInstance->RemainTime);
+	tempChara->GetStatComponent()->LoadGame(LoadGameInstance);
+	if (LoadGameInstance->n_CardKey != -1)
+	{
+		tempChara->Inventory->AddItem(NewObject<AItem_CardKey>(), LoadGameInstance->n_CardKey);
+	}
+	if (LoadGameInstance->n_RecoveryItem != -1)
+	{
+		tempChara->Inventory->AddItem(NewObject<AItem_Recover>(), LoadGameInstance->n_RecoveryItem);
+	}
+	//Title -> Load Game으로 호출된건지 검사한다. 
+	//auto gameState = Cast<AEGGameState>(GetWorld()->GetGameState());
+	//if (!gameState) { EGLOG(Error, TEXT("Game State is not Matched")); return false; }
+	//if (!gameState->bIsLoadedGame) { return false; }
+/*
+	if(LoadGameInstance->LastLocation!=FVector::ZeroVector)
+	tempChara->SetActorLocationAndRotation(LoadGameInstance->LastLocation, LoadGameInstance->LastRotator);*/
+
+	return true;
+	//level 여는건 title ui가 처리해야 된다.
+	//UGameplayStatics::OpenLevel(this, LoadGameInstance->WorldName);
+
+
+
 }
 
  

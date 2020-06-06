@@ -4,6 +4,7 @@
 #include "StatComponent_Player.h"
 #include "EGPlayerController.h"
 #include "DT_DataStruct.h"
+#include "MySaveGame.h"
 
 UStatComponent_Player::UStatComponent_Player()
 {
@@ -283,6 +284,29 @@ void UStatComponent_Player::GetExp(const int32 & DropExp)
 //
 //	PlayerTableRow = DataTable->FindRow<FPlayerTableRow>(FName(*(FString::FormatAsNumber(Level))), FString(""));
 //}
+
+void UStatComponent_Player::SaveGame(UMySaveGame * SaveInstance)
+{
+	if (!SaveInstance)return;
+
+	SaveInstance->Level = Level;
+	SaveInstance->NextExp = NextExp;
+	SaveInstance->CurrentHP = CurrentHP;
+
+
+
+}
+
+void UStatComponent_Player::LoadGame(UMySaveGame * SaveInstance)
+{
+	if (!SaveInstance)return;
+
+	Level = SaveInstance->Level;
+	CurrentHP = SaveInstance->CurrentHP;
+	NextExp = SaveInstance->NextExp;
+
+
+}
 
 void UStatComponent_Player::levelUp()
 {

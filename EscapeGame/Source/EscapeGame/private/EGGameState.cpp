@@ -5,5 +5,5 @@
 
 AEGGameState::AEGGameState()
 {
-
+	bIsLoadedGame = false;
 }

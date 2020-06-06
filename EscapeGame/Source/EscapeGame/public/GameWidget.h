@@ -40,8 +40,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 		float CheackTimeOut(float NewValue);
 
-
+	UPROPERTY(BlueprintReadWrite, Category = Timer, Meta = (AllowPrivateAccess = true))
+		float RemainTime;
 	
+	void LoadGame(float Time) { GameTimer = Time; }
 
 private:
 	void loadImages();
@@ -88,6 +90,7 @@ private:
 		int RecoveryItemEA;
 	UPROPERTY(BlueprintReadWrite, Category = Timer, Meta = (AllowPrivateAccess = true))
 		float GameTimer;
+	
 
 	UPROPERTY(BlueprintReadOnly, Category = Camera, Meta = (AllowPrivateAccess = true))
 		UCameraComponent* MiniMapCapture;

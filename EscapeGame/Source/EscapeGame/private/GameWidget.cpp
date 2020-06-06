@@ -25,6 +25,7 @@ void UGameWidget::NativeConstruct()
 	RecoveryItemNum = Cast<UTextBlock>(GetWidgetFromName(TEXT("RecoveryItemNum0")));
 	
 	GameTimer = 45.0f;
+	RemainTime = GameTimer;
 	PlayerHP = 100.0f;
 	PlayerStamina = 100.0f;
 	HPAmount = 0;
@@ -82,10 +83,11 @@ void UGameWidget::UpdateStamina()
 
 float UGameWidget::CheackTimeOut(float NewValue)
 {
+	RemainTime = NewValue;
 	if (NewValue == 0.0f)
 	{
 		//EGLOG(Error, TEXT("DIEEE"));
-		CurrentCharacterStat->TakeDamage(100.0f);
+		CurrentCharacterStat->TakeDamage(1000.0f);
 	}
 
 

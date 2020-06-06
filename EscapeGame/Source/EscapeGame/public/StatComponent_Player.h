@@ -64,9 +64,10 @@ public:
 	FStaminaChangedDelegate StaminaChangedDelegate;
 	//virtual  void LoadDataTable()override ;
 
-	
-
-
+	//Stat 정보를 저장한다
+	void SaveGame(class UMySaveGame* SaveInstance);
+	//Stat 정보를 불러온다
+	void LoadGame(class UMySaveGame* SaveInstance);
 private:
 	//Called when Exp is enough to level up
 	void levelUp();

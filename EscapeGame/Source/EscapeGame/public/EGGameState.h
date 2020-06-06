@@ -17,5 +17,10 @@ public:
 	AEGGameState();
 
 
+
+
+	//만약 loadgame으로 게임이 시작하게 된거인지면 체크한다.
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Data")
+		bool bIsLoadedGame;
 	
 };

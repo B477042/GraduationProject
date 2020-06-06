@@ -45,7 +45,17 @@ public:
 	void IsMoveKeyPressed();
 	const class UDataTable* GetDT_Player();
 
+	UFUNCTION(BlueprintCallable, Category = "Data")
+		void SaveGame();
+	UFUNCTION(BlueprintCallable, Category = "Data")
+		bool LoadGame();
+
+
 private:
+
+	void loadLocation();
+	//void load
+
 	UPROPERTY(meta=(AllowPrivateAccess=true))
 		class UGameWidget* HUD;
 

@@ -3,6 +3,7 @@
 #include "EscapeGameGameModeBase.h"
 #include"EGPlayerCharacter.h"
 #include"EGPlayerController.h"
+#include "EGGameState.h"
 //#include "DT_DataStruct.h"
 
 
@@ -10,6 +11,7 @@ AEscapeGameGameModeBase::AEscapeGameGameModeBase()
 {
 	DefaultPawnClass = AEGPlayerCharacter::StaticClass();
 	PlayerControllerClass = AEGPlayerController::StaticClass();
+	//GameStateClass = AEGGameState::StaticClass();
 
 
 }

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "EngineMinimal.h"
+#include "Kismet/GameplayStatics.h"
 
 //Debug 매크로 선언
 DECLARE_LOG_CATEGORY_EXTERN(EGgame, Log, All);
@@ -15,6 +16,7 @@ DECLARE_LOG_CATEGORY_EXTERN(EGgame, Log, All);
 static FDamageEvent ActorTakeDamageEvent;
 
 static bool DrawingDebugMode=true;
+
 
 //#define ABLOG_CALLINFO (FString(__FUNCTION__) + TEXT("(") + FString::FromInt(__LINE__) + TEXT(")"))
 //#define ABLOG_S(Verbosity) UE_LOG(ArenaBattle, Verbosity, TEXT("%s"), *ABLOG_CALLINFO)
