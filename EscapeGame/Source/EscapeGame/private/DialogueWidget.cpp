@@ -123,5 +123,8 @@ void UDialogueWidget::OnContinueClicked()
 {
 	if (!bIsAllowToNext)return;
 	OnClickSkipDelegate.Broadcast();
-	UGameplayStatics::OpenLevel(this,"Stage1");
+
+	
+
+	UGameplayStatics::OpenLevel(this,NextStage);
 }

@@ -136,8 +136,10 @@ void APawn_Camera::loadDialogue()
 
 void APawn_Camera::startTalk()
 {
+	getWidget()->NextStage = TEXT("Stage1");
 	printLog();
 	c_Talk++;
+	
 }
 
 void APawn_Camera::nextLog()

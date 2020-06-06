@@ -41,27 +41,34 @@ public:
 	void PrintLog(FText Diagram);
 	
 	FOnTalkeInvoke OnTalkeInvokeDelegate;
+	UPROPERTY(BlueprintAssignable, Category = "custom")
 	FOnClickNext OnClickNextDelegate;
+	UPROPERTY(BlueprintAssignable, Category = "custom")
 	FOnClickPrev OnClickPrevDelegate;
+	UPROPERTY(BlueprintAssignable, Category = "custom")
 	FOnClickSkip OnClickSkipDelegate;
+	UPROPERTY(BlueprintReadWrite, Category = "info")
+	FName NextStage;
+	UPROPERTY(BlueprintReadWrite, Category = "info")
+	int n_Act;
 protected:
 	virtual void NativeConstruct()override;
 
 protected:
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 		class UButton* NextButton;
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 		class UButton* PrevButton;
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 		class UButton* ContinueButton;
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 		class UEditableTextBox* TalkerBox;
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	class UEditableText* TextDiagram;
 	/*UPROPERTY()
 		TWeakObjectPtr<AActor> Talker;*/
 		
-
+	
 	
 private:
 	UFUNCTION()

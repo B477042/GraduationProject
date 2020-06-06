@@ -17,16 +17,16 @@ struct FDialogueTableRow : public FTableRowBase
 	GENERATED_BODY()
 	public:
 	//대사 내용
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Info")
 	FString Dialogue;
 	//화자
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Info")
 	FText Talker;
 	//몇 번재 Act인지
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Info")
 	int32 n_Act;
 	//몇 번째 대사인지
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Info")
 	int32 Line;
 };
 
