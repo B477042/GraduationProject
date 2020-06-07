@@ -38,15 +38,15 @@ public:
 	FVector GetFireDir() { return FireDir; }
 
 protected:
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	USceneComponent* Root;
-	UPROPERTY(VisibleAnywhere, Category = effect)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "effect")
 	UParticleSystemComponent* MainEffect;
-	UPROPERTY(VisibleAnywhere, Category = effect)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "effect")
 	UParticleSystemComponent* ReactEffect;
-	UPROPERTY(VisibleAnywhere, Category = effect)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "effect")
 	UParticleSystemComponent* HitEffect;
-	UPROPERTY(VisibleAnywhere, Category = Collision)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
 	USphereComponent*Collision;
 
 	UPROPERTY(VisibleAnywhere, Category = Collision)

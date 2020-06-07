@@ -157,7 +157,10 @@ float AEGPlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent con
 		//투사체가 맞다면, 반대로 튕겨낸다
 		if (projectile)
 		{
-			projectile->ReadyToFire(projectile->GetFireDir()*-1.0f, projectile->GetActorLocation(), projectile->GetActorRotation());
+			//반사각도
+			float randAngle = FMath::RandRange(-1.0f, 1.0f);
+
+			projectile->ReadyToFire(projectile->GetFireDir()*randAngle, projectile->GetActorLocation(), projectile->GetActorRotation());
 			projectile->SetCollision("PlayerWeapon");
 			projectile->TripleDamage();
 			EGLOG(Error, TEXT("Ting"));

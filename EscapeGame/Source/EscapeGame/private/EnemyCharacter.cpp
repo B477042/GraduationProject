@@ -50,6 +50,7 @@ void AEnemyCharacter::BeginPlay()
 		EGLOG(Warning, TEXT(" HPBar Failed"));
 		return;
 	}
+	HPBar->SetPercent(1.0f);
 	
 	
 

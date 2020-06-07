@@ -33,7 +33,7 @@ void AProjectile::ReadyToFire(const FVector & Dir_Vector, const FVector& Locatio
 	MainEffect->SetHiddenInGame(false);
 	
 	SoundTrigger->SetCollisionProfileName("OnTrapTrigger");
-	Collision->SetSphereRadius(40.3f);
+
 	
 
 	SoundTrigger->SetCollisionProfileName(TEXT("OnTrapTrigger"));
@@ -41,8 +41,8 @@ void AProjectile::ReadyToFire(const FVector & Dir_Vector, const FVector& Locatio
 
 	
 	SetActorLocationAndRotation(Location, Rotate);
-
-	Collision->SetCollisionProfileName("OnTrapTrigger");
+	Collision->SetSphereRadius(40.3f);
+	Collision->SetCollisionProfileName("Projectile");
 	Fire();
 }
 
@@ -75,6 +75,13 @@ void AProjectile::OnSomethingHit(UPrimitiveComponent * OverlappedComp, AActor * 
 		OtherActor->TakeDamage(Damage, damageEvent, GetWorld()->GetFirstPlayerController(), this);
 	}
 	ActivateHitEffect();
+	//bIsFire = false;
+}
+
+void AProjectile::Reflected()
+{
+	
+
 }
 
 void AProjectile::OnCharacterEntered(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
@@ -99,7 +106,7 @@ void AProjectile::BP_Fire(FVector  Location, FRotator  Rotation, FVector  Dir)
 
 	SetActorLocationAndRotation(Location, Rotation);
 
-	Collision->SetCollisionProfileName("EnemyWeapon");
+	Collision->SetCollisionProfileName("Projectile");
 	Fire();
 
 }
