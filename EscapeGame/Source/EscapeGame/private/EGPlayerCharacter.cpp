@@ -150,24 +150,36 @@ float AEGPlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent con
 		EGLOG(Error, TEXT("Can't Take Damage"));
 		return 0.0f;
 	}*/
-	//투사체 반사
-	if (bIsGuarding)
+
+	//투사체가 맞다면 이벤트
+	auto projectile = Cast<AProjectile>(DamageCauser);
+	if (projectile)
 	{
-		auto projectile = Cast<AProjectile>(DamageCauser);
-		//투사체가 맞다면, 반대로 튕겨낸다
-		if (projectile)
+		//투사체 반사
+		if (bIsGuarding)
 		{
+
+
 			//반사각도
 			float randAngle = FMath::RandRange(-1.0f, 1.0f);
 
 			projectile->ReadyToFire(projectile->GetFireDir()*randAngle, projectile->GetActorLocation(), projectile->GetActorRotation());
 			projectile->SetCollision("PlayerWeapon");
 			projectile->TripleDamage();
+			projectile->ActivateMainEffect();
+
 			EGLOG(Error, TEXT("Ting"));
-			return FinalDamage;
+			
+
+
 		}
 
+		//가드 하지 않아도 일어나는 공통 처리
+
+		//projectile->bis
+	return FinalDamage;
 	}
+	
 
 	Stat->TakeDamage(DamageAmount);
 

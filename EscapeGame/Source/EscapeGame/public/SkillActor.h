@@ -18,11 +18,11 @@ public:
 	// Sets default values for this actor's properties
 	ASkillActor();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void ActivateHitEffect();
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void ActivateMainEffect();
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void SetSafety();
 protected:
 	// Called when the game starts or when spawned
@@ -35,6 +35,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	UFUNCTION(BlueprintCallable)
 	FVector GetFireDir() { return FireDir; }
 
 protected:
@@ -60,10 +61,10 @@ protected:
 
 protected:
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool bIsFire;
 	//발사방향
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector FireDir;
 	//속도
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
