@@ -9,6 +9,13 @@
 /**
  * 
  */
+
+//Game Loading 방식. Load Game 인지 Next Stage인지
+UENUM(BlueprintType)
+enum class ELoadType : uint8 {
+	LoadGame, NextStage, NewGame
+};
+
 UCLASS()
 class ESCAPEGAME_API UMySaveGame : public USaveGame
 {
@@ -42,6 +49,26 @@ public:
 	int32 UserIndex;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BasicData")
 		FName WorldName;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "BasicData")
+	ELoadType LoadType;
+
+
+
+	////================================================================================
+	////적의 정보
+	////살아 있던 에너미들의 이름
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "EnemyData")
+	//	TArray<FName> AliveEnemyName;
+
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BossData")
+	//	int Boss_Mp;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BossData")
+	//	int Boss_Hp;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BossData")
+	//	FVector Boss_Location;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BossData")
+	//	FRotator Boss_Rotation;
+	
 
 
 	UMySaveGame();

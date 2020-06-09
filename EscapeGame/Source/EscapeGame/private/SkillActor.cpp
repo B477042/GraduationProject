@@ -26,7 +26,8 @@ void ASkillActor::ActivateHitEffect()
 	HitEffect->Activate();
 	SoundHit->Play();
 	Collision->SetCollisionProfileName(TEXT("NoCollision"));
-//	SetSafety();
+	bIsFire = false;
+	SetSafety();
 
 }
 
@@ -45,9 +46,9 @@ void ASkillActor::PostInitializeComponents()
 
 void ASkillActor::SetSafety()
 {
-	bIsFire = false;
-	if(!bIsFire)
-	EGLOG(Warning, TEXT("Safe"));
+	//bIsFire = false;
+	/*if(!bIsFire)
+	EGLOG(Warning, TEXT("Safe"));*/
 	FireDir = FVector::ZeroVector;
 
 	Root->SetHiddenInGame(true);

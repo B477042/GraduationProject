@@ -20,3 +20,10 @@ void AEscapeGameGameModeBase::PostLogin(APlayerController * NewPlayer)
 {
 	Super::PostLogin(NewPlayer);
 }
+
+void AEscapeGameGameModeBase::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	//EGGameState = Cast< AEGGameState>(GameState);
+}

@@ -78,7 +78,7 @@ void AProjectile::OnSomethingHit(UPrimitiveComponent * OverlappedComp, AActor * 
 		OtherActor->TakeDamage(Damage, damageEvent, GetWorld()->GetFirstPlayerController(), this);
 	}
 
-
+	EGLOG(Error, TEXT(" Hit :%s"), *OtherActor->GetName());
 
 	ActivateHitEffect();
 	//bIsFire = false;

@@ -15,6 +15,7 @@ UMySaveGame::UMySaveGame()
 	LastLocation = FVector::ZeroVector;
 	LastRotator = FRotator::ZeroRotator;
 
+	LoadType = ELoadType::NewGame;
 }
 
 void UMySaveGame::ResetData()
@@ -28,5 +29,6 @@ void UMySaveGame::ResetData()
 	n_RecoveryItem = -1;
 	LastLocation = FVector::ZeroVector;
 	LastRotator = FRotator::ZeroRotator;
+	LoadType = ELoadType::NewGame;
 
 }

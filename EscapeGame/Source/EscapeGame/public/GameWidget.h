@@ -76,6 +76,10 @@ private:
 
 
 	UPROPERTY()
+		class UImage* Img_Blood;
+
+
+	UPROPERTY()
 		class UTextBlock* RecoveryItemNum;//Write 'HP'
 	UPROPERTY(BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		int HPAmount;

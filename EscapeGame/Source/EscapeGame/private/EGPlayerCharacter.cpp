@@ -152,34 +152,34 @@ float AEGPlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent con
 	}*/
 
 	//투사체가 맞다면 이벤트
-	auto projectile = Cast<AProjectile>(DamageCauser);
-	if (projectile)
-	{
-		//투사체 반사
-		if (bIsGuarding)
-		{
+	//auto projectile = Cast<AProjectile>(DamageCauser);
+	//if (projectile)
+	//{
+	//	//투사체 반사
+	//	if (bIsGuarding)
+	//	{
 
 
-			//반사각도
-			float randAngle = FMath::RandRange(-1.0f, 1.0f);
+	//		//반사각도
+	//		float randAngle = FMath::RandRange(-1.0f, 1.0f);
 
-			projectile->ReadyToFire(projectile->GetFireDir()*randAngle, projectile->GetActorLocation(), projectile->GetActorRotation());
-			projectile->SetCollision("PlayerWeapon");
-			projectile->TripleDamage();
-			projectile->ActivateMainEffect();
+	//		projectile->ReadyToFire(projectile->GetFireDir()*randAngle, projectile->GetActorLocation(), projectile->GetActorRotation());
+	//		projectile->SetCollision("PlayerWeapon");
+	//		projectile->TripleDamage();
+	//		projectile->ActivateMainEffect();
 
-			EGLOG(Error, TEXT("Ting"));
-			
+	//		EGLOG(Error, TEXT("Ting"));
+	//		
 
 
-		}
+	//	}
 
-		//가드 하지 않아도 일어나는 공통 처리
+	//	//가드 하지 않아도 일어나는 공통 처리
 
-		//projectile->bis
-	return FinalDamage;
-	}
-	
+	//	//projectile->bis
+	//return FinalDamage;
+	//}
+	//
 
 	Stat->TakeDamage(DamageAmount);
 

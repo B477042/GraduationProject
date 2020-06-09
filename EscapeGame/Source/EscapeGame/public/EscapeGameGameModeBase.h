@@ -18,5 +18,9 @@ class ESCAPEGAME_API AEscapeGameGameModeBase : public AGameModeBase
 public:
 	virtual void PostLogin(APlayerController* NewPlayer)override;
 
+	virtual void PostInitializeComponents() override;
+
+	//UPROPERTY()
+	//class AEGGameState* EGGameState;
 
 };

@@ -4,6 +4,8 @@
 #include "Component_Inventory.h"
 #include"Components/ProgressBar.h"
 #include"Components/TextBlock.h"
+#include "Math/Color.h"
+#include "Styling/SlateColor.h"
 //#include"GameStat.h"
 
 //void UGameWidget::BindCharacterStat(UGameStat * NewCharacterStat)
@@ -21,7 +23,7 @@ void UGameWidget::NativeConstruct()
 	Img_Battery = Cast<UImage>(GetWidgetFromName(TEXT("HPImage")));
 	Img_RecoveryItem = Cast<UImage>(GetWidgetFromName(TEXT("RecoveryItemImage")));
 	Img_Cardkey = Cast<UImage>(GetWidgetFromName(TEXT("img_Cardkey")));
-	
+	Img_Blood= Cast<UImage>(GetWidgetFromName(TEXT("Img_Bloody")));
 	RecoveryItemNum = Cast<UTextBlock>(GetWidgetFromName(TEXT("RecoveryItemNum0")));
 	
 	GameTimer = 45.0f;
@@ -41,11 +43,14 @@ void UGameWidget::UpdateCharacterStat()
 		{
 			HPAmount->
 		}*/
-
+		
+		
+	
 
 		PlayerHP=CurrentCharacterStat->GetHP();
 		float PlayerHPRatio = CurrentCharacterStat->GetHPRatio()*100.0f;
-
+		float BlurRate = 0.5f*(1.0f - CurrentCharacterStat->GetHPRatio());
+		Img_Blood->SetBrushTintColor(FSlateColor(FLinearColor(1.0f, 1.0f, 1.0f,BlurRate )));
 		//이미지들은 BP에서 불러와진 것들이다
 		if (PlayerHPRatio > 90.0f)
 			Img_Battery->SetBrushFromTexture(Imgs_Battary[0]);

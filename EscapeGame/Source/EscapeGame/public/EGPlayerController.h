@@ -38,7 +38,8 @@ public:
 		TSubclassOf<class UGameWidget>HUDWidgetClass;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UUserWidget>PAUSEWidgetClass;
-
+	/*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
+		TSubclassOf<class UUserWidget>BloodWidgetClass;*/
 
 
 	void SyncStatToHUD();
@@ -47,13 +48,19 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Data")
 		void SaveGame();
+
+
+	//Called When Load Game Called. Load Transform, Stat, 
 	UFUNCTION(BlueprintCallable, Category = "Data")
 		bool LoadGame();
-
+	//Called Next Stage Event
+	UFUNCTION(BlueprintCallable, Category = "Data")
+		bool NextStage();
 
 private:
 
-	void loadLocation();
+	//void loadLocation();
+	
 	//void load
 
 	UPROPERTY(meta=(AllowPrivateAccess=true))
