@@ -81,6 +81,8 @@ protected:
 		ENotifyType NotifyType;
 	UPROPERTY(VisibleInstanceOnly, Category = "TEXT", meta = (ToolTip = "3d공간에 출력될 텍스트"))
 	UTextRenderComponent* TextRenderer;
+	UPROPERTY(EditAnywhere)
+		UStaticMeshComponent* Plane;
 
 	//들어온 캐릭터를 가리킨다. 영역 밖으로 나가면 풀어준다
 	TWeakObjectPtr<AActor> EnteredPlayer;

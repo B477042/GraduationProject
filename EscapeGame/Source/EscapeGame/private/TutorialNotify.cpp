@@ -58,7 +58,7 @@ void ATutorialNotify::OnOverlapBegin(AActor * OvelappedActor, AActor * OtherActo
 	
 	
 	TextRenderer->SetHiddenInGame(false);
-
+	Plane->SetHiddenInGame(false);
 	EnteredPlayer = OtherActor;
 	rotateTextToPlayer();
 	//FVector Start = GetActorLocation() + TextRenderer->GetRelativeLocation();
@@ -79,6 +79,7 @@ void ATutorialNotify::OnOverlapEnd(AActor * OvelappedActor, AActor * OtherActor)
 	if (!checkOverlappedActor((OtherActor)))return;
 
 	TextRenderer->SetHiddenInGame(true);
+	Plane->SetHiddenInGame(true);
 	//Tick을 꺼준다
 	//PrimaryActorTick.bCanEverTick = false;
 	EnteredPlayer = nullptr;
@@ -90,6 +91,17 @@ void ATutorialNotify::initTextRenderer()
 	TextRenderer = CreateDefaultSubobject<UTextRenderComponent>(TEXT("TextRenderer"));
 	TextRenderer->SetupAttachment(RootComponent);
 	TextRenderer->SetRelativeLocation(FVector(0.0f, 60.0f, 0.0f));
+
+	float X, Y, Z,Pitch,Yaw,Roll;
+	Plane = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PLANE"));
+	Plane->SetupAttachment(TextRenderer);
+	Plane->SetRelativeLocation(FVector(X = -13.000000, Y = -104.000000, Z = 0.000000));
+	Plane->SetRelativeScale3D(FVector(X = 1.250000, Y = 3.000000, Z = 3.500000));
+	Plane->SetRelativeRotation(FRotator(Pitch = -88.856171, Yaw = -179.999985, Roll = -179.999954));
+
+	
+
+
 	//TextRenderer->bHiddenInGame = true;
 	
 	static ConstructorHelpers::FObjectFinder<UFont>FONT(TEXT("Font'/Game/MyFolder/Font/NanumGothic.NanumGothic'"));
@@ -100,8 +112,20 @@ void ATutorialNotify::initTextRenderer()
 
 	TextRenderer->SetText(FText::FromString("Set Message on editor"));
 	
-	TextRenderer->SetTextRenderColor(FColor(0,87,85,255));
-	
+	TextRenderer->SetTextRenderColor(FColor(255,255,255,255));
+
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_Plane(TEXT("StaticMesh'/Engine/BasicShapes/Plane.Plane'"));
+	if (SM_Plane.Succeeded())
+		Plane->SetStaticMesh(SM_Plane.Object);
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface>Mat_BLACK(TEXT("Material'/Game/MyFolder/My_Material/PlanBlack.PlanBlack'"));
+	if (Mat_BLACK.Succeeded())
+		Plane->SetMaterial(0,Mat_BLACK.Object);
+
+	Plane->SetHiddenInGame(true);
+	Plane->SetCollisionProfileName(TEXT("NoCollision"));
+
+
 }
 
 void ATutorialNotify::initBoxComponent()
@@ -118,47 +142,47 @@ void ATutorialNotify::initBoxComponent()
 
 void ATutorialNotify::setInfo()
 {
-	switch (NotifyType)
-	{
-	case ENotifyType::E_MoveInput:
-		TextRenderer->SetText(FText::FromString("Press\nW,A,S,D\nTo Move"));
-		break;
-	case ENotifyType::E_MouseInput:
-		TextRenderer->SetText(FText::FromString("Move Your Mouse\nAnd Look\nAround"));
-		break;
-	case ENotifyType::E_Jump:
-		TextRenderer->SetText(FText::FromString("Press Space\nTo Jump"));
-		break;
-	case ENotifyType::E_AttackInput:
-		TextRenderer->SetText(FText::FromString("Click LMB\nTo Attack"));
-		break;
-	case ENotifyType::E_GruntEnemy:
-		TextRenderer->SetText(FText::FromString("Watch Out\nThat Robot"));
-		break;
-	case ENotifyType::E_TrapFire:
-		TextRenderer->SetText(FText::FromString("Be Careful\nFire Ball"));
-		break;
-	case ENotifyType::E_Trap_Shutter:
-		TextRenderer->SetText(FText::FromString("Spear Could\nBe Destroy"));
-		break;
-	case ENotifyType::E_Lightning:
-		TextRenderer->SetText(FText::FromString("Don't Touch\nLightning"));
-			break;
-	case ENotifyType::E_HealBox:
-		TextRenderer->SetText(FText::FromString("Contact Box\nYou'll Recover"));
-		break;
-	case ENotifyType::E_Claymore:
-		TextRenderer->SetText(FText::FromString("Claymore is\nNot Your\nFriend"));
-		break;
-	case ENotifyType::E_ChargeAttack:
-		TextRenderer->SetText(FText::FromString("While Attack\nClick RMB\nCharge Attack"));
-		break;
-
-	case ENotifyType::E_None:
-		//에디터에서 메시지를 적어서 사용해야될 때 사용한다
-		//TextRenderer->SetText(TEXT("PLZ SET NOTIFYYYYYYYY"));
-		break;
-	}
+//	switch (NotifyType)
+//	{
+//	case ENotifyType::E_MoveInput:
+//		TextRenderer->SetText(FText::FromString("Press\nW,A,S,D\nTo Move"));
+//		break;
+//	case ENotifyType::E_MouseInput:
+//		TextRenderer->SetText(FText::FromString("Move Your Mouse\nAnd Look\nAround"));
+//		break;
+//	case ENotifyType::E_Jump:
+//		TextRenderer->SetText(FText::FromString("Press Space\nTo Jump"));
+//		break;
+//	case ENotifyType::E_AttackInput:
+//		TextRenderer->SetText(FText::FromString("Click LMB\nTo Attack"));
+//		break;
+//	case ENotifyType::E_GruntEnemy:
+//		TextRenderer->SetText(FText::FromString("Watch Out\nThat Robot"));
+//		break;
+//	case ENotifyType::E_TrapFire:
+//		TextRenderer->SetText(FText::FromString("Be Careful\nFire Ball"));
+//		break;
+//	case ENotifyType::E_Trap_Shutter:
+//		TextRenderer->SetText(FText::FromString("Spear Could\nBe Destroy"));
+//		break;
+//	case ENotifyType::E_Lightning:
+//		TextRenderer->SetText(FText::FromString("Don't Touch\nLightning"));
+//			break;
+//	case ENotifyType::E_HealBox:
+//		TextRenderer->SetText(FText::FromString("Contact Box\nYou'll Recover"));
+//		break;
+//	case ENotifyType::E_Claymore:
+//		TextRenderer->SetText(FText::FromString("Claymore is\nNot Your\nFriend"));
+//		break;
+//	case ENotifyType::E_ChargeAttack:
+//		TextRenderer->SetText(FText::FromString("While Attack\nClick RMB\nCharge Attack"));
+//		break;
+//
+//	case ENotifyType::E_None:
+//		//에디터에서 메시지를 적어서 사용해야될 때 사용한다
+//		//TextRenderer->SetText(TEXT("PLZ SET NOTIFYYYYYYYY"));
+//		break;
+//	}
 }
 
 void ATutorialNotify::rotateTextToPlayer()

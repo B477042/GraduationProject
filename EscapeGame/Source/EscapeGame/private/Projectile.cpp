@@ -42,7 +42,7 @@ void AProjectile::ReadyToFire(const FVector & Dir_Vector, const FVector& Locatio
 	
 	SetActorLocationAndRotation(Location, Rotate);
 	Collision->SetSphereRadius(40.3f);
-	Collision->SetCollisionProfileName("OverlapAll");
+	Collision->SetCollisionProfileName("EnemyWeapon");
 	
 	Fire();
 }
@@ -112,7 +112,7 @@ void AProjectile::BP_Fire(FVector  Location, FRotator  Rotation, FVector  Dir)
 
 	SetActorLocationAndRotation(Location, Rotation);
 
-	Collision->SetCollisionProfileName("OverlapAll");
+	Collision->SetCollisionProfileName("EnemyWeapon");
 	Fire();
 
 }

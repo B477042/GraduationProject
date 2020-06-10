@@ -89,10 +89,11 @@ void UGameWidget::UpdateStamina()
 float UGameWidget::CheackTimeOut(float NewValue)
 {
 	RemainTime = NewValue;
-	if (NewValue == 0.0f)
+	if (NewValue <= 0.0f)
 	{
 		//EGLOG(Error, TEXT("DIEEE"));
 		CurrentCharacterStat->TakeDamage(1000.0f);
+		EGLOG(Error, TEXT("TimeOUT"));
 	}
 
 

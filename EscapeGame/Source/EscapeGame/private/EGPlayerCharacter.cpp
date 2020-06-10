@@ -12,6 +12,9 @@
 #include "..\public\EGPlayerCharacter.h"
 #include"Sound/SoundCue.h"
 #include "SkillActor_ThunderType.h"
+#include "MySaveGame.h"
+#include "Kismet/KismetMathLibrary.h"
+
 //#include "DT_DataStruct.h"
 //#include "GameWidget.h"
 
@@ -36,7 +39,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	bSetMapArm = false;
 	
 	bIsGuarding = false;
-	bIsDebugMode = true;
+	bIsDebugMode = false;
 }
 
 // Called when the game starts or when spawned
@@ -181,8 +184,7 @@ float AEGPlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent con
 	//}
 	//
 
-	if (FinalDamage >= 10.0f)
-		OnTakeHugeDamageDelegate.Broadcast();
+
 
 	Stat->TakeDamage(FinalDamage);
 
@@ -618,7 +620,18 @@ void AEGPlayerCharacter::SetDeath()
 	if (bIsDebugMode)return;
 	
 	Anim->SetDead();
+	RestricInput();
+	Anim->Montage_Stop(0.0f);
 
+//	UGameplayStatics::LoadDataFromSlot
+	UMySaveGame* LoadGameInstance = Cast<UMySaveGame>(UGameplayStatics::CreateSaveGameObject(UMySaveGame::StaticClass()));
+	LoadGameInstance = Cast<UMySaveGame>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
+
+	if (!LoadGameInstance) { EGLOG(Error, TEXT("No Save File")); return; }
+
+	LoadGameInstance->LoadType = ELoadType::NextStage;
+
+	UGameplayStatics::SaveGameToSlot(LoadGameInstance,LoadGameInstance->SaveSlotName,LoadGameInstance->UserIndex);
 
 }
 
@@ -654,6 +667,30 @@ void AEGPlayerCharacter::ComboAttackEnd()
 {
 	if (Stat == nullptr)return;
 	Stat->SetComboEndState();
+}
+
+FName AEGPlayerCharacter::calcHitDirection(AActor * DamageCauser)
+{
+	FName Result;
+
+	FVector F_Player = GetActorForwardVector();
+	FVector F_Causer = DamageCauser->GetActorForwardVector();
+
+	FVector2D F2_Player = FVector2D(F_Player.X, F_Player.Y);
+	FVector2D F2_Causer = FVector2D(F_Causer.X, F_Causer.Y);
+
+	
+
+	float Dot2D = UKismetMathLibrary::DotProduct2D(F2_Player, F2_Causer);
+	float Angle = UKismetMathLibrary::Acos(Dot2D);
+
+	Angle = UKismetMathLibrary::Abs(Angle);
+
+	if (Angle < 90.0f)Result = TEXT("React_Fwd");
+	else Result = TEXT("React_Bwd");
+
+
+	return Result;
 }
 
 void AEGPlayerCharacter::loadHitEffects()

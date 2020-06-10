@@ -61,8 +61,23 @@ void UStatComponent::TakeDamage(float NewDamage)
 	}
 
 
-	if(bIsDamageable)
+	if (bIsDamageable)
+	{
 		CurrentHP -= NewDamage;
+		if (NewDamage >= 10.0f)
+		{
+			auto player = Cast<AEGPlayerCharacter>(GetOwner());
+			if (player)
+			{
+				player->OnTakeHugeDamageDelegate.Broadcast();
+			}
+
+
+			
+		}
+
+	}
+
 	if(!IsDead())
 	HPChangedDelegate.Broadcast();
 }

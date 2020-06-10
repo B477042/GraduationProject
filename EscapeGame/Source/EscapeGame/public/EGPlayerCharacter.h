@@ -146,6 +146,10 @@ private:
 	//Montage�� ���� �� ȣ��� �Լ�
 	UFUNCTION()
 		void ComboAttackEnd();
+	//Return Name of Hit Direction
+	UFUNCTION(BlueprintCallable)
+		FName calcHitDirection(AActor* DamageCauser);
+
 
 	/*UFUNCTION()
 		void ChargeAttackStart();
