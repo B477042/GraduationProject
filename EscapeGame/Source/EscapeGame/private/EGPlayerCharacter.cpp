@@ -181,7 +181,10 @@ float AEGPlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent con
 	//}
 	//
 
-	Stat->TakeDamage(DamageAmount);
+	if (FinalDamage >= 10.0f)
+		OnTakeHugeDamageDelegate.Broadcast();
+
+	Stat->TakeDamage(FinalDamage);
 
 	return FinalDamage;
 }

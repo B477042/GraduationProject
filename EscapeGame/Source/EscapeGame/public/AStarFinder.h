@@ -12,6 +12,7 @@
 
 
 
+
 UCLASS()
 class ESCAPEGAME_API UAstarFinder : public UObject
 {
@@ -57,5 +58,5 @@ private:
 	UPROPERTY(Transient, meta = (DisplayName = "Nodes"))
 		TArray< TWeakObjectPtr<AAstarNode>>AllNodes;
 	
-
+	
 };

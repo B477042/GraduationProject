@@ -16,6 +16,8 @@
 
 //DECLARE_DELEGATE(FOnKeyPressed);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTakeHugeDamage);
+
 UCLASS()
 class ESCAPEGAME_API AEGPlayerCharacter : public ACharacter
 {
@@ -70,6 +72,9 @@ public:
 	 //User Input Enable
 	 UFUNCTION(BlueprintCallable)
 	 void RecoverInput();
+	 //Over 10 Damage -> Reacting
+	 UPROPERTY(BlueprintAssignable)
+	 FOnTakeHugeDamage OnTakeHugeDamageDelegate;
 	//const AController* GetController();
 
 	 ////===============Static Vars
