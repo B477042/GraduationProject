@@ -52,6 +52,8 @@ AGruntCharacter::AGruntCharacter()
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 	//Stat = CreateDefaultSubobject<UStatComponent_Enemy>(TEXT("STAT"));
 	//if (Stat == nullptr)EGLOG(Warning, TEXT("Enemy's Stat is null"));
+
+	bAllowRandStat = true;
 }
 
 void AGruntCharacter::BeginPlay()

@@ -101,6 +101,12 @@ bool UComponent_Inventory::UseItem(FName ItemName, ACharacter* UserActor)
 	return true;
 }
 
+bool UComponent_Inventory::HasItem(FName ItemName)
+{
+	return	Items.Contains(ItemName);
+	//return false;
+}
+
 int UComponent_Inventory::GetAmountItem(FName Name)
 {	
 	//없으면 음수로 보낸다

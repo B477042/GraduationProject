@@ -6,6 +6,12 @@
 #include "GameFramework/Actor.h"
 #include "AstarNode.generated.h"
 
+UENUM(BlueprintType)
+ enum class EPathTarget : uint8
+{
+	
+	Key,Gate
+};
 
 UCLASS()
 class ESCAPEGAME_API AAstarNode : public AActor
@@ -91,6 +97,8 @@ protected:
 		bool bIsVisited;
 	UPROPERTY(EditAnywhere, Category = "Astar Data", meta = (AllowPrivateAccess = "true"))
 		bool bIsGoalNode;
+	UPROPERTY(EditAnywhere, Category = "Astar Data", meta = (AllowPrivateAccess = "true"))
+	bool bIsKeyNode;
 
 	UPROPERTY(VisibleAnywhere, Category = "Astar Data", meta = (AllowPrivateAccess = "true"))
 		TWeakObjectPtr<AAstarNode>PrevNode;

@@ -40,6 +40,9 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 		float DropExp() { return Stat->GetDropExp(); }
+	UPROPERTY(EditInstanceOnly)
+	bool bAllowRandStat;
+
 
 private:
 	//죽어야 될 때 호출된다.

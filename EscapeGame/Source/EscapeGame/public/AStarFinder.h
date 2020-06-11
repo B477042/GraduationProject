@@ -31,11 +31,14 @@ public:
 	// Called every frame
 	//virtual void Tick(float DeltaTime) override;
 
-	void  AStar( AAstarNode* Start,  AAstarNode* Goal);
+	void  PathFind( AAstarNode* Start, EPathTarget Mode);
+
+
 	//Activate PathNodes
-	void ShowPath();
-	void SetStartPoint(AAstarNode* Other);
+	void ShowPath(EPathTarget Mode);
+	void StartPathFinder(AAstarNode* Other, EPathTarget Mode);
 	void SetGoalPoint(AAstarNode * Other);
+	void SetKeyPoint(AAstarNode*Other);
 	void ResetResult();
 	
 	//Add Node To Tarray
@@ -43,7 +46,8 @@ public:
 	void ClearNodes();
 private:
 	
-
+	void GoalFind(AAstarNode* Start, AAstarNode* Goal);
+	void KeyFind(AAstarNode* Start, AAstarNode* Goal);
 
 private:
 	
@@ -54,6 +58,9 @@ private:
 	//Goal Node in map
 	UPROPERTY(Transient, EditInstanceOnly, meta = (AllowPrivateAccess = "true", DisplayName = "Nodes"))
 	TWeakObjectPtr<AAstarNode> GoalNode;
+
+	//CardKey Node
+	TWeakObjectPtr<AAstarNode>KeyNode;
 	
 	UPROPERTY(Transient, meta = (DisplayName = "Nodes"))
 		TArray< TWeakObjectPtr<AAstarNode>>AllNodes;

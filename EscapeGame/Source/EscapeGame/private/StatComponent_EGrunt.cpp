@@ -4,7 +4,7 @@
 #include "StatComponent_EGrunt.h"
 #include "AICtrl_Grunt.h"
 #include "DT_DataStruct.h"
-#include "EnemyCharacter.h"
+#include "GruntCharacter.h"
 
 
 UStatComponent_EGrunt::UStatComponent_EGrunt()
@@ -22,12 +22,15 @@ void UStatComponent_EGrunt::BeginPlay()
 void UStatComponent_EGrunt::loadDataTable()
 {
 
-	auto OwnerChara = Cast<ACharacter>(GetOwner());
+	auto OwnerChara = Cast<AGruntCharacter>(GetOwner());
 	if (OwnerChara == nullptr)
 	{
 		EGLOG(Warning, TEXT("Owner is not Character class"));
 		return;
 	}
+
+	if (!OwnerChara->bAllowRandStat)return;
+
 	auto OwnerCon = Cast<AAICtrl_Grunt>(OwnerChara->Controller);
 	if (OwnerCon == nullptr)
 	{

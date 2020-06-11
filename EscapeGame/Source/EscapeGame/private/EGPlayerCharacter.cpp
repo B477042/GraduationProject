@@ -56,7 +56,7 @@ void AEGPlayerCharacter::BeginPlay()
 	}
 	//Stat->LoadDataTable(Con->GetDT_Player());
 
-	SetActorHiddenInGame(true);
+//	SetActorHiddenInGame(true);
 
 	loadHitEffects();
 

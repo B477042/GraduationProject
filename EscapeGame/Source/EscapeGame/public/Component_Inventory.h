@@ -104,6 +104,9 @@ public:
 	//Use Item From Inventory
 	UFUNCTION()
 		bool UseItem(FName ItemName,ACharacter* UserActor);
+	UFUNCTION()
+	bool HasItem(FName ItemName);
+
 	UFUNCTION(BlueprintCallable, Category = "Custom")
 		int GetAmountItem(FName Name);
 	/*UFUNCTION()

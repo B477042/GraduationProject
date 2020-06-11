@@ -3,6 +3,8 @@
 #include "AstarNode.h"
 #include "EGPlayerCharacter.h"
 #include "AstarFinder.h"
+#include "Item_CardKey.h"
+#include "Engine.h"
 
 // Sets default values
 AAstarNode::AAstarNode()
@@ -12,6 +14,7 @@ AAstarNode::AAstarNode()
 	initComponents();
 	bIsPath = false;
 	bIsVisited = false;
+	bIsKeyNode = false;
 
 	Count_F = 0;
 	Count_G = 0;
@@ -26,7 +29,15 @@ void AAstarNode::BeginPlay()
 	UAstarFinder::GetInstance()->AddNode(this);
 
 	if (bIsGoalNode)
+	{
 		UAstarFinder::GetInstance()->SetGoalPoint(this);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Goal Node : %s"),*GetName());
+	}
+	if (bIsKeyNode)
+	{
+		UAstarFinder::GetInstance()->SetKeyPoint(this);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Key Node : %s"),*GetName());
+	}
 	Deactivate();
 	//UAstarComponent::A_AstarNodes.Add(this);
 
@@ -39,7 +50,7 @@ void AAstarNode::PostInitializeComponents()
 	BoxTrigger->OnComponentEndOverlap.AddDynamic(this, &AAstarNode::OnActorOverlapEnd);
 	
 	
-	//OnPlayerEnter.AddUObject(this, &UAstarFinder::GetInstance()->SetStartPoint);
+	//OnPlayerEnter.AddUObject(this, &UAstarFinder::GetInstance()->StartPathFinder);
 }
 
 void AAstarNode::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -52,13 +63,18 @@ void AAstarNode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void AAstarNode::OnActorOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	OnPlayerEnter.Broadcast(this);
-	UAstarFinder::GetInstance()->SetStartPoint(this);
+	
 	auto player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (!player)return;
 
-	//Deactivate();
+	EPathTarget Mode;
+	//열쇠가 있다면 문으로 안내
+	if (player->Inventory->HasItem(AItem_CardKey::Tag))
+		Mode = EPathTarget::Gate;
+	else
+		Mode = EPathTarget::Key;
 	
-
+UAstarFinder::GetInstance()->StartPathFinder(this,Mode);
 
 
 }
