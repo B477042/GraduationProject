@@ -35,6 +35,7 @@ AEGPlayerController::AEGPlayerController()
 		PAUSEWidgetClass = UI_PAUSE_C.Class;
 	}
 
+	//bIsPauseCalled = false;
 }
 
 void AEGPlayerController::BeginPlay()
@@ -115,7 +116,8 @@ void AEGPlayerController::ChangeInputMode(bool bGameMode)
 	}
 	else
 	{
-		SetInputMode(UIInputMode);
+		SetInputMode(GameAndUIMode);
+	//SetInputMode(GameInputMode);
 		bShowMouseCursor = true;
 	}
 
@@ -123,17 +125,40 @@ void AEGPlayerController::ChangeInputMode(bool bGameMode)
 
 void AEGPlayerController::OnGamePaused()
 {
-	
-	//
-	//EGLOG(Warning, TEXT("TIMEEE"));
-	PauseUI = CreateWidget<UUserWidget>(this, PAUSEWidgetClass);
-	if (!PauseUI)return;
-	PauseUI->AddToViewport(3);
-	SetPause(true);
+	EGLOG(Warning, TEXT("TIMEEE2"));
+	//Pasue 호출하기
+	if (!GetWorld()->IsPaused())
+	{
+		//EGLOG(Warning, TEXT("TIMEEE"));
+		if(!PauseUI)
+		PauseUI = CreateWidget<UUserWidget>(this, PAUSEWidgetClass);
+		if (!PauseUI)return;
+
+		PauseUI->AddToViewport(3);
+		SetPause(true);
 	//UIInput mode로 전환
-	ChangeInputMode(false);
-	//EGLOG(Warning, TEXT("TIMEEE2"));
+		ChangeInputMode(false);
+		
+		//bIsPauseCalled = true;
+	}
+	//Toggle하여 닫기
+	else
+	{
+
+		EGLOG(Error, TEXT("Siobal"));
+		ChangeInputMode(true);
+		//bIsPauseCalled = false;
+		SetPause(false);
+		PauseUI->RemoveFromViewport();
+		PauseUI->RemoveFromParent();
+
+	}
+
 }
+
+
+
+
 
 void AEGPlayerController::OnKillMode()
 {

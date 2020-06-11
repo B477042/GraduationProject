@@ -68,7 +68,8 @@ private:
 
 	UPROPERTY()
 		class UUserWidget* PauseUI;
-
+	//UPROPERTY()
+	//	bool bIsPauseCalled;
 	
 
 	//Data Table For Player Stat
@@ -78,5 +79,6 @@ private:
 
 	FInputModeGameOnly GameInputMode;
 	FInputModeUIOnly UIInputMode;
+	FInputModeGameAndUI GameAndUIMode;
 
 };

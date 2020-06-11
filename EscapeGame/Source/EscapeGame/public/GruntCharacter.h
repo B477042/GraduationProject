@@ -49,7 +49,7 @@ private:
 	UFUNCTION()
 		void ReadToDead();
 	
-	UPROPERTY(VisibleInstanceOnly, Category = Stat)
+	UPROPERTY(EditInstanceOnly, Category = "Stat")
 	UStatComponent_EGrunt* Stat;
 
 	
