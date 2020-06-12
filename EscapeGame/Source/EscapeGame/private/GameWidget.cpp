@@ -26,7 +26,7 @@ void UGameWidget::NativeConstruct()
 	Img_Blood= Cast<UImage>(GetWidgetFromName(TEXT("Img_Bloody")));
 	RecoveryItemNum = Cast<UTextBlock>(GetWidgetFromName(TEXT("RecoveryItemNum0")));
 	
-	GameTimer = 45.0f;
+	GameTimer = 60.0f;
 	RemainTime = GameTimer;
 	PlayerHP = 100.0f;
 	PlayerStamina = 100.0f;
@@ -92,7 +92,7 @@ float UGameWidget::CheackTimeOut(float NewValue)
 	if (NewValue <= 0.0f)
 	{
 		//EGLOG(Error, TEXT("DIEEE"));
-		CurrentCharacterStat->TakeDamage(1000.0f);
+		CurrentCharacterStat->TakeDamage(9.0f);
 		EGLOG(Error, TEXT("TimeOUT"));
 	}
 

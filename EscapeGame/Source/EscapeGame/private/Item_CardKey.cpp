@@ -3,6 +3,7 @@
 
 #include "Item_CardKey.h"
 #include "EGPlayerCharacter.h"
+#include "Engine.h"
 const FName AItem_CardKey::Tag = TEXT("CardKey");
 
 AItem_CardKey::AItem_CardKey()
@@ -40,6 +41,8 @@ void AItem_CardKey::PostInitializeComponents()
 void AItem_CardKey::BePickedUp(ACharacter * OtherActor)
 {
 	Super::BePickedUp(OtherActor);
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Get Card Key"));
+
 	Effect->Deactivate();
 	SetActorHiddenInGame(true);
 	Sound->Play();

@@ -629,7 +629,7 @@ void AEGPlayerCharacter::SetDeath()
 
 	if (!LoadGameInstance) { EGLOG(Error, TEXT("No Save File")); return; }
 
-	LoadGameInstance->LoadType = ELoadType::NextStage;
+	LoadGameInstance->LoadType = ELoadType::LoadGame;
 
 	UGameplayStatics::SaveGameToSlot(LoadGameInstance,LoadGameInstance->SaveSlotName,LoadGameInstance->UserIndex);
 

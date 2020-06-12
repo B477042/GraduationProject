@@ -31,12 +31,12 @@ void AAstarNode::BeginPlay()
 	if (bIsGoalNode)
 	{
 		UAstarFinder::GetInstance()->SetGoalPoint(this);
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Goal Node : %s"),*GetName());
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Goal Node : %s"),*GetName());
 	}
 	if (bIsKeyNode)
 	{
 		UAstarFinder::GetInstance()->SetKeyPoint(this);
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Key Node : %s"),*GetName());
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Key Node : %s"),*GetName());
 	}
 	Deactivate();
 	//UAstarComponent::A_AstarNodes.Add(this);
