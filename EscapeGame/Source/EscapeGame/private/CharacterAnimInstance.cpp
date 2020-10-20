@@ -7,8 +7,8 @@
 UCharacterAnimInstance::UCharacterAnimInstance()
 {
 	CurrentCharacterSpeed = 0.0f;
-	PriviousCharacterHight = 0.0f;
-	HightVariation = 0.0f;
+	PriviousCharacterHeight = 0.0f;
+	HeightVariation = 0.0f;
 	IsInAir = false;
 
 	StartCombo = 0;
@@ -25,8 +25,8 @@ void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	if (::IsValid(Pawn))
 	{
 		CurrentCharacterSpeed = Pawn->GetVelocity().Size();
-		HightVariation = Pawn->GetActorLocation().Z - PriviousCharacterHight;
-		PriviousCharacterHight = Pawn->GetActorLocation().Z;
+		HeightVariation = Pawn->GetActorLocation().Z - PriviousCharacterHeight;
+		PriviousCharacterHeight = Pawn->GetActorLocation().Z;
 		
 
 		auto Character = Cast<ACharacter>(Pawn);

@@ -40,6 +40,9 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	
 	bIsGuarding = false;
 	bIsDebugMode = false;
+
+	MoveDirection = FVector::ZeroVector;
+	CurrenVelocity = 78.f;
 }
 
 // Called when the game starts or when spawned
@@ -71,7 +74,7 @@ void AEGPlayerCharacter::Tick(float DeltaTime)
 	
 
 	SpringArm->TargetArmLength = FMath::FInterpTo(SpringArm->TargetArmLength, ArmLengthTo, DeltaTime, ArmLengthSpeed);
-
+	Move(DeltaTime);
 }
 
 // Called to bind functionality to input
@@ -431,6 +434,8 @@ void AEGPlayerCharacter::RecoverInput()
 
 
 
+
+
 void AEGPlayerCharacter::InitComponents()
 {
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
@@ -524,7 +529,7 @@ void AEGPlayerCharacter::LoadAssets()
 void AEGPlayerCharacter::SetupSpringArm()
 {
 	//ĳ���Ϳ� �Ÿ�
-	ArmLengthTo = 300.0f;
+	ArmLengthTo = 600.0f;
 	SpringArm->SetRelativeRotation(FRotator(-65.667404f, -9.943956f, 0.771690f));
 	SpringArm->bUsePawnControlRotation = true;
 	SpringArm->bInheritPitch = true;
@@ -561,20 +566,42 @@ void AEGPlayerCharacter::UpDown( float  NewAxisValue)
 		if (GetCharacterMovement()->IsFalling())
 		EGLOG(Warning, TEXT("I'm falling"));
 		*/
+		//AddMovementInput(GetActorForwardVector(), NewAxisValue);
+		//진행방향으로 캐릭터를 돌리는 방식
+		//AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X), NewAxisValue);
 
-		AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X), NewAxisValue);
-		
+		////양수면 앞, 음수면 뒤
 	
 
+
+	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);
+	Direction.Z = 0.0f;
+	Direction.Normalize();
+	MoveDirection += Direction * FMath::Clamp(NewAxisValue, -1.0f, 1.0f);
+		
 }
 
 void AEGPlayerCharacter::LeftRight( float NewAxisValue)
 {
 	
 	if (NewAxisValue == 0.0f)return;
-	AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y), NewAxisValue);
+
+	//const FRotator Rotation = GetControlRotation();
+	
+
+
+	//AddMovementInput(GetActorRightVector(), NewAxisValue);
+	//진행방향으로 캐릭터를 돌리는 방식
+	//AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y), NewAxisValue);
 	//EGLOG(Warning, TEXT("Left or Right Pressed"));
 	
+	////양수면 오른쪽, 음수면 왼쪽
+	
+	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
+	Direction.Z = 0.0f;
+	Direction.Normalize();
+	MoveDirection += Direction * FMath::Clamp(NewAxisValue, -1.0f, 1.0f);
+
 }
 
 void AEGPlayerCharacter::LookUp(float NewAxisValue)
@@ -633,6 +660,17 @@ void AEGPlayerCharacter::SetDeath()
 
 	UGameplayStatics::SaveGameToSlot(LoadGameInstance,LoadGameInstance->SaveSlotName,LoadGameInstance->UserIndex);
 
+}
+
+void AEGPlayerCharacter::Move(float DeltaTime)
+{
+	if (MoveDirection.IsZero()) {
+		return;
+	}
+
+	MoveDirection.Normalize();
+	AddMovementInput(MoveDirection, CurrenVelocity * DeltaTime);
+	MoveDirection.Set(0.0f, 0.0f, 0.0f);
 }
 
 //Player가 아닌 모든 것에 Take Damage를 일으킵니다

@@ -54,6 +54,23 @@ UAnim_Player::UAnim_Player()
 	EndCombo = 4;
 	bIsDead = false;
 	bIsRolling = false;
+	Direction =0.0f;
+}
+
+void UAnim_Player::NativeUpdateAnimation(float DeltaSeconds)
+{
+	Super::NativeUpdateAnimation(DeltaSeconds);
+
+	auto Pawn = TryGetPawnOwner();
+	if (::IsValid(Pawn))
+	{
+		auto Player = Cast<AEGPlayerCharacter>(Pawn);
+		if (Player)
+		{
+			Direction = CalculateDirection(Player->GetVelocity(), Player->GetActorRotation());
+		}
+	}
+
 }
 
 void UAnim_Player::JumpToComboAttackSection(int32 NewSection)

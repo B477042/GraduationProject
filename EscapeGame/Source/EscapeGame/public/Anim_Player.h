@@ -20,6 +20,7 @@ class ESCAPEGAME_API UAnim_Player : public UCharacterAnimInstance
 public:
 	UAnim_Player();
 
+	virtual void NativeUpdateAnimation(float DeltaSeconds)override;
 	virtual void JumpToComboAttackSection(int32 NewSection);//ComboAttack 사이를 재생 시키는 함수
 	 void JumpToChargetAttackSection(int32 NewSection);//ChargeAttack으로 넘어가 ChargeAttack을 재생시키는 함수
 	//Section값이 Combo값과 일치 하는지 검사한다
@@ -29,6 +30,8 @@ public:
 	virtual void PlayAirAttackMontage();
 	UAnimMontage* GetAttackMontage()const;
 	void SetRolling(bool bResult);
+
+
 
 	UFUNCTION()
 		void AnimNotify_RollingStart();
@@ -89,5 +92,11 @@ private:
 		bool bIsGuarding;
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
 	bool bIsDead;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
+		float Direction;
+
+
+
 
 };

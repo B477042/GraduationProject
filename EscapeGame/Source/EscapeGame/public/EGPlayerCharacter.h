@@ -64,6 +64,8 @@ public:
 	 void SetGuard();
 	 void ReleaseGuard();
 	 
+	 
+
 
 	 void ActiveThunder();
 	 //User Input Disable
@@ -75,6 +77,9 @@ public:
 	 //Over 10 Damage -> Reacting
 	 UPROPERTY(BlueprintAssignable)
 	 FOnTakeHugeDamage OnTakeHugeDamageDelegate;
+	 
+
+
 	//const AController* GetController();
 
 	 ////===============Static Vars
@@ -134,6 +139,9 @@ private:
 	//======================
 	void SetDeath();
 
+	void Move(float DeltaTime);
+
+	void loadHitEffects();
 
 	UFUNCTION()
 		void OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
@@ -161,7 +169,9 @@ private:
 	float maxMapArmLength;
 	bool bSetMapArm;
 
-	void loadHitEffects();
+	float CurrenVelocity;
+
+	
 	//private PROPERTY
 private:
 
@@ -176,5 +186,10 @@ private:
 	//가드하고 있으면 투사체를 튕겨낸다.
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Debug", meta = (AllowPrivateAccess = "true"))
 		bool bIsGuarding;
+
+	//
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Direction", meta = (AllowPrivateAccess = "true"))
+		FVector MoveDirection;
+
 
 };

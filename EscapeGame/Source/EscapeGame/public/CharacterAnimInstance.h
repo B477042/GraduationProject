@@ -59,12 +59,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
 		float CurrentCharacterSpeed;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
-		float HightVariation;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character", meta = (AllowPrivateAccess = "true", ToolTip = "Check Character's Height changed"))
+		float HeightVariation;
 
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
-		float PriviousCharacterHight;
+		float PriviousCharacterHeight;
 
 	//is Character in air?
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
