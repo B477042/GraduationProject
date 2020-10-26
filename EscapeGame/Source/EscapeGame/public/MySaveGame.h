@@ -48,7 +48,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BasicData")
 	int32 UserIndex;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BasicData")
-		FName WorldName;
+	FName WorldName;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "BasicData")
 	ELoadType LoadType;
 
