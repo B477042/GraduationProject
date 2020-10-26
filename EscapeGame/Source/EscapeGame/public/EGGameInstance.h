@@ -3,6 +3,7 @@
 #pragma once
 
 #include "EscapeGame.h"
+
 #include "Engine/GameInstance.h"
 #include "EGGameInstance.generated.h"
 
@@ -17,6 +18,6 @@ public:
 	UEGGameInstance();
 
 private:
-
+	
 	
 };

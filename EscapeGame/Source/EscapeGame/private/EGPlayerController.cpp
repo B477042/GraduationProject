@@ -5,7 +5,7 @@
 #include "EGPlayerCharacter.h"
 #include "..\public\EGPlayerController.h"
 #include "DT_DataStruct.h"
-#include "MySaveGame.h"
+
 #include "Item_Recover.h"
 #include "Item_CardKey.h"
 #include "EGGameState.h"
@@ -97,12 +97,7 @@ void AEGPlayerController::OnPossess(APawn * aPawn)
 {
 	Super::OnPossess(aPawn);
 	
-	if (LoadGame())
-	{
-		EGLOG(Error, TEXT("Loading Complete"));
-	}
-	else
-		EGLOG(Error, TEXT("No Save File"));
+	
 
 	
 }
@@ -235,122 +230,18 @@ const UDataTable * AEGPlayerController::GetDT_Player()
 	return DT_Player;
 }
 
-void AEGPlayerController::SaveGame()
-{
-	auto SaveInstance = NewObject<UMySaveGame>();
-	if (!SaveInstance)return;
-	
 
-	auto tempChara = Cast<AEGPlayerCharacter>(GetPawn());
-	if (!tempChara)return;
-
-	tempChara->GetStatComponent()->SaveGame(SaveInstance);
-	
-	SaveInstance->LastLocation = tempChara->GetActorLocation();
-	SaveInstance->LastRotator = tempChara->GetActorRotation();
-
-
-	SaveInstance->RemainTime = HUD->RemainTime;
-
-	SaveInstance->n_RecoveryItem = tempChara->Inventory->GetAmountItem(AItem_Recover::Tag);
-	SaveInstance->n_CardKey= tempChara->Inventory->GetAmountItem(AItem_CardKey::Tag);
-	//SaveInstance.Level = statComp.
-
-	SaveInstance->WorldName =  FName(*GetWorld()->GetName());
-
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Game Saved"));
-
-	//SaveInstance->LoadType = ELoadType::Game;
-
-	UGameplayStatics::SaveGameToSlot(SaveInstance, SaveInstance->SaveSlotName, SaveInstance->UserIndex);
-
-}
-
-bool AEGPlayerController::LoadGame()
-{
-	UMySaveGame* LoadGameInstance = Cast<UMySaveGame>(UGameplayStatics::CreateSaveGameObject(UMySaveGame::StaticClass()));
-	LoadGameInstance = Cast<UMySaveGame>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
-
-	if (!LoadGameInstance) { EGLOG(Error, TEXT("No Save File")); return false; }
-
-	auto LoadType = LoadGameInstance->LoadType;
-
-	//새로하기면 load 할 필요가 없다
-	if (LoadType == ELoadType::NewGame) 
-	{ 
-		EGLOG(Error, TEXT("New Game!"));
-		return true; 
-	}
-
-	auto tempChara = Cast<AEGPlayerCharacter>(GetPawn());
-	if (!tempChara)return false;
-
-
-	//HUD->LoadGame(LoadGameInstance->RemainTime);
-	tempChara->GetStatComponent()->LoadGame(LoadGameInstance);
-	if (LoadGameInstance->n_CardKey != -1)
-	{
-		auto tempKey = GetWorld()->SpawnActor<AItem_CardKey>();
-		tempKey->SetActorHiddenInGame(true);
-		tempChara->Inventory->AddItem(tempKey, LoadGameInstance->n_CardKey);
-	}
-	if (LoadGameInstance->n_RecoveryItem != -1)
-	{
-		auto tempItem =  GetWorld()->SpawnActor <AItem_Recover>();
-		tempItem->SetActorHiddenInGame(true);
-		tempChara->Inventory->AddItem(tempItem, LoadGameInstance->n_RecoveryItem);
-	}
-	//Title -> Load Game으로 호출된건지 검사한다. 
-	//auto gameState = Cast<AEGGameState>(GetWorld()->GetGameState());
-	//if (!gameState) { EGLOG(Error, TEXT("Game State is not Matched")); return false; }
-	//if (!gameState->bIsLoadedGame) { return false; }
-/*
-	if(LoadGameInstance->LastLocation!=FVector::ZeroVector)
-	tempChara->SetActorLocationAndRotation(LoadGameInstance->LastLocation, LoadGameInstance->LastRotator);*/
-	
-	//NextStage로 호출된 것이면 위치를 조정할 필요가 없다
-	if (LoadType == ELoadType::NextStage)
-	{
-		EGLOG(Error, TEXT("Next Stage!"));
-		return true;
-	}
-	
-	tempChara->SetActorLocationAndRotation(LoadGameInstance->LastLocation, LoadGameInstance->LastRotator);
-	return true;
-	//level 여는건 title ui가 처리해야 된다.
-	//UGameplayStatics::OpenLevel(this, LoadGameInstance->WorldName);
-
-
-
-}
 
 bool AEGPlayerController::NextStage()
 {
-	UMySaveGame* LoadGameInstance = Cast<UMySaveGame>(UGameplayStatics::CreateSaveGameObject(UMySaveGame::StaticClass()));
-	LoadGameInstance = Cast<UMySaveGame>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
-
-	if (!LoadGameInstance) { EGLOG(Error, TEXT("No Save File")); return false; }
-
+	
 
 
 	auto tempChara = Cast<AEGPlayerCharacter>(GetPawn());
 	if (!tempChara)return false;
 
 
-	//HUD->LoadGame(LoadGameInstance->RemainTime);
-	tempChara->GetStatComponent()->LoadGame(LoadGameInstance);
-	if (LoadGameInstance->n_CardKey != -1)
-	{
-		auto tempKey = GetWorld()->SpawnActor<AItem_CardKey>();
-		tempKey->SetActorHiddenInGame(true);
-		tempChara->Inventory->AddItem(tempKey, LoadGameInstance->n_CardKey);
-	}
-	if (LoadGameInstance->n_RecoveryItem != -1)
-	{
-		auto tempItem = GetWorld()->SpawnActor <AItem_Recover>();
-		tempItem->SetActorHiddenInGame(true);
-		tempChara->Inventory->AddItem(tempItem, LoadGameInstance->n_RecoveryItem);
-	}
+	
 	//tempChara->SetActorLocationAndRotation(LoadGameInstance->LastLocation, LoadGameInstance->LastRotator);
 	return true;
 }

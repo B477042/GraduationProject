@@ -7,7 +7,12 @@
 /IGNORE:4221
 /NODEFAULTLIB
 "I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\EscapeGameEditor\Development\Engine\SharedPCH.Engine.h.obj"
-"I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\DT_GameData.cpp.obj"
+"I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\EGPlayerCharacter.cpp.obj"
+"I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\EGPlayerController.cpp.obj"
+"I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\EGPlayerState.cpp.obj"
+"I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\EGSaveGame.cpp.obj"
+"I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\EscapeGameGameMode.cpp.obj"
+"I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\StatComponent_Player.cpp.obj"
 "I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\Module.EscapeGame.cpp.obj"
 "I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\EscapeGame.init.gen.cpp.obj"
 "I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\Module.EscapeGame.gen.1_of_3.cpp.obj"

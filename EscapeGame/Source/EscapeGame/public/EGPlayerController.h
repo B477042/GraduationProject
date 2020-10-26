@@ -46,13 +46,7 @@ public:
 	void IsMoveKeyPressed();
 	const class UDataTable* GetDT_Player();
 
-	UFUNCTION(BlueprintCallable, Category = "Data")
-		void SaveGame();
-
-
-	//Called When Load Game Called. Load Transform, Stat, 
-	UFUNCTION(BlueprintCallable, Category = "Data")
-		bool LoadGame();
+	
 	//Called Next Stage Event
 	UFUNCTION(BlueprintCallable, Category = "Data")
 		bool NextStage();

@@ -12,7 +12,7 @@
 #include "..\public\EGPlayerCharacter.h"
 #include"Sound/SoundCue.h"
 #include "SkillActor_ThunderType.h"
-#include "MySaveGame.h"
+//#include "MySaveGame.h"
 #include "Kismet/KismetMathLibrary.h"
 
 //#include "DT_DataStruct.h"
@@ -650,15 +650,7 @@ void AEGPlayerCharacter::SetDeath()
 	RestricInput();
 	Anim->Montage_Stop(0.0f);
 
-//	UGameplayStatics::LoadDataFromSlot
-	UMySaveGame* LoadGameInstance = Cast<UMySaveGame>(UGameplayStatics::CreateSaveGameObject(UMySaveGame::StaticClass()));
-	LoadGameInstance = Cast<UMySaveGame>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
 
-	if (!LoadGameInstance) { EGLOG(Error, TEXT("No Save File")); return; }
-
-	LoadGameInstance->LoadType = ELoadType::LoadGame;
-
-	UGameplayStatics::SaveGameToSlot(LoadGameInstance,LoadGameInstance->SaveSlotName,LoadGameInstance->UserIndex);
 
 }
 

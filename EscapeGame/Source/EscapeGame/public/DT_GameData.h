@@ -3,18 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Engine/DataTable.h"
+
 #include "GameFramework/Actor.h"
 #include "DT_GameData.generated.h"
 
-//Data table to use when storing game data
-USTRUCT(BlueprintType)
-struct FGameDataTableRow : public FTableRowBase
-{
-	GENERATED_BODY()
-public:
 
-};
 
 UCLASS()
 class ESCAPEGAME_API ADT_GameData : public AActor
