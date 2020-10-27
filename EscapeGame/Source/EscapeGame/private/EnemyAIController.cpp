@@ -23,6 +23,8 @@ void AEnemyAIController::OnPossess(APawn * InPawn)
 {
 	Super::OnPossess(InPawn);
 	EGLOG(Warning, TEXT("AIController Online : %s"), *InPawn->GetName());
+
+
 }
 
 void AEnemyAIController::OnUnPossess()

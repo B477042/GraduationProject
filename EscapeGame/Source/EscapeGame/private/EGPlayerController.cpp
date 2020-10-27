@@ -120,7 +120,7 @@ void AEGPlayerController::ChangeInputMode(bool bGameMode)
 
 void AEGPlayerController::OnGamePaused()
 {
-	EGLOG(Warning, TEXT("TIMEEE2"));
+	
 	//Pasue 호출하기
 	if (!GetWorld()->IsPaused())
 	{
@@ -140,7 +140,7 @@ void AEGPlayerController::OnGamePaused()
 	else
 	{
 
-		EGLOG(Error, TEXT("Siobal"));
+		
 		ChangeInputMode(true);
 		//bIsPauseCalled = false;
 		SetPause(false);

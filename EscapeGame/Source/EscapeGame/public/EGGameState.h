@@ -10,6 +10,18 @@
 /**
  *
  */
+
+UENUM(BlueprintType)
+enum class EEGGameState :uint8
+{
+	E_NewGame=0 UMETA(DisplayName = "NewGame"),
+	E_LoadGame UMETA(DisplayName = "LoadGame"),
+	E_ClearGame UMETA(DisplayName = "ClearGame"),
+	E_NextStage UMETA(DisplayName = "NextStage")
+
+};
+
+
 UCLASS()
 class ESCAPEGAME_API AEGGameState : public AGameState
 {
@@ -20,17 +32,21 @@ public:
 
 
 
-	//만약 loadgame으로 게임이 시작하게 된거인지면 체크한다.
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Data")
-		bool bIsLoadedGame;
+
+
+public:
 	//Escape restriction time
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Data")
 		float RemainTimes;
-
+	//Game의 상태. Save file을 어떻게 사용할지 이용할 수 있다.
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Data")
+		EEGGameState EGameState;
 
 	//Level에 존재하는 EnemyCharacter의 리스트
 	UPROPERTY(VisibleAnywhere, Category = "List", meta = (AllowPrivateAccess = "true"))
 		TArray<TWeakObjectPtr<AEnemyCharacter>>A_Enemies;
+
+	
 
 	
 };

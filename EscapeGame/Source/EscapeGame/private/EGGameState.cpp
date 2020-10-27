@@ -5,5 +5,8 @@
 
 AEGGameState::AEGGameState()
 {
-	bIsLoadedGame = false;
+	
+	RemainTimes = 0.0f;
+	EGameState = EEGGameState::E_NewGame;
+
 }

@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "EnemyCharacter.h"
+#include "EGGameState.h"
 
 
 // Sets default values
@@ -52,8 +53,15 @@ void AEnemyCharacter::BeginPlay()
 	}
 	HPBar->SetPercent(1.0f);
 	
+	//Add this Object to GameState.
+	auto GameState = Cast<AEGGameState>(GetWorld()->GetGameState());
+	if (GameState)
+	{
+		
+		GameState->A_Enemies.Add(this);
+	}
 	
-
+	
 }
 
 void AEnemyCharacter::BeginDestroy()
@@ -62,6 +70,8 @@ void AEnemyCharacter::BeginDestroy()
 
 
 }
+
+
 
 float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
 {
