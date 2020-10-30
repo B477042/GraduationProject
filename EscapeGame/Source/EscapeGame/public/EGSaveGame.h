@@ -16,8 +16,10 @@ struct FGameProgressData
 {
 	GENERATED_BODY()
 public:
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+		float RemainTimes;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+		float PlayerScores;
 
 };
 
@@ -65,6 +67,16 @@ public:
 
 };
 
+USTRUCT(BlueprintType)
+struct FItemData :public  FBasicData
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+		bool bIsUsed;
+
+
+};
 
 
 
@@ -72,5 +84,18 @@ UCLASS()
 class ESCAPEGAME_API UEGSaveGame : public USaveGame
 {
 	GENERATED_BODY()
-	
+public:
+	//Data TArray of Players
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+		TArray<FPlayerData> D_Player;
+	//Data TArray of Enemies
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+		TArray<FEnemyData> D_Enemies;
+	//Data TArray of Items
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+		TArray<FItemData> D_Items;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+		FGameProgressData GameProgressData;
+
+
 };
