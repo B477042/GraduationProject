@@ -5,7 +5,7 @@
 #include "EGPlayerCharacter.h"
 #include "..\public\EGPlayerController.h"
 #include "DT_DataStruct.h"
-
+#include "EGSaveGame.h"
 #include "Item_Recover.h"
 #include "Item_CardKey.h"
 #include "EGGameState.h"
@@ -246,4 +246,70 @@ bool AEGPlayerController::NextStage()
 	return true;
 }
 
+
+UEGSaveGame* AEGPlayerController::SaveGame(UEGSaveGame* SaveInstance)
+{
+	
+	if (!SaveInstance)
+	{
+		EGLOG(Error, TEXT("Save Instance is Not Vaild"));
+		return nullptr;
+	}
+
+	auto egPlayer = Cast<AEGPlayerCharacter>(GetPawn());
+	if (!egPlayer)
+	{
+		EGLOG(Error, TEXT("Casting failed in player controller"));
+		return nullptr;
+	}
+
+	//SaveInstance에 Player의 정보를 저장해야된다
+	
+	FPlayerData playerData;
+	playerData.ActorName= egPlayer->GetName();
+	playerData.Location = egPlayer->GetActorLocation();
+	playerData.Rotation = egPlayer->GetActorRotation();
+	playerData.Level = egPlayer->GetStatComponent()->GetLevel();
+	playerData.Exp = egPlayer->GetStatComponent()->GetExp();
+	playerData.Hp = egPlayer->GetStatComponent()->GetHP();
+	playerData.n_CardKeys = egPlayer->GetInventory()->GetAmountItem(AItem_CardKey::Tag);
+	playerData.n_RecoverItmes = egPlayer->GetInventory()->GetAmountItem(AItem_Recover::Tag);
+
+	SaveInstance->D_Player=playerData;
+
+	return SaveInstance;
+}
+
+UEGSaveGame* AEGPlayerController::LoadGame(UEGSaveGame* LoadInstance)
+{
+	if (!LoadInstance)
+	{
+		EGLOG(Error, TEXT("Load Instance is not vaild"));
+		return nullptr;
+
+	}
+
+	auto egPlayer = Cast<AEGPlayerCharacter>(GetPawn());
+	if (!egPlayer)
+	{
+		EGLOG(Error, TEXT("Casting failed in player controller"));
+		return nullptr;
+	}
+
+	auto loadData = LoadInstance->D_Player;
+
+	/*
+		Player의 데이터를 불러오는 과정
+		1. 좌표 정보 불러오기
+		2. 스텟 불러오기
+		3. 아이템 갯수 불러오기
+	*/
+	egPlayer->SetActorLocationAndRotation( loadData.Location, loadData.Rotation);
+	egPlayer->GetStatComponent()->LoadGameStat(loadData.Level,loadData.Exp,loadData.Hp);
+	egPlayer->GetInventory();
+
+
+
+	return LoadInstance;
+}
  

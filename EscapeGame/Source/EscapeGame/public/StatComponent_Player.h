@@ -53,17 +53,22 @@ public:
 
 	float GetStamina();
 	float GetStaminaRatio();
+
+	int32 GetLevel();
+	//return exp
+	float GetExp();
 	
 	void AddCombo(int32 Amount);
 	void ResetCombo();
 	
 	//Get Exp form enemy's Drop Exp
 	UFUNCTION(BlueprintCallable)
-	void GetExp(const int32 &DropExp );
+	void GainExp(const int32 &DropExp );
 
 	FStaminaChangedDelegate StaminaChangedDelegate;
 	//virtual  void LoadDataTable()override ;
 
+	void LoadGameStat(int32 newLevel, float newExp, float newHp);
 	
 private:
 	//Called when Exp is enough to level up

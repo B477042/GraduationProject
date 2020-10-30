@@ -51,6 +51,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Data")
 		bool NextStage();
 
+	UFUNCTION(BlueprintCallable, Category = "Store")
+		class UEGSaveGame* SaveGame(class UEGSaveGame* SaveInstance);
+	UFUNCTION(BlueprintCallable, Category = "Store")
+		class UEGSaveGame* LoadGame(class UEGSaveGame* LoadInstance);
+
 private:
 
 	//void loadLocation();

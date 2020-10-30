@@ -235,6 +235,17 @@ float UStatComponent_Player::GetStaminaRatio()
 	return (Stamina<0.0f)? 0.0f : Stamina/MaxStamina;
 }
 
+int32 UStatComponent_Player::GetLevel()
+{
+	return Level;
+}
+
+float UStatComponent_Player::GetExp()
+{
+	return Exp;
+}
+
+
 void UStatComponent_Player::AddCombo(int32 Amount)
 {
 	CurrentCombo += Amount;
@@ -245,7 +256,7 @@ void UStatComponent_Player::ResetCombo()
 	CurrentCombo = 0;
 }
 
-void UStatComponent_Player::GetExp(const int32 & DropExp)
+void UStatComponent_Player::GainExp(const int32 & DropExp)
 {
 	Exp += DropExp;
 	//if Level up
@@ -286,6 +297,16 @@ void UStatComponent_Player::GetExp(const int32 & DropExp)
 //}
 
 
+
+void UStatComponent_Player::LoadGameStat(int32 newLevel, float newExp, float newHp)
+{
+	Level = newLevel;
+	loadLevelData();
+	CurrentHP = newHp;
+	Exp = newExp;
+
+	
+}
 
 void UStatComponent_Player::levelUp()
 {

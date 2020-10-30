@@ -48,9 +48,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		int32 Level;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+		float Exp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		int32 n_CardKeys;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		int32 n_RecoveryItmes;
+		int32 n_RecoverItmes;
 
 
 };
@@ -87,7 +89,7 @@ class ESCAPEGAME_API UEGSaveGame : public USaveGame
 public:
 	//Data TArray of Players
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		TArray<FPlayerData> D_Player;
+		FPlayerData D_Player;
 	//Data TArray of Enemies
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		TArray<FEnemyData> D_Enemies;
