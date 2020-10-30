@@ -112,6 +112,8 @@ public:
 	/*UFUNCTION()
 		FOnItemChanged GetItemChangeDelegate(FName ItemName);*/
 
+	bool LoadGameData(AItemActor* newItem, int Amount);
+
 private:
 	//FName으로 아이템 이름을 받고 리턴해서 사용한다
 	UPROPERTY(EditAnywhere, Category = "Items")

@@ -14,11 +14,12 @@
 UENUM(BlueprintType)
 enum class EEGGameState :uint8
 {
-	E_NewGame=0 UMETA(DisplayName = "NewGame"),
+	E_InPlay=0 UMETA(DisplayName = "InPlay"),
+	E_NewGame  UMETA(DisplayName = "NewGame"),
 	E_LoadGame UMETA(DisplayName = "LoadGame"),
 	E_ClearGame UMETA(DisplayName = "ClearGame"),
 	E_NextStage UMETA(DisplayName = "NextStage")
-
+	
 };
 
 

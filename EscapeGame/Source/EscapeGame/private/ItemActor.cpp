@@ -53,5 +53,9 @@ void AItemActor::PostInitializeComponents()
 //	return Tag;
 //}
 
+void  AItemActor::SetActorDisable()
+{
+	Body->SetCollisionProfileName("NoCollision");
+	SetActorHiddenInGame(true);
 
-
+}

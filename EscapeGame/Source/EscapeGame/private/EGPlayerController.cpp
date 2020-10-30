@@ -306,7 +306,36 @@ UEGSaveGame* AEGPlayerController::LoadGame(UEGSaveGame* LoadInstance)
 	*/
 	egPlayer->SetActorLocationAndRotation( loadData.Location, loadData.Rotation);
 	egPlayer->GetStatComponent()->LoadGameStat(loadData.Level,loadData.Exp,loadData.Hp);
-	egPlayer->GetInventory();
+
+	//Item > 0일 경우에만 불러온다
+	if (loadData.n_RecoverItmes > 0)
+	{
+		//World에 Recover Item을 스폰
+		auto tempRecover = Cast<AItem_Recover>(GetWorld()->SpawnActor(AItem_Recover::StaticClass()));
+		if (!tempRecover)
+		{
+			EGLOG(Error, TEXT("Null Item"));
+			return nullptr;
+		}
+
+		egPlayer->GetInventory()->LoadGameData(tempRecover, loadData.n_RecoverItmes);
+
+
+	}
+
+	if (loadData.n_CardKeys > 0)
+	{
+		//World에 Recover Item을 스폰
+		auto tempRecover = Cast<AItem_CardKey>(GetWorld()->SpawnActor(AItem_CardKey::StaticClass()));
+		if (!tempRecover)
+		{
+			EGLOG(Error, TEXT("Null Item"));
+			return nullptr;
+		}
+
+		egPlayer->GetInventory()->LoadGameData(tempRecover, loadData.n_CardKeys);
+	
+	}
 
 
 

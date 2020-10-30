@@ -115,6 +115,22 @@ int UComponent_Inventory::GetAmountItem(FName Name)
 	return Items[Name].GetAmountItems();
 }
 
+bool UComponent_Inventory::LoadGameData(AItemActor * newItem, int Amount)
+{
+	//만약 실패하면 false로 바꿔서 리턴
+	bool bResult = true;
+	/*
+		1. 받아온 Item Actor의 콜린전 반응을 끄고 게임에서 숨긴다
+		2. 이 Item Actor의 Tag로 인벤토리에 넣어준다.
+		3. 됐으면 리턴
+	*/
+	newItem->SetActorDisable();
+	bResult = AddItem(newItem, Amount);
+
+
+	return bResult;
+}
+
 ////nullptr 체크 꼭 해야됨. 아이템이 가지고 있는 델리게이틀 호출해서 엮어줄 것
 //FOnItemChanged UComponent_Inventory::GetItemChangeDelegate(FName ItemName)
 //{

@@ -30,7 +30,9 @@ public:
 	 virtual  FName GetTag()PURE_VIRTUAL(AItemActor::GetTag,return TEXT("Default") ;);
 	//Use This Item
 	virtual void UseMe(ACharacter* UserActor) PURE_VIRTUAL(AItemActor::UseMe, ;);
-	
+	//Collision->off, hidden in game	
+	void SetActorDisable();
+
 protected:
 	
 

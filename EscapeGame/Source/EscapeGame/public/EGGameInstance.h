@@ -17,6 +17,11 @@ class ESCAPEGAME_API UEGGameInstance : public UGameInstance
 public:
 	UEGGameInstance();
 
+	UFUNCTION(BlueprintCallable)
+		void SaveGame();
+	UFUNCTION(BlueprintCallable)
+		void LoadGame();
+
 private:
 	
 	
