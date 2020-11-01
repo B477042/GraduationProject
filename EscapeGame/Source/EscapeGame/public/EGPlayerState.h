@@ -14,7 +14,16 @@ class ESCAPEGAME_API AEGPlayerState : public APlayerState
 {
 	GENERATED_BODY()
 public:
+	AEGPlayerState();
 
-		AEGPlayerState();
+
+	UFUNCTION(BlueprintCallable)
+		void SaveGame();
+	UFUNCTION(BlueprintCallable)
+		void LoadGame();
+
+	FString SaveSlotName;
+
+	
 
 };

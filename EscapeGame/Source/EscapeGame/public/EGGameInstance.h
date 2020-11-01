@@ -22,6 +22,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void LoadGame();
 
+
 private:
 	
 	
