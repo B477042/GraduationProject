@@ -62,7 +62,7 @@ void AEGPlayerCharacter::BeginPlay()
 //	SetActorHiddenInGame(true);
 
 	loadHitEffects();
-
+	EGLOG(Error, TEXT("Player Begin Play"));
 	
 	
 }

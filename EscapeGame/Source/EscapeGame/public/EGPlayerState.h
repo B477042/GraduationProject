@@ -17,13 +17,13 @@ public:
 	AEGPlayerState();
 
 
-	UFUNCTION(BlueprintCallable)
+	/*UFUNCTION(BlueprintCallable)
 		void SaveGame();
 	UFUNCTION(BlueprintCallable)
 		void LoadGame();
 
-	FString SaveSlotName;
-
+	*/
+	
 	
 
 };

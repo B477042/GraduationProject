@@ -20,6 +20,8 @@ public:
 		float RemainTimes;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		float PlayerScores;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+		FName LevelName;
 
 };
 

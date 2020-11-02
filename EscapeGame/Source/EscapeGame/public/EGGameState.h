@@ -31,7 +31,7 @@ public:
 	AEGGameState();
 
 
-
+	
 
 
 
@@ -47,7 +47,8 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "List", meta = (AllowPrivateAccess = "true"))
 		TArray<TWeakObjectPtr<AEnemyCharacter>>A_Enemies;
 
-	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		FString LevelName;
 
 	
 };

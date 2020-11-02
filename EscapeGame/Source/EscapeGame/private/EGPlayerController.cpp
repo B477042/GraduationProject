@@ -97,6 +97,7 @@ void AEGPlayerController::OnPossess(APawn * aPawn)
 {
 	Super::OnPossess(aPawn);
 	
+	EGLOG(Error, TEXT("Player con Possess"));
 	
 
 	
