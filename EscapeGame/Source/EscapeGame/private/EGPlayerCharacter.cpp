@@ -14,6 +14,7 @@
 #include "SkillActor_ThunderType.h"
 //#include "MySaveGame.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "EGGameInstance.h"
 
 //#include "DT_DataStruct.h"
 //#include "GameWidget.h"
@@ -64,7 +65,27 @@ void AEGPlayerCharacter::BeginPlay()
 	loadHitEffects();
 	EGLOG(Error, TEXT("Player Begin Play"));
 	
+	//Load Game Data
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)
+	{
+		EGLOG(Error, TEXT("Game Instance is not EGGameInstance"));
+		return;
+	}
+	//등록된 함수 호출
+	auto LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(GameInstance->SaveSlotName, GameInstance->UserIndex));
+	if (!LoadInstance)
+	{
+		EGLOG(Error, TEXT("Load Insatnce Failed"));
+		return;
+	}
+
+	GameInstance->OnLoadGamePhaseDelegate.Broadcast(LoadInstance);
 	
+	loadGameData();
+
+
+
 }
 
 // Called every frame
@@ -731,5 +752,10 @@ void AEGPlayerCharacter::loadHitEffects()
 		Container_Hit->AddSkillObj( GetWorld()->SpawnActor<ASkillActor_Hit>());
 
 	Skill_Thunder = GetWorld()->SpawnActor < ASkillActor_ThunderType>();
+
+}
+
+void AEGPlayerCharacter::loadGameData()
+{
 
 }
