@@ -67,15 +67,14 @@ void AEGPlayerCharacter::BeginPlay()
 	loadHitEffects();
 	EGLOG(Error, TEXT("Player Begin Play"));
 	
-	//GameState를 검사해서 게임이 Load Game이라면 Load 시킨다
-	auto GameState = Cast<AEGGameState>(GetWorld()->GetGameState());
-	if (!GameState)
+	//GameInstance에서 GameState를 검사한다
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)
 	{
-		EGLOG(Error, TEXT("Game State Casting Failed"));
+		EGLOG(Error, TEXT("Game Instance is not EGGameInstance"));
 		return;
-
 	}
-	if (GameState->EGameState == EEGGameState::E_LoadGame)
+	if (GameInstance->EGameState == EEGGameState::E_LoadGame)
 	{
 
 		//Load Game Data
@@ -96,11 +95,14 @@ void AEGPlayerCharacter::BeginPlay()
 		GameInstance->OnLoadGamePhaseDelegate.Broadcast(LoadInstance);
 		EGLOG(Error, TEXT("OnLoadGamePhase Delegate Broadcasted"));
 		//loadGameData(LoadInstance);
-		GameState->EGameState = EEGGameState::E_InPlay;
+		GameInstance->EGameState = EEGGameState::E_InPlay;
 
 	}
-	
 
+	else
+		EGLOG(Error, TEXT("Not Load Game State"));
+	
+	
 
 
 

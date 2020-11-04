@@ -11,6 +11,7 @@ UEGGameInstance::UEGGameInstance()
 {
 	SaveSlotName = TEXT("TESTSave");
 	UserIndex = 0;
+	EGameState = EEGGameState::E_NewGame;
 }
 
 //Save Game이 호출될 경우는 메뉴에서 저장하거나 자동저장 오브젝트와 닿았을 때 일것이다
@@ -38,7 +39,7 @@ void UEGGameInstance::SaveGame()
 		auto egGameState = Cast<AEGGameState>(GetWorld()->GetGameState());
 		if (!egGameState)return;
 
-		egGameState->EGameState = EEGGameState::E_LoadGame;
+		//EGameState = EEGGameState::E_LoadGame;
 		FString LevelName = GetWorld()->GetMapName();
 		LevelName.RemoveFromStart(GetWorld()->StreamingLevelsPrefix);
 		SaveInstance->GameProgressData.LevelName = FName(*LevelName);
@@ -62,14 +63,7 @@ void UEGGameInstance::LoadGame()
 	*/
 
 	//LoadGame 상태로
-	auto egGameState = Cast<AEGGameState>(GetWorld()->GetGameState());
-	if (!egGameState) 
-	{ 
-		EGLOG(Error, TEXT("State Casting Failed"));
-		return; 
-	}
-
-	egGameState->EGameState = EEGGameState::E_LoadGame;
+	EGameState = EEGGameState::E_LoadGame;
 	
 
 	auto LoadInstance = Cast<UEGSaveGame> (UGameplayStatics::LoadGameFromSlot(SaveSlotName, UserIndex));
