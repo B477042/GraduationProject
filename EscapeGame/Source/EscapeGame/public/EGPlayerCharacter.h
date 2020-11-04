@@ -143,8 +143,8 @@ private:
 
 	void loadHitEffects();
 
-
-	void loadGameData();
+	UFUNCTION(BlueprintCallable)
+	void loadGameData(const class UEGSaveGame* LoadInstance);
 
 
 	UFUNCTION()

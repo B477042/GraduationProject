@@ -34,7 +34,6 @@
 /NODEFAULTLIB:"LIBCPD"
 /FUNCTIONPADMIN
 "I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\EscapeGameEditor\Development\Engine\SharedPCH.Engine.h.obj"
-"I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\EGGameInstance.cpp.obj"
 "I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\EGPlayerCharacter.cpp.obj"
 "I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\Module.EscapeGame.cpp.obj"
 "I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\EscapeGame.init.gen.cpp.obj"

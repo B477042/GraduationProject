@@ -37,17 +37,17 @@ public:
 
 public:
 	//Escape restriction time
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Data")
+	UPROPERTY(Transient, VisibleAnywhere, BlueprintReadWrite, Category = "Data")
 		float RemainTimes;
 	//Game의 상태. Save file을 어떻게 사용할지 이용할 수 있다.
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Data")
+	UPROPERTY(Transient, VisibleAnywhere, BlueprintReadWrite, Category = "Data")
 		EEGGameState EGameState;
 
 	//Level에 존재하는 EnemyCharacter의 리스트
-	UPROPERTY(VisibleAnywhere, Category = "List", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Transient, VisibleAnywhere, Category = "List", meta = (AllowPrivateAccess = "true"))
 		TArray<TWeakObjectPtr<AEnemyCharacter>>A_Enemies;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Transient, VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		FString LevelName;
 
 	

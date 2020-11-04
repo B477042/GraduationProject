@@ -15,6 +15,8 @@
 //#include "MySaveGame.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "EGGameInstance.h"
+#include "EGGameState.h"
+#include "Item_CardKey.h"
 
 //#include "DT_DataStruct.h"
 //#include "GameWidget.h"
@@ -65,24 +67,40 @@ void AEGPlayerCharacter::BeginPlay()
 	loadHitEffects();
 	EGLOG(Error, TEXT("Player Begin Play"));
 	
-	//Load Game Data
-	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
-	if (!GameInstance)
+	//GameState를 검사해서 게임이 Load Game이라면 Load 시킨다
+	auto GameState = Cast<AEGGameState>(GetWorld()->GetGameState());
+	if (!GameState)
 	{
-		EGLOG(Error, TEXT("Game Instance is not EGGameInstance"));
+		EGLOG(Error, TEXT("Game State Casting Failed"));
 		return;
-	}
-	//등록된 함수 호출
-	auto LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(GameInstance->SaveSlotName, GameInstance->UserIndex));
-	if (!LoadInstance)
-	{
-		EGLOG(Error, TEXT("Load Insatnce Failed"));
-		return;
-	}
 
-	GameInstance->OnLoadGamePhaseDelegate.Broadcast(LoadInstance);
+	}
+	if (GameState->EGameState == EEGGameState::E_LoadGame)
+	{
+
+		//Load Game Data
+		auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+		if (!GameInstance)
+		{
+			EGLOG(Error, TEXT("Game Instance is not EGGameInstance"));
+			return;
+		}
+		//등록된 함수 호출
+		auto LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(GameInstance->SaveSlotName, GameInstance->UserIndex));
+		if (!LoadInstance)
+		{
+			EGLOG(Error, TEXT("Load Insatnce Failed"));
+			return;
+		}
+		//다른 오브젝트들에게 Load Game을 활성화 시킨다
+		GameInstance->OnLoadGamePhaseDelegate.Broadcast(LoadInstance);
+		EGLOG(Error, TEXT("OnLoadGamePhase Delegate Broadcasted"));
+		//loadGameData(LoadInstance);
+		GameState->EGameState = EEGGameState::E_InPlay;
+
+	}
 	
-	loadGameData();
+
 
 
 
@@ -157,6 +175,16 @@ void AEGPlayerCharacter::PostInitializeComponents()
 
 	//Weapon Hit 판정
 	WeaponCollision->OnComponentBeginOverlap.AddDynamic(this, &AEGPlayerCharacter::OnWeaponBeginOverlap);
+
+	//GameInstance의 Load Game Phase에 연동
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)
+	{
+		EGLOG(Error, TEXT("GameInstance Casting Failed"));
+		return;
+	}
+
+	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEGPlayerCharacter::loadGameData);
 
 	
 	//Stat->SetSpeedLimits( MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
@@ -755,7 +783,30 @@ void AEGPlayerCharacter::loadHitEffects()
 
 }
 
-void AEGPlayerCharacter::loadGameData()
+void AEGPlayerCharacter::loadGameData(const UEGSaveGame* LoadInstance)
 {
+	if (!LoadInstance)
+	{
+		EGLOG(Error, TEXT("LoadInstance is nullptr"));
+		return;
+	}
+
+
+	auto PlayerData = LoadInstance->D_Player;
+
+	SetActorLocationAndRotation(PlayerData.Location, PlayerData.Rotation);
+	Stat->LoadGameStat(PlayerData.Level, PlayerData.Exp, PlayerData.Hp);
+	if (PlayerData.n_CardKeys > 0)
+	{
+		auto newItem = GetWorld()->SpawnActor<AItem_CardKey>();
+
+		if (!newItem)
+		{
+			EGLOG(Error, TEXT("Item Casting Failed"));
+			return;
+		}
+		Inventory->LoadGameData(newItem, PlayerData.n_CardKeys);
+	}
+
 
 }
