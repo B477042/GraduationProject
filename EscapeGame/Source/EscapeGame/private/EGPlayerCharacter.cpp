@@ -798,6 +798,8 @@ void AEGPlayerCharacter::loadGameData(const UEGSaveGame* LoadInstance)
 
 	SetActorLocationAndRotation(PlayerData.Location, PlayerData.Rotation);
 	Stat->LoadGameStat(PlayerData.Level, PlayerData.Exp, PlayerData.Hp);
+
+	//Load CardKeys
 	if (PlayerData.n_CardKeys > 0)
 	{
 		auto newItem = GetWorld()->SpawnActor<AItem_CardKey>();
@@ -809,6 +811,19 @@ void AEGPlayerCharacter::loadGameData(const UEGSaveGame* LoadInstance)
 		}
 		Inventory->LoadGameData(newItem, PlayerData.n_CardKeys);
 	}
+
+	if (PlayerData.n_RecoverItmes > 0)
+	{
+		auto newItem = GetWorld()->SpawnActor<AItem_Recover>();
+
+		if (!newItem)
+		{
+			EGLOG(Error, TEXT("Item Casting Failed"));
+			return;
+		}
+		Inventory->LoadGameData(newItem, PlayerData.n_RecoverItmes);
+	}
+
 
 
 }

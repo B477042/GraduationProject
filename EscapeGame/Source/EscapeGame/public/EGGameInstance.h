@@ -14,6 +14,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnLoadGamePhase, const UEGSaveGame*, LoadInstance );
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSaveGamePhase, const UEGSaveGame*, SaveInstance);
 
 UENUM(BlueprintType)
 enum class EEGGameState :uint8
@@ -50,7 +51,9 @@ public:
 	//PostInitiliazeComponents에서 함수 등록
 	FOnLoadGamePhase OnLoadGamePhaseDelegate;
 
-
+	//Save Game이 호출되면 실행된다
+	FOnSaveGamePhase OnSaveGamePhaseDelegate;
+ 
 private:
 	
 	

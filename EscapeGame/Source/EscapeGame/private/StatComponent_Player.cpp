@@ -302,9 +302,10 @@ void UStatComponent_Player::LoadGameStat(int32 newLevel, float newExp, float new
 {
 	Level = newLevel;
 	loadLevelData();
-	CurrentHP = newHp;
+	SetHP( newHp);
 	Exp = newExp;
 
+	
 	
 }
 
