@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ItemActor.h"
+#include "EGSaveGame.h"
 
 // Sets default values
 AItemActor::AItemActor()
@@ -62,4 +63,30 @@ void  AItemActor::SetActorDisable()
 	Body->SetCollisionProfileName("NoCollision");
 	SetActorHiddenInGame(true);
 
+}
+
+void AItemActor::SaveGame(UEGSaveGame * SaveInstance)
+{
+	if (!SaveInstance)
+	{
+		EGLOG(Error, TEXT("SaveInstance is null"));
+		return;
+	}
+	FItemData ItemData;
+	
+	
+
+	ItemData.Location = GetActorLocation();
+	ItemData.bIsVaild = bIsItemVaild;
+
+
+}
+
+void LoadGame(UEGSaveGame * LoadInstance)
+{
+	if (!LoadInstance)
+	{
+		EGLOG(Error, TEXT("LoadInstance is null"));
+		return;
+	}
 }

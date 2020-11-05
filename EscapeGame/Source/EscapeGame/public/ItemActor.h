@@ -33,6 +33,10 @@ public:
 	//Collision->off, hidden in game	
 	void SetActorDisable();
 
+
+	void SaveGame(class UEGSaveGame* SaveInstance);
+	void LoadGame(class UEGSaveGame* LoadInstance);
+
 protected:
 	
 
