@@ -76,8 +76,9 @@ struct FItemData :public  FBasicData
 {
 	GENERATED_BODY()
 public:
+	//False라면 렌더링하지 않는다
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		bool bIsUsed;
+		bool bIsVaild;
 
 
 };

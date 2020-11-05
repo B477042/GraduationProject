@@ -45,11 +45,13 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
 		UParticleSystemComponent* Effect;
 	
+
 	//이 아이템을 가지고 있는 엑터
 	UPROPERTY(VisibleAnywhere)
 		ACharacter* OwnerActor;
-
-	
+	//아이템을 Player가 주울 경우, 유효하지 않게 된다
+	UPROPERTY(VisibleAnywhere)
+		bool bIsItemVaild;
 		
 
 };

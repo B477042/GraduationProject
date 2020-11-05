@@ -102,5 +102,5 @@ void AItem_CardKey::OnPlayerOverlap(UPrimitiveComponent * OverlappedComp, AActor
 	BePickedUp(player);
 	player->GetInventory()->AddItem(this, 1);
 	DetectCollision->SetCollisionProfileName(TEXT("NoCollision"));
-
+	bIsItemVaild = false;
 }

@@ -16,6 +16,7 @@ AItemActor::AItemActor()
 	RootComponent = Body;
 	//Effect->SetupAttachment(RootComponent);
 	//Body->SetupAttachment(RootComponent);
+	bIsItemVaild = true;
 }
 
 
@@ -25,6 +26,9 @@ void AItemActor::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	if (!bIsItemVaild)
+		SetActorDisable();
+
 }
 
 // Called every frame

@@ -92,7 +92,7 @@ void AItem_Recover::OnPlayerOverlap(UPrimitiveComponent * OverlappedComp, AActor
 		EGLOG(Warning, TEXT("Succeess. Add : %d"),amount);
 	}
 	
-
+	bIsItemVaild = false;
 
 	//여기서 아이템을 player에게 넘겨준다
 
