@@ -134,7 +134,7 @@ void AEGPlayerController::OnGamePaused()
 		SetPause(true);
 	//UIInput mode로 전환
 		ChangeInputMode(false);
-		
+	
 		//bIsPauseCalled = true;
 	}
 	//Toggle하여 닫기

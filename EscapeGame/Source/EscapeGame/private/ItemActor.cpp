@@ -18,6 +18,8 @@ AItemActor::AItemActor()
 	//Effect->SetupAttachment(RootComponent);
 	//Body->SetupAttachment(RootComponent);
 	bIsItemVaild = true;
+	OwnerActor = nullptr;
+	
 }
 
 
@@ -65,7 +67,17 @@ void  AItemActor::SetActorDisable()
 
 }
 
-void AItemActor::SaveGame(UEGSaveGame * SaveInstance)
+
+
+/*
+	2020 11 07
+	저장될 아이템들 : 월드에 배치된 아이템
+	저장되선 안될 아이템들 : 플레이어를 로드할 때 생긴 아이템
+	-> Tag로 분류 Item. 
+	https://docs.unrealengine.com/ko/Gameplay/Tags/index.html
+	Tag 참조
+*/
+UEGSaveGame* AItemActor::SaveGame(UEGSaveGame * SaveInstance)
 {
 	if (!SaveInstance)
 	{
@@ -79,7 +91,7 @@ void AItemActor::SaveGame(UEGSaveGame * SaveInstance)
 	ItemData.Location = GetActorLocation();
 	ItemData.bIsVaild = bIsItemVaild;
 
-
+	return SaveInstance;
 }
 
 void LoadGame(UEGSaveGame * LoadInstance)

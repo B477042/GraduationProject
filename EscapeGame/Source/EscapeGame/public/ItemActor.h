@@ -26,6 +26,8 @@ public:
 	//Character에게 주워졌다
 	virtual void BePickedUp(ACharacter* OtherActor);
 	virtual void PostInitializeComponents()override;
+	
+
 	//자식들에서 tag를 반드시 정의해줘야 된다. 
 	 virtual  FName GetTag()PURE_VIRTUAL(AItemActor::GetTag,return TEXT("Default") ;);
 	//Use This Item
@@ -34,7 +36,7 @@ public:
 	void SetActorDisable();
 
 
-	void SaveGame(class UEGSaveGame* SaveInstance);
+	class UEGSaveGame* SaveGame(class UEGSaveGame* SaveInstance);
 	void LoadGame(class UEGSaveGame* LoadInstance);
 
 protected:
