@@ -13,6 +13,11 @@ DECLARE_LOG_CATEGORY_EXTERN(EGgame, Log, All);
 
 #define EGLOG(Verbosity,Format, ...) UE_LOG(EGgame,Verbosity,TEXT("%s %s"),*EGLOG_CALLINFO,*FString::Printf (Format, ##__VA_ARGS__))
 
+
+#define TItem TEXT("Item")
+#define TSpawned TEXT("Spawned")
+#define TPlayer TEXT("Player")
+
 static FDamageEvent ActorTakeDamageEvent;
 
 static bool DrawingDebugMode=true;

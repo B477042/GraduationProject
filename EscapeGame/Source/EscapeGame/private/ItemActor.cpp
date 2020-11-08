@@ -2,6 +2,9 @@
 
 #include "ItemActor.h"
 #include "EGSaveGame.h"
+#include "EGGameInstance.h"
+
+
 
 // Sets default values
 AItemActor::AItemActor()
@@ -19,7 +22,7 @@ AItemActor::AItemActor()
 	//Body->SetupAttachment(RootComponent);
 	bIsItemVaild = true;
 	OwnerActor = nullptr;
-	
+	Tags.Add(TItem);
 }
 
 
@@ -32,6 +35,7 @@ void AItemActor::BeginPlay()
 	if (!bIsItemVaild)
 		SetActorDisable();
 
+	EGLOG(Error, TEXT("This Item Name : %s"), *GetName());
 }
 
 // Called every frame
@@ -50,9 +54,17 @@ void AItemActor::BePickedUp(ACharacter * OtherActor)
 void AItemActor::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-
+	
 	//BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AItemActor::OnPlayerOverlap);
 
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)
+	{
+		EGLOG(Error, TEXT("Game Instance is not UEGGameInstance"));
+		return;
+	}
+	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this,&AItemActor::SaveGame);
+	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AItemActor::LoadGame);
 }
 
 //FName AItemActor::GetTag()
@@ -64,7 +76,7 @@ void  AItemActor::SetActorDisable()
 {
 	Body->SetCollisionProfileName("NoCollision");
 	SetActorHiddenInGame(true);
-
+	
 }
 
 
@@ -77,30 +89,53 @@ void  AItemActor::SetActorDisable()
 	https://docs.unrealengine.com/ko/Gameplay/Tags/index.html
 	Tag 참조
 */
-UEGSaveGame* AItemActor::SaveGame(UEGSaveGame * SaveInstance)
+void AItemActor::SaveGame(UEGSaveGame * SaveInstance)
 {
 	if (!SaveInstance)
 	{
 		EGLOG(Error, TEXT("SaveInstance is null"));
 		return;
 	}
-	FItemData ItemData;
-	
-	
+	//Tag중에 스폰됨이 있으면 저장하지 않는다
+	if (Tags.Contains(TSpawned))
+	{
+		EGLOG(Error, TEXT("%s can't store data. Contain Tag - Spawned"));
+		return;
+	}
 
-	ItemData.Location = GetActorLocation();
-	ItemData.bIsVaild = bIsItemVaild;
+	//Map에 등록되지 않아야 된다
+	if (!SaveInstance->D_Items.Contains(GetName()))
+	{
+		FItemData ItemData;
 
-	return SaveInstance;
+		ItemData.Location = GetActorLocation();
+		ItemData.Rotation = GetActorRotation();
+		ItemData.bIsVaild = bIsItemVaild;
+		SaveInstance->D_Items.Add(GetName(), ItemData);
+	}
+	else
+		EGLOG(Warning, TEXT("%s is already included in D_Items"));
+	
 }
 
-void LoadGame(UEGSaveGame * LoadInstance)
+void AItemActor::LoadGame(const UEGSaveGame * LoadInstance)
 {
 	if (!LoadInstance)
 	{
 		EGLOG(Error, TEXT("LoadInstance is null"));
+		return ;
+	}
+	auto LoadData = LoadInstance->D_Items.Find(GetName());
+	if (!LoadData)
+	{
+		EGLOG(Error, TEXT("Load Item Failed, %s"), *GetName());
 		return;
 	}
-
+	SetActorLocationAndRotation(LoadData->Location, LoadData->Rotation);
+	bIsItemVaild = LoadData->bIsVaild;
+	
+	
 
 }
+
+

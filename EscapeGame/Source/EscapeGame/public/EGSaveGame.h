@@ -95,10 +95,10 @@ public:
 		FPlayerData D_Player;
 	//Data TArray of Enemies
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		TArray<FEnemyData> D_Enemies;
+		TMap<FString, FEnemyData> D_Enemies;
 	//Data TArray of Items
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		TArray<FItemData> D_Items;
+		TMap<FString, FItemData> D_Items;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		FGameProgressData GameProgressData;
 

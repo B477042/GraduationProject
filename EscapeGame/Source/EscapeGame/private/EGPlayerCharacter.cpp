@@ -78,12 +78,7 @@ void AEGPlayerCharacter::BeginPlay()
 	{
 
 		//Load Game Data
-		auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
-		if (!GameInstance)
-		{
-			EGLOG(Error, TEXT("Game Instance is not EGGameInstance"));
-			return;
-		}
+		
 		//등록된 함수 호출
 		auto LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(GameInstance->SaveSlotName, GameInstance->UserIndex));
 		if (!LoadInstance)
@@ -821,7 +816,10 @@ void AEGPlayerCharacter::loadGameData(const UEGSaveGame* LoadInstance)
 			EGLOG(Error, TEXT("Item Casting Failed"));
 			return;
 		}
+		//인벤토리에 등록해주고 Tag에 Spawned를 추가시켜 준다
 		Inventory->LoadGameData(newItem, PlayerData.n_RecoverItmes);
+		newItem->Tags.Add(TSpawned);
+		EGLOG(Warning, TEXT("This Item is Spawned. %s"), *newItem->GetName());
 	}
 
 

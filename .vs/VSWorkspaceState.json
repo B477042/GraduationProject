@@ -1,0 +1,18 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\EscapeGame",
+    "\\EscapeGame\\Content",
+    "\\EscapeGame\\Content\\MyFolder",
+    "\\EscapeGame\\Content\\MyFolder\\BP_forSimpleTest",
+    "\\EscapeGame\\Content\\MyFolder\\BP_Structure",
+    "\\EscapeGame\\Content\\MyFolder\\BP_Tutorial",
+    "\\EscapeGame\\Content\\MyFolder\\BP_Tutorial\\Anim",
+    "\\EscapeGame\\Source",
+    "\\EscapeGame\\Source\\EscapeGame",
+    "\\EscapeGame\\Source\\EscapeGame\\private",
+    "\\EscapeGame\\Source\\EscapeGame\\public",
+    "\\EscapeGame\\Source\\GameSetting"
+  ],
+  "PreviewInSolutionExplorer": false
+}

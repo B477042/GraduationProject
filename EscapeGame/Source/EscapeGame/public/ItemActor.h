@@ -7,6 +7,9 @@
 #include "GameFramework/Actor.h"
 #include "ItemActor.generated.h"
 
+
+
+
 UCLASS()
 class ESCAPEGAME_API AItemActor : public AActor
 {
@@ -36,13 +39,17 @@ public:
 	void SetActorDisable();
 
 
-	class UEGSaveGame* SaveGame(class UEGSaveGame* SaveInstance);
-	void LoadGame(class UEGSaveGame* LoadInstance);
 
 protected:
-	
+	UFUNCTION()
+	void SaveGame(class UEGSaveGame* SaveInstance);
+	UFUNCTION()
+	void LoadGame(const class UEGSaveGame* LoadInstance);
 
 	
+
+
+
 
 
 protected:
@@ -58,6 +65,7 @@ protected:
 	//아이템을 Player가 주울 경우, 유효하지 않게 된다
 	UPROPERTY(VisibleAnywhere)
 		bool bIsItemVaild;
-		
-
+	
+	
+	
 };
