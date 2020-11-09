@@ -22,19 +22,12 @@ void UEGGameInstance::SaveGame()
 		if (!SaveInstance)return;
 	
 		
+		//정보의 저장 방식은 델리게이트의 호출로 한다
+		//Controller에서 정보의 저장을 시도하게 한다
+		//현재 등록된 Class : EGPlayerController, ItemActor
+		OnSaveGamePhaseDelegate.Broadcast(SaveInstance);
+		EGLOG(Error, TEXT("Save Game Delegate BroadCasted"));
 
-		//Player 정보 저장
-		auto playerCon = Cast<AEGPlayerController>(GetWorld()->GetFirstPlayerController());
-		if (!playerCon)return;
-	
-		playerCon->SaveGame(SaveInstance);
-	
-		//Enemy 정보 저장
-	
-	
-		//Item 정보 저장
-	
-	
 		//Game State 정보 저장
 		auto egGameState = Cast<AEGGameState>(GetWorld()->GetGameState());
 		if (!egGameState)return;

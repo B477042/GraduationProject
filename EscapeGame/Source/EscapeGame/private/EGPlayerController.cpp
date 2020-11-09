@@ -10,6 +10,7 @@
 #include "Item_CardKey.h"
 #include "EGGameState.h"
 #include "Engine.h"
+#include "EGGameInstance.h"
 
 //#include"GameStat.h"
 
@@ -91,6 +92,15 @@ void AEGPlayerController::PostInitializeComponents()
 	Super::PostInitializeComponents();
 	EGLOG(Warning, TEXT("Controller post initialize components"));
 	
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)
+	{
+		EGLOG(Error, TEXT("Game Instance is not UEGGameInstance"));
+		return;
+	}
+	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AEGPlayerController::SaveGame);
+
+
 }
 
 void AEGPlayerController::OnPossess(APawn * aPawn)
@@ -248,20 +258,20 @@ bool AEGPlayerController::NextStage()
 }
 
 
-UEGSaveGame* AEGPlayerController::SaveGame(UEGSaveGame* SaveInstance)
+void AEGPlayerController::SaveGame(UEGSaveGame* SaveInstance)
 {
 	
 	if (!SaveInstance)
 	{
 		EGLOG(Error, TEXT("Save Instance is Not Vaild"));
-		return nullptr;
+		return;
 	}
 
 	auto egPlayer = Cast<AEGPlayerCharacter>(GetPawn());
 	if (!egPlayer)
 	{
 		EGLOG(Error, TEXT("Casting failed in player controller"));
-		return nullptr;
+		return;
 	}
 
 	//SaveInstance에 Player의 정보를 저장해야된다
@@ -278,15 +288,15 @@ UEGSaveGame* AEGPlayerController::SaveGame(UEGSaveGame* SaveInstance)
 
 	SaveInstance->D_Player=playerData;
 
-	return SaveInstance;
+
 }
 
-UEGSaveGame* AEGPlayerController::LoadGame(UEGSaveGame* LoadInstance)
+void AEGPlayerController::LoadGame(UEGSaveGame* LoadInstance)
 {
 	if (!LoadInstance)
 	{
 		EGLOG(Error, TEXT("Load Instance is not vaild"));
-		return nullptr;
+		return;
 
 	}
 
@@ -294,7 +304,7 @@ UEGSaveGame* AEGPlayerController::LoadGame(UEGSaveGame* LoadInstance)
 	if (!egPlayer)
 	{
 		EGLOG(Error, TEXT("Casting failed in player controller"));
-		return nullptr;
+		return;
 	}
 
 	auto loadData = LoadInstance->D_Player;
@@ -305,8 +315,8 @@ UEGSaveGame* AEGPlayerController::LoadGame(UEGSaveGame* LoadInstance)
 		2. 스텟 불러오기
 		3. 아이템 갯수 불러오기
 	*/
-	egPlayer->SetActorLocationAndRotation( loadData.Location, loadData.Rotation);
-	egPlayer->GetStatComponent()->LoadGameStat(loadData.Level,loadData.Exp,loadData.Hp);
+	egPlayer->SetActorLocationAndRotation(loadData.Location, loadData.Rotation);
+	egPlayer->GetStatComponent()->LoadGameStat(loadData.Level, loadData.Exp, loadData.Hp);
 
 	//Item > 0일 경우에만 불러온다
 	if (loadData.n_RecoverItmes > 0)
@@ -316,7 +326,7 @@ UEGSaveGame* AEGPlayerController::LoadGame(UEGSaveGame* LoadInstance)
 		if (!tempRecover)
 		{
 			EGLOG(Error, TEXT("Null Item"));
-			return nullptr;
+			return;
 		}
 
 		egPlayer->GetInventory()->LoadGameData(tempRecover, loadData.n_RecoverItmes);
@@ -331,15 +341,14 @@ UEGSaveGame* AEGPlayerController::LoadGame(UEGSaveGame* LoadInstance)
 		if (!tempRecover)
 		{
 			EGLOG(Error, TEXT("Null Item"));
-			return nullptr;
+			return;
 		}
 
 		egPlayer->GetInventory()->LoadGameData(tempRecover, loadData.n_CardKeys);
-	
+
 	}
 
 
 
-	return LoadInstance;
 }
  

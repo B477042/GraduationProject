@@ -790,7 +790,7 @@ void AEGPlayerCharacter::loadGameData(const UEGSaveGame* LoadInstance)
 
 
 	auto PlayerData = LoadInstance->D_Player;
-
+	//좌표와 스텟을 불러온다
 	SetActorLocationAndRotation(PlayerData.Location, PlayerData.Rotation);
 	Stat->LoadGameStat(PlayerData.Level, PlayerData.Exp, PlayerData.Hp);
 

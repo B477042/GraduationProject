@@ -124,7 +124,7 @@ bool UComponent_Inventory::LoadGameData(AItemActor * newItem, int Amount)
 		2. 이 Item Actor의 Tag로 인벤토리에 넣어준다.
 		3. 됐으면 리턴
 	*/
-	newItem->SetActorDisable();
+	newItem->SetItemDisable();
 	bResult = AddItem(newItem, Amount);
 
 

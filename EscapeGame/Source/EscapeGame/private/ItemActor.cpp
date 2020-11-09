@@ -33,7 +33,7 @@ void AItemActor::BeginPlay()
 	Super::BeginPlay();
 	
 	if (!bIsItemVaild)
-		SetActorDisable();
+		SetItemDisable();
 
 	EGLOG(Error, TEXT("This Item Name : %s"), *GetName());
 }
@@ -65,6 +65,7 @@ void AItemActor::PostInitializeComponents()
 	}
 	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this,&AItemActor::SaveGame);
 	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AItemActor::LoadGame);
+	//EGLOG(Error, TEXT("post init"));
 }
 
 //FName AItemActor::GetTag()
@@ -72,7 +73,7 @@ void AItemActor::PostInitializeComponents()
 //	return Tag;
 //}
 
-void  AItemActor::SetActorDisable()
+void  AItemActor::SetItemDisable()
 {
 	Body->SetCollisionProfileName("NoCollision");
 	SetActorHiddenInGame(true);
@@ -99,7 +100,7 @@ void AItemActor::SaveGame(UEGSaveGame * SaveInstance)
 	//Tag중에 스폰됨이 있으면 저장하지 않는다
 	if (Tags.Contains(TSpawned))
 	{
-		EGLOG(Error, TEXT("%s can't store data. Contain Tag - Spawned"));
+		EGLOG(Error, TEXT("%s can't store data. Contain Tag - Spawned"),*GetName());
 		return;
 	}
 
@@ -112,10 +113,13 @@ void AItemActor::SaveGame(UEGSaveGame * SaveInstance)
 		ItemData.Rotation = GetActorRotation();
 		ItemData.bIsVaild = bIsItemVaild;
 		SaveInstance->D_Items.Add(GetName(), ItemData);
+		EGLOG(Error, TEXT("Item Saved : %s"), *GetName());
 	}
 	else
-		EGLOG(Warning, TEXT("%s is already included in D_Items"));
+		EGLOG(Error, TEXT("%s is already included in D_Items"));
 	
+
+	EGLOG(Error, TEXT("Save Game func end"));
 }
 
 void AItemActor::LoadGame(const UEGSaveGame * LoadInstance)
@@ -134,8 +138,9 @@ void AItemActor::LoadGame(const UEGSaveGame * LoadInstance)
 	SetActorLocationAndRotation(LoadData->Location, LoadData->Rotation);
 	bIsItemVaild = LoadData->bIsVaild;
 	
-	
-
+	//유효하지 않는 아이템이라면 숨김처리
+	if (!bIsItemVaild)
+		SetItemDisable();
 }
 
 
