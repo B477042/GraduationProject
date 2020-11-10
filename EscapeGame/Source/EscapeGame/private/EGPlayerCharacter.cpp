@@ -52,17 +52,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 void AEGPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	//EGLOG(Warning, TEXT("Character Begin Play"));
-
-	auto Con = Cast<AEGPlayerController>(Controller);
-	if (Con == nullptr)
-	{
-		EGLOG(Warning, TEXT("Fail to Casting Controller"));
-		return;
-	}
-	//Stat->LoadDataTable(Con->GetDT_Player());
-
-//	SetActorHiddenInGame(true);
+	
 
 	loadHitEffects();
 	EGLOG(Error, TEXT("Player Begin Play"));
@@ -74,12 +64,12 @@ void AEGPlayerCharacter::BeginPlay()
 		EGLOG(Error, TEXT("Game Instance is not EGGameInstance"));
 		return;
 	}
+
+	//Load Game일 경우 처리
 	if (GameInstance->EGameState == EEGGameState::E_LoadGame)
 	{
 
 		//Load Game Data
-		
-		//등록된 함수 호출
 		auto LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(GameInstance->SaveSlotName, GameInstance->UserIndex));
 		if (!LoadInstance)
 		{
@@ -94,8 +84,24 @@ void AEGPlayerCharacter::BeginPlay()
 
 	}
 
+	else if (GameInstance->EGameState == EEGGameState::E_NextStage)
+	{
+		auto LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(GameInstance->SaveSlotName, GameInstance->UserIndex));
+		if (!LoadInstance)
+		{
+			EGLOG(Error, TEXT("Load Insatnce Failed"));
+			return;
+		}
+		//Player의  스텟들만 불러온다
+		onNextStage(LoadInstance);
+
+		//Game State 업데이트
+		GameInstance->EGameState = EEGGameState::E_InPlay;
+
+	}
+
 	else
-		EGLOG(Error, TEXT("Not Load Game State"));
+		EGLOG(Warning, TEXT("NewGame"));
 	
 	
 
@@ -790,6 +796,9 @@ void AEGPlayerCharacter::loadGameData(const UEGSaveGame* LoadInstance)
 
 
 	auto PlayerData = LoadInstance->D_Player;
+	
+
+
 	//좌표와 스텟을 불러온다
 	SetActorLocationAndRotation(PlayerData.Location, PlayerData.Rotation);
 	Stat->LoadGameStat(PlayerData.Level, PlayerData.Exp, PlayerData.Hp);
@@ -822,6 +831,52 @@ void AEGPlayerCharacter::loadGameData(const UEGSaveGame* LoadInstance)
 		EGLOG(Warning, TEXT("This Item is Spawned. %s"), *newItem->GetName());
 	}
 
+
+
+}
+
+void AEGPlayerCharacter::onNextStage(const UEGSaveGame * LoadInstance)
+{
+	if (!LoadInstance)
+	{
+		EGLOG(Error, TEXT("LoadInstance is nullptr"));
+		return;
+	}
+
+
+	auto PlayerData = LoadInstance->D_Player;
+
+	//Stat을 불러온다
+	Stat->LoadGameStat(PlayerData.Level, PlayerData.Exp, PlayerData.Hp);
+
+
+	//이전 스테이지에서 획득한 아이템들을 불러온다
+	if (PlayerData.n_CardKeys > 0)
+	{
+		auto newItem = GetWorld()->SpawnActor<AItem_CardKey>();
+
+		if (!newItem)
+		{
+			EGLOG(Error, TEXT("Item Casting Failed"));
+			return;
+		}
+		Inventory->LoadGameData(newItem, PlayerData.n_CardKeys);
+	}
+
+	if (PlayerData.n_RecoverItmes > 0)
+	{
+		auto newItem = GetWorld()->SpawnActor<AItem_Recover>();
+
+		if (!newItem)
+		{
+			EGLOG(Error, TEXT("Item Casting Failed"));
+			return;
+		}
+		//인벤토리에 등록해주고 Tag에 Spawned를 추가시켜 준다
+		Inventory->LoadGameData(newItem, PlayerData.n_RecoverItmes);
+		newItem->Tags.Add(TSpawned);
+		EGLOG(Warning, TEXT("This Item is Spawned. %s"), *newItem->GetName());
+	}
 
 
 }

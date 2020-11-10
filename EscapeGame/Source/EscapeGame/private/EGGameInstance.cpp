@@ -52,7 +52,6 @@ void UEGGameInstance::LoadGame()
 	
 	/*
 		Player의 BeginPlay에 맞춰 정보들을 로딩하기로 한다.
-	
 	*/
 
 	//LoadGame 상태로
@@ -71,5 +70,6 @@ void UEGGameInstance::LoadGame()
 	EGLOG(Error, TEXT("Load Set Move To : %s"), *LoadInstance->GameProgressData.LevelName.ToString());
 	UGameplayStatics::OpenLevel(this,LoadInstance->GameProgressData.LevelName);
 	EGLOG(Error, TEXT("Load Complete"));
+	//Load 처리가 끝나면 Player가 BeginPlay단계에서 데이터 로드를 시도한다
 }
 

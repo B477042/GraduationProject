@@ -146,6 +146,8 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void loadGameData(const class UEGSaveGame* LoadInstance);
 
+	void onNextStage(const class UEGSaveGame* LoadInstance);
+
 
 	UFUNCTION()
 		void OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);

@@ -28,7 +28,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	virtual void BeginDestroy()override;
-	
+	virtual void PostInitializeComponents() override;
 	/*UFUNCTION(BlueprintCallable)
 		float GetCurrentSpeed();*/
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,class AController* EventInstigator, AActor* DamageCauser)override;
@@ -36,7 +36,11 @@ protected:
 		void Dead();
 
 
-
+	UFUNCTION()
+		void SaveGame(class UEGSaveGame* SaveInstance );
+	UFUNCTION()
+		void LoadGame(const class UEGSaveGAme* LoadInstance);	
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -55,5 +59,7 @@ protected:
 		class UWidgetComponent* HPBarWidget;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowClasses))
 		UProgressBar*HPBar;
+
+
 
 };

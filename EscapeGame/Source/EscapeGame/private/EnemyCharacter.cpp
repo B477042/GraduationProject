@@ -71,6 +71,12 @@ void AEnemyCharacter::BeginDestroy()
 
 }
 
+void AEnemyCharacter::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+}
+
 
 
 float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
