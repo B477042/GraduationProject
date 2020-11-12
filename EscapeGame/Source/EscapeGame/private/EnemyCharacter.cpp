@@ -2,6 +2,7 @@
 
 #include "EnemyCharacter.h"
 #include "EGGameState.h"
+#include "EGSaveGame.h"
 
 
 // Sets default values
@@ -112,5 +113,43 @@ void AEnemyCharacter::Turn(float NewAxisValue)
 void AEnemyCharacter::Dead()
 {
 	Destroy();
+}
+
+void AEnemyCharacter::SaveGame(UEGSaveGame * SaveInstance)
+{
+	if (!SaveInstance)
+	{
+		EGLOG(Error, TEXT("SaveInstance is nullptr"));
+		return;
+	}
+	//자식 클래스에서 Save Game을 사용할 경우, 이미 등록된 데이터를 불러와서 추가로 편집하는 작업으로 한다.
+	FEnemyData SaveData;
+	SaveData.Location = GetActorLocation();
+	SaveData.Rotation = GetActorRotation();
+	
+	SaveInstance->D_Enemies.Add(GetName(), SaveData);
+
+}
+
+void AEnemyCharacter::LoadGame(const UEGSaveGame * LoadInstance)
+{
+	if (!LoadInstance)
+	{
+		EGLOG(Error, TEXT("LoadInstance is nullptr"));
+		return;
+	}
+
+	auto LoadData = LoadInstance->D_Enemies.Find(GetName());
+	if (!LoadData)
+	{
+		EGLOG(Error, TEXT("%s Can't find Data"), *GetName());
+		return;
+	}
+
+	SetActorLocationAndRotation(LoadData->Location, LoadData->Rotation);
+
+
+
+
 }
 
