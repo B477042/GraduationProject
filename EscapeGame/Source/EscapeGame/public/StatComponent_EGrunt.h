@@ -20,8 +20,15 @@ public:
 
 	virtual bool IsDead()override;
 
+	virtual void SaveGame(class UEGSaveGame* SaveInstance)override;
+	
+	virtual void LoadGame(const class UEGSaveGame* LoadInstance)override;
+protected:
+	
+	
+
 	
 private:
 		//data table에서 level에 맞는 data를 가져온다
-		void loadDataTable();
+		void loadTypeData();
 };

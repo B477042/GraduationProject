@@ -6,6 +6,8 @@
 #include "CharacterAnimInstance.h"
 //#include "DrawDebugHelpers.h"
 #include "EGPlayerCharacter.h"
+#include "EGSaveGame.h"
+#include "EGGameInstance.h"
 
 //const float AGruntCharacter::MaxHP = 200.0f;
 const float AGruntCharacter::MinWalkingSpeed = 0.0f;
@@ -72,16 +74,14 @@ void AGruntCharacter::BeginPlay()
 		HPBar->SetPercent(Stat->GetHPRatio());
 	});
 	HPBar->SetPercent(Stat->GetHPRatio());
+	EGLOG(Error, TEXT("Grunt Begin"));
 }
 
 void AGruntCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	//Stat->LoadDBfromOwner(MaxHP, MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
-
 	
-	//Anim->AttackEvent_Delegate.AddDynamic(&AGruntCharacter::Attack);
 	//Set Limit of Speeds
 
 	if(Stat!=nullptr)
@@ -137,6 +137,16 @@ void AGruntCharacter::PostInitializeComponents()
 		anim->PlayDeadAnim();
 	});
 
+
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)
+	{
+		EGLOG(Error, TEXT("Gameinstance is nullptr"));
+		return;
+	}
+	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AGruntCharacter::LoadGame);
+
+
 }
 
 float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
@@ -149,6 +159,48 @@ float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Damag
 
 	return FinalDamage;
 }
+
+
+//Stat과 관련된 정보를 저장하면 된다. 
+void AGruntCharacter::SaveGame(UEGSaveGame * SaveInstance)
+{
+	Super::SaveGame(SaveInstance);
+	if (!SaveInstance)
+	{
+		EGLOG(Error, TEXT("Save Instance is nullptr"));
+		return;
+	}
+
+	/*auto SaveData = SaveInstance->D_Enemies.Find(GetName());
+	if (!SaveData)
+	{
+		EGLOG(Error, TEXT("Can't find %s's Data"), *GetName());
+		return;
+	}*/
+	Stat->SaveGame(SaveInstance);
+	 
+
+
+}
+
+
+//Stat 관련 정보를 Load하면 된다. 위치 정보 불러오기는 부모에서 처리했다
+void AGruntCharacter::LoadGame(const UEGSaveGame * LoadInstance)
+{
+	if (!LoadInstance)
+	{
+		EGLOG(Error, TEXT("LoadInstance is nullptr"));
+		return;
+	}
+	Super::LoadGame(LoadInstance);
+
+	Stat->LoadGame(LoadInstance);
+
+
+
+}
+
+
 
 void AGruntCharacter::Tick(float DeltaTime)
 {

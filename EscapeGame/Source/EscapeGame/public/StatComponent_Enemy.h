@@ -21,6 +21,12 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	//자식 클래스들이 사용하게 될 것이다. 실행은 Owner class actor가 하게 될 것이다
+	virtual void SaveGame(class UEGSaveGame* SaveInstance);
+	
+	virtual void LoadGame(const class UEGSaveGame* LoadInstance);
+
+
 public:
 
 
@@ -29,6 +35,12 @@ public:
 
 	int32 GetDropExp();
 	
+	int32 GetType() { return Type; }
+
+	//Set Type value as input value
+	void SetType(int32 input);
+
+
 
 protected:
 	
