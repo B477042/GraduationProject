@@ -24,7 +24,7 @@ void UEGGameInstance::SaveGame()
 		
 		//정보의 저장 방식은 델리게이트의 호출로 한다
 		//Controller에서 정보의 저장을 시도하게 한다
-		//현재 등록된 Class : EGPlayerController, ItemActor
+		//현재 등록된 Class : EGPlayerController, ItemActor, EnemyCharacter의 자손
 		OnSaveGamePhaseDelegate.Broadcast(SaveInstance);
 		EGLOG(Error, TEXT("Save Game Delegate BroadCasted"));
 

@@ -35,7 +35,7 @@ void AItemActor::BeginPlay()
 	if (!bIsItemVaild)
 		SetItemDisable();
 
-	EGLOG(Error, TEXT("This Item Name : %s"), *GetName());
+	//EGLOG(Error, TEXT("This Item Name : %s"), *GetName());
 }
 
 // Called every frame
@@ -119,7 +119,7 @@ void AItemActor::SaveGame(UEGSaveGame * SaveInstance)
 		EGLOG(Error, TEXT("%s is already included in D_Items"));
 	
 
-	EGLOG(Error, TEXT("Save Game func end"));
+	//EGLOG(Error, TEXT("Save Game func end"));
 }
 
 void AItemActor::LoadGame(const UEGSaveGame * LoadInstance)

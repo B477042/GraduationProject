@@ -74,7 +74,7 @@ void AGruntCharacter::BeginPlay()
 		HPBar->SetPercent(Stat->GetHPRatio());
 	});
 	HPBar->SetPercent(Stat->GetHPRatio());
-	EGLOG(Error, TEXT("Grunt Begin"));
+	
 }
 
 void AGruntCharacter::PostInitializeComponents()
@@ -132,7 +132,7 @@ void AGruntCharacter::PostInitializeComponents()
 			return;
 		}
 
-		EGLOG(Error, TEXT("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"));
+		EGLOG(Error, TEXT("%s is Down"),*GetName());
 
 		anim->PlayDeadAnim();
 	});
@@ -145,7 +145,7 @@ void AGruntCharacter::PostInitializeComponents()
 		return;
 	}
 	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AGruntCharacter::LoadGame);
-
+	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AGruntCharacter::SaveGame);
 
 }
 
@@ -171,12 +171,7 @@ void AGruntCharacter::SaveGame(UEGSaveGame * SaveInstance)
 		return;
 	}
 
-	/*auto SaveData = SaveInstance->D_Enemies.Find(GetName());
-	if (!SaveData)
-	{
-		EGLOG(Error, TEXT("Can't find %s's Data"), *GetName());
-		return;
-	}*/
+	
 	Stat->SaveGame(SaveInstance);
 	 
 

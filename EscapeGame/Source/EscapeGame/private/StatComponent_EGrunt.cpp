@@ -18,7 +18,7 @@ void UStatComponent_EGrunt::BeginPlay()
 {
 	Super::BeginPlay();
 	loadTypeData();
-	EGLOG(Error, TEXT("This Grunt's Type : %d"),Type);
+	//EGLOG(Error, TEXT("This Grunt's Type : %d"),Type);
 
 }
 
@@ -128,7 +128,7 @@ void UStatComponent_EGrunt::LoadGame(const UEGSaveGame * LoadInstance)
 		EGLOG(Error, TEXT("Can't find %s's Data"), *GetOwner()->GetName());
 		return;
 	}
-	EGLOG(Error, TEXT("LoadInstance Grunt's Type : %d"), LoadData->Type);
+	//EGLOG(Error, TEXT("LoadInstance Grunt's Type : %d"), LoadData->Type);
 
 	Type = LoadData->Type;
 	loadTypeData();
