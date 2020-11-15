@@ -28,9 +28,16 @@ public:
 	void ChangeInputMode(bool bGameMode = true);
 	//UFUNCTION(BlueprintCallable)
 	void OnGamePaused();
+	void OnEnterPressed();
 	void OnKillMode();
 
+	
+
+
 	class UGameWidget* GetHUDWidget()const;
+	//class UUserWidget* GetPopUpWidget()const;
+
+
 
 	FOnKeyTest KeyInputTest;
 
@@ -38,6 +45,8 @@ public:
 		TSubclassOf<class UGameWidget>HUDWidgetClass;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UUserWidget>PAUSEWidgetClass;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
+	TSubclassOf<class UUserWidget>POPUPWidgetClass;
 	/*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UUserWidget>BloodWidgetClass;*/
 
@@ -45,7 +54,7 @@ public:
 	void SyncStatToHUD();
 	void IsMoveKeyPressed();
 	const class UDataTable* GetDT_Player();
-
+	const class UDataTable* GetDTTutorial();
 	
 	//Called Next Stage Event
 	UFUNCTION(BlueprintCallable, Category = "Data")
@@ -74,6 +83,8 @@ private:
 	//Data Table For Player Stat
 	UPROPERTY(VisibleAnywhere, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
 	class UDataTable* DT_Player;
+	UPROPERTY(VisibleAnywhere, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
+	class UDataTable* DT_Tutorial;
 
 
 	FInputModeGameOnly GameInputMode;

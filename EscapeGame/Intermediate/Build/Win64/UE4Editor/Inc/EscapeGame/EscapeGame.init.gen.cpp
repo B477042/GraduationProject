@@ -47,8 +47,8 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGame_init() {}
 				SingletonFuncArray,
 				UE_ARRAY_COUNT(SingletonFuncArray),
 				PKG_CompiledIn | 0x00000000,
-				0xF09EE093,
-				0x0B0C2599,
+				0xEFF614EC,
+				0x09F08E7F,
 				METADATA_PARAMS(nullptr, 0)
 			};
 			UE4CodeGen_Private::ConstructUPackage(ReturnPackage, PackageParams);

@@ -5,6 +5,8 @@
 #include "EGPlayerController.h"
 #include "EGPlayerCharacter.h"
 #include "Engine/Font.h"
+#include "EGSaveGame.h"
+#include "EGGameInstance.h"
 //#include "Components/BoxComponent.h"
 
 // Sets default values
@@ -15,14 +17,12 @@ ATutorialNotify::ATutorialNotify()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 	initBoxComponent();
-	initTextRenderer();
+	
+	
+	
+	bIsImportant = false;
 
-	NotifyType = ENotifyType::E_None;
-	//auto BoxCom = Cast<UBoxComponent>(GetCollisionComponent());
-	TextRenderer->SetHiddenInGame(true);
-	EnteredPlayer = nullptr;
-	//BoxCom->SetBoxExtent(FVector(X = 98.860458, Y = 91.200172, Z = 99.117844));
-	//SetActorHiddenInGame(false);
+	
 }
 
 // Called when the game starts or when spawned
@@ -30,7 +30,7 @@ void ATutorialNotify::BeginPlay()
 {
 	Super::BeginPlay();
 	BoxTrigger->SetBoxExtent(FVector(194.383270, 200.163177,  152.044571));
-	setInfo();
+	
 }
 
 void ATutorialNotify::PostInitializeComponents()
@@ -39,95 +39,82 @@ void ATutorialNotify::PostInitializeComponents()
 	OnActorBeginOverlap.AddDynamic(this, &ATutorialNotify::OnOverlapBegin);
 	OnActorEndOverlap.AddDynamic(this, &ATutorialNotify::OnOverlapEnd);
 	
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)
+	{
+		EGLOG(Error, TEXT("Gameinstance is not EGGameInstance"));
+		return;
+	}
+	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &ATutorialNotify::SaveGame);
+	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &ATutorialNotify::LoadGame);
+
+
 }
 
-bool ATutorialNotify::checkOverlappedActor(AActor * Other)
-{
-	auto otherChara = Cast<AEGPlayerCharacter>(Other);
-	if (otherChara == nullptr)return false;
 
-	EnteredPlayer = Other;
-	return true;
-}
 
 void ATutorialNotify::OnOverlapBegin(AActor * OvelappedActor, AActor * OtherActor)
 {
-	if (!checkOverlappedActor((OtherActor)))return;
+	
+	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
+	if (!Player)return;
 
-	//EGLOG(Warning, TEXT("Welcom player"));
+	auto Controller = Cast<AEGPlayerController>(Player->GetController());
+	if (!Controller)return;
 	
 	
-	TextRenderer->SetHiddenInGame(false);
-	Plane->SetHiddenInGame(false);
-	EnteredPlayer = OtherActor;
-	rotateTextToPlayer();
-	//FVector Start = GetActorLocation() + TextRenderer->GetRelativeLocation();
-	//FVector Target = OtherActor->GetActorLocation();
+	//중요한 이벤트라면 중단시킨다
+	if (!bIsImportant)
+	{
+		
+	}
 
-	////Start지점에서 Target지점을 바라볼 때 벡터를 연산한다
-	//FRotator rotateTo=UKismetMathLibrary::FindLookAtRotation(Start,Target)/*+FRotator(0.0f,180.0f,0.0f)*/;
-	////FRotator rotateTo = OtherActor->GetActorRotation();
-	//TextRenderer->SetWorldRotation(rotateTo);
-	////SetActorRotation(rotateTo);
-	//
-	//틱을 켜준다
+	//아니라면 팝업 형태로 띄운다
+	else
+	{
+
+	}
+	
+	
 	
 }
 
 void ATutorialNotify::OnOverlapEnd(AActor * OvelappedActor, AActor * OtherActor)
 {
-	if (!checkOverlappedActor((OtherActor)))return;
+	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
+	if (!Player)return;
+	auto Controller = Cast<AEGPlayerController>(Player->GetController());
+	if (!Controller)return;
 
-	TextRenderer->SetHiddenInGame(true);
-	Plane->SetHiddenInGame(true);
-	//Tick을 꺼준다
-	//PrimaryActorTick.bCanEverTick = false;
-	EnteredPlayer = nullptr;
+	//띄워준 ui를 화면에서 지워야 된다
+	
+
+	
 }
 
-void ATutorialNotify::initTextRenderer()
+
+
+void ATutorialNotify::SaveGame(UEGSaveGame * SaveInstance)
 {
-	
-	TextRenderer = CreateDefaultSubobject<UTextRenderComponent>(TEXT("TextRenderer"));
-	TextRenderer->SetupAttachment(RootComponent);
-	TextRenderer->SetRelativeLocation(FVector(0.0f, 60.0f, 0.0f));
-
-	float X, Y, Z,Pitch,Yaw,Roll;
-	Plane = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PLANE"));
-	Plane->SetupAttachment(TextRenderer);
-	Plane->SetRelativeLocation(FVector(X = -13.000000, Y = -104.000000, Z = 0.000000));
-	Plane->SetRelativeScale3D(FVector(X = 1.250000, Y = 3.000000, Z = 3.500000));
-	Plane->SetRelativeRotation(FRotator(Pitch = -88.856171, Yaw = -179.999985, Roll = -179.999954));
-
-	
-
-
-	//TextRenderer->bHiddenInGame = true;
-	
-	static ConstructorHelpers::FObjectFinder<UFont>FONT(TEXT("Font'/Game/MyFolder/Font/NanumGothic.NanumGothic'"));
-	if(FONT.Succeeded())
-	TextRenderer->SetFont(FONT.Object);
-
-	TextRenderer->SetHiddenInGame(true);
-
-	TextRenderer->SetText(FText::FromString("Set Message on editor"));
-	
-	TextRenderer->SetTextRenderColor(FColor(255,255,255,255));
-
-
-	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_Plane(TEXT("StaticMesh'/Engine/BasicShapes/Plane.Plane'"));
-	if (SM_Plane.Succeeded())
-		Plane->SetStaticMesh(SM_Plane.Object);
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface>Mat_BLACK(TEXT("Material'/Game/MyFolder/My_Material/PlanBlack.PlanBlack'"));
-	if (Mat_BLACK.Succeeded())
-		Plane->SetMaterial(0,Mat_BLACK.Object);
-
-	Plane->SetHiddenInGame(true);
-	Plane->SetCollisionProfileName(TEXT("NoCollision"));
+	if (!SaveInstance)
+	{
+		EGLOG(Error, TEXT("SaveInstance is nullptr"));
+		return;
+	}
 
 
 }
 
+void ATutorialNotify::LoadGame(const UEGSaveGame * LoadInstance)
+{
+	if (!LoadInstance)
+	{
+		EGLOG(Error, TEXT("LoadInstance is nullptr"));
+		return;
+	}
+
+
+}
 void ATutorialNotify::initBoxComponent()
 {
 	BoxTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComp"));
@@ -135,79 +122,13 @@ void ATutorialNotify::initBoxComponent()
 	
 	BoxTrigger->SetGenerateOverlapEvents(true);
 	float X, Y, Z;
-	BoxTrigger->SetBoxExtent(FVector(X = 194.383270, Y = 200.163177, Z = 152.044571));
+	BoxTrigger->SetBoxExtent(FVector(X = 200, Y = 200, Z = 150));
 	BoxTrigger->SetHiddenInGame(true);
 	BoxTrigger->SetupAttachment(RootComponent);
 }
 
-void ATutorialNotify::setInfo()
-{
-//	switch (NotifyType)
-//	{
-//	case ENotifyType::E_MoveInput:
-//		TextRenderer->SetText(FText::FromString("Press\nW,A,S,D\nTo Move"));
-//		break;
-//	case ENotifyType::E_MouseInput:
-//		TextRenderer->SetText(FText::FromString("Move Your Mouse\nAnd Look\nAround"));
-//		break;
-//	case ENotifyType::E_Jump:
-//		TextRenderer->SetText(FText::FromString("Press Space\nTo Jump"));
-//		break;
-//	case ENotifyType::E_AttackInput:
-//		TextRenderer->SetText(FText::FromString("Click LMB\nTo Attack"));
-//		break;
-//	case ENotifyType::E_GruntEnemy:
-//		TextRenderer->SetText(FText::FromString("Watch Out\nThat Robot"));
-//		break;
-//	case ENotifyType::E_TrapFire:
-//		TextRenderer->SetText(FText::FromString("Be Careful\nFire Ball"));
-//		break;
-//	case ENotifyType::E_Trap_Shutter:
-//		TextRenderer->SetText(FText::FromString("Spear Could\nBe Destroy"));
-//		break;
-//	case ENotifyType::E_Lightning:
-//		TextRenderer->SetText(FText::FromString("Don't Touch\nLightning"));
-//			break;
-//	case ENotifyType::E_HealBox:
-//		TextRenderer->SetText(FText::FromString("Contact Box\nYou'll Recover"));
-//		break;
-//	case ENotifyType::E_Claymore:
-//		TextRenderer->SetText(FText::FromString("Claymore is\nNot Your\nFriend"));
-//		break;
-//	case ENotifyType::E_ChargeAttack:
-//		TextRenderer->SetText(FText::FromString("While Attack\nClick RMB\nCharge Attack"));
-//		break;
-//
-//	case ENotifyType::E_None:
-//		//에디터에서 메시지를 적어서 사용해야될 때 사용한다
-//		//TextRenderer->SetText(TEXT("PLZ SET NOTIFYYYYYYYY"));
-//		break;
-//	}
-}
-
-void ATutorialNotify::rotateTextToPlayer()
-{
-	if (EnteredPlayer == nullptr)
-	{
-		EGLOG(Warning, TEXT("Entered is nullptr"));
-		return;
-	}
-	EGLOG(Warning, TEXT("Entered is not nullptr"));
-	FVector Start = GetActorLocation() + TextRenderer->GetRelativeLocation();
-	FVector Target = EnteredPlayer ->GetActorLocation();
-
-	//Start지점에서 Target지점을 바라볼 때 벡터를 연산한다
-	FRotator rotateTo = UKismetMathLibrary::FindLookAtRotation(Start, Target)/*+FRotator(0.0f,180.0f,0.0f)*/;
-	//FRotator rotateTo = OtherActor->GetActorRotation();
-	TextRenderer->SetWorldRotation(rotateTo);
-	//SetActorRotation(rotateTo);
-}
 
 
-//// Called every frame
-void ATutorialNotify::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 
-}
+
 

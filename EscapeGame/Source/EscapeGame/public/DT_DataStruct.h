@@ -56,6 +56,25 @@ public:
 
 };
 
+USTRUCT(BlueprintType)
+struct FTutorialDataTable :public FTableRowBase
+{
+	GENERATED_BODY()
+	public:
+	//어느 부분에 대한 튜토리얼인지
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DataTable")
+	FName Section;
+	//내용
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DataTable")
+	FString Text;
+	//gif 경로
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DataTable")
+	FString Address;
+
+};
+
+
+
 UCLASS()
 class ESCAPEGAME_API ADT_DataStruct : public AActor
 {

@@ -162,6 +162,11 @@ void AEGPlayerController::OnGamePaused()
 
 }
 
+void AEGPlayerController::OnEnterPressed()
+{
+
+}
+
 
 
 
@@ -197,6 +202,8 @@ void AEGPlayerController::OnKillMode()
 {
 	return HUD;
 }
+
+
 
  void AEGPlayerController::SyncStatToHUD()
  {
@@ -239,6 +246,11 @@ void AEGPlayerController::IsMoveKeyPressed()
 const UDataTable * AEGPlayerController::GetDT_Player()
 {
 	return DT_Player;
+}
+
+const UDataTable * AEGPlayerController::GetDTTutorial()
+{
+	return DT_Tutorial;
 }
 
 

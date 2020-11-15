@@ -72,6 +72,9 @@ void AProjectile::OnSomethingHit(UPrimitiveComponent * OverlappedComp, AActor * 
 {
 	
 	FDamageEvent damageEvent;
+
+	ActivateHitEffect();
+
 	auto isPawn = Cast<APawn>(OtherActor);
 	if (GetWorld()->GetFirstPlayerController() && isPawn != nullptr)
 	{
@@ -80,7 +83,6 @@ void AProjectile::OnSomethingHit(UPrimitiveComponent * OverlappedComp, AActor * 
 
 	EGLOG(Error, TEXT(" Hit :%s"), *OtherActor->GetName());
 
-	ActivateHitEffect();
 	//bIsFire = false;
 }
 
