@@ -19,22 +19,26 @@
 	
 */
 
-////무엇을 알려줘야 하는지 설정하기 위한 enum
-//UENUM()
-//enum class ENotifyType :int32 {
-//	E_None = 0,
-//	E_MoveInput,
-//	E_MouseInput,
-//	E_AttackInput,
-//	E_Jump,
-//	E_TrapFire,
-//	E_Trap_Shutter,
-//	E_Claymore,
-//	E_HealBox,
-//	E_Lightning,
-//	E_GruntEnemy,
-//	E_ChargeAttack
-//};
+//무엇을 알려줘야 하는지 설정하기 위한 enum
+UENUM(BlueprintType)
+enum class ENotifyType :uint8 
+{
+
+	E_None=0 UMETA(DisplayName = "None"),
+	E_HUD UMETA(DisplayName = "HUD"),
+	E_MoveInput UMETA(DisplayName = "MoveInput"),
+	E_MouseInput UMETA(DisplayName = "MouseInput"),
+	E_AttackInput UMETA(DisplayName = "AttackInput"),
+	E_Jump UMETA(DisplayName = "Jump"),
+	E_FireBallTrap UMETA(DisplayName = "FireBallTrap"),
+	E_ShutterTrap UMETA(DisplayName = "ShutterTrap"),
+	E_Claymore UMETA(DisplayName = "Claymore"),
+	E_HealBox UMETA(DisplayName = "HealBox"),
+	E_Lightning UMETA(DisplayName = "Lightning"),
+	E_GruntEnemy UMETA(DisplayName = "GruntEnemy"),
+	E_ChargeAttack UMETA(DisplayName = "ChargeAttack")
+
+};
 
 UCLASS()
 class ESCAPEGAME_API ATutorialNotify : public AActor
@@ -69,19 +73,23 @@ protected:
 	void LoadGame(const class UEGSaveGame* LoadInstance);
 
 	void initBoxComponent();
-	
+	//ENotify에 해당되는 Message를 TutorialUI가 불러오게 해준다
+	void loadTutorialMessage(class AEGPlayerController* PlayerController);
 
 protected:
+	//ENotifyType에 대응하는 FName들의 집합
+	const static TMap<ENotifyType, FName> SetOfNotifyMessage;
+
 	UPROPERTY(EditInstanceOnly, Category = "TriggerCollision")
 		UBoxComponent* BoxTrigger;
 	//Root컴포넌트용으로 사용할 컴포넌트. 아무것도 하지 않는다
 	UPROPERTY(VisibleAnywhere)
 		USceneComponent* Axis;
 	//중요한 메시지라면 게임을 중단 시킨다
-	UPROPERTY(VisibleAnywhere,Category="Data")
+	UPROPERTY(BlueprintReadOnly, EditInstanceOnly,Category="Data")
 	bool bIsImportant;
-	UPROPERTY(BlueprintReadOnly, EditInstanceOnly, Category="Data")
-		FString MessageTag;
-
-	
+	UPROPERTY(BlueprintReadOnly, VisibleInstanceOnly, Category = "Data")
+	FName NotifyTitle;
+	UPROPERTY(BlueprintReadWrite, EditInstanceOnly, Category = "Data")
+	ENotifyType NotifyType;
 };

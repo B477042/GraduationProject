@@ -9,6 +9,23 @@
 #include "EGGameInstance.h"
 //#include "Components/BoxComponent.h"
 
+const TMap<ENotifyType, FName>ATutorialNotify::SetOfNotifyMessage = {
+	{ENotifyType::E_None,TEXT("None")},
+	{ENotifyType::E_AttackInput,TEXT("AttackInput")},
+	{ENotifyType::E_ChargeAttack,TEXT("ChargeAttack")},
+	{ENotifyType::E_Claymore,TEXT("Claymore")},
+	{ENotifyType::E_FireBallTrap,TEXT("FireBallTrap")},
+	{ENotifyType::E_GruntEnemy,TEXT("GruntEnemy")},
+	{ENotifyType::E_HealBox,TEXT("HealBox")},
+	{ENotifyType::E_HUD,TEXT("HUD")},
+	{ENotifyType::E_Jump,TEXT("Jump")},
+	{ENotifyType::E_Lightning,TEXT("Lightning")},
+	{ENotifyType::E_MouseInput,TEXT("MouseInput")},
+	{ENotifyType::E_MoveInput,TEXT("MoveInput")},
+	{ENotifyType::E_ShutterTrap,TEXT("E_ShutterTrap")}
+
+};
+
 // Sets default values
 ATutorialNotify::ATutorialNotify()
 {
@@ -22,7 +39,7 @@ ATutorialNotify::ATutorialNotify()
 	
 	bIsImportant = false;
 
-	
+	NotifyType = ENotifyType::E_None;
 }
 
 // Called when the game starts or when spawned
@@ -63,17 +80,9 @@ void ATutorialNotify::OnOverlapBegin(AActor * OvelappedActor, AActor * OtherActo
 	if (!Controller)return;
 	
 	
-	//중요한 이벤트라면 중단시킨다
-	if (!bIsImportant)
-	{
-		
-	}
+	
 
-	//아니라면 팝업 형태로 띄운다
-	else
-	{
-
-	}
+	
 	
 	
 	
@@ -119,13 +128,29 @@ void ATutorialNotify::initBoxComponent()
 {
 	BoxTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComp"));
 	BoxTrigger->SetCollisionProfileName(TEXT("Trigger"));
-	
+	BoxTrigger->SetRelativeLocation(FVector(0, 0, 150));
 	BoxTrigger->SetGenerateOverlapEvents(true);
 	float X, Y, Z;
 	BoxTrigger->SetBoxExtent(FVector(X = 200, Y = 200, Z = 150));
 	BoxTrigger->SetHiddenInGame(true);
 	BoxTrigger->SetupAttachment(RootComponent);
 }
+
+void ATutorialNotify::loadTutorialMessage(AEGPlayerController* PlayerController)
+{
+	if (!PlayerController)
+	{
+		EGLOG(Error, TEXT("Player Controller is nullptr"));
+		return;
+
+	}
+	auto NotifyName = ATutorialNotify::SetOfNotifyMessage.Find(NotifyType);
+	PlayerController->LoadTutorialMessage(NotifyName,bIsImportant);
+
+
+}
+
+
 
 
 

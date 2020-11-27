@@ -11,6 +11,7 @@
 #include "EGGameState.h"
 #include "Engine.h"
 #include "EGGameInstance.h"
+#include "TutorialWidget.h"
 
 //#include"GameStat.h"
 
@@ -35,6 +36,13 @@ AEGPlayerController::AEGPlayerController()
 	{
 		PAUSEWidgetClass = UI_PAUSE_C.Class;
 	}
+
+	static ConstructorHelpers::FClassFinder<UTutorialWidget>UI_TUTORIAL_C(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Tutorial.UI_Tutorial_C'"));
+	if (UI_TUTORIAL_C.Succeeded())
+	{
+		TutorialWidgetClass = UI_TUTORIAL_C.Class;
+	}
+
 
 	//bIsPauseCalled = false;
 }
@@ -196,12 +204,48 @@ void AEGPlayerController::OnKillMode()
 
 }
 
+void AEGPlayerController::LoadTutorialMessage(const FName * MessageName, bool bIsImportant)
+{
+	if (!MessageName)
+	{
+		EGLOG(Error, TEXT("MessageName is nullptr"));
+		return;
+	}
+
+	//중요한 메시지면 중단 시킨다
+	if (bIsImportant)
+		SetPause(true);
+	//만약 TutorialWidget이 만들어지지 않았다면 생성
+	if (!TutorialWidget)
+		TutorialWidget = CreateWidget<UTutorialWidget>(this, TutorialWidgetClass);
+	//생성 실패시 리턴
+	if (!TutorialWidget)
+		return;
+
+	//FString RowName = MessageName->ToString();
+
+	auto data = DT_Tutorial->FindRow<FTutorialDataTable>(*MessageName,TEXT(""));
+	if (!data)
+	{
+		EGLOG(Error, TEXT("Can't Find Tutorial Message on table"));
+		return;
+	}
+
+
+
+}
+
 
 
  UGameWidget* AEGPlayerController::GetHUDWidget() const
 {
 	return HUD;
 }
+
+ UTutorialWidget * AEGPlayerController::GetTutorialWidget() const
+ {
+	 return TutorialWidget;
+ }
 
 
 

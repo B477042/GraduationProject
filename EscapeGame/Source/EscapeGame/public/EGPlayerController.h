@@ -31,11 +31,11 @@ public:
 	void OnEnterPressed();
 	void OnKillMode();
 
-	
+	void LoadTutorialMessage(const FName* MessageName,bool bIsImportant);
 
 
 	class UGameWidget* GetHUDWidget()const;
-	//class UUserWidget* GetPopUpWidget()const;
+	class UTutorialWidget* GetTutorialWidget()const;
 
 
 
@@ -46,7 +46,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UUserWidget>PAUSEWidgetClass;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
-	TSubclassOf<class UUserWidget>POPUPWidgetClass;
+	TSubclassOf<class UTutorialWidget>TutorialWidgetClass;
 	/*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UUserWidget>BloodWidgetClass;*/
 
@@ -76,6 +76,9 @@ private:
 
 	UPROPERTY()
 		class UUserWidget* PauseUI;
+	UPROPERTY(meta = (AllowPrivateAccess = true))
+	class UTutorialWidget* TutorialWidget;
+
 	//UPROPERTY()
 	//	bool bIsPauseCalled;
 	

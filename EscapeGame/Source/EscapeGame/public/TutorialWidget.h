@@ -25,6 +25,8 @@ private:
 	UPROPERTY(BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = true))
 	UImage* GIF;	
 
+	UPROPERTY(BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = true))
+	UMultiLineEditableTextBox* Describe;
 
 	
 };
