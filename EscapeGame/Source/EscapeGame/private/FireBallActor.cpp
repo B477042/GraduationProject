@@ -103,20 +103,24 @@ void AFireBallActor::loadAssetes()
 		HitEffect->SetRelativeScale3D(FVector(3.5f, 3.5f, 3.5f));
 		//HitEffect->bHiddenInGame = true;
 	}
-	static ConstructorHelpers::FObjectFinder<USoundBase>SB_CAST(TEXT("SoundWave'/Game/MagicModule/SFX/WAV/WAV_FireballCast.WAV_FireballCast'"));
+	
+
+		
+
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_CAST(TEXT("SoundWave'/Game/MyFolder/Sound/SE/WAV_FireballCast.WAV_FireballCast'"));
 	if (SB_CAST.Succeeded())
 	{
 		SoundCast->SetSound(SB_CAST.Object);
 		SoundCast->bAutoActivate = false;
 		SoundCast->Deactivate();
 	}
-	static ConstructorHelpers::FObjectFinder<USoundBase>SB_EXPLOSION(TEXT("SoundWave'/Game/MagicModule/SFX/WAV/WAV_GroundExplosion01.WAV_GroundExplosion01'"));
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_EXPLOSION(TEXT("SoundWave'/Game/MyFolder/Sound/SE/WAV_GroundExplosion01.WAV_GroundExplosion01'"));
 	if (SB_EXPLOSION.Succeeded())
 	{
 		SoundExplosion->SetSound(SB_EXPLOSION.Object);
 		SoundExplosion->bAutoActivate = false;
 	}
-	static ConstructorHelpers::FObjectFinder<USoundAttenuation >SA_Attenuation(TEXT("SoundAttenuation'/Game/MyFolder/Sound/FireBallCastAttenuation.FireBallCastAttenuation'"));
+	static ConstructorHelpers::FObjectFinder<USoundAttenuation >SA_Attenuation(TEXT("SoundAttenuation'/Game/MyFolder/Sound/SE/FireBallCastAttenuation.FireBallCastAttenuation'"));
 	if (SA_Attenuation.Succeeded())
 	{
 		SoundCast->AttenuationSettings = SA_Attenuation.Object;

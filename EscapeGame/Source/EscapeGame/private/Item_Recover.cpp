@@ -123,7 +123,7 @@ void AItem_Recover::loadAsset()
 
 
 	
-	static ConstructorHelpers::FObjectFinder<USoundBase>SB_SOUND(TEXT("SoundWave'/Game/MagicModule/SFX/WAV/WAV_Healing.WAV_Healing'"));
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_SOUND(TEXT("SoundWave'/Game/MyFolder/Sound/SE/WAV_Healing.WAV_Healing'"));
 	if (SB_SOUND.Succeeded())
 	{
 		
@@ -136,7 +136,7 @@ void AItem_Recover::loadAsset()
 		//Sound->SoundWavePlaybackTimes(0);
 	}
 
-	static ConstructorHelpers::FObjectFinder<USoundBase>SB_PICKSOUND(TEXT("SoundWave'/Game/MyFolder/Sound/PickUpBoxSFX.PickUpBoxSFX'"));
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_PICKSOUND(TEXT("SoundWave'/Game/MyFolder/Sound/SE/PickUpBoxSFX.PickUpBoxSFX'"));
 	if (SB_PICKSOUND.Succeeded())
 	{
 		PickupSound->SetSound(SB_PICKSOUND.Object);

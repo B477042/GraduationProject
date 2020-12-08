@@ -8,7 +8,7 @@ public class EscapeGame : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","UMG","AIModule","NavigationSystem", "GameplayTasks", "Json", "JsonUtilities", "SlateCore" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","UMG","AIModule","NavigationSystem", "GameplayTasks", "Json", "JsonUtilities", "SlateCore","EngineSettings" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {"GameSetting"  });
 

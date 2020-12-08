@@ -115,12 +115,12 @@ void AClaymore::loadAssets()
 	}
 
 	//SoundWave'/Game/GrenadePack/MapAssets/Audio/Explosion01.Explosion01'
-	static ConstructorHelpers::FObjectFinder <USoundBase>AC_AUDIO(TEXT("SoundWave'/Game/GrenadePack/MapAssets/Audio/Explosion01.Explosion01'"));
+	static ConstructorHelpers::FObjectFinder <USoundBase>AC_AUDIO(TEXT("SoundWave'/Game/MyFolder/Sound/SE/Explosion01.Explosion01'"));
 	if (AC_AUDIO.Succeeded())
 	{
 		AudioEffect->SetSound(AC_AUDIO.Object);
 	}
-	static ConstructorHelpers::FObjectFinder <USoundBase>AC_CLICKAUDIO(TEXT("SoundWave'/Game/MyFolder/Sound/car-seatbelt-clicking.car-seatbelt-clicking'"));
+	static ConstructorHelpers::FObjectFinder <USoundBase>AC_CLICKAUDIO(TEXT("SoundWave'/Game/MyFolder/Sound/SE/car-seatbelt-clicking.car-seatbelt-clicking'"));
 	if (AC_CLICKAUDIO.Succeeded())
 	{
 		SwitchClickSound ->SetSound(AC_CLICKAUDIO.Object);

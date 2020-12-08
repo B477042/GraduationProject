@@ -4,6 +4,7 @@
 
 #include "EscapeGame.h"
 #include "EGSaveGame.h"
+#include "OptionSaveGame.h"
 #include "Engine/GameInstance.h"
 #include "EGGameInstance.generated.h"
 
@@ -15,6 +16,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnLoadGamePhase, const UEGSaveGame*, LoadInstance );
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSaveGamePhase, UEGSaveGame*, SaveInstance);
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnOptionLoad,void);
 
 UENUM(BlueprintType)
 enum class EEGGameState :uint8
@@ -38,10 +40,15 @@ public:
 		void SaveGame();
 	UFUNCTION(BlueprintCallable)
 		void LoadGame();
+	UFUNCTION(BlueprintCallable)
+		void SaveOptions(float sld_Master,float sld_BGM,float sld_SE,float sld_Voice,float sld_UI,FIntPoint ScreenResoultion,EWindowMode::Type WindowMode);
+	UFUNCTION(BlueprintCallable)
+		class UOptionSaveGame* LoadOptions();
+	
 
-	FString SaveSlotName;
-	int32 UserIndex;
 
+	const FString GetSaveSlotName() { return SaveSlotName; }
+	const int32 GetSavedUserIndex() { return UserIndex; }
 	//Game의 상태. Save file을 어떻게 사용할지 이용할 수 있다.
 	UPROPERTY( VisibleAnywhere, BlueprintReadWrite, Category = "Data")
 		EEGGameState EGameState;
@@ -55,6 +62,12 @@ public:
 	FOnSaveGamePhase OnSaveGamePhaseDelegate;
  
 private:
-	
+	FString SaveSlotName;
+	FString OptionsSlotName;
+	int32 UserIndex;
+
+
+
+
 	
 };

@@ -51,6 +51,7 @@ public:
 		TSubclassOf<class UUserWidget>BloodWidgetClass;*/
 
 
+
 	void SyncStatToHUD();
 	void IsMoveKeyPressed();
 	const class UDataTable* GetDT_Player();
@@ -88,6 +89,8 @@ private:
 	class UDataTable* DT_Player;
 	UPROPERTY(VisibleAnywhere, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
 	class UDataTable* DT_Tutorial;
+
+
 
 
 	FInputModeGameOnly GameInputMode;

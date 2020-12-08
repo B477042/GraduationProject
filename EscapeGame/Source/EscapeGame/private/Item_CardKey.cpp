@@ -72,7 +72,7 @@ void AItem_CardKey::loadAssets()
 		Effect->SetRelativeLocation(FVector(0.0f, 0.0f, 20.0f));
 	}
 
-	static ConstructorHelpers::FObjectFinder<USoundBase>SB_SOUND(TEXT("SoundWave'/Game/MyFolder/Sound/PickUpBoxSFX.PickUpBoxSFX'"));
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_SOUND(TEXT("SoundWave'/Game/MyFolder/Sound/SE/PickUpBoxSFX.PickUpBoxSFX'"));
 	if (SB_SOUND.Succeeded())
 	{
 		//SB_SOUND.Object->set;

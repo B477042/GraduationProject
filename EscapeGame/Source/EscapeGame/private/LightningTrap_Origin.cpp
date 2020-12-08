@@ -96,7 +96,7 @@ void ALightningTrap_Origin::loadAssets()
 	}
 
 	//SoundWave'/Game/MagicModule/SFX/WAV/WAV_LightingSparks.WAV_LightingSparks'
-	static ConstructorHelpers::FObjectFinder<USoundBase>SB_SPARK(TEXT("SoundWave'/Game/MagicModule/SFX/WAV/WAV_LightingSparks.WAV_LightingSparks'"));
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_SPARK(TEXT("SoundWave'/Game/MyFolder/Sound/SE/WAV_LightingSparks.WAV_LightingSparks'"));
 	if (SB_SPARK.Succeeded())
 	{
 		SparkAudio->SetSound(SB_SPARK.Object);

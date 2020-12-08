@@ -70,7 +70,7 @@ void AEGPlayerCharacter::BeginPlay()
 	{
 
 		//Load Game Data
-		auto LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(GameInstance->SaveSlotName, GameInstance->UserIndex));
+		auto LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(GameInstance->GetSaveSlotName(), GameInstance->GetSavedUserIndex()));
 		if (!LoadInstance)
 		{
 			EGLOG(Error, TEXT("Load Insatnce Failed"));
@@ -86,7 +86,7 @@ void AEGPlayerCharacter::BeginPlay()
 
 	else if (GameInstance->EGameState == EEGGameState::E_NextStage)
 	{
-		auto LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(GameInstance->SaveSlotName, GameInstance->UserIndex));
+		auto LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(GameInstance->GetSaveSlotName(), GameInstance->GetSavedUserIndex()));
 		if (!LoadInstance)
 		{
 			EGLOG(Error, TEXT("Load Insatnce Failed"));
@@ -568,7 +568,7 @@ void AEGPlayerCharacter::LoadAssets()
 
 	//SoundCue'/Game/ParagonKwang/Characters/Heroes/Kwang/Sounds/SoundCues/Kwang_Effort_Attack.Kwang_Effort_Attack'
 
-	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Attack(TEXT("SoundCue'/Game/ParagonKwang/Characters/Heroes/Kwang/Sounds/SoundCues/Kwang_Effort_Attack.Kwang_Effort_Attack'"));
+	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Attack(TEXT("SoundCue'/Game/MyFolder/Sound/Voice/Kwang_Effort_Attack.Kwang_Effort_Attack'"));
 	if (SC_Attack.Succeeded())
 	{
 		AttackSound->SetSound(SC_Attack.Object);

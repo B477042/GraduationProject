@@ -43,6 +43,7 @@ AEGPlayerController::AEGPlayerController()
 		TutorialWidgetClass = UI_TUTORIAL_C.Class;
 	}
 
+	
 
 	//bIsPauseCalled = false;
 }

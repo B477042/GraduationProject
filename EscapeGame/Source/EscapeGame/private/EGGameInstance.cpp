@@ -3,6 +3,7 @@
 
 #include "EGGameInstance.h"
 #include "EGPlayerController.h"
+#include "Sound/SoundMix.h"
 
 #include "EGPlayerState.h"
 #include "EGGameState.h"
@@ -10,8 +11,19 @@
 UEGGameInstance::UEGGameInstance()
 {
 	SaveSlotName = TEXT("TESTSave");
+	OptionsSlotName = TEXT("Options");
 	UserIndex = 0;
 	EGameState = EEGGameState::E_NewGame;
+
+	//static ConstructorHelpers::FClassFinder<USoundMix>Sm_mix(TEXT("SoundMix'/Game/MyFolder/BP_SoundClass/BP_SM_EGSoundMix.BP_SM_EGSoundMix_C'"));
+	//if (Sm_mix.Succeeded())
+	//{
+	//	SM_SoundMixClass = Sm_mix.Class;
+	//}
+	//static ConstructorHelpers::FClassFinder<USoundClass>
+
+	
+
 }
 
 //Save Game이 호출될 경우는 메뉴에서 저장하거나 자동저장 오브젝트와 닿았을 때 일것이다
@@ -40,7 +52,7 @@ void UEGGameInstance::SaveGame()
 
 		//슬롯에 저장
 		UGameplayStatics::SaveGameToSlot(SaveInstance, SaveSlotName,UserIndex);
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Save"));
+	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Save"));
 		EGLOG(Error, TEXT("Load Set Move To : %s"), *SaveInstance->GameProgressData.LevelName.ToString());
 }
 
@@ -72,4 +84,36 @@ void UEGGameInstance::LoadGame()
 	EGLOG(Error, TEXT("Load Complete"));
 	//Load 처리가 끝나면 Player가 BeginPlay단계에서 데이터 로드를 시도한다
 }
+
+void UEGGameInstance::SaveOptions(float sld_Master, float sld_BGM, float sld_SE, float sld_Voice, float sld_UI, FIntPoint ScreenResoultion, EWindowMode::Type WindowMode)
+{
+	auto SaveInstance = NewObject<UOptionSaveGame>();
+	if (!SaveInstance)return;
+
+	SaveInstance->SetValues(sld_Master, sld_BGM, sld_SE, sld_Voice, sld_UI, ScreenResoultion, WindowMode);
+	UGameplayStatics::SaveGameToSlot(SaveInstance, OptionsSlotName, UserIndex);
+}
+
+UOptionSaveGame* UEGGameInstance::LoadOptions()
+{
+	//게임 시작시 저장됐던 옵션을 불러온다.
+	//만약 불러온적이 있다면 게임 플레이가 종료되기 전까지
+	//옵션을 불러오게 해선 안 된다.
+
+
+	auto LoadInstance = Cast<UOptionSaveGame>(UGameplayStatics::LoadGameFromSlot(OptionsSlotName, UserIndex));
+	if (!LoadInstance)
+	{
+		EGLOG(Error, TEXT("Load Insatnce Failed"));
+		return nullptr;
+	}
+
+
+
+	return LoadInstance;
+	
+
+}
+
+
 
