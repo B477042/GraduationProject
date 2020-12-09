@@ -120,7 +120,7 @@ void AFireBallActor::loadAssetes()
 		SoundExplosion->SetSound(SB_EXPLOSION.Object);
 		SoundExplosion->bAutoActivate = false;
 	}
-	static ConstructorHelpers::FObjectFinder<USoundAttenuation >SA_Attenuation(TEXT("SoundAttenuation'/Game/MyFolder/Sound/SE/FireBallCastAttenuation.FireBallCastAttenuation'"));
+	static ConstructorHelpers::FObjectFinder<USoundAttenuation >SA_Attenuation(TEXT("SoundAttenuation'/Game/MyFolder/Sound/FireBallCastAttenuation.FireBallCastAttenuation'"));
 	if (SA_Attenuation.Succeeded())
 	{
 		SoundCast->AttenuationSettings = SA_Attenuation.Object;

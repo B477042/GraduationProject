@@ -47,13 +47,13 @@ void ABoss_Fireball::loadAssets()
 		HitEffect->SetTemplate(P_HITEFFECT.Object);
 		HitEffect->bAutoActivate = false;
 	}
-	static ConstructorHelpers::FObjectFinder<USoundBase>SW_Passing(TEXT("SoundWave'/Game/MyFolder/Sound/248116__robinhood76__05224-fireball-whoosh.248116__robinhood76__05224-fireball-whoosh'"));
+	static ConstructorHelpers::FObjectFinder<USoundBase>SW_Passing(TEXT("SoundWave'/Game/MyFolder/Sound/SE/248116__robinhood76__05224-fireball-whoosh.248116__robinhood76__05224-fireball-whoosh'"));
 	if (SW_Passing.Succeeded())
 	{
 		SoundPassing->SetSound(SW_Passing.Object);
 		SoundPassing->bAutoActivate = false;
 	}
-	static ConstructorHelpers::FObjectFinder<USoundBase>SW_Hit(TEXT("SoundWave'/Game/MyFolder/Sound/442872__qubodup__fire-magic.442872__qubodup__fire-magic'"));
+	static ConstructorHelpers::FObjectFinder<USoundBase>SW_Hit(TEXT("SoundWave'/Game/MyFolder/Sound/SE/442872__qubodup__fire-magic.442872__qubodup__fire-magic'"));
 	if (SW_Hit.Succeeded())
 	{
 		SoundHit->SetSound(SW_Hit.Object);

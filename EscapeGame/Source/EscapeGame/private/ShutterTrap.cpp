@@ -127,7 +127,7 @@ void AShutterTrap::initComponents()
 
 void AShutterTrap::loadAssets()
 {
-	static ConstructorHelpers::FObjectFinder<USoundBase>SB_SOUND(TEXT("SoundWave'/Game/MyFolder/Sound/unsheath-sword.unsheath-sword'"));
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_SOUND(TEXT("SoundWave'/Game/MyFolder/Sound/SE/unsheath-sword.unsheath-sword'"));
 	if (SB_SOUND.Succeeded())
 	{
 		SoundEffect->SetSound(SB_SOUND.Object);

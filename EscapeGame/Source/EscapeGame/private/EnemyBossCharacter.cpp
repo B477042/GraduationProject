@@ -267,7 +267,7 @@ void AEnemyBossCharacter::loadAsset()
 		TeleportExit->bAutoActivate = false;
 	}
 	//SoundCue'/Game/MagicModule/SFX/CUE/CUE_Teleport.CUE_Teleport'
-	static ConstructorHelpers::FObjectFinder<USoundCue>SC_TELE(TEXT("SoundCue'/Game/MagicModule/SFX/CUE/CUE_Teleport.CUE_Teleport'"));
+	static ConstructorHelpers::FObjectFinder<USoundCue>SC_TELE(TEXT("SoundCue'/Game/MyFolder/Sound/SE/CUE_Teleport.CUE_Teleport'"));
 	if (SC_TELE.Succeeded())
 	{
 		TeleportSound->SetSound(SC_TELE.Object);
@@ -284,7 +284,7 @@ void AEnemyBossCharacter::loadAsset()
 		MpChargingEffect->bAllowRecycling = true;
 
 	}
-	static ConstructorHelpers::FObjectFinder<USoundCue>SC_MP(TEXT("SoundCue'/Game/MagicModule/SFX/CUE/CUE_Healing.CUE_Healing'"));
+	static ConstructorHelpers::FObjectFinder<USoundCue>SC_MP(TEXT("SoundCue'/Game/MyFolder/Sound/SE/CUE_Healing.CUE_Healing'"));
 	if (SC_MP.Succeeded())
 	{
 		MpChargingSound->SetSound(SC_MP.Object);

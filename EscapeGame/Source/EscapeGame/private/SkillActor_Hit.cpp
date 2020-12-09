@@ -14,7 +14,7 @@ ASkillActor_Hit::ASkillActor_Hit()
 	{
 		MainEffect->SetTemplate(PS_Main.Object);
 	}
-	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Effect(TEXT("SoundCue'/Game/MagicModule/SFX/CUE/CUE_GroundExplosion.CUE_GroundExplosion'"));
+	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Effect(TEXT("SoundCue'/Game/MyFolder/Sound/SE/CUE_GroundExplosion.CUE_GroundExplosion'"));
 	if (SC_Effect.Succeeded())
 	{
 		SoundHit->SetSound(SC_Effect.Object);

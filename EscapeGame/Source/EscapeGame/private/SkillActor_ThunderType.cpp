@@ -27,7 +27,7 @@ void ASkillActor_ThunderType::loadAsset()
 		HitEffect->SetTemplate(PS_Hit.Object);
 	}
 	//SoundWave'/Game/MyFolder/Sound/thunder.thunder'
-	static ConstructorHelpers::FObjectFinder<USoundBase>SO(TEXT("SoundWave'/Game/MyFolder/Sound/thunder.thunder'"));
+	static ConstructorHelpers::FObjectFinder<USoundBase>SO(TEXT("SoundWave'/Game/MyFolder/Sound/SE/thunder.thunder'"));
 	if (SO.Succeeded())
 	{
 		SoundHit->SetSound(SO.Object);
