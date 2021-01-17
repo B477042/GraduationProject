@@ -19,11 +19,11 @@ public:
 	ASkillActor();
 
 	UFUNCTION(BlueprintCallable)
-	void ActivateHitEffect();
+	virtual void ActivateHitEffect();
 	UFUNCTION(BlueprintCallable)
 	void ActivateMainEffect();
 	UFUNCTION(BlueprintCallable)
-	void SetSafety();
+	virtual void SetSafety();
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -35,42 +35,37 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	UFUNCTION(BlueprintCallable)
-	FVector GetFireDir() { return FireDir; }
+
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	USceneComponent* Root;
+
+	//형태로 사용될 수 있는 주된 이펙트
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "effect")
-	UParticleSystemComponent* MainEffect;
+	UParticleSystemComponent* VFX_Main;
+
+	//명중시 이펙트
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "effect")
-	UParticleSystemComponent* ReactEffect;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "effect")
-	UParticleSystemComponent* HitEffect;
+	UParticleSystemComponent* VFX_Hit;
+
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
-	USphereComponent*Collision;
+	USphereComponent*MainCollision;
 
-	UPROPERTY(VisibleAnywhere, Category = Collision)
-	USphereComponent*SoundTrigger;//볼이 날아갈 때 옆에 지나가면 날아가는 소리가 들리게끔 하는 범위
-		//맞으면 나는 소리
+	
+
+	//맞으면 나는 소리
 	UPROPERTY(VisibleAnywhere, Category = Contents)
-	UAudioComponent*SoundHit;
-	//날아가면서 나는 소리
+	UAudioComponent*SFX_Hit;
+	//주변에서 나는 소리
 	UPROPERTY(VisibleAnywhere, Category = Contents)
-	UAudioComponent*SoundPassing;
+	UAudioComponent*SFX_Passing;
 
-protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"), Category = Info)
+		float Damage;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	bool bIsFire;
-	//발사방향
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector FireDir;
-	//속도
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float Acceleration;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float Damage;
+	
 
 
 };

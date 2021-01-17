@@ -17,40 +17,59 @@ class ESCAPEGAME_API AProjectile : public  ASkillActor
 public:	
 	// Sets default values for this actor's properties
 	AProjectile();
+	
 	virtual void ReadyToFire(const FVector &Dir_Vector, const FVector& Location,const FRotator& Rotate);
 	void Fire();
-	virtual void PostInitializeComponents()override;
+	
+	virtual void SetSafety()override;
+	virtual void ActivateHitEffect() override;
+	
+
 	//메인 이펙트에 맞았을 때
 	UFUNCTION()
 	void OnSomethingHit(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
-	//옆으로 지나갈 때
-
-	//반사되었을때
-	UFUNCTION()
-		void Reflected();
-
+	
 	UFUNCTION()
 	void OnCharacterEntered(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 	
-	void TripleDamage() { Damage *= 3.0f; }
+	//void TripleDamage() { Damage *= 3.0f; }
 
-	void SetCollision(const FName&name) { Collision->SetCollisionProfileName(name); }
+	void SetCollision(const FName&name) { MainCollision->SetCollisionProfileName(name); }
+
+//반사되었을때
+	UFUNCTION()
+	void Reflected();
+
 	UFUNCTION(BlueprintCallable)
-		void BP_Fire(FVector Location, FRotator Rotation, FVector Dir);
+	void BP_Fire(FVector Location, FRotator Rotation, FVector Dir);
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
+	virtual void PostInitializeComponents()override;
+
 	void gliding();
 	
+
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+protected:
 
+	////날아가는 효과를 가진 Actor가 지나갈 때 나는 소리를 재생 시킬 범위
+	UPROPERTY(VisibleAnywhere, Category = MainCollision)
+		USphereComponent*Trigger_Passing;
 	
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"),Category = FireInformation)
+		bool bIsFire;
+	//발사방향
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"), Category = FireInformation)
+		FVector FireDir;
+	//속도
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"), Category = FireInformation)
+		float Acceleration;
+	
 
 };

@@ -8,8 +8,8 @@
 ASkillActor_ThunderType::ASkillActor_ThunderType()
 {
 	loadAsset();
-	MainEffect->SetRelativeScale3D(FVector(2.0f, 2.0f, 2.0f));
-	HitEffect->SetRelativeScale3D(FVector(2.0f, 2.0f, 2.0f));
+	VFX_Main->SetRelativeScale3D(FVector(2.0f, 2.0f, 2.0f));
+	VFX_Hit->SetRelativeScale3D(FVector(2.0f, 2.0f, 2.0f));
 	Damage = 300.0f;
 }
 
@@ -19,18 +19,18 @@ void ASkillActor_ThunderType::loadAsset()
 	static ConstructorHelpers::FObjectFinder<UParticleSystem>PS_Main(TEXT("ParticleSystem'/Game/ParagonKwang/FX/Particles/Abilities/LightStrike/FX/P_Kwang_LightStrike_Burst.P_Kwang_LightStrike_Burst'"));
 	if (PS_Main.Succeeded())
 	{
-		MainEffect->SetTemplate(PS_Main.Object);
+		VFX_Main->SetTemplate(PS_Main.Object);
 	}
 	static ConstructorHelpers::FObjectFinder<UParticleSystem>PS_Hit(TEXT("ParticleSystem'/Game/ParagonKwang/FX/Particles/Abilities/LightStrike/FX/P_Kwang_LightStrike_Burst_Holding.P_Kwang_LightStrike_Burst_Holding'"));
 	if (PS_Hit.Succeeded())
 	{
-		HitEffect->SetTemplate(PS_Hit.Object);
+		VFX_Hit->SetTemplate(PS_Hit.Object);
 	}
 	//SoundWave'/Game/MyFolder/Sound/thunder.thunder'
 	static ConstructorHelpers::FObjectFinder<USoundBase>SO(TEXT("SoundWave'/Game/MyFolder/Sound/SE/thunder.thunder'"));
 	if (SO.Succeeded())
 	{
-		SoundHit->SetSound(SO.Object);
+		SFX_Hit->SetSound(SO.Object);
 	}
 
 }
@@ -44,7 +44,7 @@ void ASkillActor_ThunderType::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	HitEffect->OnSystemFinished.AddDynamic(this, &ASkillActor_ThunderType::OnSystemEnd);
+	VFX_Hit->OnSystemFinished.AddDynamic(this, &ASkillActor_ThunderType::OnSystemEnd);
 
 }
 
@@ -57,12 +57,12 @@ void ASkillActor_ThunderType::OnSystemEnd(UParticleSystemComponent * PS)
 void ASkillActor_ThunderType::UseSkill(const FVector & Location)
 {
 	SetActorHiddenInGame(false);
-	MainEffect->SetHiddenInGame(false);
-	MainEffect->Activate();
-	HitEffect->SetHiddenInGame(false);
-	HitEffect->Activate();
+	VFX_Main->SetHiddenInGame(false);
+	VFX_Main->Activate();
+	VFX_Hit->SetHiddenInGame(false);
+	VFX_Hit->Activate();
 	SetActorLocation(Location);
-	SoundHit->Play();
+	SFX_Hit->Play();
 
 	TArray<FHitResult> HitResult;
 

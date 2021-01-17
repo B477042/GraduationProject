@@ -13,9 +13,9 @@ ASkillActor_BossLightning::ASkillActor_BossLightning()
 	bIsActivated = false;
 
 	float X, Y, Z, Yaw, Roll, Pitch;
-	MainEffect->SetRelativeScale3D(FVector(X = 2.250000, Y = 1.000000, Z = 1.000000));
+	VFX_Main->SetRelativeScale3D(FVector(X = 2.250000, Y = 1.000000, Z = 1.000000));
 
-	SoundHit->SetRelativeLocation(FVector(X = 545.000000, Y = 0.000000, Z = 0.000000));
+	SFX_Hit->SetRelativeLocation(FVector(X = 545.000000, Y = 0.000000, Z = 0.000000));
 
 	Capsule->SetCapsuleHalfHeight(563.568665f);
 	Capsule->SetCapsuleRadius(22.0f);
@@ -68,8 +68,8 @@ bool ASkillActor_BossLightning::UseSkill(const FVector & Loc, const FRotator & R
 
 void ASkillActor_BossLightning::ActivateEffect()
 {
-	MainEffect->SetHiddenInGame(false);
-	SoundHit->Play();
+	VFX_Main->SetHiddenInGame(false);
+	SFX_Hit->Play();
 
 	Capsule->SetCollisionProfileName(TEXT("EnemyWeapon"));
 
@@ -78,8 +78,8 @@ void ASkillActor_BossLightning::ActivateEffect()
 
 void ASkillActor_BossLightning::DeactivateEffect()
 {
-	SoundHit->Stop();
-	MainEffect->SetHiddenInGame(true);
+	SFX_Hit->Stop();
+	VFX_Main->SetHiddenInGame(true);
 
 	bIsActivated = false;
 }
@@ -95,14 +95,14 @@ void ASkillActor_BossLightning::loadAsset()
 	static ConstructorHelpers::FObjectFinder<UParticleSystem >PS_EFFECT(TEXT("ParticleSystem'/Game/MagicModule/VFX/P_Beam.P_Beam'"));
 	if (PS_EFFECT.Succeeded())
 	{
-		MainEffect->SetTemplate(PS_EFFECT.Object);
+		VFX_Main->SetTemplate(PS_EFFECT.Object);
 	}
 
 	static ConstructorHelpers::FObjectFinder<USoundCue>SB_SPARK(TEXT("SoundCue'/Game/MagicModule/SFX/CUE/CUE_LightingSparks.CUE_LightingSparks'"));
 	if (SB_SPARK.Succeeded())
 	{
-		SoundHit->SetSound(SB_SPARK.Object);
-		SoundHit->bAutoActivate = false;
+		SFX_Hit->SetSound(SB_SPARK.Object);
+		SFX_Hit->bAutoActivate = false;
 
 	}
 

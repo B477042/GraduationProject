@@ -9,24 +9,25 @@ ASkillActor::ASkillActor()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	initComponents();
-	bIsFire = false;
-	FireDir = FVector::ZeroVector;
+	
 	SetActorLocation(FVector::ZeroVector);
+
+	Damage = 0.0f;
 }
 
 void ASkillActor::ActivateMainEffect()
 {
-	MainEffect->Activate();
+	VFX_Main->Activate();
 	
 }
 void ASkillActor::ActivateHitEffect()
 {
-	MainEffect->Deactivate();
-	HitEffect->SetHiddenInGame(false);
-	HitEffect->Activate();
-	SoundHit->Play();
-	Collision->SetCollisionProfileName(TEXT("NoCollision"));
-	bIsFire = false;
+	VFX_Main->Deactivate();
+	VFX_Hit->SetHiddenInGame(false);
+	VFX_Hit->Activate();
+	SFX_Hit->Play();
+	MainCollision->SetCollisionProfileName(TEXT("NoCollision"));
+	
 	SetSafety();
 
 }
@@ -49,54 +50,53 @@ void ASkillActor::SetSafety()
 	//bIsFire = false;
 	/*if(!bIsFire)
 	EGLOG(Warning, TEXT("Safe"));*/
-	FireDir = FVector::ZeroVector;
-
+	
 	Root->SetHiddenInGame(true);
 	
-	Collision->SetCollisionProfileName(TEXT("NoCollision"));
-	SoundTrigger->SetCollisionProfileName(TEXT("NoCollision"));
+	MainCollision->SetCollisionProfileName(TEXT("NoCollision"));
+	
 
-	SoundHit->bAutoActivate = false;
-	SoundPassing->bAutoActivate = false;
-	MainEffect->SetHiddenInGame(true);
-	ReactEffect->SetHiddenInGame(true);
-	ReactEffect->bAutoActivate = false;
+	SFX_Hit->bAutoActivate = false;
+	SFX_Passing->bAutoActivate = false;
+	VFX_Main->SetHiddenInGame(true);
+	//ReactEffect->SetHiddenInGame(true);
+	//ReactEffect->bAutoActivate = false;
 
-	SoundHit->Deactivate();
-	SoundPassing->Deactivate();
+	SFX_Hit->Deactivate();
+	SFX_Passing->Deactivate();
 	
 }
 
 void ASkillActor::initComponents()
 {
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("ROOT"));
-	MainEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("FIREBALL"));
-	ReactEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("ReactEffect"));
-	HitEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("HIT"));
-	Collision = CreateDefaultSubobject<USphereComponent>(TEXT("COLLISION"));
-	SoundTrigger = CreateDefaultSubobject<USphereComponent>(TEXT("SoundTRIGGER"));
-	SoundPassing = CreateDefaultSubobject<UAudioComponent >(TEXT("SOUNDPassing"));
-	SoundHit = CreateDefaultSubobject<UAudioComponent >(TEXT("SOUNDHit"));
+	VFX_Main = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("FIREBALL"));
+//	ReactEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("ReactEffect"));
+	VFX_Hit = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("HIT"));
+	MainCollision = CreateDefaultSubobject<USphereComponent>(TEXT("COLLISION"));
+	
+	SFX_Passing = CreateDefaultSubobject<UAudioComponent >(TEXT("SOUNDPassing"));
+	SFX_Hit = CreateDefaultSubobject<UAudioComponent >(TEXT("SOUNDHit"));
 
 	RootComponent = Root;
-	Collision->SetupAttachment(RootComponent);
-	MainEffect->SetupAttachment(RootComponent);
-	ReactEffect->SetupAttachment(RootComponent);
-	HitEffect->SetupAttachment(RootComponent);
-	MainEffect->SetupAttachment(RootComponent);
-	SoundPassing->SetupAttachment(RootComponent);
-	SoundHit->SetupAttachment(RootComponent);
-	SoundTrigger->SetupAttachment(RootComponent);
+	MainCollision->SetupAttachment(RootComponent);
+	VFX_Main->SetupAttachment(RootComponent);
+	//ReactEffect->SetupAttachment(RootComponent);
+	VFX_Hit->SetupAttachment(RootComponent);
+	VFX_Main->SetupAttachment(RootComponent);
+	SFX_Passing->SetupAttachment(RootComponent);
+	SFX_Hit->SetupAttachment(RootComponent);
+
 
 	//Root->SetHiddenInGame(true);
-	Collision->SetCollisionProfileName(TEXT("NoCollision"));
-	SoundTrigger->SetCollisionProfileName(TEXT("NoCollision"));
+	MainCollision->SetCollisionProfileName(TEXT("NoCollision"));
+
 	
-	SoundHit->bAutoActivate = false;
-	SoundPassing->bAutoActivate = false;
+	SFX_Hit->bAutoActivate = false;
+	SFX_Passing->bAutoActivate = false;
 	//MainEffect->SetHiddenInGame(true);
 	//ReactEffect->SetHiddenInGame(true);
-	ReactEffect->bAutoActivate = false;
+	//ReactEffect->bAutoActivate = false;
 }
 
 // Called every frame

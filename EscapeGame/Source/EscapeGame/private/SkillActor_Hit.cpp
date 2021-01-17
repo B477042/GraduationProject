@@ -12,12 +12,12 @@ ASkillActor_Hit::ASkillActor_Hit()
 	static ConstructorHelpers::FObjectFinder<UParticleSystem>PS_Main(TEXT("ParticleSystem'/Game/ParagonHowitzer/FX/Particles/Abilities/LRM/FX/P_LRM_Explo_Character_Miss.P_LRM_Explo_Character_Miss'"));
 	if (PS_Main.Succeeded())
 	{
-		MainEffect->SetTemplate(PS_Main.Object);
+		VFX_Main->SetTemplate(PS_Main.Object);
 	}
 	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Effect(TEXT("SoundCue'/Game/MyFolder/Sound/SE/CUE_GroundExplosion.CUE_GroundExplosion'"));
 	if (SC_Effect.Succeeded())
 	{
-		SoundHit->SetSound(SC_Effect.Object);
+		SFX_Hit->SetSound(SC_Effect.Object);
 
 	}
 
@@ -34,7 +34,7 @@ void ASkillActor_Hit::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	MainEffect->OnSystemFinished.AddDynamic(this, &ASkillActor_Hit::OnSystemEnd);
+	VFX_Main->OnSystemFinished.AddDynamic(this, &ASkillActor_Hit::OnSystemEnd);
 }
 
 void ASkillActor_Hit::Tick(float DeltaTime)
@@ -46,13 +46,13 @@ void ASkillActor_Hit::UseSkill(const FVector & Point)
 {
 	SetActorHiddenInGame(false);
 	Root->SetHiddenInGame(false);
-	MainEffect->SetHiddenInGame(false);
+	VFX_Main->SetHiddenInGame(false);
 	SetActorLocation(Point);
 
 	ActivateMainEffect();
-	//SoundHit->SetHiddenInGame(false);
-	SoundHit->Play();
-	Collision->SetCollisionProfileName(TEXT("NoCollision"));
+	//SFX_Hit->SetHiddenInGame(false);
+	SFX_Hit->Play();
+	MainCollision->SetCollisionProfileName(TEXT("NoCollision"));
 	
 	//탐지된 여러가지의 결과들
 	TArray<FOverlapResult>OverlapResults;
