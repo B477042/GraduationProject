@@ -4,6 +4,8 @@
 #include "Projectile.h"
 #include "EnemyCharacter.h"
 #include "EGPlayerCharacter.h"
+#include "DrawDebugHelpers.h"
+#include "EGGameInstance.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -19,6 +21,7 @@ AProjectile::AProjectile()
 	bIsFire = false;
 	FireDir = FVector::ZeroVector;
 
+	bIsDebugMode = false;
 	//initComponents();
 	
 }
@@ -29,6 +32,33 @@ void AProjectile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	//EGLOG(Warning, TEXT("d"));
 	gliding();
+}
+
+// Called when the game starts or when spawned
+void AProjectile::BeginPlay()
+{
+	Super::BeginPlay();
+	//SetSafety();
+
+	auto gameInstance = Cast<UEGGameInstance>(GetGameInstance());
+	if (!gameInstance)
+	{
+		bIsDebugMode = gameInstance->bIsDebugMode;
+	}
+
+}
+
+void AProjectile::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	MainCollision->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnSomethingHit);
+
+	Trigger_Passing->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnPlayerEntered);;
+	SFX_Hit->OnAudioFinished.AddDynamic(this, &ASkillActor::SetSafety);
+
+
+
 }
 
 
@@ -79,18 +109,6 @@ void AProjectile::ActivateHitEffect()
 }
 
 
-void AProjectile::PostInitializeComponents()
-{
-	Super::PostInitializeComponents();
-
-	MainCollision->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnSomethingHit);
-
-	Trigger_Passing->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnCharacterEntered);;
-	SFX_Hit->OnAudioFinished.AddDynamic(this, &ASkillActor::SetSafety);
-
-	
-
-}
 
 void AProjectile::OnSomethingHit(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
@@ -116,9 +134,16 @@ void AProjectile::Reflected()
 
 }
 
-void AProjectile::OnCharacterEntered(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+void AProjectile::OnPlayerEntered(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	SFX_Passing->Play();
+	auto player = Cast<AEGPlayerCharacter>(OtherActor);
+	if(!player)
+	{
+		
+		
+		SFX_Passing->Play();
+	}
+
 }
 
 void AProjectile::BP_Fire(FVector  Location, FRotator  Rotation, FVector  Dir)
@@ -145,12 +170,6 @@ void AProjectile::BP_Fire(FVector  Location, FRotator  Rotation, FVector  Dir)
 
 
 
-// Called when the game starts or when spawned
-void AProjectile::BeginPlay()
-{
-	Super::BeginPlay();
-	//SetSafety();
-}
 
 
 

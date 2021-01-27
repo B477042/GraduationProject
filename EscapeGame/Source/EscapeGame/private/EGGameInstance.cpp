@@ -23,7 +23,7 @@ UEGGameInstance::UEGGameInstance()
 	//static ConstructorHelpers::FClassFinder<USoundClass>
 
 	
-
+	bIsDebugMode = false;
 }
 
 //Save Game이 호출될 경우는 메뉴에서 저장하거나 자동저장 오브젝트와 닿았을 때 일것이다

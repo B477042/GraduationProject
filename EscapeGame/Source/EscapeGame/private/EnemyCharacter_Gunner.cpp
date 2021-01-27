@@ -56,11 +56,12 @@ void  AEnemyCharacter_Gunner::initComponents()
 	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
 	FireSound1 = CreateDefaultSubobject<UAudioComponent>(TEXT("FireSound1"));
 	FireSound2 = CreateDefaultSubobject<UAudioComponent>(TEXT("FireSound2"));
-
-
-	WeaponMesh->AttachTo(RootComponent);
-	FireSound1->AttachTo(WeaponMesh);
-	FireSound2->AttachTo(WeaponMesh);
+	MagComponent = CreateDefaultSubobject<UComponent_Mag>(TEXT("MagComponent"));
+	
+	WeaponMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+	FireSound1->AttachToComponent(WeaponMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+	FireSound2->AttachToComponent(WeaponMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+	
 }
 
 void  AEnemyCharacter_Gunner::loadAssets()

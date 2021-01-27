@@ -94,6 +94,7 @@ ANormalPath::ANormalPath()
 	LampLight->SetAttenuationRadius(428.286865f);
 	LampLight->SetInnerConeAngle(21.464767f);
 	LampLight->SetOuterConeAngle(28.952377f);
+
 	//빠른 랜더링을 위해 Light를 Static으로
 	LampLight->SetMobility(EComponentMobility::Movable);
 

@@ -61,6 +61,8 @@ public:
 	//Save Game이 호출되면 실행된다
 	FOnSaveGamePhase OnSaveGamePhaseDelegate;
  
+	bool bIsDebugMode;
+
 private:
 	FString SaveSlotName;
 	FString OptionsSlotName;

@@ -82,7 +82,7 @@ AOneSideBlockedPath::AOneSideBlockedPath()
 	LampLight->SetInnerConeAngle(21.464767f);
 	LampLight->SetOuterConeAngle(28.952377f);
 	
-	LampLight->SetMobility(EComponentMobility::Movable);
+	LampLight->SetMobility(EComponentMobility::Static);
 
 
 	//UPROPERTY 계층구조 만들기

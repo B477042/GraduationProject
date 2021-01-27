@@ -26,18 +26,11 @@ protected:
 	virtual void PostInitializeComponents() override;
 
 
-	 void initComponents();
+	void loadAssets();
+	void initCollisions();
 
 private:
 	
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision", meta = (AllowPrivateAccess = "true"))
-		USphereComponent* HitCollision;
-
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "VFX", meta = (AllowPrivateAccess = "true"))
-		UParticleSystemComponent* VFX_Trail;
-	
-
 
 };

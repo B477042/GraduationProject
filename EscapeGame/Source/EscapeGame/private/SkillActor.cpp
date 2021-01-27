@@ -47,9 +47,7 @@ void ASkillActor::PostInitializeComponents()
 
 void ASkillActor::SetSafety()
 {
-	//bIsFire = false;
-	/*if(!bIsFire)
-	EGLOG(Warning, TEXT("Safe"));*/
+
 	
 	Root->SetHiddenInGame(true);
 	
