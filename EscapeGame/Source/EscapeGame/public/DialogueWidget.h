@@ -4,10 +4,10 @@
 
 #include "EscapeGame.h"
 #include "Blueprint/UserWidget.h"
-#include "Button.h"
+#include "Components/Button.h"
 #include "UMG/Public/Components/EditableTextBox.h"
 #include "UMG/Public/Components/EditableText.h"
-#include "EditableTextBox.h"
+#include "Components/EditableTextBox.h"
 #include "DialogueWidget.generated.h"
 
 /**

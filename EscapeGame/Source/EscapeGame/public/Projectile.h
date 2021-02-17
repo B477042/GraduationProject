@@ -8,6 +8,9 @@
 
 /*
 	발사체 클래스
+
+	* 
+
 */
 UCLASS()
 class ESCAPEGAME_API AProjectile : public  ASkillActor
@@ -19,7 +22,7 @@ public:
 	AProjectile();
 	
 	virtual void ReadyToFire(const FVector &Dir_Vector, const FVector& Location,const FRotator& Rotate);
-	void Fire();
+
 	
 	virtual void SetSafety()override;
 	virtual void ActivateHitEffect() override;
@@ -40,8 +43,8 @@ public:
 	UFUNCTION()
 	void Reflected();
 
-	UFUNCTION(BlueprintCallable)
-	void BP_Fire(FVector Location, FRotator Rotation, FVector Dir);
+	//UFUNCTION(BlueprintCallable)
+	//void BP_Fire(FVector Location, FRotator Rotation, FVector Dir);
 
 protected:
 	// Called when the game starts or when spawned
@@ -49,7 +52,7 @@ protected:
 	virtual void PostInitializeComponents()override;
 
 	void gliding();
-	
+	void fire();
 
 
 public:	

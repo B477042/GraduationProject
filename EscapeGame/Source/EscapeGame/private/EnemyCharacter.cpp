@@ -38,6 +38,8 @@ AEnemyCharacter::AEnemyCharacter()
 	HPBarWidget->SetHiddenInGame(false);
 	
 
+	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
+	AIPerceptionStimuliSourceComponent = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("AIPerceptionStimuliSourceComponent"));
 	
 }
 
@@ -87,6 +89,10 @@ float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Damag
 	//Stat->TakeDamage(DamageAmount);
 
 	return FinalDamage;
+}
+
+void AEnemyCharacter::perceptionUpdated(const TArray<AActor*>& UpdatedActors)
+{
 }
 
 // Called every frame
@@ -147,8 +153,6 @@ void AEnemyCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 	}
 
 	SetActorLocationAndRotation(LoadData->Location, LoadData->Rotation);
-
-
 
 
 }

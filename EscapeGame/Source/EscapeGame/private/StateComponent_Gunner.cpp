@@ -1,0 +1,74 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "StateComponent_Gunner.h"
+#include "EnemyCharacter_Gunner.h"
+
+UStateComponent_Gunner::UStateComponent_Gunner()
+{
+	State = EGunnerState::E_Idle;
+
+	JogSpeed = 300.0f;
+	ADSSpeed = 150.0f;
+
+}
+void UStateComponent_Gunner::BeginPlay()
+{
+
+	Super::BeginPlay();
+
+	SetState(EGunnerState::E_Idle);
+}
+
+
+void UStateComponent_Gunner::SetState(EGunnerState NewState)
+{
+	State = NewState;
+
+	auto Character =Cast<AEnemyCharacter_Gunner>( GetOwner());
+
+	if (!Character)return;
+
+	switch (State)
+	{
+	case EGunnerState::E_Idle:
+		Character->GetCharacterMovement()->MaxWalkSpeed = JogSpeed;
+		break;
+	case EGunnerState::E_ADS:
+		Character->GetCharacterMovement()->MaxWalkSpeed = ADSSpeed;
+		break;
+	case EGunnerState::E_Attack:
+		
+		break;
+	case EGunnerState::E_Crouch:
+		Character->GetCharacterMovement()->MaxWalkSpeed = ADSSpeed;
+		break;
+	}
+
+
+}
+
+EGunnerState UStateComponent_Gunner::GetState()
+{
+	return State;
+}
+
+void UStateComponent_Gunner::SaveGame(UEGSaveGame * SaveInstance)
+{
+}
+
+void UStateComponent_Gunner::LoadGame(UEGSaveGame * LoadInstance)
+{
+}
+
+void UStateComponent_Gunner::TakeDamage(float Damage)
+{
+	Hp -= Damage;
+	if (Hp <= 0)
+		NotifyDeath();
+}
+
+void UStateComponent_Gunner::NotifyDeath()
+{
+
+}

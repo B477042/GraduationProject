@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+//#include "CoreMinimal.h"
 #include "EnemyAIController.h"
 #include "EnemyGunnerAIController.generated.h"
 
@@ -13,5 +13,22 @@ UCLASS()
 class ESCAPEGAME_API AEnemyGunnerAIController : public AEnemyAIController
 {
 	GENERATED_BODY()
+
+public:
+
+	AEnemyGunnerAIController();
+protected:
+	virtual void BeginPlay()override;
+	virtual void PostInitializeComponents()override;
+
+public:
+	 void OnPossess(APawn* InPawn)override;
+	 void OnUnPossess()override;
+		
+
 	
+	
+	virtual	void RunAI()override;
+	virtual	void StopAI()override;
+
 };

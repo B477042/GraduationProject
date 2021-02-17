@@ -82,10 +82,10 @@ void AProjectile::ReadyToFire(const FVector & Dir_Vector, const FVector& Locatio
 	MainCollision->SetSphereRadius(40.3f);
 	MainCollision->SetCollisionProfileName("EnemyWeapon");
 	
-	Fire();
+	fire();
 }
 
-void AProjectile::Fire()
+void AProjectile::fire()
 {
 	bIsFire = true;
 	//EGLOG(Error, TEXT("Free fire"));
@@ -146,27 +146,27 @@ void AProjectile::OnPlayerEntered(UPrimitiveComponent * OverlappedComp, AActor *
 
 }
 
-void AProjectile::BP_Fire(FVector  Location, FRotator  Rotation, FVector  Dir)
-{
-	FireDir = Dir;
-	SetActorHiddenInGame(false);
-	Root->SetHiddenInGame(false);
-	VFX_Main->SetHiddenInGame(false);
-
-	//SFX_Passing->SetCollisionProfileName("OnTrapTrigger");
-	MainCollision->SetSphereRadius(40.3f);
-
-
-	Trigger_Passing->SetCollisionProfileName(TEXT("OnTrapTrigger"));
-	Trigger_Passing->SetSphereRadius(200.0f);
-
-
-	SetActorLocationAndRotation(Location, Rotation);
-
-	MainCollision->SetCollisionProfileName("EnemyWeapon");
-	Fire();
-
-}
+//void AProjectile::BP_Fire(FVector  Location, FRotator  Rotation, FVector  Dir)
+//{
+//	FireDir = Dir;
+//	SetActorHiddenInGame(false);
+//	Root->SetHiddenInGame(false);
+//	VFX_Main->SetHiddenInGame(false);
+//
+//	//SFX_Passing->SetCollisionProfileName("OnTrapTrigger");
+//	MainCollision->SetSphereRadius(40.3f);
+//
+//
+//	Trigger_Passing->SetCollisionProfileName(TEXT("OnTrapTrigger"));
+//	Trigger_Passing->SetSphereRadius(200.0f);
+//
+//
+//	SetActorLocationAndRotation(Location, Rotation);
+//
+//	MainCollision->SetCollisionProfileName("EnemyWeapon");
+//	fire();
+//
+//}
 
 
 

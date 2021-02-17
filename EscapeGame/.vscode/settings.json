@@ -1,9 +1,10 @@
 {
 	"files.exclude": {
-		"E:/CODE/GraduationProject/EscapeGame/.vs": true,
-		"E:/CODE/GraduationProject/EscapeGame/.vscode": true,
-		"E:/CODE/GraduationProject/EscapeGame/Content": true,
-		"E:/CODE/GraduationProject/EscapeGame/Intermediate": true,
-		"E:/CODE/GraduationProject/EscapeGame/Saved": true
+		"I:/CODE/GraduationProject/EscapeGame/.vs": true,
+		"I:/CODE/GraduationProject/EscapeGame/.vscode": true,
+		"I:/CODE/GraduationProject/EscapeGame/Content": true,
+		"I:/CODE/GraduationProject/EscapeGame/DerivedDataCache": true,
+		"I:/CODE/GraduationProject/EscapeGame/Intermediate": true,
+		"I:/CODE/GraduationProject/EscapeGame/Saved": true
 	}
 }

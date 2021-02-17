@@ -6,7 +6,10 @@
 #include "GameFramework/Character.h"
 #include "StatComponent_Enemy.h"
 #include "Components/WidgetComponent.h"
-#include "ProgressBar.h"
+#include "Components/ProgressBar.h"
+#include "Perception/AIPerceptionComponent.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
+
 #include "EnemyCharacter.generated.h"
 
 
@@ -40,6 +43,9 @@ protected:
 	/*UFUNCTION(BlueprintCallable)
 		float GetCurrentSpeed();*/
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,class AController* EventInstigator, AActor* DamageCauser)override;
+
+	virtual void perceptionUpdated(const TArray<AActor*>& UpdatedActors);
+
 	UFUNCTION(BlueprintCallable)
 		void Dead();
 
@@ -59,11 +65,22 @@ public:
 
 protected:
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowClasses))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		class UWidgetComponent* HPBarWidget;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowClasses))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		UProgressBar*HPBar;
 
-
+	/*
+	https://docs.unrealengine.com/en-US/API/Runtime/AIModule/Perception/UAIPerceptionComponent/index.html
+	자손 클래스에서 값 처리를 시킬 것
+	*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
+		UAIPerceptionComponent* AIPerceptionComponent;
+	/*
+	https://docs.unrealengine.com/en-US/API/Runtime/AIModule/Perception/UAIPerceptionComponent/index.html
+	자손 클래스에서 값 처리를 시킬 것
+	*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
+		UAIPerceptionStimuliSourceComponent* AIPerceptionStimuliSourceComponent;
 
 };

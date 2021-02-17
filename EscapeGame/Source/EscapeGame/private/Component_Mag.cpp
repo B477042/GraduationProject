@@ -10,8 +10,8 @@ UComponent_Mag::UComponent_Mag()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-	MaxCapacity = 40;
+	PrimaryComponentTick.bCanEverTick = false;
+	MaxCapacity = 30;
 
 	idxBullet = 0;
 
@@ -36,24 +36,19 @@ void UComponent_Mag::nextBullet()
 {
 	++idxBullet;
 	//재장전 필요
-	if (idxBullet <= MaxCapacity)
+	if (idxBullet >= MaxCapacity)
 	{
 		idxBullet = 0;
-
+	//	ReloadMag();
 	}
+	
 	TopBullet = Mag[idxBullet];
 
 
 }
 
 
-// Called every frame
-void UComponent_Mag::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
-}
 
 void UComponent_Mag::SaveGame(UEGSaveGame * SaveInstance)
 {
@@ -82,15 +77,21 @@ void UComponent_Mag::CreateMag()
 
 }
 
-void UComponent_Mag::UseBullet()
-{
 
-
-	nextBullet();
-}
 
 void UComponent_Mag::ReloadMag()
 {
+	
+}
+
+void UComponent_Mag::FireBullet(FVector FireLoation, FRotator FireRotation, FVector FireFWVector)
+{
+
+	TopBullet->SetActorLocationAndRotation(FireLoation, FireRotation);
+
+	TopBullet->ReadyToFire(FireFWVector, FireLoation, FireRotation);
+	nextBullet();
+
 
 }
 

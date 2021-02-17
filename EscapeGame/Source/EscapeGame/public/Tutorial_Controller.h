@@ -4,7 +4,7 @@
 
 #include "EscapeGame.h"
 #include "GameFramework/PlayerController.h"
-#include "Button.h"
+#include "Components/Button.h"
 #include "Tutorial_Controller.generated.h"
 
 /**

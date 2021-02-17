@@ -23,8 +23,7 @@ protected:
 
 	void nextBullet();
 public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
 
 	//총알들의 위치 정보, 상태 저장. Mag 상태 저장 / Owner가 호출한다
 	void SaveGame(class UEGSaveGame* SaveInstance);
@@ -32,14 +31,22 @@ public:
 	void LoadGame(class UEGSaveGame* LoadInstance);
 
 	void CreateMag();
-	void UseBullet();
-	void ReloadMag();
 	
+	void ReloadMag();
+	void FireBullet(FVector FireLoation, FRotator FireRotation,FVector FireFWVector);
+
+protected:
+
+	
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		TArray<TSoftObjectPtr<AGunnerBullet>> Mag;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		TSoftObjectPtr<AGunnerBullet> TopBullet;
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	int idxBullet;
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	int MaxCapacity;
+
 };
