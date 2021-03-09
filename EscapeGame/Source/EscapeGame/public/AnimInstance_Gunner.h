@@ -10,6 +10,9 @@
 /**
  * 
  */
+
+
+
 UCLASS()
 class ESCAPEGAME_API UAnimInstance_Gunner : public UAnimInstance
 {
@@ -24,6 +27,8 @@ public:
 	void SetCrouch(bool bSet);
 	void SetIronsights(bool bSet);
 	void SetAttacking(bool bSet);
+	void SetAccelerating(bool bSet);
+
 
 	UAnimMontage* GetFireMontage()const;
 

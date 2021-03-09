@@ -13,7 +13,7 @@
 const FName AEnemyAIController::TargetPlayer(TEXT("TargetPlayer"));
 const FName AEnemyAIController::HomePos(TEXT("HomePos"));
 const FName AEnemyAIController::PatrolPos(TEXT("PatrolPos"));
-
+const FName AEnemyAIController::TargetPos(TEXT("TargetPos"));
 AEnemyAIController::AEnemyAIController()
 {
 	
@@ -45,11 +45,22 @@ void AEnemyAIController::PostInitializeComponents()
 	Super::PostInitializeComponents();
 }
 
+void AEnemyAIController::perceptionUpdated(const TArray<AActor*>& UpdatedActors)
+{
+}
+
 void AEnemyAIController::RunAI()
 {
-	
+	if (BBData == nullptr) { EGLOG(Error, TEXT("BBDataError")) return; }
+	//if(Blackboard)
+
+	if (UseBlackboard(BBData, Blackboard))
+	{
+		Blackboard->SetValueAsVector(HomePos, GetPawn()->GetActorLocation());
+	}
+
 	RunBehaviorTree(BTData);
-	EGLOG(Warning, TEXT("Running"));
+//	EGLOG(Warning, TEXT("Running"));
 }
 
 void AEnemyAIController::StopAI()
@@ -57,11 +68,11 @@ void AEnemyAIController::StopAI()
 	auto BehaviorTreeComponent = Cast<UBehaviorTreeComponent>(BrainComponent);
 	if (nullptr != BehaviorTreeComponent)
 	{
-		EGLOG(Warning, TEXT("PLz stop"));
+		
 		BehaviorTreeComponent->StopTree(EBTStopMode::Safe);
 		return;
 	}
 
-	EGLOG(Warning, TEXT("You Fucking racist"));
+	
 
 }

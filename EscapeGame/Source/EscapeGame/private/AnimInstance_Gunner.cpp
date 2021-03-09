@@ -105,6 +105,11 @@ void UAnimInstance_Gunner::SetAttacking(bool bSet)
 	bIsAttacking = bSet;
 }
 
+void UAnimInstance_Gunner::SetAccelerating(bool bSet)
+{
+	bIsAccelerating = bSet;
+}
+
 UAnimMontage * UAnimInstance_Gunner::GetFireMontage() const
 {
 
@@ -118,14 +123,14 @@ void UAnimInstance_Gunner::PlayFire(EGunnerState State)
 		{
 			Montage_JumpToSection(FIRE_RIFLE_HIP);
 			Montage_Play(FireMontage, 1.0f);
-			EGLOG(Warning, TEXT("idle fire"));
+		//	EGLOG(Warning, TEXT("idle fire"));
 			return;
 		}
 		if (State == EGunnerState::E_ADS)
 		{
 			Montage_JumpToSection(FIRE_RIFLE_IRONSIGHTS);
 			Montage_Play(FireMontage, 1.0f);
-			EGLOG(Warning, TEXT("ADS fire"));
+		//	EGLOG(Warning, TEXT("ADS fire"));
 			return;
 		}
 	

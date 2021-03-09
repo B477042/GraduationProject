@@ -42,10 +42,7 @@ void AAIController_Boss::PostInitializeComponents()
 void AAIController_Boss::RunAI()
 {
 	Super::RunAI();
-	if (UseBlackboard(BBData, Blackboard))
-	{
-		Blackboard->SetValueAsVector(HomePos, GetPawn()->GetActorLocation());
-	}
+
 }
 
 void AAIController_Boss::StopAI()

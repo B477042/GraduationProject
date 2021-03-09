@@ -27,13 +27,15 @@ public:
 		static const FName TargetPlayer;
 		static const FName HomePos;
 		static const FName PatrolPos;
+		static const FName TargetPos;
+
 		const class UBlackboardData* GetBlackBoard() { return BBData; }
 			virtual	void RunAI();
 	virtual	void StopAI();
 protected:
 	virtual void BeginPlay()override;
 	virtual void PostInitializeComponents()override;
-	
+	virtual void perceptionUpdated(const TArray<AActor*>& UpdatedActors);
 //private:
 
 //private:

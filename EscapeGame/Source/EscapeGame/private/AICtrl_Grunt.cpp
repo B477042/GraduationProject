@@ -48,10 +48,7 @@ void AAICtrl_Grunt::RunAI()
 {
 	Super::RunAI();
 	
-	if (UseBlackboard(BBData,Blackboard))
-	{
-		Blackboard->SetValueAsVector(HomePos, GetPawn()->GetActorLocation());
-	}
+	
 }
 
 void AAICtrl_Grunt::StopAI()

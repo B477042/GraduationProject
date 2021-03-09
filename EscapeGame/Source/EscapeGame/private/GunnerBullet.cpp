@@ -36,6 +36,7 @@ void AGunnerBullet::loadAssets()
 	if (PS_Main.Succeeded())
 	{
 		VFX_Main->SetTemplate( PS_Main.Object);
+		VFX_Main->SetRelativeScale3D(FVector(0.25f, 0.25f, 0.25f));
 	}
 
 

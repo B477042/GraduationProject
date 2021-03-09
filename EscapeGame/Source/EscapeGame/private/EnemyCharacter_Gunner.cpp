@@ -5,9 +5,17 @@
 #include "EnemyGunnerAIController.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "AnimInstance_Gunner.h"
+#include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig.h"
 #include "Perception/AIPerceptionTypes.h"
 #include "Perception/AISenseConfig_Sight.h"
+
+//UAIPerceptionComponent
+//https://docs.unrealengine.com/en-US/API/Runtime/AIModule/Perception/UAIPerceptionComponent/index.html
+
+//UAISenseConfig_Sight
+//https://docs.unrealengine.com/en-US/API/Runtime/AIModule/Perception/UAISenseConfig_Sight/index.html
+
 
 AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
 {
@@ -24,7 +32,7 @@ AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
 
 	Point_Muzzle = FVector::ZeroVector;
 
-	setupPerception();
+	//setupPerception();
 }
 void  AEnemyCharacter_Gunner::Tick(float DeltaTime)
 {
@@ -46,7 +54,7 @@ void  AEnemyCharacter_Gunner::Tick(float DeltaTime)
 	
 		Cooltime = 0.0f;
 
-		EGLOG(Warning, TEXT("Can fire"));	
+		//EGLOG(Warning, TEXT("Can fire"));	
 	//tick Áß´Ü
 		SetActorTickEnabled(false);
 	}
@@ -63,7 +71,7 @@ void AEnemyCharacter_Gunner::PostInitializeComponents()
 	if (!Anim)EGLOG(Error, TEXT("********Anim Cast Failed********"));
 
 
-	AIPerceptionComponent->OnPerceptionUpdated.AddDynamic(this,&AEnemyCharacter_Gunner::perceptionUpdated);
+//	AIPerceptionComponent->OnPerceptionUpdated.AddDynamic(this,&AEnemyCharacter_Gunner::perceptionUpdated);
 
 }
 
@@ -71,7 +79,7 @@ void AEnemyCharacter_Gunner::BeginPlay()
 {
 	Super::BeginPlay();
 
-
+	//EGLOG(Error, TEXT("Chara Begin"));
 }
 
 void AEnemyCharacter_Gunner::BeginDestroy()
@@ -92,12 +100,7 @@ void AEnemyCharacter_Gunner::LoadGame(const UEGSaveGame * LoadInstance)
 	//Super::LoadGame(LoadInstance);
 
 }
-void AEnemyCharacter_Gunner::perceptionUpdated(const TArray<AActor*>& UpdatedActors)
-{
-	Super::perceptionUpdated(UpdatedActors);
 
-
-}
 void  AEnemyCharacter_Gunner::initComponents()
 {
 	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
@@ -105,7 +108,7 @@ void  AEnemyCharacter_Gunner::initComponents()
 	FireSound2 = CreateDefaultSubobject<UAudioComponent>(TEXT("FireSound2"));
 	MagComponent = CreateDefaultSubobject<UComponent_Mag>(TEXT("MagComponent"));
 	StateComponent = CreateDefaultSubobject<UStateComponent_Gunner>(TEXT("StateComponent"));
-	AiConfigSight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("AIConfigSight"));
+//	AiConfigSight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("AIConfigSight"));
 
 	WeaponMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 //	FireSound1->AttachToComponent(WeaponMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
@@ -130,8 +133,8 @@ void  AEnemyCharacter_Gunner::loadAssets()
 	if (SM_Weapon.Succeeded())
 	{
 		WeaponMesh->SetSkeletalMesh(SM_Weapon.Object);
-		WeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale,TEXT("GunPos"));
-	
+		//WeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale,TEXT("GunPos"));
+		WeaponMesh->SetupAttachment(GetMesh(), TEXT("GunPos"));
 
 	}
 
@@ -171,35 +174,35 @@ void AEnemyCharacter_Gunner::playGunSFX()
 		FireSound2->Play();
 }
 
-void AEnemyCharacter_Gunner::setupPerception()
-{
-	//UAISenseConfig AISenseConfig;
-//	FAISenseID
-	//AIPerceptionComponent->ConfigureSense
-
-	//https://docs.unrealengine.com/en-US/API/Runtime/AIModule/Perception/UAISenseConfig_Sight/index.html
-	//UAISenseConfig_Sight Document
-	//UAISenseConfig_Sight senseConfig_Sight;
-	AiConfigSight->SightRadius = 1500.0f;
-	AiConfigSight->LoseSightRadius = 3100.0f;
-	AiConfigSight->PeripheralVisionAngleDegrees = 90.0f;
-	AiConfigSight->DetectionByAffiliation.bDetectEnemies = false;
-	AiConfigSight->DetectionByAffiliation.bDetectNeutrals = true;
-
-	AIPerceptionComponent->ConfigureSense(*AiConfigSight);
-	AIPerceptionComponent->SetDominantSense(UAISense_Sight::StaticClass());
-
-	
-
-
-}
+//void AEnemyCharacter_Gunner::setupPerception()
+//{
+//	//UAISenseConfig AISenseConfig;
+////	FAISenseID
+//	//AIPerceptionComponent->ConfigureSense
+//
+//	//https://docs.unrealengine.com/en-US/API/Runtime/AIModule/Perception/UAISenseConfig_Sight/index.html
+//	//UAISenseConfig_Sight Document
+//	//UAISenseConfig_Sight senseConfig_Sight;
+////	AiConfigSight->SightRadius = 1500.0f;
+////	AiConfigSight->LoseSightRadius = 3100.0f;
+////	AiConfigSight->PeripheralVisionAngleDegrees = 90.0f;
+////	AiConfigSight->DetectionByAffiliation.bDetectEnemies = false;
+////	AiConfigSight->DetectionByAffiliation.bDetectNeutrals = true;
+//
+////	AIPerceptionComponent->ConfigureSense(*AiConfigSight);
+////	AIPerceptionComponent->SetDominantSense(UAISense_Sight::StaticClass());
+//
+//	
+//
+//
+//}
 
 void AEnemyCharacter_Gunner::Attack()
 {
 
 	if (!bCanFire)
 	{
-		EGLOG(Error, TEXT("Cant fire"));
+	//	EGLOG(Error, TEXT("Cant fire"));
 		return;
 	}
 

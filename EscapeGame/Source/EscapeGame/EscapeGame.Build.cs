@@ -22,5 +22,10 @@ public class EscapeGame : ModuleRules
 
         bLegacyPublicIncludePaths = false;
 
+
+        //Faster Build https://answers.unrealengine.com/questions/3647/how-to-improve-compile-times-for-a-c-project.html
+        MinFilesUsingPrecompiledHeaderOverride = 1;
+        bFasterWithoutUnity = true;
+
     }
 }

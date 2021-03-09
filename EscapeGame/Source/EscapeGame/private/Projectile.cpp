@@ -123,7 +123,7 @@ void AProjectile::OnSomethingHit(UPrimitiveComponent * OverlappedComp, AActor * 
 		OtherActor->TakeDamage(Damage, damageEvent, GetWorld()->GetFirstPlayerController(), this);
 	}
 
-	EGLOG(Error, TEXT(" Hit :%s"), *OtherActor->GetName());
+	EGLOG(Error, TEXT(" Hit : %s"), *OtherActor->GetName());
 
 	//bIsFire = false;
 }

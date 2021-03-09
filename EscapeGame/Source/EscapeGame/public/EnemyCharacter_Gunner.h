@@ -53,12 +53,12 @@ protected:
 	// Delegate 등록은 자식 클레스에서
 		virtual	void LoadGame(const class UEGSaveGame* LoadInstance);
 
-		virtual void perceptionUpdated(const TArray<AActor*>& UpdatedActors)override;
+	
 	void initComponents();
 	void loadAssets();
 	void playGunSFX();
 	//init ai perception component
-	void setupPerception();
+	//void setupPerception();
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
@@ -81,8 +81,8 @@ protected:
 		UStateComponent_Gunner* StateComponent;
 	UPROPERTY()
 		class UAnimInstance_Gunner* Anim;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
-		class UAISenseConfig_Sight * AiConfigSight;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	//	class UAISenseConfig_Sight * AiConfigSight;
 
 
 };
