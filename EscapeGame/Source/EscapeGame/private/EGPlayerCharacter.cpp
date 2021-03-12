@@ -106,7 +106,7 @@ void AEGPlayerCharacter::BeginPlay()
 	
 
 
-
+	DamagedPostEffect();
 }
 
 // Called every frame
@@ -532,6 +532,14 @@ void AEGPlayerCharacter::InitComponents()
 	WeaponCollision->SetBoxExtent(FVector(X = 9.093354, Y = 6.199887, Z = 63.501183));
 	WeaponCollision->SetCollisionProfileName(TEXT("NoCollision"));
 	SetupSpringArm();
+
+
+	FPostProcessSettings& PostProcessSettings = Camera->PostProcessSettings;
+
+	
+
+
+
 }
 
 void AEGPlayerCharacter::LoadAssets()
@@ -773,6 +781,13 @@ FName AEGPlayerCharacter::calcHitDirection(AActor * DamageCauser)
 
 
 	return Result;
+}
+
+void AEGPlayerCharacter::DamagedPostEffect()
+{
+	FPostProcessSettings& PostProcessSettings = Camera->PostProcessSettings;
+
+	PostProcessSettings.ColorGamma = FVector4(1.0f, 1.0f, 1.0f, 0.0f);
 }
 
 void AEGPlayerCharacter::loadHitEffects()

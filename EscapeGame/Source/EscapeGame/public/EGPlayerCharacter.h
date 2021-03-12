@@ -164,6 +164,9 @@ private:
 	UFUNCTION(BlueprintCallable)
 		FName calcHitDirection(AActor* DamageCauser);
 
+	//현재 체력에 따라 카메라에 이펙트를 준다. HP가 변하면 업데이트가 되게끔
+	void DamagedPostEffect();
+
 
 	/*UFUNCTION()
 		void ChargeAttackStart();

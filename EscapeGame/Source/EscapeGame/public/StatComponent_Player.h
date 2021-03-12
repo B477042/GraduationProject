@@ -32,7 +32,7 @@ public:
 
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
+	virtual void TakeDamage(float NewDamage)override;
 	bool CheckCanComboAttack()const;
 	bool CheckCanChargeAttack()const;
 	

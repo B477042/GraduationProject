@@ -63,12 +63,14 @@ public:
  
 	bool bIsDebugMode;
 
+	const TWeakObjectPtr<class AEGPostProcessVolume> GetPostProcessVolume();
+	bool SetPostProcessVolume(class AEGPostProcessVolume* Object);
 private:
 	FString SaveSlotName;
 	FString OptionsSlotName;
 	int32 UserIndex;
 
-
+	TWeakObjectPtr<class AEGPostProcessVolume> PostProcessVolume;
 
 
 	

@@ -84,6 +84,27 @@ public:
 };
 
 
+USTRUCT(BlueprintType)
+struct FPostProcessData :public  FBasicData
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+		FVector4 ColorContrastValue;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+		FVector4 ColorGammaValue;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+		FVector4 ColorSaturation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	float GrainJitter ;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	float GrainIntensity ;
+
+};
+
+
+
 
 UCLASS()
 class ESCAPEGAME_API UEGSaveGame : public USaveGame
@@ -101,6 +122,7 @@ public:
 		TMap<FString, FItemData> D_Items;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		FGameProgressData GameProgressData;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+		FPostProcessData PostProcessData;
 
 };

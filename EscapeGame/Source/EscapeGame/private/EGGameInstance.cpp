@@ -4,7 +4,7 @@
 #include "EGGameInstance.h"
 #include "EGPlayerController.h"
 #include "Sound/SoundMix.h"
-
+#include "EGPostProcessVolume.h"
 #include "EGPlayerState.h"
 #include "EGGameState.h"
 
@@ -115,5 +115,16 @@ UOptionSaveGame* UEGGameInstance::LoadOptions()
 
 }
 
+const TWeakObjectPtr<AEGPostProcessVolume> UEGGameInstance::GetPostProcessVolume()
+{
+	return PostProcessVolume;
+}
 
+bool  UEGGameInstance::SetPostProcessVolume(AEGPostProcessVolume* Object)
+{
+	if (!Object)return false;
+
+	PostProcessVolume = Object;
+	return true;
+}
 

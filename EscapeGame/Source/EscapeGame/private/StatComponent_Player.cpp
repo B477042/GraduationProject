@@ -4,6 +4,8 @@
 #include "StatComponent_Player.h"
 #include "EGPlayerController.h"
 #include "DT_DataStruct.h"
+#include "EGGameInstance.h"
+#include "EGPostProcessVolume.h"
 
 
 UStatComponent_Player::UStatComponent_Player()
@@ -46,6 +48,20 @@ void UStatComponent_Player::TickComponent(float DeltaTime, ELevelTick TickType, 
 	//EGLOG(Warning, TEXT("Player Stat Tick"));
 	//Tick이 켜진 컴포넌트인 것 확인 됨
 	RecoverStamina(DeltaTime);
+
+}
+
+void UStatComponent_Player::TakeDamage(float NewDamage)
+{
+	Super::TakeDamage(NewDamage);
+
+	//현재 hp 비율을 GameInstance를 통해 postprocess로 넘겨줘서 피격효과가 나타나게 해준다.
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)return;
+
+	if(GameInstance->GetPostProcessVolume().IsValid())
+	GameInstance->GetPostProcessVolume()->SyncHpPercent(GetHPRatio());
+
 
 }
 
