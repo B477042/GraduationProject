@@ -50,7 +50,10 @@ void UGameWidget::UpdateCharacterStat()
 		PlayerHP=CurrentCharacterStat->GetHP();
 		float PlayerHPRatio = CurrentCharacterStat->GetHPRatio()*100.0f;
 		float BlurRate = 0.5f*(1.0f - CurrentCharacterStat->GetHPRatio());
-		Img_Blood->SetBrushTintColor(FSlateColor(FLinearColor(1.0f, 1.0f, 1.0f,BlurRate )));
+
+
+		//Ui 피 효과. 제거 2021 03 12
+		//Img_Blood->SetBrushTintColor(FSlateColor(FLinearColor(1.0f, 1.0f, 1.0f,BlurRate )));
 		//이미지들은 BP에서 불러와진 것들이다
 		if (PlayerHPRatio > 90.0f)
 			Img_Battery->SetBrushFromTexture(Imgs_Battary[0]);
