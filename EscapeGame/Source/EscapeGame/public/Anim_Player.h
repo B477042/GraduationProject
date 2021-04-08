@@ -4,6 +4,7 @@
 
 //#include "CoreMinimal.h"
 #include "CharacterAnimInstance.h"
+
 #include "Anim_Player.generated.h"
 
 /**
@@ -19,8 +20,9 @@ class ESCAPEGAME_API UAnim_Player : public UCharacterAnimInstance
 	GENERATED_BODY()
 public:
 	UAnim_Player();
-
+	virtual void NativeBeginPlay()override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds)override;
+
 	virtual void JumpToComboAttackSection(int32 NewSection);//ComboAttack 사이를 재생 시키는 함수
 	 void JumpToChargetAttackSection(int32 NewSection);//ChargeAttack으로 넘어가 ChargeAttack을 재생시키는 함수
 	//Section값이 Combo값과 일치 하는지 검사한다
@@ -31,6 +33,8 @@ public:
 	UAnimMontage* GetAttackMontage()const;
 	void SetRolling(bool bResult);
 
+	//리엑션 관련 계수 조작. React Direction, bIsDamaged 조작
+	void TakeDamage(const AActor* OtherActor);
 
 
 	UFUNCTION()
@@ -40,7 +44,7 @@ public:
 	UFUNCTION()
 		void AnimNotify_AnimEnd();
 	UFUNCTION()
-		void AnimNotify_PlaySound();
+		void AnimNotify_PlayHitSound();
 
 	UFUNCTION()
 		void AnimNotify_Skill1Start();
@@ -52,6 +56,19 @@ public:
 	void AnimNotify_DeadStart();
 	UFUNCTION()
 	void AnimNotify_DeadEnd();
+
+	UFUNCTION()
+		void AnimNotify_LeftPlant();
+	UFUNCTION()
+		void AnimNotify_RightPlant();
+	UFUNCTION()
+		void AnimNotify_ReactDamagedEnd();
+	
+
+	/*UFUNCTION()
+		void OnMontageStart(UAnimMontage* Montage);
+	UFUNCTION()
+		void OnMontageEnd(UAnimMontage* Montage, bool bInterrupted);*/
 
 
 	//Input 값은 Player의 Combo
@@ -73,10 +90,14 @@ private:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
 		TArray<UAnimMontage*> SkillMontages;
 	UPROPERTY()
-		UAudioComponent* SoundLaugh;
+	UAudioComponent* SoundLaugh;
 
 	UPROPERTY()
 	UAudioComponent* SoundDeath;
+	UPROPERTY()
+	UAudioComponent* SFX_FootStep;
+	UPROPERTY()
+		UAudioComponent* SFX_Pain;
 
 	////통상공격 몽타주
 	//UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
@@ -95,7 +116,10 @@ private:
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
 		float Direction;
-
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
+		float ReactDirection;
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
+	bool bIsDamaged;
 
 
 

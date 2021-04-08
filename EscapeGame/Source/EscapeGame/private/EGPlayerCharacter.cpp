@@ -46,6 +46,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 
 	MoveDirection = FVector::ZeroVector;
 	CurrenVelocity = 78.f;
+	
 }
 
 // Called when the game starts or when spawned
@@ -241,6 +242,7 @@ float AEGPlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent con
 
 
 
+	Anim->TakeDamage(DamageCauser);
 	Stat->TakeDamage(FinalDamage);
 
 	return FinalDamage;
@@ -738,11 +740,18 @@ void AEGPlayerCharacter::OnWeaponBeginOverlap(UPrimitiveComponent * OverlappedCo
 
 	Container_Hit->SetEffectAt(OtherActor->GetActorLocation());
 }
+void AEGPlayerCharacter::OnMontageStart(UAnimMontage* Montage)
+{
+	WeaponCollision->SetCollisionProfileName("PlayerWeapon");
+}
+
 
 void AEGPlayerCharacter::OnAttackMontageEnded(UAnimMontage * Montage, bool bInterrupted)
 {
 	//if (!Stat->IsAttacking())return;
 	//EGLOG(Warning, TEXT("PlayEnded"));
+	WeaponCollision->SetCollisionProfileName("NoCollision");
+
 	ComboAttackEnd();
 }
 

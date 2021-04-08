@@ -27,8 +27,7 @@ public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds)override;
 	//virtual void PostInitalizeComponents()override;
 
-	UFUNCTION(BlueprintCallable)
-		void BPBeginPlay();
+	
 	//UFUNCTION(BlueprintCallable)
 	//	void UpdateIsMoving();
 	//montage 플레이를 테스트 해보자. 된다면 CharageAttack용 몽타주를 안 만들어도 된다.

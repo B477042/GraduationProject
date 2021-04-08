@@ -5,6 +5,7 @@
 #include "EGPlayerCharacter.h"
 #include "Sound\SoundCue.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "..\public\Anim_Player.h"
 
 
@@ -12,6 +13,9 @@ UAnim_Player::UAnim_Player()
 {
 	SoundLaugh = CreateDefaultSubobject<UAudioComponent>(TEXT("LAUGH"));
 	SoundDeath = CreateDefaultSubobject<UAudioComponent>(TEXT("S_DEATH"));
+	SFX_FootStep = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Foot"));
+
+	SFX_Pain = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Pain"));
 
 	bIsGuarding = false;
 	static ConstructorHelpers::FObjectFinder <UAnimMontage>NORMAL_ATTACK(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/m_NormalAttack.m_NormalAttack'"));
@@ -47,15 +51,37 @@ UAnim_Player::UAnim_Player()
 		SoundDeath->SetSound(SC_Death.Object);
 		SoundDeath->bAutoActivate = false;
 	}
+	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Foot(TEXT("SoundCue'/Game/MyFolder/Sound/SE/Foot_left_Cue.Foot_left_Cue'"));
+	if (SC_Foot.Succeeded())
+	{
+		SFX_FootStep->SetSound(SC_Foot.Object);
+		SFX_FootStep->bAutoActivate = false;
+	}
 	
-	
+	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Pain(TEXT("SoundCue'/Game/MyFolder/Sound/Voice/Kwang_Effort_Pain.Kwang_Effort_Pain'"));
+	if (SC_Pain.Succeeded())
+	{
+		SFX_Pain->SetSound(SC_Pain.Object);
+		SFX_Pain->bAutoActivate = false;
+	}
+
+
 	//UCharacterAnimInstance::StartCombo = 1;
 	StartCombo = 1;
 	EndCombo = 4;
 	bIsDead = false;
 	bIsRolling = false;
-	Direction =0.0f;
+	ReactDirection = 0.0f;
+	Direction = 0.0f;
+	bIsDamaged = false;
 }
+void UAnim_Player::NativeBeginPlay()
+{
+	Super::NativeBeginPlay();
+	//OnMontageStarted.AddDynamic(this, UAnim_Player::OnMontageStarted );
+
+}
+
 
 void UAnim_Player::NativeUpdateAnimation(float DeltaSeconds)
 {
@@ -65,10 +91,14 @@ void UAnim_Player::NativeUpdateAnimation(float DeltaSeconds)
 	if (::IsValid(Pawn))
 	{
 		auto Player = Cast<AEGPlayerCharacter>(Pawn);
-		if (Player)
-		{
-			Direction = CalculateDirection(Player->GetVelocity(), Player->GetActorRotation());
-		}
+		if (!Player)return;
+		
+		//Moving Directing
+		Direction = CalculateDirection(Player->GetVelocity(), Player->GetActorRotation());
+		
+		
+
+		
 	}
 
 }
@@ -180,16 +210,21 @@ void UAnim_Player::AnimNotify_AnimEnd()
 	Owner->RecoverInput();
 }
 
-void UAnim_Player::AnimNotify_PlaySound()
+void UAnim_Player::AnimNotify_PlayHitSound()
 {
-	auto Owner = Cast<AEGPlayerCharacter>(GetOwningActor());
-	if (Owner == nullptr)
-	{
-		
-		return;
-	}
-	
-	Owner->AttackSound->Play();
+	EGLOG(Error, TEXT(" p start"));
+	auto player = GetOwningActor();
+
+	if (!player)return;
+	const auto world = GEngine->GetWorld();
+	if (!IsValid(world))return;
+
+	UGameplayStatics::PlaySoundAtLocation(world, SFX_Pain->Sound, player->GetActorLocation());
+
+
+//	SFX_Pain->Play();
+	EGLOG(Error, TEXT("Play Sound"));
+//	Owner->AttackSound->Play();
 
 
 }
@@ -248,6 +283,41 @@ void UAnim_Player::AnimNotify_DeadEnd()
 
 }
 
+void UAnim_Player::AnimNotify_LeftPlant()
+{
+	EGLOG(Error, TEXT(" l start"));
+	const auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
+
+	if (!player)return;
+	const auto world = GEngine->GetWorld();
+	if (!IsValid(world))return;
+	
+	UGameplayStatics::PlaySoundAtLocation( world, SFX_FootStep->Sound, player->GetActorLocation());
+
+	SFX_FootStep->Play();
+
+	EGLOG(Error, TEXT(" left tep"));
+}
+void UAnim_Player::AnimNotify_RightPlant()
+{
+	EGLOG(Error, TEXT(" r start"));
+	auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
+
+	if (!player)return;
+	const auto world = GEngine->GetWorld();
+	if (!IsValid(world))return;
+
+	UGameplayStatics::PlaySoundAtLocation(world, SFX_FootStep->Sound, player->GetActorLocation());
+	SFX_FootStep->Play();
+	EGLOG(Error, TEXT(" right tep"));
+}
+void UAnim_Player::AnimNotify_ReactDamagedEnd()
+{
+	bIsDamaged = false;
+}
+
+
+
 //Input 값은 Player의 Combo
 void UAnim_Player::PlaySkillMontage(int Combo)
 {
@@ -270,6 +340,29 @@ void UAnim_Player::PlaySkillMontage(int Combo)
 	}*/
 
 
+}
+
+
+void UAnim_Player::TakeDamage(const AActor* OtherActor)
+{
+	bIsDamaged = true;
+	auto Owner = GetOwningActor();
+	if (!Owner)return;
+	//위치 불러오기
+	FVector OtherPos = OtherActor->GetActorLocation();
+	FVector OwnerPos = Owner->GetActorLocation();
+	//방향 벡터 생성
+	FVector dir_Other = (OtherPos - OwnerPos);
+	FVector dir_fwd = Owner->GetActorForwardVector();
+
+	float cosine = UKismetMathLibrary::Vector_CosineAngle2D(dir_fwd, dir_Other);
+	float degree = UKismetMathLibrary::DegAcos(cosine);
+	
+	
+
+	ReactDirection = degree;
+
+	EGLOG(Error, TEXT("Degree : %f"),ReactDirection);
 }
 
 void UAnim_Player::SetDead()

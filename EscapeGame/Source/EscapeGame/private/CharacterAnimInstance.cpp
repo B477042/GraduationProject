@@ -11,6 +11,8 @@ UCharacterAnimInstance::UCharacterAnimInstance()
 	HeightVariation = 0.0f;
 	IsInAir = false;
 
+	
+
 	StartCombo = 0;
 	EndCombo = 0;
 	//
@@ -28,12 +30,12 @@ void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		HeightVariation = Pawn->GetActorLocation().Z - PriviousCharacterHeight;
 		PriviousCharacterHeight = Pawn->GetActorLocation().Z;
 		
-
+		
 		auto Character = Cast<ACharacter>(Pawn);
 		if (Character)
 		{
 			IsInAir = Character->GetCharacterMovement()->IsFalling();
-
+			
 		/*	if (Character->GetCharacterMovement()->GetCurrentAcceleration() != FVector::ZeroVector)
 				IsAccelerating=true;
 			else IsAccelerating = false;*/
@@ -43,16 +45,7 @@ void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	//EGLOG(Warning, TEXT("Tick"));
 }
 
-void UCharacterAnimInstance::BPBeginPlay()
-{
-	//EGLOG(Warning, TEXT("Anim Blueprint Begin!!!"));
-	//EGLOG(Warning, TEXT("Anim Bp Owner name : %s"), *GetOwningActor()->GetName());
-	/*Character = Cast<AEGPlayerCharacter>(GetOwningActor());
-	if (Character != nullptr)
-		EGLOG(Warning, TEXT("Character Name : %s"), *Character->GetName());
-*/
-	
-}
+
 
 void UCharacterAnimInstance::PlayAttackMontage()
 {
