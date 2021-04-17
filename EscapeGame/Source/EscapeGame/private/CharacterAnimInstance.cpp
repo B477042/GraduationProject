@@ -50,6 +50,7 @@ void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 void UCharacterAnimInstance::PlayAttackMontage()
 {
 	
+
 		Montage_Play(AttackMontage, 1.0f);
 
 

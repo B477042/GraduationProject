@@ -39,11 +39,11 @@ private:
 	const float DefaultVignettelIntensity=0.4f;
 
 
-	const FVector4 MaxColorGamma = FVector4(1.0f, 1.0f, 1.0f, 0.0f);
+	const FVector4 MaxColorGamma = FVector4(1.0f, 1.0f, 1.0f, 0.03f);
 	const FVector4 MaxColorContrast = FVector4( 1.000000f,  1.000000f,  1.000000f, 1.460000f);
-	const FVector4 MaxColorSaturation = FVector4(1.0f,  1.0f,  1.00f,  0.000000f);
-	const float MaxGrainJitter=1.0f;
-	const float MaxGrainIntensity=0.4f;
+	const FVector4 MaxColorSaturation = FVector4(1.0f,  1.0f,  1.0f,  0.000000f);
+	const float MaxGrainJitter=10.0f;
+	const float MaxGrainIntensity=0.5f;
 	const float MaxVignetteIntensity= 0.523810f;
 
 };

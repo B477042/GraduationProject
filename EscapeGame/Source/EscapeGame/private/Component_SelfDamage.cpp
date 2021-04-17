@@ -2,7 +2,7 @@
 
 
 #include "Component_SelfDamage.h"
-
+#include "Kismet/KismetMathLibrary.h"
 // Sets default values for this component's properties
 UComponent_SelfDamage::UComponent_SelfDamage()
 {
@@ -45,6 +45,9 @@ void UComponent_SelfDamage::TickComponent(float DeltaTime, ELevelTick TickType, 
 		FDamageEvent DamageEvent;
 		Owner->TakeDamage(Damage,DamageEvent,Owner->GetController(),Owner );
 	}
+
+	//UKismetMathLibrary::lerp
+
 
 }
 
