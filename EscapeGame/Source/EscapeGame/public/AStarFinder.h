@@ -65,5 +65,7 @@ private:
 	UPROPERTY(Transient, meta = (DisplayName = "Nodes"))
 		TArray< TWeakObjectPtr<AAstarNode>>AllNodes;
 	
+	/*UPROPERTY(Transient, meta = (DisplayName = "Nodes"))
+		TArray<AAstarNode*>AllNodes;*/
 	
 };

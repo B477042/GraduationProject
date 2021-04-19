@@ -157,11 +157,14 @@ void UAstarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Goal Finder"));
 	TWeakObjectPtr<AAstarNode> PopedNode;
 	int i = 0;
+
+
 	//방문해야될 노드가 비워질 때까지
 	while (!ToVisiteNodes.IsEmpty())
 	{
 		EGLOG(Warning, TEXT("%d Try"), i);
 		i++;
+
 		//Queue에서 하나를 꺼낸다
 		ToVisiteNodes.Dequeue(PopedNode);
 		EGLOG(Warning, TEXT("Current Node : %s"), *PopedNode->GetName());
@@ -202,11 +205,29 @@ void UAstarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 			//정렬용 임시 보관소
 		//	TArray<TWeakObjectPtr<AAstarNode>>tempList;
 		//	tempList.Init(nullptr, 4);
+			
+		
+		
+			//fcount 순으로 정렬
+			for (int k = 0; i < PopedNode->NearNodes.Num();++k)
+			{
+				for (int j = i ; j < PopedNode->NearNodes.Num()-1; ++j)
+				{
+					if (PopedNode->NearNodes[k]->GetF() > PopedNode->NearNodes[j]->GetF())
+						PopedNode->NearNodes.Swap(k, j);
+				}
+
+			}
+
+		 
 			//주변 노드들을 FCount가 작은 순으로 넣어야 된다. ->연산자 오퍼레이터가 잘 안 된다 그냥 패스
+			//정렬된 순서대로 넣는다
 			for (auto it : PopedNode->NearNodes)
 			{
+				
 				//유효하지 않다면 넘어간다
 				if (!it.IsValid())continue;
+
 				//방문했던 노드면 다시 안 넣어도 된다
 				if (it->IsVisitedNode())continue;
 				//PopedNode->VisitNode();
@@ -221,6 +242,21 @@ void UAstarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 				//}
 
 			}
+
+			
+
+			//TLinkedList<TSoftObjectPtr<AAstarNode>>  LLSort;
+			//for (auto it : PopedNode->NearNodes)
+			//{
+			//	
+
+			//	// 리스트에 연결 시킬 때 값대로 들어가게 
+			//	
+
+			//}
+
+
+
 
 
 			////tempList.Sort();

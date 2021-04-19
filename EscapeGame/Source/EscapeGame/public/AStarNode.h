@@ -31,6 +31,8 @@ public:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	
 	bool operator<(const AAstarNode& lhs);
 	//bool operator<(const AAstarNode& lhs, const AAstarNode& rhs);
 	bool operator>(const AAstarNode& lhs);
@@ -59,10 +61,10 @@ public:
 
 	TWeakObjectPtr<AAstarNode> GetPrevNode() { return PrevNode; }
 
-	//주변 노드들의 이전 노드들을 자신의 노드로한다. 
+	//주변 노드들의 이전 노드들을 자신의 노드로한다. 폐기 
 	void SetNearNodesPrevAsMe();
 
-	 int GetF() { return Count_F; }
+	const int GetF() { return Count_F; }
 	const int GetH() { return Count_H; }
 	const int GetG() { return Count_G; }
 
