@@ -22,7 +22,7 @@ UAnim_Player::UAnim_Player()
 	if (NORMAL_ATTACK.Succeeded())
 	{
 		AttackMontage = NORMAL_ATTACK.Object;
-	
+		
 	}
 	//AnimMontage'/Game/MyFolder/AnimationBlueprint/Montage_Skill1.Montage_Skill1'
 

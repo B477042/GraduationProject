@@ -153,12 +153,18 @@ void AEGPlayerCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	EGLOG(Warning, TEXT("Player Post init compons"));
-	//Anim load
+
+	//AnimInstance와 연동할 것들
 	Anim = Cast<UAnim_Player>(GetMesh()->GetAnimInstance());
 	if (Anim != nullptr)
 	{
 	
 		//Anim->montage_
+		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
+
+		//montageStart
+		Anim->OnMontageStarted.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageStart);
+		//Motage End
 		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
 
 
@@ -740,7 +746,7 @@ void AEGPlayerCharacter::OnWeaponBeginOverlap(UPrimitiveComponent * OverlappedCo
 
 	Container_Hit->SetEffectAt(OtherActor->GetActorLocation());
 }
-void AEGPlayerCharacter::OnMontageStart(UAnimMontage* Montage)
+void AEGPlayerCharacter::OnAttackMontageStart(UAnimMontage* Montage)
 {
 	WeaponCollision->SetCollisionProfileName("PlayerWeapon");
 }

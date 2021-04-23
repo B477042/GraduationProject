@@ -154,7 +154,7 @@ private:
 	//============================
 
 	UFUNCTION()
-	void OnMontageStart(UAnimMontage* Montage);
+	void OnAttackMontageStart(UAnimMontage* Montage);
 	UFUNCTION()
 	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 	//Attack Montage�� ����� �� ȣ��� �Լ�
