@@ -5,7 +5,7 @@
 
 #include "StatComponent.h"
 #include "StatComponent_Enemy.generated.h"
-
+#include "EGSaveGame.h"
 /**
  * 
  */
@@ -22,9 +22,9 @@ protected:
 	virtual void BeginPlay() override;
 
 	//자식 클래스들이 사용하게 될 것이다. 실행은 Owner class actor가 하게 될 것이다
-	virtual void SaveGame(class UEGSaveGame* SaveInstance);
+	virtual void SaveGame(FEnemyData& SaveData);
 	
-	virtual void LoadGame(const class UEGSaveGame* LoadInstance);
+	virtual void LoadGame(const FEnemyData& LoadData);
 
 
 public:

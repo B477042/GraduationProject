@@ -162,32 +162,42 @@ float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Damag
 
 
 //Stat과 관련된 정보를 저장하면 된다. 
-void AGruntCharacter::SaveGame(UEGSaveGame * SaveInstance)
+FEnemyData* AGruntCharacter::SaveGame(UEGSaveGame * SaveInstance)
 {
-	Super::SaveGame(SaveInstance);
+	auto SaveData = Super::SaveGame(SaveInstance);
 	if (!SaveInstance)
 	{
 		EGLOG(Error, TEXT("Save Instance is nullptr"));
 		return;
 	}
-
+	if (!SaveData)
+	{
+		EGLOG(Error, TEXT("SAVEDATA FAILED"));
+		return;
+	}
 	
-	Stat->SaveGame(SaveInstance);
+	Stat->SaveGame(SaveData);
 	 
-
-
+	return SaveData;
+	
 }
 
 
 //Stat 관련 정보를 Load하면 된다. 위치 정보 불러오기는 부모에서 처리했다
-void AGruntCharacter::LoadGame(const UEGSaveGame * LoadInstance)
+const FEnemyData* AGruntCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 {
 	if (!LoadInstance)
 	{
 		EGLOG(Error, TEXT("LoadInstance is nullptr"));
 		return;
 	}
-	Super::LoadGame(LoadInstance);
+
+	auto LoadData = Super::LoadGame(LoadInstance);
+	if (!LoadData)
+	{
+		EGLOG(Error, TEXT("SAVEDATA FAILED"));
+		return;
+	}
 
 	Stat->LoadGame(LoadInstance);
 

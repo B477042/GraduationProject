@@ -4,6 +4,7 @@
 #include "EnemyBossCharacter.h"
 #include "AIController_Boss.h"
 #include "Boss_Fireball.h"
+#include "EGSaveGame.h"
 #include "AnimInstance_Boss.h"
 #include "SkillActor_BossLightning.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -314,5 +315,23 @@ void AEnemyBossCharacter::reloadSkillObjs()
 		Comp_Fireball->AddSkillObj(GetWorld()->SpawnActor<ABoss_Fireball>());
 	}
 
+}
+
+void AEnemyBossCharacter::SaveGame(UEGSaveGame * SaveInstance)
+{
+	 
+	//Super::SaveGame(SaveInstance);
+	if (!SaveInstance)
+	{
+		EGLOG(Error, TEXT("SaveInstance is nullptr"));
+		return;
+	}
+	
+
+
+}
+
+void AEnemyBossCharacter::LoadGame(const UEGSaveGame * LoadInstance)
+{
 }
 

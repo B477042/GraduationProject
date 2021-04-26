@@ -119,7 +119,7 @@ void AEnemyCharacter::Dead()
 	Destroy();
 }
 
-void AEnemyCharacter::SaveGame(UEGSaveGame * SaveInstance)
+FEnemyData* AEnemyCharacter::SaveGame(UEGSaveGame * SaveInstance)
 {
 	if (!SaveInstance)
 	{
@@ -132,10 +132,10 @@ void AEnemyCharacter::SaveGame(UEGSaveGame * SaveInstance)
 	SaveData.Rotation = GetActorRotation();
 	
 	SaveInstance->D_Enemies.Add(GetName(), SaveData);
-
+	return &SaveData;
 }
 
-void AEnemyCharacter::LoadGame(const UEGSaveGame * LoadInstance)
+const FEnemyData* AEnemyCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 {
 	if (!LoadInstance)
 	{
@@ -152,6 +152,6 @@ void AEnemyCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 
 	SetActorLocationAndRotation(LoadData->Location, LoadData->Rotation);
 
-
+	return LoadData;
 }
 

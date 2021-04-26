@@ -28,9 +28,9 @@ protected:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)override;
 
 
-	virtual void SaveGame(class UEGSaveGame* SaveInstance)override;
+	virtual FEnemyData* SaveGame(class UEGSaveGame* SaveInstance)override;
 
-	virtual void LoadGame(const class UEGSaveGame* LoadInstance)override;
+	virtual FEnemyData* LoadGame(const class UEGSaveGame* LoadInstance)override;
 
 
 

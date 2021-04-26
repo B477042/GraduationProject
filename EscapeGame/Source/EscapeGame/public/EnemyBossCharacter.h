@@ -78,17 +78,20 @@ public:
 
 
 
-private:
+protected:
 	void initComponents();
 	void loadAsset();
 
 	void reloadSkillObjs();
+	virtual void SaveGame(class UEGSaveGame* SaveInstance)override;
+
+	virtual void LoadGame(const class UEGSaveGame* LoadInstance)override;
 
 //UFUNCTION(BlueprintCallable)
 //		void ReadyToDie();
 //	UFUNCTION(BlueprintCallable)
 //		void Die();
-private:
+protected:
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		UStatComponent_Enemy* Stat;
 

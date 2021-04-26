@@ -2,7 +2,7 @@
 
 
 #include "StatComponent_Enemy.h"
-#include "EGSaveGame.h"
+
 
 UStatComponent_Enemy::UStatComponent_Enemy()
 {
@@ -23,12 +23,14 @@ void UStatComponent_Enemy::BeginPlay()
 
 }
 
-void UStatComponent_Enemy::SaveGame(UEGSaveGame * SaveInstance)
+void UStatComponent_Enemy::SaveGame(FEnemyData& SaveData)
 {
+	
 }
 
-void UStatComponent_Enemy::LoadGame(const UEGSaveGame * LoadInstance)
+void UStatComponent_Enemy::LoadGame(const FEnemyData&LoadData)
 {
+
 }
 
 void UStatComponent_Enemy::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
