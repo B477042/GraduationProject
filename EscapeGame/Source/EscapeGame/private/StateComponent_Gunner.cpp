@@ -10,7 +10,7 @@ UStateComponent_Gunner::UStateComponent_Gunner()
 
 	JogSpeed = 300.0f;
 	ADSSpeed = 150.0f;
-
+	Hp = 110.0f;
 }
 void UStateComponent_Gunner::BeginPlay()
 {
@@ -55,6 +55,14 @@ EGunnerState UStateComponent_Gunner::GetState()
 
 void UStateComponent_Gunner::SaveGame(UEGSaveGame * SaveInstance)
 {
+	if (!SaveInstance)
+	{
+		EGLOG(Error, TEXT("SaveInstance is nullptr"));
+		return;
+	}
+
+
+
 }
 
 void UStateComponent_Gunner::LoadGame(UEGSaveGame * LoadInstance)

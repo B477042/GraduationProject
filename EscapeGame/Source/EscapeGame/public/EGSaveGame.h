@@ -11,6 +11,7 @@
  * 
  */
 
+//게임의 진행 상황에 대한 정보를 저장
 USTRUCT(BlueprintType)
 struct FGameProgressData
 {
@@ -25,9 +26,9 @@ public:
 
 };
 
- //기본적인 좌표계를 저장하는 
+ //기본적인 좌표계를 저장
 USTRUCT(BlueprintType)
-struct FBasicData
+struct FTransformData
 {
 	GENERATED_BODY()
 public:
@@ -39,9 +40,9 @@ public:
 		FRotator Rotation;
 	
 };
-
+//Player의 데이터를 저장
 USTRUCT(BlueprintType)
-struct FPlayerData :public FBasicData
+struct FPlayerData :public FTransformData
 {
 	GENERATED_BODY()
 public:
@@ -58,9 +59,9 @@ public:
 
 
 };
-
+//Enemy를 상속하는 클래스들의 정보 저장
 USTRUCT(BlueprintType)
-struct FEnemyData :public FBasicData
+struct FEnemyData :public FTransformData
 {
 	GENERATED_BODY()
 public:
@@ -70,9 +71,17 @@ public:
 		int32 Type;
 
 };
+//Boss의 정보를 저장합니다
+USTRUCT(BlueprintType)
+struct FBossData :public FEnemyData
+{
+	GENERATED_BODY()
+public:
+
+};
 
 USTRUCT(BlueprintType)
-struct FItemData :public  FBasicData
+struct FItemData :public  FTransformData
 {
 	GENERATED_BODY()
 public:
@@ -83,9 +92,9 @@ public:
 
 };
 
-
+//PostProcess 이펙트 관련 정보 저장
 USTRUCT(BlueprintType)
-struct FPostProcessData :public  FBasicData
+struct FPostProcessData :public  FTransformData
 {
 	GENERATED_BODY()
 public:
@@ -112,17 +121,20 @@ class ESCAPEGAME_API UEGSaveGame : public USaveGame
 	GENERATED_BODY()
 public:
 	//Data TArray of Players
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	UPROPERTY(BlueprintReadWrite, Category = "Data")
 		FPlayerData D_Player;
-	//Data TArray of Enemies
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	//엔진 에디터에 지정된 이름으로 정보를 관리합니다
+	UPROPERTY( BlueprintReadWrite, Category = "Data")
 		TMap<FString, FEnemyData> D_Enemies;
-	//Data TArray of Items
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		TMap<FString, FItemData> D_Items;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		FGameProgressData GameProgressData;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		FPostProcessData PostProcessData;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Data")
+		FBossData BossData;
+	//엔진 에디터에 지정된 이름으로 정보를 관리합니다
+	UPROPERTY( BlueprintReadWrite, Category = "Data")
+		TMap<FString, FItemData> D_Items;
+	UPROPERTY(BlueprintReadWrite, Category = "Data")
+		FGameProgressData GameProgressData;
+	UPROPERTY(BlueprintReadWrite, Category = "Data")
+		FPostProcessData PostProcessData;
+	
 };

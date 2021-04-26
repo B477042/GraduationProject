@@ -3,6 +3,7 @@
 
 #include "EnemyCharacter_Gunner.h"
 #include "EnemyGunnerAIController.h"
+#include "EGSaveGame.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "AnimInstance_Gunner.h"
 #include "Perception/AIPerceptionComponent.h"
@@ -92,7 +93,18 @@ void AEnemyCharacter_Gunner::BeginDestroy()
 
 void AEnemyCharacter_Gunner::SaveGame(UEGSaveGame * SaveInstance)
 {
-	//Super::SaveGame(SaveInstance);
+	Super::SaveGame(SaveInstance);
+	if (!SaveInstance)
+	{
+		EGLOG(Error, TEXT("SaveInstance is nullptr"));
+		return;
+	}
+
+
+	auto SaveData = SaveInstance->D_Enemies[GetName()];
+	//SaveData.Hp=StateComponent
+
+
 }
 
 void AEnemyCharacter_Gunner::LoadGame(const UEGSaveGame * LoadInstance)
