@@ -4,8 +4,9 @@
 
 
 #include "StatComponent.h"
-#include "StatComponent_Enemy.generated.h"
 #include "EGSaveGame.h"
+#include "StatComponent_Enemy.generated.h"
+
 /**
  * 
  */
@@ -17,14 +18,15 @@ public:
 	UStatComponent_Enemy();
 
 	virtual void InitializeComponent()override;
+
+	//자식 클래스들이 사용하게 될 것이다. 실행은 Owner class actor가 하게 될 것이다
+	virtual void SaveGame(FEnemyData* SaveData);
+	
+	virtual void LoadGame(const FEnemyData* LoadData);
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	//자식 클래스들이 사용하게 될 것이다. 실행은 Owner class actor가 하게 될 것이다
-	virtual void SaveGame(FEnemyData& SaveData);
-	
-	virtual void LoadGame(const FEnemyData& LoadData);
 
 
 public:

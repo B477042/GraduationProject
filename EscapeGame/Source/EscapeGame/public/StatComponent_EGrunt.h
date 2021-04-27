@@ -20,9 +20,9 @@ public:
 
 	virtual bool IsDead()override;
 
-	virtual void SaveGame(class UEGSaveGame* SaveInstance)override;
+	virtual   void SaveGame(FEnemyData* SaveData)override;
 	
-	virtual void LoadGame(const class UEGSaveGame* LoadInstance)override;
+	virtual  void LoadGame(const FEnemyData* LoadData)override;
 protected:
 	
 	

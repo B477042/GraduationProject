@@ -5,6 +5,7 @@
 #include "AIController_Boss.h"
 #include "Boss_Fireball.h"
 #include "EGSaveGame.h"
+#include "EGGameInstance.h"
 #include "AnimInstance_Boss.h"
 #include "SkillActor_BossLightning.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -66,6 +67,18 @@ void AEnemyBossCharacter::PostInitializeComponents()
 		
 
 	});
+
+
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)
+	{
+		EGLOG(Error, TEXT("Gameinstance is nullptr"));
+		return;
+	}
+	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEnemyBossCharacter::LoadGame);
+	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AEnemyBossCharacter::SaveGame);
+
+
 
 
 	//Comp_Fireball->AddSkillObj(ABoss_Fireball::CreateDefaultSubobject,10);
@@ -327,11 +340,32 @@ void AEnemyBossCharacter::SaveGame(UEGSaveGame * SaveInstance)
 		return;
 	}
 	
+	FBossData SaveData;
+	SaveData.Location = GetActorLocation();
+	SaveData.Rotation = GetActorRotation();
+	SaveData.bIsMpCharging = bIsMpCharging;
+	
+	auto DowncastedData = static_cast<FEnemyData*>(&SaveData);
+	Stat->SaveGame(DowncastedData);
 
 
+	SaveInstance->BossData = SaveData;
 }
 
 void AEnemyBossCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 {
+	if (!LoadInstance)
+	{
+		EGLOG(Error, TEXT("LoadInstance is nullptr"));
+		return;
+	}
+
+	auto LoadData = LoadInstance->BossData;
+	SetActorLocationAndRotation(LoadData.Location, LoadData.Rotation);
+	bIsMpCharging = LoadData.bIsMpCharging;
+
+	auto DowncastedData = static_cast<FEnemyData*>(&LoadData);
+
+	Stat->LoadGame(DowncastedData);
 }
 

@@ -4,6 +4,7 @@
 #include "EnemyCharacter_Gunner.h"
 #include "EnemyGunnerAIController.h"
 #include "EGSaveGame.h"
+#include "EGGameInstance.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "AnimInstance_Gunner.h"
 #include "Perception/AIPerceptionComponent.h"
@@ -71,6 +72,16 @@ void AEnemyCharacter_Gunner::PostInitializeComponents()
 	Anim = Cast<UAnimInstance_Gunner>(GetMesh()->GetAnimInstance());
 	if (!Anim)EGLOG(Error, TEXT("********Anim Cast Failed********"));
 
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)
+	{
+		EGLOG(Error, TEXT("Gameinstance is nullptr"));
+		return;
+	}
+	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEnemyCharacter_Gunner::LoadGame);
+	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AEnemyCharacter_Gunner::SaveGame);
+
+
 
 //	AIPerceptionComponent->OnPerceptionUpdated.AddDynamic(this,&AEnemyCharacter_Gunner::perceptionUpdated);
 
@@ -96,21 +107,36 @@ void AEnemyCharacter_Gunner::SaveGame(UEGSaveGame * SaveInstance)
 	Super::SaveGame(SaveInstance);
 	if (!SaveInstance)
 	{
-		EGLOG(Error, TEXT("SaveInstance is nullptr"));
+		EGLOG(Error, TEXT("Save Instance is nullptr"));
 		return;
 	}
 
-
-	auto SaveData = SaveInstance->D_Enemies[GetName()];
-	//SaveData.Hp=StateComponent
-
+	auto SaveData = SaveInstance->D_Enemies.Find(GetOwner()->GetName());
+	if (!SaveData)
+	{
+		EGLOG(Error, TEXT("Can't find %s's Data"), *GetOwner()->GetName());
+		return;
+	}
+	StateComponent->SaveGame(SaveData);
+	
 
 }
 
 void AEnemyCharacter_Gunner::LoadGame(const UEGSaveGame * LoadInstance)
 {
-	//Super::LoadGame(LoadInstance);
-
+	Super::LoadGame(LoadInstance);
+	if (!LoadInstance)
+	{
+		EGLOG(Error, TEXT("LoadInstance is nullptr"));
+		return;
+	}
+	auto LoadData = LoadInstance->D_Enemies.Find(GetOwner()->GetName());
+	if (!LoadData)
+	{
+		EGLOG(Error, TEXT("LaodData FAILED"));
+		return;
+	}
+	StateComponent->LoadGame(LoadData);
 }
 
 void  AEnemyCharacter_Gunner::initComponents()

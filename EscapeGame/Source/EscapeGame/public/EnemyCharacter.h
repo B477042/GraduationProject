@@ -31,10 +31,10 @@ public:
 
 	//Save Game 단계에서Enemy Character들이 공통적으로 저장할 정보를 저장한다. Delegate 등록은 자식 클레스에서
 	UFUNCTION(BlueprintCallable)
-	virtual	FEnemyData* SaveGame(class UEGSaveGame* SaveInstance);
+	virtual	void SaveGame(class UEGSaveGame* SaveInstance);
 	//Load Game 단계에서 Enemmy Character들이 공통적으로 저장할 정보를 저장한다. Delegate 등록은 자식 클레스에서
 	UFUNCTION(BlueprintCallable)
-	virtual	const FEnemyData* LoadGame(const class UEGSaveGame* LoadInstance);
+	virtual	void LoadGame(const class UEGSaveGame* LoadInstance);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

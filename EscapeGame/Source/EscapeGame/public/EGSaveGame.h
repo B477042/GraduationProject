@@ -78,12 +78,16 @@ struct FBossData :public FEnemyData
 	GENERATED_BODY()
 public:
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+		bool bIsMpCharging;
+
 };
 
 USTRUCT(BlueprintType)
 struct FItemData :public  FTransformData
 {
 	GENERATED_BODY()
+
 public:
 	//False라면 렌더링하지 않는다
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")

@@ -4,6 +4,7 @@
 
 #include "EscapeGame.h"
 #include "StateComponent.h"
+#include "EGSaveGame.h"
 #include "StateComponent_Gunner.generated.h"
 
 /**
@@ -23,7 +24,7 @@ enum class EGunnerState : uint8
 
 
 UCLASS()
-class ESCAPEGAME_API UStateComponent_Gunner : public UStateComponent
+class ESCAPEGAME_API UStateComponent_Gunner : public UActorComponent
 {
 	GENERATED_BODY()
 
@@ -34,8 +35,9 @@ protected:
 public:
 	void SetState(EGunnerState NewState);
 	EGunnerState GetState();
-	void SaveGame(class UEGSaveGame *SaveInstance);
-	void LoadGame(class UEGSaveGame *LoadInstance);
+
+	void SaveGame(FEnemyData* SaveData);
+	void LoadGame(const FEnemyData* LoadData);
 
 	void TakeDamage(float Damage);
 	void NotifyDeath();

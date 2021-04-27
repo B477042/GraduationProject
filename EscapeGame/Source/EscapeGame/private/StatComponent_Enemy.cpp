@@ -23,14 +23,27 @@ void UStatComponent_Enemy::BeginPlay()
 
 }
 
-void UStatComponent_Enemy::SaveGame(FEnemyData& SaveData)
+void UStatComponent_Enemy::SaveGame(FEnemyData* SaveData)
 {
+	if (!SaveData)
+	{
+		EGLOG(Error, TEXT("Save Data is nullptr"));
+		return;
+	}
+
+
 	
+	SaveData->Hp = CurrentHP;
 }
 
-void UStatComponent_Enemy::LoadGame(const FEnemyData&LoadData)
+void UStatComponent_Enemy::LoadGame(const FEnemyData* LoadData)
 {
-
+	if (!LoadData)
+	{
+		EGLOG(Error, TEXT(" LoadData is nullptr"));
+		return;
+	}
+	 CurrentHP= LoadData->Hp;
 }
 
 void UStatComponent_Enemy::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)

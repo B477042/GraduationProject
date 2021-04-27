@@ -162,29 +162,33 @@ float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Damag
 
 
 //Stat과 관련된 정보를 저장하면 된다. 
-FEnemyData* AGruntCharacter::SaveGame(UEGSaveGame * SaveInstance)
+void AGruntCharacter::SaveGame(UEGSaveGame * SaveInstance)
 {
-	auto SaveData = Super::SaveGame(SaveInstance);
+	Super::SaveGame(SaveInstance);
 	if (!SaveInstance)
 	{
 		EGLOG(Error, TEXT("Save Instance is nullptr"));
 		return;
 	}
+
+	auto SaveData = SaveInstance->D_Enemies.Find(GetOwner()->GetName());
 	if (!SaveData)
 	{
-		EGLOG(Error, TEXT("SAVEDATA FAILED"));
+		EGLOG(Error, TEXT("Can't find %s's Data"), *GetOwner()->GetName());
 		return;
 	}
+
+	
 	
 	Stat->SaveGame(SaveData);
 	 
-	return SaveData;
+
 	
 }
 
 
 //Stat 관련 정보를 Load하면 된다. 위치 정보 불러오기는 부모에서 처리했다
-const FEnemyData* AGruntCharacter::LoadGame(const UEGSaveGame * LoadInstance)
+void AGruntCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 {
 	if (!LoadInstance)
 	{
@@ -192,14 +196,14 @@ const FEnemyData* AGruntCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 		return;
 	}
 
-	auto LoadData = Super::LoadGame(LoadInstance);
+	auto LoadData = LoadInstance->D_Enemies.Find(GetOwner()->GetName());
 	if (!LoadData)
 	{
-		EGLOG(Error, TEXT("SAVEDATA FAILED"));
+		EGLOG(Error, TEXT("LaodData FAILED"));
 		return;
 	}
 
-	Stat->LoadGame(LoadInstance);
+	Stat->LoadGame(LoadData);
 
 
 
