@@ -87,7 +87,21 @@ void AEGPostProcessVolume::BeginPlay()
 
 //	UE_LOG(LogTemp, Error, TEXT("Print Value!!! %f"),Settings.BloomIntensity);
 
+	//auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	//if (!GameInstance)return;
+	////이어하기나 다음 스테이지로 이동이면 먼저 읽어 들인다
+	//if (GameInstance->EGameState == EEGGameState::E_LoadGame || GameInstance->EGameState == EEGGameState::E_NextStage)
+	//{
+	//	auto LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(GameInstance->GetSaveSlotName(), GameInstance->GetSavedUserIndex()));
+	//	if (!LoadInstance)
+	//	{
+	//		EGLOG(Error, TEXT("Load Insatnce Failed"));
+	//		return;
+	//	}
 
+
+
+	//}
 
 
 }
@@ -95,13 +109,14 @@ void AEGPostProcessVolume::BeginPlay()
 void AEGPostProcessVolume::SaveGame(UEGSaveGame* SaveInstance)
 {
 	if (!SaveInstance)return;
-	FPostProcessData& data = SaveInstance->PostProcessData;
+	FPostProcessData data ;
 	
 	data.ColorContrastValue = Settings.ColorContrast;
 	data.ColorGammaValue = Settings.ColorGamma;
 	data.ColorSaturation = Settings.ColorSaturation;
 	data.GrainJitter= Settings.GrainJitter;
 	data.GrainIntensity= Settings.GrainIntensity;
+	SaveInstance->PostProcessData = data;
 
 }
 void AEGPostProcessVolume::LoadGame(const UEGSaveGame* LoadInstance)
