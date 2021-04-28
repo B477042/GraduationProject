@@ -350,6 +350,11 @@ void AEnemyBossCharacter::SaveGame(UEGSaveGame * SaveInstance)
 
 
 	SaveInstance->BossData = SaveData;
+	auto AICon = Cast<AAIController_Boss>(GetController());
+	if (!AICon)
+		return;
+	AICon->SaveGame(SaveInstance);
+
 }
 
 void AEnemyBossCharacter::LoadGame(const UEGSaveGame * LoadInstance)
@@ -367,5 +372,9 @@ void AEnemyBossCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 	auto DowncastedData = static_cast<FEnemyData*>(&LoadData);
 
 	Stat->LoadGame(DowncastedData);
+	auto AICon = Cast<AAIController_Boss>(GetController());
+	if (!AICon)
+		return;
+	AICon->LoadGame(LoadInstance);
 }
 

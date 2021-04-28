@@ -20,9 +20,20 @@ public:
 	virtual void RunAI()override;
 	virtual void StopAI()override;
 
-	static FName TargetPos;
+	//static FName Name_TargetPos;
 	static FName ActionTimer;
 	static FName IsDash;
+	static FName MP;
+	static FName BackStepPoint;
+	static FName SoundPlayed;
+	static FName BehaviorPattern;
+	
+
+
+	void SaveGame(class UEGSaveGame* SaveInstance);
+	void LoadGame(const class UEGSaveGame* LoadInstance);
+
+
 private:
 	//UPROPERTY(VisibleAnywhere, Category = AI)
 	//	class UBlackboardData* BBData;
