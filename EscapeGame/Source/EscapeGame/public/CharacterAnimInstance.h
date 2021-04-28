@@ -13,7 +13,7 @@
  */
 
 DECLARE_MULTICAST_DELEGATE(FAttackEventDelegate);
-DECLARE_MULTICAST_DELEGATE(FComboAttackCheckDelegate);
+DECLARE_MULTICAST_DELEGATE/*_TwoParams*/(FComboAttackCheckDelegate/*, UAnimMontage*, bool, Montage,  bInterrupted*/);
 DECLARE_MULTICAST_DELEGATE(FChargeAttackCheckDelegate);
 
 UCLASS()

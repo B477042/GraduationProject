@@ -53,29 +53,29 @@ EGunnerState UStateComponent_Gunner::GetState()
 	return State;
 }
 
-void UStateComponent_Gunner::SaveGame(FEnemyData* SaveData)
+void UStateComponent_Gunner::SaveGame(FEnemyData& SaveData)
 {
-	if (!SaveData)
+	/*if (!SaveData)
 	{
 		EGLOG(Error, TEXT("SaveData is nullptr"));
 		return;
-	}
-	SaveData->Hp = Hp;
+	}*/
+	SaveData.Hp = Hp;
 	
 	
 
 
 }
 
-void UStateComponent_Gunner::LoadGame(const FEnemyData* LoadData)
+void UStateComponent_Gunner::LoadGame(const FEnemyData& LoadData)
 {
 	
-	if (!LoadData)
+	/*if (!LoadData)
 	{
 		EGLOG(Error, TEXT("LoadData is nullptr"));
 		return;
-	}
-	Hp = LoadData->Hp;
+	}*/
+	Hp = LoadData.Hp;
 
 
 }

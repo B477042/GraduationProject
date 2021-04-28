@@ -80,14 +80,21 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		bool bIsMpCharging;
+
 	FVector TargetPos;
 	
 	//BB Data
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	float ActionTimer;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	uint8 BehaviorPattern;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	bool bIsDash;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	FVector BackStepPoint;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	bool bSoundPlayed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	float MP;
 
 

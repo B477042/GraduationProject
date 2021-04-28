@@ -168,9 +168,10 @@ void AEGPlayerCharacter::PostInitializeComponents()
 		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
 
 
-		Anim->OnComboAttackCheckDelegate.AddLambda([this]()->void {
+		Anim->OnComboAttackCheckDelegate.AddLambda([this](/*UAnimMontage * Montage, bool bInterrupted*/) ->void {
 			if (Stat->CheckCanComboAttack())
 			{
+				EGLOG(Error, TEXT("lambda check combo"));
 				//AnimNotify_CanComboAttack 에서 호출될 함수다
 				Stat->SetComboStartState();
 				Anim->JumpToComboAttackSection(Stat->GetCurrentCombo());

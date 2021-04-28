@@ -36,8 +36,10 @@ public:
 	void SetState(EGunnerState NewState);
 	EGunnerState GetState();
 
-	void SaveGame(FEnemyData* SaveData);
-	void LoadGame(const FEnemyData* LoadData);
+	UFUNCTION(BlueprintCallable)
+	void SaveGame(FEnemyData& SaveData);
+	UFUNCTION(BlueprintCallable)
+	void LoadGame(const FEnemyData& LoadData);
 
 	void TakeDamage(float Damage);
 	void NotifyDeath();

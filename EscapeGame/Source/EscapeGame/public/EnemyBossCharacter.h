@@ -83,6 +83,7 @@ protected:
 	void loadAsset();
 
 	void reloadSkillObjs();
+
 	virtual void SaveGame(class UEGSaveGame* SaveInstance)override;
 
 	virtual void LoadGame(const class UEGSaveGame* LoadInstance)override;

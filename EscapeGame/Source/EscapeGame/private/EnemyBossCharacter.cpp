@@ -349,11 +349,14 @@ void AEnemyBossCharacter::SaveGame(UEGSaveGame * SaveInstance)
 	Stat->SaveGame(DowncastedData);
 
 
-	SaveInstance->BossData = SaveData;
+	
 	auto AICon = Cast<AAIController_Boss>(GetController());
 	if (!AICon)
 		return;
-	AICon->SaveGame(SaveInstance);
+	AICon->SaveGame(SaveData);
+
+	SaveInstance->BossData = SaveData;
+	EGLOG(Error, TEXT("Boss Save Complete mP : %f"), SaveInstance->BossData.MP);
 
 }
 
@@ -371,10 +374,12 @@ void AEnemyBossCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 
 	auto DowncastedData = static_cast<FEnemyData*>(&LoadData);
 
-	Stat->LoadGame(DowncastedData);
+
+	EGLOG(Error, TEXT("Load instance data MP : %f"), LoadInstance->BossData.MP);
 	auto AICon = Cast<AAIController_Boss>(GetController());
 	if (!AICon)
 		return;
-	AICon->LoadGame(LoadInstance);
+	AICon->LoadGame(LoadData);
+	Stat->LoadGame(DowncastedData);
 }
 

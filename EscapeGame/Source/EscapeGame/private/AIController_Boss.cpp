@@ -2,7 +2,7 @@
 
 
 #include "AIController_Boss.h"
-#include "EGSaveGame.h"
+
 
 //FName AAIController_Boss::Name_TargetPos = TEXT("TargetPos");
 FName AAIController_Boss::ActionTimer = TEXT("ActionTimer");
@@ -55,28 +55,32 @@ void AAIController_Boss::StopAI()
 }
 
 //Boss Character에서 호출
-void AAIController_Boss::SaveGame(UEGSaveGame * SaveInstance)
+void AAIController_Boss::SaveGame(FBossData& BossData)
 {
-	if (!SaveInstance)
+	/*if (!SaveInstance)
 		return;
-	SaveInstance->BossData.ActionTimer = GetBlackboardComponent()->GetValueAsFloat(ActionTimer);
-	SaveInstance->BossData.MP = GetBlackboardComponent()->GetValueAsFloat(MP);
-	SaveInstance->BossData.bIsDash = GetBlackboardComponent()->GetValueAsBool(IsDash);		
-	SaveInstance->BossData.bSoundPlayed = GetBlackboardComponent()->GetValueAsBool(SoundPlayed);
-	SaveInstance->BossData.BackStepPoint = GetBlackboardComponent()->GetValueAsVector(BackStepPoint);
-	SaveInstance->BossData.BehaviorPattern = GetBlackboardComponent()->GetValueAsEnum(BehaviorPattern);
-	EGLOG(Error, TEXT("Boss Save Complete"));
+
+	FBossData& BossData = SaveInstance->BossData;*/
+/*	SaveInstance->*/BossData.ActionTimer = GetBlackboardComponent()->GetValueAsFloat(ActionTimer);
+/*	SaveInstance->*/BossData.MP = GetBlackboardComponent()->GetValueAsFloat(MP);
+/*	SaveInstance->*/BossData.bIsDash = GetBlackboardComponent()->GetValueAsBool(IsDash);
+/*	SaveInstance->*/BossData.bSoundPlayed = GetBlackboardComponent()->GetValueAsBool(SoundPlayed);
+/*	SaveInstance->*/BossData.BackStepPoint = GetBlackboardComponent()->GetValueAsVector(BackStepPoint);
+/*	SaveInstance->*/BossData.BehaviorPattern = GetBlackboardComponent()->GetValueAsEnum(BehaviorPattern);
+	EGLOG(Error, TEXT("Boss Save Complete MP : %f"), GetBlackboardComponent()->GetValueAsFloat(MP));
+
 }
 //에서 호출
-void AAIController_Boss::LoadGame(const UEGSaveGame * LoadInstance)
+void AAIController_Boss::LoadGame(const FBossData& BossData)
 {
-	if (!LoadInstance)
-		return;
-	GetBlackboardComponent()->SetValueAsFloat(ActionTimer,LoadInstance->BossData.ActionTimer );
-	GetBlackboardComponent()->SetValueAsFloat(MP, LoadInstance->BossData.MP);
-	GetBlackboardComponent()->SetValueAsBool(IsDash, LoadInstance->BossData.bIsDash);
-	GetBlackboardComponent()->SetValueAsBool(SoundPlayed, LoadInstance->BossData.bSoundPlayed);
-	GetBlackboardComponent()->SetValueAsVector(BackStepPoint, LoadInstance->BossData.BackStepPoint);
-	GetBlackboardComponent()->SetValueAsEnum(BehaviorPattern, LoadInstance->BossData.BehaviorPattern);
+	/*if (!LoadInstance)
+		return;*/
+	EGLOG(Error, TEXT("Load instance data mp : %f"), /*LoadInstance->*/BossData.MP);
+	GetBlackboardComponent()->SetValueAsFloat(ActionTimer,/*LoadInstance->*/BossData.ActionTimer );
+	GetBlackboardComponent()->SetValueAsFloat(MP, /*LoadInstance->*/BossData.MP);
+	GetBlackboardComponent()->SetValueAsBool(IsDash, /*LoadInstance->*/BossData.bIsDash);
+	GetBlackboardComponent()->SetValueAsBool(SoundPlayed, /*LoadInstance->*/BossData.bSoundPlayed);
+	GetBlackboardComponent()->SetValueAsVector(BackStepPoint, /*LoadInstance->*/ BossData.BackStepPoint);
+	GetBlackboardComponent()->SetValueAsEnum(BehaviorPattern, /*LoadInstance->*/BossData.BehaviorPattern);
 	EGLOG(Error, TEXT("Boss Load Complete MP : %f"),GetBlackboardComponent()->GetValueAsFloat(MP));
 }

@@ -117,7 +117,7 @@ void AEnemyCharacter_Gunner::SaveGame(UEGSaveGame * SaveInstance)
 		EGLOG(Error, TEXT("Can't find %s's Data"), *GetOwner()->GetName());
 		return;
 	}
-	StateComponent->SaveGame(SaveData);
+	StateComponent->SaveGame(*SaveData);
 	
 
 }
@@ -136,7 +136,7 @@ void AEnemyCharacter_Gunner::LoadGame(const UEGSaveGame * LoadInstance)
 		EGLOG(Error, TEXT("LaodData FAILED"));
 		return;
 	}
-	StateComponent->LoadGame(LoadData);
+	StateComponent->LoadGame(*LoadData);
 }
 
 void  AEnemyCharacter_Gunner::initComponents()

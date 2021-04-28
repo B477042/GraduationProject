@@ -3,6 +3,7 @@
 #pragma once
 
 #include "EnemyAIController.h"
+#include "EGSaveGame.h"
 #include "AIController_Boss.generated.h"
 
 /**
@@ -29,9 +30,10 @@ public:
 	static FName BehaviorPattern;
 	
 
-
-	void SaveGame(class UEGSaveGame* SaveInstance);
-	void LoadGame(const class UEGSaveGame* LoadInstance);
+	UFUNCTION(BlueprintCallable)
+	void SaveGame(FBossData& BossData);
+	UFUNCTION(BlueprintCallable)
+	void LoadGame(const FBossData& BossData);
 
 
 private:
