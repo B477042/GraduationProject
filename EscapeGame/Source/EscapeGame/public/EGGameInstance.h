@@ -64,7 +64,12 @@ public:
 	bool bIsDebugMode;
 
 	const TWeakObjectPtr<class AEGPostProcessVolume> GetPostProcessVolume();
+	TWeakObjectPtr<class AAStarFinder>GetAStarFinder();
 	bool SetPostProcessVolume(class AEGPostProcessVolume* Object);
+	bool SetAStarFinder(class AAStarFinder* Object);
+	
+
+
 private:
 	FString SaveSlotName;
 	FString OptionsSlotName;
@@ -72,6 +77,6 @@ private:
 
 	TWeakObjectPtr<class AEGPostProcessVolume> PostProcessVolume;
 
-
+	TWeakObjectPtr<class AAStarFinder>AStarFinder;
 	
 };

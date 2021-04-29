@@ -4,49 +4,58 @@
 #include "AstarFinder.h"
 #include "Engine/Engine.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "EGGameInstance.h"
 // Sets default values
-UAstarFinder::UAstarFinder()
+AAStarFinder::AAStarFinder()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	//PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = false;
 
 }
 
 // Called when the game starts or when spawned
-//void UAstarFinder::BeginPlay()
-//{
-//	Super::BeginPlay();
-//	EGLOG(Error, TEXT("Ganag nam style"));
-//}
-//
-//void UAstarFinder::PostInitializeComponents()
-//{
-//	Super::PostInitializeComponents();
-//	
-//}
-//
+void AAStarFinder::BeginPlay()
+{
+	Super::BeginPlay();
+	EGLOG(Error, TEXT("Ganag nam style"));
+
+
+
+}
+
+void AAStarFinder::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)return;
+
+	if (GameInstance->SetAStarFinder(this))
+		EGLOG(Warning, TEXT("Regist astar finder"));
+
+}
+
 //// Called every frame
-//void UAstarFinder::Tick(float DeltaTime)
+//void AAStarFinder::Tick(float DeltaTime)
 //{
 //	Super::Tick(DeltaTime);
 //
 //}
+//
+//AAStarFinder * AAStarFinder::GetInstance()
+//{
+//	{
+//		if (GEngine)
+//		{
+//			AAStarFinder* instance = Cast<AAStarFinder>(GEngine->GameSingleton);
+//			
+//			return instance;
+//		}
+//	
+//		return nullptr;
+//	}
+//}
 
-UAstarFinder * UAstarFinder::GetInstance()
-{
-	{
-		if (GEngine)
-		{
-			UAstarFinder* instance = Cast<UAstarFinder>(GEngine->GameSingleton);
-			
-			return instance;
-		}
-	
-		return nullptr;
-	}
-}
-
-void UAstarFinder::PathFind(AAstarNode * Start,EPathTarget Mode)
+void AAStarFinder::PathFind(AAstarNode * Start,EPathTarget Mode)
 {
 	EGLOG(Error, TEXT("AStar Lunched At :%s"),*Start->GetName());
 	ToVisiteNodes.Empty();
@@ -73,7 +82,7 @@ void UAstarFinder::PathFind(AAstarNode * Start,EPathTarget Mode)
 
 }
 
-void UAstarFinder::ShowPath(EPathTarget Mode)
+void AAStarFinder::ShowPath(EPathTarget Mode)
 {
 	TWeakObjectPtr<AAstarNode> temp;
 	switch (Mode)
@@ -106,24 +115,24 @@ void UAstarFinder::ShowPath(EPathTarget Mode)
 	}
 }
 
-void UAstarFinder::StartPathFinder(AAstarNode * Other, EPathTarget Mode)
+void AAStarFinder::StartPathFinder(AAstarNode * Other, EPathTarget Mode)
 {
 	
 		PathFind(Other,Mode);
 	
 }
-void UAstarFinder::SetKeyPoint(AAstarNode* Other)
+void AAStarFinder::SetKeyPoint(AAstarNode* Other)
 {
 	KeyNode = Other;
 }
 
 //Game instance에서 목표가 되는 오브젝트를 우선적으로 불러와서 찾아준다. 
-void UAstarFinder::SetGoalPoint(AAstarNode * Other)
+void AAStarFinder::SetGoalPoint(AAstarNode * Other)
 {
 	GoalNode = Other;
 }
 //모든 노드의 PathFind 연산값을 지워준다
-void UAstarFinder::ResetResult()
+void AAStarFinder::ResetResult()
 {
 	for (auto it : AllNodes)
 	{
@@ -133,7 +142,7 @@ void UAstarFinder::ResetResult()
 
 }
 
-void UAstarFinder::AddNode(AAstarNode * Other)
+void AAStarFinder::AddNode(AAstarNode * Other)
 {
 	AllNodes.Add(Other);
 	EGLOG(Warning, TEXT("Add : %s"), *AllNodes.Top()->GetName());
@@ -147,12 +156,12 @@ void UAstarFinder::AddNode(AAstarNode * Other)
 	EGLOG(Warning, TEXT("ToVisiteNodes : %d "), ToVisiteNodes.IsEmpty());
 }
 
-void UAstarFinder::ClearNodes()
+void AAStarFinder::ClearNodes()
 {
 	AllNodes.Empty();
 }
 
-void UAstarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
+void AAStarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Goal Finder"));
 	TWeakObjectPtr<AAstarNode> PopedNode;
@@ -272,7 +281,7 @@ void UAstarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 		ShowPath(EPathTarget::Gate);
 }
 
-void UAstarFinder::KeyFind(AAstarNode * Start, AAstarNode * Key)
+void AAStarFinder::KeyFind(AAstarNode * Start, AAstarNode * Key)
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Key Finder"));
 	

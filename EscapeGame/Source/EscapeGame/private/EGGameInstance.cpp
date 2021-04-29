@@ -7,6 +7,7 @@
 #include "EGPostProcessVolume.h"
 #include "EGPlayerState.h"
 #include "EGGameState.h"
+#include "AStarFinder.h"
 
 UEGGameInstance::UEGGameInstance()
 {
@@ -22,7 +23,7 @@ UEGGameInstance::UEGGameInstance()
 	//}
 	//static ConstructorHelpers::FClassFinder<USoundClass>
 
-	
+	AStarFinder = nullptr;
 	bIsDebugMode = false;
 }
 
@@ -119,6 +120,10 @@ const TWeakObjectPtr<AEGPostProcessVolume> UEGGameInstance::GetPostProcessVolume
 {
 	return PostProcessVolume;
 }
+TWeakObjectPtr<class AAStarFinder>UEGGameInstance::GetAStarFinder()
+{
+	return AStarFinder;
+}
 
 bool  UEGGameInstance::SetPostProcessVolume(AEGPostProcessVolume* Object)
 {
@@ -127,4 +132,18 @@ bool  UEGGameInstance::SetPostProcessVolume(AEGPostProcessVolume* Object)
 	PostProcessVolume = Object;
 	return true;
 }
+bool  UEGGameInstance::SetAStarFinder(AAStarFinder* Object)
+{
+	if (!Object)return false;
 
+	if (AStarFinder!=nullptr)
+	{
+		EGLOG(Error, TEXT("AStarFinder is already Setted"));
+		return false;
+	}
+
+	AStarFinder = Object;
+	return true;
+
+
+}

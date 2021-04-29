@@ -5,6 +5,7 @@
 #include "AstarFinder.h"
 #include "Item_CardKey.h"
 #include "Engine.h"
+#include "EGGameInstance.h"
 
 // Sets default values
 AAstarNode::AAstarNode()
@@ -26,16 +27,26 @@ AAstarNode::AAstarNode()
 void AAstarNode::BeginPlay()
 {
 	Super::BeginPlay();
-	UAstarFinder::GetInstance()->AddNode(this);
+
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)return;
+
+	auto finder = GameInstance->GetAStarFinder();
+	if (finder==nullptr) {
+		EGLOG(Error, TEXT("Can't find finder"));
+		return;
+	}
+
+	finder->AddNode(this);
 
 	if (bIsGoalNode)
 	{
-		UAstarFinder::GetInstance()->SetGoalPoint(this);
+		finder->SetGoalPoint(this);
 		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Goal Node : %s"),*GetName());
 	}
 	if (bIsKeyNode)
 	{
-		UAstarFinder::GetInstance()->SetKeyPoint(this);
+		finder->SetKeyPoint(this);
 		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Key Node : %s"),*GetName());
 	}
 	Deactivate();
@@ -50,13 +61,25 @@ void AAstarNode::PostInitializeComponents()
 	BoxTrigger->OnComponentEndOverlap.AddDynamic(this, &AAstarNode::OnActorOverlapEnd);
 	
 	
-	//OnPlayerEnter.AddUObject(this, &UAstarFinder::GetInstance()->StartPathFinder);
+	//OnPlayerEnter.AddUObject(this, &AAStarFinder::GetInstance()->StartPathFinder);
 }
 
 void AAstarNode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
-	UAstarFinder::GetInstance()->ClearNodes();
+
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)return;
+
+	auto finder = GameInstance->GetAStarFinder();
+	if (finder == nullptr) {
+		EGLOG(Error, TEXT("Can't find finder"));
+		return;
+	}
+
+
+
+	finder->ClearNodes();
 	EGLOG(Error, TEXT("End Play"));
 }
 
@@ -74,14 +97,32 @@ void AAstarNode::OnActorOverlap(UPrimitiveComponent * OverlappedComp, AActor * O
 	else
 		Mode = EPathTarget::Key;
 	
-UAstarFinder::GetInstance()->StartPathFinder(this,Mode);
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)return;
+
+	auto finder = GameInstance->GetAStarFinder();
+	if (finder == nullptr) {
+		EGLOG(Error, TEXT("Can't find finder"));
+		return;
+	}
+
+
+	finder->StartPathFinder(this,Mode);
 
 
 }
 
 void AAstarNode::OnActorOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
-	UAstarFinder::GetInstance()->ResetResult();
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)return;
+
+	auto finder = GameInstance->GetAStarFinder();
+	if (finder == nullptr) {
+		EGLOG(Error, TEXT("Can't find finder"));
+		return;
+	}
+	finder-> ResetResult();
 }
 
 // Called every frame

@@ -7,26 +7,27 @@
 #include "Containers/Queue.h"
 //#include "Containers/pri"
 //#include "Containers/"
-#include "UObject/NoExportTypes.h"
+#include "GameFramework/Actor.h"
 #include "AstarFinder.generated.h"
 
 
 
 
 UCLASS()
-class ESCAPEGAME_API UAstarFinder : public UObject
+class ESCAPEGAME_API AAStarFinder : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	UAstarFinder();
-	static UAstarFinder* GetInstance();
+	AAStarFinder();
+	//static AAStarFinder* GetInstance();
 
 protected:
 	// Called when the game starts or when spawned
-	/*virtual void BeginPlay() override;
-	virtual void PostInitializeComponents()override;*/
+	virtual void BeginPlay() override;
+	
+	virtual void PostInitializeComponents()override;
 public:	
 	// Called every frame
 	//virtual void Tick(float DeltaTime) override;
