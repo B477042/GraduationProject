@@ -5,6 +5,7 @@
 #include "EnemyGunnerAIController.h"
 #include "EGSaveGame.h"
 #include "EGGameInstance.h"
+#include "EGPlayerCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "AnimInstance_Gunner.h"
 #include "Perception/AIPerceptionComponent.h"
@@ -31,6 +32,7 @@ AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
 
 	bCanFire = true;
 	Cooltime = 0.0f;
+
 
 	Point_Muzzle = FVector::ZeroVector;
 
@@ -81,6 +83,30 @@ void AEnemyCharacter_Gunner::PostInitializeComponents()
 	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEnemyCharacter_Gunner::LoadGame);
 	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AEnemyCharacter_Gunner::SaveGame);
 
+	OnHpChangedDelegate.AddLambda([this]()->void{
+		HPBar = Cast<UProgressBar>(HPBarWidget->GetUserWidgetObject()->GetWidgetFromName(TEXT("HPBar")));
+		if (!HPBar)
+		{
+			EGLOG(Warning, TEXT(" HPBar Failed"));
+			return;
+		}
+		HPBar->SetPercent(StateComponent->GetHPRatio());
+	});
+
+	OnHPIsZeroDelegate.AddLambda([this]()->void {
+		//Anim Dead 설정
+		//AIController 중단
+
+		Anim->SetDead(true);
+		auto AICon = Cast<AEnemyGunnerAIController>(GetController());
+		if (AICon)
+		{
+			AICon->StopAI();
+		}
+
+
+	});
+	
 
 
 //	AIPerceptionComponent->OnPerceptionUpdated.AddDynamic(this,&AEnemyCharacter_Gunner::perceptionUpdated);
@@ -275,5 +301,25 @@ void AEnemyCharacter_Gunner::ReleaseADS()
 {
 	StateComponent->SetState(EGunnerState::E_Idle);
 	Anim->SetIronsights(false);
+}
+
+float AEnemyCharacter_Gunner::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+{
+	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	StateComponent->TakeDamage(FinalDamage);
+
+	//죽었다면 causer가 player인지 검사하고 경험치를 준다
+	if (StateComponent->GetHPRatio() <= 0.0f)
+	{
+		auto player = Cast<AEGPlayerCharacter>(DamageCauser);
+		if (player)
+		{
+			player->GetStatComponent()->GainExp(StateComponent->GetExp());
+		}
+	}
+
+
+	return FinalDamage;
 }
 

@@ -5,6 +5,7 @@
 #include "EscapeGame.h"
 #include "Animation/AnimInstance.h"
 #include "EnemyCharacter_Gunner.h"
+#include "Sound/SoundBase.h"
 #include "AnimInstance_Gunner.generated.h"
 
 /**
@@ -22,20 +23,25 @@ public:
 protected:
 	virtual void NativeBeginPlay()override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds)override;
+	
+
 public:
 
 	void SetCrouch(bool bSet);
 	void SetIronsights(bool bSet);
 	void SetAttacking(bool bSet);
 	void SetAccelerating(bool bSet);
-
+	void SetDead(bool bSet);
 
 	UAnimMontage* GetFireMontage()const;
 
 	void PlayFire(EGunnerState State);
 	void PlayReload(EGunnerState State);
 
-
+	UFUNCTION()
+		void AnimNotify_Anim_DeadStart();
+	UFUNCTION()
+		void AnimNotify_Anim_DeadEnd();
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "variable", meta = (AllowPrivateAccess = "true"))
@@ -50,7 +56,8 @@ protected:
 	bool bIsCrouch;
 	UPROPERTY(BlueprintReadOnly, Category = "variable", meta = (AllowPrivateAccess = "true"))
 	bool bOnIronsights;
-
+	UPROPERTY(BlueprintReadOnly, Category = "variable", meta = (AllowPrivateAccess = "true"))
+	bool bIsDead;
 
 
 	UPROPERTY(BlueprintReadOnly, Category = "variable", meta = (AllowPrivateAccess = "true"))
@@ -78,7 +85,8 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
 		UAnimMontage* FireMontage;
-	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "SFX", meta = (AllowPrivateAccess = true))
+		USoundBase* SFX_Dead;
 
 
 	FRotator RotationLastTick;

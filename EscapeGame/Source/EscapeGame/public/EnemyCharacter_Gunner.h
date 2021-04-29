@@ -16,6 +16,8 @@
 
 
 
+DECLARE_MULTICAST_DELEGATE(FOnHpIsZero);
+
 
 UCLASS()
 class ESCAPEGAME_API AEnemyCharacter_Gunner : public AEnemyCharacter
@@ -39,7 +41,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ReleaseADS();
 	
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)override;
 
+	//state component-> take damage ¿¡¼­ broadcast µÊ
+	FOnHpIsZero OnHPIsZeroDelegate;
+	//state component-> take damage ¿¡¼­ broadcast µÊ
+	FOnHPChangeDelegate OnHpChangedDelegate;
 
 protected:
 	
@@ -81,6 +88,9 @@ protected:
 		UStateComponent_Gunner* StateComponent;
 	UPROPERTY()
 		class UAnimInstance_Gunner* Anim;
+	
+
+
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	//	class UAISenseConfig_Sight * AiConfigSight;
 

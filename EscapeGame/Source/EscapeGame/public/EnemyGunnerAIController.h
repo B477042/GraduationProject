@@ -30,10 +30,10 @@ public:
 	 void OnUnPossess()override;
 		
 
-	
-protected:
 	virtual	void RunAI()override;
 	virtual	void StopAI()override;
+protected:
+	
 	UFUNCTION()
 	virtual void OnPerceptionUpdated(const TArray<AActor*>& UpdatedActors);
 	UFUNCTION()

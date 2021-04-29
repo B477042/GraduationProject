@@ -42,9 +42,10 @@ public:
 	void LoadGame(const FEnemyData& LoadData);
 
 	void TakeDamage(float Damage);
-	void NotifyDeath();
-
 	
+	float GetHPRatio() { return Hp / DefaultHp; }
+	int32 GetExp() { return Exp; }
+
 
 private:
 
@@ -56,5 +57,8 @@ private:
 		float ADSSpeed;
 	UPROPERTY(Transient, EditInstanceOnly, BlueprintReadWrite, Category = "Stats", meta = (AllowPrivateAccess = "true"))
 		float Hp;
+	UPROPERTY(Transient, EditInstanceOnly, BlueprintReadWrite, Category = "Stats", meta = (AllowPrivateAccess = "true"))
+		int32 Exp;
 
+	const float DefaultHp = 110.0f;
 };

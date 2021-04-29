@@ -10,7 +10,8 @@ UStateComponent_Gunner::UStateComponent_Gunner()
 
 	JogSpeed = 300.0f;
 	ADSSpeed = 150.0f;
-	Hp = 110.0f;
+	Hp = DefaultHp;
+	Exp = 100;
 }
 void UStateComponent_Gunner::BeginPlay()
 {
@@ -83,11 +84,12 @@ void UStateComponent_Gunner::LoadGame(const FEnemyData& LoadData)
 void UStateComponent_Gunner::TakeDamage(float Damage)
 {
 	Hp -= Damage;
+	auto OwnerChara = Cast<AEnemyCharacter_Gunner>(GetOwner());
+	if (!OwnerChara)return;
+
+	OwnerChara->OnHpChangedDelegate.Broadcast();
+
 	if (Hp <= 0)
-		NotifyDeath();
+		OwnerChara->OnHPIsZeroDelegate.Broadcast();
 }
 
-void UStateComponent_Gunner::NotifyDeath()
-{
-
-}

@@ -21,6 +21,7 @@ UAnimInstance_Gunner::UAnimInstance_Gunner()
 	bIsFullBody=false;
 	bIsAttacking=false;
 	bIsCrouch = false;
+	bIsDead = false;
 	bOnIronsights = false;
 	Speed=0.f;
 	Direction = 0.0f;
@@ -36,7 +37,11 @@ UAnimInstance_Gunner::UAnimInstance_Gunner()
 	{
 		FireMontage = AM_Fire.Object;
 	}
-
+	static ConstructorHelpers::FObjectFinder<USoundWave>SW_Dead(TEXT("SoundWave'/Game/MyFolder/Sound/Voice/396801__scorpion67890__male-death-4.396801__scorpion67890__male-death-4'"));
+	if (SW_Dead.Succeeded())
+	{
+		SFX_Dead = SW_Dead.Object;
+	}
 	
 }
 
@@ -62,10 +67,7 @@ void UAnimInstance_Gunner::NativeUpdateAnimation(float DeltaSeconds)
 	//update speed
 	Speed = Character->GetVelocity().Size();
 
-	////update is accelerating
-	//float accelerate = Character->GetCharacterMovement()->GetCurrentAcceleration().Size();
-	//accelerate > 0 ? bIsAccelerating = true : bIsAccelerating = false;
-
+	
 	//update is fullbody
 	GetCurveValue(TEXT("FullBody")) > 0 ? bIsFullBody = true : bIsFullBody = false;
 
@@ -84,9 +86,7 @@ void UAnimInstance_Gunner::NativeUpdateAnimation(float DeltaSeconds)
 	);
 
 	////Update bs_Walk Speed
-	//bs_Speed = UKismetMathLibrary::GetDirectionUnitVector(PrevPos,Character->GetActorLocation()).Size();
-	//PrevPos = Character->GetActorLocation();
-	//
+	
 	//Update Direction bs_Walk
 	Direction = CalculateDirection(Character->GetVelocity(), Character->GetActorRotation());
 }
@@ -109,10 +109,14 @@ void UAnimInstance_Gunner::SetAccelerating(bool bSet)
 {
 	bIsAccelerating = bSet;
 }
+void UAnimInstance_Gunner::SetDead(bool bSet)
+{
+	bIsDead = bSet;
+}
+
 
 UAnimMontage * UAnimInstance_Gunner::GetFireMontage() const
 {
-
 	return FireMontage;
 }
 
@@ -153,4 +157,17 @@ void UAnimInstance_Gunner::PlayReload(EGunnerState State)
 		return;
 	}
 	
+}
+
+void UAnimInstance_Gunner::AnimNotify_Anim_DeadStart()
+{
+	StopAllMontages(0);
+	UGameplayStatics::PlaySoundAtLocation(this, SFX_Dead, GetOwningActor()->GetActorLocation());
+	
+}
+
+
+void UAnimInstance_Gunner::AnimNotify_Anim_DeadEnd()
+{
+	Character->Dead();
 }

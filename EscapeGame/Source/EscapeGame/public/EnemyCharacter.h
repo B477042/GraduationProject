@@ -35,6 +35,10 @@ public:
 	//Load Game 단계에서 Enemmy Character들이 공통적으로 저장할 정보를 저장한다. Delegate 등록은 자식 클레스에서
 	UFUNCTION(BlueprintCallable)
 	virtual	void LoadGame(const class UEGSaveGame* LoadInstance);
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)override;
+	UFUNCTION(BlueprintCallable)
+		void Dead();
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -42,12 +46,11 @@ protected:
 	virtual void PostInitializeComponents() override;
 	/*UFUNCTION(BlueprintCallable)
 		float GetCurrentSpeed();*/
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,class AController* EventInstigator, AActor* DamageCauser)override;
+	
 
 	
 
-	UFUNCTION(BlueprintCallable)
-		void Dead();
+
 
 
 	
