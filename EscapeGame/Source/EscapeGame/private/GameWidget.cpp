@@ -25,7 +25,9 @@ void UGameWidget::NativeConstruct()
 	Img_Cardkey = Cast<UImage>(GetWidgetFromName(TEXT("img_Cardkey")));
 	Img_Blood= Cast<UImage>(GetWidgetFromName(TEXT("Img_Bloody")));
 	RecoveryItemNum = Cast<UTextBlock>(GetWidgetFromName(TEXT("RecoveryItemNum0")));
-	
+	//Txt_TimerBlock=Cast<UTextBlock>(GetWidgetFromName(TEXT("TimerBlock")));
+
+
 	GameTimer = 60.0f;
 	RemainTime = GameTimer;
 	PlayerHP = 100.0f;
@@ -111,6 +113,21 @@ void UGameWidget::loadImages()
 void UGameWidget::TimeExtend(float addTime)
 {
 	GameTimer += addTime;
+
+
+	////15초 미마이면 빨간색
+	//if (GameTimer < 15.0f)
+	//{
+	//	FSlateColor RedColor(FLinearColor(1.0f,0.0f,0.0f,1.0f));
+	//
+	//	Txt_TimerBlock->SetColorAndOpacity(RedColor);
+	//}
+	//else if (GameTimer < 30.0f)
+	//{
+	//	FSlateColor YellowColor(FLinearColor(1.0f, 0.744f, 0.0f, 1.0f));
+
+	//	Txt_TimerBlock->SetColorAndOpacity(YellowColor);
+	//}
 }
 
 void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)

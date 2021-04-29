@@ -156,7 +156,7 @@ void AEGPlayerCharacter::PostInitializeComponents()
 
 	//AnimInstance와 연동할 것들
 	Anim = Cast<UAnim_Player>(GetMesh()->GetAnimInstance());
-	if (Anim != nullptr)
+	if (Anim)
 	{
 	
 		//Anim->montage_

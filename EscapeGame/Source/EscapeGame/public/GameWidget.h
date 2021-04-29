@@ -78,6 +78,8 @@ private:
 	UPROPERTY()
 		class UImage* Img_Blood;
 
+	//UPROPERTY()
+	//	class UTextBlock* Txt_TimerBlock;
 
 	UPROPERTY()
 		class UTextBlock* RecoveryItemNum;//Write 'HP'
