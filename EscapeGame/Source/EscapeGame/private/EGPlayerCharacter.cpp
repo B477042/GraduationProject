@@ -53,11 +53,31 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 void AEGPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 
 	loadHitEffects();
 	EGLOG(Error, TEXT("Player Begin Play"));
-	
+
+	//Binding Delegate
+	Anim = Cast<UAnim_Player>(GetMesh()->GetAnimInstance());
+	if (Anim)
+	{
+	Anim->OnComboAttackCheckDelegate.AddLambda([this](/*UAnimMontage * Montage, bool bInterrupted*/) ->void {
+		if (Stat->CheckCanComboAttack())
+		{
+			EGLOG(Error, TEXT("lambda check combo"));
+			//AnimNotify_CanComboAttack 에서 호출될 함수다
+			Stat->SetComboStartState();
+			Anim->JumpToComboAttackSection(Stat->GetCurrentCombo());
+			//Anim->Montage->Play();
+		}
+		});
+	}
+	Stat->HPZeroDelegate.AddUObject(this, &AEGPlayerCharacter::SetDeath);
+
+
+
+
 	//GameInstance에서 GameState를 검사한다
 	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
 	if (!GameInstance)
@@ -168,19 +188,10 @@ void AEGPlayerCharacter::PostInitializeComponents()
 		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
 
 
-		Anim->OnComboAttackCheckDelegate.AddLambda([this](/*UAnimMontage * Montage, bool bInterrupted*/) ->void {
-			if (Stat->CheckCanComboAttack())
-			{
-				EGLOG(Error, TEXT("lambda check combo"));
-				//AnimNotify_CanComboAttack 에서 호출될 함수다
-				Stat->SetComboStartState();
-				Anim->JumpToComboAttackSection(Stat->GetCurrentCombo());
-				//Anim->Montage->Play();
-			}
-		});
+		
 	}
 
-	Stat->HPZeroDelegate.AddUObject(this,&AEGPlayerCharacter::SetDeath );
+	
 
 
 
