@@ -55,12 +55,7 @@ void UStatComponent_Player::TakeDamage(float NewDamage)
 {
 	Super::TakeDamage(NewDamage);
 
-	//현재 hp 비율을 GameInstance를 통해 postprocess로 넘겨줘서 피격효과가 나타나게 해준다.
-	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
-	if (!GameInstance)return;
-
-	if(GameInstance->GetPostProcessVolume().IsValid())
-	GameInstance->GetPostProcessVolume()->SyncHpPercent(GetHPRatio());
+	
 
 
 }

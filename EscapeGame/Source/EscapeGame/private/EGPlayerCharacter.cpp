@@ -17,6 +17,7 @@
 #include "EGGameInstance.h"
 #include "EGGameState.h"
 #include "Item_CardKey.h"
+#include "EGPostProcessVolume.h"
 
 //#include "DT_DataStruct.h"
 //#include "GameWidget.h"
@@ -57,11 +58,20 @@ void AEGPlayerCharacter::BeginPlay()
 
 	loadHitEffects();
 	EGLOG(Error, TEXT("Player Begin Play"));
-
-	//Binding Delegate
+	
+	//Binding Delegate, AnimInstance와 연동할 것들
 	Anim = Cast<UAnim_Player>(GetMesh()->GetAnimInstance());
 	if (Anim)
 	{
+		
+		//Anim->montage_
+		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
+
+		//montageStart
+		Anim->OnMontageStarted.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageStart);
+		//Motage End
+		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
+
 	Anim->OnComboAttackCheckDelegate.AddLambda([this](/*UAnimMontage * Montage, bool bInterrupted*/) ->void {
 		if (Stat->CheckCanComboAttack())
 		{
@@ -74,7 +84,15 @@ void AEGPlayerCharacter::BeginPlay()
 		});
 	}
 	Stat->HPZeroDelegate.AddUObject(this, &AEGPlayerCharacter::SetDeath);
+	Stat->HPChangedDelegate.AddLambda([this]()->void {
 
+		//현재 hp 비율을 GameInstance를 통해 postprocess로 넘겨줘서 피격효과가 나타나게 해준다.
+		auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+		if (!GameInstance)return;
+
+		if (GameInstance->GetPostProcessVolume().IsValid())
+			GameInstance->GetPostProcessVolume()->SyncHpPercent(Stat->GetHPRatio());
+	});
 
 
 
@@ -174,22 +192,7 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	Super::PostInitializeComponents();
 	EGLOG(Warning, TEXT("Player Post init compons"));
 
-	//AnimInstance와 연동할 것들
-	Anim = Cast<UAnim_Player>(GetMesh()->GetAnimInstance());
-	if (Anim)
-	{
-	
-		//Anim->montage_
-		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
 
-		//montageStart
-		Anim->OnMontageStarted.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageStart);
-		//Motage End
-		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
-
-
-		
-	}
 
 	
 
