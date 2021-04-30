@@ -23,7 +23,9 @@ protected:
 	virtual void PostInitializeComponents()override;
 	virtual void BeginPlay()override;
 
+	UFUNCTION()
 	void SaveGame(class UEGSaveGame* SaveInstance);
+	UFUNCTION()
 	void LoadGame(const class UEGSaveGame* LoadInstance);
 
 	
