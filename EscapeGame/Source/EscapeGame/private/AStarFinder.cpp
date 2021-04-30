@@ -218,10 +218,12 @@ void AAStarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 		
 		
 			//fcount 순으로 정렬
-			for (int k = 0; i < PopedNode->NearNodes.Num();++k)
+			for (int k = 0; k < PopedNode->NearNodes.Num();++k)
 			{
-				for (int j = i ; j < PopedNode->NearNodes.Num()-1; ++j)
+				for (int j = k+1 ; j < PopedNode->NearNodes.Num()-1; ++j)
 				{
+					//비교전 유효성 검사
+					if (!PopedNode->NearNodes[k].IsValid() || !PopedNode->NearNodes[j].IsValid())continue;
 					if (PopedNode->NearNodes[k]->GetF() > PopedNode->NearNodes[j]->GetF())
 						PopedNode->NearNodes.Swap(k, j);
 				}
@@ -332,6 +334,25 @@ void AAStarFinder::KeyFind(AAstarNode * Start, AAstarNode * Key)
 
 			//꺼낸 노드의 주변 노드들의 이전 노드를 꺼낸 노드로 설정해준다. 
 			PopedNode->SetNearNodesPrevAsMe();
+
+
+
+
+
+			//fcount 순으로 정렬
+			for (int k = 0; k < PopedNode->NearNodes.Num(); ++k)
+			{
+				for (int j = k + 1; j < PopedNode->NearNodes.Num() - 1; ++j)
+				{
+					//비교전 유효성 검사
+					if (!PopedNode->NearNodes[k].IsValid() || !PopedNode->NearNodes[j].IsValid())continue;
+					if (PopedNode->NearNodes[k]->GetF() > PopedNode->NearNodes[j]->GetF())
+						PopedNode->NearNodes.Swap(k, j);
+				}
+
+			}
+
+
 
 			//정렬용 임시 보관소
 		//	TArray<TWeakObjectPtr<AAstarNode>>tempList;

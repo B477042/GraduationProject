@@ -78,7 +78,9 @@ protected:
 
 protected:
 	//ENotifyType에 대응하는 FName들의 집합
-	const static TMap<ENotifyType, FName> SetOfNotifyMessage;
+	const static TMap<ENotifyType, FName> SetOfTypesOfNotifications;
+	//const static TMap<FName, FString>SetOfNotifyMessages;
+
 
 	UPROPERTY(EditInstanceOnly, Category = "TriggerCollision")
 		UBoxComponent* BoxTrigger;

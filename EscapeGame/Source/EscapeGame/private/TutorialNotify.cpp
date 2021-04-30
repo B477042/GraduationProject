@@ -9,7 +9,7 @@
 #include "EGGameInstance.h"
 //#include "Components/BoxComponent.h"
 
-const TMap<ENotifyType, FName>ATutorialNotify::SetOfNotifyMessage = {
+const TMap<ENotifyType, FName>ATutorialNotify::SetOfTypesOfNotifications = {
 	{ENotifyType::E_None,TEXT("None")},
 	{ENotifyType::E_AttackInput,TEXT("AttackInput")},
 	{ENotifyType::E_ChargeAttack,TEXT("ChargeAttack")},
@@ -81,10 +81,6 @@ void ATutorialNotify::OnOverlapBegin(AActor * OvelappedActor, AActor * OtherActo
 	
 	
 	
-
-	
-	
-	
 	
 }
 
@@ -144,7 +140,7 @@ void ATutorialNotify::loadTutorialMessage(AEGPlayerController* PlayerController)
 		return;
 
 	}
-	auto NotifyName = ATutorialNotify::SetOfNotifyMessage.Find(NotifyType);
+	auto NotifyName = ATutorialNotify::SetOfTypesOfNotifications.Find(NotifyType);
 	PlayerController->LoadTutorialMessage(NotifyName,bIsImportant);
 
 

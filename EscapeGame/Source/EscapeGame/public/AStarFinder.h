@@ -57,7 +57,7 @@ private:
 	TQueue<TWeakObjectPtr<AAstarNode>>ToVisiteNodes;
 
 	//Goal Node in map
-	UPROPERTY(Transient, EditInstanceOnly, meta = (AllowPrivateAccess = "true", DisplayName = "Nodes"))
+	UPROPERTY(Transient, EditInstanceOnly, meta = (AllowPrivateAccess = "true"))
 	TWeakObjectPtr<AAstarNode> GoalNode;
 
 	//CardKey Node
