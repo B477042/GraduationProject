@@ -15,13 +15,17 @@ const TMap<ENotifyType, FName>ATutorialNotify::SetOfTypesOfNotifications = {
 	{ENotifyType::E_ChargeAttack,TEXT("ChargeAttack")},
 	{ENotifyType::E_Claymore,TEXT("Claymore")},
 	{ENotifyType::E_FireBallTrap,TEXT("FireBallTrap")},
-	{ENotifyType::E_GruntEnemy,TEXT("GruntEnemy")},
 	{ENotifyType::E_HealBox,TEXT("HealBox")},
-	{ENotifyType::E_HUD,TEXT("HUD")},
+	{ENotifyType::E_GameRule,TEXT("GameRule")},
 	{ENotifyType::E_Jump,TEXT("Jump")},
 	{ENotifyType::E_Lightning,TEXT("Lightning")},
-	{ENotifyType::E_MouseInput,TEXT("MouseInput")},
 	{ENotifyType::E_MoveInput,TEXT("MoveInput")},
+	{ENotifyType::E_GoldenGate ,TEXT("GoldenGate")},
+	{ENotifyType::E_SubBattery,TEXT("SubBattery")},
+	{ENotifyType::E_GruntEnemy,TEXT("Grunt")},
+	{ENotifyType::E_Gunner,TEXT("Gunner")},
+	{ENotifyType::E_Boss,TEXT("Boss")},
+	{ENotifyType::E_Guard,TEXT("Guard")},	
 	{ENotifyType::E_ShutterTrap,TEXT("E_ShutterTrap")}
 
 };
@@ -78,8 +82,8 @@ void ATutorialNotify::OnOverlapBegin(AActor * OvelappedActor, AActor * OtherActo
 
 	auto Controller = Cast<AEGPlayerController>(Player->GetController());
 	if (!Controller)return;
-	
-	
+	//튜토리얼 메시지를 player controller로 보내서 widget을 준비 시킨다
+	loadTutorialMessage(Controller);
 	
 	
 }
@@ -142,6 +146,8 @@ void ATutorialNotify::loadTutorialMessage(AEGPlayerController* PlayerController)
 	}
 	auto NotifyName = ATutorialNotify::SetOfTypesOfNotifications.Find(NotifyType);
 	PlayerController->LoadTutorialMessage(NotifyName,bIsImportant);
+
+
 
 
 }

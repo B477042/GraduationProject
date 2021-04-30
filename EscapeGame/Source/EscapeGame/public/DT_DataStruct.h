@@ -63,13 +63,17 @@ struct FTutorialDataTable :public FTableRowBase
 	public:
 	//어느 부분에 대한 튜토리얼인지
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DataTable")
-	FName Section;
-	//내용
+	FName NotifyName;
+	//튜토리얼 제목
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DataTable")
-	FString Text;
+	FText NotifyTittle;
+	//튜토리얼 내용
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DataTable")
+	FText Describe;
+	
 	//gif 경로
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DataTable")
-	FString Address;
+	FText GifPath;
 
 };
 

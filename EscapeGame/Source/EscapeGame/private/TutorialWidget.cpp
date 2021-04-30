@@ -14,12 +14,27 @@ void UTutorialWidget::NativeConstruct()
 		return;
 	}
 
-	Describe = Cast<UMultiLineEditableTextBox>(GetWidgetFromName("txt_Describe"));
-	if (Describe == nullptr)
+	Txt_Describe = Cast<UMultiLineEditableTextBox>(GetWidgetFromName("Describe"));
+	if (Txt_Describe == nullptr)
 	{
-		EGLOG(Error, TEXT("Fail to Find txt_Describe"));
+		EGLOG(Error, TEXT("Fail to Find Describe"));
 		return;
 	}
+	Txt_NotifyTittle = Cast<UTextBlock>(GetWidgetFromName("NotifyTittle"));
+	if (!Txt_NotifyTittle)
+	{
+		EGLOG(Error, TEXT("Fail to find NotifyTittle"));
+		return;
+	}
+
+}
+
+
+
+void UTutorialWidget::ReceiveTutorialMessage(const FText & NotifyTittle, const FText & Describe, const FText & GIFPath)
+{
+	Txt_NotifyTittle->SetText(NotifyTittle);
+	Txt_Describe->SetText(Describe);
 
 
 }

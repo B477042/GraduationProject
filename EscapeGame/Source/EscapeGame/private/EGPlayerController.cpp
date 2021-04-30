@@ -42,7 +42,11 @@ AEGPlayerController::AEGPlayerController()
 	{
 		TutorialWidgetClass = UI_TUTORIAL_C.Class;
 	}
-
+	static ConstructorHelpers::FObjectFinder<UDataTable>DT_TUTORIAL(TEXT("DataTable'/Game/MyFolder/DataTable/DT_TutorialNotifyMessages_Test.DT_TutorialNotifyMessages_Test'"));
+	if (DT_TUTORIAL.Succeeded())
+	{
+		DT_Tutorial = DT_TUTORIAL.Object;
+	}
 	
 
 	//bIsPauseCalled = false;
@@ -216,14 +220,17 @@ void AEGPlayerController::LoadTutorialMessage(const FName * MessageName, bool bI
 	//중요한 메시지면 중단 시킨다
 	if (bIsImportant)
 		SetPause(true);
-	//만약 TutorialWidget이 만들어지지 않았다면 생성
-	if (!TutorialWidget)
-		TutorialWidget = CreateWidget<UTutorialWidget>(this, TutorialWidgetClass);
-	//생성 실패시 리턴
-	if (!TutorialWidget)
-		return;
+	////만약 TutorialWidget이 만들어지지 않았다면 생성
+	//if (!TutorialWidget)
+	//	TutorialWidget = CreateWidget<UTutorialWidget>(this, TutorialWidgetClass);
+	////생성 실패시 리턴
+	//if (!TutorialWidget)
+	//	return;
 
 	//FString RowName = MessageName->ToString();
+
+	
+	
 
 	auto data = DT_Tutorial->FindRow<FTutorialDataTable>(*MessageName,TEXT(""));
 	if (!data)
@@ -231,6 +238,11 @@ void AEGPlayerController::LoadTutorialMessage(const FName * MessageName, bool bI
 		EGLOG(Error, TEXT("Can't Find Tutorial Message on table"));
 		return;
 	}
+	EGLOG(Error, TEXT("%s"), *data->NotifyName.ToString());
+
+	//EGLOG(Error, TEXT("%s") *data->NotifyTittle.ToString());
+
+	EGLOG(Error, TEXT("Describe : %s"),*data->Describe.ToString());
 
 
 

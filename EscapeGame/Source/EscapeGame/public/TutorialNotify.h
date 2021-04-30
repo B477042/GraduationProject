@@ -25,18 +25,28 @@ enum class ENotifyType :uint8
 {
 
 	E_None=0 UMETA(DisplayName = "None"),
-	E_HUD UMETA(DisplayName = "HUD"),
-	E_MoveInput UMETA(DisplayName = "MoveInput"),
-	E_MouseInput UMETA(DisplayName = "MouseInput"),
 	E_AttackInput UMETA(DisplayName = "AttackInput"),
-	E_Jump UMETA(DisplayName = "Jump"),
-	E_FireBallTrap UMETA(DisplayName = "FireBallTrap"),
-	E_ShutterTrap UMETA(DisplayName = "ShutterTrap"),
+	E_ChargeAttack UMETA(DisplayName = "ChargeAttack"),
 	E_Claymore UMETA(DisplayName = "Claymore"),
+	E_FireBallTrap UMETA(DisplayName = "FireBallTrap"),
 	E_HealBox UMETA(DisplayName = "HealBox"),
+	E_GameRule UMETA(DisplayName = "Game Rule"),
+	E_Jump UMETA(DisplayName = "Jump"),
 	E_Lightning UMETA(DisplayName = "Lightning"),
+	E_MoveInput UMETA(DisplayName = "MoveInput"),
+	E_GoldenGate UMETA(DisplayName = "Golden Gate"),
+	E_SubBattery UMETA(DisplayName = "SubBattery"),
 	E_GruntEnemy UMETA(DisplayName = "GruntEnemy"),
-	E_ChargeAttack UMETA(DisplayName = "ChargeAttack")
+	E_Gunner UMETA(DisplayName = "Gunner"),
+	E_Boss UMETA(DisplayName = "Boss"),
+	E_Guard UMETA(DisplayName = "Guard"), 
+	
+	E_ShutterTrap UMETA(DisplayName = "ShutterTrap")
+	
+	
+	
+
+	
 
 };
 
