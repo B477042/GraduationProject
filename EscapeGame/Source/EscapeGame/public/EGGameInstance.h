@@ -35,6 +35,7 @@ class ESCAPEGAME_API UEGGameInstance : public UGameInstance
 	GENERATED_BODY()
 public:
 	UEGGameInstance();
+	virtual void Init()override;
 
 	UFUNCTION(BlueprintCallable)
 		void SaveGame();
@@ -44,14 +45,16 @@ public:
 		void SaveOptions(float sld_Master,float sld_BGM,float sld_SE,float sld_Voice,float sld_UI,FIntPoint ScreenResoultion,EWindowMode::Type WindowMode);
 	UFUNCTION(BlueprintCallable)
 		class UOptionSaveGame* LoadOptions();
-	
+	//Loading Screen
+	UFUNCTION()
+		virtual void BeginLoadingScreen(const FString& MapName);
+	UFUNCTION()
+		virtual void EndLoadingScreen(UWorld* InLoadedWorld);
 
 
 	const FString GetSaveSlotName() { return SaveSlotName; }
 	const int32 GetSavedUserIndex() { return UserIndex; }
-	//Game의 상태. Save file을 어떻게 사용할지 이용할 수 있다.
-	UPROPERTY( VisibleAnywhere, BlueprintReadWrite, Category = "Data")
-		EEGGameState EGameState;
+	
 
 
 	//Player가 BeginPlay를 호출할때 실행될 것. 모든 엑터들은 자신의 정보를 불러온다
@@ -67,9 +70,12 @@ public:
 	TWeakObjectPtr<class AAStarFinder>GetAStarFinder();
 	bool SetPostProcessVolume(class AEGPostProcessVolume* Object);
 	bool SetAStarFinder(class AAStarFinder* Object);
-	
-
-
+public:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
+		TSubclassOf<class UUserWidget>LoadingScreenWidgetClass;
+	//Game의 상태. Save file을 어떻게 사용할지 이용할 수 있다.
+	UPROPERTY( VisibleAnywhere, BlueprintReadWrite, Category = "Data")
+		EEGGameState EGameState;
 private:
 	FString SaveSlotName;
 	FString OptionsSlotName;
@@ -79,4 +85,7 @@ private:
 
 	TWeakObjectPtr<class AAStarFinder>AStarFinder;
 	
+	UPROPERTY(BlueprintReadWrite, Category = "Loading Screen", meta = (AllowPrivateAccess = true))
+		class UUserWidget* UI_LoadingScreeen;
+
 };

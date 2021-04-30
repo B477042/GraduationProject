@@ -8,6 +8,8 @@
 #include "EGPlayerState.h"
 #include "EGGameState.h"
 #include "AStarFinder.h"
+#include "MoviePlayer.h"
+
 
 UEGGameInstance::UEGGameInstance()
 {
@@ -21,11 +23,36 @@ UEGGameInstance::UEGGameInstance()
 	//{
 	//	SM_SoundMixClass = Sm_mix.Class;
 	//}
-	//static ConstructorHelpers::FClassFinder<USoundClass>
+	static ConstructorHelpers::FClassFinder<UUserWidget>UI_LOADING(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_LoadingScreen.UI_LoadingScreen_C'"));
+	if (UI_LOADING.Succeeded())
+	{
+		LoadingScreenWidgetClass = UI_LOADING.Class;
+	}
+
+	
 
 	AStarFinder = nullptr;
 	bIsDebugMode = false;
 }
+void UEGGameInstance::Init()
+{
+	Super::Init();
+
+	if (!UI_LoadingScreeen)
+		UI_LoadingScreeen = CreateWidget<UUserWidget>(this, LoadingScreenWidgetClass);
+	if (!UI_LoadingScreeen)
+	{
+		EGLOG(Error, TEXT("Can't Create Loading Screen"));
+		return;
+	}
+
+
+	FCoreUObjectDelegates::PreLoadMap.AddUObject(this, &UEGGameInstance::BeginLoadingScreen);
+	FCoreUObjectDelegates::PostLoadMapWithWorld.AddUObject(this, &UEGGameInstance::EndLoadingScreen);
+
+
+}
+
 
 //Save Game이 호출될 경우는 메뉴에서 저장하거나 자동저장 오브젝트와 닿았을 때 일것이다
 void UEGGameInstance::SaveGame()
@@ -115,6 +142,41 @@ UOptionSaveGame* UEGGameInstance::LoadOptions()
 	
 
 }
+
+//loading screen을 불러온다
+void UEGGameInstance::BeginLoadingScreen(const FString & MapName)
+{
+	
+	if (!IsRunningDedicatedServer())
+	{
+		
+		
+		if (UGameViewportClient* ViewportClient = GetGameViewportClient())
+		{
+			ViewportClient->AddViewportWidgetContent(UI_LoadingScreeen->TakeWidget());
+			EGLOG(Error, TEXT("begin loading screen"));
+		}
+
+		/*FLoadingScreenAttributes LoadingScreen;
+		LoadingScreen.bAutoCompleteWhenLoadingCompletes = false;
+		LoadingScreen.WidgetLoadingScreen = UI_LoadingScreeen->TakeWidget();
+		LoadingScreen.MinimumLoadingScreenDisplayTime = 3.0f;
+		GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
+		EGLOG(Error, TEXT("LoadingScreenIsPrepared : %d"),GetMoviePlayer()->LoadingScreenIsPrepared());
+		*/
+	}
+}
+//loading screen을 닫는다
+void UEGGameInstance::EndLoadingScreen(UWorld * InLoadedWorld)
+{
+	EGLOG(Error, TEXT("close loading screen"));
+	if (UGameViewportClient* ViewportClient = GetGameViewportClient())
+		ViewportClient->RemoveViewportWidgetContent(UI_LoadingScreeen->TakeWidget());
+
+}
+
+
+
 
 const TWeakObjectPtr<AEGPostProcessVolume> UEGGameInstance::GetPostProcessVolume()
 {
