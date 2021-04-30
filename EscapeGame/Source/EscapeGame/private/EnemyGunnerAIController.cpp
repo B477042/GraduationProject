@@ -36,7 +36,7 @@ AEnemyGunnerAIController::AEnemyGunnerAIController()
 	AiConfigSight->DetectionByAffiliation.bDetectEnemies = true;
 	AiConfigSight->DetectionByAffiliation.bDetectNeutrals = true;
 	AiConfigSight->DetectionByAffiliation.bDetectFriendlies = true;
-	AiConfigSight->SetMaxAge(1.0f);
+	AiConfigSight->SetMaxAge(10.0f);
 
 
 	PerceptionComponent->ConfigureSense(*AiConfigSight);
