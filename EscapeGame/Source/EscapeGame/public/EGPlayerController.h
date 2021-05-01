@@ -5,6 +5,7 @@
 #include "EscapeGame.h"
 #include "GameFramework/PlayerController.h"
 #include "Components/SceneCaptureComponent2D.h"
+
 #include "EGPlayerController.generated.h"
 
 /**
@@ -17,6 +18,7 @@ UCLASS()
 class ESCAPEGAME_API AEGPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+
 public:
 	AEGPlayerController();
 	void BeginPlay();
@@ -31,11 +33,10 @@ public:
 	void OnEnterPressed();
 	void OnKillMode();
 
-	void LoadTutorialMessage(const FName* MessageName,bool bIsImportant);
-
+	
 
 	class UGameWidget* GetHUDWidget()const;
-	class UTutorialWidget* GetTutorialWidget()const;
+
 
 
 
@@ -45,17 +46,15 @@ public:
 		TSubclassOf<class UGameWidget>HUDWidgetClass;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UUserWidget>PAUSEWidgetClass;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
-	TSubclassOf<class UTutorialWidget>TutorialWidgetClass;
-	/*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
-		TSubclassOf<class UUserWidget>BloodWidgetClass;*/
+	
+
 
 
 
 	void SyncStatToHUD();
 	void IsMoveKeyPressed();
 	const class UDataTable* GetDT_Player();
-	const class UDataTable* GetDTTutorial();
+
 	
 	//Called Next Stage Event
 	UFUNCTION(BlueprintCallable, Category = "Data")
@@ -72,13 +71,14 @@ private:
 	
 	//void load
 
-	UPROPERTY(meta=(AllowPrivateAccess=true))
+	UPROPERTY(VisibleAnywhere, Category = "UI", meta = (AllowPrivateAccess = true))
 		class UGameWidget* HUD;
 
-	UPROPERTY()
+
+	UPROPERTY(VisibleAnywhere, Category = "UI", meta = (AllowPrivateAccess = true))
 		class UUserWidget* PauseUI;
-	UPROPERTY(meta = (AllowPrivateAccess = true))
-	class UTutorialWidget* TutorialWidget;
+
+	
 
 	//UPROPERTY()
 	//	bool bIsPauseCalled;
@@ -87,8 +87,7 @@ private:
 	//Data Table For Player Stat
 	UPROPERTY(VisibleAnywhere, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
 	class UDataTable* DT_Player;
-	UPROPERTY(VisibleAnywhere, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
-	class UDataTable* DT_Tutorial;
+	
 
 
 

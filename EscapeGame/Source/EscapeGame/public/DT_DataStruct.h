@@ -73,7 +73,7 @@ struct FTutorialDataTable :public FTableRowBase
 	
 	//gif 경로
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DataTable")
-	FText GifPath;
+	FSoftObjectPath GifPath;
 
 };
 

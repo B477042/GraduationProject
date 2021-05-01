@@ -7,9 +7,42 @@
 #include "Engine/Font.h"
 #include "EGSaveGame.h"
 #include "EGGameInstance.h"
+#include "TutorialWidget.h"
+#include "DT_DataStruct.h"
 //#include "Components/BoxComponent.h"
 
-const TMap<ENotifyType, FName>ATutorialNotify::SetOfTypesOfNotifications = {
+
+
+// Sets default values
+ATutorialNotify::ATutorialNotify()
+{
+	Axis = CreateDefaultSubobject<USceneComponent>(TEXT("Axis"));
+	RootComponent = Axis;
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = false;
+	initBoxComponent();
+	
+	/*static ConstructorHelpers::FClassFinder<UTutorialWidget>UI_TUTO_C(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Tutorial.UI_Tutorial_C'"));
+	if (UI_TUTO_C.Succeeded())
+	{
+		TutoWidgetClass = UI_TUTO_C.Class;
+	
+	}*/
+
+	static ConstructorHelpers::FObjectFinder<UDataTable>DT_TUTORIAL(TEXT("DataTable'/Game/MyFolder/DataTable/DT_TutorialNotifyMessages.DT_TutorialNotifyMessages'"));
+	if (DT_TUTORIAL.Succeeded())
+	{
+		DT_Tutorial = DT_TUTORIAL.Object;
+	}
+
+	
+	bIsImportant = false;
+
+	NotifyType = ENotifyType::E_None;
+
+
+
+	/*const TMap<ENotifyType, FName>ATutorialNotify::*/SetOfTypesOfNotifications = {
 	{ENotifyType::E_None,TEXT("None")},
 	{ENotifyType::E_AttackInput,TEXT("AttackInput")},
 	{ENotifyType::E_ChargeAttack,TEXT("ChargeAttack")},
@@ -25,33 +58,25 @@ const TMap<ENotifyType, FName>ATutorialNotify::SetOfTypesOfNotifications = {
 	{ENotifyType::E_GruntEnemy,TEXT("Grunt")},
 	{ENotifyType::E_Gunner,TEXT("Gunner")},
 	{ENotifyType::E_Boss,TEXT("Boss")},
-	{ENotifyType::E_Guard,TEXT("Guard")},	
+	{ENotifyType::E_Guard,TEXT("Guard")},
 	{ENotifyType::E_ShutterTrap,TEXT("E_ShutterTrap")}
 
-};
+	};
+	BoxTrigger->SetBoxExtent(FVector(194.383270, 200.163177,  152.044571));
 
-// Sets default values
-ATutorialNotify::ATutorialNotify()
-{
-	Axis = CreateDefaultSubobject<USceneComponent>(TEXT("Axis"));
-	RootComponent = Axis;
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
-	initBoxComponent();
-	
-	
-	
-	bIsImportant = false;
-
-	NotifyType = ENotifyType::E_None;
 }
 
 // Called when the game starts or when spawned
 void ATutorialNotify::BeginPlay()
 {
 	Super::BeginPlay();
-	BoxTrigger->SetBoxExtent(FVector(194.383270, 200.163177,  152.044571));
 	
+	//TutoWidget = CreateWidget<UTutorialWidget>(GetWorld()->GetFirstPlayerController(), TutoWidgetClass);
+
+	//Widget에 넣을 정보를 불러온다
+
+
+
 }
 
 void ATutorialNotify::PostInitializeComponents()
@@ -77,26 +102,27 @@ void ATutorialNotify::PostInitializeComponents()
 void ATutorialNotify::OnOverlapBegin(AActor * OvelappedActor, AActor * OtherActor)
 {
 	
-	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
-	if (!Player)return;
+	//auto Player = Cast<AEGPlayerCharacter>(OtherActor);
+	//if (!Player)return;
 
-	auto Controller = Cast<AEGPlayerController>(Player->GetController());
-	if (!Controller)return;
-	//튜토리얼 메시지를 player controller로 보내서 widget을 준비 시킨다
-	loadTutorialMessage(Controller);
-	
+	//auto Controller = Cast<AEGPlayerController>(Player->GetController());
+	//if (!Controller)return;
+	////튜토리얼 메시지를 player controller로 보내서 widget을 준비 시킨다
+	//if (!TutoWidget)
+	//TutoWidget->AddToViewport(2);
 	
 }
 
 void ATutorialNotify::OnOverlapEnd(AActor * OvelappedActor, AActor * OtherActor)
 {
-	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
-	if (!Player)return;
-	auto Controller = Cast<AEGPlayerController>(Player->GetController());
-	if (!Controller)return;
+	//auto Player = Cast<AEGPlayerCharacter>(OtherActor);
+	//if (!Player)return;
+	//auto Controller = Cast<AEGPlayerController>(Player->GetController());
+	//if (!Controller)return;
 
-	//띄워준 ui를 화면에서 지워야 된다
-	
+	////띄워준 ui를 화면에서 지워야 된다
+	//if(!TutoWidget)
+	//TutoWidget->RemoveFromParent();
 
 	
 }
@@ -135,23 +161,21 @@ void ATutorialNotify::initBoxComponent()
 	BoxTrigger->SetHiddenInGame(true);
 	BoxTrigger->SetupAttachment(RootComponent);
 }
-
-void ATutorialNotify::loadTutorialMessage(AEGPlayerController* PlayerController)
-{
-	if (!PlayerController)
-	{
-		EGLOG(Error, TEXT("Player Controller is nullptr"));
-		return;
-
-	}
-	auto NotifyName = ATutorialNotify::SetOfTypesOfNotifications.Find(NotifyType);
-	PlayerController->LoadTutorialMessage(NotifyName,bIsImportant);
-
-
-
-
-}
-
+//
+//void ATutorialNotify::LoadTutorialData(FTutorialDataTable &Input)
+//{
+//	if (!TutoWidget)return ;
+//
+//	auto data = DT_Tutorial->FindRow<FTutorialDataTable>(*ATutorialNotify::SetOfTypesOfNotifications.Find(NotifyType), TEXT(""));
+//	if (!data)
+//	{
+//		EGLOG(Error, TEXT("Can't Find Tutorial Message on table"));
+//		return;
+//	}
+//
+//	
+//	Input = *data;
+//}
 
 
 

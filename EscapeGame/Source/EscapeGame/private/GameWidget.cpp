@@ -27,7 +27,7 @@ void UGameWidget::NativeConstruct()
 	RecoveryItemNum = Cast<UTextBlock>(GetWidgetFromName(TEXT("RecoveryItemNum0")));
 	//Txt_TimerBlock=Cast<UTextBlock>(GetWidgetFromName(TEXT("TimerBlock")));
 
-
+	EGLOG(Error, TEXT("Test Widget"));
 	GameTimer = 60.0f;
 	RemainTime = GameTimer;
 	PlayerHP = 100.0f;

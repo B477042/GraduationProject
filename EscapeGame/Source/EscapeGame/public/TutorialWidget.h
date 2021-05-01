@@ -24,7 +24,8 @@ public:
 	virtual void NativeConstruct() override;
 
 	//출력할 메시지를 받습니다
-	void ReceiveTutorialMessage(const FText& NotifyTittle, const FText& Describe, const FText& GIFPath);
+	UFUNCTION()
+	void ReceiveTutorialMessage(const FText& NotifyTittle, const FText& Describe, const FSoftObjectPath& GIFPath);
 
 private:
 	//Gif file image

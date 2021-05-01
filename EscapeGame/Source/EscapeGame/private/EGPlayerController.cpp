@@ -11,7 +11,7 @@
 #include "EGGameState.h"
 #include "Engine.h"
 #include "EGGameInstance.h"
-#include "TutorialWidget.h"
+
 
 //#include"GameStat.h"
 
@@ -22,8 +22,16 @@ AEGPlayerController::AEGPlayerController()
 	static ConstructorHelpers::FClassFinder<UGameWidget> UI_HUD_C(TEXT("/Game/MyFolder/UI/UI_HUD.UI_HUD_C"));
 	if (UI_HUD_C.Succeeded())
 	{
+		
 		HUDWidgetClass = UI_HUD_C.Class;
 	}
+	static ConstructorHelpers::FClassFinder<UUserWidget>UI_PAUSE_C(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Pause.UI_Pause_C'"));
+	if (UI_PAUSE_C.Succeeded())
+	{
+		PAUSEWidgetClass = UI_PAUSE_C.Class;
+	}
+
+	
 
 	static ConstructorHelpers::FObjectFinder<UDataTable>DT_PLAYER(TEXT("DataTable'/Game/MyFolder/DataTable/DT_PlayerStat.DT_PlayerStat'"));
 	if (DT_PLAYER.Succeeded())
@@ -31,22 +39,8 @@ AEGPlayerController::AEGPlayerController()
 		DT_Player = DT_PLAYER.Object;
 	}
 	
-	static ConstructorHelpers::FClassFinder<UUserWidget>UI_PAUSE_C(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Pause.UI_Pause_C'"));
-	if (UI_PAUSE_C.Succeeded())
-	{
-		PAUSEWidgetClass = UI_PAUSE_C.Class;
-	}
 
-	static ConstructorHelpers::FClassFinder<UTutorialWidget>UI_TUTORIAL_C(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Tutorial.UI_Tutorial_C'"));
-	if (UI_TUTORIAL_C.Succeeded())
-	{
-		TutorialWidgetClass = UI_TUTORIAL_C.Class;
-	}
-	static ConstructorHelpers::FObjectFinder<UDataTable>DT_TUTORIAL(TEXT("DataTable'/Game/MyFolder/DataTable/DT_TutorialNotifyMessages_Test.DT_TutorialNotifyMessages_Test'"));
-	if (DT_TUTORIAL.Succeeded())
-	{
-		DT_Tutorial = DT_TUTORIAL.Object;
-	}
+	
 	
 
 	//bIsPauseCalled = false;
@@ -56,7 +50,14 @@ void AEGPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	ChangeInputMode(true);
+	
 	HUD = CreateWidget<UGameWidget>(this, HUDWidgetClass);
+	
+
+	EGLOG(Error, TEXT("widget widget widget"));
+
+
+
 
 	//번호가 높을수록 위에 뜨는 ui 가 된다
 	HUD->AddToViewport(1);
@@ -209,56 +210,12 @@ void AEGPlayerController::OnKillMode()
 
 }
 
-void AEGPlayerController::LoadTutorialMessage(const FName * MessageName, bool bIsImportant)
-{
-	if (!MessageName)
-	{
-		EGLOG(Error, TEXT("MessageName is nullptr"));
-		return;
-	}
-
-	//중요한 메시지면 중단 시킨다
-	if (bIsImportant)
-		SetPause(true);
-	////만약 TutorialWidget이 만들어지지 않았다면 생성
-	//if (!TutorialWidget)
-	//	TutorialWidget = CreateWidget<UTutorialWidget>(this, TutorialWidgetClass);
-	////생성 실패시 리턴
-	//if (!TutorialWidget)
-	//	return;
-
-	//FString RowName = MessageName->ToString();
-
-	
-	
-
-	auto data = DT_Tutorial->FindRow<FTutorialDataTable>(*MessageName,TEXT(""));
-	if (!data)
-	{
-		EGLOG(Error, TEXT("Can't Find Tutorial Message on table"));
-		return;
-	}
-	EGLOG(Error, TEXT("%s"), *data->NotifyName.ToString());
-
-	//EGLOG(Error, TEXT("%s") *data->NotifyTittle.ToString());
-
-	EGLOG(Error, TEXT("Describe : %s"),*data->Describe.ToString());
-
-
-
-}
-
 
 
  UGameWidget* AEGPlayerController::GetHUDWidget() const
 {
 	return HUD;
 }
-
- UTutorialWidget * AEGPlayerController::GetTutorialWidget() const
- {
-	 return TutorialWidget;
- }
 
 
 
@@ -305,10 +262,6 @@ const UDataTable * AEGPlayerController::GetDT_Player()
 	return DT_Player;
 }
 
-const UDataTable * AEGPlayerController::GetDTTutorial()
-{
-	return DT_Tutorial;
-}
 
 
 

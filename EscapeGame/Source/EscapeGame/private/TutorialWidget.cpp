@@ -27,14 +27,18 @@ void UTutorialWidget::NativeConstruct()
 		return;
 	}
 
+	EGLOG(Error, TEXT("Test Widget"));
+
 }
 
 
 
-void UTutorialWidget::ReceiveTutorialMessage(const FText & NotifyTittle, const FText & Describe, const FText & GIFPath)
+void UTutorialWidget::ReceiveTutorialMessage(const FText & NotifyTittle, const FText & Describe, const FSoftObjectPath & GIFPath)
 {
 	Txt_NotifyTittle->SetText(NotifyTittle);
 	Txt_Describe->SetText(Describe);
+
+
 
 
 }
