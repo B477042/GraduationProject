@@ -110,10 +110,10 @@ protected:
 	ENotifyType NotifyType;
 
 
-	//UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
-	//	TSubclassOf<class UTutorialWidget>TutoWidgetClass;
-	//UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "UI", meta = (AllowPrivateAccess = true))
-	//class  UTutorialWidget* TutoWidget;
+	/*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
+		TSubclassOf<class UUserWidget>TutoWidgetClass;
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "UI", meta = (AllowPrivateAccess = true))
+	class  UUserWidget* TutoWidget;*/
 UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "DataTable", meta = (AllowPrivateAccess = true))
 		class UDataTable* DT_Tutorial;
 

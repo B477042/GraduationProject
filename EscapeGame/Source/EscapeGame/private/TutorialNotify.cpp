@@ -7,7 +7,7 @@
 #include "Engine/Font.h"
 #include "EGSaveGame.h"
 #include "EGGameInstance.h"
-#include "TutorialWidget.h"
+#include "Blueprint/UserWidget.h"
 #include "DT_DataStruct.h"
 //#include "Components/BoxComponent.h"
 
@@ -22,12 +22,12 @@ ATutorialNotify::ATutorialNotify()
 	PrimaryActorTick.bCanEverTick = false;
 	initBoxComponent();
 	
-	/*static ConstructorHelpers::FClassFinder<UTutorialWidget>UI_TUTO_C(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Tutorial.UI_Tutorial_C'"));
-	if (UI_TUTO_C.Succeeded())
-	{
-		TutoWidgetClass = UI_TUTO_C.Class;
-	
-	}*/
+	//static ConstructorHelpers::FClassFinder<UUserWidget>UI_TUTO_C(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Tutorial.UI_Tutorial_C'"));
+	//if (UI_TUTO_C.Succeeded())
+	//{
+	//	TutoWidgetClass = UI_TUTO_C.Class;
+	//
+	//}
 
 	static ConstructorHelpers::FObjectFinder<UDataTable>DT_TUTORIAL(TEXT("DataTable'/Game/MyFolder/DataTable/DT_TutorialNotifyMessages.DT_TutorialNotifyMessages'"));
 	if (DT_TUTORIAL.Succeeded())
@@ -74,8 +74,16 @@ void ATutorialNotify::BeginPlay()
 	//TutoWidget = CreateWidget<UTutorialWidget>(GetWorld()->GetFirstPlayerController(), TutoWidgetClass);
 
 	//Widget에 넣을 정보를 불러온다
+	
 
-
+	//auto Controller = Cast<AEGPlayerController>(GetWorld()->GetFirstPlayerController());
+	//if (!Controller)return;
+	////튜토리얼 메시지를 player controller로 보내서 widget을 준비 시킨다
+	//if (!TutoWidget)
+	//	TutoWidget = CreateWidget<UTutorialWidget>(Controller, TutoWidgetClass);
+	//if (!TutoWidget)
+	//	return;
+	
 
 }
 
@@ -109,22 +117,42 @@ void ATutorialNotify::OnOverlapBegin(AActor * OvelappedActor, AActor * OtherActo
 	//if (!Controller)return;
 	////튜토리얼 메시지를 player controller로 보내서 widget을 준비 시킨다
 	//if (!TutoWidget)
+	//	TutoWidget = CreateWidget<UUserWidget>(Controller, TutoWidgetClass);
+	//if (!TutoWidget)
+	//	return;
+
+
+
+	//if (!DT_Tutorial)return;
+
+	//int8 num = (uint8)NotifyType;
+	//auto data = DT_Tutorial->FindRow<FTutorialDataTable>(*(FString::FromInt(num)), TEXT(""));
+	//if (!data)
+	//{
+	//	EGLOG(Error, TEXT("Can't Find Tutorial Message on table"));
+	//	return;
+	//}
+
+
+
+
 	//TutoWidget->AddToViewport(2);
 	
 }
 
 void ATutorialNotify::OnOverlapEnd(AActor * OvelappedActor, AActor * OtherActor)
 {
-	//auto Player = Cast<AEGPlayerCharacter>(OtherActor);
-	//if (!Player)return;
-	//auto Controller = Cast<AEGPlayerController>(Player->GetController());
-	//if (!Controller)return;
-
-	////띄워준 ui를 화면에서 지워야 된다
-	//if(!TutoWidget)
-	//TutoWidget->RemoveFromParent();
-
-	
+//	//auto Player = Cast<AEGPlayerCharacter>(OtherActor);
+//	//if (!Player)return;
+//	//auto Controller = Cast<AEGPlayerController>(Player->GetController());
+//	//if (!Controller)return;
+//
+//	////띄워준 ui를 화면에서 지워야 된다
+//	if (!TutoWidget)return;
+//	TutoWidget->RemoveFromViewport();
+////	TutoWidget->RemoveFromParent();
+//
+//	
 }
 
 

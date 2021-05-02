@@ -11,7 +11,7 @@
 #include "EGGameState.h"
 #include "Engine.h"
 #include "EGGameInstance.h"
-
+#include "TutorialWidget.h"
 
 //#include"GameStat.h"
 
@@ -39,7 +39,6 @@ AEGPlayerController::AEGPlayerController()
 		DT_Player = DT_PLAYER.Object;
 	}
 	
-
 	
 	
 
@@ -50,11 +49,13 @@ void AEGPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	ChangeInputMode(true);
-	
+
 	HUD = CreateWidget<UGameWidget>(this, HUDWidgetClass);
 	
 
-	EGLOG(Error, TEXT("widget widget widget"));
+
+
+
 
 
 

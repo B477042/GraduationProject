@@ -78,7 +78,8 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "UI", meta = (AllowPrivateAccess = true))
 		class UUserWidget* PauseUI;
 
-	
+
+
 
 	//UPROPERTY()
 	//	bool bIsPauseCalled;

@@ -4,16 +4,14 @@
 
 #include "EscapeGame.h"
 #include "Blueprint/UserWidget.h"
-#include "Components/Button.h"
-#include "Components/TextBlock.h"
-#include "UMG/Public/Components/Image.h"
-#include "Components/MultiLineEditableTextBox.h"
+#include "DT_DataStruct.h"
 #include "TutorialWidget.generated.h"
 
 /**
  * 
  */
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnReceiveData, FTutorialDataTable, Data);
 
 
 UCLASS()
@@ -23,17 +21,7 @@ class ESCAPEGAME_API UTutorialWidget : public UUserWidget
 public:
 	virtual void NativeConstruct() override;
 
-	//출력할 메시지를 받습니다
-	UFUNCTION()
-	void ReceiveTutorialMessage(const FText& NotifyTittle, const FText& Describe, const FSoftObjectPath& GIFPath);
 
 private:
-	//Gif file image
-	UPROPERTY(BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = true))
-	UImage* GIF;	
 
-	UPROPERTY(BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = true))
-	UMultiLineEditableTextBox* Txt_Describe;
-	UPROPERTY(BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = true))
-	UTextBlock* Txt_NotifyTittle;
 };
