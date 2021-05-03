@@ -27,6 +27,7 @@ public:
 	virtual void PostInitializeComponents()override;
 	virtual void OnPossess(APawn* aPawn)override;
 	UFUNCTION(BlueprintCallable)
+		//If true, GameInputMode. False Game And UI Mode
 	void ChangeInputMode(bool bGameMode = true);
 	//UFUNCTION(BlueprintCallable)
 	void OnGamePaused();

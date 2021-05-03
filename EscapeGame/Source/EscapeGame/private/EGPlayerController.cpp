@@ -396,6 +396,9 @@ void AEGPlayerController::ShowTutorialMessage(uint8 TutorialMessage)
 
 		TutorialUI->ReceiveMessage(tempData->NotifyTittle, FText::FromString(tempData->Describe),tempData->GifPath);
 
+
+		SetInputMode(GameAndUIMode);
+		bShowMouseCursor = true;
 	}
 
 }
@@ -405,6 +408,8 @@ void AEGPlayerController::CloseTutorialMessage()
 	if (TutorialUI->IsInViewport())
 	{
 		TutorialUI->RemoveFromViewport();
+		SetInputMode(GameInputMode);
+		bShowMouseCursor = false;
 	}
 }
 

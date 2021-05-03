@@ -3,9 +3,11 @@
 
 #include "TutorialWidget.h"
 #include "Components/Image.h"
+#include "Components/Button.h"
 #include "Components/EditableText.h"
 #include "AnimatedTexture2D.h"
 #include "Engine/Texture2D.h"
+#include "EGPlayerController.h"
 
 void UTutorialWidget::NativeConstruct()
 {
@@ -14,7 +16,9 @@ void UTutorialWidget::NativeConstruct()
 	Txt_NotifyTittle = Cast<UEditableText>(GetWidgetFromName(TEXT("NotifyTittle")));
 	Txt_Describe = Cast<UEditableText>(GetWidgetFromName(TEXT("Describe")));
 	Img_Gif= Cast<UImage>(GetWidgetFromName(TEXT("ImageSpace")));
+	Btn_Close = Cast<UButton>(GetWidgetFromName(TEXT("Button_Close")));
 
+	Btn_Close->OnClicked.AddDynamic(this, &UTutorialWidget::OnButtonClicked);
 
 }
 
@@ -58,6 +62,17 @@ void UTutorialWidget::ReceiveMessage( FText  NotifyTittle,  FText  Describe, FSo
 
 	Txt_NotifyTittle->SetText(NotifyTittle);
 	Txt_Describe->SetText(Describe);
+
+}
+void UTutorialWidget::OnButtonClicked()
+{
+	if (IsInViewport())
+		RemoveFromViewport();
+	auto controller = Cast<AEGPlayerController>(GetOwningPlayer());
+	if (controller)
+	{
+		controller->ChangeInputMode(true);
+	}
 
 }
 void UTutorialWidget::AsyncImageLoad()

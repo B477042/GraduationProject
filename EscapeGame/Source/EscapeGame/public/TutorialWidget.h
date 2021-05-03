@@ -19,6 +19,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ReceiveMessage( FText NotifyTittle,  FText Describe,FSoftObjectPath ObjectPath);
+	UFUNCTION()
+		void OnButtonClicked();
 protected:
 	void AsyncImageLoad();
 protected:
@@ -28,7 +30,8 @@ protected:
 		class UEditableText*  Txt_Describe;
 	UPROPERTY()
 		class UImage* Img_Gif;
-
+	UPROPERTY()
+		class UButton* Btn_Close;
 
 	FSoftObjectPath pathobject;
 };
