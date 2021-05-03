@@ -9,7 +9,7 @@
 void UDialogueWidget::PrintLog(FText Diagram)
 {
 	if (!TextDiagram)return;
-
+	//\n글자를 찾아서 엔터로 바꿔주는 작업
 	auto strDia = Diagram.ToString();
 	int num=0;
 	if (strDia.FindChar('\\', num))

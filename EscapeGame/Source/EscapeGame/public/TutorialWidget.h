@@ -17,7 +17,7 @@ public:
 	virtual void NativeConstruct() override;
 
 	UFUNCTION(BlueprintCallable)
-	void Test(const FText& Txt1, const FText&Txt2);
+	void ReceiveMessage( FText NotifyTittle,  FText Describe);
 
 protected:
 	UPROPERTY(BlueprintReadOnly)

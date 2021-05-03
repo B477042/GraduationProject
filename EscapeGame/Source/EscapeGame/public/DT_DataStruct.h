@@ -69,7 +69,7 @@ struct FTutorialDataTable :public FTableRowBase
 	FText NotifyTittle;
 	//튜토리얼 내용
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DataTable")
-	FText Describe;
+	FString Describe;
 	
 	//gif 경로
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DataTable")

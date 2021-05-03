@@ -394,7 +394,7 @@ void AEGPlayerController::ShowTutorialMessage(uint8 TutorialMessage)
 		if (!TutorialUI->IsInViewport())
 		TutorialUI->AddToViewport(VP_Tutorial);
 
-		TutorialUI->Test(tempData->NotifyTittle, tempData->Describe);
+		TutorialUI->ReceiveMessage(tempData->NotifyTittle, FText::FromString(tempData->Describe));
 
 	}
 

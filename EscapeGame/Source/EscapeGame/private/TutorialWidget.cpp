@@ -17,7 +17,7 @@ void UTutorialWidget::NativeConstruct()
 
 }
 
-void UTutorialWidget::Test(const FText & Txt1, const FText & Txt2)
+void UTutorialWidget::ReceiveMessage( FText  NotifyTittle,  FText  Describe)
 {
 	if (!Txt_NotifyTittle)
 		EGLOG(Error, TEXT("txt notify nullptr"));
@@ -26,7 +26,19 @@ void UTutorialWidget::Test(const FText & Txt1, const FText & Txt2)
 	if (!Img_Gif)
 		EGLOG(Error, TEXT("img gif nullptr"));
 
-	Txt_NotifyTittle->SetText(Txt1);
-	Txt_Describe->SetText(Txt2);
+	auto strDia = Describe.ToString();
+	int num = 0;
+	if (strDia.FindChar('\\', num))
+	{
+		
+		strDia.ReplaceInline(TEXT("\\n"), /*TEXT("opop")*/LINE_TERMINATOR);
+
+		Describe = FText::FromString(strDia);
+		
+	}
+
+
+	Txt_NotifyTittle->SetText(NotifyTittle);
+	Txt_Describe->SetText(Describe);
 
 }
