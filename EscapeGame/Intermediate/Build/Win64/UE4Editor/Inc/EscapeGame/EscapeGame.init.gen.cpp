@@ -23,7 +23,6 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGame_init() {}
 	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnClickSkip__DelegateSignature();
 	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnLoadGamePhase__DelegateSignature();
 	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnSaveGamePhase__DelegateSignature();
-	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnReceiveData__DelegateSignature();
 	UPackage* Z_Construct_UPackage__Script_EscapeGame()
 	{
 		static UPackage* ReturnPackage = nullptr;
@@ -42,15 +41,14 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGame_init() {}
 				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnClickSkip__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnLoadGamePhase__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnSaveGamePhase__DelegateSignature,
-				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnReceiveData__DelegateSignature,
 			};
 			static const UE4CodeGen_Private::FPackageParams PackageParams = {
 				"/Script/EscapeGame",
 				SingletonFuncArray,
 				UE_ARRAY_COUNT(SingletonFuncArray),
 				PKG_CompiledIn | 0x00000000,
-				0xB678B75D,
-				0x2BF161C5,
+				0x50AD1BC2,
+				0x1ED16693,
 				METADATA_PARAMS(nullptr, 0)
 			};
 			UE4CodeGen_Private::ConstructUPackage(ReturnPackage, PackageParams);

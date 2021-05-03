@@ -38,23 +38,13 @@ public:
 	class UGameWidget* GetHUDWidget()const;
 
 
-
-
-	FOnKeyTest KeyInputTest;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
-		TSubclassOf<class UGameWidget>HUDWidgetClass;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
-		TSubclassOf<class UUserWidget>PAUSEWidgetClass;
 	
-
-
 
 
 	void SyncStatToHUD();
 	void IsMoveKeyPressed();
 	const class UDataTable* GetDT_Player();
-
+	FOnKeyTest KeyInputTest;
 	
 	//Called Next Stage Event
 	UFUNCTION(BlueprintCallable, Category = "Data")
@@ -65,6 +55,24 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Store")
 	void LoadGame(class UEGSaveGame* LoadInstance);
 
+
+	void ShowTutorialMessage(uint8 TutorialMessage);
+	void CloseTutorialMessage();
+public:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
+		TSubclassOf<class UGameWidget>HUDWidgetClass;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
+		TSubclassOf<class UUserWidget>PAUSEWidgetClass;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
+		TSubclassOf<class UTutorialWidget>TUTOWidgetClass;
+
+	//Viewport Priority
+	const uint8 VP_HUD = 1;
+	//Viewport Priority
+	const uint8 VP_Tutorial = 2;
+	//Viewport Priority
+	const uint8  VP_Pause = 3;
+
 private:
 
 	//void loadLocation();
@@ -74,21 +82,21 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "UI", meta = (AllowPrivateAccess = true))
 		class UGameWidget* HUD;
 
-
 	UPROPERTY(VisibleAnywhere, Category = "UI", meta = (AllowPrivateAccess = true))
 		class UUserWidget* PauseUI;
-
-
+	UPROPERTY(VisibleAnywhere, Category = "UI", meta = (AllowPrivateAccess = true))
+		class UTutorialWidget* TutorialUI;
 
 
 	//UPROPERTY()
 	//	bool bIsPauseCalled;
 	
-
 	//Data Table For Player Stat
 	UPROPERTY(VisibleAnywhere, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
 	class UDataTable* DT_Player;
-	
+	//Tutorial Message Data table
+	UPROPERTY(VisibleAnywhere, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
+		class UDataTable* DT_Tutorial;
 
 
 

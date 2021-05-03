@@ -110,11 +110,11 @@ void ATutorialNotify::PostInitializeComponents()
 void ATutorialNotify::OnOverlapBegin(AActor * OvelappedActor, AActor * OtherActor)
 {
 	
-	//auto Player = Cast<AEGPlayerCharacter>(OtherActor);
-	//if (!Player)return;
+	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
+	if (!Player)return;
 
-	//auto Controller = Cast<AEGPlayerController>(Player->GetController());
-	//if (!Controller)return;
+	auto Controller = Cast<AEGPlayerController>(Player->GetController());
+	if (!Controller)return;
 	////튜토리얼 메시지를 player controller로 보내서 widget을 준비 시킨다
 	//if (!TutoWidget)
 	//	TutoWidget = CreateWidget<UUserWidget>(Controller, TutoWidgetClass);
@@ -133,7 +133,7 @@ void ATutorialNotify::OnOverlapBegin(AActor * OvelappedActor, AActor * OtherActo
 	//	return;
 	//}
 
-
+	Controller->ShowTutorialMessage((uint8)NotifyType);
 
 
 	//TutoWidget->AddToViewport(2);
@@ -142,10 +142,13 @@ void ATutorialNotify::OnOverlapBegin(AActor * OvelappedActor, AActor * OtherActo
 
 void ATutorialNotify::OnOverlapEnd(AActor * OvelappedActor, AActor * OtherActor)
 {
-//	//auto Player = Cast<AEGPlayerCharacter>(OtherActor);
-//	//if (!Player)return;
-//	//auto Controller = Cast<AEGPlayerController>(Player->GetController());
-//	//if (!Controller)return;
+	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
+	if (!Player)return;
+	auto Controller = Cast<AEGPlayerController>(Player->GetController());
+	if (!Controller)return;
+
+	Controller->CloseTutorialMessage();
+
 //
 //	////띄워준 ui를 화면에서 지워야 된다
 //	if (!TutoWidget)return;

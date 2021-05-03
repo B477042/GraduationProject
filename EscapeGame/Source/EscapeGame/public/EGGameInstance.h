@@ -6,6 +6,7 @@
 #include "EGSaveGame.h"
 #include "OptionSaveGame.h"
 #include "Engine/GameInstance.h"
+#include "Engine/StreamableManager.h"
 #include "EGGameInstance.generated.h"
 
 /**
@@ -70,6 +71,10 @@ public:
 	TWeakObjectPtr<class AAStarFinder>GetAStarFinder();
 	bool SetPostProcessVolume(class AEGPostProcessVolume* Object);
 	bool SetAStarFinder(class AAStarFinder* Object);
+
+
+
+	FStreamableManager StreamableManager;
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UUserWidget>LoadingScreenWidgetClass;

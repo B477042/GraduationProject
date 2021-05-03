@@ -18,11 +18,11 @@
 
 AEGPlayerController::AEGPlayerController()
 {
-	
+
 	static ConstructorHelpers::FClassFinder<UGameWidget> UI_HUD_C(TEXT("/Game/MyFolder/UI/UI_HUD.UI_HUD_C"));
 	if (UI_HUD_C.Succeeded())
 	{
-		
+
 		HUDWidgetClass = UI_HUD_C.Class;
 	}
 	static ConstructorHelpers::FClassFinder<UUserWidget>UI_PAUSE_C(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Pause.UI_Pause_C'"));
@@ -30,8 +30,11 @@ AEGPlayerController::AEGPlayerController()
 	{
 		PAUSEWidgetClass = UI_PAUSE_C.Class;
 	}
-
-	
+	static ConstructorHelpers::FClassFinder<UTutorialWidget>UI_TUTORIAL_C(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Tutorial.UI_Tutorial_C'"));
+	if (UI_TUTORIAL_C.Succeeded())
+	 {
+		TUTOWidgetClass = UI_TUTORIAL_C.Class;
+	}
 
 	static ConstructorHelpers::FObjectFinder<UDataTable>DT_PLAYER(TEXT("DataTable'/Game/MyFolder/DataTable/DT_PlayerStat.DT_PlayerStat'"));
 	if (DT_PLAYER.Succeeded())
@@ -39,7 +42,12 @@ AEGPlayerController::AEGPlayerController()
 		DT_Player = DT_PLAYER.Object;
 	}
 	
-	
+	static ConstructorHelpers::FObjectFinder<UDataTable>DT_TUTO(TEXT("DataTable'/Game/MyFolder/DataTable/DT_TutorialNotifyMessages.DT_TutorialNotifyMessages'"));
+	if (DT_TUTO.Succeeded())
+	{
+		DT_Tutorial = DT_TUTO.Object;
+	}
+
 	
 
 	//bIsPauseCalled = false;
@@ -51,6 +59,7 @@ void AEGPlayerController::BeginPlay()
 	ChangeInputMode(true);
 
 	HUD = CreateWidget<UGameWidget>(this, HUDWidgetClass);
+	TutorialUI = CreateWidget<UTutorialWidget>(this, TUTOWidgetClass);
 	
 
 
@@ -59,10 +68,9 @@ void AEGPlayerController::BeginPlay()
 
 
 
-
 	//번호가 높을수록 위에 뜨는 ui 가 된다
-	HUD->AddToViewport(1);
-
+	HUD->AddToViewport(VP_HUD);
+	//TutorialUI->AddToViewport(VP_Tutorial);
 	
 	//PlayerStat = Cast<UGameStat>(PlayerStat);
 	//if (PlayerStat == nullptr)return;
@@ -88,8 +96,8 @@ void AEGPlayerController::BeginPlay()
 
 	
 	HUD->BindCharacterInven(tempChara->GetInventory());
-
 	
+	//TutorialUI->Test(FText::FromString(TEXT("TestTs")), FText::FromString(TEXT("notitnotif")));
 
 
 }
@@ -155,7 +163,7 @@ void AEGPlayerController::OnGamePaused()
 		PauseUI = CreateWidget<UUserWidget>(this, PAUSEWidgetClass);
 		if (!PauseUI)return;
 
-		PauseUI->AddToViewport(3);
+		PauseUI->AddToViewport(VP_Pause);
 		SetPause(true);
 	//UIInput mode로 전환
 		ChangeInputMode(false);
@@ -209,6 +217,7 @@ void AEGPlayerController::OnKillMode()
 	}
 
 
+	
 }
 
 
@@ -374,4 +383,30 @@ void AEGPlayerController::LoadGame(UEGSaveGame* LoadInstance)
 
 
 }
+
+//넘어오는 enum(uint8)을 기준으로 그 열의 데이터를 불러와 튜토리얼위젯을 꾸민다
+void AEGPlayerController::ShowTutorialMessage(uint8 TutorialMessage)
+{
+	auto tempData = DT_Tutorial->FindRow<FTutorialDataTable>(FName(*FString::FormatAsNumber(TutorialMessage)), FString(""));
+	if (tempData)
+	{
+		
+		if (!TutorialUI->IsInViewport())
+		TutorialUI->AddToViewport(VP_Tutorial);
+
+		TutorialUI->Test(tempData->NotifyTittle, tempData->Describe);
+
+	}
+
+}
+
+void AEGPlayerController::CloseTutorialMessage()
+{
+	if (TutorialUI->IsInViewport())
+	{
+		TutorialUI->RemoveFromViewport();
+	}
+}
+
+
  
