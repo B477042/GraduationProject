@@ -4,6 +4,7 @@
 
 #include "EscapeGame.h"
 #include "Blueprint/UserWidget.h"
+#include "EGGameInstance.h"
 #include "TutorialWidget.generated.h"
 
 /**
@@ -17,8 +18,9 @@ public:
 	virtual void NativeConstruct() override;
 
 	UFUNCTION(BlueprintCallable)
-	void ReceiveMessage( FText NotifyTittle,  FText Describe);
-
+	void ReceiveMessage( FText NotifyTittle,  FText Describe,FSoftObjectPath ObjectPath);
+protected:
+	void AsyncImageLoad();
 protected:
 	UPROPERTY(BlueprintReadOnly)
 		class UEditableText*  Txt_NotifyTittle;
@@ -28,4 +30,5 @@ protected:
 		class UImage* Img_Gif;
 
 
+	FSoftObjectPath pathobject;
 };

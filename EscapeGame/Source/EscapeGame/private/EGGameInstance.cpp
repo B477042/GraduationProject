@@ -28,7 +28,7 @@ UEGGameInstance::UEGGameInstance()
 	{
 		LoadingScreenWidgetClass = UI_LOADING.Class;
 	}
-
+	
 	
 
 	AStarFinder = nullptr;

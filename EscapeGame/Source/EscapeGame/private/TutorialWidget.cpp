@@ -4,7 +4,8 @@
 #include "TutorialWidget.h"
 #include "Components/Image.h"
 #include "Components/EditableText.h"
-
+#include "AnimatedTexture2D.h"
+#include "Engine/Texture2D.h"
 
 void UTutorialWidget::NativeConstruct()
 {
@@ -17,7 +18,7 @@ void UTutorialWidget::NativeConstruct()
 
 }
 
-void UTutorialWidget::ReceiveMessage( FText  NotifyTittle,  FText  Describe)
+void UTutorialWidget::ReceiveMessage( FText  NotifyTittle,  FText  Describe, FSoftObjectPath ObjectPath)
 {
 	if (!Txt_NotifyTittle)
 		EGLOG(Error, TEXT("txt notify nullptr"));
@@ -36,9 +37,51 @@ void UTutorialWidget::ReceiveMessage( FText  NotifyTittle,  FText  Describe)
 		Describe = FText::FromString(strDia);
 		
 	}
+	auto gameInstance = Cast< UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!gameInstance)return;
+
+	pathobject = ObjectPath;
+
+	EGLOG(Error, TEXT("%s"),*pathobject.GetAssetPathString());
+	gameInstance->StreamableManager.RequestAsyncLoad(ObjectPath, FStreamableDelegate::CreateUObject(this,&UTutorialWidget::AsyncImageLoad));
+	//auto newImage = Cast<UTexture2D>(gameInstance->StreamableManager.LoadSynchronous(ObjectPath));
+	//if (newImage)
+	//{
+	//	Img_Gif->SetBrushFromTexture(newImage);
+	//}
+	//else
+	//	EGLOG(Error, TEXT("Load failed"));
+
+
+
 
 
 	Txt_NotifyTittle->SetText(NotifyTittle);
 	Txt_Describe->SetText(Describe);
+
+}
+void UTutorialWidget::AsyncImageLoad()
+{
+	
+
+	TSoftObjectPtr<UAnimatedTexture2D> ImageAsset(pathobject);
+	UAnimatedTexture2D* newImage = ImageAsset.Get();
+	if (newImage)
+	{
+		auto temp = Cast<UTexture>(newImage);
+		if (!temp)
+		{
+			EGLOG(Error, TEXT("castubg fialse"));
+			return;
+		}
+
+		
+
+		Img_Gif->SetBrushResourceObject(temp);
+		EGLOG(Error, TEXT("good"));
+	}
+	else
+		EGLOG(Error, TEXT("failed"));
+
 
 }

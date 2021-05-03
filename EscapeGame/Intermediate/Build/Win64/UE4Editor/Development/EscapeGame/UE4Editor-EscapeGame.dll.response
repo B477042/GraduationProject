@@ -34,7 +34,7 @@
 /NODEFAULTLIB:"LIBCPD"
 /FUNCTIONPADMIN
 "I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\EscapeGameEditor\Development\Engine\SharedPCH.Engine.h.obj"
-"I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\DialogueWidget.cpp.obj"
+"I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\EGGameInstance.cpp.obj"
 "I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\EGPlayerController.cpp.obj"
 "I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\TutorialWidget.cpp.obj"
 "I:\CODE\GraduationProject\EscapeGame\Intermediate\Build\Win64\UE4Editor\Development\EscapeGame\Module.EscapeGame.cpp.obj"
@@ -59,6 +59,7 @@
 "C:\Program Files\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Development\SlateCore\UE4Editor-SlateCore.lib"
 "C:\Program Files\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Development\EngineSettings\UE4Editor-EngineSettings.lib"
 "C:\Program Files\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Development\MoviePlayer\UE4Editor-MoviePlayer.lib"
+"C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Marketplace\AnimatedTexture\Intermediate\Build\Win64\UE4Editor\Development\AnimatedTexture\UE4Editor-AnimatedTexture.lib"
 "delayimp.lib"
 "wininet.lib"
 "rpcrt4.lib"
