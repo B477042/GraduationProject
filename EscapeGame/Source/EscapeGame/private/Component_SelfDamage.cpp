@@ -12,8 +12,8 @@ UComponent_SelfDamage::UComponent_SelfDamage()
 
 	// ...
 
-	Damage = 10.0f;
-	LimitTime = 2.0f;
+	Damage = 5.0f;
+	LimitTime = 5.0f;
 	ActTimer = 0.0f;
 }
 

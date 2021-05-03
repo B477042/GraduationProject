@@ -47,7 +47,16 @@ void UTutorialWidget::ReceiveMessage( FText  NotifyTittle,  FText  Describe, FSo
 	pathobject = ObjectPath;
 
 	EGLOG(Error, TEXT("%s"),*pathobject.GetAssetPathString());
-	gameInstance->StreamableManager.RequestAsyncLoad(ObjectPath, FStreamableDelegate::CreateUObject(this,&UTutorialWidget::AsyncImageLoad));
+	
+	auto returnvalue = gameInstance->StreamableManager.RequestAsyncLoad(ObjectPath, FStreamableDelegate::CreateUObject(this,&UTutorialWidget::AsyncImageLoad));
+
+	if (!returnvalue)
+	{
+		EGLOG(Error, TEXT("Fail to load"));
+	}
+	
+
+
 	//auto newImage = Cast<UTexture2D>(gameInstance->StreamableManager.LoadSynchronous(ObjectPath));
 	//if (newImage)
 	//{

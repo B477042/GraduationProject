@@ -41,8 +41,9 @@ enum class ENotifyType :uint8
 	E_Gunner UMETA(DisplayName = "Gunner"),
 	E_Boss UMETA(DisplayName = "Boss"),
 	E_Guard UMETA(DisplayName = "Guard"), 
-	
+	E_Sprint UMETA(DisplayName = "Sprint"),
 	E_ShutterTrap UMETA(DisplayName = "ShutterTrap")
+	
 	
 	
 	

@@ -34,4 +34,6 @@ protected:
 		class UButton* Btn_Close;
 
 	FSoftObjectPath pathobject;
+	const FLinearColor activateColor= FLinearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	const FLinearColor deactivateColor = FLinearColor(0.0f, 0.0f, 0.0f, 0.0f);
 };
