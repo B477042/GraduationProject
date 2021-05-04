@@ -13,7 +13,7 @@
  */
 
 DECLARE_MULTICAST_DELEGATE(FAttackEventDelegate);
-DECLARE_MULTICAST_DELEGATE/*_TwoParams*/(FComboAttackCheckDelegate/*, UAnimMontage*, bool, Montage,  bInterrupted*/);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FComboAttackCheckDelegate, UAnimMontage*, Montage, bool, bInterrupted);
 DECLARE_MULTICAST_DELEGATE(FChargeAttackCheckDelegate);
 
 UCLASS()
@@ -34,8 +34,8 @@ public:
 
 	
 	
-
-	FComboAttackCheckDelegate OnComboAttackCheckDelegate;//콤보 어택으로 이어질지 검사하는 델리게이트
+	//UPROPERTY(BlueprintAssignable)
+	//FComboAttackCheckDelegate OnComboAttackCheckDelegate;//콤보 어택으로 이어질지 검사하는 델리게이트
 	FChargeAttackCheckDelegate OnChargeAttackCheckDelegate;//차지어택으로 이어질지 검사하는 델리게이트
 	
 	//AnimNotify는 몽타쥬에서 정한 호출 시점에서 자동으로 호출된다

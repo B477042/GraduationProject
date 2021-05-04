@@ -14,6 +14,7 @@ DECLARE_MULTICAST_DELEGATE(FPlayerRollingStartDelegate);
 DECLARE_MULTICAST_DELEGATE(FPlayerRollingEndDelegate);
 
 
+
 UCLASS()
 class ESCAPEGAME_API UAnim_Player : public UCharacterAnimInstance
 {

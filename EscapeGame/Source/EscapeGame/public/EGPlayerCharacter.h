@@ -78,7 +78,7 @@ public:
 	 UPROPERTY(BlueprintAssignable)
 	 FOnTakeHugeDamage OnTakeHugeDamageDelegate;
 	 
-
+	 
 
 	//const AController* GetController();
 
@@ -152,7 +152,8 @@ private:
 	UFUNCTION()
 		void OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 	//============================
-
+	UFUNCTION(BlueprintCallable)
+		void OnCheckCanComboAttack(UAnimMontage* Montage, bool bInterrupted);
 	UFUNCTION()
 	void OnAttackMontageStart(UAnimMontage* Montage);
 	UFUNCTION()

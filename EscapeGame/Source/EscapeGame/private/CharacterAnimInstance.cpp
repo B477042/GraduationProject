@@ -2,7 +2,7 @@
 
 #include "CharacterAnimInstance.h"
 #include "..\public\CharacterAnimInstance.h"
-
+#include "EGPlayerCharacter.h"
 
 UCharacterAnimInstance::UCharacterAnimInstance()
 {
@@ -77,7 +77,24 @@ void UCharacterAnimInstance::PlayAttackMontage()
 void UCharacterAnimInstance::AnimNotify_CanComboAttack()
 {
 	//EGLOG(Warning, TEXT("AnimNotify_CanCombo"));
-	OnComboAttackCheckDelegate.Broadcast();
+	//OnComboAttackCheckDelegate.Broadcast(GetCurrentActiveMontage(), false);
+
+	auto player = Cast<AEGPlayerCharacter>(TryGetPawnOwner());
+	if (player)
+	{
+		if (player->GetStatComponent()->CheckCanComboAttack())
+		{
+			EGLOG(Error, TEXT("lambda check combo"));
+			//AnimNotify_CanComboAttack 에서 호출될 함수다
+			player->GetStatComponent()->SetComboStartState();
+			JumpToComboAttackSection(player->GetStatComponent()->GetCurrentCombo());
+			//Anim->Montage->Play();
+		}
+
+	}
+
+
+
 }
 
 //공격 애니메이션 재생되고 다음 애니메이션을 재생할지 검사하는 타이밍에 나온다

@@ -59,30 +59,7 @@ void AEGPlayerCharacter::BeginPlay()
 	loadHitEffects();
 	EGLOG(Error, TEXT("Player Begin Play"));
 	
-	//Binding Delegate, AnimInstance와 연동할 것들
-	Anim = Cast<UAnim_Player>(GetMesh()->GetAnimInstance());
-	if (Anim)
-	{
-		
-		//Anim->montage_
-		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
 
-		//montageStart
-		Anim->OnMontageStarted.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageStart);
-		//Motage End
-		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
-
-		Anim->OnComboAttackCheckDelegate.AddLambda([this](/*UAnimMontage * Montage, bool bInterrupted*/) ->void {
-		if (Stat->CheckCanComboAttack())
-		{
-			EGLOG(Error, TEXT("lambda check combo"));
-			//AnimNotify_CanComboAttack 에서 호출될 함수다
-			Stat->SetComboStartState();
-			Anim->JumpToComboAttackSection(Stat->GetCurrentCombo());
-			//Anim->Montage->Play();
-		}
-		});
-	}
 	Stat->HPZeroDelegate.AddUObject(this, &AEGPlayerCharacter::SetDeath);
 	Stat->HPChangedDelegate.AddLambda([this]()->void {
 
@@ -193,7 +170,32 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	EGLOG(Warning, TEXT("Player Post init compons"));
 
 
+	//Binding Delegate, AnimInstance와 연동할 것들
+	Anim = Cast<UAnim_Player>(GetMesh()->GetAnimInstance());
+	if (Anim)
+	{
 
+		//Anim->montage_
+		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
+
+		//montageStart
+		Anim->OnMontageStarted.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageStart);
+		//Motage End
+		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
+
+	//	Anim->OnComboAttackCheckDelegate.AddUniqueDynamic(this, &AEGPlayerCharacter::OnCheckCanComboAttack);
+
+		//Anim->OnComboAttackCheckDelegate.AddLambda([this](/*UAnimMontage * Montage, bool bInterrupted*/) ->void {
+		//	if (Stat->CheckCanComboAttack())
+		//	{
+		//		EGLOG(Error, TEXT("lambda check combo"));
+		//		//AnimNotify_CanComboAttack 에서 호출될 함수다
+		//		Stat->SetComboStartState();
+		//		Anim->JumpToComboAttackSection(Stat->GetCurrentCombo());
+		//		//Anim->Montage->Play();
+		//	}
+		//});
+	}
 	
 
 
@@ -579,7 +581,7 @@ void AEGPlayerCharacter::LoadAssets()
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 
 
-	static ConstructorHelpers::FClassFinder<UAnimInstance>ANI_CHARACTER(TEXT("/Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang.AniPlayerCharacterKwang_C"));
+	static ConstructorHelpers::FClassFinder<UAnimInstance>ANI_CHARACTER(TEXT("AnimBlueprint'/Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang_Test.AniPlayerCharacterKwang_Test_C'"));
 	if (ANI_CHARACTER.Succeeded())
 	{
 		GetMesh()->SetAnimInstanceClass(ANI_CHARACTER.Class);
@@ -760,6 +762,17 @@ void AEGPlayerCharacter::OnWeaponBeginOverlap(UPrimitiveComponent * OverlappedCo
 	OtherActor->TakeDamage(Stat->GetATK(),DamageEvent,Controller,this );
 
 	Container_Hit->SetEffectAt(OtherActor->GetActorLocation());
+}
+void AEGPlayerCharacter::OnCheckCanComboAttack(UAnimMontage* Montage, bool bInterrupted)
+{
+	if (Stat->CheckCanComboAttack())
+	{
+		EGLOG(Error, TEXT("lambda check combo"));
+		//AnimNotify_CanComboAttack 에서 호출될 함수다
+		Stat->SetComboStartState();
+		Anim->JumpToComboAttackSection(Stat->GetCurrentCombo());
+		//Anim->Montage->Play();
+	}
 }
 void AEGPlayerCharacter::OnAttackMontageStart(UAnimMontage* Montage)
 {
