@@ -20,7 +20,7 @@ AAstarNode::AAstarNode()
 	Count_F = 0;
 	Count_G = 0;
 	Count_H = 0;
-	BodyMesh->SetMobility(EComponentMobility::Static);
+	//BodyMesh->SetMobility(EComponentMobility::Static);
 
 }
 
