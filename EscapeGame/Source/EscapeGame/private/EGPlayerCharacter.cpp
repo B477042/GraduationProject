@@ -71,7 +71,13 @@ void AEGPlayerCharacter::BeginPlay()
 			GameInstance->GetPostProcessVolume()->SyncHpPercent(Stat->GetHPRatio());
 	});
 
+	//Anim->montage_
+	Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
 
+	//montageStart
+	Anim->OnMontageStarted.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageStart);
+	//Motage End
+	Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
 
 	//GameInstance에서 GameState를 검사한다
 	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
@@ -175,26 +181,9 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	if (Anim)
 	{
 
-		//Anim->montage_
-		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
+		
 
-		//montageStart
-		Anim->OnMontageStarted.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageStart);
-		//Motage End
-		Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
-
-	//	Anim->OnComboAttackCheckDelegate.AddUniqueDynamic(this, &AEGPlayerCharacter::OnCheckCanComboAttack);
-
-		//Anim->OnComboAttackCheckDelegate.AddLambda([this](/*UAnimMontage * Montage, bool bInterrupted*/) ->void {
-		//	if (Stat->CheckCanComboAttack())
-		//	{
-		//		EGLOG(Error, TEXT("lambda check combo"));
-		//		//AnimNotify_CanComboAttack 에서 호출될 함수다
-		//		Stat->SetComboStartState();
-		//		Anim->JumpToComboAttackSection(Stat->GetCurrentCombo());
-		//		//Anim->Montage->Play();
-		//	}
-		//});
+	
 	}
 	
 
@@ -581,7 +570,7 @@ void AEGPlayerCharacter::LoadAssets()
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 
 
-	static ConstructorHelpers::FClassFinder<UAnimInstance>ANI_CHARACTER(TEXT("AnimBlueprint'/Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang_Test.AniPlayerCharacterKwang_Test_C'"));
+	static ConstructorHelpers::FClassFinder<UAnimInstance>ANI_CHARACTER(TEXT("AnimBlueprint'/Game/MyFolder/AnimationBlueprint/AniPlayerCharacterKwang.AniPlayerCharacterKwang_C'"));
 	if (ANI_CHARACTER.Succeeded())
 	{
 		GetMesh()->SetAnimInstanceClass(ANI_CHARACTER.Class);

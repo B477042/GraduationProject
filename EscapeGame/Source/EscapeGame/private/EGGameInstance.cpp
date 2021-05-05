@@ -155,6 +155,15 @@ void UEGGameInstance::BeginLoadingScreen(const FString & MapName)
 		{
 			ViewportClient->AddViewportWidgetContent(UI_LoadingScreeen->TakeWidget());
 			EGLOG(Error, TEXT("begin loading screen"));
+
+			FTimerHandle WaitHandle;
+			float WaitTime=30000.0f; //시간을 설정하고
+			GetWorld()->GetTimerManager().SetTimer(WaitHandle, FTimerDelegate::CreateLambda([&]()
+			{
+				EGLOG(Warning, TEXT("iion"));
+				// 여기에 코드를 치면 된다.
+
+			}), WaitTime, false);
 		}
 
 		/*FLoadingScreenAttributes LoadingScreen;
