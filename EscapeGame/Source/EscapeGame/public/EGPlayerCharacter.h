@@ -34,24 +34,17 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	//virtual void TickComponent(float DeltaTime)override;
+	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void PostInitializeComponents() override;
-	//=====================================================================
-	//Public Not UPROPERTY member 
-public:
-	float ArmLengthTo = 0.0f;
-	FRotator ArmRotationTo = FRotator::ZeroRotator;
-	float ArmLengthSpeed = 0.0f;
-	float ArmRotationSpeed = 0.0f;
+
 	
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, \
-		class AController* EventInstigator, AActor* DamageCauser)override;
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)override;
 	void HealHP(float addHP);
-	 UStatComponent_Player* GetStatComponent();
-	 UComponent_Inventory* GetInventory();
-	 //Actions
+	
+	
+	//Actions
 	 void ChargeAttack();
 	 void ComboAttack();
 	 void AirAttack();
@@ -61,12 +54,12 @@ public:
 	 void Roll();
 	 void UseRecoveryItem();
 	 void ToggleMap();
-	 void SetGuard();
+	 void PressGuard();
 	 void ReleaseGuard();
 	 
 	 
 
-
+	 
 	 void ActiveThunder();
 	 //User Input Disable
 	 UFUNCTION(BlueprintCallable)
@@ -74,11 +67,23 @@ public:
 	 //User Input Enable
 	 UFUNCTION(BlueprintCallable)
 	 void RecoverInput();
+	 
 	 //Over 10 Damage -> Reacting
 	 UPROPERTY(BlueprintAssignable)
 	 FOnTakeHugeDamage OnTakeHugeDamageDelegate;
 	 
-	 
+	//=====================================================================
+	//Public Not UPROPERTY member 
+public:
+	float ArmLengthTo = 0.0f;
+	FRotator ArmRotationTo = FRotator::ZeroRotator;
+	float ArmLengthSpeed = 0.0f;
+	float ArmRotationSpeed = 0.0f;
+	
+	 UStatComponent_Player* GetStatComponent();
+	 UComponent_Inventory* GetInventory();
+
+	
 
 	//const AController* GetController();
 
@@ -148,6 +153,9 @@ private:
 
 	void onNextStage(const class UEGSaveGame* LoadInstance);
 
+	//현재 체력에 따라 카메라에 이펙트를 준다. HP가 변하면 업데이트가 되게끔
+	void DamagedPostEffect();
+
 
 	UFUNCTION()
 		void OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
@@ -168,8 +176,7 @@ private:
 	UFUNCTION(BlueprintCallable)
 		FName calcHitDirection(AActor* DamageCauser);
 
-	//현재 체력에 따라 카메라에 이펙트를 준다. HP가 변하면 업데이트가 되게끔
-	void DamagedPostEffect();
+	
 
 
 	/*UFUNCTION()

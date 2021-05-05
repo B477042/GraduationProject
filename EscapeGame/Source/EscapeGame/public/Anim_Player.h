@@ -27,8 +27,8 @@ public:
 	virtual void JumpToComboAttackSection(int32 NewSection);//ComboAttack 사이를 재생 시키는 함수
 	 void JumpToChargetAttackSection(int32 NewSection);//ChargeAttack으로 넘어가 ChargeAttack을 재생시키는 함수
 	//Section값이 Combo값과 일치 하는지 검사한다
-//일치 하지 않는다면 Failed라는 FName이 반환된다
-//	virtual FName GetAttackMontageSectionName(int32 Section);
+	//일치 하지 않는다면 Failed라는 FName이 반환된다
+	//	virtual FName GetAttackMontageSectionName(int32 Section);
 	//void PlayAttackMontage();
 	virtual void PlayAirAttackMontage();
 	UAnimMontage* GetAttackMontage()const;
@@ -91,10 +91,10 @@ private:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
 		TArray<UAnimMontage*> SkillMontages;
 	UPROPERTY()
-	UAudioComponent* SoundLaugh;
+	UAudioComponent* SFX_Laugh;
 
 	UPROPERTY()
-	UAudioComponent* SoundDeath;
+	UAudioComponent* SFX_Death;
 	UPROPERTY()
 	UAudioComponent* SFX_FootStep;
 	UPROPERTY()

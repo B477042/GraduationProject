@@ -11,8 +11,8 @@
 
 UAnim_Player::UAnim_Player()
 {
-	SoundLaugh = CreateDefaultSubobject<UAudioComponent>(TEXT("LAUGH"));
-	SoundDeath = CreateDefaultSubobject<UAudioComponent>(TEXT("S_DEATH"));
+	SFX_Laugh = CreateDefaultSubobject<UAudioComponent>(TEXT("LAUGH"));
+	SFX_Death = CreateDefaultSubobject<UAudioComponent>(TEXT("S_DEATH"));
 	SFX_FootStep = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Foot"));
 
 	SFX_Pain = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Pain"));
@@ -41,15 +41,15 @@ UAnim_Player::UAnim_Player()
 	static ConstructorHelpers:: FObjectFinder<USoundCue>SC_Laugh(TEXT("SoundCue'/Game/ParagonKwang/Characters/Heroes/Kwang/Sounds/SoundCues/Kwang_Effort_Laugh.Kwang_Effort_Laugh'"));
 	if (SC_Laugh.Succeeded())
 	{
-		SoundLaugh->SetSound(SC_Laugh.Object);
-		SoundLaugh->bAutoActivate = false;
+		SFX_Laugh->SetSound(SC_Laugh.Object);
+		SFX_Laugh->bAutoActivate = false;
 	}
 
 	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Death(TEXT("SoundCue'/Game/ParagonKwang/Characters/Heroes/Kwang/Sounds/SoundCues/Kwang_Death.Kwang_Death'"));
 	if (SC_Death.Succeeded())
 	{
-		SoundDeath->SetSound(SC_Death.Object);
-		SoundDeath->bAutoActivate = false;
+		SFX_Death->SetSound(SC_Death.Object);
+		SFX_Death->bAutoActivate = false;
 	}
 	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Foot(TEXT("SoundCue'/Game/MyFolder/Sound/SE/Foot_left_Cue.Foot_left_Cue'"));
 	if (SC_Foot.Succeeded())
@@ -236,7 +236,7 @@ void UAnim_Player::AnimNotify_Skill1Start()
 
 	if (!player)return;
 	player->RestricInput();
-	SoundLaugh->Play();
+	SFX_Laugh->Play();
 }
 
 void UAnim_Player::AnimNotify_SkillEnd()
@@ -263,7 +263,7 @@ void UAnim_Player::AnimNotify_DeadStart()
 	auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
 
 	if (!player)return;
-	SoundDeath->Play();
+	SFX_Death->Play();
 	player->RestricInput();
 	player->GetCapsuleComponent()->SetCollisionProfileName(TEXT("NoCollision"));
 	
@@ -342,7 +342,7 @@ void UAnim_Player::PlaySkillMontage(int Combo)
 
 }
 
-
+//데미지를 받았을 때 맞은 방향을 계산합니다
 void UAnim_Player::TakeDamage(const AActor* OtherActor)
 {
 	bIsDamaged = true;

@@ -4,7 +4,7 @@
 #include "Engine/SceneCapture2D.h"
 #include "EGPlayerController.h"
 #include "Item_Recover.h"
-//#include "EGPlayerController.h"
+
 #include "GameWidget.h"
 #include"Components/InputComponent.h"
 #include "Projectile.h"
@@ -12,20 +12,13 @@
 #include "..\public\EGPlayerCharacter.h"
 #include"Sound/SoundCue.h"
 #include "SkillActor_ThunderType.h"
-//#include "MySaveGame.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "EGGameInstance.h"
 #include "EGGameState.h"
 #include "Item_CardKey.h"
 #include "EGPostProcessVolume.h"
 
-//#include "DT_DataStruct.h"
-//#include "GameWidget.h"
 
-//const float AEGPlayerCharacter::MaxHP = 100.0f;
-//const float AEGPlayerCharacter::MaxWalkingSpeed = 600.0f;
-//const float AEGPlayerCharacter::MinWalkingSpeed = 0.0f;
-//const float AEGPlayerCharacter::MaxRunningSpeed = 1200.0f;
 
 
 // Sets default values
@@ -33,9 +26,11 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
 	InitComponents();
 	LoadAssets();
 	SetupSpringArm();
+
 	//object type을 PlayerCharacter로 해준다
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("PlayerCharacter"));
 	//EGLOG(Warning, TEXT("Character Constroucter"));
@@ -58,7 +53,9 @@ void AEGPlayerCharacter::BeginPlay()
 
 	loadHitEffects();
 	EGLOG(Error, TEXT("Player Begin Play"));
-	
+//================================================
+//||			Stat 관련 Delegate 등록			||
+//================================================
 
 	Stat->HPZeroDelegate.AddUObject(this, &AEGPlayerCharacter::SetDeath);
 	Stat->HPChangedDelegate.AddLambda([this]()->void {
@@ -71,13 +68,20 @@ void AEGPlayerCharacter::BeginPlay()
 			GameInstance->GetPostProcessVolume()->SyncHpPercent(Stat->GetHPRatio());
 	});
 
-	//Anim->montage_
+//================================================
+//||		Montage 관련 Delegate Binding		||
+//================================================
+	//Anim->montage
 	Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
 
 	//montageStart
 	Anim->OnMontageStarted.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageStart);
 	//Motage End
 	Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
+
+//=====================================================
+//||GameState를 검사해서 이어하기/불러오기 처리합니다||
+//=====================================================
 
 	//GameInstance에서 GameState를 검사한다
 	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
@@ -105,7 +109,7 @@ void AEGPlayerCharacter::BeginPlay()
 		GameInstance->EGameState = EEGGameState::E_InPlay;
 
 	}
-
+	//이어하기
 	else if (GameInstance->EGameState == EEGGameState::E_NextStage)
 	{
 		auto LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(GameInstance->GetSaveSlotName(), GameInstance->GetSavedUserIndex()));
@@ -162,7 +166,7 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction(TEXT("Roll"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::Roll);
 	PlayerInputComponent->BindAction(TEXT("Recovery"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::UseRecoveryItem);
 	PlayerInputComponent->BindAction(TEXT("ToggleMap"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::ToggleMap);
-	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::SetGuard);
+	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::PressGuard);
 	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Released, this, &AEGPlayerCharacter::ReleaseGuard);
 	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::UsingStaminaTick);
 
@@ -176,14 +180,12 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	EGLOG(Warning, TEXT("Player Post init compons"));
 
 
-	//Binding Delegate, AnimInstance와 연동할 것들
+	//Anim Instance에 빨리 접근하기 위해
 	Anim = Cast<UAnim_Player>(GetMesh()->GetAnimInstance());
-	if (Anim)
+	if (!Anim)
 	{
-
-		
-
-	
+		EGLOG(Error, TEXT("AnimInstance is not UAnim_Player"));
+		return;
 	}
 	
 
@@ -356,6 +358,7 @@ void AEGPlayerCharacter::StartRunning()
 
 //호출 시점 IE_Repeated
 //누르고 있는지 좀 돼야 반응한다
+//스테미나를 사용하는 기능에서 호출됩니다. 달리기/막기
 void AEGPlayerCharacter::UsingStaminaTick()
 {
 	
@@ -434,7 +437,7 @@ void AEGPlayerCharacter::ToggleMap()
 	}
 }
 
-void AEGPlayerCharacter::SetGuard()
+void AEGPlayerCharacter::PressGuard()
 {
 
 	if (Stat->CanUsingStamina())
@@ -627,8 +630,7 @@ void AEGPlayerCharacter::SetupSpringArm()
 }
 
 
-//이것 하나하나가 input event다.
-//이것들을 활용해서 움직임을 개선해야 된다
+
 void AEGPlayerCharacter::UpDown( float  NewAxisValue)
 {
  
@@ -791,6 +793,7 @@ void AEGPlayerCharacter::ComboAttackEnd()
 	Stat->SetComboEndState();
 }
 
+//미사용, 데미지를 준 엑터와 플레이어의 각도 계산
 FName AEGPlayerCharacter::calcHitDirection(AActor * DamageCauser)
 {
 	FName Result;
@@ -815,6 +818,7 @@ FName AEGPlayerCharacter::calcHitDirection(AActor * DamageCauser)
 	return Result;
 }
 
+// PostProcess 연동 테스트
 void AEGPlayerCharacter::DamagedPostEffect()
 {
 	FPostProcessSettings& PostProcessSettings = Camera->PostProcessSettings;
@@ -822,6 +826,7 @@ void AEGPlayerCharacter::DamagedPostEffect()
 	PostProcessSettings.ColorGamma = FVector4(1.0f, 1.0f, 1.0f, 0.0f);
 }
 
+// 스킬 이펙트를 생성하고 스킬 컨테이너 컴포넌트에 넣어줍니다.
 void AEGPlayerCharacter::loadHitEffects()
 {
 	if (!GetWorld()) { EGLOG(Warning, TEXT("No0 world")); return; }
