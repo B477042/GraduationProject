@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AEGPlayerCharacter" Collapsed="true">
+    <Position X="22.75" Y="3" Width="4" />
+    <AssociationLine Name="Container_Hit" Type="USkillContainer_PlayerHitEffect" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="26.75" Y="3.005" />
+        <Point X="28.75" Y="3.005" />
+        <Point X="28.75" Y="2.5" />
+        <Point X="32.312" Y="2.5" />
+        <Point X="32.312" Y="2.75" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>oAmDAAAEIpBBAYIRRKnqaBYIoAAAiBAAIAoKtgGoSwA=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EGPlayerCharacter.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Anim" />
+      <Field Name="Container_Hit" />
+      <Field Name="Inventory" />
+      <Field Name="MapRenderer" />
+      <Field Name="SelfDamage" />
+      <Field Name="Stat" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AEGPlayerController" Collapsed="true">
+    <Position X="23.25" Y="1.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>ABAA4CIECJARQAAIAEAEFEACACABAABAIAAAEABggAE=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EGPlayerController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UAnim_Player" Collapsed="true">
+    <Position X="29.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAwBChAAAgEAAEgKABQQQACwASIEABCBBIhAEIAEg=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Anim_Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="USkillContainer_PlayerHitEffect" Collapsed="true">
+    <Position X="29" Y="2.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAEAAAAAAAAAAAAAAQAAAgAAA=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\SkillContainer_PlayerHitEffect.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UComponent_Inventory" Collapsed="true">
+    <Position X="29" Y="4" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACgQAAgAACAAAAAAAAAAAiAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Component_Inventory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMiniMapRenderComponent" Collapsed="true">
+    <Position X="29.75" Y="5.25" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\MiniMapRenderComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UComponent_SelfDamage" Collapsed="true">
+    <Position X="28.75" Y="6.25" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAgAAAAAAAEAAAAAAAAAAAAAAAAAAAEAgAAA=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Component_SelfDamage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UStatComponent_Player" Collapsed="true">
+    <Position X="28.75" Y="8.25" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AgACCQAARgAgEA4DAIAAALATQMAIAQABKgAQyEAgBIA=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\StatComponent_Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

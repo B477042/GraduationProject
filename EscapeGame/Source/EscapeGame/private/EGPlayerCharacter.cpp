@@ -72,7 +72,7 @@ void AEGPlayerCharacter::BeginPlay()
 //||		Montage 관련 Delegate Binding		||
 //================================================
 	//Anim->montage
-	Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
+//	Anim->OnMontageEnded.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageEnded);
 
 	//montageStart
 	Anim->OnMontageStarted.AddDynamic(this, &AEGPlayerCharacter::OnAttackMontageStart);

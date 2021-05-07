@@ -17,6 +17,7 @@ struct FGameProgressData
 {
 	GENERATED_BODY()
 public:
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		float RemainTimes;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
@@ -32,6 +33,7 @@ struct FTransformData
 {
 	GENERATED_BODY()
 public:
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		FString ActorName;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
@@ -46,6 +48,7 @@ struct FPlayerData :public FTransformData
 {
 	GENERATED_BODY()
 public:
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		float Hp;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
@@ -65,6 +68,7 @@ struct FEnemyData :public FTransformData
 {
 	GENERATED_BODY()
 public:
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		float Hp;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
@@ -107,6 +111,7 @@ struct FItemData :public  FTransformData
 	GENERATED_BODY()
 
 public:
+
 	//False라면 렌더링하지 않는다
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		bool bIsVaild;
@@ -120,6 +125,7 @@ struct FPostProcessData :public  FTransformData
 {
 	GENERATED_BODY()
 public:
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		FVector4 ColorContrastValue;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")

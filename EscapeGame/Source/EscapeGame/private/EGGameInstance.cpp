@@ -151,15 +151,19 @@ void UEGGameInstance::BeginLoadingScreen(const FString & MapName)
 	{
 		
 		
-		if (UGameViewportClient* ViewportClient = GetGameViewportClient())
-		{
-			ViewportClient->AddViewportWidgetContent(UI_LoadingScreeen->TakeWidget());
-			EGLOG(Error, TEXT("begin loading screen"));
+		/*if (UGameViewportClient* ViewportClient = GetGameViewportClient())
+		{*/
+			//ViewportClient->AddViewportWidgetContent(UI_LoadingScreeen->TakeWidget());
+			FLoadingScreenAttributes LoadingScreen;
+			LoadingScreen.bMoviesAreSkippable = false;
+			LoadingScreen.bAutoCompleteWhenLoadingCompletes = true;
+			LoadingScreen.WidgetLoadingScreen = UI_LoadingScreeen->TakeWidget();
+			//LoadingScreen.MinimumLoadingScreenDisplayTime=
 
-		
+			GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
 
 			
-		}
+		//}
 
 		/*FLoadingScreenAttributes LoadingScreen;
 		LoadingScreen.bAutoCompleteWhenLoadingCompletes = false;

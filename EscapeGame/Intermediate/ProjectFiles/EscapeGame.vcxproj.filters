@@ -688,5 +688,9 @@
     <ClInclude Include="..\..\Source\Structure\public\Building.h">
       <Filter>Source\Structure\public</Filter>
     </ClInclude>
+    <None Include="ClassDiagram.cd" />
+    <None Include="..\..\Source\EscapeGame\PlayerDiagram.cd">
+      <Filter>Source\EscapeGame</Filter>
+    </None>
   </ItemGroup>
 </Project>
