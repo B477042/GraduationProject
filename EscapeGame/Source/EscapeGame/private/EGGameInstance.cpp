@@ -46,6 +46,24 @@ void UEGGameInstance::Init()
 		return;
 	}
 
+	//Check Save Data File
+	auto checkSaveData= UGameplayStatics::LoadGameFromSlot(SaveSlotName, UserIndex);
+	if (!checkSaveData)
+	{
+		auto SaveInstance = NewObject<UEGSaveGame>();
+		if (!SaveInstance)return;
+		UGameplayStatics::SaveGameToSlot(SaveInstance, SaveSlotName, UserIndex);
+		EGLOG(Error, TEXT("Can't find Save Data. Create New One"));
+	}
+
+	auto checkOptionsData = UGameplayStatics::LoadGameFromSlot(OptionsSlotName, UserIndex);
+	if (!checkOptionsData)
+	{
+		auto OptionsInstance = NewObject<UOptionSaveGame>();
+		if (!OptionsInstance)return;
+		UGameplayStatics::SaveGameToSlot(OptionsInstance, OptionsSlotName, UserIndex);
+		EGLOG(Error, TEXT("Can't find Options Data. Create New One"));
+	}
 
 	FCoreUObjectDelegates::PreLoadMap.AddUObject(this, &UEGGameInstance::BeginLoadingScreen);
 	FCoreUObjectDelegates::PostLoadMapWithWorld.AddUObject(this, &UEGGameInstance::EndLoadingScreen);

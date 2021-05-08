@@ -103,8 +103,9 @@ void AEGPlayerCharacter::BeginPlay()
 			return;
 		}
 		//다른 오브젝트들에게 Load Game을 활성화 시킨다
-		GameInstance->OnLoadGamePhaseDelegate.Broadcast(LoadInstance);
 		EGLOG(Error, TEXT("OnLoadGamePhase Delegate Broadcasted"));
+		GameInstance->OnLoadGamePhaseDelegate.Broadcast(LoadInstance);
+		
 		//loadGameData(LoadInstance);
 		GameInstance->EGameState = EEGGameState::E_InPlay;
 

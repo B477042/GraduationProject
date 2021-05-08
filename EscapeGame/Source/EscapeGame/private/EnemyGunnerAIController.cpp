@@ -10,7 +10,7 @@
 AEnemyGunnerAIController::AEnemyGunnerAIController()
 {
 
-	static ConstructorHelpers::FObjectFinder<UBlackboardData>BB_Data(TEXT("BlackboardData'/Game/MyFolder/AIData/BB_GunnerBoard.BB_GunnerBoard'"));
+	static ConstructorHelpers::FObjectFinder<UBlackboardData>BB_Data(TEXT("BlackboardData'/Game/MyFolder/AIData/BB_GunnerBoad.BB_GunnerBoad'"));
 	if (BB_Data.Succeeded())
 	{
 		BBData = BB_Data.Object;
