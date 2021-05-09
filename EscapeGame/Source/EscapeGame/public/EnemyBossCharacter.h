@@ -4,7 +4,7 @@
 
 
 #include "EnemyCharacter.h"
-#include "SkillComponent_ProjectileType.h"
+#include "SkillContainer_ProjectileType.h"
 #include "StatComponent_Enemy.h"
 #include "Animation/AnimMontage.h"
 #include "EnemyBossCharacter.generated.h"
@@ -101,7 +101,7 @@ protected:
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		EBossState State;
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	USkillComponent_ProjectileType* Comp_Fireball;
+	USkillContainer_ProjectileType* Comp_Fireball;
 
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		UParticleSystemComponent* TeleportEnter;

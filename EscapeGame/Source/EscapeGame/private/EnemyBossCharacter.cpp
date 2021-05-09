@@ -233,7 +233,7 @@ void AEnemyBossCharacter::PlayChargeEffect(bool Power)
 void AEnemyBossCharacter::initComponents()
 {
 	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
-	Comp_Fireball = CreateDefaultSubobject<USkillComponent_ProjectileType>(TEXT("FireballComp"));
+	Comp_Fireball = CreateDefaultSubobject<USkillContainer_ProjectileType>(TEXT("FireballComp"));
 	Stat = CreateDefaultSubobject<UStatComponent_Enemy>(TEXT("STAT"));
 	TeleportEnter = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("TELEENTER"));
 	TeleportExit = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("TELEEXIT"));
