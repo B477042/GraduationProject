@@ -228,7 +228,7 @@ bool UStatComponent_Player::SetStaminaUsing(bool bResult)
 	return bIsStaminaUsing;
 }
 
-bool UStatComponent_Player::CanUsingStamina()
+bool UStatComponent_Player::CanUseStamina()
 {
 	if (Stamina <= 0)
 		return false;

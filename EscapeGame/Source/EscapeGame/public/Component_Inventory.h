@@ -47,7 +47,6 @@ struct  FItemDataInfo
 		return true;
 	}
 	//아이템의 양이 반환된다
-
 	int GetAmountItems() { return n_item; }
 	//양이 추가된다. 음수나 0이라면 반환
 	void AddItem(int num)
@@ -66,10 +65,6 @@ struct  FItemDataInfo
 		Item = Other;
 		if (num >= 0)n_item = num;
 	}
-
-	
-
-
 private:
 	//이 아이템의 종류
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))

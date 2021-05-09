@@ -2,7 +2,7 @@
 
 
 #include "GruntCharacter.h"
-#include "AICtrl_Grunt.h"
+#include "EnemyAIController_Grunt.h"
 #include "CharacterAnimInstance.h"
 //#include "DrawDebugHelpers.h"
 #include "EGPlayerCharacter.h"
@@ -21,7 +21,7 @@ AGruntCharacter::AGruntCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	//Set AI Controller
-	AIControllerClass = AAICtrl_Grunt::StaticClass();
+	AIControllerClass = AEnemyAIController_Grunt::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	
 	Stat = CreateDefaultSubobject<UStatComponent_EGrunt>(TEXT("STAT"));
@@ -242,7 +242,7 @@ void AGruntCharacter::Attack()
 //anim의 Dead Animation을 재생시키게 해준다
 void AGruntCharacter::ReadToDead()
 {
-	auto con = Cast<AAICtrl_Grunt>(Controller);
+	auto con = Cast<AEnemyAIController_Grunt>(Controller);
 	if (!con)return;
 
 

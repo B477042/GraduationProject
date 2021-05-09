@@ -4,7 +4,7 @@
 #include "BTDecorator_Boss_IsDashing.h"
 
 #include"EnemyBossCharacter.h"
-#include"AIController_Boss.h"
+#include"EnemyAIController_Boss.h"
 
 UBTDecorator_Boss_IsDashing::UBTDecorator_Boss_IsDashing()
 {
@@ -27,10 +27,10 @@ bool UBTDecorator_Boss_IsDashing::CalculateRawConditionValue(UBehaviorTreeCompon
 
 	if (Boss->GetState() == EBossState::Walk)
 	{
-		Blackboard->SetValueAsBool(AAIController_Boss::IsDash, false);
+		Blackboard->SetValueAsBool(AEnemyAIController_Boss::IsDash, false);
 		return true;
 	}
-	Blackboard->SetValueAsBool(AAIController_Boss::IsDash, true);
+	Blackboard->SetValueAsBool(AEnemyAIController_Boss::IsDash, true);
 	 return false;
 
 

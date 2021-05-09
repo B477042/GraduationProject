@@ -13,8 +13,9 @@
  */
 
 DECLARE_MULTICAST_DELEGATE(FAttackEventDelegate);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FComboAttackCheckDelegate, UAnimMontage*, Montage, bool, bInterrupted);
 DECLARE_MULTICAST_DELEGATE(FChargeAttackCheckDelegate);
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FComboAttackCheckDelegate, UAnimMontage*, Montage, bool, bInterrupted);
+
 
 UCLASS()
 class ESCAPEGAME_API UCharacterAnimInstance : public UAnimInstance

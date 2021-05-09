@@ -2,7 +2,7 @@
 
 
 #include "StatComponent_EGrunt.h"
-#include "AICtrl_Grunt.h"
+#include "EnemyAIController_Grunt.h"
 #include "DT_DataStruct.h"
 #include "GruntCharacter.h"
 #include "EGSaveGame.h"
@@ -34,7 +34,7 @@ void UStatComponent_EGrunt::loadTypeData()
 
 	if (!OwnerChara->bAllowRandStat)return;
 
-	auto OwnerCon = Cast<AAICtrl_Grunt>(OwnerChara->Controller);
+	auto OwnerCon = Cast<AEnemyAIController_Grunt>(OwnerChara->Controller);
 	if (OwnerCon == nullptr)
 	{
 		EGLOG(Warning, TEXT("Owner controller Casting failed"));

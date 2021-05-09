@@ -2,7 +2,7 @@
 
 
 #include "EnemyCharacter_Gunner.h"
-#include "EnemyGunnerAIController.h"
+#include "EnemyAIController_Gunner.h"
 #include "EGSaveGame.h"
 #include "EGGameInstance.h"
 #include "EGPlayerCharacter.h"
@@ -25,7 +25,7 @@ AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	AIControllerClass = AEnemyGunnerAIController::StaticClass();
+	AIControllerClass = AEnemyAIController_Gunner::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
 	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
@@ -158,7 +158,7 @@ void AEnemyCharacter_Gunner::PostInitializeComponents()
 		//AIController Áß´Ü
 
 		Anim->SetDead(true);
-		auto AICon = Cast<AEnemyGunnerAIController>(GetController());
+		auto AICon = Cast<AEnemyAIController_Gunner>(GetController());
 		if (AICon)
 		{
 			AICon->StopAI();

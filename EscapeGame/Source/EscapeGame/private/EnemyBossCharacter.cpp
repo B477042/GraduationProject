@@ -2,7 +2,7 @@
 
 
 #include "EnemyBossCharacter.h"
-#include "AIController_Boss.h"
+#include "EnemyAIController_Boss.h"
 #include "Boss_Fireball.h"
 #include "EGSaveGame.h"
 #include "EGGameInstance.h"
@@ -13,7 +13,7 @@
 
 AEnemyBossCharacter::AEnemyBossCharacter()
 {
-	AIControllerClass = AAIController_Boss::StaticClass();
+	AIControllerClass = AEnemyAIController_Boss::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
 	initComponents();
@@ -121,19 +121,19 @@ bool AEnemyBossCharacter::TeleportTo(const FVector & DestLocation, const FRotato
 */
 void AEnemyBossCharacter::ThrowFireBall()
 {
-	auto tempCon = Cast<AAIController_Boss>(GetController());
+	auto tempCon = Cast<AEnemyAIController_Boss>(GetController());
 	if (!tempCon) { 
 		EGLOG(Warning, TEXT("Casting faile"));
 		return; }
 
-	AActor* tempObj = Cast<AActor>(tempCon->GetBlackboardComponent()->GetValueAsObject(AAIController_Boss::TargetPlayer));
+	AActor* tempObj = Cast<AActor>(tempCon->GetBlackboardComponent()->GetValueAsObject(AEnemyAIController_Boss::TargetPlayer));
 	if (!tempObj)
 	{
 		EGLOG(Error, TEXT("fail to get value "));
 		return;
 	}
 	//EGLOG(Warning, TEXT("Target Name : %s"), *tempObj->GetName());
-	//tempCon->GetBlackBoard()->get (AAIController_Boss::TargetPlayer);
+	//tempCon->GetBlackBoard()->get (AEnemyAIController_Boss::TargetPlayer);
 	Comp_Fireball->UseSkill(*tempObj,GetActorForwardVector());
 	//EGLOG(Error, TEXT("FIRRRRR"));
 	OnFireballThrow.Broadcast();
@@ -150,7 +150,7 @@ void AEnemyBossCharacter::Thunderbolt()
 
 void AEnemyBossCharacter::AtPlayThunderblotAnim()
 {
-	auto aiCon = Cast<AAIController_Boss>(GetController());
+	auto aiCon = Cast<AEnemyAIController_Boss>(GetController());
 	if (!aiCon)
 	{
 		EGLOG(Error, TEXT("AI Con casting failed"));
@@ -185,7 +185,7 @@ void AEnemyBossCharacter::AtPlayThunderblotAnim()
 //Called By Task Node
 void AEnemyBossCharacter::ChargeMP()
 {
-	//auto tempCon = Cast<AAIController_Boss>(GetController());
+	//auto tempCon = Cast<AEnemyAIController_Boss>(GetController());
 	//if (!tempCon) {
 	//	EGLOG(Warning, TEXT("Casting faile"));
 	//	return;
@@ -350,7 +350,7 @@ void AEnemyBossCharacter::SaveGame(UEGSaveGame * SaveInstance)
 
 
 	
-	auto AICon = Cast<AAIController_Boss>(GetController());
+	auto AICon = Cast<AEnemyAIController_Boss>(GetController());
 	if (!AICon)
 		return;
 	AICon->SaveGame(SaveData);
@@ -376,7 +376,7 @@ void AEnemyBossCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 
 
 	EGLOG(Error, TEXT("Load instance data MP : %f"), LoadInstance->BossData.MP);
-	auto AICon = Cast<AAIController_Boss>(GetController());
+	auto AICon = Cast<AEnemyAIController_Boss>(GetController());
 	if (!AICon)
 		return;
 	AICon->LoadGame(LoadData);

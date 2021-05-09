@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AEnemyAIController" Collapsed="true">
+    <Position X="1" Y="4.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAEQAAgAAAAAAAwgEACAACAACAAAAAAAIggAAA=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EnemyAIController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AEnemyBossCharacter" Collapsed="true">
+    <Position X="3.75" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAiABEAEIQBQAAAYIEACJAwAApAQQEAFABIAhAAgAIE=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EnemyBossCharacter.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Stat" />
+      <Field Name="Comp_Fireball" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AEnemyCharacter" Collapsed="true">
+    <Position X="6.25" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACABAAAEAAARAAAAAAECAAAAAAAAAAgAAAAAiAAgQgE=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EnemyCharacter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AEnemyCharacter_Gunner" Collapsed="true">
+    <Position X="6.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AC4ACACEAAAQIAAAEAAAAAAIAIAQAAUACAAAgIEwQBE=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EnemyCharacter_Gunner.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Anim" />
+      <Field Name="MagComponent" />
+      <Field Name="StateComponent" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AEnemyGunnerAIController" Collapsed="true">
+    <Position X="1.25" Y="7.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAEQAAAAAAAAAgAAAACAAAAACAAAAAAAAAgACA=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EnemyGunnerAIController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AGruntCharacter" Collapsed="true">
+    <Position X="8.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAQAEAQAQAAAYAAAAAAAAAIIIAAAABAIAgAAgQAE=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\GruntCharacter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UAnimInstance_Gunner" Collapsed="true">
+    <Position X="5" Y="6.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AACSAAIAgQkAEA1AAKAAAAgBgQACAICAmABAAQAIGAg=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\AnimInstance_Gunner.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UStatComponent_Enemy" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAQAAAIAAAAAAACAAIAAAEQAQAAAAAgAAE=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\StatComponent_Enemy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="USkillComponent_ProjectileType" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAgAAAAAAAAAAEAAAAAAAAAAAAEAAAAAgAAA=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\SkillComponent_ProjectileType.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UComponent_Mag" Collapsed="true">
+    <Position X="5.25" Y="7.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgJAQAAAAAAAAAAAACAAAAQAAAAAAAIAoEAE=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Component_Mag.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UStateComponent_Gunner" Collapsed="true">
+    <Position X="5" Y="5.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AIACBEAAAAEQAAAAAAAACAAAAAAAAAAAAAAAhCAgQIE=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\StateComponent_Gunner.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UAnim_Grunt" Collapsed="true">
+    <Position X="10.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAgBAAAAEAAACAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Anim_Grunt.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UAnimInstance_Boss" Collapsed="true">
+    <Position X="1.25" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAQAgAAABAAAAEAACABAgAAEAAAAIgUAABABAAAAAg=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\AnimInstance_Boss.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AAICtrl_Grunt" Collapsed="true">
+    <Position X="2.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAEQAAAAgAAAAAAAAAAAAgAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\AICtrl_Grunt.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AEnemyAIController_Boss" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAAAQAkQAAQAAAAAAwAAAACAgQAAAAAAAEAAAAgAAE=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EnemyAIController_Boss.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

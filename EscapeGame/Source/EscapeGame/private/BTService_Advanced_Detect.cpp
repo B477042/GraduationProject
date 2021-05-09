@@ -4,7 +4,7 @@
 #include "BTService_Advanced_Detect.h"
 #include "EGPlayerCharacter.h"
 #include "EnemyBossCharacter.h"
-#include "AIController_Boss.h"
+#include "EnemyAIController_Boss.h"
 //#include "DrawDebugHelpers.h"
 #include "..\public\BTService_Advanced_Detect.h"
 
@@ -68,7 +68,7 @@ void UBTService_Advanced_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, ui
 
 
 				OwnerComp.GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, resultChara);
-				OwnerComp.GetBlackboardComponent()->SetValueAsVector(AAIController_Boss::TargetPos, resultChara->GetActorLocation());
+				OwnerComp.GetBlackboardComponent()->SetValueAsVector(AEnemyAIController_Boss::TargetPos, resultChara->GetActorLocation());
 				//OwnerComp.GetBlackboardComponent()->SetValueAsVector(AEnemyAIController::PatrolPos, resultChara->GetActorLocation());
 				//EGLOG(Warning, TEXT("Detect : %s"), *OwnerComp.GetBlackboardComponent()->GetValueAsObject(AEnemyAIController::TargetPlayer)->GetName());
 				return;
@@ -80,7 +80,7 @@ void UBTService_Advanced_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, ui
 
 	
 	OwnerComp.GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, nullptr);
-	OwnerComp.GetBlackboardComponent()->SetValueAsBool(AAIController_Boss::IsDash, false);
+	OwnerComp.GetBlackboardComponent()->SetValueAsBool(AEnemyAIController_Boss::IsDash, false);
 	auto temp = Cast<AEnemyBossCharacter>(ControllingPawn);
 	if (temp)
 	{

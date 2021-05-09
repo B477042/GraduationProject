@@ -2,7 +2,7 @@
 
 
 #include "BTTask_Boss_DashATK.h"
-#include "AIController_Boss.h"
+#include "EnemyAIController_Boss.h"
 #include "EnemyBossCharacter.h"
 UBTTask_Boss_DashATK::UBTTask_Boss_DashATK()
 {

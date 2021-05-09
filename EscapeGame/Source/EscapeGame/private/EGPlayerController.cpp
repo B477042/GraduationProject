@@ -60,14 +60,6 @@ void AEGPlayerController::BeginPlay()
 
 	HUD = CreateWidget<UGameWidget>(this, HUDWidgetClass);
 	TutorialUI = CreateWidget<UTutorialWidget>(this, TUTOWidgetClass);
-	
-
-
-
-
-
-
-
 	//번호가 높을수록 위에 뜨는 ui 가 된다
 	HUD->AddToViewport(VP_HUD);
 	//TutorialUI->AddToViewport(VP_Tutorial);
@@ -85,16 +77,12 @@ void AEGPlayerController::BeginPlay()
 	FInputModeGameOnly GameOnly;
 	SetInputMode(GameOnly);
 
-
-	
 	auto tempChara = Cast<AEGPlayerCharacter>(GetPawn());
 	if (!tempChara)
 	{
 	
 		return;
 	}
-
-	
 	HUD->BindCharacterInven(tempChara->GetInventory());
 	
 	//TutorialUI->Test(FText::FromString(TEXT("TestTs")), FText::FromString(TEXT("notitnotif")));
@@ -136,6 +124,7 @@ void AEGPlayerController::OnPossess(APawn * aPawn)
 	
 }
 
+//True면 키보드 입력, false면 마우스 조작과 키보드 입력
 void AEGPlayerController::ChangeInputMode(bool bGameMode)
 {
 	if (bGameMode)

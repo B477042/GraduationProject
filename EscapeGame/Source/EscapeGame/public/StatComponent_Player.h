@@ -49,7 +49,7 @@ public:
 	void UseStamina(float DeltaTime);
 	//void SetRunning();
 	bool SetStaminaUsing(bool bResult);
-	bool CanUsingStamina();
+	bool CanUseStamina();
 
 	float GetStamina();
 	float GetStaminaRatio();

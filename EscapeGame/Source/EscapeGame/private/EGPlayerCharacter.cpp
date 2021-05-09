@@ -348,7 +348,7 @@ void AEGPlayerCharacter::StartRunning()
 	//
 	if (Stat->IsAttacking())return;
 
-	if (Stat->CanUsingStamina())
+	if (Stat->CanUseStamina())
 	{
 		Stat->SetStaminaUsing(true);
 		GetCharacterMovement()->MaxWalkSpeed = 2000.0f;
@@ -363,7 +363,7 @@ void AEGPlayerCharacter::StartRunning()
 void AEGPlayerCharacter::UsingStaminaTick()
 {
 	
-	if (!Stat->CanUsingStamina())
+	if (!Stat->CanUseStamina())
 	{
 		StopRunning();
 		ReleaseGuard();
@@ -441,7 +441,7 @@ void AEGPlayerCharacter::ToggleMap()
 void AEGPlayerCharacter::PressGuard()
 {
 
-	if (Stat->CanUsingStamina())
+	if (Stat->CanUseStamina())
 	{
 		EGLOG(Error, TEXT("Guard start"));
 		Stat->SetStaminaUsing(true);
@@ -755,6 +755,7 @@ void AEGPlayerCharacter::OnWeaponBeginOverlap(UPrimitiveComponent * OverlappedCo
 
 	Container_Hit->SetEffectAt(OtherActor->GetActorLocation());
 }
+
 void AEGPlayerCharacter::OnCheckCanComboAttack(UAnimMontage* Montage, bool bInterrupted)
 {
 	if (Stat->CheckCanComboAttack())
