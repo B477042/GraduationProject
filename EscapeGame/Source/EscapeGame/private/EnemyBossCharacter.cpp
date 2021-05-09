@@ -161,6 +161,8 @@ void AEnemyBossCharacter::AtPlayThunderblotAnim()
 
 	if (SA_Thunder->IsActivate()) { SA_Thunder->DeactivateEffect(); }
 
+
+	//50%확률로 번개의 진행방향을 수직으로 할지 수평으로할지 정합니다.
 	int rand = UKismetMathLibrary::RandomIntegerInRange(0, 10);
 
 	if (rand < 5)

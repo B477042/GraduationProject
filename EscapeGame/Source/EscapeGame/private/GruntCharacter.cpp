@@ -90,7 +90,7 @@ void AGruntCharacter::PostInitializeComponents()
 	auto Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
 	if (!Anim)return;
 
-	//공격을 플레이할 때 호출되고 공격에 대한 판정을 시도합니다. 이걸 넣어줍니다
+	//공격을 플레이할 때 호출되고 공격에 대한 판정을 시도합니다. 
 	Anim->AttackEvent_Delegate.AddLambda([this]()->void {
 		
 	//EGLOG(Error, TEXT("ANIm notify test start"));

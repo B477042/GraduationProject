@@ -116,7 +116,7 @@ void AEnemyAIController_Gunner::OnPerceptionUpdated(const TArray<AActor*>& Updat
 void AEnemyAIController_Gunner::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
 	
-	//Check Sensed Actor is Controlled by Player
+	//감지된 엑터가 player인지 검사합니다
 	auto target = Cast<APawn>(Actor);
 	if (target == nullptr)return;
 
@@ -125,10 +125,11 @@ void AEnemyAIController_Gunner::OnTargetPerceptionUpdated(AActor* Actor, FAIStim
 
 
 
-	//Sensed Result.
-	//True = Percept Actor Successfully  | False = Loose Actor
+	//탐지결과
+	//True = 감지 성공  | False = 사라짐
 	bool bSenseResult = Stimulus.WasSuccessfullySensed();
 
+	//성공시 값을 저장하고 return
 	if (bSenseResult)
 	{
 		EGLOG(Error, TEXT("Find %s "), *Actor->GetName());
@@ -136,7 +137,7 @@ void AEnemyAIController_Gunner::OnTargetPerceptionUpdated(AActor* Actor, FAIStim
 		return;
 	}
 
-
+	//실패시 관련 BB값 초기화
 	EGLOG(Error, TEXT("Lose %s"), *Actor->GetName());
 	GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, nullptr);
 	GetBlackboardComponent()->SetValueAsVector(AEnemyAIController::TargetPos, Actor->GetActorLocation());
