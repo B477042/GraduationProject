@@ -228,6 +228,12 @@ int AAstarNode::CalcHCount(const FVector & Goal)
 	Count_H = FVector::Distance(Goal, GetActorLocation());
 	return Count_H;
 }
+int AAstarNode::CalcFCount(const FVector & Start, const FVector & Goal)
+{
+	Count_F = CalcGCount(Start) + CalcHCount(Goal);
+	return Count_F;
+}
+
 
 void AAstarNode::SetNearNodesPrevAsMe()
 {
@@ -254,8 +260,3 @@ void AAstarNode::ResetAStarValue()
 	PrevNode=nullptr;
 }
 
-int AAstarNode::CalcFCount(const FVector & Start, const FVector & Goal)
-{
-	Count_F = CalcGCount(Start) + CalcHCount(Goal);
-	return Count_F;
-}
