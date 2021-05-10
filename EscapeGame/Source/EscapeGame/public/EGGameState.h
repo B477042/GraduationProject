@@ -30,18 +30,11 @@ class ESCAPEGAME_API AEGGameState : public AGameState
 public:
 	AEGGameState();
 
-
-	
-
-
-
 public:
 	//Escape restriction time
 	UPROPERTY(Transient, VisibleAnywhere, BlueprintReadWrite, Category = "Data")
 		float RemainTimes;
-	////Game의 상태. Save file을 어떻게 사용할지 이용할 수 있다.
-	//UPROPERTY(Transient, VisibleAnywhere, BlueprintReadWrite, Category = "Data")
-	//	EEGGameState EGameState;
+	
 
 	//Level에 존재하는 EnemyCharacter의 리스트
 	UPROPERTY(Transient, VisibleAnywhere, Category = "List", meta = (AllowPrivateAccess = "true"))

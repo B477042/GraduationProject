@@ -55,20 +55,6 @@ void UTutorialWidget::ReceiveMessage( FText  NotifyTittle,  FText  Describe, FSo
 		EGLOG(Error, TEXT("Fail to load"));
 	}
 	
-
-
-	//auto newImage = Cast<UTexture2D>(gameInstance->StreamableManager.LoadSynchronous(ObjectPath));
-	//if (newImage)
-	//{
-	//	Img_Gif->SetBrushFromTexture(newImage);
-	//}
-	//else
-	//	EGLOG(Error, TEXT("Load failed"));
-
-
-
-
-
 	Txt_NotifyTittle->SetText(NotifyTittle);
 	Txt_Describe->SetText(Describe);
 

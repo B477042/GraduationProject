@@ -168,10 +168,7 @@ void UEGGameInstance::BeginLoadingScreen(const FString & MapName)
 	if (!IsRunningDedicatedServer())
 	{
 		
-		
-		/*if (UGameViewportClient* ViewportClient = GetGameViewportClient())
-		{*/
-			//ViewportClient->AddViewportWidgetContent(UI_LoadingScreeen->TakeWidget());
+	
 			FLoadingScreenAttributes LoadingScreen;
 			LoadingScreen.bMoviesAreSkippable = false;
 			LoadingScreen.bAutoCompleteWhenLoadingCompletes = true;
@@ -180,16 +177,8 @@ void UEGGameInstance::BeginLoadingScreen(const FString & MapName)
 
 			GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
 
-			
-		//}
-
-		/*FLoadingScreenAttributes LoadingScreen;
-		LoadingScreen.bAutoCompleteWhenLoadingCompletes = false;
-		LoadingScreen.WidgetLoadingScreen = UI_LoadingScreeen->TakeWidget();
-		LoadingScreen.MinimumLoadingScreenDisplayTime = 3.0f;
-		GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
-		EGLOG(Error, TEXT("LoadingScreenIsPrepared : %d"),GetMoviePlayer()->LoadingScreenIsPrepared());
-		*/
+	
+	
 	}
 }
 //loading screenÀ» ´Ý´Â´Ù

@@ -78,7 +78,7 @@ public:
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UUserWidget>LoadingScreenWidgetClass;
-	//Game의 상태. Save file을 어떻게 사용할지 이용할 수 있다.
+	//Game의 상태. Save file을 어디까지 불러올지 확인하는데 활용
 	UPROPERTY( VisibleAnywhere, BlueprintReadWrite, Category = "Data")
 		EEGGameState EGameState;
 private:

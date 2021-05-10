@@ -39,16 +39,7 @@ void UGameWidget::UpdateCharacterStat()
 {
 	if (CurrentCharacterStat.IsValid())
 	{
-		/*if (PB_HP != nullptr)
-			PB_HP->SetPercent(CurrentCharacterStat->GetHPRatio());*/
-		/*if (HPAmount != nullptr)
-		{
-			HPAmount->
-		}*/
 		
-		
-	
-
 		PlayerHP=CurrentCharacterStat->GetHP();
 		float PlayerHPRatio = CurrentCharacterStat->GetHPRatio()*100.0f;
 		float BlurRate = 0.5f*(1.0f - CurrentCharacterStat->GetHPRatio());
@@ -145,13 +136,7 @@ void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 		OwnerChara = temp;
 		}
 
-	/*CurrentCharacterStat->HPChangedDelegate.AddLambda([this]()->void {
-		if (CurrentCharacterStat.IsValid())
-		{
-			EGLOG(Warning, TEXT("HP : %f%"), CurrentCharacterStat->GetHPRatio());
-		}
-	});*/
-
+	
 	
 }
 
