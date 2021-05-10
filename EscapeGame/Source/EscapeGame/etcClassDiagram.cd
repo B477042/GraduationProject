@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="UOptionSaveGame">
-    <Position X="9.75" Y="3" Width="1.5" />
+  <Class Name="UOptionSaveGame" Collapsed="true">
+    <Position X="6.5" Y="0.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAQAAAAAABAgAAAAAAAAAAAAAAAAAAAAQAACAAAQQ=</HashCode>
       <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\OptionSaveGame.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UEGSaveGame">
-    <Position X="10" Y="0.75" Width="1.5" />
+  <Class Name="UEGSaveGame" Collapsed="true">
+    <Position X="7" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAgAgAAABAAAAAABACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EGSaveGame.h</FileName>
@@ -20,77 +20,91 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="UEGGameInstance" Collapsed="true">
-    <Position X="5.5" Y="2" Width="1.5" />
+    <Position X="3.75" Y="0.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAJCBSAAABBAxgAACAAEIGAAUAQgACAAAAAAE=</HashCode>
       <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EGGameInstance.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UGameWidget" Collapsed="true">
-    <Position X="4.75" Y="3.75" Width="1.5" />
+    <Position X="0.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABABAMEAIAAUECQAGAQIAQAAAQAAEAQAAAAAAABpAAE=</HashCode>
       <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\GameWidget.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UTittleWidget" Collapsed="true">
-    <Position X="7.75" Y="3.5" Width="1.5" />
+    <Position X="0.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAEIAgAAAAACAAAAAABAAAAAAAAAAAIAE=</HashCode>
       <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\TittleWidget.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UTutorialWidget" Collapsed="true">
-    <Position X="6.5" Y="4.75" Width="1.5" />
+    <Position X="0.5" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAQABARAAAAAIAAAAAAAAAAACABAAAAAAAAgAAAAAQ=</HashCode>
       <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\TutorialWidget.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AAstarNode" Collapsed="true">
-    <Position X="4.25" Y="4.75" Width="1.5" />
+    <Position X="0.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAgAIACEEAFAAAFAIoAAC4AAAIAiAEAYCEZgGAEwQgA=</HashCode>
       <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\AStarNode.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AAStarFinder" Collapsed="true">
-    <Position X="2.5" Y="4" Width="1.5" />
+    <Position X="0.5" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BICCAEAEAAAAAAABAAAAAAAEAQAAAAAAgAAAAwAoAAE=</HashCode>
       <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\AStarFinder.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="APromptor">
-    <Position X="12.5" Y="4.5" Width="1.5" />
+  <Class Name="APromptor" Collapsed="true">
+    <Position X="6.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgQAA=</HashCode>
       <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Promptor.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UDialogueWidget" Collapsed="true">
-    <Position X="11.5" Y="3.5" Width="1.5" />
+    <Position X="5.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IEEAQAAAgAAAAAIAAgAAAIAgAIAQABEABAIgAAQAAAA=</HashCode>
       <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\DialogueWidget.h</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="APawn_Camera" Collapsed="true">
+    <Position X="5.5" Y="4.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AABAgABAAAQBAAMAEEABAAQIEAAAAAABAAIgQAAxYAA=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Pawn_Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AEGGameState" Collapsed="true">
+    <Position X="3.75" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAIAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EGGameState.h</FileName>
+    </TypeIdentifier>
+  </Class>
   <Struct Name="FBossData" Collapsed="true">
-    <Position X="13.5" Y="1.25" Width="1.5" />
+    <Position X="10.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAEAAAAAQQAAACAgAAAAAAAAEAAAAAAQA=</HashCode>
       <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EGSaveGame.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="FGameProgressData" Collapsed="true">
-    <Position X="13.5" Y="2" Width="2.25" />
+    <Position X="10.5" Y="1.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAIA=</HashCode>
       <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EGSaveGame.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="FPostProcessData" Collapsed="true">
-    <Position X="13.75" Y="2.75" Width="1.5" />
+    <Position X="10.75" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAQAAAAAAAIAAAAAAAAAgAAAAAAAAABAAAAAAAAAA=</HashCode>
       <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\EGSaveGame.h</FileName>
