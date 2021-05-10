@@ -204,6 +204,7 @@ void AEnemyCharacter_Gunner::SaveGame(UEGSaveGame * SaveInstance)
 		EGLOG(Error, TEXT("Can't find %s's Data"), *GetOwner()->GetName());
 		return;
 	}
+	//HpÀúÀå
 	StateComponent->SaveGame(*SaveData);
 	
 

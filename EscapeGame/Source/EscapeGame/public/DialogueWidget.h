@@ -64,7 +64,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 		class UEditableTextBox* TalkerBox;
 	UPROPERTY(BlueprintReadOnly)
-	class UEditableText* TextDiagram;
+	class UEditableText* TextDialogue;
 	/*UPROPERTY()
 		TWeakObjectPtr<AActor> Talker;*/
 		
@@ -77,6 +77,7 @@ private:
 		void OnPrevClicked();
 	UFUNCTION()
 		void OnContinueClicked();
+	//¥Ÿ¿Ω Ω∫≈ﬁ
 	UPROPERTY(BlueprintReadWrite, Category = "Key", meta = (AllowPrivateAccess = "true"))
 		bool bIsAllowToNext;
 };

@@ -8,7 +8,7 @@
 //Diagram 의 TEXT 내용
 void UDialogueWidget::PrintLog(FText Diagram)
 {
-	if (!TextDiagram)return;
+	if (!TextDialogue)return;
 	//\n글자를 찾아서 엔터로 바꿔주는 작업
 	auto strDia = Diagram.ToString();
 	int num=0;
@@ -22,14 +22,14 @@ void UDialogueWidget::PrintLog(FText Diagram)
 		EGLOG(Error, TEXT("%s"), *strDia);
 	}
 	
-		TextDiagram->SetText(Diagram);
+		TextDialogue->SetText(Diagram);
 		
-		//TextDiagram->ColorAndOpacity_DEPRECATED;
+		//TextDialogue->ColorAndOpacity_DEPRECATED;
 		
 			//FSlateColor::FSlateColor(FLinearColor::Blue);
 		
 		//FSlateColor newColor(FLinearColor::Blue);
-		//TextDiagram->ColorAndOpacity_DEPRECATED.GetSpecifiedColor().Blue;
+		//TextDialogue->ColorAndOpacity_DEPRECATED.GetSpecifiedColor().Blue;
 		//	Font_DEPRECATED = FSlateColor::FSlateColor(FLinearColor::Blue);
 		
 
@@ -69,10 +69,10 @@ void UDialogueWidget::NativeConstruct()
 		EGLOG(Error, TEXT("Talker Box is nullptr"));
 		return;
 	}
-	TextDiagram = Cast<UEditableText>(GetWidgetFromName("Dialogue"));
+	TextDialogue = Cast<UEditableText>(GetWidgetFromName("Dialogue"));
 	if (TalkerBox == nullptr)
 	{
-		EGLOG(Error, TEXT("TextDiagram is nullptr"));
+		EGLOG(Error, TEXT("TextDialogue is nullptr"));
 		return;
 	}
 	
@@ -115,7 +115,7 @@ void UDialogueWidget::OnPrevClicked()
 		return;
 	}*/
 	OnClickPrevDelegate.Broadcast();
-	//TextDiagram->linercolor
+	//TextDialogue->linercolor
 	//EGLOG(Error, TEXT("RUNNNNNNNNN"));
 }
 
