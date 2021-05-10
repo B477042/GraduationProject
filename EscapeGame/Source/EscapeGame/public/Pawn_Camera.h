@@ -22,7 +22,7 @@ struct FDialogueTableRow : public FTableRowBase
 	//화자
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Info")
 	FText Talker;
-	//몇 번재 Act인지
+	//몇 번재 Act인지, 미사용
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Info")
 	int32 n_Act;
 	//몇 번째 대사인지

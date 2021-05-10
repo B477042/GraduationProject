@@ -5,24 +5,24 @@
 
 
 
-//Diagram 의 TEXT 내용
-void UDialogueWidget::PrintLog(FText Diagram)
+//Dialogue 의 TEXT 내용
+void UDialogueWidget::PrintLog(FText Dialogue)
 {
 	if (!TextDialogue)return;
 	//\n글자를 찾아서 엔터로 바꿔주는 작업
-	auto strDia = Diagram.ToString();
+	auto strDia = Dialogue.ToString();
 	int num=0;
 	if (strDia.FindChar('\\', num))
 	{
 		EGLOG(Error, TEXT("Find \\"));
 		strDia.ReplaceInline(TEXT("\\n"), /*TEXT("opop")*/LINE_TERMINATOR);
 		
-		Diagram = FText::FromString(strDia);
-		EGLOG(Error, TEXT("%s"), *Diagram.ToString());
+		Dialogue = FText::FromString(strDia);
+		EGLOG(Error, TEXT("%s"), *Dialogue.ToString());
 		EGLOG(Error, TEXT("%s"), *strDia);
 	}
 	
-		TextDialogue->SetText(Diagram);
+		TextDialogue->SetText(Dialogue);
 		
 		//TextDialogue->ColorAndOpacity_DEPRECATED;
 		
@@ -35,8 +35,8 @@ void UDialogueWidget::PrintLog(FText Diagram)
 
 	
 
-		//->SetText(Diagram);
-//	EGLOG(Warning, *Diagram.ToString());
+		//->SetText(Dialogue);
+//	EGLOG(Warning, *Dialogue.ToString());
 
 }
 

@@ -180,7 +180,7 @@ void AAStarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 		//노드의 방문을 마친다
 		PopedNode->VisitNode();
 
-		//꺼낸 노드가 Goal과 위치가 같다면 -> 안먹힌다면 같은 객체를 가리키는지 검사
+		//꺼낸 노드가 Goal과 위치가 같다면 
 		if (PopedNode->GetActorLocation() == Goal->GetActorLocation())
 		{
 			//GoalNode를 설정해주고 ToVisiteNode를 비워준다
@@ -202,20 +202,13 @@ void AAStarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 				if (it->IsVisitedNode())continue;
 
 				it->CalcFCount(Start->GetActorLocation(), Goal->GetActorLocation());
-				//인근노드들 Count계산 끝나면 필요 없겠지
-				;
-				////만약 지금 탐색중인 인근 노드가 Goal과 같다면 for문을 나간다
-				//if (it == Goal)break;
+				
+			
 			}
 
 			//꺼낸 노드의 주변 노드들의 이전 노드를 꺼낸 노드로 설정해준다. 
 			PopedNode->SetNearNodesPrevAsMe();
-
-			//정렬용 임시 보관소
-		//	TArray<TWeakObjectPtr<AAstarNode>>tempList;
-		//	tempList.Init(nullptr, 4);
-			
-		
+					
 		
 			//fcount 순으로 정렬
 			for (int k = 0; k < PopedNode->NearNodes.Num();++k)
@@ -231,7 +224,7 @@ void AAStarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 			}
 
 		 
-			//주변 노드들을 FCount가 작은 순으로 넣어야 된다. ->연산자 오퍼레이터가 잘 안 된다 그냥 패스
+			
 			//정렬된 순서대로 넣는다
 			for (auto it : PopedNode->NearNodes)
 			{
@@ -245,35 +238,10 @@ void AAStarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 				EGLOG(Warning, TEXT("Enqueue : %s"), *it->GetName());
 				ToVisiteNodes.Enqueue(it.Get());
 
-				////정렬 코드
-				//for (int i = 0; i < tempList; i++)
-				//{
-
-
-				//}
 
 			}
 
-			
-
-			//TLinkedList<TSoftObjectPtr<AAstarNode>>  LLSort;
-			//for (auto it : PopedNode->NearNodes)
-			//{
-			//	
-
-			//	// 리스트에 연결 시킬 때 값대로 들어가게 
-			//	
-
-			//}
-
-
-
-
-
-			////tempList.Sort();
-			//for (auto it : tempList)
-			//	ToVisiteNodes.Enqueue(it);
-
+		
 
 		}
 	}
@@ -304,7 +272,7 @@ void AAStarFinder::KeyFind(AAstarNode * Start, AAstarNode * Key)
 		//노드의 방문을 마친다
 		PopedNode->VisitNode();
 
-		//꺼낸 노드가Key와 위치가 같다면 -> 안먹힌다면 같은 객체를 가리키는지 검사
+		//꺼낸 노드가Key와 위치가 같다면 
 		if (PopedNode->GetActorLocation() == Key->GetActorLocation())
 		{
 			//GoalNode를 설정해주고 ToVisiteNode를 비워준다
@@ -326,17 +294,12 @@ void AAStarFinder::KeyFind(AAstarNode * Start, AAstarNode * Key)
 				if (it->IsVisitedNode())continue;
 
 				it->CalcFCount(Start->GetActorLocation(), Key->GetActorLocation());
-				//인근노드들 Count계산 끝나면 필요 없겠지
-				;
-				////만약 지금 탐색중인 인근 노드가 Goal과 같다면 for문을 나간다
-				//if (it == Goal)break;
+			
+				
 			}
 
 			//꺼낸 노드의 주변 노드들의 이전 노드를 꺼낸 노드로 설정해준다. 
 			PopedNode->SetNearNodesPrevAsMe();
-
-
-
 
 
 			//fcount 순으로 정렬
@@ -353,11 +316,7 @@ void AAStarFinder::KeyFind(AAstarNode * Start, AAstarNode * Key)
 			}
 
 
-
-			//정렬용 임시 보관소
-		//	TArray<TWeakObjectPtr<AAstarNode>>tempList;
-		//	tempList.Init(nullptr, 4);
-			//주변 노드들을 FCount가 작은 순으로 넣어야 된다. ->연산자 오퍼레이터가 잘 안 된다 그냥 패스
+			//주변 노드들을 FCount가 작은 순으로 넣어야 된다.
 			for (auto it : PopedNode->NearNodes)
 			{
 				//유효하지 않다면 넘어간다
@@ -368,19 +327,9 @@ void AAStarFinder::KeyFind(AAstarNode * Start, AAstarNode * Key)
 				EGLOG(Warning, TEXT("Enqueue : %s"), *it->GetName());
 				ToVisiteNodes.Enqueue(it.Get());
 
-				////정렬 코드
-				//for (int i = 0; i < tempList; i++)
-				//{
-
-
-				//}
 
 			}
 
-
-			////tempList.Sort();
-			//for (auto it : tempList)
-			//	ToVisiteNodes.Enqueue(it);
 
 
 		}

@@ -62,21 +62,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="APromptor" Collapsed="true">
-    <Position X="6.75" Y="3.75" Width="1.5" />
+    <Position X="7.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgQAA=</HashCode>
       <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Promptor.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UDialogueWidget" Collapsed="true">
-    <Position X="5.25" Y="3.75" Width="1.5" />
+    <Position X="3.75" Y="2.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>IEEAQAAAgAAAAAIAAgAAAIAgAIAQABEABAIgAAQAAAA=</HashCode>
+      <HashCode>IFEAQAAAgAAAAAIAAgAAAIAgAIAQABEABAIAAAQAAAA=</HashCode>
       <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\DialogueWidget.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="APawn_Camera" Collapsed="true">
-    <Position X="5.5" Y="4.5" Width="2.5" />
+    <Position X="5.75" Y="5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AABAgABAAAQBAAMAEEABAAQIEAAAAAABAAIgQAAxYAA=</HashCode>
       <FileName>I:\CODE\GraduationProject\EscapeGame\Source\EscapeGame\public\Pawn_Camera.h</FileName>

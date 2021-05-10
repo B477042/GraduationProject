@@ -115,10 +115,10 @@ protected:
 	int Count_H;
 };
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerEnter, AAstarNode*);
-DECLARE_MULTICAST_DELEGATE(FOnPlayerExit);
+//DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerEnter, AAstarNode*);
+//DECLARE_MULTICAST_DELEGATE(FOnPlayerExit);
 
 //경로 업데이트 델리게이트
-static FOnPlayerEnter OnPlayerEnter;
-//Finder의 Start노드 초기화
-static FOnPlayerExit OnPlayerExit;
+//static FOnPlayerEnter OnPlayerEnter;
+////Finder의 Start노드 초기화
+//static FOnPlayerExit OnPlayerExit;

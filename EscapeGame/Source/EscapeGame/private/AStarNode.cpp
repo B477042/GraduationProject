@@ -86,7 +86,7 @@ void AAstarNode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 void AAstarNode::OnActorOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	OnPlayerEnter.Broadcast(this);
+	//OnPlayerEnter.Broadcast(this);
 	
 	auto player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (!player)return;
