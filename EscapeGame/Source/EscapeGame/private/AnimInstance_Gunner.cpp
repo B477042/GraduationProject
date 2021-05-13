@@ -171,3 +171,13 @@ void UAnimInstance_Gunner::AnimNotify_Anim_DeadEnd()
 {
 	Character->Dead();
 }
+
+void UAnimInstance_Gunner::AnimNotify_LeftStep()
+{
+	Character->PlaySFXFoot(false);
+}
+
+void UAnimInstance_Gunner::AnimNotify_RightStep()
+{
+	Character->PlaySFXFoot(true);
+}

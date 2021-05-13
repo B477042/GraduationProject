@@ -42,7 +42,10 @@ public:
 		void AnimNotify_Anim_DeadStart();
 	UFUNCTION()
 		void AnimNotify_Anim_DeadEnd();
-
+	UFUNCTION()
+		void AnimNotify_LeftStep();
+	UFUNCTION()
+		void AnimNotify_RightStep();
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "variable", meta = (AllowPrivateAccess = "true"))
 	bool bIsInAir;

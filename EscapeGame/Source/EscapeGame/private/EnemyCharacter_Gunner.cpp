@@ -29,15 +29,21 @@ AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
 	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
-	FireSound1 = CreateDefaultSubobject<UAudioComponent>(TEXT("FireSound1"));
-	FireSound2 = CreateDefaultSubobject<UAudioComponent>(TEXT("FireSound2"));
+	SFX_Fire1 = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Fire1"));
+	SFX_Fire2 = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Fire2"));
+	SFX_Foot_L = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Foot_L"));
+	SFX_Foot_R = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Foot_R"));
 	MagComponent = CreateDefaultSubobject<UComponent_Mag>(TEXT("MagComponent"));
 	StateComponent = CreateDefaultSubobject<UStateComponent_Gunner>(TEXT("StateComponent"));
+	
+
 	//	AiConfigSight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("AIConfigSight"));
 	//WeaponMesh->SetupAttachment(GetMesh(), TEXT("GunPos"));
 	
-	//	FireSound1->AttachToComponent(WeaponMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
-	//  FireSound2->AttachToComponent(WeaponMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+		SFX_Fire1->AttachTo(WeaponMesh);
+		SFX_Fire2->AttachTo(WeaponMesh);
+		SFX_Foot_L->AttachTo(RootComponent);
+		SFX_Foot_R->AttachTo(RootComponent);
 	float Pitch = 0.0f, Yaw = 0.0f, Roll = 0.0f;
 	float X = 0.0f, Y = 0.0f, Z = 0.0f;
 
@@ -57,10 +63,10 @@ AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
 		//WeaponMesh->SetupAttachment(GetMesh(), TEXT("GunPos"));
 		//WeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("GunPos"));
 
-	//	FireSound1->AttachToComponent(WeaponMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
-	//	FireSound2->AttachToComponent(WeaponMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
-		FireSound1->SetupAttachment(WeaponMesh);
-		FireSound2->SetupAttachment(WeaponMesh);
+	//	SFX_Fire1->AttachToComponent(WeaponMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+	//	SFX_Fire2->AttachToComponent(WeaponMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+		SFX_Fire1->SetupAttachment(WeaponMesh);
+		SFX_Fire2->SetupAttachment(WeaponMesh);
 		//WeaponMesh->AttachTo(GetMesh(), TEXT("GunPos"));
 	}
 
@@ -72,22 +78,41 @@ AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
 		GetMesh()->SetAnimInstanceClass(ANIM.Class);
 	}
 
-	static ConstructorHelpers::FObjectFinder<USoundCue>SFX_Gun1(TEXT("SoundCue'/Game/MyFolder/BP_Enemy/Gunner/SFX/AK47Que.AK47Que'"));
-	if (SFX_Gun1.Succeeded())
+	static ConstructorHelpers::FObjectFinder<USoundCue>SFX_Gun(TEXT("SoundCue'/Game/MyFolder/Sound/SE/AK47Que.AK47Que'"));
+	if (SFX_Gun.Succeeded())
 	{
-		FireSound1->Sound = SFX_Gun1.Object;
+		SFX_Fire1->Sound = SFX_Gun.Object;
+		SFX_Fire2->Sound = SFX_Gun.Object;
+		SFX_Fire1->bAutoActivate = false;
+		SFX_Fire2->bAutoActivate = false;
 	}
-	static ConstructorHelpers::FObjectFinder<USoundCue>SFX_Gun2(TEXT("SoundCue'/Game/MyFolder/BP_Enemy/Gunner/SFX/AK47Que.AK47Que'"));
-	if (SFX_Gun2.Succeeded())
-	{
-		FireSound2->Sound = SFX_Gun2.Object;
-	}
-	static ConstructorHelpers::FObjectFinder<USoundAttenuation>SA_Gun(TEXT("SoundAttenuation'/Game/MyFolder/BP_Enemy/Gunner/SFX/Ak47Attenuation.Ak47Attenuation'"));
+	
+	static ConstructorHelpers::FObjectFinder<USoundAttenuation>SA_Gun(TEXT("SoundAttenuation'/Game/MyFolder/Sound/SE/Ak47Attenuation.Ak47Attenuation'"));
 	if (SA_Gun.Succeeded())
 	{
-		FireSound1->AttenuationSettings = SA_Gun.Object;
-		FireSound2->AttenuationSettings = SA_Gun.Object;
+		SFX_Fire1->AttenuationSettings = SA_Gun.Object;
+		SFX_Fire2->AttenuationSettings = SA_Gun.Object;
+	
 	}
+
+	static ConstructorHelpers::FObjectFinder<USoundCue>SFX_FOOTr(TEXT("SoundCue'/Game/MyFolder/Sound/SE/Foot_right_Cue.Foot_right_Cue'"));
+	if (SFX_FOOTr.Succeeded())
+	{
+		SFX_Foot_L->Sound = SFX_FOOTr.Object;
+	
+		SFX_Foot_L->bAutoActivate = false;
+	
+	}
+	static ConstructorHelpers::FObjectFinder<USoundCue>SFX_FOOTl(TEXT("SoundCue'/Game/MyFolder/Sound/SE/Foot_left_Cue.Foot_left_Cue'"));
+	if (SFX_FOOTl.Succeeded())
+	{
+		
+		SFX_Foot_R->Sound = SFX_FOOTl.Object;
+		
+		SFX_Foot_R->bAutoActivate = false;
+	}
+
+
 
 
 	bCanFire = true;
@@ -95,6 +120,9 @@ AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
 
 
 	Point_Muzzle = FVector::ZeroVector;
+
+
+
 
 	//setupPerception();
 }
@@ -239,14 +267,14 @@ void  AEnemyCharacter_Gunner::loadAssets()
 	
 }
 
-void AEnemyCharacter_Gunner::playGunSFX()
+void AEnemyCharacter_Gunner::playSFXGun()
 {
 	bool bTemp = UKismetMathLibrary::RandomBool();
 
 	if (bTemp)
-		FireSound1->Play();
+		SFX_Fire1->Play();
 	else
-		FireSound2->Play();
+		SFX_Fire2->Play();
 }
 
 //void AEnemyCharacter_Gunner::setupPerception()
@@ -286,7 +314,7 @@ void AEnemyCharacter_Gunner::Attack()
 	SetActorTickEnabled(true);
 	//애니메이션과 소리 재생
 	Anim->PlayFire(StateComponent->GetState());
-	playGunSFX();
+	playSFXGun();
 	//Mag에서 총 발사
 	//Point_Muzzle =  WeaponMesh->GetSocketLocation(TEXT("Muzzle"));
 	MagComponent->FireBullet(
@@ -332,5 +360,13 @@ float AEnemyCharacter_Gunner::TakeDamage(float DamageAmount, FDamageEvent const 
 
 
 	return FinalDamage;
+}
+
+void AEnemyCharacter_Gunner::PlaySFXFoot(bool bResult)
+{
+	if (bResult)
+		SFX_Foot_R->Play();
+	else
+		SFX_Foot_L->Play();
 }
 

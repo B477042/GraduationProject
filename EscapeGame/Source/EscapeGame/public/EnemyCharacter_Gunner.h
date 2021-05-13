@@ -42,7 +42,9 @@ public:
 	void ReleaseADS();
 	
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)override;
-
+	
+	//False¸é left true¸é right
+	void PlaySFXFoot(bool bResult);
 	//state component-> take damage ¿¡¼­ broadcast µÊ
 	FOnHpIsZero OnHPIsZeroDelegate;
 	//state component-> take damage ¿¡¼­ broadcast µÊ
@@ -63,7 +65,9 @@ protected:
 	
 	void initComponents();
 	void loadAssets();
-	void playGunSFX();
+	void playSFXGun();
+	
+	
 	//init ai perception component
 	//void setupPerception();
 
@@ -72,9 +76,13 @@ protected:
 		USkeletalMeshComponent* WeaponMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-		UAudioComponent* FireSound1;
+		UAudioComponent* SFX_Fire1;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-		UAudioComponent* FireSound2;
+		UAudioComponent* SFX_Fire2;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SFX")
+		UAudioComponent* SFX_Foot_L;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SFX")
+		UAudioComponent* SFX_Foot_R;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 		UComponent_Mag* MagComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
