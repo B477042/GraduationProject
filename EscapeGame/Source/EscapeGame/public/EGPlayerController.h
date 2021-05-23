@@ -32,9 +32,7 @@ public:
 	void ChangeInputMode(bool bGameMode = true);
 
 	//UFUNCTION(BlueprintCallable)
-	void OnGamePaused();
-	void OnEnterPressed();
-	void OnKillMode();
+
 
 	
 
@@ -61,6 +59,13 @@ public:
 
 	void ShowTutorialMessage(uint8 TutorialMessage);
 	void CloseTutorialMessage();
+private:
+
+	void OnGamePaused();
+	void OnEnterPressed();
+	void OnKillMode();
+
+
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UGameWidget>HUDWidgetClass;
