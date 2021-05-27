@@ -93,7 +93,7 @@ void AEGPlayerController::BeginPlay()
 void AEGPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
-	InputComponent->BindAction(TEXT("Pause"), EInputEvent::IE_Pressed, this, &AEGPlayerController::OnGamePaused);
+	InputComponent->BindAction(TEXT("Pause"), EInputEvent::IE_Pressed, this, &AEGPlayerController::OnEscPressed);
 	InputComponent->BindAction(TEXT("KillAll"), EInputEvent::IE_Pressed, this, &AEGPlayerController::OnKillMode);
 
 }
@@ -141,11 +141,26 @@ void AEGPlayerController::ChangeInputMode(bool bGameMode)
 
 }
 
-void AEGPlayerController::OnGamePaused()
+
+
+/*
+1. Tutorial UI가 띄워져있으면 UI를 꺼주고 끝
+2. Turorial UI가 꺼져있고 게임이 진행 중이면 Pause 메뉴 출력
+3. Tutorial UI가 꺼져있고 게임이 중단 됐으면 재개
+
+
+*/
+void AEGPlayerController::OnEscPressed()
 {
 	
+	//Tutorial UI 닫기
+	if (TutorialUI->IsInViewport())
+	{
+		CloseTutorialMessage();
+	}
+
 	//Pasue 호출하기
-	if (!GetWorld()->IsPaused())
+	else if (!GetWorld()->IsPaused())
 	{
 		//EGLOG(Warning, TEXT("TIMEEE"));
 		if(!PauseUI)
@@ -162,8 +177,6 @@ void AEGPlayerController::OnGamePaused()
 	//Toggle하여 닫기
 	else
 	{
-
-		
 		ChangeInputMode(true);
 		//bIsPauseCalled = false;
 		SetPause(false);
@@ -171,11 +184,6 @@ void AEGPlayerController::OnGamePaused()
 		PauseUI->RemoveFromParent();
 
 	}
-
-}
-
-void AEGPlayerController::OnEnterPressed()
-{
 
 }
 

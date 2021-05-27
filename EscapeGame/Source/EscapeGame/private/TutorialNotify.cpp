@@ -60,9 +60,10 @@ ATutorialNotify::ATutorialNotify()
 	{ENotifyType::E_Boss,TEXT("Boss")},
 	{ENotifyType::E_Guard,TEXT("Guard")},
 	{ENotifyType::E_ShutterTrap,TEXT("E_ShutterTrap")}
-
 	};
-	BoxTrigger->SetBoxExtent(FVector(194.383270, 200.163177,  152.044571));
+
+
+	BoxTrigger->SetBoxExtent(FVector(140.924042, 160.456924, 129.459534));
 
 }
 

@@ -18,7 +18,7 @@ void UTutorialWidget::NativeConstruct()
 	Img_Gif= Cast<UImage>(GetWidgetFromName(TEXT("ImageSpace")));
 	Btn_Close = Cast<UButton>(GetWidgetFromName(TEXT("Button_Close")));
 
-	Btn_Close->OnClicked.AddDynamic(this, &UTutorialWidget::OnButtonClicked);
+	//Btn_Close->OnClicked.AddDynamic(this, &UTutorialWidget::OnButtonClicked);
 
 }
 
@@ -59,6 +59,7 @@ void UTutorialWidget::ReceiveMessage( FText  NotifyTittle,  FText  Describe, FSo
 	Txt_Describe->SetText(Describe);
 
 }
+
 void UTutorialWidget::OnButtonClicked()
 {
 	if (IsInViewport())
@@ -67,6 +68,8 @@ void UTutorialWidget::OnButtonClicked()
 	if (controller)
 	{
 		controller->ChangeInputMode(true);
+		controller->bShowMouseCursor = false;
+
 	}
 
 }

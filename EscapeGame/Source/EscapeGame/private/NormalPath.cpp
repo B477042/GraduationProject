@@ -95,8 +95,8 @@ ANormalPath::ANormalPath()
 	LampLight->SetInnerConeAngle(21.464767f);
 	LampLight->SetOuterConeAngle(28.952377f);
 
-	//빠른 랜더링을 위해 Light를 Static으로
-	LampLight->SetMobility(EComponentMobility::Movable);
+	
+	LampLight->SetMobility(EComponentMobility::Stationary);
 
 
 	//UPROPERTY 계층구조 만들기

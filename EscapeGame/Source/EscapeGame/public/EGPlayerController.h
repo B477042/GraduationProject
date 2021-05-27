@@ -61,8 +61,8 @@ public:
 	void CloseTutorialMessage();
 private:
 
-	void OnGamePaused();
-	void OnEnterPressed();
+	void OnEscPressed();
+	
 	void OnKillMode();
 
 

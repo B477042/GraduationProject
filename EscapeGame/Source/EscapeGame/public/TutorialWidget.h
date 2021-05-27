@@ -19,7 +19,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ReceiveMessage( FText NotifyTittle,  FText Describe,FSoftObjectPath ObjectPath);
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		void OnButtonClicked();
 protected:
 	void AsyncImageLoad();
