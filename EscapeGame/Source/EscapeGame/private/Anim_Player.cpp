@@ -45,7 +45,7 @@ UAnim_Player::UAnim_Player()
 		SFX_Laugh->bAutoActivate = false;
 	}
 
-	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Death(TEXT("SoundCue'/Game/ParagonKwang/Characters/Heroes/Kwang/Sounds/SoundCues/Kwang_Death.Kwang_Death'"));
+	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Death(TEXT("SoundCue'/Game/ParagonKwang/Characters/Heroes/Kwang/Sounds/SoundCues/Kwang_Effort_Death.Kwang_Effort_Death'"));
 	if (SC_Death.Succeeded())
 	{
 		SFX_Death->SetSound(SC_Death.Object);

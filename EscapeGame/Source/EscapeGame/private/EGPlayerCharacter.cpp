@@ -351,7 +351,7 @@ void AEGPlayerCharacter::StartRunning()
 	if (Stat->CanUseStamina())
 	{
 		Stat->SetStaminaUsing(true);
-		GetCharacterMovement()->MaxWalkSpeed = 2000.0f;
+		GetCharacterMovement()->MaxWalkSpeed = 1000.0f;
 	}
 
 

@@ -40,10 +40,10 @@ AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
 	//	AiConfigSight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("AIConfigSight"));
 	//WeaponMesh->SetupAttachment(GetMesh(), TEXT("GunPos"));
 	
-		SFX_Fire1->AttachTo(WeaponMesh);
-		SFX_Fire2->AttachTo(WeaponMesh);
-		SFX_Foot_L->AttachTo(RootComponent);
-		SFX_Foot_R->AttachTo(RootComponent);
+		SFX_Fire1->AttachToComponent(WeaponMesh,FAttachmentTransformRules::KeepRelativeTransform);
+		SFX_Fire2->AttachToComponent(WeaponMesh, FAttachmentTransformRules::KeepRelativeTransform);
+		SFX_Foot_L->AttachToComponent(WeaponMesh, FAttachmentTransformRules::KeepRelativeTransform);
+		SFX_Foot_R->AttachToComponent(WeaponMesh, FAttachmentTransformRules::KeepRelativeTransform);
 	float Pitch = 0.0f, Yaw = 0.0f, Roll = 0.0f;
 	float X = 0.0f, Y = 0.0f, Z = 0.0f;
 

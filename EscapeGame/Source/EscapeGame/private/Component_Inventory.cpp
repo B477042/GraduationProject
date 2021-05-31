@@ -12,9 +12,6 @@ UComponent_Inventory::UComponent_Inventory()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
 
-
-	//Tag = "Item";
-	// ...
 }
 
 
@@ -48,50 +45,28 @@ void UComponent_Inventory::TickComponent(float DeltaTime, ELevelTick TickType, F
 */
 bool UComponent_Inventory::AddItem(AItemActor * AddItem, int Amount)
 {
-
-
 	if (!AddItem)return false;
-
-	//EGLOG(Warning, TEXT("input Item Tag Name : %s"), *AddItem->GetTag().ToString());
 	//만약 이 아이템이 이미 가지고 있는 것이라면
 	if (Items.Contains(AddItem->GetTag()))
 	{
 		 Items[AddItem->GetTag()].AddItem(Amount);
-
-		//EGLOG(Warning, TEXT("Current Amount : %d"), tempData.GetAmountItems());
-
 		return true;
 	}
 
 	//처음 생성할 때
 	else
 	{
-		
 		FItemDataInfo tempData ;
 		tempData.SetItemInfo(AddItem, Amount);
-		//EGLOG(Warning, TEXT("Item Tag Name : %s"), *tempData.GetItem()->GetTag().ToString());
 		Items.Add(tempData.GetItem()->GetTag(), tempData);
-		
-		////widget에서 inventory를 호출할 수 있게 연결한다
-		////연결되있다면 그만둔다
-		//auto tempChara = Cast<ACharacter>(GetOwner());
-		//if (!tempChara)return true;
-		//auto tempCon = Cast<AEGPlayerController>(tempChara->Controller);
-		//if (!tempCon)return true;
-		//tempCon->GetHUDWidget()->BindCharacterInven(this);
-
-		//EGLOG(Warning, TEXT("Current Amount : %d"), tempData.GetAmountItems());
 		return true;
 	}
 	return false;
-
-
 }
 //아이템을 사용합니다. 성공적으로 사용했다면 사용자의 위치에 이펙트를 뿌려줍니다.
 bool UComponent_Inventory::UseItem(FName ItemName, ACharacter* UserActor)
 {
-	EGLOG(Warning, TEXT("Pressed"));
-	if (!Items.Contains(ItemName)) { EGLOG(Warning, TEXT("Not contain Such Item")); return false; }
+	if (!Items.Contains(ItemName)) { EGLOG(Warning, TEXT("There is no such item")); return false; }
 	//아이템을 사용합니다.
 	//아이템의 갯수가 0 이하가 되면 이 아이템은 inventory에서 사라져야 됩니다.
 	if (!Items[ItemName].UseItem(UserActor))
@@ -122,7 +97,6 @@ bool UComponent_Inventory::LoadGameData(AItemActor * newItem, int Amount)
 	/*
 		1. 받아온 Item Actor의 콜린전 반응을 끄고 게임에서 숨긴다
 		2. 이 Item Actor의 Tag로 인벤토리에 넣어준다.
-		3. 됐으면 리턴
 	*/
 	newItem->SetItemDisable();
 	bResult = AddItem(newItem, Amount);
@@ -130,15 +104,3 @@ bool UComponent_Inventory::LoadGameData(AItemActor * newItem, int Amount)
 
 	return bResult;
 }
-
-////nullptr 체크 꼭 해야됨. 아이템이 가지고 있는 델리게이틀 호출해서 엮어줄 것
-//FOnItemChanged UComponent_Inventory::GetItemChangeDelegate(FName ItemName)
-//{
-//
-//	if(!Items.Contains(ItemName))
-//	return ;
-//
-//	return Items[ItemName].OnItemChanged;
-//}
-
-

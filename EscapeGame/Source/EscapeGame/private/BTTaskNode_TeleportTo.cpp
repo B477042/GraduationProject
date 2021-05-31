@@ -24,7 +24,7 @@ EBTNodeResult::Type UBTTaskNode_TeleportTo::ExecuteTask(UBehaviorTreeComponent &
 	}
 
 	auto newPos = CalcTeleportPos(AiCon->GetBlackboardComponent()->GetValueAsVector(TEXT("TargetPos")));
-	if (CanTeleportThere(newPos))
+	if (CanTeleportThere(newPos,Chara))
 	{
 		
 		Chara->TeleportTo(newPos, FRotator::ZeroRotator);
@@ -57,13 +57,15 @@ FVector UBTTaskNode_TeleportTo::CalcTeleportPos(const FVector & TargetPos)
 
 
 //Line Trace로 바닥이 있는지 검사한다. 바닥이 없으면 그곳은 갈수 없는 곳이다.
-bool UBTTaskNode_TeleportTo::CanTeleportThere(const FVector & TeleportPos)
+bool UBTTaskNode_TeleportTo::CanTeleportThere(const FVector & TeleportPos, const AActor* IgnoreActor)
 {
+	if (!IgnoreActor)return false;
+
 	FHitResult hitResult;
 	//FHitResult hitResult;
-	FCollisionQueryParams param(NAME_None, false, this);
-
-
+	FCollisionQueryParams param(NAME_None, false, IgnoreActor);
+	
+	//FCollisionQueryParams
 	bool Result = false;
 
 

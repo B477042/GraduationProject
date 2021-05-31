@@ -200,6 +200,7 @@ void AGruntCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 	if (!LoadData)
 	{
 		EGLOG(Error, TEXT("LaodData FAILED"));
+		Destroy(this);
 		return;
 	}
 

@@ -23,7 +23,7 @@ protected:
 	//얼마나 텔레포트 할지 길이
 	UPROPERTY(BlueprintReadWrite, Category = "Custom", meta = (AllowPrivateAccess = "true"))
 	float TeleportDistance;
-	bool CanTeleportThere(const FVector & TeleportPos);
+	bool CanTeleportThere(const FVector & TeleportPos,const AActor* IgnoreActor);
 
 
 };

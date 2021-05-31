@@ -43,27 +43,6 @@ void UComponent_SkillContainer::TickComponent(float DeltaTime, ELevelTick TickTy
 	// ...
 }
 
-//template <typename T>
-//void UComponent_SkillContainer::AddSkillObj(T * Input, int num)
-//{
-//	auto typeTest = Cast<AActor>(Input);
-//
-//	if (!typeTest)
-//	{
-//		EGLOG(Warning, TEXT("typeTest Failed"));
-//		return;
-//	}
-//
-//	for (int i = 0; i < num; i++)
-//	{
-//		SkillObjects.Emplace(GetWorld()->SpawnActor<T>());
-//		
-//	}
-//
-//	
-//	Index = 0;
-//	CurrentIndex = SkillObjects[Index];
-//}
 
 void UComponent_SkillContainer::AddSkillObj(TWeakObjectPtr<ASkillActor> Input)
 {
@@ -75,10 +54,6 @@ void UComponent_SkillContainer::AddSkillObj(TWeakObjectPtr<ASkillActor> Input)
 	
 	SkillObjects[Index] = Input.Get();
 
-	/*Index++;
-
-	if (Index >= ArraySize)
-		Index = 0;*/
 	revolve();
 
 }
@@ -98,11 +73,6 @@ void UComponent_SkillContainer::revolve()
 
 	if(SkillObjects[ArraySize-1]!=nullptr)
 		CurrentIndex = SkillObjects[Index];
-	
-	//CurrentIndex = SkillObjects[Index];
-	//EGLOG(Error, TEXT("Index : %d"), Index);
-	
-//	EGLOG(Warning, TEXT("CIndex Name : %s"), *CurrentIndex->GetName());
 	
 }
 

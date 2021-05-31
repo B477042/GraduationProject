@@ -41,7 +41,7 @@ void AItem_CardKey::PostInitializeComponents()
 void AItem_CardKey::BePickedUp(ACharacter * OtherActor)
 {
 	Super::BePickedUp(OtherActor);
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Get Card Key"));
+//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Get Card Key"));
 
 	Effect->Deactivate();
 	SetActorHiddenInGame(true);

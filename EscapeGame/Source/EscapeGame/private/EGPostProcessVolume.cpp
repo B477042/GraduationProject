@@ -19,16 +19,21 @@ AEGPostProcessVolume::AEGPostProcessVolume()
 	Settings.bOverride_GrainJitter = true;
 	Settings.bOverride_VignetteIntensity = true;
 	Settings.bOverride_BloomIntensity = true;
+	Settings.bOverride_ScreenSpaceReflectionMaxRoughness = true;
+	Settings.bOverride_ScreenSpaceReflectionIntensity = true;
+	
 
 
 	
 	//Bloom Intensity
-	Settings.BloomIntensity = 1.2f;
+	Settings.BloomIntensity = 1.961905f;
 	
-	//
-	//Settings.GrainJitter = 0.8f;
-	//Settings.GrainIntensity = 0.5f;
-	//Settings.VignetteIntensity = 0.4f;
+	//auto exposure
+	Settings.AutoExposureBias = 1.5f;
+
+	//scrren space reflections
+	Settings.ScreenSpaceReflectionQuality = 80.952385f;
+	Settings.ScreenSpaceReflectionMaxRoughness = 0.613429f;
 
 }
 

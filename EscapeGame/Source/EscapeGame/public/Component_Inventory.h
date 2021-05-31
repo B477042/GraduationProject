@@ -11,7 +11,7 @@
 #include "Components/ActorComponent.h"
 #include "Component_Inventory.generated.h"
 
-//싱크는 BP에서 맞춘다
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnItemChanged);
 
 
@@ -26,17 +26,18 @@ struct  FItemDataInfo
 
 	UPROPERTY(BlueprintAssignable)
 	FOnItemChanged OnItemChanged;
-	//아이템을 사용한다.사용한 후 0이하가 되면 인벤토리에서 사라져야된다.
-	//item의 갯수가 0이 된다면 false를 리턴한다
+
+	//If the number of items becomes zero after using them,
+	// remove the item from the inventory and return false.
 	bool UseItem(ACharacter* UserActor)
 	{
-		//에러 체크용
+		
 		if (n_item <= 0)return false;
-		//아이템을 사용합니다
+		//Use Item
 		n_item --;
 		OnItemChanged.Broadcast();
 
-		//사용후 0 이하가 된다면 사용 후 false를 리턴합니다
+		//If the number is less than zero after use,retun false.
 		if (n_item <= 0)
 		{
 			Item->UseMe(UserActor);
@@ -46,12 +47,14 @@ struct  FItemDataInfo
 		Item->UseMe(UserActor);
 		return true;
 	}
-	//아이템의 양이 반환된다
+
+	//return number of item
 	int GetAmountItems() { return n_item; }
-	//양이 추가된다. 음수나 0이라면 반환
+
+	//Increase the amount by num
 	void AddItem(int num)
 	{
-		//EGLOG(Error, TEXT("Add : %d"), num);
+		
 		if (num <= 0)return;
 
 		OnItemChanged.Broadcast();
@@ -59,19 +62,23 @@ struct  FItemDataInfo
 		n_item +=  num;
 		
 	}
-	TWeakObjectPtr<AItemActor> GetItem() { return Item; }
-	void SetItemInfo( AItemActor* Other, int num)
+
+	void SetItemInfo(AItemActor* Other, int num)
 	{
 		Item = Other;
 		if (num >= 0)n_item = num;
+	
 	}
+
+	TWeakObjectPtr<AItemActor> GetItem() { return Item; }
+	
 private:
-	//이 아이템의 종류
+	//Sort of this item
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TWeakObjectPtr<AItemActor> Item;
-	//이 아이템의 갯수
+	
 	UPROPERTY(Transient, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	int n_item;
+		int n_item;
 	
 
 };
@@ -90,7 +97,7 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
+	// Called every frame. NOT USED
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	//Add Item Actor To Inventory
@@ -104,17 +111,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Custom")
 		int GetAmountItem(FName Name);
-	/*UFUNCTION()
-		FOnItemChanged GetItemChangeDelegate(FName ItemName);*/
+
 
 	bool LoadGameData(AItemActor* newItem, int Amount);
 
 private:
-	//FName으로 아이템 이름을 받고 리턴해서 사용한다
+	
 	UPROPERTY(EditAnywhere, Category = "Items")
 		TMap<FName,  FItemDataInfo> Items;
-	//
-	/*UPROPERTY(VisibleAnywhere, Category = "Capacity")
-		int32 CurrnetCapacity;*/
+	
+	
 
 };
