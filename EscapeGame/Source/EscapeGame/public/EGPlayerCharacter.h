@@ -12,6 +12,7 @@
 #include "Component_SelfDamage.h"
 #include "Component_Inventory.h"
 #include "SkillContainer_PlayerHitEffect.h"
+#include "PaperSpriteComponent.h"
 #include "EGPlayerCharacter.generated.h"
 
 //DECLARE_DELEGATE(FOnKeyPressed);
@@ -117,10 +118,14 @@ public:
 		UAudioComponent* AttackSound;
 	UPROPERTY(VisibleAnywhere, meta = (AllowClasses))
 		USkillContainer_PlayerHitEffect* Container_Hit;
-
-
+	
 	UPROPERTY(VisibleAnywhere)
 		UParticleSystemComponent * SwordEffect;
+	/*미니맵에 표시되는 Marker용 */
+	UPROPERTY(BlueprintReadOnly, EditInstanceOnly, Category = "UI", meta = (AllowPrivateAccess = true))
+	UPaperSpriteComponent* PaperMarker;
+
+	
 private:
 	void InitComponents();
 	void LoadAssets();
@@ -189,7 +194,7 @@ private:
 	float maxMapArmLength;
 	bool bSetMapArm;
 
-	float CurrenVelocity;
+	float CurrentVelocity;
 
 	
 	//private PROPERTY

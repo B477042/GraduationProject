@@ -3,16 +3,28 @@
 #include "EnemyCharacter.h"
 #include "EGGameState.h"
 #include "EGSaveGame.h"
-
+#include "PaperSprite.h"
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	//마커 초기값 설정
+	PaperMarker = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("PaperMarker"));
+	PaperMarker->SetupAttachment(RootComponent);
+	static ConstructorHelpers::FObjectFinder<UPaperSprite>T_Sprite_Mark(TEXT("PaperSprite'/Game/MyFolder/MiniMap/Dot/EnemeyDot_Sprite.EnemeyDot_Sprite'"));
+	if (T_Sprite_Mark.Succeeded())
+	{
+		PaperMarker->SetSprite(Cast<UPaperSprite>(T_Sprite_Mark.Object));
+	}
+	PaperMarker->SetRelativeLocation(FVector(0, 0, 200));
+	PaperMarker->SetRelativeRotation(FRotator(0, 0, 270));
+	PaperMarker->SetRelativeScale3D(FVector(2.5f, 0, 2.5f));
 
-	//Stat = CreateDefaultSubobject<UStatComponent_Enemy>(TEXT("STAT"));
-	//if(Stat==nullptr)EGLOG(Warning,TEXT("Enemy's Stat is null"));
+	PaperMarker->bOwnerNoSee = true;
+
+
 	
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = false;

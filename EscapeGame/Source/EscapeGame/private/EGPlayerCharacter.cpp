@@ -17,7 +17,7 @@
 #include "EGGameState.h"
 #include "Item_CardKey.h"
 #include "EGPostProcessVolume.h"
-
+#include "PaperSprite.h"
 
 
 
@@ -41,7 +41,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	bIsDebugMode = false;
 
 	MoveDirection = FVector::ZeroVector;
-	CurrenVelocity = 78.f;
+	CurrentVelocity = 78.f;
 	
 }
 
@@ -519,18 +519,18 @@ void AEGPlayerCharacter::InitComponents()
 	WeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("WeaponCollision"));
 	Container_Hit=CreateDefaultSubobject < USkillContainer_PlayerHitEffect>(TEXT("HitEffects"));
 	AttackSound = CreateDefaultSubobject<UAudioComponent>(TEXT("AttackSound"));
+	PaperMarker = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("PaperMarker"));
+
 	//Components Tree
-	
-	
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	Camera->SetupAttachment(SpringArm);
 	MiniMapArm->SetupAttachment(GetCapsuleComponent());
 	MapRenderer->SetupAttachment(MiniMapArm);
 	WeaponCollision->SetupAttachment(SwordEffect);
 	AttackSound->SetupAttachment(RootComponent);
-	
+	PaperMarker->SetupAttachment(RootComponent);
 
-
+	//미니맵 및 카메라 관련 초기값 설정
 
 	minMapArmLength = 320.0f;
 	maxMapArmLength = 1000.0f;
@@ -540,21 +540,31 @@ void AEGPlayerCharacter::InitComponents()
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 	SpringArm->TargetArmLength = 500.0f;
 	//SpringArm->SetRelativeRotation(FRotator(-15.0f, 0.0f, 0.0f));
-
 	MiniMapArm->TargetArmLength = 0.0f;
 	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, 1000.0f));
 	MiniMapArm->SetRelativeRotation(FRotator(-90.0f, 0.0f,0.0f));
 
+	//마커 초기값 설정
+	PaperMarker->SetRelativeLocation(FVector(0, 0, 200));
+	PaperMarker->SetRelativeRotation(FRotator(0,0,270));
+	PaperMarker->SetRelativeScale3D(FVector(2.5f, 0, 2.5f));
+
+	PaperMarker->bOwnerNoSee = true;
+	
+	//무기 설정
 	WeaponCollision->SetRelativeLocation(FVector(X = 0.976299f, Y = 1.777855f, Z = 66.010002f));
 	WeaponCollision->SetRelativeRotation(FRotator(Pitch = -1.184324, Yaw = 155.845551, Roll = 0.682941));
 	WeaponCollision->SetBoxExtent(FVector(X = 9.093354, Y = 6.199887, Z = 63.501183));
 	WeaponCollision->SetCollisionProfileName(TEXT("NoCollision"));
+
+	//스프링암 값 설정
 	SetupSpringArm();
 
-
-	FPostProcessSettings& PostProcessSettings = Camera->PostProcessSettings;
-
 	
+	////포스트 프로세스 값 지정
+	//FPostProcessSettings& PostProcessSettings = Camera->PostProcessSettings;
+
+	//
 
 
 
@@ -599,6 +609,12 @@ void AEGPlayerCharacter::LoadAssets()
 	{
 		AttackSound->SetSound(SC_Attack.Object);
 		AttackSound->bAutoActivate = false;
+	}
+	
+	static ConstructorHelpers::FObjectFinder<UPaperSprite>T_Sprite_Mark(TEXT("PaperSprite'/Game/MyFolder/MiniMap/Dot/PlayerDot_Sprite.PlayerDot_Sprite'"));
+	if(T_Sprite_Mark.Succeeded())
+	{
+		PaperMarker->SetSprite(Cast<UPaperSprite>(T_Sprite_Mark.Object));
 	}
 
 }
@@ -738,7 +754,7 @@ void AEGPlayerCharacter::Move(float DeltaTime)
 	}
 
 	MoveDirection.Normalize();
-	AddMovementInput(MoveDirection, CurrenVelocity * DeltaTime);
+	AddMovementInput(MoveDirection, CurrentVelocity * DeltaTime);
 	MoveDirection.Set(0.0f, 0.0f, 0.0f);
 }
 

@@ -18,12 +18,16 @@ UMiniMapRenderComponent::UMiniMapRenderComponent()
 		this->TextureTarget = Cast<UTextureRenderTarget2D>(T_TextureTarget.Object);
 
 	}
-
+	ProjectionType = ECameraProjectionMode::Orthographic;
 	
 	this->CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
 	bCaptureEveryFrame = true;
 	//TextureTarget->AdjustBrightness = 255.0f;
 
+	//Don't Caputre Skeletal Meshes
+	ShowFlags.SkeletalMeshes = false;
+	ShowFlags.EyeAdaptation = false;
+ 
 	//���� ���߿� ��������
 	// ...
 }
