@@ -2,6 +2,7 @@
 
 #include "MiniMapRenderComponent.h"
 #include"Engine/TextureRenderTarget2D.h"
+#include "Materials/MaterialInstance.h"
 #include"GameSetting/public/EGCharacterSetting.h"
 
 // Sets default values for this component's properties
@@ -28,8 +29,14 @@ UMiniMapRenderComponent::UMiniMapRenderComponent()
 	ShowFlags.SkeletalMeshes = false;
 	ShowFlags.EyeAdaptation = false;
  
-	//���� ���߿� ��������
-	// ...
+	//미니맵 용 포스트 프로세스 인스턴스 불러오기
+	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Post(TEXT("MaterialInstanceConstant'/Game/MyFolder/MiniMap/MI_Minimap_OutLine.MI_Minimap_OutLine'"));
+	if(MI_Post.Succeeded())
+	{
+		FWeightedBlendable Weighted;
+		Weighted.Object = Cast<UMaterialInstance>(MI_Post.Object);
+		PostProcessSettings.WeightedBlendables.Array.Add(Weighted);
+	}
 }
 
 
