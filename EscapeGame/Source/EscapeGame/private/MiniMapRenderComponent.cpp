@@ -29,13 +29,15 @@ UMiniMapRenderComponent::UMiniMapRenderComponent()
 	ShowFlags.SkeletalMeshes = false;
 	ShowFlags.EyeAdaptation = false;
  
-	//미니맵 용 포스트 프로세스 인스턴스 불러오기
+	//미니맵 용 포스트 프로세스 인스턴스 불러오기 및 포스트 프로세스 설정
 	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Post(TEXT("MaterialInstanceConstant'/Game/MyFolder/MiniMap/MI_Minimap_OutLine.MI_Minimap_OutLine'"));
 	if(MI_Post.Succeeded())
 	{
 		FWeightedBlendable Weighted;
 		Weighted.Object = Cast<UMaterialInstance>(MI_Post.Object);
+		Weighted.Weight = 1;
 		PostProcessSettings.WeightedBlendables.Array.Add(Weighted);
+		
 	}
 }
 
