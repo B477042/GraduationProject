@@ -130,6 +130,14 @@ void AProjectile::OnSomethingHit(UPrimitiveComponent * OverlappedComp, AActor * 
 
 void AProjectile::Reflected()
 {
+	//Turn 180 Degrees
+	FRotator CurrentRotation = GetActorRotation();
+	FRotator NewRotation = CurrentRotation+FRotator(0,180,0);
+	SetActorRotation(NewRotation);
+	//Deactive VFX
+	VFX_Main->Deactivate();
+	VFX_Hit->Deactivate();
+	
 	
 
 }

@@ -51,7 +51,7 @@ void AEGPlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 
 
-	loadHitEffects();
+	LoadHitEffects();
 	EGLOG(Error, TEXT("Player Begin Play"));
 //================================================
 //||			Stat 관련 Delegate 등록			||
@@ -106,7 +106,7 @@ void AEGPlayerCharacter::BeginPlay()
 		EGLOG(Error, TEXT("OnLoadGamePhase Delegate Broadcasted"));
 		GameInstance->OnLoadGamePhaseDelegate.Broadcast(LoadInstance);
 		
-		//loadGameData(LoadInstance);
+		//LoadGameData(LoadInstance);
 		GameInstance->EGameState = EEGGameState::E_InPlay;
 
 	}
@@ -120,7 +120,7 @@ void AEGPlayerCharacter::BeginPlay()
 			return;
 		}
 		//Player의  스텟들만 불러온다
-		onNextStage(LoadInstance);
+		OnNextStage(LoadInstance);
 
 		//Game State 업데이트
 		GameInstance->EGameState = EEGGameState::E_InPlay;
@@ -203,7 +203,7 @@ void AEGPlayerCharacter::PostInitializeComponents()
 		return;
 	}
 
-	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEGPlayerCharacter::loadGameData);
+	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEGPlayerCharacter::LoadGameData);
 
 	
 	//Stat->SetSpeedLimits( MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
@@ -225,35 +225,7 @@ float AEGPlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent con
 		return 0.0f;
 	}*/
 
-	//투사체가 맞다면 이벤트
-	//auto projectile = Cast<AProjectile>(DamageCauser);
-	//if (projectile)
-	//{
-	//	//투사체 반사
-	//	if (bIsGuarding)
-	//	{
-
-
-	//		//반사각도
-	//		float randAngle = FMath::RandRange(-1.0f, 1.0f);
-
-	//		projectile->ReadyToFire(projectile->GetFireDir()*randAngle, projectile->GetActorLocation(), projectile->GetActorRotation());
-	//		projectile->SetCollision("PlayerWeapon");
-	//		projectile->TripleDamage();
-	//		projectile->ActivateMainEffect();
-
-	//		EGLOG(Error, TEXT("Ting"));
-	//		
-
-
-	//	}
-
-	//	//가드 하지 않아도 일어나는 공통 처리
-
-	//	//projectile->bis
-	//return FinalDamage;
-	//}
-	//
+	
 
 
 
@@ -652,13 +624,7 @@ void AEGPlayerCharacter::UpDown( float  NewAxisValue)
 {
  
 	if (NewAxisValue == 0.0f)return;
-		//굳이 안 움직여도 확인할 수 있다.
-		/*if (GetCharacterMovement()->IsMovingOnGround())
-			EGLOG(Warning, TEXT("I'm moving on ground"));
-
-		if (GetCharacterMovement()->IsFalling())
-		EGLOG(Warning, TEXT("I'm falling"));
-		*/
+	 
 		//AddMovementInput(GetActorForwardVector(), NewAxisValue);
 		//진행방향으로 캐릭터를 돌리는 방식
 		//AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X), NewAxisValue);
@@ -678,12 +644,7 @@ void AEGPlayerCharacter::LeftRight( float NewAxisValue)
 {
 	
 	if (NewAxisValue == 0.0f)return;
-
-	//const FRotator Rotation = GetControlRotation();
-	
-
-
-	//AddMovementInput(GetActorRightVector(), NewAxisValue);
+ 
 	//진행방향으로 캐릭터를 돌리는 방식
 	//AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y), NewAxisValue);
 	//EGLOG(Warning, TEXT("Left or Right Pressed"));
@@ -758,6 +719,28 @@ void AEGPlayerCharacter::Move(float DeltaTime)
 	MoveDirection.Set(0.0f, 0.0f, 0.0f);
 }
 
+float AEGPlayerCharacter::ReflactProjectiles(AActor* DamageCauser, float FinalDamage)
+{
+
+	//Projectile Type Only
+	const auto Projectile = Cast<AProjectile>(DamageCauser);
+	if (Projectile)
+	{
+		//투사체 반사
+		if (bIsGuarding)
+		{
+
+			Projectile->Reflected();
+			
+		}
+
+	
+
+	}
+	return FinalDamage;
+	
+}
+
 //Player가 아닌 모든 것에 Take Damage를 일으킵니다
 void AEGPlayerCharacter::OnWeaponBeginOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
@@ -812,7 +795,7 @@ void AEGPlayerCharacter::ComboAttackEnd()
 }
 
 //미사용, 데미지를 준 엑터와 플레이어의 각도 계산
-FName AEGPlayerCharacter::calcHitDirection(AActor * DamageCauser)
+FName AEGPlayerCharacter::CalcHitDirection(AActor * DamageCauser)
 {
 	FName Result;
 
@@ -845,7 +828,7 @@ void AEGPlayerCharacter::DamagedPostEffect()
 }
 
 // 스킬 이펙트를 생성하고 스킬 컨테이너 컴포넌트에 넣어줍니다.
-void AEGPlayerCharacter::loadHitEffects()
+void AEGPlayerCharacter::LoadHitEffects()
 {
 	if (!GetWorld()) { EGLOG(Warning, TEXT("No0 world")); return; }
 	int cap = Container_Hit->GetCapacity();
@@ -856,7 +839,7 @@ void AEGPlayerCharacter::loadHitEffects()
 
 }
 
-void AEGPlayerCharacter::loadGameData(const UEGSaveGame* LoadInstance)
+void AEGPlayerCharacter::LoadGameData(const UEGSaveGame* LoadInstance)
 {
 	if (!LoadInstance)
 	{
@@ -905,7 +888,7 @@ void AEGPlayerCharacter::loadGameData(const UEGSaveGame* LoadInstance)
 
 }
 
-void AEGPlayerCharacter::onNextStage(const UEGSaveGame * LoadInstance)
+void AEGPlayerCharacter::OnNextStage(const UEGSaveGame * LoadInstance)
 {
 	if (!LoadInstance)
 	{

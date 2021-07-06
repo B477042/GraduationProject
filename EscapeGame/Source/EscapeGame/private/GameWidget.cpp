@@ -143,15 +143,15 @@ void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 void UGameWidget::BindCharacterInven(UComponent_Inventory * newInven)
 {
 	if (newInven == nullptr) {
-		EGLOG(Error, TEXT("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"));
+		EGLOG(Error, TEXT("Inputed Param is nullptr"));
 		return;
 	}
 	//¿ÃπÃ º≥¡§ µ∆¿∏∏È ∆®±‰¥Ÿ
 	if (CurrenPlayerInventory!=nullptr) {
-		EGLOG(Error, TEXT("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"));
+		EGLOG(Error, TEXT("Inven comp is already setted "));
 		return;
 	}
-	EGLOG(Warning, TEXT("Player Post init compo4*************************************ns"));
+	 
 	CurrenPlayerInventory = newInven;
 
 }

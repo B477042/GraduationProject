@@ -57,8 +57,10 @@ public:
 	 void ToggleMap();
 	 void PressGuard();
 	 void ReleaseGuard();
-	 
-	 
+
+	
+	 UStatComponent_Player* GetStatComponent();
+	 UComponent_Inventory* GetInventory();
 
 	 
 	 void ActiveThunder();
@@ -72,31 +74,13 @@ public:
 	 //Over 10 Damage -> Reacting
 	 UPROPERTY(BlueprintAssignable)
 	 FOnTakeHugeDamage OnTakeHugeDamageDelegate;
-	 
-	//=====================================================================
-	//Public Not UPROPERTY member 
+ 
 public:
 	float ArmLengthTo = 0.0f;
 	FRotator ArmRotationTo = FRotator::ZeroRotator;
 	float ArmLengthSpeed = 0.0f;
 	float ArmRotationSpeed = 0.0f;
 	
-	 UStatComponent_Player* GetStatComponent();
-	 UComponent_Inventory* GetInventory();
-
-	
-
-	//const AController* GetController();
-
-	 ////===============Static Vars
-	//// const static float MaxHP;
-	// const static float MaxWalkingSpeed;
-	// const static float MaxRunningSpeed;
-	// const static float MinWalkingSpeed;
-
-	//=====================================================================
-	// Public UPROPERTY Zone
-public:
 	UPROPERTY(VisibleAnywhere, Category = MainCam)
 		USpringArmComponent* SpringArm;
 	UPROPERTY(VisibleAnywhere, Category = MainCam)
@@ -129,6 +113,7 @@ public:
 private:
 	void InitComponents();
 	void LoadAssets();
+	void LoadHitEffects();
 	//void SetupMiniMap();
 	//=========================
 	//Camera Category Init Functions
@@ -151,16 +136,20 @@ private:
 
 	void Move(float DeltaTime);
 
-	void loadHitEffects();
+	/*
+	 * Reflact All Projectile Type Attack
+	 * 
+	 */
+	float ReflactProjectiles(AActor* DamageCauser, float FinalDamage);
 
-	UFUNCTION(BlueprintCallable)
-	void loadGameData(const class UEGSaveGame* LoadInstance);
-
-	void onNextStage(const class UEGSaveGame* LoadInstance);
+	void OnNextStage(const class UEGSaveGame* LoadInstance);
 
 	//현재 체력에 따라 카메라에 이펙트를 준다. HP가 변하면 업데이트가 되게끔
 	void DamagedPostEffect();
 
+
+	UFUNCTION(BlueprintCallable)
+	void LoadGameData(const class UEGSaveGame* LoadInstance);
 
 	UFUNCTION()
 		void OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
@@ -179,7 +168,7 @@ private:
 		void ComboAttackEnd();
 	//Return Name of Hit Direction
 	UFUNCTION(BlueprintCallable)
-		FName calcHitDirection(AActor* DamageCauser);
+		FName CalcHitDirection(AActor* DamageCauser);
 
 	
 
@@ -190,16 +179,13 @@ private:
 		void ChargeAttackEnd();*/
 
 //==================================================
+	private:
 	float minMapArmLength;
 	float maxMapArmLength;
 	bool bSetMapArm;
 
 	float CurrentVelocity;
-
-	
-	//private PROPERTY
-private:
-
+  
 	UPROPERTY(VisibleInstanceOnly,/*BlueprintReadOnly,*/ Category = Anim, Meta=(AllowPrivateAccess=true))
 		class UAnim_Player* Anim;
 	UPROPERTY(VisibleInstanceOnly, Category = "SkillActor", meta = (AllowPrivateAccess = "true"))
