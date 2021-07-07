@@ -60,8 +60,8 @@ private:
 
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
 	TWeakObjectPtr<ACharacter>OwnerChara;
-	/*UPROPERTY()
-		class UProgressBar* PB_HP;*/
+
+	
 	UPROPERTY()
 		class UProgressBar* PB_Stamina;
 	//Image Box of Player's Hp

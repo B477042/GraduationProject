@@ -1,6 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "GameWidget.h"
+
+#include <string>
+
 #include "Component_Inventory.h"
 #include"Components/ProgressBar.h"
 #include"Components/TextBlock.h"
@@ -37,6 +40,7 @@ void UGameWidget::NativeConstruct()
 	PlayerHP = 100.0f;
 	PlayerStamina = 100.0f;
 	HPAmount = 0;
+	
 }
 //연동된 character의 stat component에서 채력이 바뀔 때, 호출된다. 
 void UGameWidget::UpdateCharacterStat()
@@ -88,7 +92,26 @@ void UGameWidget::UpdateStamina()
 
 void UGameWidget::UpdateItemes(FName ItemName, int Amount)
 {
-	EGLOG(Error, TEXT("Updated Item : %s Amount : %d "),*ItemName.ToString(),Amount);
+	//Card Key Item 처리
+	if(ItemName ==AItem_CardKey::Tag)
+	{
+		N_CardKeyItems = Amount;
+		if(N_CardKeyItems<=0)
+		{
+			Img_Cardkey->SetBrushFromTexture(Img_Cardkeys[0]);
+		}
+		else
+		{
+			Img_Cardkey->SetBrushFromTexture(Img_Cardkeys[1]);
+		}
+		
+	}
+	//Recover Item 처리
+	else if (ItemName==AItem_Recover::Tag)
+	{
+		N_RecoveryItems = Amount;
+		RecoveryItemNum->SetText(FText::FromString(FString::FromInt(N_RecoveryItems)));
+	}
 
 	
 }

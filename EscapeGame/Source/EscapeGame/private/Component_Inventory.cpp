@@ -76,10 +76,15 @@ bool UComponent_Inventory::UseItem(FName ItemName, ACharacter* UserActor)
 	//아이템의 갯수가 0 이하가 되면 이 아이템은 inventory에서 사라져야 됩니다.
 	if (!Items[ItemName].UseItem(UserActor))
 	{
+		OnItemUpdated.Execute(ItemName, 0);
 		Items.Remove(ItemName);
 	}
-	int Amount = Items[ItemName].GetAmountItems();
-	OnItemUpdated.Execute(ItemName, Amount);
+	else
+	{
+		int Amount = Items[ItemName].GetAmountItems();
+		OnItemUpdated.Execute(ItemName, Amount);
+	}
+	
 	
 	return true;
 }
