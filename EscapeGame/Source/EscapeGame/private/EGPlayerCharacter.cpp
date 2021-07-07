@@ -18,7 +18,7 @@
 #include "Item_CardKey.h"
 #include "EGPostProcessVolume.h"
 #include "PaperSprite.h"
-
+#include "GameWidget.h"
 
 
 // Sets default values
@@ -53,6 +53,20 @@ void AEGPlayerCharacter::BeginPlay()
 
 	LoadHitEffects();
 	EGLOG(Error, TEXT("Player Begin Play"));
+	/*
+	 * Inventory 관련 Delegate 등록
+	 */
+	auto PlayerCon = Cast<AEGPlayerController>(Controller);
+	if(!PlayerCon)
+	{
+		EGLOG(Warning, TEXT("Casting Falied"));
+		return;
+		
+	}
+	//인벤토리의 델리게이트와 위젯 연동
+	Inventory->OnItemUpdated.BindUFunction (PlayerCon->GetHUDWidget(), FName("UpdateItemes"));
+	
+	
 //================================================
 //||			Stat 관련 Delegate 등록			||
 //================================================

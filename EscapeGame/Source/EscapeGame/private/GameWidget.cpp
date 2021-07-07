@@ -6,6 +6,8 @@
 #include"Components/TextBlock.h"
 #include "Math/Color.h"
 #include "Styling/SlateColor.h"
+#include "Item_CardKey.h"
+#include "Item_Recover.h"
 //#include"GameStat.h"
 
 //void UGameWidget::BindCharacterStat(UGameStat * NewCharacterStat)
@@ -27,6 +29,8 @@ void UGameWidget::NativeConstruct()
 	RecoveryItemNum = Cast<UTextBlock>(GetWidgetFromName(TEXT("RecoveryItemNum0")));
 	//Txt_TimerBlock=Cast<UTextBlock>(GetWidgetFromName(TEXT("TimerBlock")));
 
+	
+	
 	EGLOG(Error, TEXT("Test Widget"));
 	GameTimer = 60.0f;
 	RemainTime = GameTimer;
@@ -81,6 +85,14 @@ void UGameWidget::UpdateStamina()
 		PlayerStamina = CurrentCharacterStat->GetStamina();
 	}
 }
+
+void UGameWidget::UpdateItemes(FName ItemName, int Amount)
+{
+	EGLOG(Error, TEXT("Updated Item : %s Amount : %d "),*ItemName.ToString(),Amount);
+
+	
+}
+
 
 float UGameWidget::CheackTimeOut(float NewValue)
 {
@@ -147,12 +159,12 @@ void UGameWidget::BindCharacterInven(UComponent_Inventory * newInven)
 		return;
 	}
 	//¿ÃπÃ º≥¡§ µ∆¿∏∏È ∆®±‰¥Ÿ
-	if (CurrenPlayerInventory!=nullptr) {
+	if (CurrentPlayerInventory!=nullptr) {
 		EGLOG(Error, TEXT("Inven comp is already setted "));
 		return;
 	}
 	 
-	CurrenPlayerInventory = newInven;
+	CurrentPlayerInventory = newInven;
 
 }
 

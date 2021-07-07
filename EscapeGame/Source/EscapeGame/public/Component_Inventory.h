@@ -12,8 +12,8 @@
 #include "Component_Inventory.generated.h"
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnItemChanged);
-
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnItemChanged);
+DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnItemUpdated, FName, ItemName, int, Amount);
 
 
 
@@ -24,8 +24,8 @@ struct  FItemDataInfo
 	public:
 	FItemDataInfo() { Item = nullptr; n_item = 0; }
 
-	UPROPERTY(BlueprintAssignable)
-	FOnItemChanged OnItemChanged;
+	/*UPROPERTY(BlueprintAssignable)
+	FOnItemChanged OnItemChanged;*/
 
 	//If the number of items becomes zero after using them,
 	// remove the item from the inventory and return false.
@@ -35,7 +35,7 @@ struct  FItemDataInfo
 		if (n_item <= 0)return false;
 		//Use Item
 		n_item --;
-		OnItemChanged.Broadcast();
+		//OnItemChanged.Broadcast();
 
 		//If the number is less than zero after use,retun false.
 		if (n_item <= 0)
@@ -57,7 +57,7 @@ struct  FItemDataInfo
 		
 		if (num <= 0)return;
 
-		OnItemChanged.Broadcast();
+		//OnItemChanged.Broadcast();
 
 		n_item +=  num;
 		
@@ -114,7 +114,9 @@ public:
 
 
 	bool LoadGameData(AItemActor* newItem, int Amount);
-
+	FOnItemUpdated OnItemUpdated;
+	
+	
 private:
 	
 	UPROPERTY(EditAnywhere, Category = "Items")

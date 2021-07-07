@@ -15,7 +15,7 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGame_init() {}
 	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnFireballThrow__DelegateSignature();
 	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnBossIsDeadDelegate__DelegateSignature();
 	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnThunderbolt__DelegateSignature();
-	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnItemChanged__DelegateSignature();
+	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnItemUpdated__DelegateSignature();
 	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnTakeHugeDamage__DelegateSignature();
 	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnTalkeInvoke__DelegateSignature();
 	ESCAPEGAME_API UFunction* Z_Construct_UDelegateFunction_EscapeGame_OnClickNext__DelegateSignature();
@@ -33,7 +33,7 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGame_init() {}
 				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnFireballThrow__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnBossIsDeadDelegate__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnThunderbolt__DelegateSignature,
-				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnItemChanged__DelegateSignature,
+				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnItemUpdated__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnTakeHugeDamage__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnTalkeInvoke__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_EscapeGame_OnClickNext__DelegateSignature,
@@ -47,8 +47,8 @@ void EmptyLinkFunctionForGeneratedCodeEscapeGame_init() {}
 				SingletonFuncArray,
 				UE_ARRAY_COUNT(SingletonFuncArray),
 				PKG_CompiledIn | 0x00000000,
-				0x64655A37,
-				0x0FBBEE89,
+				0x52869C99,
+				0xBC3CC41B,
 				METADATA_PARAMS(nullptr, 0)
 			};
 			UE4CodeGen_Private::ConstructUPackage(ReturnPackage, PackageParams);
