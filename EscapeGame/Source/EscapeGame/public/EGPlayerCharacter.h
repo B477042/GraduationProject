@@ -140,7 +140,7 @@ private:
 	 * Reflact All Projectile Type Attack
 	 * 
 	 */
-	float ReflactProjectiles(AActor* DamageCauser, float FinalDamage);
+	float ReflectProjectiles(AActor* DamageCauser, float FinalDamage);
 
 	void OnNextStage(const class UEGSaveGame* LoadInstance);
 

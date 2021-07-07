@@ -239,7 +239,11 @@ float AEGPlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent con
 		return 0.0f;
 	}*/
 
-	
+	if(bIsGuarding)
+	{
+		return ReflectProjectiles(DamageCauser,FinalDamage);
+		
+	}
 
 
 
@@ -733,7 +737,7 @@ void AEGPlayerCharacter::Move(float DeltaTime)
 	MoveDirection.Set(0.0f, 0.0f, 0.0f);
 }
 
-float AEGPlayerCharacter::ReflactProjectiles(AActor* DamageCauser, float FinalDamage)
+float AEGPlayerCharacter::ReflectProjectiles(AActor* DamageCauser, float FinalDamage)
 {
 
 	//Projectile Type Only

@@ -132,14 +132,17 @@ void AProjectile::Reflected()
 {
 	//Turn 180 Degrees
 	FRotator CurrentRotation = GetActorRotation();
-	FRotator NewRotation = CurrentRotation+FRotator(0,180,0);
+	FVector ReflectPos = GetActorLocation() - GetActorForwardVector() * 20;
+	float NewYaw = FMath::RandRange(120, 210);
+	float NewRoll = FMath::RandRange(120, 210);
+	
+	FRotator NewRotation = CurrentRotation+FRotator(0,NewYaw,NewRoll);
 	SetActorRotation(NewRotation);
 	//Deactive VFX
-	VFX_Main->Deactivate();
 	VFX_Hit->Deactivate();
+	fire();
 	
-	
-
+	EGLOG(Warning, TEXT("Reflected "));
 }
 
 void AProjectile::OnPlayerEntered(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)

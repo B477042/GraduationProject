@@ -98,11 +98,11 @@ void UGameWidget::UpdateItemes(FName ItemName, int Amount)
 		N_CardKeyItems = Amount;
 		if(N_CardKeyItems<=0)
 		{
-			Img_Cardkey->SetBrushFromTexture(Img_Cardkeys[0]);
+			//Img_Cardkey->SetBrushFromTexture(Img_Cardkeys[0]);
 		}
 		else
 		{
-			Img_Cardkey->SetBrushFromTexture(Img_Cardkeys[1]);
+			//Img_Cardkey->SetBrushFromTexture(Img_Cardkeys[1]);
 		}
 		
 	}
