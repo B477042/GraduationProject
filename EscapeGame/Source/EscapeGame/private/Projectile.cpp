@@ -156,33 +156,7 @@ void AProjectile::OnPlayerEntered(UPrimitiveComponent * OverlappedComp, AActor *
 	}
 
 }
-
-//void AProjectile::BP_Fire(FVector  Location, FRotator  Rotation, FVector  Dir)
-//{
-//	FireDir = Dir;
-//	SetActorHiddenInGame(false);
-//	Root->SetHiddenInGame(false);
-//	VFX_Main->SetHiddenInGame(false);
-//
-//	//SFX_Passing->SetCollisionProfileName("OnTrapTrigger");
-//	MainCollision->SetSphereRadius(40.3f);
-//
-//
-//	Trigger_Passing->SetCollisionProfileName(TEXT("OnTrapTrigger"));
-//	Trigger_Passing->SetSphereRadius(200.0f);
-//
-//
-//	SetActorLocationAndRotation(Location, Rotation);
-//
-//	MainCollision->SetCollisionProfileName("EnemyWeapon");
-//	fire();
-//
-//}
-
-
-
-
-
+ 
 
 void AProjectile::gliding()
 {
