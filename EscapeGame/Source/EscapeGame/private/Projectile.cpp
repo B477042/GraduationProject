@@ -21,6 +21,11 @@ AProjectile::AProjectile()
 	bIsFire = false;
 	FireDir = FVector::ZeroVector;
 
+
+	Trigger_Passing->SetCollisionProfileName(TEXT("OnTrapTrigger"));
+	Trigger_Passing->SetSphereRadius(200.0f);
+	MainCollision->SetSphereRadius(40.3f);
+	
 	bIsDebugMode = false;
 	//initComponents();
 	
@@ -55,9 +60,9 @@ void AProjectile::PostInitializeComponents()
 	MainCollision->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnSomethingHit);
 
 	Trigger_Passing->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnPlayerEntered);;
-	SFX_Hit->OnAudioFinished.AddDynamic(this, &ASkillActor::SetSafety);
+	
 
-
+	//VFX_Hit->OnSystemFinished.AddDynamic(this, &ASkillActor::SetSafety);
 
 }
 
@@ -74,12 +79,9 @@ void AProjectile::ReadyToFire(const FVector & Dir_Vector, const FVector& Locatio
 
 	
 
-	Trigger_Passing->SetCollisionProfileName(TEXT("OnTrapTrigger"));
-	Trigger_Passing->SetSphereRadius(200.0f);
-
 	
 	SetActorLocationAndRotation(Location, Rotate);
-	MainCollision->SetSphereRadius(40.3f);
+	
 	MainCollision->SetCollisionProfileName("EnemyWeapon");
 	
 	fire();
@@ -94,9 +96,9 @@ void AProjectile::fire()
 }
 
 
-void AProjectile::SetSafety()
+void AProjectile::SetSafety(UParticleSystemComponent* PSystem)
 {
-	Super::SetSafety();
+	Super::SetSafety(PSystem);
 
 	FireDir = FVector::ZeroVector;
 	Trigger_Passing->SetCollisionProfileName(TEXT("NoCollision"));
@@ -130,19 +132,23 @@ void AProjectile::OnSomethingHit(UPrimitiveComponent * OverlappedComp, AActor * 
 
 void AProjectile::Reflected()
 {
-	//Turn 180 Degrees
-	FRotator CurrentRotation = GetActorRotation();
-	FVector ReflectPos = GetActorLocation() - GetActorForwardVector() * 20;
-	float NewYaw = FMath::RandRange(120, 210);
-	float NewRoll = FMath::RandRange(120, 210);
-	
-	FRotator NewRotation = CurrentRotation+FRotator(0,NewYaw,NewRoll);
-	SetActorRotation(NewRotation);
-	//Deactive VFX
-	VFX_Hit->Deactivate();
-	fire();
-	
-	EGLOG(Warning, TEXT("Reflected "));
+	////Turn 180 Degrees
+	//FRotator CurrentRotation = GetActorRotation();
+	//FVector ReflectPos = GetActorLocation() - GetActorForwardVector() * 20;
+	//float NewYaw = FMath::RandRange(120, 210);
+	//float NewRoll = FMath::RandRange(120, 210);
+	//
+	//
+	////Set Safty
+	//SetSafety(nullptr);
+	//
+	//FRotator NewRotation = CurrentRotation+FRotator(0,NewYaw,NewRoll);
+	//SetActorRotation(NewRotation);
+	//
+	//MainCollision->SetCollisionProfileName("PlayerWeapon");
+	//fire();
+	//
+	//EGLOG(Warning, TEXT("Reflected "));
 }
 
 void AProjectile::OnPlayerEntered(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)

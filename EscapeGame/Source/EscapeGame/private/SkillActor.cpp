@@ -28,7 +28,7 @@ void ASkillActor::ActivateHitEffect()
 	SFX_Hit->Play();
 	MainCollision->SetCollisionProfileName(TEXT("NoCollision"));
 	
-	SetSafety();
+	SetSafety(VFX_Hit);
 
 }
 
@@ -37,7 +37,7 @@ void ASkillActor::ActivateHitEffect()
 void ASkillActor::BeginPlay()
 {
 	Super::BeginPlay();
-	SetSafety();
+	SetSafety(nullptr);
 }
 
 void ASkillActor::PostInitializeComponents()
@@ -45,7 +45,7 @@ void ASkillActor::PostInitializeComponents()
 	Super::PostInitializeComponents();
 }
 
-void ASkillActor::SetSafety()
+void ASkillActor::SetSafety(UParticleSystemComponent* PSystem)
 {
 
 	
