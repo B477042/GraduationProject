@@ -20,16 +20,30 @@ AGruntCharacter::AGruntCharacter()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	//Set AI Controller
+	/*
+	 * Set AI Controller
+	 */
 	AIControllerClass = AEnemyAIController_Grunt::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	
 	Stat = CreateDefaultSubobject<UStatComponent_EGrunt>(TEXT("STAT"));
+	PSFireEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("PSFireEffect"));
+	/*
+	* Load Fire Attack Particle
+	*/
 	
-	//Set Attack Range To 100cm
-	AttackRange = 240.0f;
-	AttackExtent = FVector(100.0f,50.0f,50.0f);
-	ATK = 10.0f;
+	static ConstructorHelpers::FObjectFinder<UParticleSystem>PS_Fire(TEXT("ParticleSystem'/Game/ParagonHowitzer/FX/Particles/Abilities/Primary/FX/P_Grenade_Muzzle.P_Grenade_Muzzle'"));
+	if (PS_Fire.Succeeded())
+	{
+		PSFireEffect->SetTemplate(PS_Fire.Object);
+		PSFireEffect->bAutoActivate = false;
+
+	}
+
+	//Set Melee Attack Range To 100cm
+	MeleeAttackRange = 240.0f;
+	MeleeAttackExtent = FVector(100.0f,50.0f,50.0f);
+	AtkMeleeAtk = 10.0f;
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh>SM_Body(TEXT("SkeletalMesh'/Game/ParagonHowitzer/Characters/Heroes/Howitzer/Skins/Tier_2/Domed/Meshes/Howitzer_Domed.Howitzer_Domed'"));
 	if (SM_Body.Succeeded())
 	{
@@ -87,20 +101,23 @@ void AGruntCharacter::PostInitializeComponents()
 	if(Stat!=nullptr)
 	Stat->SetSpeedLimits(MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
 
-	auto Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
+	Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
 	if (!Anim)return;
-
-	//공격을 플레이할 때 호출되고 공격에 대한 판정을 시도합니다. 
+	
+	/*
+	 *	Attack Event Delegate Add Lambda
+	 *	람다 함수 바인딩
+	 *	공격을 플레이할 때 호출되고 공격에 대한 판정을 시도합니다. 
+	 * 
+	 */
 	Anim->AttackEvent_Delegate.AddLambda([this]()->void {
-		
-	//EGLOG(Error, TEXT("ANIm notify test start"));
 	FHitResult HitResult;
-	FVector EndPoint = GetActorLocation() + GetActorForwardVector()*AttackRange;
+	FVector EndPoint = GetActorLocation() + GetActorForwardVector()*MeleeAttackRange;
 	FCollisionQueryParams Params(NAME_None, false, this);
 
 	//ECC_EngineTraceChannel2 = 'Player' Trace
 	bool bResult = GetWorld()->SweepSingleByObjectType(HitResult, GetActorLocation(), EndPoint,
-			FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeBox(AttackExtent),Params);
+			FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeBox(MeleeAttackExtent),Params);
 
 	//if hit
 	if (bResult)
@@ -113,22 +130,20 @@ void AGruntCharacter::PostInitializeComponents()
 		}
 
 		FDamageEvent DamageEvent;
-		Player->TakeDamage(ATK, DamageEvent, GetController(), this);
-		EGLOG(Warning, TEXT("Give Damgae : %d"), ATK);
+		Player->TakeDamage(AtkMeleeAtk, DamageEvent, GetController(), this);
+		EGLOG(Warning, TEXT("Give Damgae : %d"), AtkMeleeAtk);
 	}
 	else
 		EGLOG(Error, TEXT("Notjhiog"));
 
 	});
 
-	//체력이 0이 됐을 때 호출될 함수들을 엮어줍니다
-	//Stat->HPZeroDelegate.AddUObject(this, &AGruntCharacter::ReadToDead);
-	//Stat->HPZeroDelegate.AddUObject(this, UAnim_Grunt::playDeadAnim);
+	//체력이 0이 됐을 때 호출될 람다 함수
 	Stat->HPZeroDelegate.AddLambda([this]()->void {
 		auto anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
 		if (!anim)
 		{
-			EGLOG(Warning, TEXT("Dead failed555555555555555555555555555555555555555555555555555555"));
+			
 			return;
 		}
 
@@ -224,10 +239,9 @@ void AGruntCharacter::Tick(float DeltaTime)
 void AGruntCharacter::Attack()
 {
 	//EGLOG(Warning, TEXT("Attack! Grunt"));
-
-	
-	auto Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
 	if (!Anim)return;
+	
+	
 	Anim->PlayAttackMontage();
 
 
@@ -235,6 +249,62 @@ void AGruntCharacter::Attack()
 	
 	
 
+}
+
+void AGruntCharacter::FireAttack()
+{
+	if (!Anim)return;
+	//발사 파티클을 만들 위치
+	FVector PosPSPlay = GetMesh()->GetSocketLocation(SockFirePointR);
+	//발사 파티클의 회전 값
+	FRotator RotPSPlay = GetActorRotation();
+
+	/*
+	 *	발사 방식
+	 *	Ray Tracing을 통한 타격 판정을 시행
+	 *	원으로 스프레이 형식으로 만들어 랜덤한 방향으로 Ray를 발사
+	 */
+
+	// 발사 지점에서 원까지 거리 
+	float DistOffset = 300.0f;
+	//유효 사정거리
+	float Range = 3000.0f;
+	//원 지름
+	float Radius = 50.0f;
+	//원의 중심 위치
+	FVector Center = PosPSPlay + (GetActorForwardVector() * DistOffset);
+	//조준 지점. 원의 위치에서 랜덤하게 한다
+	FVector AimPoint;
+	AimPoint.X = FMath::RandRange(Center.X - Radius, Center.X + Radius);
+	AimPoint.Y = FMath::RandRange(Center.Y - Radius, Center.Y + Radius);
+	AimPoint.Z = FMath::RandRange(Center.Z - Radius, Center.Z + Radius);
+
+	//Ray의 끝지점
+	FVector EndPoint= AimPoint + (GetActorForwardVector() * Range);
+	FHitResult HitResult;
+	
+	
+	auto World = GetWorld();
+	if(!World)
+	{
+		EGLOG(Warning, TEXT("World is invalid"));
+		return;
+	}
+	//All Block Trace
+	bool bResult = World->LineTraceSingleByChannel(HitResult, PosPSPlay, EndPoint, ECollisionChannel::ECC_GameTraceChannel4);
+	//맞았다면
+	if(bResult)
+	{
+		EGLOG(Warning, TEXT("Hit Target : %s"), *HitResult.Actor->GetName());
+		//맞은 지점의 위치
+		FVector PosHit= HitResult.ImpactPoint;
+		//데미지 처리
+		FDamageEvent DamageEvent;
+		HitResult.Actor->TakeDamage(AtkFireAtk, DamageEvent, GetController(), this);
+		//히트 판정 파티클&사운드 출력
+		
+	}
+	
 }
 
 
