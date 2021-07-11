@@ -79,6 +79,6 @@ protected:
 	//Fire Attack Value
 	float AtkFireAtk;
 
-	const FName SockFirePointR = "fire_point_l";
+	const FName SockFirePointR = "fire_point_r";
 	class UAnim_Grunt* Anim;
 };
