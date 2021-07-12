@@ -19,7 +19,21 @@ UMiniMapRenderComponent::UMiniMapRenderComponent()
 		this->TextureTarget = Cast<UTextureRenderTarget2D>(T_TextureTarget.Object);
 
 	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Post(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_OutLineShader.MI_OutLineShader'"));
+	if (MI_Post.Succeeded())
+	{
+		FWeightedBlendable Weighted;
+		Weighted.Object = Cast<UMaterialInstance>(MI_Post.Object);
+		Weighted.Weight = 2;
+
+		PostProcessSettings.WeightedBlendables.Array.Add(Weighted);
+
+	}
+
 	ProjectionType = ECameraProjectionMode::Orthographic;
+
+
 	
 	this->CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
 	bCaptureEveryFrame = true;

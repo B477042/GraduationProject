@@ -37,12 +37,13 @@ AEGPostProcessVolume::AEGPostProcessVolume()
 	Settings.ScreenSpaceReflectionMaxRoughness = 0.613429f;
 
 	//Post Process Matrial ·Îµå. 
-	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Post(TEXT("MaterialInstanceConstant'/Game/MyFolder/MiniMap/MI_OutLineShader.MI_OutLineShader'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Post(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_OutLineShader.MI_OutLineShader'"));
 	if (MI_Post.Succeeded())
 	{
 		FWeightedBlendable Weighted;
 		Weighted.Object = Cast<UMaterialInstance>(MI_Post.Object);
 		Weighted.Weight = 1;
+		
 		Settings.WeightedBlendables.Array.Add(Weighted);
 
 	}
