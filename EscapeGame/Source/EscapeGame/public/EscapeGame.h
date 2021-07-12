@@ -21,7 +21,8 @@ DECLARE_LOG_CATEGORY_EXTERN(EGgame, Log, All);
 static FDamageEvent ActorTakeDamageEvent;
 
 static bool DrawingDebugMode=true;
-
+//미니맵 요소들을 랜더링하는 기준 위치. 상대좌표로 이용한다. 30M위에 미니맵용 평면들 출력
+const static FVector POS_Minimap= FVector(0,0,3000);
 
 //Set of Six Direction; up,down,forward,backward,left,right
 UENUM(BlueprintType)

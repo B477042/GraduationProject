@@ -20,7 +20,7 @@ AEnemyCharacter::AEnemyCharacter()
 	}
 	PaperMarker->SetRelativeLocation(FVector(0, 0, 200));
 	PaperMarker->SetRelativeRotation(FRotator(0, 0, 270));
-	PaperMarker->SetRelativeScale3D(FVector(2.5f, 0, 2.5f));
+	PaperMarker->SetRelativeScale3D(FVector(2.5f, 1.0f, 2.5f));
 
 	PaperMarker->bOwnerNoSee = true;
 
