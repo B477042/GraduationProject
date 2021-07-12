@@ -19,6 +19,7 @@
 #include "EGPostProcessVolume.h"
 #include "PaperSprite.h"
 #include "GameWidget.h"
+#include "MiniMapMarkerComponent.h"
 
 
 // Sets default values
@@ -410,14 +411,14 @@ void AEGPlayerCharacter::ToggleMap()
 	
 	if (bSetMapArm==false)
 	{
-		MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, maxMapArmLength));
+		MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, maxMiniMapArmLength));
 		EGLOG(Error, TEXT("Change To Max"));
 		bSetMapArm = true;
 		return;
 	}
 	if (bSetMapArm==true)
 	{
-		MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, minMapArmLength));
+		MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, minMiniMapArmLength));
 		bSetMapArm = false;
 		EGLOG(Error, TEXT("Change To Min"));
 		return;
@@ -509,8 +510,9 @@ void AEGPlayerCharacter::InitComponents()
 	WeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("WeaponCollision"));
 	Container_Hit=CreateDefaultSubobject < USkillContainer_PlayerHitEffect>(TEXT("HitEffects"));
 	AttackSound = CreateDefaultSubobject<UAudioComponent>(TEXT("AttackSound"));
-	PaperMarker = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("PaperMarker"));
+	MiniMapMarkerComponent = CreateDefaultSubobject<UMiniMapMarkerComponent>(TEXT("MiniMapMarker"));
 
+	//====================================================================================================
 	//Components Tree
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	Camera->SetupAttachment(SpringArm);
@@ -518,28 +520,25 @@ void AEGPlayerCharacter::InitComponents()
 	MapRenderer->SetupAttachment(MiniMapArm);
 	WeaponCollision->SetupAttachment(SwordEffect);
 	AttackSound->SetupAttachment(RootComponent);
-	PaperMarker->SetupAttachment(RootComponent);
+	MiniMapMarkerComponent->SetupAttachment(RootComponent);
 
+	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
+	//====================================================================================================
 	//미니맵 및 카메라 관련 초기값 설정
-
-	minMapArmLength = 320.0f;
-	maxMapArmLength = 1000.0f;
+	minMiniMapArmLength = POS_Minimap.Z + 1500.0f;
+	maxMiniMapArmLength = POS_Minimap.Z + 3000.0f;
+	
 	float X=0, Y=0, Z=0,Pitch=0,Yaw=0,Roll=0;
 	Camera->SetRelativeLocation(FVector(0.0f, 30.0f, 90.0f));
-	//Camera->SetRelativeLocationAndRotation(FVector(X = 119.325928f, Y = 143.606781f, Z = 134.770874f),FRotator(Pitch = -10.796335f, Yaw = -6.558897f, Roll = 1.233861f));
-	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 	SpringArm->TargetArmLength = 500.0f;
-	//SpringArm->SetRelativeRotation(FRotator(-15.0f, 0.0f, 0.0f));
+
 	MiniMapArm->TargetArmLength = 0.0f;
-	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, 1000.0f));
+	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, POS_Minimap.Z+1500.0f));
 	MiniMapArm->SetRelativeRotation(FRotator(-90.0f, 0.0f,0.0f));
 
 	//마커 초기값 설정
-	PaperMarker->SetRelativeLocation(FVector(0, 0, 200));
-	PaperMarker->SetRelativeRotation(FRotator(0,0,270));
-	PaperMarker->SetRelativeScale3D(FVector(2.5f, 0, 2.5f));
-
-	PaperMarker->bOwnerNoSee = true;
+	MiniMapMarkerComponent->SetRelativeLocation(FVector(0, 0, POS_Minimap.Z));
+	MiniMapMarkerComponent->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
 	
 	//무기 설정
 	WeaponCollision->SetRelativeLocation(FVector(X = 0.976299f, Y = 1.777855f, Z = 66.010002f));
@@ -549,7 +548,7 @@ void AEGPlayerCharacter::InitComponents()
 
 	//스프링암 값 설정
 	SetupSpringArm();
-
+	
 	
 	////포스트 프로세스 값 지정
 	//FPostProcessSettings& PostProcessSettings = Camera->PostProcessSettings;
@@ -601,10 +600,10 @@ void AEGPlayerCharacter::LoadAssets()
 		AttackSound->bAutoActivate = false;
 	}
 	
-	static ConstructorHelpers::FObjectFinder<UPaperSprite>T_Sprite_Mark(TEXT("PaperSprite'/Game/MyFolder/MiniMap/Dot/PlayerDot_Sprite.PlayerDot_Sprite'"));
-	if(T_Sprite_Mark.Succeeded())
+	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Marker(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_Marker_Player.MI_Marker_Player'"));
+	if(MI_Marker.Succeeded())
 	{
-		PaperMarker->SetSprite(Cast<UPaperSprite>(T_Sprite_Mark.Object));
+		MiniMapMarkerComponent->SetMaterial(0, MI_Marker.Object);
 	}
 
 }

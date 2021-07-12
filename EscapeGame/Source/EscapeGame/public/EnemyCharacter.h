@@ -59,8 +59,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		UProgressBar*HPBar;
 	/*미니맵에 표시되는 Marker용 */
-	UPROPERTY(BlueprintReadOnly, EditInstanceOnly, Category = "UI", meta = (AllowPrivateAccess = true))
-	UPaperSpriteComponent* PaperMarker;
+	UPROPERTY(BlueprintReadOnly, EditInstanceOnly, Category = "MiniMap", meta = (AllowPrivateAccess = true))
+	class UMiniMapMarkerComponent* MiniMapMarkerComponent;
 	/*
 	https://docs.unrealengine.com/en-US/API/Runtime/AIModule/Perception/UAIPerceptionComponent/index.html
 	자손 클래스에서 값 처리를 시킬 것

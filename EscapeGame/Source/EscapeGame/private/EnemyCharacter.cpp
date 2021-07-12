@@ -4,25 +4,22 @@
 #include "EGGameState.h"
 #include "EGSaveGame.h"
 #include "PaperSprite.h"
-
+#include "MiniMapMarkerComponent.h"
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	//마커 초기값 설정
-	PaperMarker = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("PaperMarker"));
-	PaperMarker->SetupAttachment(RootComponent);
-	static ConstructorHelpers::FObjectFinder<UPaperSprite>T_Sprite_Mark(TEXT("PaperSprite'/Game/MyFolder/MiniMap/Dot/EnemeyDot_Sprite.EnemeyDot_Sprite'"));
-	if (T_Sprite_Mark.Succeeded())
+	MiniMapMarkerComponent = CreateDefaultSubobject<UMiniMapMarkerComponent>(TEXT("MiniMapMarker"));
+	MiniMapMarkerComponent->SetupAttachment(RootComponent);
+	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Marker(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_Marker_Enemy.MI_Marker_Enemy'"));
+	if (MI_Marker.Succeeded())
 	{
-		PaperMarker->SetSprite(Cast<UPaperSprite>(T_Sprite_Mark.Object));
+		MiniMapMarkerComponent->SetMaterial(0, MI_Marker.Object);
 	}
-	PaperMarker->SetRelativeLocation(FVector(0, 0, 200));
-	PaperMarker->SetRelativeRotation(FRotator(0, 0, 270));
-	PaperMarker->SetRelativeScale3D(FVector(2.5f, 1.0f, 2.5f));
-
-	PaperMarker->bOwnerNoSee = true;
+	MiniMapMarkerComponent->SetRelativeLocation(FVector(0, 0, POS_Minimap.Z));
+	MiniMapMarkerComponent->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
 
 
 	
