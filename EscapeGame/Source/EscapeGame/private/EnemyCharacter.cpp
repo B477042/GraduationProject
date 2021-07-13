@@ -20,7 +20,7 @@ AEnemyCharacter::AEnemyCharacter()
 	}
 	MiniMapMarkerComponent->SetRelativeLocation(FVector(0, 0, POS_Minimap.Z));
 	MiniMapMarkerComponent->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
-
+	MiniMapMarkerComponent->SetMobility(EComponentMobility::Movable);
 
 	
 	bUseControllerRotationYaw = false;

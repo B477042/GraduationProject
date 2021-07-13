@@ -10,7 +10,7 @@
 AEnemyAIController_Grunt::AEnemyAIController_Grunt()
 {
 
-	static ConstructorHelpers::FObjectFinder<UBlackboardData>BB(TEXT("BlackboardData'/Game/MyFolder/AIData/BB_EnemyBoard.BB_EnemyBoard'"));
+	static ConstructorHelpers::FObjectFinder<UBlackboardData>BB(TEXT("BlackboardData'/Game/MyFolder/AIData/BB_GruntBoard.BB_GruntBoard'"));
 	if (BB.Succeeded())
 	{
 		BBData = BB.Object;

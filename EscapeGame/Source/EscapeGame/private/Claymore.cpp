@@ -228,14 +228,7 @@ bool AClaymore::bIsActorInFrontSide(FHitResult &hitResult)
 		//저 방향대로 디텍트 범위를 곱한후, claymorePos을 더하면 월드 좌표계에서 디텍트 범위 끝 점에 위치한 점이 나올 것이다.
 		const FVector myTargetVec = (myFwVec * maxDetectRange) + ClaymorePos;
 
-	/*	EGLOG(Warning, TEXT("Claymore :%s ForwardVector : %s"),*GetName(),*GetActorForwardVector().ToString());
-		EGLOG(Warning, TEXT("Claymore :%s MyFwVec : %s"), *GetName(), *myFwVec.ToString());
-		EGLOG(Warning, TEXT("Claymore :%s myTargetVec : %s"), *GetName(), *myTargetVec.ToString());
-		EGLOG(Warning, TEXT("========================="));
-		//디버그 로깅용
-		DrawDebugLine(GetWorld(), ClaymorePos, myTargetVec, FColor::Red, true,300.0f);*/
-
-		
+ 
 
 		//전방으로 detecte range만큼 탐색한다. 레이를 쏜다
 		bool bResult = GetWorld()->LineTraceSingleByChannel(hitResult, ClaymorePos , myTargetVec,
@@ -248,11 +241,7 @@ bool AClaymore::bIsActorInFrontSide(FHitResult &hitResult)
 			//EGLOG(Error, TEXT("Nothing"));
 			return false;
 		}
-		//정보 확인 용
-		//EGLOG(Error, TEXT("%s 's Trace was hit The %s, At : %s"), *GetName(), *hitResult.Actor.Get()->GetName(), *hitResult.ImpactPoint.ToString());
-		//EGLOG(Error, TEXT("BoxExtent : %s"), *BoxCollision->GetScaledBoxExtent().ToString());
-		//EGLOG(Error, TEXT("Box RelativeTransform location : %s"), *BoxCollision->GetRelativeTransform().GetLocation().ToString()); 
-		//EGLOG(Warning, TEXT("%s hit!"), *hitResult.Actor.Get()->GetName());
+	 
 		return true;
 }
 
