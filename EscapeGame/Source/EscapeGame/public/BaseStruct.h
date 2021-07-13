@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "EscapeGame.h"
 #include "GameFramework/Actor.h"
-#include "Components/StaticMeshComponent.h"
+#include "MiniMapMarkerComponent.h"
 #include "BaseStruct.generated.h"
 
 UCLASS(Abstract, BlueprintType)
@@ -27,5 +27,5 @@ public:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 		USceneComponent* SceneRoot;
 	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
-		UStaticMeshComponent* MiniMapTileMesh;
+		UMiniMapMarkerComponent* MiniMapTileMesh;
 };

@@ -96,18 +96,18 @@ ANormalPath::ANormalPath()
 	LampLight->SetOuterConeAngle(28.952377f);
 
 	
-	LampLight->SetMobility(EComponentMobility::Stationary);
-
+	
 
 	//UPROPERTY 계층구조 만들기
-	RootComponent = Plate;
+	Plate->SetupAttachment(RootComponent);
 	LeftSideWall->SetupAttachment(Plate);
 	RightSideWall->SetupAttachment(Plate);
 	Ceiling->SetupAttachment(Plate);
 	LampMesh->SetupAttachment(Plate);;
-
 	LampLight->SetupAttachment(Plate);
 
+	
+	LampLight->SetMobility(EComponentMobility::Stationary);
 
 }
 
