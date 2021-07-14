@@ -71,7 +71,9 @@ AOneSideOpendPath::AOneSideOpendPath()
 	//Object들 위치 배치
 
 	Plate->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
-	//plate->SetRelativeRotation(FRotator(180.0f,90.0f,180.0f));
+	Plate->SetMobility(EComponentMobility::Static);
+
+	
 	LeftSideWall->SetRelativeLocation(FVector(10.0f, 0.0f, 0.0f));
 	//LeftSideWall->SetRelativeRotation(FRotator(0.0f, 270.0f, 0.0f));
 
@@ -104,12 +106,12 @@ AOneSideOpendPath::AOneSideOpendPath()
 	LampLight->SetAttenuationRadius(428.286865f);
 	LampLight->SetInnerConeAngle(21.464767f);
 	LampLight->SetOuterConeAngle(28.952377f);
-	//빠른 랜더링을 위해 Light를 Static으로
+
 	LampLight->SetMobility(EComponentMobility::Movable);
 
 
 	//UPROPERTY 계층구조 만들기
-	RootComponent = Plate;
+	Plate->SetupAttachment(RootComponent);
 	LeftSideWall->SetupAttachment(Plate);
 	RightSideWall->SetupAttachment(Plate);
 	MiddleWall->SetupAttachment(Plate);

@@ -2,12 +2,11 @@
 
 #pragma once
 
-#include "EscapeGame.h"
-#include "GameFramework/Actor.h"
+#include "BaseStruct.h"
 #include "StairPath2.generated.h"
 
 UCLASS()
-class ESCAPEGAME_API AStairPath2 : public AActor
+class ESCAPEGAME_API AStairPath2 : public ABaseStruct
 {
 	GENERATED_BODY()
 	

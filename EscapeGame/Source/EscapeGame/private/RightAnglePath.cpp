@@ -62,10 +62,9 @@ ARightAnglePath::ARightAnglePath()
 	//Object들 위치 배치
 
 	Plate->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
-	//plate->SetRelativeRotation(FRotator(180.0f,90.0f,180.0f));
-/*
-	LeftSideWall->SetRelativeLocation(FVector(0.0f, -340.0f, 0.0f));
-	LeftSideWall->SetRelativeRotation(FRotator(0.0f, 270.0f, 0.0f));*/
+	Plate->SetMobility(EComponentMobility::Static);
+
+	
 	LeftSideWall->SetRelativeLocation(FVector(10.0f, 0.0f, 0.0f));
 	//LeftSideWall->SetRelativeRotation(FRotator(0.0f, 270.0f, 0.0f));
 
@@ -89,19 +88,18 @@ ARightAnglePath::ARightAnglePath()
 
 	//(X=-160.000000,Y=-130.000000,Z=410.000000)
 	//(Pitch=-90.000000,Yaw=0.000000,Roll=0.000000)
-	LampLight->SetRelativeLocation(FVector(-160.0f, -130.0f, 410.0f));
+	LampLight->SetRelativeLocation(FVector(-160.0f, -160.0f, 410.0f));
 	LampLight->SetRelativeRotation(FRotator(-90.0f, 0.0f, 0.0f));
 	//SpotLight 밝기 조절
 	LampLight->SetIntensity(5000.695313f);
 	LampLight->SetAttenuationRadius(428.286865f);
 	LampLight->SetInnerConeAngle(21.464767f);
-	LampLight->SetOuterConeAngle(28.952377f);
-	//빠른 랜더링을 위해 Light를 Static으로
-	LampLight->SetMobility(EComponentMobility::Movable);
+	LampLight->SetOuterConeAngle(23.685711f);
+	LampLight->SetMobility(EComponentMobility::Stationary);
 
 
 	//UPROPERTY 계층구조 만들기
-	RootComponent = Plate;
+	Plate->SetupAttachment(RootComponent);
 	LeftSideWall->SetupAttachment(Plate);
 	RightSideWall->SetupAttachment(Plate);
 	Ceiling->SetupAttachment(Plate);
