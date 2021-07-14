@@ -71,7 +71,7 @@ AOneSideOpendPath::AOneSideOpendPath()
 	//Object들 위치 배치
 
 	Plate->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
-	Plate->SetMobility(EComponentMobility::Static);
+	Plate->SetMobility(EComponentMobility::Stationary);
 
 	
 	LeftSideWall->SetRelativeLocation(FVector(10.0f, 0.0f, 0.0f));
@@ -107,9 +107,14 @@ AOneSideOpendPath::AOneSideOpendPath()
 	LampLight->SetInnerConeAngle(21.464767f);
 	LampLight->SetOuterConeAngle(28.952377f);
 
-	LampLight->SetMobility(EComponentMobility::Movable);
-
-
+	//Mobility
+	Plate->SetMobility(EComponentMobility::Stationary);
+	LeftSideWall->SetMobility(EComponentMobility::Stationary);
+	RightSideWall->SetMobility(EComponentMobility::Stationary);
+	Ceiling->SetMobility(EComponentMobility::Stationary);
+	LampMesh->SetMobility(EComponentMobility::Stationary);
+	LampLight->SetMobility(EComponentMobility::Stationary);
+	MiddleWall->SetMobility(EComponentMobility::Stationary);
 	//UPROPERTY 계층구조 만들기
 	Plate->SetupAttachment(RootComponent);
 	LeftSideWall->SetupAttachment(Plate);
@@ -119,6 +124,9 @@ AOneSideOpendPath::AOneSideOpendPath()
 	LampMesh->SetupAttachment(Plate);;
 
 	LampLight->SetupAttachment(Plate);
+	//MiniMapTile설정
+	MiniMapTileMesh->SetRelativeLocation(FVector(-160, -180, POS_Minimap.Z));
+	MiniMapTileMesh->SetRelativeScale3D(FVector(3.2f, 3.7f, 1.0f));
 
 
 }

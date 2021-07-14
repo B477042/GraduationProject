@@ -26,6 +26,19 @@ AStairPath2::AStairPath2()
 	LampLight2->SetIntensity(10000.0f);
 
 	Root->SetMobility(EComponentMobility::Stationary);
+	Plate1->SetMobility(EComponentMobility::Stationary);
+	Plate2->SetMobility(EComponentMobility::Stationary);
+	Wall1->SetMobility(EComponentMobility::Stationary);
+	Wall2->SetMobility(EComponentMobility::Stationary);
+	Wall3->SetMobility(EComponentMobility::Stationary);
+	Wall4->SetMobility(EComponentMobility::Stationary);
+	Wall5->SetMobility(EComponentMobility::Stationary);
+	Stair1->SetMobility(EComponentMobility::Stationary);
+	Stair2->SetMobility(EComponentMobility::Stationary);
+	Ceiling->SetMobility(EComponentMobility::Stationary);
+	CeilingDiv->SetMobility(EComponentMobility::Stationary);
+	LampMesh1->SetMobility(EComponentMobility::Stationary);
+	LampMesh2->SetMobility(EComponentMobility::Stationary);
 	LampLight1->SetMobility(EComponentMobility::Stationary);
 	LampLight2->SetMobility(EComponentMobility::Stationary);
 }

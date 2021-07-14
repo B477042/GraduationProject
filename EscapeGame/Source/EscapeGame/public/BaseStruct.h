@@ -26,6 +26,6 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 		USceneComponent* SceneRoot;
-	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Mesh")
 		UMiniMapMarkerComponent* MiniMapTileMesh;
 };

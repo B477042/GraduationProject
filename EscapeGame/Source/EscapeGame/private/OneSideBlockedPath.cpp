@@ -54,7 +54,7 @@ AOneSideBlockedPath::AOneSideBlockedPath()
 	//Object들 위치 배치
 
 	Plate->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
-	Plate->SetMobility(EComponentMobility::Static);
+	Plate->SetMobility(EComponentMobility::Stationary);
 
 	MiddleWall->SetRelativeLocation(FVector(10.0f, 0.0f, 0.0f));
 	//LeftSideWall->SetRelativeRotation(FRotator(0.0f, 270.0f, 0.0f));
@@ -81,7 +81,12 @@ AOneSideBlockedPath::AOneSideBlockedPath()
 	LampLight->SetAttenuationRadius(428.286865f);
 	LampLight->SetInnerConeAngle(18.455242f);
 	LampLight->SetOuterConeAngle(22.933331f);
+	//Mobility
+	Plate->SetMobility(EComponentMobility::Stationary);
+	Ceiling->SetMobility(EComponentMobility::Stationary);
+	LampMesh->SetMobility(EComponentMobility::Stationary);
 	LampLight->SetMobility(EComponentMobility::Stationary);
+	MiddleWall->SetMobility(EComponentMobility::Stationary);
 
 
 
@@ -91,6 +96,9 @@ AOneSideBlockedPath::AOneSideBlockedPath()
 	Ceiling->SetupAttachment(Plate);
 	LampMesh->SetupAttachment(Plate);;
 	LampLight->SetupAttachment(Plate);
+	//MiniMapTile설정
+	MiniMapTileMesh->SetRelativeLocation(FVector(-160, -180, POS_Minimap.Z));
+	MiniMapTileMesh->SetRelativeScale3D(FVector(3.2f, 3.7f, 1.0f));
 
 
 }

@@ -63,7 +63,7 @@ ANormalPath::ANormalPath()
 	//Object들 위치 배치
 	
 	Plate->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
-	Plate->SetMobility(EComponentMobility::Static);
+	Plate->SetMobility(EComponentMobility::Stationary);
 
 	LeftSideWall->SetRelativeLocation(FVector(10.0f, 0.0f, 0.0f));
 	
@@ -87,7 +87,14 @@ ANormalPath::ANormalPath()
 	LampLight->SetAttenuationRadius(428.286865f);
 	LampLight->SetInnerConeAngle(19.923807f);
 	LampLight->SetOuterConeAngle(26.695234f);
+	//Mobility
+	Plate->SetMobility(EComponentMobility::Stationary);
+	LeftSideWall->SetMobility(EComponentMobility::Stationary);
+	RightSideWall->SetMobility(EComponentMobility::Stationary);
+	Ceiling->SetMobility(EComponentMobility::Stationary);
+	LampMesh->SetMobility(EComponentMobility::Stationary);
 	LampLight->SetMobility(EComponentMobility::Stationary);
+
 
 
 	//UPROPERTY 계층구조 만들기
@@ -98,6 +105,9 @@ ANormalPath::ANormalPath()
 	LampMesh->SetupAttachment(Plate);;
 	LampLight->SetupAttachment(Plate);
 
+	//MiniMapTile설정
+	MiniMapTileMesh->SetRelativeLocation(FVector(-160, -180, POS_Minimap.Z));
+	MiniMapTileMesh->SetRelativeScale3D(FVector(3.2f, 3.7f, 1.0f));
 	
 
 
