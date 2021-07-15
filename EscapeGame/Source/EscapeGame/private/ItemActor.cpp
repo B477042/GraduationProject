@@ -3,7 +3,7 @@
 #include "ItemActor.h"
 #include "EGSaveGame.h"
 #include "EGGameInstance.h"
-
+#include "MiniMapMarkerComponent.h"
 
 
 // Sets default values
@@ -13,9 +13,15 @@ AItemActor::AItemActor()
 	PrimaryActorTick.bCanEverTick = false;
 	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BODY"));
 	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EFFECT"));
-	//BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BOX"));
-
-	//BoxCollision->SetCollisionProfileName(FName("OnTrapTrigger"));
+	MiniMapMarker = CreateDefaultSubobject<UMiniMapMarkerComponent>(TEXT("MINIMAPMARKER"));
+	
+	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Marker(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_Marker_Item.MI_Marker_Item'"));
+	if(MI_Marker.Succeeded())
+	{
+		MiniMapMarker->SetMaterial(0, MI_Marker.Object);
+		MiniMapMarker->SetRelativeScale3D(FVector(0.5f, 0.5f, 1));
+		MiniMapMarker->SetRelativeLocation(POS_Minimap);
+	}
 
 	RootComponent = Body;
 	//Effect->SetupAttachment(RootComponent);

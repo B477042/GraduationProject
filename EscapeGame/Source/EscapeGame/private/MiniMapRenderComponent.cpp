@@ -32,7 +32,7 @@ UMiniMapRenderComponent::UMiniMapRenderComponent()
 	}
 
 	ProjectionType = ECameraProjectionMode::Orthographic;
-
+	FOVAngle=150;
 
 	
 	this->CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
@@ -42,7 +42,7 @@ UMiniMapRenderComponent::UMiniMapRenderComponent()
 	//Don't Caputre Skeletal Meshes
 	ShowFlags.SkeletalMeshes = false;
 	ShowFlags.EyeAdaptation = false;
- 
+	
 
 }
 

@@ -98,8 +98,7 @@ AOneSideBlockedPath::AOneSideBlockedPath()
 	LampLight->SetupAttachment(Plate);
 	//MiniMapTile¼³Á¤
 	MiniMapTileMesh->SetRelativeLocation(FVector(-160, -180, POS_Minimap.Z));
-	MiniMapTileMesh->SetRelativeScale3D(FVector(3.2f, 3.7f, 1.0f));
-
+	MiniMapTileMesh->SetRelativeScale3D(FVector(3.4375f, 3.8125f, 1.0f));
 
 }
 

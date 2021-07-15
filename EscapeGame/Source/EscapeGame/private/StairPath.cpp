@@ -27,8 +27,8 @@ AStairPath::AStairPath()
 	LampLight2->SetIntensity(10000.0f);
 
 
-	MiniMapTileMesh->SetRelativeScale3D(FVector(5.75, 7.5, 1));
-	MiniMapTileMesh->SetRelativeLocation(FVector(70, -145, POS_Minimap.Z));
+	MiniMapTileMesh->SetRelativeScale3D(FVector(5.75, 7.75, 1));
+	MiniMapTileMesh->SetRelativeLocation(FVector(90, -135, POS_Minimap.Z));
 
 	
 	Root->SetMobility(EComponentMobility::Stationary);
