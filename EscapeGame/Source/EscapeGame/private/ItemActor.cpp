@@ -14,7 +14,7 @@ AItemActor::AItemActor()
 	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BODY"));
 	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EFFECT"));
 	MiniMapMarker = CreateDefaultSubobject<UMiniMapMarkerComponent>(TEXT("MINIMAPMARKER"));
-	
+	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Marker(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_Marker_Item.MI_Marker_Item'"));
 	if(MI_Marker.Succeeded())
 	{
@@ -23,7 +23,9 @@ AItemActor::AItemActor()
 		MiniMapMarker->SetRelativeLocation(POS_Minimap);
 	}
 
-	RootComponent = Body;
+	RootComponent = Root;
+	Body->SetupAttachment(Root);
+	MiniMapMarker->SetupAttachment(Root);
 	//Effect->SetupAttachment(RootComponent);
 	//Body->SetupAttachment(RootComponent);
 	bIsItemVaild = true;

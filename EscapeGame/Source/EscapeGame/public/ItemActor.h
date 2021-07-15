@@ -59,7 +59,8 @@ protected:
 		UParticleSystemComponent* Effect;
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
 		class UMiniMapMarkerComponent* MiniMapMarker;
-
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+		USceneComponent* Root;
 	//이 아이템을 가지고 있는 엑터
 	UPROPERTY(VisibleAnywhere)
 		ACharacter* OwnerActor;
