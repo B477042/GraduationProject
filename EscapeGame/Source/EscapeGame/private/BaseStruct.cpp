@@ -16,7 +16,7 @@ ABaseStruct::ABaseStruct()
 	MiniMapTileMesh->SetupAttachment(SceneRoot);
 	
 	MiniMapTileMesh->SetRelativeLocation(POS_Minimap);
-	MiniMapTileMesh->SetMobility(EComponentMobility::Static);
+	MiniMapTileMesh->SetMobility(EComponentMobility::Stationary);
 	MiniMapTileMesh->SetRelativeLocation(POS_Minimap);
 }
 
