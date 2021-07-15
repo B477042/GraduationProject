@@ -40,5 +40,5 @@ private:
 	UPROPERTY(VisibleAnywhere,Category=mesh)
 		UStaticMeshComponent*  Root;
 	UPROPERTY(VisibleAnywhere, Category = mesh)
-		USceneComponent  *FirePoint;
+		UStaticMeshComponent*FirePoint;
 };

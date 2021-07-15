@@ -37,7 +37,7 @@ void AFireBallTrap::Tick(float DeltaTime)
 void AFireBallTrap::initComponents()
 {
 	Root= CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Root"));
-	FirePoint = CreateDefaultSubobject<USceneComponent>(TEXT("FIREPOINT"));
+	FirePoint = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("FIREPOINT"));
 	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger"));
 
 	RootComponent = Root;
