@@ -12,7 +12,7 @@ ABaseStruct::ABaseStruct()
 	MiniMapTileMesh = CreateDefaultSubobject<UMiniMapMarkerComponent>(TEXT("MINIMAPTILEMESH"));
 
 	RootComponent = SceneRoot;
-	SceneRoot->SetMobility(EComponentMobility::Stationary);
+	SceneRoot->SetMobility(EComponentMobility::Static);
 	MiniMapTileMesh->SetupAttachment(SceneRoot);
 
 	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Marker(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_PathMarker.MI_PathMarker'"));
@@ -22,7 +22,7 @@ ABaseStruct::ABaseStruct()
 	}
 	
 	MiniMapTileMesh->SetRelativeLocation(POS_Minimap);
-	MiniMapTileMesh->SetMobility(EComponentMobility::Stationary);
+	MiniMapTileMesh->SetMobility(EComponentMobility::Static);
 	MiniMapTileMesh->SetRelativeLocation(POS_Minimap);
 }
 
