@@ -320,8 +320,7 @@ void AGruntCharacter::ReadToDead()
 	con->StopAI();
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("NoCollision"));
 	
-	auto Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
-	if (!Anim)return;
+	
 	Anim->PlayDeadAnim();
 }
 
