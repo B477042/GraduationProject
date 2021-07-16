@@ -8,7 +8,7 @@ ASpearActor::ASpearActor()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BODY"));
-	Root = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ROOT"));
+	Root = CreateDefaultSubobject<USceneComponent>(TEXT("ROOT"));
 	Durability = 10.0f;
 	RootComponent = Root;
 	Body->SetupAttachment(Root);
@@ -27,7 +27,7 @@ ASpearActor::ASpearActor()
 
 void ASpearActor::SetCollisionProfileTo(FName profile)
 {
-	Root->SetCollisionProfileName(profile);
+
 	Body->SetCollisionProfileName(profile);
 }
 
@@ -44,7 +44,7 @@ float ASpearActor::TakeDamage(float DamageAmount, FDamageEvent const & DamageEve
 	
 	if (Durability <= 0.0f)
 	{
-		Root->SetCollisionProfileName(TEXT("NoCollision"));
+		
 		SetActorHiddenInGame(true);
 		Destroy();
 	}
