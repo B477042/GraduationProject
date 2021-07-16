@@ -32,10 +32,11 @@ public:
 	void PlayDeadAnim();
 	
 	FOnFireAttack OnFireAttack;
-
-protected:
+	UAnimMontage* GetFireAttackMontage();
 	
-
+protected:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Montage", meta = (AllowPrivateAccess = true))
+		UAnimMontage* FireAttackMontage;
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		bool bIsDead;
 

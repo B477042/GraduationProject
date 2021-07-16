@@ -254,6 +254,9 @@ void AGruntCharacter::Attack()
 void AGruntCharacter::FireAttack()
 {
 	if (!Anim)return;
+	//Montage 재생
+	Anim->Montage_Play(Anim->GetFireAttackMontage());
+	
 	//발사 파티클을 만들 위치
 	FVector PosPSPlay = GetMesh()->GetSocketLocation(SockFirePointR);
 	//발사 파티클의 회전 값
