@@ -10,7 +10,7 @@
  * 
  */
 
-DECLARE_DYNAMIC_DELEGATE(FOnFireAttack);
+DECLARE_DELEGATE(FOnFireAttack);
 
 UCLASS()
 class ESCAPEGAME_API UAnim_Grunt : public UCharacterAnimInstance
@@ -26,7 +26,7 @@ public:
 	UFUNCTION()
 	void AnimNotify_Notify_CheckRange();
 	UFUNCTION()
-		void Notify_FireStart();
+		void AnimNotify_Notify_FireStart();
 	
 	UFUNCTION()
 	void PlayDeadAnim();

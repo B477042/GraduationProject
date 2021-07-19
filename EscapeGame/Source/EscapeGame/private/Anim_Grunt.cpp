@@ -51,9 +51,9 @@ void UAnim_Grunt::AnimNotify_Notify_CheckRange()
 
 }
 
-void UAnim_Grunt::Notify_FireStart()
+void UAnim_Grunt::AnimNotify_Notify_FireStart()
 {
-	
+	OnFireAttack.Execute();
 }
 
 void UAnim_Grunt::PlayDeadAnim()

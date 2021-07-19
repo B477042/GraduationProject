@@ -33,7 +33,7 @@ protected:
 	virtual void LoadGame(const class UEGSaveGame* LoadInstance)override;
 
 
-
+	void PlayMuzzleEffect();
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -65,10 +65,15 @@ protected:
 	
 	UPROPERTY(EditInstanceOnly, Category = "Stat")
 	UStatComponent_EGrunt* Stat;
-	UPROPERTY(EditInstanceOnly, Category = "PSystem")
-	UParticleSystemComponent* PSFireEffect;
+	UPROPERTY(EditInstanceOnly, Category = "SFX")
+	UAudioComponent* SFX_Explosion;
+	UPROPERTY(EditInstanceOnly, Category = "SFX")
+	UAudioComponent* SFX_Burst;
+	UPROPERTY(EditInstanceOnly, Category = "VFX")
+	UParticleSystemComponent* VFX_MuzzleEffect;
+	UPROPERTY(EditInstanceOnly, Category = "VFX")
+	UParticleSystemComponent* VFX_HitEffect;
 	
-
 	//Stat Component 정리되면 거기에 넣는다. 전방 탐지 범위
 	UPROPERTY(VisibleInstanceOnly, Category = Stat)
 		float MeleeAttackRange;

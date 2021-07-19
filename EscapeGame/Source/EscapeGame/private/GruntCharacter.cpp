@@ -8,6 +8,7 @@
 #include "EGPlayerCharacter.h"
 #include "EGSaveGame.h"
 #include "EGGameInstance.h"
+#include "DrawDebugHelpers.h"
 
 //const float AGruntCharacter::MaxHP = 200.0f;
 const float AGruntCharacter::MinWalkingSpeed = 0.0f;
@@ -27,19 +28,53 @@ AGruntCharacter::AGruntCharacter()
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	
 	Stat = CreateDefaultSubobject<UStatComponent_EGrunt>(TEXT("STAT"));
-	PSFireEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("PSFireEffect"));
+	VFX_MuzzleEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("VFX_MuzzleEffect"));
+	VFX_HitEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("VFX_HitEffect"));
+	SFX_Explosion = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_EXPLOSION"));
+	SFX_Burst = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Burst"));
 	/*
-	* Load Fire Attack Particle
+	*	VFX Muzzle Effect Settings
+	* 
 	*/
-	
 	static ConstructorHelpers::FObjectFinder<UParticleSystem>PS_Fire(TEXT("ParticleSystem'/Game/ParagonHowitzer/FX/Particles/Abilities/Primary/FX/P_Grenade_Muzzle.P_Grenade_Muzzle'"));
 	if (PS_Fire.Succeeded())
 	{
-		PSFireEffect->SetTemplate(PS_Fire.Object);
-		PSFireEffect->bAutoActivate = false;
+		VFX_MuzzleEffect->SetTemplate(PS_Fire.Object);
+		VFX_MuzzleEffect->bAutoActivate = false;
 
 	}
+	/*
+	 *	VFX Hit Effect Settings
+	 *
+	 */
+	static ConstructorHelpers::FObjectFinder<UParticleSystem>PS_Hit(TEXT("ParticleSystem'/Game/GrenadePack/Particles/VFX_GrenadeEXP_air.VFX_GrenadeEXP_air'"));
+	if (PS_Hit.Succeeded())
+	{
+		VFX_HitEffect->SetTemplate(PS_Hit.Object);
+		VFX_HitEffect->bAutoActivate = false;
+	}
+	/*
+	 *	SFX Explosion Settings
+	 * 
+	 */
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_EXPLOSION(TEXT("SoundWave'/Game/MyFolder/Sound/SE/WAV_GroundExplosion01.WAV_GroundExplosion01'"));
+	if (SB_EXPLOSION.Succeeded())
+	{
+		SFX_Explosion->SetSound(SB_EXPLOSION.Object);
+		SFX_Explosion->bAutoActivate = false;
+	}
+	static ConstructorHelpers::FObjectFinder<USoundAttenuation >SA_Attenuation(TEXT("SoundAttenuation'/Game/MyFolder/Sound/FireBallCastAttenuation.FireBallCastAttenuation'"));
+	if (SA_Attenuation.Succeeded())
+	{
+		SFX_Explosion->AttenuationSettings = SA_Attenuation.Object;
+	}
 
+	/*
+	 * SFX Burst Settings
+	 */
+	
+	
+	
 	//Set Melee Attack Range To 100cm
 	MeleeAttackRange = 240.0f;
 	MeleeAttackExtent = FVector(100.0f,50.0f,50.0f);
@@ -66,10 +101,10 @@ AGruntCharacter::AGruntCharacter()
 	else
 		EGLOG(Warning, TEXT("Faile"));
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-	//Stat = CreateDefaultSubobject<UStatComponent_Enemy>(TEXT("STAT"));
-	//if (Stat == nullptr)EGLOG(Warning, TEXT("Enemy's Stat is null"));
-
+ 
+	//CSV File을 기반으로 한 스텟 부여 설정
 	bAllowRandStat = true;
+
 }
 
 void AGruntCharacter::BeginPlay()
@@ -88,6 +123,9 @@ void AGruntCharacter::BeginPlay()
 		HPBar->SetPercent(Stat->GetHPRatio());
 	});
 	HPBar->SetPercent(Stat->GetHPRatio());
+
+	//Bind Muzzle Fire 
+	Anim->OnFireAttack.BindUObject(this, &AGruntCharacter::PlayMuzzleEffect);
 	
 }
 
@@ -225,6 +263,18 @@ void AGruntCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 
 }
 
+void AGruntCharacter::PlayMuzzleEffect()
+{
+	
+	VFX_MuzzleEffect->SetWorldLocation(	GetMesh()->GetSocketLocation(SockFirePointR));
+	//Play Particle
+	if(VFX_MuzzleEffect->IsActive())
+	{
+		VFX_MuzzleEffect->Deactivate();
+	}
+
+	VFX_MuzzleEffect->Activate();
+}
 
 
 void AGruntCharacter::Tick(float DeltaTime)
@@ -269,7 +319,7 @@ void AGruntCharacter::FireAttack()
 	 */
 
 	// 발사 지점에서 원까지 거리 
-	float DistOffset = 300.0f;
+	float DistOffset = 30.0f;
 	//유효 사정거리
 	float Range = 3000.0f;
 	//원 지름
@@ -286,6 +336,8 @@ void AGruntCharacter::FireAttack()
 	FVector EndPoint= AimPoint + (GetActorForwardVector() * Range);
 	FHitResult HitResult;
 	
+
+	
 	
 	auto World = GetWorld();
 	if(!World)
@@ -293,6 +345,12 @@ void AGruntCharacter::FireAttack()
 		EGLOG(Warning, TEXT("World is invalid"));
 		return;
 	}
+
+	//디버그용 라인
+	DrawDebugLine(World, PosPSPlay, EndPoint, FColor::Cyan, false, 10.0f);
+
+
+	
 	//All Block Trace
 	bool bResult = World->LineTraceSingleByChannel(HitResult, PosPSPlay, EndPoint, ECollisionChannel::ECC_GameTraceChannel4);
 	//맞았다면
@@ -304,8 +362,21 @@ void AGruntCharacter::FireAttack()
 		//데미지 처리
 		FDamageEvent DamageEvent;
 		HitResult.Actor->TakeDamage(AtkFireAtk, DamageEvent, GetController(), this);
+
 		//히트 판정 파티클&사운드 출력
+		VFX_HitEffect->SetWorldLocation(PosHit);
+		SFX_Explosion->SetWorldLocation(PosHit);
+		if(VFX_HitEffect->IsActive())
+		{
+			VFX_HitEffect->Deactivate();
+		}
+		if(SFX_Explosion->IsActive())
+		{
+			SFX_Explosion->Deactivate();
+		}
 		
+		VFX_HitEffect->Activate();
+		SFX_Explosion->Activate();
 	}
 	
 }
