@@ -63,22 +63,40 @@ AGruntCharacter::AGruntCharacter()
 		SFX_Explosion->SetSound(SB_EXPLOSION.Object);
 		SFX_Explosion->bAutoActivate = false;
 	}
-	static ConstructorHelpers::FObjectFinder<USoundAttenuation >SA_Attenuation(TEXT("SoundAttenuation'/Game/MyFolder/Sound/FireBallCastAttenuation.FireBallCastAttenuation'"));
+	/*static ConstructorHelpers::FObjectFinder<USoundAttenuation >SA_Attenuation(TEXT("SoundAttenuation'/Game/MyFolder/Sound/FireBallCastAttenuation.FireBallCastAttenuation'"));
 	if (SA_Attenuation.Succeeded())
 	{
 		SFX_Explosion->AttenuationSettings = SA_Attenuation.Object;
-	}
+	}*/
 
 	/*
 	 * SFX Burst Settings
 	 */
-	
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_Burst(TEXT("SoundWave'/Game/MyFolder/Sound/SE/tow-missile-launch-1-no-echo.tow-missile-launch-1-no-echo'"));
+	if (SB_EXPLOSION.Succeeded())
+	{
+		SFX_Burst->SetSound(SB_Burst.Object);
+		SFX_Burst->bAutoActivate = false;
+		SFX_Burst->SetupAttachment(RootComponent);
+	}
+
+	/*
+	 *	SFX Sound Attenuation
+	 * 
+	 */
+	static ConstructorHelpers::FObjectFinder<USoundAttenuation >SA_Burst(TEXT("SoundAttenuation'/Game/MyFolder/Sound/Attenuation_TowMissile.Attenuation_TowMissile'"));
+	if (SA_Burst.Succeeded())
+	{
+		SFX_Burst->AttenuationSettings = SA_Burst.Object;
+		SFX_Explosion->AttenuationSettings = SA_Burst.Object;
+	}
 	
 	
 	//Set Melee Attack Range To 100cm
 	MeleeAttackRange = 240.0f;
 	MeleeAttackExtent = FVector(100.0f,50.0f,50.0f);
-	AtkMeleeAtk = 10.0f;
+	AtkMeleeAtk = 15.0f;
+	AtkFireAtk = 25.0f;
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh>SM_Body(TEXT("SkeletalMesh'/Game/ParagonHowitzer/Characters/Heroes/Howitzer/Skins/Tier_2/Domed/Meshes/Howitzer_Domed.Howitzer_Domed'"));
 	if (SM_Body.Succeeded())
 	{
@@ -274,6 +292,14 @@ void AGruntCharacter::PlayMuzzleEffect()
 	}
 
 	VFX_MuzzleEffect->Activate();
+
+	//Play Lunch Sounds
+	if(SFX_Burst->IsActive())
+	{
+		SFX_Burst->Deactivate();
+	}
+
+	SFX_Burst->Activate();
 }
 
 
@@ -323,7 +349,7 @@ void AGruntCharacter::FireAttack()
 	//유효 사정거리
 	float Range = 3000.0f;
 	//원 지름
-	float Radius = 50.0f;
+	float Radius = 200.0f;
 	//원의 중심 위치
 	FVector Center = PosPSPlay + (GetActorForwardVector() * DistOffset);
 	//조준 지점. 원의 위치에서 랜덤하게 한다

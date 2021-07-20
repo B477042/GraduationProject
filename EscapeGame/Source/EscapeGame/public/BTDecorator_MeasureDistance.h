@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(meta = (ToolTip = "Measure the distance between yourself and the target. Returns true if the measurement is farther than Standard Distanc"))
 class ESCAPEGAME_API UBTDecorator_MeasureDistance : public UBTDecorator
 {
 	GENERATED_BODY()
@@ -19,8 +19,9 @@ public:
 
 	virtual bool CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const override;
 	
-	UPROPERTY(BlueprintReadWrite, Category = "Variable", meta = (ToolTip = "Return true if shorter than this value"))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Variable", meta = (ToolTip = "Return true if shorter than this value"))
 		float StandardDistance;
+	
 	const FName TARGETPOS = "TargetPos";
 	
 };

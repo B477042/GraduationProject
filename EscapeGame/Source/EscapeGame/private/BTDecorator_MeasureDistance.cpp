@@ -7,6 +7,7 @@
 UBTDecorator_MeasureDistance::UBTDecorator_MeasureDistance()
 {
 	NodeName = TEXT("Measure Distance To Target");
+	
 	StandardDistance = 400.0f;
 }
 
@@ -28,13 +29,15 @@ bool UBTDecorator_MeasureDistance::CalculateRawConditionValue(UBehaviorTreeCompo
 
 	float ResultDist = FVector::Distance(TargetPos, OwnerPos);
 	
-	if(ResultDist < StandardDistance)
+	if(ResultDist > StandardDistance)
 	{
+		EGLOG(Log, TEXT("Too Far"));
 		return true;
 		
 	}
 	else
 	{
+		EGLOG(Log, TEXT("Too Close"));
 		return false;
 	}
 	
