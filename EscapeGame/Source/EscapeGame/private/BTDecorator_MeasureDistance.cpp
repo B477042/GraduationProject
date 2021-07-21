@@ -23,11 +23,16 @@ bool UBTDecorator_MeasureDistance::CalculateRawConditionValue(UBehaviorTreeCompo
 		UE_LOG(LogTemp, Warning, TEXT("Decorator Casting Failed"));
 		return false;
 	}
+	auto TargetActor = Cast<AActor>(BB->GetValueAsObject(TARGETPLAYER));
+	
+	
 	//Target Pos Vector Value
-	const FVector TargetPos = BB->GetValueAsVector(TARGETPOS);
+	const FVector TargetPos = TargetActor->GetActorLocation();
 	const FVector OwnerPos = Controller->GetPawn()->GetActorLocation();
 
-	float ResultDist = FVector::Distance(TargetPos, OwnerPos);
+	const float ResultDist = FVector::Distance(TargetPos, OwnerPos);
+
+	EGLOG(Warning, TEXT("Measure Distance : %f"), ResultDist);
 	
 	if(ResultDist > StandardDistance)
 	{

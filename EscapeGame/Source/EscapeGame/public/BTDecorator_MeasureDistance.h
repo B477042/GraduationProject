@@ -22,6 +22,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Variable", meta = (ToolTip = "Return true if shorter than this value"))
 		float StandardDistance;
 	
-	const FName TARGETPOS = "TargetPos";
+	const FName TARGETPLAYER = "TargetPlayer";
 	
 };

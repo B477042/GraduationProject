@@ -4,6 +4,8 @@
 
 //#include "CoreMinimal.h"
 #include "EnemyAIController.h"
+#include "Perception/AIPerceptionTypes.h"
+#include "Perception/AISenseConfig_Sight.h"
 #include "EnemyAIController_Grunt.generated.h"
 
 /**
@@ -25,9 +27,16 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void StopAI()override;
 protected:
+	UFUNCTION()
+		virtual void OnPerceptionUpdated(const TArray<AActor*>& UpdatedActors);
+	UFUNCTION()
+		void OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
+
+protected:
 	//Data Table for Grunt Enemy
 	UPROPERTY(VisibleAnywhere, Category = DataTable)
 		class UDataTable* DT_Grunt;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
+		class UAISenseConfig_Sight* AiConfigSight;
 
 };
