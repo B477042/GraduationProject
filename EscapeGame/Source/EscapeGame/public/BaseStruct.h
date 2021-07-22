@@ -5,6 +5,7 @@
 #include "EscapeGame.h"
 #include "GameFramework/Actor.h"
 #include "MiniMapMarkerComponent.h"
+#include "Math/Color.h"
 #include "BaseStruct.generated.h"
 
 UCLASS(Abstract, BlueprintType)
@@ -23,9 +24,18 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+ 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 		USceneComponent* SceneRoot;
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Mesh")
 		UMiniMapMarkerComponent* MiniMapTileMesh;
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	class UMaterialInstanceDynamic* TileMaterial;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FLinearColor Color_Default;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FLinearColor Color_OnPlayer;
+	const FName Name_MainColor = "MainColor";
 };

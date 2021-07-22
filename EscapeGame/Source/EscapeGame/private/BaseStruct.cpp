@@ -2,7 +2,7 @@
 
 
 #include "BaseStruct.h"
-
+#include "Materials/MaterialInstanceDynamic.h"
 // Sets default values
 ABaseStruct::ABaseStruct()
 {
@@ -18,12 +18,17 @@ ABaseStruct::ABaseStruct()
 	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Marker(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_PathMarker.MI_PathMarker'"));
 	if(MI_Marker.Succeeded())
 	{
-		MiniMapTileMesh->SetMaterial(0, MI_Marker.Object);
+		TileMaterial = UMaterialInstanceDynamic::Create(MI_Marker.Object, MI_Marker.Object);
+		MiniMapTileMesh->SetMaterial(0, TileMaterial);
+		
 	}
 	
 	MiniMapTileMesh->SetRelativeLocation(POS_Minimap);
 	MiniMapTileMesh->SetMobility(EComponentMobility::Static);
 	MiniMapTileMesh->SetRelativeLocation(POS_Minimap);
+	//Set Dynamic Color
+	TileMaterial->GetVectorParameterValue(, Color_Default);
+	
 }
 
 // Called when the game starts or when spawned
