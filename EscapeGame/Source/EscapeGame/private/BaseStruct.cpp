@@ -26,8 +26,21 @@ ABaseStruct::ABaseStruct()
 	MiniMapTileMesh->SetRelativeLocation(POS_Minimap);
 	MiniMapTileMesh->SetMobility(EComponentMobility::Static);
 	MiniMapTileMesh->SetRelativeLocation(POS_Minimap);
+	
+
+	/*
+	 *======================================================
+	 * Material Parameters
+	 */
+	FMaterialParameterInfo MaterialParameterInfo;
+	MaterialParameterInfo.Name = Name_MainColor;
 	//Set Dynamic Color
-	TileMaterial->GetVectorParameterValue(, Color_Default);
+	bool bResult = TileMaterial->GetVectorParameterValue(MaterialParameterInfo, Color_Default);
+	if(!bResult)
+	{
+		EGLOG(Warning, TEXT("Get Vector Failed"));
+	}
+	Color_OnPlayer = FLinearColor(255, 255, 255, 1);
 	
 }
 

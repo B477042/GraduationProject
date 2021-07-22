@@ -32,7 +32,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	class UMaterialInstanceDynamic* TileMaterial;
 	
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	
 		FLinearColor Color_Default;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
