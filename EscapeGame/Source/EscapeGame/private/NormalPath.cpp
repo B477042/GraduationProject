@@ -63,50 +63,52 @@ ANormalPath::ANormalPath()
 	//Object들 위치 배치
 	
 	Plate->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
-	//plate->SetRelativeRotation(FRotator(180.0f,90.0f,180.0f));
+	Plate->SetMobility(EComponentMobility::Stationary);
 
 	LeftSideWall->SetRelativeLocation(FVector(10.0f, 0.0f, 0.0f));
-	//LeftSideWall->SetRelativeRotation(FRotator(0.0f, 270.0f, 0.0f));
-
-	//(X = -330.000000, Y = -360.000000, Z = 0.000000)
-
-	//(Pitch = 0.000000, Yaw = -180.000000, Roll = 0.000000)
+	
 	RightSideWall->SetRelativeLocation(FVector(-330.0f, -360.0f, 0.0f));
 	RightSideWall->SetRelativeRotation(FRotator(0.0f, -180.0f, 0.0f));
 
-	//(X=0.000000,Y=-360.000000,Z=410.000000)
-	//(Pitch=0.000000,Yaw=0.000000,Roll=0.000000)
+	
 	Ceiling->SetRelativeLocation(FVector(0.0f, -360.0f, 410.0f));
 	Ceiling->SetRelativeRotation(FRotator(0.0f, 0.0f, 0.0f));
 	
-	//(X=-170.000000,Y=-150.000000,Z=410.000000)
-	//(Pitch=0.000000,Yaw=90.000000,Roll=180.000244)
-	//(X=1.500000,Y=1.000000,Z=1.000000)
+	
 	LampMesh->SetRelativeLocation(FVector(-170.0f, -150, 410.0f));
-	//LampMesh->SetRelativeRotation(FRotator(180.0f, 90.0f, 00.0f));
 	LampMesh->SetRelativeScale3D(FVector(1.5f, 1.0f, 1.0f));
-	//(X=-160.000000,Y=-130.000000,Z=410.000000)
-	//(Pitch=-90.000000,Yaw=0.000000,Roll=0.000000)
-	LampLight->SetRelativeLocation(FVector(-160.0f,-130.0f,410.0f));
+
+ 
+	LampLight->SetRelativeLocation(FVector(-160.0f,-180.0f,410.0f));
 	LampLight->SetRelativeRotation(FRotator(-90.0f,0.0f,0.0f));
+	
 //SpotLight 밝기 조절
 	LampLight->SetIntensity(5000.695313f);
 	LampLight->SetAttenuationRadius(428.286865f);
-	LampLight->SetInnerConeAngle(21.464767f);
-	LampLight->SetOuterConeAngle(28.952377f);
-
-	
+	LampLight->SetInnerConeAngle(19.923807f);
+	LampLight->SetOuterConeAngle(26.695234f);
+	//Mobility
+	Plate->SetMobility(EComponentMobility::Stationary);
+	LeftSideWall->SetMobility(EComponentMobility::Stationary);
+	RightSideWall->SetMobility(EComponentMobility::Stationary);
+	Ceiling->SetMobility(EComponentMobility::Stationary);
+	LampMesh->SetMobility(EComponentMobility::Stationary);
 	LampLight->SetMobility(EComponentMobility::Stationary);
 
 
+
 	//UPROPERTY 계층구조 만들기
-	RootComponent = Plate;
+	Plate->SetupAttachment(RootComponent);
 	LeftSideWall->SetupAttachment(Plate);
 	RightSideWall->SetupAttachment(Plate);
 	Ceiling->SetupAttachment(Plate);
 	LampMesh->SetupAttachment(Plate);;
-
 	LampLight->SetupAttachment(Plate);
+
+	//MiniMapTile설정
+	MiniMapTileMesh->SetRelativeLocation(FVector(-160, -180, POS_Minimap.Z));
+	MiniMapTileMesh->SetRelativeScale3D(FVector(3.4375f, 3.8125f, 1.0f));
+	
 
 
 }
@@ -117,11 +119,3 @@ void ANormalPath::BeginPlay()
 	Super::BeginPlay();
 	
 }
-
-//// Called every frame
-//void ANormalPath::Tick(float DeltaTime)
-//{
-//	//Super::Tick(DeltaTime);
-//
-//}
-

@@ -2,12 +2,11 @@
 
 #pragma once
 
-#include "EscapeGame.h"
-#include "GameFramework/Actor.h"
+#include "BaseStruct.h"
 #include "OneSideBlockedPath.generated.h"
 
 UCLASS()
-class ESCAPEGAME_API AOneSideBlockedPath : public AActor
+class ESCAPEGAME_API AOneSideBlockedPath : public ABaseStruct
 {
 	GENERATED_BODY()
 	

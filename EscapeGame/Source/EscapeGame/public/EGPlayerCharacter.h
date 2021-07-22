@@ -12,6 +12,7 @@
 #include "Component_SelfDamage.h"
 #include "Component_Inventory.h"
 #include "SkillContainer_PlayerHitEffect.h"
+#include "PaperSpriteComponent.h"
 #include "EGPlayerCharacter.generated.h"
 
 //DECLARE_DELEGATE(FOnKeyPressed);
@@ -24,18 +25,16 @@ class ESCAPEGAME_API AEGPlayerCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
+	
 	AEGPlayerCharacter();
-	 //FOnKeyPressed OnKeyPressed;
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	//virtual void 
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	
-	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void PostInitializeComponents() override;
 
@@ -56,8 +55,10 @@ public:
 	 void ToggleMap();
 	 void PressGuard();
 	 void ReleaseGuard();
-	 
-	 
+
+	
+	 UStatComponent_Player* GetStatComponent();
+	 UComponent_Inventory* GetInventory();
 
 	 
 	 void ActiveThunder();
@@ -71,59 +72,18 @@ public:
 	 //Over 10 Damage -> Reacting
 	 UPROPERTY(BlueprintAssignable)
 	 FOnTakeHugeDamage OnTakeHugeDamageDelegate;
-	 
-	//=====================================================================
-	//Public Not UPROPERTY member 
+ 
 public:
-	float ArmLengthTo = 0.0f;
-	FRotator ArmRotationTo = FRotator::ZeroRotator;
-	float ArmLengthSpeed = 0.0f;
-	float ArmRotationSpeed = 0.0f;
-	
-	 UStatComponent_Player* GetStatComponent();
-	 UComponent_Inventory* GetInventory();
-
-	
-
-	//const AController* GetController();
-
-	 ////===============Static Vars
-	//// const static float MaxHP;
-	// const static float MaxWalkingSpeed;
-	// const static float MaxRunningSpeed;
-	// const static float MinWalkingSpeed;
-
-	//=====================================================================
-	// Public UPROPERTY Zone
-public:
-	UPROPERTY(VisibleAnywhere, Category = MainCam)
-		USpringArmComponent* SpringArm;
-	UPROPERTY(VisibleAnywhere, Category = MainCam)
-		UCameraComponent* Camera;
-	UPROPERTY(VisibleAnywhere, Category = Minimap)
-		USpringArmComponent* MiniMapArm;
-	UPROPERTY(VisibleAnywhere, Category = Minimap)
-		UMiniMapRenderComponent* MapRenderer;
-	UPROPERTY(BlueprintReadOnly,EditInstanceOnly, Category = Stat)
-		UStatComponent_Player* Stat;
-	UPROPERTY(EditAnywhere, Category = "Damage")
-		UComponent_SelfDamage* SelfDamage;
+	UPROPERTY(BlueprintReadOnly, EditInstanceOnly, Category = Stat)
+	UStatComponent_Player* Stat;
 	UPROPERTY(VisibleAnywhere, Category = "inventory")
-		UComponent_Inventory* Inventory;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WeaponBox", meta = (AllowPrivateAccess = "true"))
-		UBoxComponent* WeaponCollision;
-	//SoundCue'/Game/ParagonKwang/Characters/Heroes/Kwang/Sounds/SoundCues/Kwang_Effort_Attack.Kwang_Effort_Attack'
-	UPROPERTY(VisibleAnywhere, Category = "Sound")
-		UAudioComponent* AttackSound;
-	UPROPERTY(VisibleAnywhere, meta = (AllowClasses))
-		USkillContainer_PlayerHitEffect* Container_Hit;
+	UComponent_Inventory* Inventory;
 
-
-	UPROPERTY(VisibleAnywhere)
-		UParticleSystemComponent * SwordEffect;
+	
 private:
 	void InitComponents();
 	void LoadAssets();
+	void LoadHitEffects();
 	//void SetupMiniMap();
 	//=========================
 	//Camera Category Init Functions
@@ -146,16 +106,20 @@ private:
 
 	void Move(float DeltaTime);
 
-	void loadHitEffects();
+	/*
+	 * Reflact All Projectile Type Attack
+	 * 
+	 */
+	float ReflectProjectiles(AActor* DamageCauser, float FinalDamage);
 
-	UFUNCTION(BlueprintCallable)
-	void loadGameData(const class UEGSaveGame* LoadInstance);
-
-	void onNextStage(const class UEGSaveGame* LoadInstance);
+	void OnNextStage(const class UEGSaveGame* LoadInstance);
 
 	//현재 체력에 따라 카메라에 이펙트를 준다. HP가 변하면 업데이트가 되게끔
 	void DamagedPostEffect();
 
+
+	UFUNCTION(BlueprintCallable)
+	void LoadGameData(const class UEGSaveGame* LoadInstance);
 
 	UFUNCTION()
 		void OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
@@ -174,27 +138,64 @@ private:
 		void ComboAttackEnd();
 	//Return Name of Hit Direction
 	UFUNCTION(BlueprintCallable)
-		FName calcHitDirection(AActor* DamageCauser);
+		FName CalcHitDirection(AActor* DamageCauser);
 
 	
-
-
-	/*UFUNCTION()
-		void ChargeAttackStart();
-	UFUNCTION()
-		void ChargeAttackEnd();*/
-
 //==================================================
-	float minMapArmLength;
-	float maxMapArmLength;
+	protected:
+		//Main Cam Spring Arm Values
+		float ArmLengthTo = 0.0f;
+		FRotator ArmRotationTo = FRotator::ZeroRotator;
+		float ArmLengthSpeed = 0.0f;
+		float ArmRotationSpeed = 0.0f;
+
+	/*
+	 *=====================================================
+	 * Main Camera Components
+	 */
+		UPROPERTY(VisibleAnywhere, Category = MainCam)
+		USpringArmComponent* SpringArm;
+		UPROPERTY(VisibleAnywhere, Category = MainCam)
+		UCameraComponent* Camera;
+
+	/*
+	 *=====================================================
+	 * MiniMap
+	 */
+		UPROPERTY(VisibleAnywhere, Category = MiniMap)
+		USpringArmComponent* MiniMapArm;
+		UPROPERTY(VisibleAnywhere, Category = MiniMap)
+		UMiniMapRenderComponent* MapRenderer;
+		/*미니맵에 표시되는 Marker용 */
+		UPROPERTY(BlueprintReadOnly, EditInstanceOnly, Category = "MiniMap", meta = (AllowPrivateAccess = true))
+		class UMiniMapMarkerComponent* MiniMapMarkerComponent;
+
+	/*
+	 *======================================================
+	 * Weapon Component
+	 */
+	
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WeaponBox", meta = (AllowPrivateAccess = "true"))
+		UBoxComponent* WeaponCollision;
+		//SoundCue'/Game/ParagonKwang/Characters/Heroes/Kwang/Sounds/SoundCues/Kwang_Effort_Attack.Kwang_Effort_Attack'
+		UPROPERTY(VisibleAnywhere, Category = "Sound")
+		UAudioComponent* AttackSound;
+		UPROPERTY(VisibleAnywhere, meta = (AllowClasses))
+		USkillContainer_PlayerHitEffect* Container_Hit;
+		UPROPERTY(VisibleAnywhere)
+		UParticleSystemComponent* SwordEffect;
+
+	
+		UPROPERTY(EditAnywhere, Category = "Damage")
+		UComponent_SelfDamage* SelfDamage;
+		
+
+	float minMiniMapArmLength;
+	float maxMiniMapArmLength;
 	bool bSetMapArm;
 
-	float CurrenVelocity;
-
-	
-	//private PROPERTY
-private:
-
+	float CurrentVelocity;
+  
 	UPROPERTY(VisibleInstanceOnly,/*BlueprintReadOnly,*/ Category = Anim, Meta=(AllowPrivateAccess=true))
 		class UAnim_Player* Anim;
 	UPROPERTY(VisibleInstanceOnly, Category = "SkillActor", meta = (AllowPrivateAccess = "true"))

@@ -8,6 +8,7 @@
 #include "EGPlayerCharacter.h"
 #include "EGSaveGame.h"
 #include "EGGameInstance.h"
+#include "DrawDebugHelpers.h"
 
 //const float AGruntCharacter::MaxHP = 200.0f;
 const float AGruntCharacter::MinWalkingSpeed = 0.0f;
@@ -20,16 +21,82 @@ AGruntCharacter::AGruntCharacter()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	//Set AI Controller
+	/*
+	 * Set AI Controller
+	 */
 	AIControllerClass = AEnemyAIController_Grunt::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	
 	Stat = CreateDefaultSubobject<UStatComponent_EGrunt>(TEXT("STAT"));
+	VFX_MuzzleEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("VFX_MuzzleEffect"));
+	VFX_HitEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("VFX_HitEffect"));
+	SFX_Explosion = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_EXPLOSION"));
+	SFX_Burst = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Burst"));
+	/*
+	*	VFX Muzzle Effect Settings
+	* 
+	*/
+	static ConstructorHelpers::FObjectFinder<UParticleSystem>PS_Fire(TEXT("ParticleSystem'/Game/ParagonHowitzer/FX/Particles/Abilities/Primary/FX/P_Grenade_Muzzle.P_Grenade_Muzzle'"));
+	if (PS_Fire.Succeeded())
+	{
+		VFX_MuzzleEffect->SetTemplate(PS_Fire.Object);
+		VFX_MuzzleEffect->bAutoActivate = false;
+
+	}
+	/*
+	 *	VFX Hit Effect Settings
+	 *
+	 */
+	static ConstructorHelpers::FObjectFinder<UParticleSystem>PS_Hit(TEXT("ParticleSystem'/Game/GrenadePack/Particles/VFX_GrenadeEXP_air.VFX_GrenadeEXP_air'"));
+	if (PS_Hit.Succeeded())
+	{
+		VFX_HitEffect->SetTemplate(PS_Hit.Object);
+		VFX_HitEffect->bAutoActivate = false;
+	}
+	/*
+	 *	SFX Explosion Settings
+	 * 
+	 */
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_EXPLOSION(TEXT("SoundWave'/Game/MyFolder/Sound/SE/WAV_GroundExplosion01.WAV_GroundExplosion01'"));
+	if (SB_EXPLOSION.Succeeded())
+	{
+		SFX_Explosion->SetSound(SB_EXPLOSION.Object);
+		SFX_Explosion->bAutoActivate = false;
+	}
+	/*static ConstructorHelpers::FObjectFinder<USoundAttenuation >SA_Attenuation(TEXT("SoundAttenuation'/Game/MyFolder/Sound/FireBallCastAttenuation.FireBallCastAttenuation'"));
+	if (SA_Attenuation.Succeeded())
+	{
+		SFX_Explosion->AttenuationSettings = SA_Attenuation.Object;
+	}*/
+
+	/*
+	 * SFX Burst Settings
+	 */
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_Burst(TEXT("SoundWave'/Game/MyFolder/Sound/SE/tow-missile-launch-1-no-echo.tow-missile-launch-1-no-echo'"));
+	if (SB_EXPLOSION.Succeeded())
+	{
+		SFX_Burst->SetSound(SB_Burst.Object);
+		SFX_Burst->bAutoActivate = false;
+		SFX_Burst->SetupAttachment(RootComponent);
+	}
+
+	/*
+	 *	SFX Sound Attenuation
+	 * 
+	 */
+	static ConstructorHelpers::FObjectFinder<USoundAttenuation >SA_Burst(TEXT("SoundAttenuation'/Game/MyFolder/Sound/Attenuation_TowMissile.Attenuation_TowMissile'"));
+	if (SA_Burst.Succeeded())
+	{
+		SFX_Burst->AttenuationSettings = SA_Burst.Object;
+		SFX_Explosion->AttenuationSettings = SA_Burst.Object;
+	}
 	
-	//Set Attack Range To 100cm
-	AttackRange = 240.0f;
-	AttackExtent = FVector(100.0f,50.0f,50.0f);
-	ATK = 10.0f;
+	
+	//Set Melee Attack Range To 100cm
+	MeleeAttackRange = 240.0f;
+	MeleeAttackExtent = FVector(100.0f,50.0f,50.0f);
+	AtkMeleeAtk = 15.0f;
+	AtkFireAtk = 25.0f;
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh>SM_Body(TEXT("SkeletalMesh'/Game/ParagonHowitzer/Characters/Heroes/Howitzer/Skins/Tier_2/Domed/Meshes/Howitzer_Domed.Howitzer_Domed'"));
 	if (SM_Body.Succeeded())
 	{
@@ -52,10 +119,10 @@ AGruntCharacter::AGruntCharacter()
 	else
 		EGLOG(Warning, TEXT("Faile"));
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-	//Stat = CreateDefaultSubobject<UStatComponent_Enemy>(TEXT("STAT"));
-	//if (Stat == nullptr)EGLOG(Warning, TEXT("Enemy's Stat is null"));
-
+ 
+	//CSV File을 기반으로 한 스텟 부여 설정
 	bAllowRandStat = true;
+
 }
 
 void AGruntCharacter::BeginPlay()
@@ -74,6 +141,9 @@ void AGruntCharacter::BeginPlay()
 		HPBar->SetPercent(Stat->GetHPRatio());
 	});
 	HPBar->SetPercent(Stat->GetHPRatio());
+
+	//Bind Muzzle Fire 
+	Anim->OnFireAttack.BindUObject(this, &AGruntCharacter::PlayMuzzleEffect);
 	
 }
 
@@ -87,20 +157,23 @@ void AGruntCharacter::PostInitializeComponents()
 	if(Stat!=nullptr)
 	Stat->SetSpeedLimits(MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
 
-	auto Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
+	Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
 	if (!Anim)return;
-
-	//공격을 플레이할 때 호출되고 공격에 대한 판정을 시도합니다. 
+	
+	/*
+	 *	Attack Event Delegate Add Lambda
+	 *	람다 함수 바인딩
+	 *	공격을 플레이할 때 호출되고 공격에 대한 판정을 시도합니다. 
+	 * 
+	 */
 	Anim->AttackEvent_Delegate.AddLambda([this]()->void {
-		
-	//EGLOG(Error, TEXT("ANIm notify test start"));
 	FHitResult HitResult;
-	FVector EndPoint = GetActorLocation() + GetActorForwardVector()*AttackRange;
+	FVector EndPoint = GetActorLocation() + GetActorForwardVector()*MeleeAttackRange;
 	FCollisionQueryParams Params(NAME_None, false, this);
 
 	//ECC_EngineTraceChannel2 = 'Player' Trace
 	bool bResult = GetWorld()->SweepSingleByObjectType(HitResult, GetActorLocation(), EndPoint,
-			FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeBox(AttackExtent),Params);
+			FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeBox(MeleeAttackExtent),Params);
 
 	//if hit
 	if (bResult)
@@ -113,22 +186,20 @@ void AGruntCharacter::PostInitializeComponents()
 		}
 
 		FDamageEvent DamageEvent;
-		Player->TakeDamage(ATK, DamageEvent, GetController(), this);
-		EGLOG(Warning, TEXT("Give Damgae : %d"), ATK);
+		Player->TakeDamage(AtkMeleeAtk, DamageEvent, GetController(), this);
+		EGLOG(Warning, TEXT("Give Damgae : %d"), AtkMeleeAtk);
 	}
 	else
 		EGLOG(Error, TEXT("Notjhiog"));
 
 	});
 
-	//체력이 0이 됐을 때 호출될 함수들을 엮어줍니다
-	//Stat->HPZeroDelegate.AddUObject(this, &AGruntCharacter::ReadToDead);
-	//Stat->HPZeroDelegate.AddUObject(this, UAnim_Grunt::playDeadAnim);
+	//체력이 0이 됐을 때 호출될 람다 함수
 	Stat->HPZeroDelegate.AddLambda([this]()->void {
 		auto anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
 		if (!anim)
 		{
-			EGLOG(Warning, TEXT("Dead failed555555555555555555555555555555555555555555555555555555"));
+			
 			return;
 		}
 
@@ -200,7 +271,7 @@ void AGruntCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 	if (!LoadData)
 	{
 		EGLOG(Error, TEXT("LaodData FAILED"));
-		Destroy(this);
+		SetActorHiddenInGame(true);
 		return;
 	}
 
@@ -210,6 +281,26 @@ void AGruntCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 
 }
 
+void AGruntCharacter::PlayMuzzleEffect()
+{
+	
+	VFX_MuzzleEffect->SetWorldLocation(	GetMesh()->GetSocketLocation(SockFirePointR));
+	//Play Particle
+	if(VFX_MuzzleEffect->IsActive())
+	{
+		VFX_MuzzleEffect->Deactivate();
+	}
+
+	VFX_MuzzleEffect->Activate();
+
+	//Play Lunch Sounds
+	if(SFX_Burst->IsActive())
+	{
+		SFX_Burst->Deactivate();
+	}
+
+	SFX_Burst->Activate();
+}
 
 
 void AGruntCharacter::Tick(float DeltaTime)
@@ -224,10 +315,9 @@ void AGruntCharacter::Tick(float DeltaTime)
 void AGruntCharacter::Attack()
 {
 	//EGLOG(Warning, TEXT("Attack! Grunt"));
-
-	
-	auto Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
 	if (!Anim)return;
+	
+	
 	Anim->PlayAttackMontage();
 
 
@@ -235,6 +325,86 @@ void AGruntCharacter::Attack()
 	
 	
 
+}
+
+void AGruntCharacter::FireAttack()
+{
+	if (!Anim)return;
+	//Montage 재생
+	Anim->Montage_Play(Anim->GetFireAttackMontage());
+	
+	//발사 파티클을 만들 위치
+	FVector PosPSPlay = GetMesh()->GetSocketLocation(SockFirePointR);
+	//발사 파티클의 회전 값
+	FRotator RotPSPlay = GetActorRotation();
+
+	/*
+	 *	발사 방식
+	 *	Ray Tracing을 통한 타격 판정을 시행
+	 *	원으로 스프레이 형식으로 만들어 랜덤한 방향으로 Ray를 발사
+	 */
+
+	// 발사 지점에서 원까지 거리 
+	float DistOffset = 30.0f;
+	//유효 사정거리
+	float Range = 3000.0f;
+	//원 지름
+	float Radius = 200.0f;
+	//원의 중심 위치
+	FVector Center = PosPSPlay + (GetActorForwardVector() * DistOffset);
+	//조준 지점. 원의 위치에서 랜덤하게 한다
+	FVector AimPoint;
+	AimPoint.X = FMath::RandRange(Center.X - Radius, Center.X + Radius);
+	AimPoint.Y = FMath::RandRange(Center.Y - Radius, Center.Y + Radius);
+	AimPoint.Z = FMath::RandRange(Center.Z - Radius, Center.Z + Radius);
+
+	//Ray의 끝지점
+	FVector EndPoint= AimPoint + (GetActorForwardVector() * Range);
+	FHitResult HitResult;
+	
+
+	
+	
+	auto World = GetWorld();
+	if(!World)
+	{
+		EGLOG(Warning, TEXT("World is invalid"));
+		return;
+	}
+
+	//디버그용 라인
+	DrawDebugLine(World, PosPSPlay, EndPoint, FColor::Cyan, false, 10.0f);
+
+
+	
+	//All Block Trace
+	bool bResult = World->LineTraceSingleByChannel(HitResult, PosPSPlay, EndPoint, ECollisionChannel::ECC_GameTraceChannel4);
+	//맞았다면
+	if(bResult)
+	{
+		EGLOG(Warning, TEXT("Hit Target : %s"), *HitResult.Actor->GetName());
+		//맞은 지점의 위치
+		FVector PosHit= HitResult.ImpactPoint;
+		//데미지 처리
+		FDamageEvent DamageEvent;
+		HitResult.Actor->TakeDamage(AtkFireAtk, DamageEvent, GetController(), this);
+
+		//히트 판정 파티클&사운드 출력
+		VFX_HitEffect->SetWorldLocation(PosHit);
+		SFX_Explosion->SetWorldLocation(PosHit);
+		if(VFX_HitEffect->IsActive())
+		{
+			VFX_HitEffect->Deactivate();
+		}
+		if(SFX_Explosion->IsActive())
+		{
+			SFX_Explosion->Deactivate();
+		}
+		
+		VFX_HitEffect->Activate();
+		SFX_Explosion->Activate();
+	}
+	
 }
 
 
@@ -250,8 +420,7 @@ void AGruntCharacter::ReadToDead()
 	con->StopAI();
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("NoCollision"));
 	
-	auto Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
-	if (!Anim)return;
+	
 	Anim->PlayDeadAnim();
 }
 

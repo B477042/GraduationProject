@@ -47,9 +47,13 @@ bool UComponent_Inventory::AddItem(AItemActor * AddItem, int Amount)
 {
 	if (!AddItem)return false;
 	//만약 이 아이템이 이미 가지고 있는 것이라면
-	if (Items.Contains(AddItem->GetTag()))
+	FName ItemTag = AddItem->GetTag();
+	
+	if (Items.Contains(ItemTag))
 	{
-		 Items[AddItem->GetTag()].AddItem(Amount);
+		 Items[ItemTag].AddItem(Amount);
+		
+		 OnItemUpdated.Execute(ItemTag ,Items[ItemTag].GetAmountItems());
 		return true;
 	}
 
@@ -59,6 +63,7 @@ bool UComponent_Inventory::AddItem(AItemActor * AddItem, int Amount)
 		FItemDataInfo tempData ;
 		tempData.SetItemInfo(AddItem, Amount);
 		Items.Add(tempData.GetItem()->GetTag(), tempData);
+		OnItemUpdated.Execute(ItemTag, Amount);
 		return true;
 	}
 	return false;
@@ -71,8 +76,16 @@ bool UComponent_Inventory::UseItem(FName ItemName, ACharacter* UserActor)
 	//아이템의 갯수가 0 이하가 되면 이 아이템은 inventory에서 사라져야 됩니다.
 	if (!Items[ItemName].UseItem(UserActor))
 	{
+		OnItemUpdated.Execute(ItemName, 0);
 		Items.Remove(ItemName);
 	}
+	else
+	{
+		int Amount = Items[ItemName].GetAmountItems();
+		OnItemUpdated.Execute(ItemName, Amount);
+	}
+	
+	
 	return true;
 }
 

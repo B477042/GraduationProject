@@ -2,6 +2,7 @@
 
 #include "MiniMapRenderComponent.h"
 #include"Engine/TextureRenderTarget2D.h"
+#include "Materials/MaterialInstance.h"
 #include"GameSetting/public/EGCharacterSetting.h"
 
 // Sets default values for this component's properties
@@ -19,13 +20,30 @@ UMiniMapRenderComponent::UMiniMapRenderComponent()
 
 	}
 
+	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Post(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_OutLineShader.MI_OutLineShader'"));
+	if (MI_Post.Succeeded())
+	{
+		FWeightedBlendable Weighted;
+		Weighted.Object = Cast<UMaterialInstance>(MI_Post.Object);
+		Weighted.Weight = 2;
+
+		PostProcessSettings.WeightedBlendables.Array.Add(Weighted);
+
+	}
+
+	ProjectionType = ECameraProjectionMode::Orthographic;
+	FOVAngle=150;
+
 	
 	this->CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
 	bCaptureEveryFrame = true;
 	//TextureTarget->AdjustBrightness = 255.0f;
 
-	//���� ���߿� ��������
-	// ...
+	//Don't Caputre Skeletal Meshes
+	ShowFlags.SkeletalMeshes = false;
+	ShowFlags.EyeAdaptation = false;
+	
+
 }
 
 

@@ -10,7 +10,7 @@
  * 
  */
 
-
+DECLARE_DELEGATE(FOnFireAttack);
 
 UCLASS()
 class ESCAPEGAME_API UAnim_Grunt : public UCharacterAnimInstance
@@ -26,16 +26,19 @@ public:
 	UFUNCTION()
 	void AnimNotify_Notify_CheckRange();
 	UFUNCTION()
+		void AnimNotify_Notify_FireStart();
+	
+	UFUNCTION()
 	void PlayDeadAnim();
 	
-
-
-protected:
+	FOnFireAttack OnFireAttack;
+	UAnimMontage* GetFireAttackMontage();
 	
-
+protected:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Montage", meta = (AllowPrivateAccess = true))
+		UAnimMontage* FireAttackMontage;
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		bool bIsDead;
 
-private:
-
+ 
 };

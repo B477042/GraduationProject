@@ -28,7 +28,7 @@ public:
 		UStaticMeshComponent* Body;
 	//point to tail of Spear
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
-		UStaticMeshComponent* Root;
+		USceneComponent* Root;
 	UPROPERTY(EditInstanceOnly, Category = Stat)
 		float Durability;
 };

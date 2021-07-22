@@ -24,7 +24,7 @@ public:
 	virtual void ReadyToFire(const FVector &Dir_Vector, const FVector& Location,const FRotator& Rotate);
 
 	
-	virtual void SetSafety()override;
+	virtual void SetSafety(UParticleSystemComponent* PSystem)override;
 	virtual void ActivateHitEffect() override;
 	
 

@@ -2,13 +2,13 @@
 
 #pragma once
 
-#include "EscapeGame.h"
+#include "BaseStruct.h"
 #include "GameFramework/Actor.h"
 
 #include "NormalPath.generated.h"
 
 UCLASS()
-class ESCAPEGAME_API ANormalPath : public AActor
+class ESCAPEGAME_API ANormalPath : public ABaseStruct
 {
 	GENERATED_BODY()
 	

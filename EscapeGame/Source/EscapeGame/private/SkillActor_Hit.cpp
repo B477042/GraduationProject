@@ -76,6 +76,6 @@ void ASkillActor_Hit::UseSkill(const FVector & Point)
 
 void ASkillActor_Hit::OnSystemEnd(UParticleSystemComponent * PS)
 {
-	SetSafety();
+	SetSafety(PS);
 
 }

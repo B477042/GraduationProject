@@ -1,11 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "GameWidget.h"
+
+#include <string>
+
 #include "Component_Inventory.h"
 #include"Components/ProgressBar.h"
 #include"Components/TextBlock.h"
 #include "Math/Color.h"
 #include "Styling/SlateColor.h"
+#include "Item_CardKey.h"
+#include "Item_Recover.h"
 //#include"GameStat.h"
 
 //void UGameWidget::BindCharacterStat(UGameStat * NewCharacterStat)
@@ -27,12 +32,15 @@ void UGameWidget::NativeConstruct()
 	RecoveryItemNum = Cast<UTextBlock>(GetWidgetFromName(TEXT("RecoveryItemNum0")));
 	//Txt_TimerBlock=Cast<UTextBlock>(GetWidgetFromName(TEXT("TimerBlock")));
 
+	
+	
 	EGLOG(Error, TEXT("Test Widget"));
 	GameTimer = 60.0f;
 	RemainTime = GameTimer;
 	PlayerHP = 100.0f;
 	PlayerStamina = 100.0f;
 	HPAmount = 0;
+	
 }
 //연동된 character의 stat component에서 채력이 바뀔 때, 호출된다. 
 void UGameWidget::UpdateCharacterStat()
@@ -81,6 +89,33 @@ void UGameWidget::UpdateStamina()
 		PlayerStamina = CurrentCharacterStat->GetStamina();
 	}
 }
+
+void UGameWidget::UpdateItemes(FName ItemName, int Amount)
+{
+	//Card Key Item 처리
+	if(ItemName ==AItem_CardKey::Tag)
+	{
+		N_CardKeyItems = Amount;
+		if(N_CardKeyItems<=0)
+		{
+			//Img_Cardkey->SetBrushFromTexture(Img_Cardkeys[0]);
+		}
+		else
+		{
+			//Img_Cardkey->SetBrushFromTexture(Img_Cardkeys[1]);
+		}
+		
+	}
+	//Recover Item 처리
+	else if (ItemName==AItem_Recover::Tag)
+	{
+		N_RecoveryItems = Amount;
+		RecoveryItemNum->SetText(FText::FromString(FString::FromInt(N_RecoveryItems)));
+	}
+
+	
+}
+
 
 float UGameWidget::CheackTimeOut(float NewValue)
 {
@@ -143,16 +178,16 @@ void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 void UGameWidget::BindCharacterInven(UComponent_Inventory * newInven)
 {
 	if (newInven == nullptr) {
-		EGLOG(Error, TEXT("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"));
+		EGLOG(Error, TEXT("Inputed Param is nullptr"));
 		return;
 	}
 	//이미 설정 됐으면 튕긴다
-	if (CurrenPlayerInventory!=nullptr) {
-		EGLOG(Error, TEXT("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"));
+	if (CurrentPlayerInventory!=nullptr) {
+		EGLOG(Error, TEXT("Inven comp is already setted "));
 		return;
 	}
-	EGLOG(Warning, TEXT("Player Post init compo4*************************************ns"));
-	CurrenPlayerInventory = newInven;
+	 
+	CurrentPlayerInventory = newInven;
 
 }
 

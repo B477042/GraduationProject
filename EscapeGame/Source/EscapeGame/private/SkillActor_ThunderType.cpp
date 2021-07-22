@@ -50,7 +50,7 @@ void ASkillActor_ThunderType::PostInitializeComponents()
 
 void ASkillActor_ThunderType::OnSystemEnd(UParticleSystemComponent * PS)
 {
-	SetSafety();
+	SetSafety(PS);
 }
 
 

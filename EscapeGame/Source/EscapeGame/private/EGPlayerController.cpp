@@ -70,21 +70,23 @@ void AEGPlayerController::BeginPlay()
 	SyncStatToHUD();
 	EGLOG(Warning, TEXT("Controller begin play"));
 
-	KeyInputTest.AddUObject(this,&AEGPlayerController::IsMoveKeyPressed);
+	
 	
 	EGLOG(Warning, TEXT("Current Game Mode : %s"), *GetWorld()->GetFirstPlayerController()->GetName());
 	
 	FInputModeGameOnly GameOnly;
 	SetInputMode(GameOnly);
 
-	auto tempChara = Cast<AEGPlayerCharacter>(GetPawn());
-	if (!tempChara)
+	auto EGPlayer = Cast<AEGPlayerCharacter>(GetPawn());
+	if (!EGPlayer)
 	{
 	
 		return;
 	}
-	HUD->BindCharacterInven(tempChara->GetInventory());
-	
+	HUD->BindCharacterInven(EGPlayer->GetInventory());
+
+	/*EGPlayer->Inventory->OnItemUpdated.BindUFunction(HUD, FName("UpdateItemes"));
+	EGPlayer->Inventory->OnItemUpdated.Execute(FString("hi"),0);*/
 	//TutorialUI->Test(FText::FromString(TEXT("TestTs")), FText::FromString(TEXT("notitnotif")));
 
 
@@ -239,30 +241,6 @@ void AEGPlayerController::OnKillMode()
 	 
  }
 
-void AEGPlayerController::IsMoveKeyPressed()
- {
-	//inputkey
-	 if (IsInputKeyDown(EKeys::A))
-	 {
-		 EGLOG(Warning, TEXT("A Pressed"));
-		 //return true;
-	 }
-	 else if (IsInputKeyDown(EKeys::S))
-	 {
-		 EGLOG(Warning, TEXT("S Pressed"));
-	 }
-	 else if (IsInputKeyDown(EKeys::D))
-	 {
-		 EGLOG(Warning, TEXT("D Pressed"));
-	 }
-	 else if (IsInputKeyDown(EKeys::W))
-	 {
-		 EGLOG(Warning, TEXT("W Pressed"));
-	 }
-	
-	 
-	// return false;
- }
 
 const UDataTable * AEGPlayerController::GetDT_Player()
 {

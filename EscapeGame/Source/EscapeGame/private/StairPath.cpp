@@ -13,6 +13,40 @@ AStairPath::AStairPath()
 	SettingWorldMatrix();
 	MakeComponentsTree();
 
+	
+
+	
+	LampLight1->SetInnerConeAngle(19.809523f);
+	LampLight1->SetOuterConeAngle(25.076189f);
+	LampLight1->SetAttenuationRadius(612.470337f);
+	LampLight1->SetIntensity(10000.0f);
+	
+	LampLight2->SetInnerConeAngle(19.809523f);
+	LampLight2->SetOuterConeAngle(25.076189f);
+	LampLight2->SetAttenuationRadius(612.470337f);
+	LampLight2->SetIntensity(10000.0f);
+
+
+	MiniMapTileMesh->SetRelativeScale3D(FVector(5.75, 7.75, 1));
+	MiniMapTileMesh->SetRelativeLocation(FVector(90, -135, POS_Minimap.Z));
+
+	
+	Root->SetMobility(EComponentMobility::Stationary);
+	Plate1->SetMobility(EComponentMobility::Stationary);
+	Plate2->SetMobility(EComponentMobility::Stationary);
+	Wall1->SetMobility(EComponentMobility::Stationary);
+	Wall2->SetMobility(EComponentMobility::Stationary);
+	Wall3->SetMobility(EComponentMobility::Stationary);
+	Wall4->SetMobility(EComponentMobility::Stationary);
+	Wall5->SetMobility(EComponentMobility::Stationary);
+	Stair1->SetMobility(EComponentMobility::Stationary);
+	Stair2->SetMobility(EComponentMobility::Stationary);
+	Ceiling->SetMobility(EComponentMobility::Stationary);
+	CeilingDiv->SetMobility(EComponentMobility::Stationary);
+	LampMesh1->SetMobility(EComponentMobility::Stationary);
+	LampMesh2->SetMobility(EComponentMobility::Stationary);
+	LampLight1->SetMobility(EComponentMobility::Stationary);
+	LampLight2->SetMobility(EComponentMobility::Stationary);
 }
 
 // Called when the game starts or when spawned
@@ -164,17 +198,17 @@ void AStairPath::SettingWorldMatrix()
 	LampMesh2->SetRelativeScale3D(FVector(X = 2.000000f, Y = 2.000000f, Z = 1.000000f));
 
 	LampLight1->SetRelativeLocation(FVector(X = 314.716888f, Y = 38.943176f, Z = 595.080750f));
-	LampLight1->SetRelativeRotation(FRotator(Pitch = -46.0f, Yaw = 154.0f, Roll = 140.0f));
+	LampLight1->SetRelativeRotation(FRotator(Pitch = -50.825459, Yaw = 188.736816, Roll = 94.648758));
 
 	LampLight2->SetRelativeLocation(FVector(X = -110.000000f, Y = -320.000000f, Z = 690.000000f));
-	LampLight2->SetRelativeRotation(FRotator(Pitch = -60.0f, Yaw = 90.0f, Roll = -90.0f));
+	LampLight2->SetRelativeRotation(FRotator(Pitch = -67.731102, Yaw = 25.505415, Roll = -27.273155));
 
 	
 }
 
 void AStairPath::MakeComponentsTree()
 {
-	RootComponent = Root;
+	Root->SetupAttachment(RootComponent);
 	Plate1->SetupAttachment(Root);
 	Plate2->SetupAttachment(Root);
 	

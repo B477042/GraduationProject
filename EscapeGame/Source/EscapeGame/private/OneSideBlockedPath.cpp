@@ -54,7 +54,7 @@ AOneSideBlockedPath::AOneSideBlockedPath()
 	//Object들 위치 배치
 
 	Plate->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
-	//plate->SetRelativeRotation(FRotator(180.0f,90.0f,180.0f));
+	Plate->SetMobility(EComponentMobility::Stationary);
 
 	MiddleWall->SetRelativeLocation(FVector(10.0f, 0.0f, 0.0f));
 	//LeftSideWall->SetRelativeRotation(FRotator(0.0f, 270.0f, 0.0f));
@@ -74,25 +74,31 @@ AOneSideBlockedPath::AOneSideBlockedPath()
 	LampMesh->SetRelativeScale3D(FVector(1.5f, 1.0f, 1.0f));
 	//(X=-160.000000,Y=-130.000000,Z=410.000000)
 	//(Pitch=-90.000000,Yaw=0.000000,Roll=0.000000)
-	LampLight->SetRelativeLocation(FVector(-160.0f, -130.0f, 410.0f));
+	LampLight->SetRelativeLocation(FVector(-170.0f, -170.0f, 410.0f));
 	LampLight->SetRelativeRotation(FRotator(-90.0f, 0.0f, 0.0f));
 	//SpotLight 밝기 조절
 	LampLight->SetIntensity(5000.695313f);
 	LampLight->SetAttenuationRadius(428.286865f);
-	LampLight->SetInnerConeAngle(21.464767f);
-	LampLight->SetOuterConeAngle(28.952377f);
-	
-	LampLight->SetMobility(EComponentMobility::Static);
+	LampLight->SetInnerConeAngle(18.455242f);
+	LampLight->SetOuterConeAngle(22.933331f);
+	//Mobility
+	Plate->SetMobility(EComponentMobility::Stationary);
+	Ceiling->SetMobility(EComponentMobility::Stationary);
+	LampMesh->SetMobility(EComponentMobility::Stationary);
+	LampLight->SetMobility(EComponentMobility::Stationary);
+	MiddleWall->SetMobility(EComponentMobility::Stationary);
+
 
 
 	//UPROPERTY 계층구조 만들기
-	RootComponent = Plate;
+	Plate->SetupAttachment(RootComponent);
 	MiddleWall->SetupAttachment(Plate);
 	Ceiling->SetupAttachment(Plate);
 	LampMesh->SetupAttachment(Plate);;
-
 	LampLight->SetupAttachment(Plate);
-
+	//MiniMapTile설정
+	MiniMapTileMesh->SetRelativeLocation(FVector(-160, -180, POS_Minimap.Z));
+	MiniMapTileMesh->SetRelativeScale3D(FVector(3.4375f, 3.8125f, 1.0f));
 
 }
 
@@ -103,11 +109,4 @@ void AOneSideBlockedPath::BeginPlay()
 	
 }
 
-//
-//// Called every frame
-//void AOneSideBlockedPath::Tick(float DeltaTime)
-//{
-//	Super::Tick(DeltaTime);
-//
-//}
-//
+ 

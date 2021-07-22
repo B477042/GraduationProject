@@ -23,7 +23,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ActivateMainEffect();
 	UFUNCTION(BlueprintCallable)
-	virtual void SetSafety();
+	virtual void SetSafety(UParticleSystemComponent* PSystem);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

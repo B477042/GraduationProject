@@ -3,16 +3,25 @@
 #include "EnemyCharacter.h"
 #include "EGGameState.h"
 #include "EGSaveGame.h"
-
-
+#include "PaperSprite.h"
+#include "MiniMapMarkerComponent.h"
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	//마커 초기값 설정
+	MiniMapMarkerComponent = CreateDefaultSubobject<UMiniMapMarkerComponent>(TEXT("MiniMapMarker"));
+	MiniMapMarkerComponent->SetupAttachment(RootComponent);
+	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Marker(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_Marker_Enemy.MI_Marker_Enemy'"));
+	if (MI_Marker.Succeeded())
+	{
+		MiniMapMarkerComponent->SetMaterial(0, MI_Marker.Object);
+	}
+	MiniMapMarkerComponent->SetRelativeLocation(FVector(0, 0, POS_Minimap.Z));
+	MiniMapMarkerComponent->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
+	MiniMapMarkerComponent->SetMobility(EComponentMobility::Movable);
 
-	//Stat = CreateDefaultSubobject<UStatComponent_Enemy>(TEXT("STAT"));
-	//if(Stat==nullptr)EGLOG(Warning,TEXT("Enemy's Stat is null"));
 	
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = false;

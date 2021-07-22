@@ -33,7 +33,7 @@ protected:
 	virtual void LoadGame(const class UEGSaveGame* LoadInstance)override;
 
 
-
+	void PlayMuzzleEffect();
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -41,6 +41,10 @@ public:
 	virtual void Attack()override;
 
 
+	//원거리 공격
+	void FireAttack();
+
+	
 	const static float MaxWalkingSpeed;
 	const static float MaxRunningSpeed;
 	const static float MinWalkingSpeed;
@@ -51,8 +55,7 @@ public:
 	UPROPERTY(EditInstanceOnly)
 	bool bAllowRandStat;
 
-
-private:
+protected:
 	//죽어야 될 때 호출된다.
 	//Stat의 hp 0 delegate에 연동할게 아니라 anim의 dead 모션이 끝나면 사라지게 해야겠구나
 	
@@ -62,15 +65,25 @@ private:
 	
 	UPROPERTY(EditInstanceOnly, Category = "Stat")
 	UStatComponent_EGrunt* Stat;
-
+	UPROPERTY(EditInstanceOnly, Category = "SFX")
+	UAudioComponent* SFX_Explosion;
+	UPROPERTY(EditInstanceOnly, Category = "SFX")
+	UAudioComponent* SFX_Burst;
+	UPROPERTY(EditInstanceOnly, Category = "VFX")
+	UParticleSystemComponent* VFX_MuzzleEffect;
+	UPROPERTY(EditInstanceOnly, Category = "VFX")
+	UParticleSystemComponent* VFX_HitEffect;
 	
-
 	//Stat Component 정리되면 거기에 넣는다. 전방 탐지 범위
 	UPROPERTY(VisibleInstanceOnly, Category = Stat)
-		float AttackRange;
+		float MeleeAttackRange;
 	UPROPERTY(VisibleInstanceOnly, Category = Stat)
-		FVector AttackExtent;
+		FVector MeleeAttackExtent;
+	//Melee Attack Value
+	float AtkMeleeAtk;
+	//Fire Attack Value
+	float AtkFireAtk;
 
-	float ATK;
-
+	const FName SockFirePointR = "fire_point_r";
+	class UAnim_Grunt* Anim;
 };

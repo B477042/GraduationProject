@@ -37,6 +37,10 @@ public:
 	//Update UI's Stamina
 	UFUNCTION(BlueprintCallable)
 		void UpdateStamina();
+	//Update Item's Info. Call by Delegate in inventory Comp
+	UFUNCTION(BlueprintCallable)
+	void UpdateItemes(FName ItemName, int Amount);
+	
 	UFUNCTION(BlueprintCallable)
 		float CheackTimeOut(float NewValue);
 
@@ -52,12 +56,12 @@ private:
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
 	TWeakObjectPtr<class UStatComponent_Player>CurrentCharacterStat;
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
-	TWeakObjectPtr<class UComponent_Inventory>CurrenPlayerInventory;
+	TWeakObjectPtr<class UComponent_Inventory>CurrentPlayerInventory;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
 	TWeakObjectPtr<ACharacter>OwnerChara;
-	/*UPROPERTY()
-		class UProgressBar* PB_HP;*/
+
+	
 	UPROPERTY()
 		class UProgressBar* PB_Stamina;
 	//Image Box of Player's Hp
@@ -77,30 +81,28 @@ private:
 
 	UPROPERTY()
 		class UImage* Img_Blood;
-
-	//UPROPERTY()
-	//	class UTextBlock* Txt_TimerBlock;
+	 
 
 	UPROPERTY()
 		class UTextBlock* RecoveryItemNum;//Write 'HP'
 	UPROPERTY(BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		int HPAmount;
 	//
-	//UPROPERTY()
-	//	class UTextBlock* TimerText;
+	
 	UPROPERTY(BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		float PlayerHP;
 	UPROPERTY(BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		float PlayerStamina;
-	UPROPERTY(BlueprintReadOnly, Category = Inventory, Meta = (AllowPrivateAccess = true))
-		int RecoveryItemEA;
+	
 	UPROPERTY(BlueprintReadWrite, Category = Timer, Meta = (AllowPrivateAccess = true))
 		float GameTimer;
+	UPROPERTY(BlueprintReadOnly, Category = Inventory, Meta = (AllowPrivateAccess = true))
+	int N_RecoveryItems=0;
+	UPROPERTY(BlueprintReadOnly, Category = Inventory, Meta = (AllowPrivateAccess = true))
+	int N_CardKeyItems=0;
 	
 
-	UPROPERTY(BlueprintReadOnly, Category = Camera, Meta = (AllowPrivateAccess = true))
-		UCameraComponent* MiniMapCapture;
-
+	//Inventory UI Data Variables
 
 
 	

@@ -17,8 +17,9 @@
 #include "EGGameState.h"
 #include "Item_CardKey.h"
 #include "EGPostProcessVolume.h"
-
-
+#include "PaperSprite.h"
+#include "GameWidget.h"
+#include "MiniMapMarkerComponent.h"
 
 
 // Sets default values
@@ -41,7 +42,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	bIsDebugMode = false;
 
 	MoveDirection = FVector::ZeroVector;
-	CurrenVelocity = 78.f;
+	CurrentVelocity = 78.f;
 	
 }
 
@@ -51,8 +52,22 @@ void AEGPlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 
 
-	loadHitEffects();
+	LoadHitEffects();
 	EGLOG(Error, TEXT("Player Begin Play"));
+	/*
+	 * Inventory 관련 Delegate 등록
+	 */
+	auto PlayerCon = Cast<AEGPlayerController>(Controller);
+	if(!PlayerCon)
+	{
+		EGLOG(Warning, TEXT("Casting Falied"));
+		return;
+		
+	}
+	//인벤토리의 델리게이트와 위젯 연동
+	Inventory->OnItemUpdated.BindUFunction (PlayerCon->GetHUDWidget(), FName("UpdateItemes"));
+	
+	
 //================================================
 //||			Stat 관련 Delegate 등록			||
 //================================================
@@ -106,7 +121,7 @@ void AEGPlayerCharacter::BeginPlay()
 		EGLOG(Error, TEXT("OnLoadGamePhase Delegate Broadcasted"));
 		GameInstance->OnLoadGamePhaseDelegate.Broadcast(LoadInstance);
 		
-		//loadGameData(LoadInstance);
+		//LoadGameData(LoadInstance);
 		GameInstance->EGameState = EEGGameState::E_InPlay;
 
 	}
@@ -120,7 +135,7 @@ void AEGPlayerCharacter::BeginPlay()
 			return;
 		}
 		//Player의  스텟들만 불러온다
-		onNextStage(LoadInstance);
+		OnNextStage(LoadInstance);
 
 		//Game State 업데이트
 		GameInstance->EGameState = EEGGameState::E_InPlay;
@@ -203,7 +218,7 @@ void AEGPlayerCharacter::PostInitializeComponents()
 		return;
 	}
 
-	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEGPlayerCharacter::loadGameData);
+	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEGPlayerCharacter::LoadGameData);
 
 	
 	//Stat->SetSpeedLimits( MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
@@ -225,35 +240,11 @@ float AEGPlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent con
 		return 0.0f;
 	}*/
 
-	//투사체가 맞다면 이벤트
-	//auto projectile = Cast<AProjectile>(DamageCauser);
-	//if (projectile)
-	//{
-	//	//투사체 반사
-	//	if (bIsGuarding)
-	//	{
-
-
-	//		//반사각도
-	//		float randAngle = FMath::RandRange(-1.0f, 1.0f);
-
-	//		projectile->ReadyToFire(projectile->GetFireDir()*randAngle, projectile->GetActorLocation(), projectile->GetActorRotation());
-	//		projectile->SetCollision("PlayerWeapon");
-	//		projectile->TripleDamage();
-	//		projectile->ActivateMainEffect();
-
-	//		EGLOG(Error, TEXT("Ting"));
-	//		
-
-
-	//	}
-
-	//	//가드 하지 않아도 일어나는 공통 처리
-
-	//	//projectile->bis
-	//return FinalDamage;
-	//}
-	//
+	if(bIsGuarding)
+	{
+		return ReflectProjectiles(DamageCauser,FinalDamage);
+		
+	}
 
 
 
@@ -420,14 +411,14 @@ void AEGPlayerCharacter::ToggleMap()
 	
 	if (bSetMapArm==false)
 	{
-		MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, maxMapArmLength));
+		MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, maxMiniMapArmLength));
 		EGLOG(Error, TEXT("Change To Max"));
 		bSetMapArm = true;
 		return;
 	}
 	if (bSetMapArm==true)
 	{
-		MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, minMapArmLength));
+		MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, minMiniMapArmLength));
 		bSetMapArm = false;
 		EGLOG(Error, TEXT("Change To Min"));
 		return;
@@ -519,42 +510,50 @@ void AEGPlayerCharacter::InitComponents()
 	WeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("WeaponCollision"));
 	Container_Hit=CreateDefaultSubobject < USkillContainer_PlayerHitEffect>(TEXT("HitEffects"));
 	AttackSound = CreateDefaultSubobject<UAudioComponent>(TEXT("AttackSound"));
+	MiniMapMarkerComponent = CreateDefaultSubobject<UMiniMapMarkerComponent>(TEXT("MiniMapMarker"));
+
+	//====================================================================================================
 	//Components Tree
-	
-	
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	Camera->SetupAttachment(SpringArm);
 	MiniMapArm->SetupAttachment(GetCapsuleComponent());
 	MapRenderer->SetupAttachment(MiniMapArm);
 	WeaponCollision->SetupAttachment(SwordEffect);
 	AttackSound->SetupAttachment(RootComponent);
+	MiniMapMarkerComponent->SetupAttachment(RootComponent);
+
+	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
+	//====================================================================================================
+	//미니맵 및 카메라 관련 초기값 설정
+	minMiniMapArmLength = POS_Minimap.Z + 1500.0f;
+	maxMiniMapArmLength = POS_Minimap.Z + 3000.0f;
 	
-
-
-
-	minMapArmLength = 320.0f;
-	maxMapArmLength = 1000.0f;
 	float X=0, Y=0, Z=0,Pitch=0,Yaw=0,Roll=0;
 	Camera->SetRelativeLocation(FVector(0.0f, 30.0f, 90.0f));
-	//Camera->SetRelativeLocationAndRotation(FVector(X = 119.325928f, Y = 143.606781f, Z = 134.770874f),FRotator(Pitch = -10.796335f, Yaw = -6.558897f, Roll = 1.233861f));
-	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 	SpringArm->TargetArmLength = 500.0f;
-	//SpringArm->SetRelativeRotation(FRotator(-15.0f, 0.0f, 0.0f));
 
 	MiniMapArm->TargetArmLength = 0.0f;
-	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, 1000.0f));
+	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, POS_Minimap.Z+1500.0f));
 	MiniMapArm->SetRelativeRotation(FRotator(-90.0f, 0.0f,0.0f));
 
+	//마커 초기값 설정
+	MiniMapMarkerComponent->SetRelativeLocation(FVector(0, 0, POS_Minimap.Z));
+	MiniMapMarkerComponent->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
+	
+	//무기 설정
 	WeaponCollision->SetRelativeLocation(FVector(X = 0.976299f, Y = 1.777855f, Z = 66.010002f));
 	WeaponCollision->SetRelativeRotation(FRotator(Pitch = -1.184324, Yaw = 155.845551, Roll = 0.682941));
 	WeaponCollision->SetBoxExtent(FVector(X = 9.093354, Y = 6.199887, Z = 63.501183));
 	WeaponCollision->SetCollisionProfileName(TEXT("NoCollision"));
+
+	//스프링암 값 설정
 	SetupSpringArm();
-
-
-	FPostProcessSettings& PostProcessSettings = Camera->PostProcessSettings;
-
 	
+	
+	////포스트 프로세스 값 지정
+	//FPostProcessSettings& PostProcessSettings = Camera->PostProcessSettings;
+
+	//
 
 
 
@@ -600,6 +599,12 @@ void AEGPlayerCharacter::LoadAssets()
 		AttackSound->SetSound(SC_Attack.Object);
 		AttackSound->bAutoActivate = false;
 	}
+	
+	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Marker(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_Marker_Player.MI_Marker_Player'"));
+	if(MI_Marker.Succeeded())
+	{
+		MiniMapMarkerComponent->SetMaterial(0, MI_Marker.Object);
+	}
 
 }
 
@@ -636,13 +641,7 @@ void AEGPlayerCharacter::UpDown( float  NewAxisValue)
 {
  
 	if (NewAxisValue == 0.0f)return;
-		//굳이 안 움직여도 확인할 수 있다.
-		/*if (GetCharacterMovement()->IsMovingOnGround())
-			EGLOG(Warning, TEXT("I'm moving on ground"));
-
-		if (GetCharacterMovement()->IsFalling())
-		EGLOG(Warning, TEXT("I'm falling"));
-		*/
+	 
 		//AddMovementInput(GetActorForwardVector(), NewAxisValue);
 		//진행방향으로 캐릭터를 돌리는 방식
 		//AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X), NewAxisValue);
@@ -662,12 +661,7 @@ void AEGPlayerCharacter::LeftRight( float NewAxisValue)
 {
 	
 	if (NewAxisValue == 0.0f)return;
-
-	//const FRotator Rotation = GetControlRotation();
-	
-
-
-	//AddMovementInput(GetActorRightVector(), NewAxisValue);
+ 
 	//진행방향으로 캐릭터를 돌리는 방식
 	//AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y), NewAxisValue);
 	//EGLOG(Warning, TEXT("Left or Right Pressed"));
@@ -738,8 +732,30 @@ void AEGPlayerCharacter::Move(float DeltaTime)
 	}
 
 	MoveDirection.Normalize();
-	AddMovementInput(MoveDirection, CurrenVelocity * DeltaTime);
+	AddMovementInput(MoveDirection, CurrentVelocity * DeltaTime);
 	MoveDirection.Set(0.0f, 0.0f, 0.0f);
+}
+
+float AEGPlayerCharacter::ReflectProjectiles(AActor* DamageCauser, float FinalDamage)
+{
+
+	//Projectile Type Only
+	const auto Projectile = Cast<AProjectile>(DamageCauser);
+	if (Projectile)
+	{
+		//투사체 반사
+		if (bIsGuarding)
+		{
+
+			Projectile->Reflected();
+			
+		}
+
+	
+
+	}
+	return FinalDamage;
+	
 }
 
 //Player가 아닌 모든 것에 Take Damage를 일으킵니다
@@ -796,7 +812,7 @@ void AEGPlayerCharacter::ComboAttackEnd()
 }
 
 //미사용, 데미지를 준 엑터와 플레이어의 각도 계산
-FName AEGPlayerCharacter::calcHitDirection(AActor * DamageCauser)
+FName AEGPlayerCharacter::CalcHitDirection(AActor * DamageCauser)
 {
 	FName Result;
 
@@ -829,7 +845,7 @@ void AEGPlayerCharacter::DamagedPostEffect()
 }
 
 // 스킬 이펙트를 생성하고 스킬 컨테이너 컴포넌트에 넣어줍니다.
-void AEGPlayerCharacter::loadHitEffects()
+void AEGPlayerCharacter::LoadHitEffects()
 {
 	if (!GetWorld()) { EGLOG(Warning, TEXT("No0 world")); return; }
 	int cap = Container_Hit->GetCapacity();
@@ -840,7 +856,7 @@ void AEGPlayerCharacter::loadHitEffects()
 
 }
 
-void AEGPlayerCharacter::loadGameData(const UEGSaveGame* LoadInstance)
+void AEGPlayerCharacter::LoadGameData(const UEGSaveGame* LoadInstance)
 {
 	if (!LoadInstance)
 	{
@@ -889,7 +905,7 @@ void AEGPlayerCharacter::loadGameData(const UEGSaveGame* LoadInstance)
 
 }
 
-void AEGPlayerCharacter::onNextStage(const UEGSaveGame * LoadInstance)
+void AEGPlayerCharacter::OnNextStage(const UEGSaveGame * LoadInstance)
 {
 	if (!LoadInstance)
 	{
