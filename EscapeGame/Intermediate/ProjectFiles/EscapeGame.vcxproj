@@ -297,6 +297,7 @@
     <None Include="..\..\Config\DefaultGame.ini"/>
     <None Include="..\..\Config\DefaultGameSetting.ini"/>
     <None Include="..\..\Config\DefaultInput.ini"/>
+    <None Include="..\..\Source\EscapeGame\.editorconfig"/>
     <None Include="..\..\Source\EscapeGame\EnemyDiagram.cd"/>
     <None Include="..\..\Source\EscapeGame\EscapeGame.Build.cs"/>
     <None Include="..\..\Source\EscapeGame\etcClassDiagram.cd"/>

@@ -3,7 +3,7 @@
 
 #include "Anim_Player.h"
 #include "EGPlayerCharacter.h"
-#include "Sound\SoundCue.h"
+#include "Sound/SoundCue.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/AudioComponent.h"
