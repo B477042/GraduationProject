@@ -3,6 +3,8 @@
 
 #include "BaseStruct.h"
 #include "Materials/MaterialInstanceDynamic.h"
+#include "Components/BoxComponent.h"
+#include "EGPlayerCharacter.h"
 // Sets default values
 ABaseStruct::ABaseStruct()
 {
@@ -10,17 +12,34 @@ ABaseStruct::ABaseStruct()
 	PrimaryActorTick.bCanEverTick = false;
 	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("SCENEROOT"));
 	MiniMapTileMesh = CreateDefaultSubobject<UMiniMapMarkerComponent>(TEXT("MINIMAPTILEMESH"));
+	TileTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("TileTrigger"));
 
+	/*
+	 *=====================================================
+	 * Components Tree
+	 */
 	RootComponent = SceneRoot;
 	SceneRoot->SetMobility(EComponentMobility::Static);
 	MiniMapTileMesh->SetupAttachment(SceneRoot);
-
+	TileTrigger->SetupAttachment(SceneRoot);
+	/*
+	 * ======================================================
+	 * Material asset
+	 */
 	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Marker(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_PathMarker.MI_PathMarker'"));
 	if(MI_Marker.Succeeded())
 	{
 		TileMaterial = UMaterialInstanceDynamic::Create(MI_Marker.Object, MI_Marker.Object);
 		MiniMapTileMesh->SetMaterial(0, TileMaterial);
-		
+		if (!TileMaterial)
+		{
+			EGLOG(Error, TEXT("TileMaterial is null"));
+			return;
+		}
+	}
+	else
+	{
+		EGLOG(Error, TEXT("Material load failed"));
 	}
 	
 	MiniMapTileMesh->SetRelativeLocation(POS_Minimap);
@@ -28,27 +47,86 @@ ABaseStruct::ABaseStruct()
 	MiniMapTileMesh->SetRelativeLocation(POS_Minimap);
 	
 
-	/*
-	 *======================================================
-	 * Material Parameters
-	 */
-	FMaterialParameterInfo MaterialParameterInfo;
-	MaterialParameterInfo.Name = Name_MainColor;
-	//Set Dynamic Color
-	bool bResult = TileMaterial->GetVectorParameterValue(MaterialParameterInfo, Color_Default);
-	if(!bResult)
-	{
-		EGLOG(Warning, TEXT("Get Vector Failed"));
-	}
-	Color_OnPlayer = FLinearColor(255, 255, 255, 1);
 	
+	/*
+	 * =====================================================
+	 * Trigger Setting
+	 */
+	TileTrigger->SetCollisionProfileName(TEXT("OnTrapTrigger"));
 }
 
 // Called when the game starts or when spawned
 void ABaseStruct::BeginPlay()
 {
 	Super::BeginPlay();
+	/*
+	 *======================================================
+	 * Material Parameters
+	 */
+	TileMaterial = UMaterialInstanceDynamic::Create(MiniMapTileMesh->GetMaterial(0), MiniMapTileMesh->GetMaterial(0));
 	
+	
+	if (!TileMaterial)
+	{
+		EGLOG(Error, TEXT("TileMaterial is null"));
+		return;
+	}
+	FMaterialParameterInfo MaterialParameterInfo;
+	MaterialParameterInfo.Name = Name_MainColor;
+	MaterialParameterInfo.Association = EMaterialParameterAssociation::GlobalParameter;
+	MaterialParameterInfo.Index = INDEX_NONE;
+	
+	
+	//Set Dynamic Color
+	bool bResult = TileMaterial->GetVectorParameterValue(MaterialParameterInfo, Color_Default);
+	if (!bResult)
+	{
+		EGLOG(Warning, TEXT("Get Vector Failed"));
+	}
+	Color_OnPlayer = FLinearColor(255, 255, 255, 1);
+}
+
+void ABaseStruct::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	TileTrigger->OnComponentBeginOverlap.AddDynamic(this, &ABaseStruct::OnComponenetBeginOverlap);
+	TileTrigger->OnComponentEndOverlap.AddDynamic(this, &ABaseStruct::OnComponentEndOverlap);
+}
+
+void ABaseStruct::OnComponenetBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
+	if (!Player)
+	{
+		return;
+	}
+	if (!TileMaterial)
+	{
+		EGLOG(Error, TEXT("TileMaterial is null"));
+		return;
+	}
+	TileMaterial->SetVectorParameterValue(Name_MainColor, Color_OnPlayer);
+
+}
+
+void ABaseStruct::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
+	if (!Player)
+	{
+		return;
+	}
+	if (!TileMaterial)
+	{
+		EGLOG(Error, TEXT("TileMaterial is null"));
+		return;
+	}
+	TileMaterial->SetVectorParameterValue(Name_MainColor, Color_Default);
+
+
 }
 
 // Called every frame

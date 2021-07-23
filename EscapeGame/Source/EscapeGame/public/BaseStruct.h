@@ -22,7 +22,13 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void PostInitializeComponents() override;
 
+	UFUNCTION()
+		void OnComponenetBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION()
+		void OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -33,11 +39,13 @@ public:
 		UMiniMapMarkerComponent* MiniMapTileMesh;
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	class UMaterialInstanceDynamic* TileMaterial;
-	
-	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		class UBoxComponent* TileTrigger;
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 		FLinearColor Color_Default;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		FLinearColor Color_OnPlayer;
 	const FName Name_MainColor = "MainColor";
 };
+
