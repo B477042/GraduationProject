@@ -144,7 +144,9 @@ void AEGPlayerCharacter::BeginPlay()
 
 	else
 		EGLOG(Warning, TEXT("NewGame"));
-	
+	//GameInstance의 Load Game Phase에 연동
+	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEGPlayerCharacter::LoadGameData);
+
 	
 
 
@@ -210,16 +212,7 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	//Weapon Hit 판정
 	WeaponCollision->OnComponentBeginOverlap.AddDynamic(this, &AEGPlayerCharacter::OnWeaponBeginOverlap);
 
-	//GameInstance의 Load Game Phase에 연동
-	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
-	if (!GameInstance)
-	{
-		EGLOG(Error, TEXT("GameInstance Casting Failed"));
-		return;
-	}
-
-	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEGPlayerCharacter::LoadGameData);
-
+	
 	
 	//Stat->SetSpeedLimits( MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
 

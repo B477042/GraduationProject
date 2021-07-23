@@ -4,6 +4,7 @@
 
 //#include "CoreMinimal.h"
 #include "ItemActor.h"
+#include "Components/BoxComponent.h"
 #include "Item_CardKey.generated.h"
 
 /**

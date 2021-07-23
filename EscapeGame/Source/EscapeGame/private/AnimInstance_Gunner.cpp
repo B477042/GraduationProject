@@ -3,6 +3,7 @@
 
 #include "AnimInstance_Gunner.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 
 

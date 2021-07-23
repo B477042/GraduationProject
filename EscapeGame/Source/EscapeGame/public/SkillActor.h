@@ -5,6 +5,7 @@
 #include "EscapeGame.h"
 #include "GameFramework/Actor.h"
 #include "Sound/SoundCue.h"
+#include "Components/SphereComponent.h"
 #include "SkillActor.generated.h"
 
 

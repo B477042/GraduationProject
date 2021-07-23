@@ -162,15 +162,6 @@ void AEnemyCharacter_Gunner::PostInitializeComponents()
 	Anim = Cast<UAnimInstance_Gunner>(GetMesh()->GetAnimInstance());
 	if (!Anim)EGLOG(Error, TEXT("********Anim Cast Failed********"));
 
-	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
-	if (!GameInstance)
-	{
-		EGLOG(Error, TEXT("Gameinstance is nullptr"));
-		return;
-	}
-	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEnemyCharacter_Gunner::LoadGame);
-	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AEnemyCharacter_Gunner::SaveGame);
-
 	OnHpChangedDelegate.AddLambda([this]()->void{
 		HPBar = Cast<UProgressBar>(HPBarWidget->GetUserWidgetObject()->GetWidgetFromName(TEXT("HPBar")));
 		if (!HPBar)
@@ -207,6 +198,16 @@ void AEnemyCharacter_Gunner::BeginPlay()
 	//if(WeaponMesh)
 	WeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("GunPos"));
 	//EGLOG(Error, TEXT("Chara Begin"));
+
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)
+	{
+		EGLOG(Error, TEXT("Gameinstance is nullptr"));
+		return;
+	}
+	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEnemyCharacter_Gunner::LoadGame);
+	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AEnemyCharacter_Gunner::SaveGame);
+
 }
 
 void AEnemyCharacter_Gunner::BeginDestroy()

@@ -6,6 +6,8 @@
 #include "GameFramework/Pawn.h"
 //#include "NPCCharacter.h"
 #include "Engine/DataTable.h"
+#include "Camera/CameraComponent.h"
+#include "Components/BoxComponent.h"
 
 #include "Pawn_Camera.generated.h"
 

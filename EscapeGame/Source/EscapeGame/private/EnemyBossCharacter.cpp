@@ -47,6 +47,18 @@ void AEnemyBossCharacter::BeginPlay()
 	SA_Thunder = GetWorld()->SpawnActor<ASkillActor_BossLightning>();
 	SA_Thunder->DeactivateEffect();
 
+	/*Save & Load*/
+
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)
+	{
+		EGLOG(Error, TEXT("Gameinstance is nullptr"));
+		return;
+	}
+	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEnemyBossCharacter::LoadGame);
+	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AEnemyBossCharacter::SaveGame);
+
+
 
 }
 
@@ -67,16 +79,6 @@ void AEnemyBossCharacter::PostInitializeComponents()
 		
 
 	});
-
-
-	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
-	if (!GameInstance)
-	{
-		EGLOG(Error, TEXT("Gameinstance is nullptr"));
-		return;
-	}
-	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEnemyBossCharacter::LoadGame);
-	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AEnemyBossCharacter::SaveGame);
 
 
 

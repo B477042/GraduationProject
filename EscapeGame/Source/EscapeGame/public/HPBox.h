@@ -3,7 +3,7 @@
 #pragma once
 
 #include "TrapType.h"
-#include "GameFramework/Actor.h"
+#include "Components/BoxComponent.h"
 #include "HPBox.generated.h"
 
 

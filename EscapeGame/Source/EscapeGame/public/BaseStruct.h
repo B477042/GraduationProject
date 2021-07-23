@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "MiniMapMarkerComponent.h"
 #include "Math/Color.h"
+#include "Components/StaticMeshComponent.h"
+#include "Components/SpotLightComponent.h"
 #include "BaseStruct.generated.h"
 
 UCLASS(Abstract, BlueprintType)
