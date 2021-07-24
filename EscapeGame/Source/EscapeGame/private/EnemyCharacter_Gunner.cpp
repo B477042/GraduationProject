@@ -10,15 +10,6 @@
 #include "AnimInstance_Gunner.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig.h"
-#include "Perception/AIPerceptionTypes.h"
-#include "Perception/AISenseConfig_Sight.h"
-
-//UAIPerceptionComponent
-//https://docs.unrealengine.com/en-US/API/Runtime/AIModule/Perception/UAIPerceptionComponent/index.html
-
-//UAISenseConfig_Sight
-//https://docs.unrealengine.com/en-US/API/Runtime/AIModule/Perception/UAISenseConfig_Sight/index.html
-
 
 AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
 {

@@ -9,6 +9,8 @@
 #include "EGSaveGame.h"
 #include "EGGameInstance.h"
 #include "DrawDebugHelpers.h"
+#include "Components/CapsuleComponent.h"
+
 
 //const float AGruntCharacter::MaxHP = 200.0f;
 const float AGruntCharacter::MinWalkingSpeed = 0.0f;

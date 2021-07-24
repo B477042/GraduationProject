@@ -2,7 +2,7 @@
 
 
 #include "BaseStruct.h"
-#include "Materials/MaterialInstanceDynamic.h"
+#include "Materials/MaterialInstance.h"
 #include "Components/BoxComponent.h"
 #include "EGPlayerCharacter.h"
 // Sets default values
@@ -29,13 +29,9 @@ ABaseStruct::ABaseStruct()
 	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Marker(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_PathMarker.MI_PathMarker'"));
 	if(MI_Marker.Succeeded())
 	{
-		TileMaterial = UMaterialInstanceDynamic::Create(MI_Marker.Object, MI_Marker.Object);
-		MiniMapTileMesh->SetMaterial(0, TileMaterial);
-		if (!TileMaterial)
-		{
-			EGLOG(Error, TEXT("TileMaterial is null"));
-			return;
-		}
+		//TileMaterial = UMaterialInstanceDynamic::Create(MI_Marker.Object, MI_Marker.Object);
+		MiniMapTileMesh->SetMaterial(0, MI_Marker.Object);
+		
 	}
 	else
 	{
@@ -63,41 +59,41 @@ void ABaseStruct::BeginPlay()
 	 *======================================================
 	 * Material Parameters
 	 */
-	TileMaterial = UMaterialInstanceDynamic::Create(MiniMapTileMesh->GetMaterial(0), MiniMapTileMesh->GetMaterial(0));
-	
-	
-	if (!TileMaterial)
-	{
-		EGLOG(Error, TEXT("TileMaterial is null"));
-		return;
-	}
-	FMaterialParameterInfo MaterialParameterInfo;
-	MaterialParameterInfo.Name = Name_MainColor;
-	MaterialParameterInfo.Association = EMaterialParameterAssociation::GlobalParameter;
-	MaterialParameterInfo.Index = INDEX_NONE;
-	
-	
-	//Set Dynamic Color
-	bool bResult = TileMaterial->GetVectorParameterValue(MaterialParameterInfo, Color_Default);
-	if (!bResult)
-	{
-		EGLOG(Warning, TEXT("Get Vector Failed"));
-	}
-	Color_OnPlayer = FLinearColor(255, 255, 255, 1);
+	//TileMaterial = UMaterialInstanceDynamic::Create(MiniMapTileMesh->GetMaterial(0), MiniMapTileMesh->GetMaterial(0));
+	//
+	//
+	//if (!TileMaterial)
+	//{
+	//	EGLOG(Error, TEXT("TileMaterial is null"));
+	//	return;
+	//}
+	//FMaterialParameterInfo MaterialParameterInfo;
+	//MaterialParameterInfo.Name = Name_MainColor;
+	//MaterialParameterInfo.Association = EMaterialParameterAssociation::GlobalParameter;
+	//MaterialParameterInfo.Index = INDEX_NONE;
+	//
+	//
+	////Set Dynamic Color
+	//bool bResult = TileMaterial->GetVectorParameterValue(MaterialParameterInfo, Color_Default);
+	//if (!bResult)
+	//{
+	//	EGLOG(Warning, TEXT("Get Vector Failed"));
+	//}
+	//Color_OnPlayer = FLinearColor(255, 255, 255, 1);
 }
 
 void ABaseStruct::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	TileTrigger->OnComponentBeginOverlap.AddDynamic(this, &ABaseStruct::OnComponenetBeginOverlap);
-	TileTrigger->OnComponentEndOverlap.AddDynamic(this, &ABaseStruct::OnComponentEndOverlap);
+	//TileTrigger->OnComponentBeginOverlap.AddDynamic(this, &ABaseStruct::OnComponenetBeginOverlap);
+	//TileTrigger->OnComponentEndOverlap.AddDynamic(this, &ABaseStruct::OnComponentEndOverlap);
 }
 
 void ABaseStruct::OnComponenetBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
+	/*auto Player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (!Player)
 	{
 		return;
@@ -107,14 +103,14 @@ void ABaseStruct::OnComponenetBeginOverlap(UPrimitiveComponent* OverlappedCompon
 		EGLOG(Error, TEXT("TileMaterial is null"));
 		return;
 	}
-	TileMaterial->SetVectorParameterValue(Name_MainColor, Color_OnPlayer);
+	TileMaterial->SetVectorParameterValue(Name_MainColor, Color_OnPlayer);*/
 
 }
 
 void ABaseStruct::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
+	/*auto Player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (!Player)
 	{
 		return;
@@ -124,7 +120,7 @@ void ABaseStruct::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent
 		EGLOG(Error, TEXT("TileMaterial is null"));
 		return;
 	}
-	TileMaterial->SetVectorParameterValue(Name_MainColor, Color_Default);
+	TileMaterial->SetVectorParameterValue(Name_MainColor, Color_Default);*/
 
 
 }

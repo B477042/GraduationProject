@@ -5,6 +5,7 @@
 #include "EnemyBossCharacter.h"
 #include "GameFramework/MovementComponent.h"
 #include "EnemyAIController.h"
+#include "Components/CapsuleComponent.h"
 
 UAnimInstance_Boss::UAnimInstance_Boss()
 {

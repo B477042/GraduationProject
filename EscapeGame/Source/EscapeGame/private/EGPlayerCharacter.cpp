@@ -1,24 +1,23 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "EGPlayerCharacter.h"
-#include "Engine/SceneCapture2D.h"
 #include "EGPlayerController.h"
 #include "Item_Recover.h"
-
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/AudioComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "GameWidget.h"
-#include"Components/InputComponent.h"
+#include "Components/InputComponent.h"
 #include "Projectile.h"
 #include "GameSetting/public/EGCharacterSetting.h"
-#include "..\public\EGPlayerCharacter.h"
-#include"Sound/SoundCue.h"
+#include "Sound/SoundCue.h"
 #include "SkillActor_ThunderType.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "EGGameInstance.h"
 #include "EGGameState.h"
 #include "Item_CardKey.h"
 #include "EGPostProcessVolume.h"
-#include "PaperSprite.h"
-#include "GameWidget.h"
 #include "MiniMapMarkerComponent.h"
 
 

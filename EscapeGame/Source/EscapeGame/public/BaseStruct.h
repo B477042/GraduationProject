@@ -37,8 +37,8 @@ public:
 		USceneComponent* SceneRoot;
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Mesh")
 		UMiniMapMarkerComponent* MiniMapTileMesh;
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-	class UMaterialInstanceDynamic* TileMaterial;
+	/*UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	class UMaterialInstanceDynamic* TileMaterial;*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		class UBoxComponent* TileTrigger;
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)

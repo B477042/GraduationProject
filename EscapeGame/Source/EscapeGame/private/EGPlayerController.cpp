@@ -3,7 +3,6 @@
 #include "EGPlayerController.h"
 #include "GameWidget.h"
 #include "EGPlayerCharacter.h"
-#include "..\public\EGPlayerController.h"
 #include "DT_DataStruct.h"
 #include "EGSaveGame.h"
 #include "Item_Recover.h"

@@ -4,7 +4,7 @@
 
 //#include "CoreMinimal.h"
 #include "TrapType.h"
-#include"EGPlayerCharacter.h"
+#include "EGPlayerCharacter.h"
 #include "DrawDebugHelpers.h"
 #include "Claymore.generated.h"
 

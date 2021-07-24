@@ -4,6 +4,8 @@
 
 #include "TrapType.h"
 #include "Components/BoxComponent.h"
+#include "particles/ParticleSystemComponent.h"
+#include "Components/AudioComponent.h"
 #include "HPBox.generated.h"
 
 

@@ -24,8 +24,6 @@ struct  FItemDataInfo
 	public:
 	FItemDataInfo() { Item = nullptr; n_item = 0; }
 
-	/*UPROPERTY(BlueprintAssignable)
-	FOnItemChanged OnItemChanged;*/
 
 	//If the number of items becomes zero after using them,
 	// remove the item from the inventory and return false.

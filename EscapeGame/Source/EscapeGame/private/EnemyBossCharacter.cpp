@@ -9,7 +9,8 @@
 #include "AnimInstance_Boss.h"
 #include "SkillActor_BossLightning.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "..\public\EnemyBossCharacter.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Sound/SoundCue.h"
 
 AEnemyBossCharacter::AEnemyBossCharacter()
 {

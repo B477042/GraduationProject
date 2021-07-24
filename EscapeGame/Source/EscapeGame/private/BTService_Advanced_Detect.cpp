@@ -6,7 +6,7 @@
 #include "EnemyBossCharacter.h"
 #include "EnemyAIController_Boss.h"
 //#include "DrawDebugHelpers.h"
-#include "..\public\BTService_Advanced_Detect.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 UBTService_Advanced_Detect::UBTService_Advanced_Detect()
 {
