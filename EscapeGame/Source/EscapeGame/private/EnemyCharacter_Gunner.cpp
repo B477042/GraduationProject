@@ -8,7 +8,7 @@
 #include "EGPlayerCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "AnimInstance_Gunner.h"
-#include "Perception/AIPerceptionComponent.h"
+#include "Sound/SoundCue.h"
 #include "Perception/AISenseConfig.h"
 
 AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
