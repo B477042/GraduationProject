@@ -63,8 +63,6 @@ void AEGPlayerCharacter::BeginPlay()
 		return;
 		
 	}
-	//인벤토리의 델리게이트와 위젯 연동
-	Inventory->OnItemUpdated.BindUFunction (PlayerCon->GetHUDWidget(), FName("UpdateItemes"));
 	
 	
 //================================================

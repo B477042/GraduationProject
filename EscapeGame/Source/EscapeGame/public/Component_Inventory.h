@@ -112,6 +112,8 @@ public:
 
 
 	bool LoadGameData(AItemActor* newItem, int Amount);
+	
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Delegate")
 	FOnItemUpdated OnItemUpdated;
 	
 	
