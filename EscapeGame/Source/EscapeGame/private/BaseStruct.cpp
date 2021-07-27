@@ -39,7 +39,7 @@ ABaseStruct::ABaseStruct()
 	}
 	
 	MiniMapTileMesh->SetRelativeLocation(POS_Minimap);
-	MiniMapTileMesh->SetMobility(EComponentMobility::Static);
+	MiniMapTileMesh->SetMobility(EComponentMobility::Stationary);
 	MiniMapTileMesh->SetRelativeLocation(POS_Minimap);
 	
 
@@ -59,68 +59,48 @@ void ABaseStruct::BeginPlay()
 	 *======================================================
 	 * Material Parameters
 	 */
-	//TileMaterial = UMaterialInstanceDynamic::Create(MiniMapTileMesh->GetMaterial(0), MiniMapTileMesh->GetMaterial(0));
-	//
-	//
-	//if (!TileMaterial)
-	//{
-	//	EGLOG(Error, TEXT("TileMaterial is null"));
-	//	return;
-	//}
-	//FMaterialParameterInfo MaterialParameterInfo;
-	//MaterialParameterInfo.Name = Name_MainColor;
-	//MaterialParameterInfo.Association = EMaterialParameterAssociation::GlobalParameter;
-	//MaterialParameterInfo.Index = INDEX_NONE;
-	//
-	//
-	////Set Dynamic Color
-	//bool bResult = TileMaterial->GetVectorParameterValue(MaterialParameterInfo, Color_Default);
-	//if (!bResult)
-	//{
-	//	EGLOG(Warning, TEXT("Get Vector Failed"));
-	//}
-	//Color_OnPlayer = FLinearColor(255, 255, 255, 1);
+	auto TileMaterial = UMaterialInstanceDynamic::Create(MiniMapTileMesh->GetMaterial(0), MiniMapTileMesh->GetMaterial(0));
+	
+	
+	if (!TileMaterial)
+	{
+		EGLOG(Error, TEXT("TileMaterial is null"));
+		return;
+	}
+	FMaterialParameterInfo MaterialParameterInfo;
+	MaterialParameterInfo.Name = Name_MainColor;
+	MaterialParameterInfo.Association = EMaterialParameterAssociation::GlobalParameter;
+	MaterialParameterInfo.Index = INDEX_NONE;
+	
+	
+	//Set Dynamic Color
+	bool bResult = TileMaterial->GetVectorParameterValue(MaterialParameterInfo, Color_Default);
+	if (!bResult)
+	{
+		EGLOG(Warning, TEXT("Get Vector Failed"));
+	}
+	Color_OnPlayer = FLinearColor(255, 255, 255, 1);
 }
 
 void ABaseStruct::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	//TileTrigger->OnComponentBeginOverlap.AddDynamic(this, &ABaseStruct::OnComponenetBeginOverlap);
-	//TileTrigger->OnComponentEndOverlap.AddDynamic(this, &ABaseStruct::OnComponentEndOverlap);
+	TileTrigger->OnComponentBeginOverlap.AddDynamic(this, &ABaseStruct::OnComponenetBeginOverlap);
+	TileTrigger->OnComponentEndOverlap.AddDynamic(this, &ABaseStruct::OnComponentEndOverlap);
 }
 
 void ABaseStruct::OnComponenetBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	/*auto Player = Cast<AEGPlayerCharacter>(OtherActor);
-	if (!Player)
-	{
-		return;
-	}
-	if (!TileMaterial)
-	{
-		EGLOG(Error, TEXT("TileMaterial is null"));
-		return;
-	}
-	TileMaterial->SetVectorParameterValue(Name_MainColor, Color_OnPlayer);*/
+	EGLOG(Warning, TEXT("Entered"));
 
 }
 
 void ABaseStruct::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	/*auto Player = Cast<AEGPlayerCharacter>(OtherActor);
-	if (!Player)
-	{
-		return;
-	}
-	if (!TileMaterial)
-	{
-		EGLOG(Error, TEXT("TileMaterial is null"));
-		return;
-	}
-	TileMaterial->SetVectorParameterValue(Name_MainColor, Color_Default);*/
+	EGLOG(Warning, TEXT("Exit"));
 
 
 }

@@ -515,15 +515,15 @@ void AEGPlayerCharacter::InitComponents()
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 	//====================================================================================================
 	//미니맵 및 카메라 관련 초기값 설정
-	minMiniMapArmLength = POS_Minimap.Z + 1500.0f;
-	maxMiniMapArmLength = POS_Minimap.Z + 3000.0f;
+	minMiniMapArmLength = POS_Minimap.Z + 3000.0f;
+	maxMiniMapArmLength = POS_Minimap.Z + 6000.0f;
 	
 	float X=0, Y=0, Z=0,Pitch=0,Yaw=0,Roll=0;
 	Camera->SetRelativeLocation(FVector(0.0f, 30.0f, 90.0f));
 	SpringArm->TargetArmLength = 500.0f;
 
-	MiniMapArm->TargetArmLength = 0.0f;
-	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, POS_Minimap.Z+1500.0f));
+	MiniMapArm->TargetArmLength = POS_Minimap.Z+minMiniMapArmLength;
+	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, POS_Minimap.Z));
 	MiniMapArm->SetRelativeRotation(FRotator(-90.0f, 0.0f,0.0f));
 
 	//마커 초기값 설정
