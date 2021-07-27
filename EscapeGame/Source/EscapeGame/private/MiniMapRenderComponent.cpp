@@ -42,7 +42,8 @@ UMiniMapRenderComponent::UMiniMapRenderComponent()
 	//Don't Caputre Skeletal Meshes
 	ShowFlags.SkeletalMeshes = false;
 	ShowFlags.EyeAdaptation = false;
-	
+	ShowFlags.Particles = false;
+	 
 
 }
 
