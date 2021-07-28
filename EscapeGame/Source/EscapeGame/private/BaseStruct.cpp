@@ -41,7 +41,9 @@ ABaseStruct::ABaseStruct()
 	MiniMapTileMesh->SetRelativeLocation(POS_Minimap);
 	MiniMapTileMesh->SetMobility(EComponentMobility::Stationary);
 	MiniMapTileMesh->SetRelativeLocation(POS_Minimap);
+
 	
+	Color_OnPlayer = FLinearColor(255, 255, 255, 1);
 
 	
 	/*
@@ -59,50 +61,57 @@ void ABaseStruct::BeginPlay()
 	 *======================================================
 	 * Material Parameters
 	 */
-	auto TileMaterial = UMaterialInstanceDynamic::Create(MiniMapTileMesh->GetMaterial(0), MiniMapTileMesh->GetMaterial(0));
-	
-	
-	if (!TileMaterial)
+	MID_Tile = MiniMapTileMesh->CreateDynamicMaterialInstance(0);
+	if(!MID_Tile)
 	{
-		EGLOG(Error, TEXT("TileMaterial is null"));
+		EGLOG(Error, TEXT("Failed to Create MID"));
 		return;
 	}
-	FMaterialParameterInfo MaterialParameterInfo;
-	MaterialParameterInfo.Name = Name_MainColor;
-	MaterialParameterInfo.Association = EMaterialParameterAssociation::GlobalParameter;
-	MaterialParameterInfo.Index = INDEX_NONE;
+
 	
 	
-	//Set Dynamic Color
-	bool bResult = TileMaterial->GetVectorParameterValue(MaterialParameterInfo, Color_Default);
-	if (!bResult)
+	 const bool bResult = MID_Tile->GetVectorParameterValue(Name_MainColor,
+		 Color_Default);
+	if(!bResult)
 	{
-		EGLOG(Warning, TEXT("Get Vector Failed"));
+		EGLOG(Error, TEXT("Failed to get Color Param"));
+		return;
 	}
-	Color_OnPlayer = FLinearColor(255, 255, 255, 1);
+	
+	
 }
 
 void ABaseStruct::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	TileTrigger->OnComponentBeginOverlap.AddDynamic(this, &ABaseStruct::OnComponenetBeginOverlap);
+	TileTrigger->OnComponentBeginOverlap.AddDynamic(this, &ABaseStruct::OnComponentBeginOverlap);
 	TileTrigger->OnComponentEndOverlap.AddDynamic(this, &ABaseStruct::OnComponentEndOverlap);
 }
 
-void ABaseStruct::OnComponenetBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+void ABaseStruct::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	EGLOG(Warning, TEXT("Entered"));
-
+	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
+	if(!Player)
+	{
+		return;
+	}
+	MID_Tile->SetVectorParameterValue(Name_MainColor, Color_OnPlayer);
 }
 
 void ABaseStruct::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	EGLOG(Warning, TEXT("Exit"));
-
-
+	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
+	if (!Player)
+	{
+		return;
+	}
+	MID_Tile->SetVectorParameterValue(Name_MainColor, Color_Default);
+	
 }
 
 // Called every frame

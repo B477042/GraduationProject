@@ -25,7 +25,7 @@ protected:
 	virtual void PostInitializeComponents() override;
 
 	UFUNCTION()
-		void OnComponenetBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+		void OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION()
 		void OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	
@@ -41,9 +41,14 @@ public:
 	class UMaterialInstanceDynamic* TileMaterial;*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		class UBoxComponent* TileTrigger;
+	//Material Instance Dynamic
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+		class UMaterialInstanceDynamic* MID_Tile;
+
+	//Color From Material Instance
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 		FLinearColor Color_Default;
-
+	//Color When Player On this Block
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		FLinearColor Color_OnPlayer;
 	const FName Name_MainColor = "MainColor";
