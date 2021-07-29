@@ -62,6 +62,8 @@ void AMiniMapTileManager::BeginPlay()
 
 	}
 
+
+
 }
 
 void AMiniMapTileManager::BeginDestroy()

@@ -53,3 +53,5 @@ namespace Thread_CalcOpacity
 		EGLOG(Error, TEXT("Thread is works?"));
 	}
 }
+
+//class CalacMiniMapTile:public 
