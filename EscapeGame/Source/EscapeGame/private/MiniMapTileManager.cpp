@@ -61,8 +61,8 @@ void AMiniMapTileManager::BeginPlay()
 		Array_Structs.Add(Casted);
 
 	}
-
-
+	EGLOG(Warning, TEXT("Task Start"));
+	(new FAutoDeleteAsyncTask<CalcMiniMapTileAsyncTask>(this, this))->StartBackgroundTask();
 
 }
 

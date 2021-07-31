@@ -47,11 +47,47 @@ protected:
 
 namespace Thread_CalcOpacity
 {
-	static void CalcOpacityOfStruct(const AMiniMapTileManager* Manager,
-		const AActor* Player)
+	static void CalcOpacityOfStruct(const AMiniMapTileManager* Manager,	const AActor* Player)
 	{
 		EGLOG(Error, TEXT("Thread is works?"));
 	}
 }
 
-//class CalacMiniMapTile:public 
+/*
+*	Reference Tutorial : https://www.orfeasel.com/implementing-multithreading-in-ue4/
+*	AsyncTask Type Calss. 
+* 
+*/
+class CalcMiniMapTileAsyncTask :public FNonAbandonableTask
+{
+	const AMiniMapTileManager* Manager;
+	const AActor* Player;
+
+public:
+	CalcMiniMapTileAsyncTask(const AMiniMapTileManager* Manager, const AActor* Player)
+	{
+		this->Manager = Manager;
+		this->Player = Player;
+	}
+
+
+	FORCEINLINE TStatId GetStatId() const
+	{
+		RETURN_QUICK_DECLARE_CYCLE_STAT(PrimeCalculationAsyncTask, STATGROUP_ThreadPoolAsyncTasks);
+	}
+
+	void DoWork()
+	{
+		EGLOG(Warning, TEXT("============================="));
+		EGLOG(Warning, TEXT("DO Work baby"));
+		EGLOG(Warning, TEXT("============================="));
+
+		if (!Manager && !Player)
+		{
+			EGLOG(Warning, TEXT("Thread On"));
+			Thread_CalcOpacity::CalcOpacityOfStruct(Manager, Player);
+		}
+
+	}
+
+};
