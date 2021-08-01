@@ -49,7 +49,13 @@ namespace Thread_CalcOpacity
 {
 	static void CalcOpacityOfStruct(const AMiniMapTileManager* Manager,	const AActor* Player)
 	{
-		EGLOG(Error, TEXT("Thread is works?"));
+
+		EGLOG(Error, TEXT("Thread : %s"), *Manager->GetName());
+		for (int i = 0; i < 100000; i++)
+		{
+			EGLOG(Warning, TEXT("%d"), i);
+		}
+
 	}
 }
 
@@ -78,11 +84,9 @@ public:
 
 	void DoWork()
 	{
-		EGLOG(Warning, TEXT("============================="));
-		EGLOG(Warning, TEXT("DO Work baby"));
-		EGLOG(Warning, TEXT("============================="));
+		
 
-		if (!Manager && !Player)
+		if (Manager && Player)
 		{
 			EGLOG(Warning, TEXT("Thread On"));
 			Thread_CalcOpacity::CalcOpacityOfStruct(Manager, Player);
