@@ -693,20 +693,20 @@ void AEGPlayerCharacter::Jump()
 {
 	if(!Stat->IsAttacking())
 	Super::Jump();
-	//Test용
-	auto World = GetWorld();
-	if (!World)
-	{
-		return;
-	}
-	TArray<AActor*>Results;
+	////Test용
+	//auto World = GetWorld();
+	//if (!World)
+	//{
+	//	return;
+	//}
+	//TArray<AActor*>Results;
 
-	UGameplayStatics::GetAllActorsOfClass(World, AMiniMapTileManager::StaticClass(), Results);
+	//UGameplayStatics::GetAllActorsOfClass(World, AMiniMapTileManager::StaticClass(), Results);
 
-	auto Manager = Cast<AMiniMapTileManager>(Results[0]);
+	//auto Manager = Cast<AMiniMapTileManager>(Results[0]);
 
-	//Run Thread 
-	(new FAutoDeleteAsyncTask<CalcMiniMapTileAsyncTask>(Manager, this))->StartBackgroundTask();
+	////Run Thread 
+	//(new FAutoDeleteAsyncTask<CalcMiniMapTileAsyncTask>(Manager, this))->StartBackgroundTask();
 
 	
 }

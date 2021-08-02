@@ -53,6 +53,17 @@ ABaseStruct::ABaseStruct()
 	TileTrigger->SetCollisionProfileName(TEXT("OnTrapTrigger"));
 }
 
+void ABaseStruct::SetTileOpacity(const float NewValue)
+{
+	if (!MID_Tile)
+	{
+		UE_LOG(LogTemp, Log, TEXT("MID Tile is nullptr"));
+		return;
+	}
+	MID_Tile->SetScalarParameterValue(Name_Opacity, NewValue);
+
+}
+
 // Called when the game starts or when spawned
 void ABaseStruct::BeginPlay()
 {

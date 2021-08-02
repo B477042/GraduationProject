@@ -32,6 +32,10 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	virtual void BeginDestroy()override;
+
+	//Calculate Distance between player and path. Only Z value 
+	float CalcHowFarToPlayer(const FVector& Pos_Player, const FVector& Pos_Path);
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -39,7 +43,18 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "MultiThread")
 		TArray<class ABaseStruct*> Array_Structs;
-	
+
+	/*
+	* Offset value How far to player used to start fading	
+	*/
+	UPROPERTY(EditAnywhere, Category = "MultiThread", meta = (UIMin = 0.00))
+		float Offset_BeginFade;
+	/*
+	* Offset value How far to player used to fade compeletely
+	*/
+	UPROPERTY(EditAnywhere, Category = "MultiThread", meta = (UIMin = 0.00))
+		float Offset_CompeleteFade;
+
 	//If True it means There is other object of this type. 
 	static bool bIsUniqueObj;
 

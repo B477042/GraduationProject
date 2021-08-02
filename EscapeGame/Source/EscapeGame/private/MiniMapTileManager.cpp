@@ -10,6 +10,9 @@ AMiniMapTileManager::AMiniMapTileManager()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
+	Offset_BeginFade = 100.0f;
+	Offset_CompeleteFade = 150.0f;
+
 }
 
 // Called when the game starts or when spawned
@@ -73,6 +76,18 @@ void AMiniMapTileManager::BeginDestroy()
 	Super::BeginDestroy();
 	EGLOG(Warning, TEXT("Manager Destroy"));
 }
+
+float AMiniMapTileManager::CalcHowFarToPlayer(const FVector& Pos_Player, const FVector& Pos_Path)
+{
+	float Result = 0.0f;
+
+	Result = FMath::Abs(Pos_Player.Z - Pos_Path.Z);
+
+	return Result;
+}
+
+
+
 
 // Called every frame
 void AMiniMapTileManager::Tick(float DeltaTime)

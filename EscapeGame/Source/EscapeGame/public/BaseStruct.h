@@ -18,6 +18,7 @@ class ESCAPEGAME_API ABaseStruct : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ABaseStruct();
+	void SetTileOpacity(const float NewValue);
 
 protected:
 	// Called when the game starts or when spawned
@@ -52,5 +53,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		FLinearColor Color_OnPlayer;
 	const FName Name_MainColor = "MainColor";
+	const FName Name_Opacity = "Opacity";
 };
 
