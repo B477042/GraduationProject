@@ -49,13 +49,14 @@ namespace Thread_CalcOpacity
 {
 	static void CalcOpacityOfStruct(const AMiniMapTileManager* Manager,	const AActor* Player)
 	{
-
+		int num = 0;
 		EGLOG(Error, TEXT("Thread : %s"), *Manager->GetName());
 		for (int i = 0; i < 100000; i++)
 		{
-			EGLOG(Warning, TEXT("%d"), i);
+			num += i;
+		
 		}
-
+		UE_LOG(LogTemp, Log, TEXT("Thread : %d"),num);
 	}
 }
 

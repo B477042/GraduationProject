@@ -62,7 +62,9 @@ void AMiniMapTileManager::BeginPlay()
 
 	}
 	EGLOG(Warning, TEXT("Task Start"));
-	(new FAutoDeleteAsyncTask<CalcMiniMapTileAsyncTask>(this, this))->StartBackgroundTask();
+
+	////Run Thread 
+	//(new FAutoDeleteAsyncTask<CalcMiniMapTileAsyncTask>(Manager, this))->StartBackgroundTask();
 
 }
 

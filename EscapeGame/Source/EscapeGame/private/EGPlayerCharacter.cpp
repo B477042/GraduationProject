@@ -19,6 +19,7 @@
 #include "Item_CardKey.h"
 #include "EGPostProcessVolume.h"
 #include "MiniMapMarkerComponent.h"
+#include "MiniMapTileManager.h"
 
 
 // Sets default values
@@ -692,6 +693,21 @@ void AEGPlayerCharacter::Jump()
 {
 	if(!Stat->IsAttacking())
 	Super::Jump();
+	//Test용
+	auto World = GetWorld();
+	if (!World)
+	{
+		return;
+	}
+	TArray<AActor*>Results;
+
+	UGameplayStatics::GetAllActorsOfClass(World, AMiniMapTileManager::StaticClass(), Results);
+
+	auto Manager = Cast<AMiniMapTileManager>(Results[0]);
+
+	//Run Thread 
+	(new FAutoDeleteAsyncTask<CalcMiniMapTileAsyncTask>(Manager, this))->StartBackgroundTask();
+
 	
 }
 
