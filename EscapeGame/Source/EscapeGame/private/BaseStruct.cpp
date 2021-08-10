@@ -5,6 +5,11 @@
 #include "Materials/MaterialInstance.h"
 #include "Components/BoxComponent.h"
 #include "EGPlayerCharacter.h"
+#include "MiniMapTileManager.h"
+
+
+bool ABaseStruct::bIsPlayerCaptured = false;
+
 // Sets default values
 ABaseStruct::ABaseStruct()
 {
@@ -103,19 +108,55 @@ void ABaseStruct::PostInitializeComponents()
 void ABaseStruct::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	EGLOG(Warning, TEXT("Entered"));
+	
+
+	//Check Is Player
+
 	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
 	if(!Player)
 	{
 		return;
 	}
+	//Change Tile Color 
 	MID_Tile->SetVectorParameterValue(Name_MainColor, Color_OnPlayer);
+
+	//Set 'bIsPlayerCaptured' to true
+	bIsPlayerCaptured = true;
+
+	//If 'bIsPlayerCaputred' is ture, return function
+	if (bIsPlayerCaptured)
+	{
+		return;
+	}
+	//Run Multi-Thread 
+
+	const auto World = GetWorld();
+	if (!World)
+	{
+		UE_LOG(LogTemp, Log, TEXT("World Invailed!"));
+		return;
+	}
+
+	TArray<AActor*>Results;
+
+	UGameplayStatics::GetAllActorsOfClass(World, AMiniMapTileManager::StaticClass(), Results);
+	//Cast AActor=================>MiniMapTileManager
+	const auto Manager = Cast<AMiniMapTileManager>(Results[0]);
+	if (!Manager)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Casting Failed"));
+	}
+
+	//Run Thread 
+	(new FAutoDeleteAsyncTask<CalcMiniMapTileAsyncTask>(Manager, Player))->StartBackgroundTask();
+
+	
 }
 
 void ABaseStruct::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	EGLOG(Warning, TEXT("Exit"));
+
 	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (!Player)
 	{

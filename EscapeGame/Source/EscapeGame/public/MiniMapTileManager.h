@@ -98,16 +98,7 @@ public:
 		RETURN_QUICK_DECLARE_CYCLE_STAT(PrimeCalculationAsyncTask, STATGROUP_ThreadPoolAsyncTasks);
 	}
 
-	void DoWork()
-	{
-		
-
-		if (Manager && Player)
-		{
-			EGLOG(Warning, TEXT("Thread On"));
-			Thread_CalcOpacity::CalcOpacityOfStruct(Manager, Player);
-		}
-
-	}
+	void DoWork();
+	
 
 };

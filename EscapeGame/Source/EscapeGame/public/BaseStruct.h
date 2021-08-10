@@ -30,6 +30,10 @@ protected:
 	UFUNCTION()
 		void OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	
+	/*
+	* If Player had been caputred by this type of object set true
+	*/
+	static bool bIsPlayerCaptured;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

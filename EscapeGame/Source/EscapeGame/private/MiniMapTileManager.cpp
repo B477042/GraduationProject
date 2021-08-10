@@ -96,3 +96,33 @@ void AMiniMapTileManager::Tick(float DeltaTime)
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+//==========================================================================================================
+//Thread
+
+
+void CalcMiniMapTileAsyncTask::DoWork()
+{
+	
+
+
+		if (Manager && Player)
+		{
+			EGLOG(Warning, TEXT("Thread On"));
+			Thread_CalcOpacity::CalcOpacityOfStruct(Manager, Player);
+			EGLOG(Warning, TEXT("Thread Bye bye"));
+		}
+
+	
+}
