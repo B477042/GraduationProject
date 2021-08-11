@@ -66,9 +66,7 @@ void AMiniMapTileManager::BeginPlay()
 	}
 	EGLOG(Warning, TEXT("Task Start"));
 
-	////Run Thread 
-	//(new FAutoDeleteAsyncTask<CalcMiniMapTileAsyncTask>(Manager, this))->StartBackgroundTask();
-
+	
 }
 
 void AMiniMapTileManager::BeginDestroy()
@@ -116,13 +114,29 @@ void CalcMiniMapTileAsyncTask::DoWork()
 {
 	
 
+	//Task Parameter Check 
+	if (Manager && Player)
+	{
+		/*
+		* ===============================================
+		*		How To Work
+		* 
+		*	Goal : Calculate Opacity of all of 'MiniMap tile'
+		*	
+		*	Solution
+		* 
+			1) As Default, Set Tiles's Opacity to 0
+			2) In While Loop, Calaculate Z Distance Between Tiles and Player
+			3) 
+		* ================================================ 
+		*/
 
-		if (Manager && Player)
-		{
-			EGLOG(Warning, TEXT("Thread On"));
-			Thread_CalcOpacity::CalcOpacityOfStruct(Manager, Player);
-			EGLOG(Warning, TEXT("Thread Bye bye"));
-		}
+
+		EGLOG(Warning, TEXT("Thread On"));
+		Thread_CalcOpacity::CalcOpacityOfStruct(Manager, Player);
+		EGLOG(Warning, TEXT("Thread Bye bye"));
+
+	}
 
 	
 }
