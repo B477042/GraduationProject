@@ -120,14 +120,16 @@ void ABaseStruct::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedCompone
 	//Change Tile Color 
 	MID_Tile->SetVectorParameterValue(Name_MainColor, Color_OnPlayer);
 
-	//Set 'bIsPlayerCaptured' to true
-	bIsPlayerCaptured = true;
+	
 
 	//If 'bIsPlayerCaputred' is ture, return function
 	if (bIsPlayerCaptured)
 	{
 		return;
 	}
+	
+	//Set 'bIsPlayerCaptured' to true
+	bIsPlayerCaptured = true;
 	//Run Multi-Thread 
 
 	const auto World = GetWorld();
@@ -146,7 +148,7 @@ void ABaseStruct::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedCompone
 	{
 		UE_LOG(LogTemp, Error, TEXT("Casting Failed"));
 	}
-
+	EGLOG(Error, TEXT("Runn"));
 	//Run Thread 
 	(new FAutoDeleteAsyncTask<CalcMiniMapTileAsyncTask>(Manager, Player))->StartBackgroundTask();
 

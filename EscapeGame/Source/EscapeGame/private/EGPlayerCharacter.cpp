@@ -57,13 +57,13 @@ void AEGPlayerCharacter::BeginPlay()
 	/*
 	 * Inventory 관련 Delegate 등록
 	 */
-	auto PlayerCon = Cast<AEGPlayerController>(Controller);
+	/*auto PlayerCon = Cast<AEGPlayerController>(Controller);
 	if(!PlayerCon)
 	{
 		EGLOG(Warning, TEXT("Casting Falied"));
 		return;
 		
-	}
+	}*/
 	
 	
 //================================================
