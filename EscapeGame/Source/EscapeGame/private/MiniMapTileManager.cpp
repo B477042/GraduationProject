@@ -3,7 +3,7 @@
 
 #include "MiniMapTileManager.h"
 #include "BaseStruct.h"
-bool AMiniMapTileManager::bIsUniqueObj = false;
+//bool AMiniMapTileManager::bIsUniqueObj = false;
 // Sets default values
 AMiniMapTileManager::AMiniMapTileManager()
 {
@@ -20,18 +20,22 @@ void AMiniMapTileManager::BeginPlay()
 {
 	Super::BeginPlay();
 	EGLOG(Warning, TEXT("Manager Begin"));
-	/*
-	*	If There is any other Object that equal type exist
-	*	Destroy this Object
-	*/
-	if (!bIsUniqueObj)
-	{
-		bIsUniqueObj = true;
-	}
-	else
-	{
-		Destroy();
-	}
+	///*
+	//*	If There is any other Object that equal type exist
+	//*	Destroy this Object
+	//*/
+	//if (!bIsUniqueObj)
+	//{
+	//	bIsUniqueObj = true;
+	//}
+	//else
+	//{
+	//	EGLOG(Error, TEXT("Is Not Unique Manager"));
+	//	Destroy();
+	//}
+	
+
+
 	//Collect All 'ABaseStruct' based objects
 	auto World = GetWorld();
 	if (!World)
@@ -99,13 +103,6 @@ void AMiniMapTileManager::Tick(float DeltaTime)
 
 
 
-
-
-
-
-
-
-
 //==========================================================================================================
 //Thread
 
@@ -133,10 +130,33 @@ void CalcMiniMapTileAsyncTask::DoWork()
 
 
 		EGLOG(Warning, TEXT("Thread On"));
+
+		//#1 Set Opacity to 0
+
+		
 		Thread_CalcOpacity::CalcOpacityOfStruct(Manager, Player);
-		EGLOG(Warning, TEXT("Thread Bye bye"));
+		EGLOG(Warning, TEXT("Thread Off"));
 
 	}
 
 	
+}
+
+void Thread_CalcOpacity::SetAllOpacityToZero(const AMiniMapTileManager* Manager)
+{
+}
+
+void Thread_CalcOpacity::CalcOpacityOfStruct(const AMiniMapTileManager* Manager, const AActor* Player)
+{
+	//int num = 0;
+	//EGLOG(Error, TEXT("Thread : %s"), *Manager->GetName());
+	//for (int i = 0; i < 1000000000; i++)
+	//{
+	//	num += i;
+
+	//}
+	//UE_LOG(LogTemp, Warning, TEXT("Thread : %d"), num);
+
+
+
 }

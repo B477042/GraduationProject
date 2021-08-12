@@ -94,7 +94,10 @@ void ABaseStruct::BeginPlay()
 		return;
 	}
 	
-	
+	if (bIsPlayerCaptured)
+	{
+		bIsPlayerCaptured = false;
+	}
 }
 
 void ABaseStruct::PostInitializeComponents()
@@ -143,6 +146,12 @@ void ABaseStruct::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedCompone
 
 	UGameplayStatics::GetAllActorsOfClass(World, AMiniMapTileManager::StaticClass(), Results);
 	//Cast AActor=================>MiniMapTileManager
+	if (Results.Num() == 0)
+	{
+		EGLOG(Error, TEXT("Results is empty"));
+		return;
+	}
+
 	const auto Manager = Cast<AMiniMapTileManager>(Results[0]);
 	if (!Manager)
 	{

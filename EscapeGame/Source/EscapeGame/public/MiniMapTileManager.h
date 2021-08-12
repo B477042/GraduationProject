@@ -55,24 +55,16 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "MultiThread", meta = (UIMin = 0.00))
 		float Offset_CompeleteFade;
 
-	//If True it means There is other object of this type. 
-	static bool bIsUniqueObj;
+	////If True it means There is other object of this type. 
+	//static bool bIsUniqueObj;
 
 };
 
+
 namespace Thread_CalcOpacity
 {
-	static void CalcOpacityOfStruct(const AMiniMapTileManager* Manager,	const AActor* Player)
-	{
-		int num = 0;
-		EGLOG(Error, TEXT("Thread : %s"), *Manager->GetName());
-		for (int i = 0; i < 100000; i++)
-		{
-			num += i;
-		
-		}
-		UE_LOG(LogTemp, Log, TEXT("Thread : %d"),num);
-	}
+	static void SetAllOpacityToZero(const AMiniMapTileManager* Manager);
+	static void CalcOpacityOfStruct(const AMiniMapTileManager* Manager, const AActor* Player);
 }
 
 /*
