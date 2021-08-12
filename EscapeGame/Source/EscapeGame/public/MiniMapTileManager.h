@@ -33,12 +33,16 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void BeginDestroy()override;
 
+
 	//Calculate Distance between player and path. Only Z value 
 	float CalcHowFarToPlayer(const FVector& Pos_Player, const FVector& Pos_Path);
 	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	//Make all tiles opacity to zero
+	void SetAllOpacityToZero();
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "MultiThread")
@@ -63,8 +67,8 @@ protected:
 
 namespace Thread_CalcOpacity
 {
-	static void SetAllOpacityToZero(const AMiniMapTileManager* Manager);
-	static void CalcOpacityOfStruct(const AMiniMapTileManager* Manager, const AActor* Player);
+	static void SetAllOpacityToZero( AMiniMapTileManager* Manager);
+	static void CalcOpacityOfStruct(AMiniMapTileManager* Manager, const AActor* Player);
 }
 
 /*
@@ -74,11 +78,11 @@ namespace Thread_CalcOpacity
 */
 class CalcMiniMapTileAsyncTask :public FNonAbandonableTask
 {
-	const AMiniMapTileManager* Manager;
+	AMiniMapTileManager* Manager;
 	const AActor* Player;
 
 public:
-	CalcMiniMapTileAsyncTask(const AMiniMapTileManager* Manager, const AActor* Player)
+	CalcMiniMapTileAsyncTask(AMiniMapTileManager* Manager, const AActor* Player)
 	{
 		this->Manager = Manager;
 		this->Player = Player;

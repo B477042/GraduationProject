@@ -98,6 +98,20 @@ void AMiniMapTileManager::Tick(float DeltaTime)
 
 }
 
+void AMiniMapTileManager::SetAllOpacityToZero()
+{
+	if (Array_Structs.Num() == 0)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Array is empty"));
+		return;
+	}
+
+	for (auto it : Array_Structs)
+	{
+		it->SetTileOpacity(0);
+	}
+}
+
 
 
 
@@ -132,7 +146,7 @@ void CalcMiniMapTileAsyncTask::DoWork()
 		EGLOG(Warning, TEXT("Thread On"));
 
 		//#1 Set Opacity to 0
-
+		Thread_CalcOpacity::SetAllOpacityToZero(Manager);
 		
 		Thread_CalcOpacity::CalcOpacityOfStruct(Manager, Player);
 		EGLOG(Warning, TEXT("Thread Off"));
@@ -142,12 +156,27 @@ void CalcMiniMapTileAsyncTask::DoWork()
 	
 }
 
-void Thread_CalcOpacity::SetAllOpacityToZero(const AMiniMapTileManager* Manager)
+void Thread_CalcOpacity::SetAllOpacityToZero(AMiniMapTileManager* Manager)
 {
+	if (!Manager)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Manager is Nullptr"));
+	}
+	Manager->SetAllOpacityToZero();
+
+	
 }
 
-void Thread_CalcOpacity::CalcOpacityOfStruct(const AMiniMapTileManager* Manager, const AActor* Player)
+void Thread_CalcOpacity::CalcOpacityOfStruct( AMiniMapTileManager* Manager, const AActor* Player)
 {
+	if (!Manager)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Manager is Nullptr"));
+	}
+	if (!Player)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Player is Nullptr"));
+	}
 	//int num = 0;
 	//EGLOG(Error, TEXT("Thread : %s"), *Manager->GetName());
 	//for (int i = 0; i < 1000000000; i++)
