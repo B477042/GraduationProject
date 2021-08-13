@@ -10,8 +10,8 @@ AMiniMapTileManager::AMiniMapTileManager()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
-	Offset_BeginFade = 100.0f;
-	Offset_CompeleteFade = 150.0f;
+	Offset_BeginFade = 190.0f;
+	Offset_CompeleteFade = 415.0f;
 
 }
 
@@ -126,10 +126,17 @@ void AMiniMapTileManager::CalculateStructsOpacity(const FVector& Pos_Player)
 		*/
 		if (DistanceZ < Offset_CompeleteFade)
 		{
-			float Percent = DistanceZ / (Offset_CompeleteFade - Offset_BeginFade);
-			float LerpValue = FMath::Lerp(Offset_BeginFade, Offset_CompeleteFade, Percent);
+			//Smaller than Offset BeginFade
+			if (DistanceZ <= Offset_BeginFade)
+			{
+				it->SetTileOpacity(1);
+			}
 
-			it->SetTileOpacity(LerpValue);
+			//Calc Percent value
+			float Percent = 1 - (DistanceZ - Offset_BeginFade) / (Offset_CompeleteFade - Offset_BeginFade);
+			//float LerpValue = FMath::Lerp(Offset_BeginFade, Offset_CompeleteFade, Percent)/Offset_CompeleteFade;
+
+			it->SetTileOpacity(Percent);
 		}
 		else
 		{
