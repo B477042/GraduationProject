@@ -43,7 +43,8 @@ UMiniMapRenderComponent::UMiniMapRenderComponent()
 	ShowFlags.SkeletalMeshes = false;
 	ShowFlags.EyeAdaptation = false;
 	ShowFlags.Particles = false;
-	 
+	
+	
 
 }
 

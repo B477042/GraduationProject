@@ -402,21 +402,22 @@ void AEGPlayerCharacter::ToggleMap()
 	
 	if (bSetMapArm==false)
 	{
-		MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, maxMiniMapArmLength));
-		EGLOG(Error, TEXT("Change To Max"));
+		MiniMapArm->TargetArmLength=POS_Minimap.Z+ maxMiniMapArmLength;
+		EGLOG(Log, TEXT("Change To Max"));
 		bSetMapArm = true;
 		return;
 	}
 	if (bSetMapArm==true)
 	{
-		MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, minMiniMapArmLength));
+		
+		MiniMapArm->TargetArmLength = POS_Minimap.Z + minMiniMapArmLength;
 		bSetMapArm = false;
-		EGLOG(Error, TEXT("Change To Min"));
+		EGLOG(Log, TEXT("Change To Min"));
 		return;
 	}
 	else
 	{
-		EGLOG(Error, TEXT("Error"));
+		EGLOG(Error, TEXT("Minimap Toggle Error"));
 	}
 }
 
@@ -517,15 +518,16 @@ void AEGPlayerCharacter::InitComponents()
 	//====================================================================================================
 	//미니맵 및 카메라 관련 초기값 설정
 	minMiniMapArmLength = POS_Minimap.Z + 3000.0f;
-	maxMiniMapArmLength = POS_Minimap.Z + 6000.0f;
+	maxMiniMapArmLength = POS_Minimap.Z + 7000.0f;
 	
 	float X=0, Y=0, Z=0,Pitch=0,Yaw=0,Roll=0;
 	Camera->SetRelativeLocation(FVector(0.0f, 30.0f, 90.0f));
 	SpringArm->TargetArmLength = 500.0f;
 
 	MiniMapArm->TargetArmLength = POS_Minimap.Z+minMiniMapArmLength;
-	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, POS_Minimap.Z));
+	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
 	MiniMapArm->SetRelativeRotation(FRotator(-90.0f, 0.0f,0.0f));
+	MiniMapArm->bDoCollisionTest = false;
 
 	//마커 초기값 설정
 	MiniMapMarkerComponent->SetRelativeLocation(FVector(0, 0, POS_Minimap.Z));

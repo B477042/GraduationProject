@@ -134,8 +134,7 @@ void AMiniMapTileManager::CalculateStructsOpacity(const FVector& Pos_Player)
 
 			//Calc Percent value
 			float Percent = 1 - (DistanceZ - Offset_BeginFade) / (Offset_CompeleteFade - Offset_BeginFade);
-			//float LerpValue = FMath::Lerp(Offset_BeginFade, Offset_CompeleteFade, Percent)/Offset_CompeleteFade;
-
+			
 			it->SetTileOpacity(Percent);
 		}
 		else
