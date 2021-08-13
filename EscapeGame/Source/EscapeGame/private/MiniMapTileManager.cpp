@@ -65,7 +65,7 @@ void AMiniMapTileManager::BeginPlay()
 			return;
 		}
 
-		Array_Structs.Add(Casted);
+		Array_Structures.Add(Casted);
 
 	}
 	EGLOG(Warning, TEXT("Task Start"));
@@ -100,16 +100,46 @@ void AMiniMapTileManager::Tick(float DeltaTime)
 
 void AMiniMapTileManager::SetAllOpacityToZero()
 {
-	if (Array_Structs.Num() == 0)
+	if (Array_Structures.Num() == 0)
 	{
 		UE_LOG(LogTemp, Log, TEXT("Array is empty"));
 		return;
 	}
 
-	for (auto it : Array_Structs)
+	for (auto it : Array_Structures)
 	{
 		it->SetTileOpacity(0);
 	}
+}
+
+void AMiniMapTileManager::CalculateStructsOpacity(const FVector& Pos_Player)
+{
+
+
+	for (auto it : Array_Structures)
+	{
+		const float DistanceZ = CalcHowFarToPlayer(Pos_Player, it->GetActorLocation());
+		
+		/*
+		* DistanceZ is smaller than Offset CompeleteFade. 
+		*
+		*/
+		if (DistanceZ < Offset_CompeleteFade)
+		{
+			float Percent = DistanceZ / (Offset_CompeleteFade - Offset_BeginFade);
+			float LerpValue = FMath::Lerp(Offset_BeginFade, Offset_CompeleteFade, Percent);
+
+			it->SetTileOpacity(LerpValue);
+		}
+		else
+		{
+			it->SetTileOpacity(0);
+		}
+
+	}
+
+
+	
 }
 
 
@@ -177,15 +207,19 @@ void Thread_CalcOpacity::CalcOpacityOfStruct( AMiniMapTileManager* Manager, cons
 	{
 		UE_LOG(LogTemp, Error, TEXT("Player is Nullptr"));
 	}
-	//int num = 0;
-	//EGLOG(Error, TEXT("Thread : %s"), *Manager->GetName());
-	//for (int i = 0; i < 1000000000; i++)
-	//{
-	//	num += i;
+	
+	while (Player->IsValidLowLevel()&& UGameplayStatics::GetGameInstance(Manager))
+	{
+		/*
+			Is Thread Works? 
+		*/
+		/*UE_LOG(LogTemp, Log, TEXT("Hello Thread"));
+		FPlatformProcess::Sleep(0.01);*/
 
-	//}
-	//UE_LOG(LogTemp, Warning, TEXT("Thread : %d"), num);
+		Manager->CalculateStructsOpacity(Player->GetActorLocation());
+		FPlatformProcess::Sleep(0.01);
 
+	}
 
 
 }

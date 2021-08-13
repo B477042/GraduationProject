@@ -35,7 +35,7 @@ protected:
 
 
 	//Calculate Distance between player and path. Only Z value 
-	float CalcHowFarToPlayer(const FVector& Pos_Player, const FVector& Pos_Path);
+	float CalcHowFarToPlayer(const FVector& Pos_Player, const FVector& Pos_Struct);
 	
 public:	
 	// Called every frame
@@ -43,10 +43,10 @@ public:
 
 	//Make all tiles opacity to zero
 	void SetAllOpacityToZero();
-
+	void CalculateStructsOpacity(const FVector& Pos_Player);
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "MultiThread")
-		TArray<class ABaseStruct*> Array_Structs;
+		TArray<class ABaseStruct*> Array_Structures;
 
 	/*
 	* Offset value How far to player used to start fading	
