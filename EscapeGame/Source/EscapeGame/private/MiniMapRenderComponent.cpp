@@ -32,7 +32,7 @@ UMiniMapRenderComponent::UMiniMapRenderComponent()
 	}
 
 	ProjectionType = ECameraProjectionMode::Orthographic;
-	FOVAngle=175;
+	FOVAngle=120;
 
 	
 	this->CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
