@@ -205,9 +205,20 @@ void AStairPath2::SettingWorldMatrix()
 
 void AStairPath2::MakeComponentsTree()
 {
+	
+	//* Before
 	Root->SetupAttachment(RootComponent);
 	Plate1->SetupAttachment(Root);
 	Plate2->SetupAttachment(Root);
+	
+
+
+	/*
+	* After 08/18/2021
+	*/
+	//Plate2->SetupAttachment(RootComponent);
+	//Root->SetupAttachment(Plate2);
+	//Plate1->SetupAttachment(Root);
 
 	Wall1->SetupAttachment(Root);
 	Wall2->SetupAttachment(Root);
