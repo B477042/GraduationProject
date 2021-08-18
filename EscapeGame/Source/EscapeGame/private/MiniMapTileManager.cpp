@@ -10,8 +10,8 @@ AMiniMapTileManager::AMiniMapTileManager()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
-	Offset_BeginFade = 190.0f;
-	Offset_CompeleteFade = 415.0f;
+	Offset_BeginFade = 120.0f;
+	Offset_CompeleteFade = 200.0f;
 
 }
 
