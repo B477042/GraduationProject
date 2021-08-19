@@ -4,9 +4,7 @@
 
 #include "EscapeGame.h"
 #include "GameFramework/Actor.h"
-#include "Components/AudioComponent.h"
-#include "particles/ParticleSystemComponent.h"
-#include "Components/SphereComponent.h"
+#include "Sound/SoundCue.h"
 #include "SkillActor.generated.h"
 
 
@@ -53,16 +51,16 @@ protected:
 
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
-	USphereComponent* MainCollision;
+	USphereComponent*MainCollision;
 
 	
 
 	//맞으면 나는 소리
 	UPROPERTY(VisibleAnywhere, Category = Contents)
-	UAudioComponent* SFX_Hit;
+	UAudioComponent*SFX_Hit;
 	//주변에서 나는 소리
 	UPROPERTY(VisibleAnywhere, Category = Contents)
-	UAudioComponent* SFX_Passing;
+	UAudioComponent*SFX_Passing;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"), Category = Info)
 		float Damage;

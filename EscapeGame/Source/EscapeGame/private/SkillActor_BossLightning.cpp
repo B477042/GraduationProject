@@ -2,7 +2,6 @@
 
 
 #include "SkillActor_BossLightning.h"
-#include "Sound/SoundCue.h"
 
 
 ASkillActor_BossLightning::ASkillActor_BossLightning()

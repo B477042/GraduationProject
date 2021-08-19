@@ -4,7 +4,6 @@
 
 
 #include "ItemActor.h"
-#include "Components/AudioComponent.h"
 #include "Item_Recover.generated.h"
 
 /**

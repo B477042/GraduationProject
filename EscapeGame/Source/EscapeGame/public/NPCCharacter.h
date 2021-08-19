@@ -3,9 +3,7 @@
 #pragma once
 
 #include "EscapeGame.h"
-
-#include "GameFramework/Character.h"
-
+#include "GameFramework/Actor.h"
 #include "NPCCharacter.generated.h"
 
 /*

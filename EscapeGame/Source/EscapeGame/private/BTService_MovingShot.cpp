@@ -4,7 +4,7 @@
 #include "BTService_MovingShot.h"
 #include "EnemyCharacter_Gunner.h"
 #include "EnemyAIController.h"
-
+#include "BehaviorTree/BlackboardComponent.h"
 
 UBTService_MovingShot::UBTService_MovingShot()
 {

@@ -4,9 +4,6 @@
 
 #include "EscapeGame.h"
 #include "GameFramework/Actor.h"
-#include "particles/ParticleSystemComponent.h"
-#include "Components/SphereComponent.h"
-#include "Components/AudioComponent.h"
 #include "FireBallActor.generated.h"
 
 UCLASS()

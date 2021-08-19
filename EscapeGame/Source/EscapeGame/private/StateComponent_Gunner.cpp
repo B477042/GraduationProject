@@ -3,7 +3,6 @@
 
 #include "StateComponent_Gunner.h"
 #include "EnemyCharacter_Gunner.h"
-#include "GameFramework/CharacterMovementComponent.h"
 
 UStateComponent_Gunner::UStateComponent_Gunner()
 {

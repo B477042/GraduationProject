@@ -42,17 +42,7 @@ void AItemActor::BeginPlay()
 	
 	if (!bIsItemVaild)
 		SetItemDisable();
-	/*Save & Load*/
-	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
-	if (!GameInstance)
-	{
-		EGLOG(Error, TEXT("Game Instance is not UEGGameInstance"));
-		return;
-	}
-	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AItemActor::SaveGame);
-	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AItemActor::LoadGame);
 
-	
 	//EGLOG(Error, TEXT("This Item Name : %s"), *GetName());
 }
 
@@ -75,7 +65,15 @@ void AItemActor::PostInitializeComponents()
 	
 	//BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AItemActor::OnPlayerOverlap);
 
-//EGLOG(Error, TEXT("post init"));
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)
+	{
+		EGLOG(Error, TEXT("Game Instance is not UEGGameInstance"));
+		return;
+	}
+	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this,&AItemActor::SaveGame);
+	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AItemActor::LoadGame);
+	//EGLOG(Error, TEXT("post init"));
 }
 
 //FName AItemActor::GetTag()

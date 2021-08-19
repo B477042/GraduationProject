@@ -3,8 +3,7 @@
 #include "EnemyCharacter.h"
 #include "EGGameState.h"
 #include "EGSaveGame.h"
-#include "Components/CapsuleComponent.h"
-#include "GameFramework/CharacterMovementComponent.h"
+#include "PaperSprite.h"
 #include "MiniMapMarkerComponent.h"
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()

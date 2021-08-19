@@ -4,7 +4,7 @@
 
 #include "EscapeGame.h"
 #include "Components/ActorComponent.h"
-
+#include "Engine/DataTable.h"
 #include "StatComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FOnHPChangeDelegate);

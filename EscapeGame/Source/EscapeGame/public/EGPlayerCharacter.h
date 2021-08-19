@@ -3,9 +3,8 @@
 #pragma once
 
 #include "EscapeGame.h"
-
-#include "Camera/CameraComponent.h"
-#include "GameFramework/SpringArmComponent.h"
+#include "Components/SceneCaptureComponent2D.h"
+#include "Engine/SceneCapture2D.h"
 #include "MinimapRenderComponent.h"
 #include "GameFramework/Character.h"
 #include "StatComponent_Player.h"
@@ -13,7 +12,7 @@
 #include "Component_SelfDamage.h"
 #include "Component_Inventory.h"
 #include "SkillContainer_PlayerHitEffect.h"
-#include "Components/BoxComponent.h"
+#include "PaperSpriteComponent.h"
 #include "EGPlayerCharacter.generated.h"
 
 //DECLARE_DELEGATE(FOnKeyPressed);

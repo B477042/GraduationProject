@@ -4,7 +4,7 @@
 
 #include "TrapType.h"
 #include "FireBallActor.h"
-#include "Components/BoxComponent.h"
+#include "GameFramework/Actor.h"
 #include "FireBallTrap.generated.h"
 
 //DECLARE_DELEGATE(FOnCharacterEntered,void);

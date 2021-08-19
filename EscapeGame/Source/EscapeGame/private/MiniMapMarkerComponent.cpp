@@ -18,12 +18,6 @@ UMiniMapMarkerComponent::UMiniMapMarkerComponent()
 		
 	}
 
-
+	SetMobility(EComponentMobility::Movable);
 	
-}
-
-void UMiniMapMarkerComponent::BeginPlay()
-{
-	Super::BeginPlay();
-	SetCollisionProfileName(TEXT("NoCollisiion"));
 }

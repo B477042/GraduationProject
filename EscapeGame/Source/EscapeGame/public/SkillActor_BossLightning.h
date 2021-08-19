@@ -2,9 +2,8 @@
 
 #pragma once
 
-
+#include "CoreMinimal.h"
 #include "SkillActor.h"
-#include "Components/CapsuleComponent.h"
 #include "SkillActor_BossLightning.generated.h"
 
 /**

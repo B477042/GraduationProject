@@ -2,7 +2,8 @@
 
 
 #include "EGPlayerState.h"
-
+#include "EGPlayerController.h"
+#include "EGSaveGame.h"
 AEGPlayerState::AEGPlayerState()
 {
 

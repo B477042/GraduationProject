@@ -4,7 +4,6 @@
 
 #include "TrapType.h"
 #include "SpearActor.h"
-#include "Components/BoxComponent.h"
 #include "ShutterTrap.generated.h"
 
 

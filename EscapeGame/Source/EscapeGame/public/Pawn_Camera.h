@@ -6,8 +6,6 @@
 #include "GameFramework/Pawn.h"
 //#include "NPCCharacter.h"
 #include "Engine/DataTable.h"
-#include "Camera/CameraComponent.h"
-#include "Components/BoxComponent.h"
 
 #include "Pawn_Camera.generated.h"
 
@@ -18,26 +16,26 @@ struct FDialogueTableRow : public FTableRowBase
 {
 	GENERATED_BODY()
 	public:
-	//ëŒ€ì‚¬ ë‚´ìš©
+	//´ë»ç ³»¿ë
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Info")
 	FString Dialogue;
-	//í™”ì
+	//È­ÀÚ
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Info")
 	FText Talker;
-	//ëª‡ ë²ˆì¬ Actì¸ì§€, ë¯¸ì‚¬ìš©
+	//¸î ¹øÀç ActÀÎÁö, ¹Ì»ç¿ë
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Info")
 	int32 n_Act;
-	//ëª‡ ë²ˆì§¸ ëŒ€ì‚¬ì¸ì§€
+	//¸î ¹øÂ° ´ë»çÀÎÁö
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Info")
 	int32 Line;
 };
 
 /*
-	ëŒ€í™”ë¥¼ í•˜ëŠ” ì¥ë©´ì„ ì´¬ì˜í•˜ëŠ” pawn
-	ëŒ€í™”ê°€ ì¼ì–´ë‚˜ëŠ” ìŠ¤í¬ë¦½íŠ¸ëŠ” ì—¬ê¸°ì— ì €ì¥ë˜ê³ 
-	next prev ë²„íŠ¼ì— ëŒ€í•œ ìƒí˜¸ì‘ìš©ìœ¼ë¡œ
-	ë„˜ì–´ê°€ëŠ” ëŒ€í™”ë„ ì—¬ê¸°ì„œ ì²˜ë¦¬í•œë‹¤.
-	ë²„íŠ¼ì„ ëˆ„ë¥´ëŠ” ì´ë²¤íŠ¸ë¡œ ëŒ€ìƒì´ ë˜ëŠ” ìºë¦­í„°ì— ì›€ì§ì„ì„ ì¤€ë‹¤.
+	´ëÈ­¸¦ ÇÏ´Â Àå¸éÀ» ÃÔ¿µÇÏ´Â pawn
+	´ëÈ­°¡ ÀÏ¾î³ª´Â ½ºÅ©¸³Æ®´Â ¿©±â¿¡ ÀúÀåµÇ°í
+	next prev ¹öÆ°¿¡ ´ëÇÑ »óÈ£ÀÛ¿ëÀ¸·Î
+	³Ñ¾î°¡´Â ´ëÈ­µµ ¿©±â¼­ Ã³¸®ÇÑ´Ù.
+	¹öÆ°À» ´©¸£´Â ÀÌº¥Æ®·Î ´ë»óÀÌ µÇ´Â Ä³¸¯ÅÍ¿¡ ¿òÁ÷ÀÓÀ» ÁØ´Ù.
 
 
 */
@@ -60,27 +58,27 @@ public:
 	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	//ëŒ€í™”í•˜ëŠ” ìƒëŒ€ì˜ ë§ì„ ë“£ê²Œ ëœë‹¤
+	//´ëÈ­ÇÏ´Â »ó´ëÀÇ ¸»À» µè°Ô µÈ´Ù
 	void AddTalkingActor(TWeakObjectPtr<class ANPCCharacter> Talker);
-	//ë§ì„ ê±¸ì–´ì˜¤ê¸° ì‹œì‘í•  ë•Œ í˜¸ì¶œí•©ë‹ˆë‹¤
+	//¸»À» °É¾î¿À±â ½ÃÀÛÇÒ ¶§ È£ÃâÇÕ´Ï´Ù
 	void StartListenTo(TWeakObjectPtr<class ANPCCharacter>Talker);
 	
-	//ë¹™ì˜ë  ë•Œ ìœ„ì ¯ì— ë¸ë¦¬ê²Œì´íŠ¸ë¥¼ ë“±ë¡í•œë‹¤
+	//ºùÀÇµÉ ¶§ À§Á¬¿¡ µ¨¸®°ÔÀÌÆ®¸¦ µî·ÏÇÑ´Ù
 	UFUNCTION(BlueprintCallable)
 	void OnNextClicked();
-	//ë¹™ì˜ë  ë•Œ ìœ„ì ¯ì— ë¸ë¦¬ê²Œì´íŠ¸ë¥¼ ë“±ë¡í•œë‹¤
+	//ºùÀÇµÉ ¶§ À§Á¬¿¡ µ¨¸®°ÔÀÌÆ®¸¦ µî·ÏÇÑ´Ù
 	UFUNCTION(BlueprintCallable)
 	void OnPrevClicked();
 
 private:
 	
-	//ìƒí™©ì— ë§ëŠ” ëŒ€í™” ëª©ë¡ì„ ë¶ˆëŸ¬ì˜µë‹ˆë‹¤.
+	//»óÈ²¿¡ ¸Â´Â ´ëÈ­ ¸ñ·ÏÀ» ºÒ·¯¿É´Ï´Ù.
 	void loadDialogue();
-	//ì²˜ìŒ í™”ë©´ì— ë„ìš¸ë•Œë§Œ ì‚¬ìš©í•œë‹¤
+	//Ã³À½ È­¸é¿¡ ¶ç¿ï¶§¸¸ »ç¿ëÇÑ´Ù
 	void startTalk();
 	void nextLog();
 	void prevLog();
-	//ì§€ê¸ˆ ì¶œë ¥í•´ì•¼ë  ë‚´ìš© ì¶œë ¥
+	//Áö±İ Ãâ·ÂÇØ¾ßµÉ ³»¿ë Ãâ·Â
 	void printLog();
 	void registDelegateToWidget();
 	class UDialogueWidget* getWidget();
@@ -98,15 +96,15 @@ private:
 		TArray< class UDataTable* > dialogueTable;*/
 	UPROPERTY(VisibleAnywhere, Category = "DialogueInfo", meta = (AllowPrivateAccess = "true"))
 		TArray< FDialogueTableRow>dialogues;
-	//ë§‰ì˜ êµ¬ì„±ì„ n_Actë¡œ êµ¬í˜„í•œë‹¤
+	//¸·ÀÇ ±¸¼ºÀ» n_Act·Î ±¸ÇöÇÑ´Ù
 	//static int n_Act;
-	//ëŒ€í™”ë¥¼ Logë¡œ ì¶œë ¥í•  ë•Œ ì¤„ì˜ ìˆ«ì. ëŒ€í™”ì—ì„œ ì²˜ìŒ ëŒ€ì‚¬ëŠ” 0ë²ˆì´ ëœë‹¤
+	//´ëÈ­¸¦ Log·Î Ãâ·ÂÇÒ ¶§ ÁÙÀÇ ¼ıÀÚ. ´ëÈ­¿¡¼­ Ã³À½ ´ë»ç´Â 0¹øÀÌ µÈ´Ù
 	UPROPERTY(Transient, VisibleAnywhere, Category = "DialogueInfo")
 	uint32 c_Talk;
-	//ì§€ê¸ˆ ë‹¤ì´ì–¼ë¡œê·¸ì˜ ëŒ€ì‚¬ ì´ ëŒ€ì‚¬ ê°¯ìˆ˜. 6ì¤„ì´ë©´ 5ê°€ ë  ê²ƒì´ë‹¤
+	//Áö±İ ´ÙÀÌ¾ó·Î±×ÀÇ ´ë»ç ÃÑ ´ë»ç °¹¼ö. 6ÁÙÀÌ¸é 5°¡ µÉ °ÍÀÌ´Ù
 	UPROPERTY(Transient, VisibleAnywhere, Category = "DialogueInfo")
 	uint32 maxLine;
-	
+
 	bool bIsDelegateRegist;
 	
 };

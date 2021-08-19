@@ -7,7 +7,7 @@
 #include "Components/Button.h"
 #include "UMG/Public/Components/EditableTextBox.h"
 #include "UMG/Public/Components/EditableText.h"
-
+#include "Components/EditableTextBox.h"
 #include "DialogueWidget.generated.h"
 
 /**

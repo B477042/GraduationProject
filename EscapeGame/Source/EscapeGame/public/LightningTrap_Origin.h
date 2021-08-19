@@ -2,10 +2,7 @@
 
 #pragma once
 
-#include "TrapType.h"
-#include "Components/CapsuleComponent.h"
-#include "particles/ParticleSystemComponent.h"
-#include "Components/AudioComponent.h"
+#include"TrapType.h"
 #include "LightningTrap_Origin.generated.h"
 
 //파생형은 4가지. 가로, 세로, 상향,하향

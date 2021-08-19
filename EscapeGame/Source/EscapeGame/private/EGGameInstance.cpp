@@ -18,7 +18,11 @@ UEGGameInstance::UEGGameInstance()
 	UserIndex = 0;
 	EGameState = EEGGameState::E_NewGame;
 
-
+	//static ConstructorHelpers::FClassFinder<USoundMix>Sm_mix(TEXT("SoundMix'/Game/MyFolder/BP_SoundClass/BP_SM_EGSoundMix.BP_SM_EGSoundMix_C'"));
+	//if (Sm_mix.Succeeded())
+	//{
+	//	SM_SoundMixClass = Sm_mix.Class;
+	//}
 	static ConstructorHelpers::FClassFinder<UUserWidget>UI_LOADING(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_LoadingScreen.UI_LoadingScreen_C'"));
 	if (UI_LOADING.Succeeded())
 	{

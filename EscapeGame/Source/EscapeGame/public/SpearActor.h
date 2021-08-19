@@ -4,7 +4,6 @@
 
 #include "EscapeGame.h"
 #include "GameFramework/Actor.h"
-#include "Components/StaticMeshComponent.h"
 #include "SpearActor.generated.h"
 
 UCLASS()

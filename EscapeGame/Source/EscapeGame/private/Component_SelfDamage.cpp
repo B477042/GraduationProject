@@ -3,7 +3,6 @@
 
 #include "Component_SelfDamage.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "GameFramework/Character.h"
 // Sets default values for this component's properties
 UComponent_SelfDamage::UComponent_SelfDamage()
 {

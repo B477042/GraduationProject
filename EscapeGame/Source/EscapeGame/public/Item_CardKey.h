@@ -4,8 +4,6 @@
 
 //#include "CoreMinimal.h"
 #include "ItemActor.h"
-#include "Components/BoxComponent.h"
-#include "Components/AudioComponent.h"
 #include "Item_CardKey.generated.h"
 
 /**
@@ -31,7 +29,7 @@ private:
 	UFUNCTION()
 	void OnPlayerOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 	UPROPERTY(BlueprintReadWrite, Category = "SoundEffect", meta = (AllowPrivateAccess = "true"))
-	UAudioComponent* Sound;
+		UAudioComponent* Sound;
 	UPROPERTY(EditAnywhere, Category = "DetectCollision")
-	UBoxComponent* DetectCollision;
+		UBoxComponent* DetectCollision;
 };

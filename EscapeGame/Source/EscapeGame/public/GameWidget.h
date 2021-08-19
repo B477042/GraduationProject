@@ -59,28 +59,28 @@ private:
 	TWeakObjectPtr<class UComponent_Inventory>CurrentPlayerInventory;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
-	TWeakObjectPtr<class ACharacter>OwnerChara;
+	TWeakObjectPtr<ACharacter>OwnerChara;
 
 	
 	UPROPERTY()
-	class UProgressBar* PB_Stamina;
+		class UProgressBar* PB_Stamina;
 	//Image Box of Player's Hp
 	UPROPERTY()
-	UImage* Img_Battery;
+		class UImage* Img_Battery;
 	UPROPERTY()
-	UImage* Img_Cardkey;
+	class UImage* Img_Cardkey;
 	//Display Player's HP Statue as Image. Set images on BP
 	UPROPERTY(BlueprintReadWrite, Category = "Images", meta = (AllowPrivateAccess = "true"))
-	TArray<UTexture2D*> Imgs_Battary;
+		 TArray<UTexture2D*> Imgs_Battary;
 	UPROPERTY(BlueprintReadWrite, Category = "Images", meta = (AllowPrivateAccess = "true"))
-	TArray<UTexture2D*> Img_Cardkeys;
+		TArray<UTexture2D*> Img_Cardkeys;
 	//Image of Itme Recovery Item
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	UImage* Img_RecoveryItem;
+	class UImage* Img_RecoveryItem;
 
 
 	UPROPERTY()
-	UImage* Img_Blood;
+		class UImage* Img_Blood;
 	 
 
 	UPROPERTY()

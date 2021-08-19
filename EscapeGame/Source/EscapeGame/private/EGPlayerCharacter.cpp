@@ -1,25 +1,25 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "EGPlayerCharacter.h"
+#include "Engine/SceneCapture2D.h"
 #include "EGPlayerController.h"
 #include "Item_Recover.h"
-#include "GameFramework/CharacterMovementComponent.h"
-#include "Components/CapsuleComponent.h"
-#include "Components/AudioComponent.h"
-#include "Particles/ParticleSystemComponent.h"
+
 #include "GameWidget.h"
-#include "Components/InputComponent.h"
+#include"Components/InputComponent.h"
 #include "Projectile.h"
 #include "GameSetting/public/EGCharacterSetting.h"
-#include "Sound/SoundCue.h"
+#include "..\public\EGPlayerCharacter.h"
+#include"Sound/SoundCue.h"
 #include "SkillActor_ThunderType.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "EGGameInstance.h"
 #include "EGGameState.h"
 #include "Item_CardKey.h"
 #include "EGPostProcessVolume.h"
+#include "PaperSprite.h"
+#include "GameWidget.h"
 #include "MiniMapMarkerComponent.h"
-#include "MiniMapTileManager.h"
 
 
 // Sets default values
@@ -57,13 +57,15 @@ void AEGPlayerCharacter::BeginPlay()
 	/*
 	 * Inventory 관련 Delegate 등록
 	 */
-	/*auto PlayerCon = Cast<AEGPlayerController>(Controller);
+	auto PlayerCon = Cast<AEGPlayerController>(Controller);
 	if(!PlayerCon)
 	{
 		EGLOG(Warning, TEXT("Casting Falied"));
 		return;
 		
-	}*/
+	}
+	//인벤토리의 델리게이트와 위젯 연동
+	Inventory->OnItemUpdated.BindUFunction (PlayerCon->GetHUDWidget(), FName("UpdateItemes"));
 	
 	
 //================================================
@@ -142,9 +144,7 @@ void AEGPlayerCharacter::BeginPlay()
 
 	else
 		EGLOG(Warning, TEXT("NewGame"));
-	//GameInstance의 Load Game Phase에 연동
-	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEGPlayerCharacter::LoadGameData);
-
+	
 	
 
 
@@ -210,7 +210,16 @@ void AEGPlayerCharacter::PostInitializeComponents()
 	//Weapon Hit 판정
 	WeaponCollision->OnComponentBeginOverlap.AddDynamic(this, &AEGPlayerCharacter::OnWeaponBeginOverlap);
 
-	
+	//GameInstance의 Load Game Phase에 연동
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)
+	{
+		EGLOG(Error, TEXT("GameInstance Casting Failed"));
+		return;
+	}
+
+	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEGPlayerCharacter::LoadGameData);
+
 	
 	//Stat->SetSpeedLimits( MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
 
@@ -402,22 +411,21 @@ void AEGPlayerCharacter::ToggleMap()
 	
 	if (bSetMapArm==false)
 	{
-		MiniMapArm->TargetArmLength=POS_Minimap.Z+ maxMiniMapArmLength;
-		EGLOG(Log, TEXT("Change To Max"));
+		MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, maxMiniMapArmLength));
+		EGLOG(Error, TEXT("Change To Max"));
 		bSetMapArm = true;
 		return;
 	}
 	if (bSetMapArm==true)
 	{
-		
-		MiniMapArm->TargetArmLength = POS_Minimap.Z + minMiniMapArmLength;
+		MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, minMiniMapArmLength));
 		bSetMapArm = false;
-		EGLOG(Log, TEXT("Change To Min"));
+		EGLOG(Error, TEXT("Change To Min"));
 		return;
 	}
 	else
 	{
-		EGLOG(Error, TEXT("Minimap Toggle Error"));
+		EGLOG(Error, TEXT("Error"));
 	}
 }
 
@@ -517,17 +525,16 @@ void AEGPlayerCharacter::InitComponents()
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 	//====================================================================================================
 	//미니맵 및 카메라 관련 초기값 설정
-	minMiniMapArmLength = POS_Minimap.Z + 3000.0f;
-	maxMiniMapArmLength = POS_Minimap.Z + 7000.0f;
+	minMiniMapArmLength = POS_Minimap.Z + 1500.0f;
+	maxMiniMapArmLength = POS_Minimap.Z + 3000.0f;
 	
 	float X=0, Y=0, Z=0,Pitch=0,Yaw=0,Roll=0;
 	Camera->SetRelativeLocation(FVector(0.0f, 30.0f, 90.0f));
 	SpringArm->TargetArmLength = 500.0f;
 
-	MiniMapArm->TargetArmLength = POS_Minimap.Z+minMiniMapArmLength;
-	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
+	MiniMapArm->TargetArmLength = 0.0f;
+	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, POS_Minimap.Z+1500.0f));
 	MiniMapArm->SetRelativeRotation(FRotator(-90.0f, 0.0f,0.0f));
-	MiniMapArm->bDoCollisionTest = false;
 
 	//마커 초기값 설정
 	MiniMapMarkerComponent->SetRelativeLocation(FVector(0, 0, POS_Minimap.Z));
@@ -695,21 +702,6 @@ void AEGPlayerCharacter::Jump()
 {
 	if(!Stat->IsAttacking())
 	Super::Jump();
-	////Test용
-	//auto World = GetWorld();
-	//if (!World)
-	//{
-	//	return;
-	//}
-	//TArray<AActor*>Results;
-
-	//UGameplayStatics::GetAllActorsOfClass(World, AMiniMapTileManager::StaticClass(), Results);
-
-	//auto Manager = Cast<AMiniMapTileManager>(Results[0]);
-
-	////Run Thread 
-	//(new FAutoDeleteAsyncTask<CalcMiniMapTileAsyncTask>(Manager, this))->StartBackgroundTask();
-
 	
 }
 

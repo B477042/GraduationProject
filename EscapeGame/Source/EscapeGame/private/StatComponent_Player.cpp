@@ -5,8 +5,7 @@
 #include "EGPlayerController.h"
 #include "DT_DataStruct.h"
 #include "EGGameInstance.h"
-#include "GameFramework/Character.h"
-
+#include "EGPostProcessVolume.h"
 
 
 UStatComponent_Player::UStatComponent_Player()

@@ -2,7 +2,7 @@
 
 #pragma once
 
-
+#include "CoreMinimal.h"
 #include "StatComponent_Enemy.h"
 #include "StatComponent_EGrunt.generated.h"
 

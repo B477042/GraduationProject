@@ -4,7 +4,6 @@
 
 #include "EscapeGame.h"
 #include "GameFramework/Actor.h"
-#include "Components/BoxComponent.h"
 #include "AstarNode.generated.h"
 
 UENUM(BlueprintType)

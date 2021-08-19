@@ -13,12 +13,6 @@ UCLASS()
 class ESCAPEGAME_API UMiniMapMarkerComponent : public UStaticMeshComponent
 {
 	GENERATED_BODY()
-	
 public:
 	UMiniMapMarkerComponent();
-	
-protected:
-	
-	virtual void BeginPlay() override;
-	
 };

@@ -2,8 +2,11 @@
 
 #pragma once
 
-
+//#include "CoreMinimal.h"
 #include "Projectile.h"
+//#include "Components/AudioComponent.h"
+//#include "Components/SphereComponent.h"
+//#include "Particles/ParticleSystemComponent.h"
 #include "GunnerBullet.generated.h"
 
 /**
@@ -17,7 +20,7 @@ public:
 	AGunnerBullet();
 
 protected:
-	
+	// ==============================Form AActor=====================
 	virtual void BeginPlay() override;
 	virtual void BeginDestroy()override;
 	virtual void PostInitializeComponents() override;
@@ -26,5 +29,8 @@ protected:
 	void loadAssets();
 	void initCollisions();
 
+private:
+	
+	
 
 };

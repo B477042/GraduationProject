@@ -17,7 +17,8 @@ AAStarFinder::AAStarFinder()
 void AAStarFinder::BeginPlay()
 {
 	Super::BeginPlay();
- 
+	EGLOG(Error, TEXT("Ganag nam style"));
+
 
 
 }

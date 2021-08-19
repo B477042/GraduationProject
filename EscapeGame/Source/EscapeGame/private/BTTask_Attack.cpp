@@ -3,6 +3,7 @@
 
 #include "BTTask_Attack.h"
 #include "EnemyCharacter.h"
+#include "GruntCharacter.h"
 #include "EnemyAIController.h"
 
 EBTNodeResult::Type  UBTTask_Attack :: ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)

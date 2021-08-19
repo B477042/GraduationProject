@@ -3,8 +3,7 @@
 #pragma once
 
 #include "EscapeGame.h"
-#include "particles/ParticleSystemComponent.h"
-#include "MiniMapMarkerComponent.h"
+
 #include "GameFramework/Actor.h"
 #include "ItemActor.generated.h"
 
@@ -59,7 +58,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
 		UParticleSystemComponent* Effect;
 	UPROPERTY(VisibleAnywhere, Category = Mesh)
-		UMiniMapMarkerComponent* MiniMapMarker;
+		class UMiniMapMarkerComponent* MiniMapMarker;
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 		USceneComponent* Root;
 	//이 아이템을 가지고 있는 엑터
