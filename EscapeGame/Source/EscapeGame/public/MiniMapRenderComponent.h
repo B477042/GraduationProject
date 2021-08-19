@@ -7,6 +7,7 @@
 #include "MiniMapRenderComponent.generated.h"
 
 
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ESCAPEGAME_API UMiniMapRenderComponent : public USceneCaptureComponent2D
 {
@@ -16,9 +17,13 @@ public:
 	// Sets default values for this component's properties
 	UMiniMapRenderComponent();
 
+	
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
+
 
 public:	
 	// Called every frame

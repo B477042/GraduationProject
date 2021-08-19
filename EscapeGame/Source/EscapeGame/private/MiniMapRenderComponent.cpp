@@ -44,8 +44,9 @@ UMiniMapRenderComponent::UMiniMapRenderComponent()
 	ShowFlags.EyeAdaptation = false;
 	ShowFlags.Particles = false;
 	
+	OrthoWidth = 1024;
 	
-
+	MaxViewDistanceOverride = POS_Minimap.Z;
 }
 
 
