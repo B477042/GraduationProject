@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "EscapeGameGameMode.h"
-#include"EGPlayerCharacter.h"
-#include"EGPlayerController.h"
+#include "EGPlayerCharacter.h"
+#include "EGPlayerController.h"
 #include "EGGameState.h"
-#include"EGPlayerState.h"
+#include "EGPlayerState.h"
 //#include "DT_DataStruct.h"
 
 

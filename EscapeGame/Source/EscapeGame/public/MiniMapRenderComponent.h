@@ -3,10 +3,9 @@
 #pragma once
 
 #include "EscapeGame.h"
-#include "Components/ActorComponent.h"
 #include "Components/SceneCaptureComponent2D.h"
-#include "Engine/SceneCapture2D.h"
 #include "MiniMapRenderComponent.generated.h"
+
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -18,18 +17,17 @@ public:
 	// Sets default values for this component's properties
 	UMiniMapRenderComponent();
 
+	
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-
-
-private:
-	
 	
 	
 

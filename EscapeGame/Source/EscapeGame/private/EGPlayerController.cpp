@@ -3,7 +3,6 @@
 #include "EGPlayerController.h"
 #include "GameWidget.h"
 #include "EGPlayerCharacter.h"
-#include "..\public\EGPlayerController.h"
 #include "DT_DataStruct.h"
 #include "EGSaveGame.h"
 #include "Item_Recover.h"
@@ -60,6 +59,7 @@ void AEGPlayerController::BeginPlay()
 
 	HUD = CreateWidget<UGameWidget>(this, HUDWidgetClass);
 	TutorialUI = CreateWidget<UTutorialWidget>(this, TUTOWidgetClass);
+
 	//번호가 높을수록 위에 뜨는 ui 가 된다
 	HUD->AddToViewport(VP_HUD);
 	//TutorialUI->AddToViewport(VP_Tutorial);
@@ -104,6 +104,7 @@ void AEGPlayerController::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	EGLOG(Warning, TEXT("Controller post initialize components"));
+
 	
 	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
 	if (!GameInstance)
@@ -113,7 +114,7 @@ void AEGPlayerController::PostInitializeComponents()
 	}
 	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AEGPlayerController::SaveGame);
 
-
+	
 }
 
 void AEGPlayerController::OnPossess(APawn * aPawn)

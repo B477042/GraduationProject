@@ -1,14 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "GameWidget.h"
-
-#include <string>
-
 #include "Component_Inventory.h"
-#include"Components/ProgressBar.h"
-#include"Components/TextBlock.h"
-#include "Math/Color.h"
-#include "Styling/SlateColor.h"
+#include "Components/ProgressBar.h"
+#include "Components/TextBlock.h"
+#include "GameFramework/Character.h"
+
 #include "Item_CardKey.h"
 #include "Item_Recover.h"
 //#include"GameStat.h"
@@ -188,6 +185,8 @@ void UGameWidget::BindCharacterInven(UComponent_Inventory * newInven)
 	}
 	 
 	CurrentPlayerInventory = newInven;
+	//인벤토리의 델리게이트와 위젯 연동
+	CurrentPlayerInventory->OnItemUpdated.BindUFunction(this, "UpdateItemes");
 
 }
 

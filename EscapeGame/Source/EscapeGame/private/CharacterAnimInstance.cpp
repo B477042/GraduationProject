@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CharacterAnimInstance.h"
-#include "..\public\CharacterAnimInstance.h"
 #include "EGPlayerCharacter.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 UCharacterAnimInstance::UCharacterAnimInstance()
 {

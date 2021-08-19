@@ -5,8 +5,8 @@
 #include "EscapeGame.h"
 #include "GameFramework/Actor.h"
 #include "Components/TextRenderComponent.h"
-//#include "Engine/TriggerBox.h"
-#include "Kismet/KismetMathLibrary.h"
+#include "Components/BoxComponent.h"
+
 
 #include "TutorialNotify.generated.h"
 

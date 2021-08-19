@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MiniMapRenderComponent.h"
-#include"Engine/TextureRenderTarget2D.h"
+#include "Engine/TextureRenderTarget2D.h"
 #include "Materials/MaterialInstance.h"
-#include"GameSetting/public/EGCharacterSetting.h"
+#include "GameSetting/public/EGCharacterSetting.h"
 
 // Sets default values for this component's properties
 UMiniMapRenderComponent::UMiniMapRenderComponent()
@@ -32,7 +32,7 @@ UMiniMapRenderComponent::UMiniMapRenderComponent()
 	}
 
 	ProjectionType = ECameraProjectionMode::Orthographic;
-	FOVAngle=150;
+	FOVAngle=120;
 
 	
 	this->CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
@@ -42,8 +42,11 @@ UMiniMapRenderComponent::UMiniMapRenderComponent()
 	//Don't Caputre Skeletal Meshes
 	ShowFlags.SkeletalMeshes = false;
 	ShowFlags.EyeAdaptation = false;
+	ShowFlags.Particles = false;
 	
-
+	OrthoWidth = 1024;
+	
+	MaxViewDistanceOverride = POS_Minimap.Z;
 }
 
 

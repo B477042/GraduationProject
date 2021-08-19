@@ -6,6 +6,8 @@
 #include "EnemyCharacter.h"
 #include "Anim_Grunt.h"
 #include "StatComponent_EGrunt.h"
+#include "Components/AudioComponent.h"
+#include "particles/ParticleSystemComponent.h"
 #include "GruntCharacter.generated.h"
 
 /**
