@@ -71,6 +71,8 @@ void AMiniMapTileManager::BeginPlay()
 	EGLOG(Warning, TEXT("Task Start"));
 
 	
+
+
 }
 
 void AMiniMapTileManager::BeginDestroy()
