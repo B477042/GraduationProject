@@ -4,6 +4,7 @@
 
 
 #include "SkillActor.h"
+
 #include "SkillActor_ThunderType.generated.h"
 
 /**

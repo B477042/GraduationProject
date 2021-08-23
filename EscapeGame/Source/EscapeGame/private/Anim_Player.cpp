@@ -3,11 +3,11 @@
 
 #include "Anim_Player.h"
 #include "EGPlayerCharacter.h"
-#include "Sound\SoundCue.h"
+#include "Sound/SoundCue.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "..\public\Anim_Player.h"
-
+#include "Components/AudioComponent.h"
+#include "Components/CapsuleComponent.h"
 
 UAnim_Player::UAnim_Player()
 {

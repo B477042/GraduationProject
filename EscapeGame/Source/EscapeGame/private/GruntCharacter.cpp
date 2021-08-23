@@ -9,6 +9,8 @@
 #include "EGSaveGame.h"
 #include "EGGameInstance.h"
 #include "DrawDebugHelpers.h"
+#include "Components/CapsuleComponent.h"
+
 
 //const float AGruntCharacter::MaxHP = 200.0f;
 const float AGruntCharacter::MinWalkingSpeed = 0.0f;
@@ -144,7 +146,18 @@ void AGruntCharacter::BeginPlay()
 
 	//Bind Muzzle Fire 
 	Anim->OnFireAttack.BindUObject(this, &AGruntCharacter::PlayMuzzleEffect);
-	
+
+	/*Save & Load*/
+
+	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)
+	{
+		EGLOG(Error, TEXT("Gameinstance is nullptr"));
+		return;
+	}
+	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AGruntCharacter::LoadGame);
+	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AGruntCharacter::SaveGame);
+
 }
 
 void AGruntCharacter::PostInitializeComponents()
@@ -208,15 +221,6 @@ void AGruntCharacter::PostInitializeComponents()
 		anim->PlayDeadAnim();
 	});
 
-
-	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
-	if (!GameInstance)
-	{
-		EGLOG(Error, TEXT("Gameinstance is nullptr"));
-		return;
-	}
-	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AGruntCharacter::LoadGame);
-	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AGruntCharacter::SaveGame);
 
 }
 

@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "EngineMinimal.h"
+#include "CoreMinimal.h"
 #include "Kismet/GameplayStatics.h"
 
 //Debug 매크로 선언
