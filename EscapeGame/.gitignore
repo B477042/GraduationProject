@@ -115,6 +115,6 @@ Content/*
 !Content/MyFolder/
 
 
-Intemediate/
+Intemediate/*
 Saved/
 # End of https://www.gitignore.io/api/c++,unrealengine
