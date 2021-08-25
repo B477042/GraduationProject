@@ -361,7 +361,7 @@ void AEGPlayerCharacter::UsingStaminaTick()
 //키에서 때면 바로 호출된다
 void AEGPlayerCharacter::StopRunning()
 {
-	EGLOG(Warning, TEXT("Run Key Released"));
+	/*EGLOG(Warning, TEXT("Run Key Released"));*/
 	Stat->SetStaminaUsing(false);
 	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 	/*if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::ZeroVector)return;
@@ -374,19 +374,19 @@ void AEGPlayerCharacter::StopRunning()
 	구르는 동작을 시작한다
 	구르기 시작하는 과정이 여기에 들어간다
 
-	
 */
 void AEGPlayerCharacter::Roll()
 {
 	//Anim의 bIsRolling을 true로 바꿔주면 AnimBP에서 구르는 애니메이션을 재생하게 된다.
 	Anim->SetRolling(true);
-	float interval = Anim->GetRollingLength();
+	UE_LOG(LogTemp, Log, TEXT("roll"));
+	//float interval = Anim->GetRollingLength();
 
-	//Actor를 뒤로 후퇴시킬 방향
-	FVector jumpPoint = GetActorForwardVector()*interval;
+	////Actor를 뒤로 후퇴시킬 방향
+	//FVector jumpPoint = GetActorForwardVector()*interval;
 
-	//입력을 제한 시킨다
-	RestricInput();
+	////입력을 제한 시킨다
+	//RestricInput();
 
 }
 //회복 아이템을 사용한다. 기본적으로 키를 입력하면 호출된다. 강제로 사용하게 만드는 방법도 만들 수 있을 것 같다
@@ -445,8 +445,8 @@ void AEGPlayerCharacter::PressGuard()
 
 void AEGPlayerCharacter::ReleaseGuard()
 {
-	
-	EGLOG(Error, TEXT("Guard Release"));
+	/*
+	EGLOG(Error, TEXT("Guard Release"));*/
 	Stat->SetDamageable(true);
 	Stat->SetWalking();
 	

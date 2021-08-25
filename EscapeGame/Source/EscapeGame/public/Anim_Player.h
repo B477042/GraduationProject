@@ -87,11 +87,14 @@ private:
 	float RollingLength = 570.0f;
 
 
-	//Charge Attack Montage
+	////Charge Attack Montage
+	//UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
+	//	UAnimMontage* Montage_ChargeAttack;
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
-		UAnimMontage* ChargeAttackMontage;
+		TArray<UAnimMontage*> Montage_Skills;
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
-		TArray<UAnimMontage*> SkillMontages;
+		UAnimMontage* Montage_Roll;
+
 	UPROPERTY()
 	UAudioComponent* SFX_Laugh;
 

@@ -29,7 +29,7 @@ UAnim_Player::UAnim_Player()
 	static ConstructorHelpers::FObjectFinder <UAnimMontage>Skill_1(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/Montage_Skill1.Montage_Skill1'"));
 	if (Skill_1.Succeeded())
 	{
-		SkillMontages.Add(Skill_1.Object);
+		Montage_Skills.Add(Skill_1.Object);
 	}
 
 
@@ -207,7 +207,7 @@ void UAnim_Player::AnimNotify_AnimEnd()
 	EGLOG(Warning, TEXT("Actor Location : %s"), *Owner->GetActorLocation().ToString());
 	EGLOG(Warning, TEXT("Mesh Location : %s"), *(Owner->GetActorLocation() + Owner->GetMesh()->GetRelativeLocation()).ToString());
 
-	Owner->RecoverInput();
+	//Owner->RecoverInput();
 }
 
 void UAnim_Player::AnimNotify_PlayHitSound()
@@ -321,10 +321,10 @@ void UAnim_Player::AnimNotify_ReactDamagedEnd()
 //Input °ªÀº PlayerÀÇ Combo
 void UAnim_Player::PlaySkillMontage(int Combo)
 {
-	Montage_Play(SkillMontages[0], 1.0f);
+	Montage_Play(Montage_Skills[0], 1.0f);
 
 	/*int playNum = Combo - 1;
-	if (SkillMontages.IsValidIndex(playNum))
+	if (Montage_Skills.IsValidIndex(playNum))
 	{
 		auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
 
@@ -333,7 +333,7 @@ void UAnim_Player::PlaySkillMontage(int Combo)
 		player->RestricInput();
 
 
-		Montage_Play(SkillMontages[0],1.0f);
+		Montage_Play(Montage_Skills[0],1.0f);
 
 		
 
