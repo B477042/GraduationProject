@@ -76,6 +76,8 @@ Saved/*
 
 # Compiled source files for the engine to use
 Intermediate/*
+Intermediate/Build/BuildRules/*
+Intermediate/Build/*
 Plugins/*/Intermediate/*
 
 # Cache files for the editor to use

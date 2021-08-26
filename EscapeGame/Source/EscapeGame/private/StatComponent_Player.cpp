@@ -11,7 +11,7 @@
 
 UStatComponent_Player::UStatComponent_Player()
 {
-
+	PrimaryComponentTick.bCanEverTick = true;
 	bIsChargeAttackInputOn = false;
 	bIsComboAttackInputOn = false;
 	bCanChargeAttack = false;
@@ -24,7 +24,7 @@ UStatComponent_Player::UStatComponent_Player()
 	MinWalkingSpeed = 0.0f;
 	MaxWalkingSpeed = 600.0f;
 	MaxRunningSpeed = 1000.0f;
-	Stamina = 0.0f;
+	Stamina = 0;
 	TimerStamina = 0.0f;
 	bIsStaminaUsing = false;
 	bCanUsingStamina = true;
@@ -38,7 +38,11 @@ void UStatComponent_Player::InitializeComponent()
 void UStatComponent_Player::BeginPlay()
 {
 	Super::BeginPlay();
-	loadLevelData();
+	LoadLevelData();
+
+	//Init Stamina 
+	Stamina = MaxStamina;
+	StaminaChangedDelegate.Broadcast();
 }
 
 
@@ -162,7 +166,11 @@ void UStatComponent_Player::UseStamina(float DeltaTime)
 void UStatComponent_Player::RecoverStamina(float DeltaTime)
 {
 	if (bIsStaminaUsing)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Stamina is using"));
 		return;
+	}
+		
 	if (Stamina > MaxStamina)
 	{
 		Stamina = MaxStamina;
@@ -171,6 +179,7 @@ void UStatComponent_Player::RecoverStamina(float DeltaTime)
 		
 	if (Stamina == MaxStamina)
 	{
+		UE_LOG(LogTemp, Log, TEXT("Full Stamina"));
 		//EGLOG(Warning, TEXT("Stamina is full"));
 		StaminaChangedDelegate.Broadcast();
 		return;
@@ -313,7 +322,7 @@ void UStatComponent_Player::GainExp(const int32 & DropExp)
 void UStatComponent_Player::LoadGameStat(int32 newLevel, float newExp, float newHp)
 {
 	Level = newLevel;
-	loadLevelData();
+	LoadLevelData();
 	SetHP( newHp);
 	Exp = newExp;
 
@@ -329,10 +338,10 @@ void UStatComponent_Player::levelUp()
 	if (Exp < 0)Exp = 0;
 	Level++;
 	
-	loadLevelData();
+	LoadLevelData();
 }
 
-void UStatComponent_Player::loadLevelData()
+void UStatComponent_Player::LoadLevelData()
 {
 
 	/*
