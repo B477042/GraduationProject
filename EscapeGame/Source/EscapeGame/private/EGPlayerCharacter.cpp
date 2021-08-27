@@ -496,7 +496,7 @@ void AEGPlayerCharacter::InitComponents()
 	MiniMapArm= CreateDefaultSubobject<USpringArmComponent>(TEXT("MINMAPARM"));
 	MapRenderer = CreateDefaultSubobject<UMiniMapRenderComponent>(TEXT("MAPRENDERER"));
 	Stat = CreateDefaultSubobject <UStatComponent_Player>(TEXT("STAT"));
-	SelfDamage = CreateDefaultSubobject<UComponent_SelfDamage>(TEXT("SelfDAMAGE"));
+	
 	Inventory = CreateDefaultSubobject<UComponent_Inventory>(TEXT("INVENTORY"));
 	SwordEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("PS_Sword"));
 	WeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("WeaponCollision"));

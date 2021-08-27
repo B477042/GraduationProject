@@ -7,8 +7,7 @@
 #include "Component_SelfDamage.generated.h"
 
 /*
-	Owner에게 일정 시간마다 데미지를 입히는 컴포넌트입니다
-
+	
 */
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ESCAPEGAME_API UComponent_SelfDamage : public UActorComponent
