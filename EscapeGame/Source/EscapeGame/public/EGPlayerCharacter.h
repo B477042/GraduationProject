@@ -184,8 +184,8 @@ private:
 		USkillContainer_PlayerHitEffect* Container_Hit;
 		UPROPERTY(VisibleAnywhere)
 		UParticleSystemComponent* SwordEffect;
-
-	
+		UPROPERTY(VisibleAnywhere, Category = "Effect")
+		class UBarrierEffectComponent* BarrierEffect;
 
 	float minMiniMapArmLength;
 	float maxMiniMapArmLength;

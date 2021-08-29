@@ -20,7 +20,7 @@
 #include "EGPostProcessVolume.h"
 #include "MiniMapMarkerComponent.h"
 #include "MiniMapTileManager.h"
-
+#include "BarrierEffectComponent.h"
 
 // Sets default values
 AEGPlayerCharacter::AEGPlayerCharacter()
@@ -426,7 +426,7 @@ void AEGPlayerCharacter::PressGuard()
 
 	if (Stat->CanUseStamina())
 	{
-		EGLOG(Error, TEXT("Guard start"));
+		BarrierEffect->ActivateEffect(GetActorLocation());
 		Stat->SetStaminaUsing(true);
 		
 		Stat->SetDamageable(false);
@@ -445,8 +445,7 @@ void AEGPlayerCharacter::PressGuard()
 
 void AEGPlayerCharacter::ReleaseGuard()
 {
-	/*
-	EGLOG(Error, TEXT("Guard Release"));*/
+	BarrierEffect->DeactivateEffect();
 	Stat->SetDamageable(true);
 	Stat->SetWalking();
 	
@@ -503,6 +502,7 @@ void AEGPlayerCharacter::InitComponents()
 	Container_Hit=CreateDefaultSubobject < USkillContainer_PlayerHitEffect>(TEXT("HitEffects"));
 	AttackSound = CreateDefaultSubobject<UAudioComponent>(TEXT("AttackSound"));
 	MiniMapMarkerComponent = CreateDefaultSubobject<UMiniMapMarkerComponent>(TEXT("MiniMapMarker"));
+	BarrierEffect = CreateDefaultSubobject<UBarrierEffectComponent>(TEXT("BarrierEffectComponent"));
 
 	//====================================================================================================
 	//Components Tree

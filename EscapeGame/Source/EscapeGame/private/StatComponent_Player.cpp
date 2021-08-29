@@ -167,7 +167,7 @@ void UStatComponent_Player::RecoverStamina(float DeltaTime)
 {
 	if (bIsStaminaUsing)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Stamina is using"));
+		
 		return;
 	}
 		
@@ -179,7 +179,7 @@ void UStatComponent_Player::RecoverStamina(float DeltaTime)
 		
 	if (Stamina == MaxStamina)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Full Stamina"));
+		
 		//EGLOG(Warning, TEXT("Stamina is full"));
 		StaminaChangedDelegate.Broadcast();
 		return;
