@@ -26,5 +26,5 @@ public:
 	void ActivateEffect(const FVector& Pos);
 	void DeactivateEffect();
 
-	class ABarrierEffectActor* EffectActor;
+	TSoftObjectPtr<class ABarrierEffectActor> EffectActor;
 };

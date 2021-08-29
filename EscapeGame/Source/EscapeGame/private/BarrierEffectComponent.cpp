@@ -34,7 +34,13 @@ void UBarrierEffectComponent::BeginPlay()
 void UBarrierEffectComponent::BeginDestroy()
 {
 	Super::BeginDestroy();
-	EffectActor->Destroy();
+	/*if (EffectActor.IsValid())
+	{
+		EGLOG(Log, TEXT("Delete Effect Actor"));
+		EffectActor->Destroy();
+	}*/
+	//EGLOG(Log, TEXT("Component Destory"));
+	
 }
 
 void UBarrierEffectComponent::ActivateEffect(const FVector& Pos)

@@ -3,6 +3,7 @@
 
 #include "BarrierEffectActor.h"
 #include "Materials/MaterialInstance.h"
+#include "Components/AudioComponent.h"
 
 // Sets default values
 ABarrierEffectActor::ABarrierEffectActor()
@@ -12,13 +13,14 @@ ABarrierEffectActor::ABarrierEffectActor()
 
 	EnergySphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("EnergySphere"));
 	WaveSphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WaveSphere"));
-
+	SFX_Barrier = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Barrier"));
 	
 	EnergySphere->SetCollisionProfileName(TEXT("NoCollision"));
 	WaveSphere->SetCollisionProfileName(TEXT("NoCollision"));
 	
 	RootComponent = EnergySphere;
 	WaveSphere->SetupAttachment(RootComponent);
+	SFX_Barrier->SetupAttachment(RootComponent);
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_Sphere(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
 	if (SM_Sphere.Succeeded())
@@ -41,20 +43,30 @@ ABarrierEffectActor::ABarrierEffectActor()
 		WaveSphere->SetMaterial(0, MI_Wave.Object);
 	}
 
+	static ConstructorHelpers::FObjectFinder<USoundWave>SW_Barrier(TEXT("SoundWave'/Game/MyFolder/Sound/SE/BarrierSound.BarrierSound'"));
+	if (SW_Barrier.Succeeded())
+	{
+		SFX_Barrier->SetSound(SW_Barrier.Object);
+		
+	}
+
+	SFX_Barrier->bAutoActivate = false;
+
 	SetActorScale3D(FVector(2.25f, 2.25f, 2.25f));
 }
 
 void ABarrierEffectActor::ActivateEffect()
 {
 	EnergySphere->SetHiddenInGame(false);
-	//WaveSphere->SetHiddenInGame(false);
-
+	WaveSphere->SetHiddenInGame(false);
+	SFX_Barrier->Play();
 }
 
 void ABarrierEffectActor::DeactivateEffect()
 {
 	EnergySphere->SetHiddenInGame(true);
-	//WaveSphere->SetHiddenInGame(true);
+	WaveSphere->SetHiddenInGame(true);
+	SFX_Barrier->Stop();
 }
 
 // Called when the game starts or when spawned
@@ -62,7 +74,13 @@ void ABarrierEffectActor::BeginPlay()
 {
 	Super::BeginPlay();
 	EnergySphere->SetHiddenInGame(true);
-	//WaveSphere->SetHiddenInGame(true);
+	WaveSphere->SetHiddenInGame(true);
+}
+
+void ABarrierEffectActor::BeginDestroy()
+{
+	Super::BeginDestroy();
+	EGLOG(Log, TEXT("Barrier Actor Begin Destroy"));
 }
 
 

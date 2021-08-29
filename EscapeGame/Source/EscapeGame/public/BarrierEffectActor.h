@@ -22,7 +22,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
+	virtual void BeginDestroy() override;
 
 
 public:	
@@ -32,5 +32,7 @@ public:
 		UStaticMeshComponent* EnergySphere;
 	UPROPERTY(VisibleAnywhere, Category = "Barrier")
 		UStaticMeshComponent* WaveSphere;
+	UPROPERTY(VisibleAnywhere, Category = "Barrier")
+		class UAudioComponent* SFX_Barrier;
 
 };
