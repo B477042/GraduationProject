@@ -103,13 +103,13 @@ void AEGPlayerCharacter::BeginPlay()
 		EGLOG(Error, TEXT("Game Instance is not EGGameInstance"));
 		return;
 	}
-
-	//Load Game일 경우 처리
-	if (GameInstance->EGameState == EEGGameState::E_LoadGame)
+	UEGSaveGame* LoadInstance = nullptr;
+	
+	switch (GameInstance->EGameState)
 	{
-
+	case EEGGameState::E_LoadGame:
 		//Load Game Data
-		auto LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(GameInstance->GetSaveSlotName(), GameInstance->GetSavedUserIndex()));
+		 LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(GameInstance->Name_SaveSlot0, GameInstance->GetSavedUserIndex()));
 		if (!LoadInstance)
 		{
 			EGLOG(Error, TEXT("Load Insatnce Failed"));
@@ -118,15 +118,32 @@ void AEGPlayerCharacter::BeginPlay()
 		//다른 오브젝트들에게 Load Game을 활성화 시킨다
 		EGLOG(Error, TEXT("OnLoadGamePhase Delegate Broadcasted"));
 		GameInstance->OnLoadGamePhaseDelegate.Broadcast(LoadInstance);
-		
+
+		//LoadGameData(LoadInstance);
+		GameInstance->EGameState = EEGGameState::E_InPlay;
+		break;
+		//============================================================================================
+	case EEGGameState::E_Death:
+
+		LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(GameInstance->Name_CheckPointSlot, GameInstance->GetSavedUserIndex()));
+		if (!LoadInstance)
+		{
+			EGLOG(Error, TEXT("Load Insatnce Failed"));
+			return;
+		}
+
+		//다른 오브젝트들에게 Load Game을 활성화 시킨다
+		EGLOG(Error, TEXT("OnLoadGamePhase Delegate Broadcasted"));
+		GameInstance->OnLoadGamePhaseDelegate.Broadcast(LoadInstance);
+
 		//LoadGameData(LoadInstance);
 		GameInstance->EGameState = EEGGameState::E_InPlay;
 
-	}
-	//이어하기
-	else if (GameInstance->EGameState == EEGGameState::E_NextStage)
-	{
-		auto LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(GameInstance->GetSaveSlotName(), GameInstance->GetSavedUserIndex()));
+		break;
+		//============================================================================================
+	case EEGGameState::E_NextStage:
+
+		LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(GameInstance->Name_SaveSlot0, GameInstance->GetSavedUserIndex()));
 		if (!LoadInstance)
 		{
 			EGLOG(Error, TEXT("Load Insatnce Failed"));
@@ -137,11 +154,13 @@ void AEGPlayerCharacter::BeginPlay()
 
 		//Game State 업데이트
 		GameInstance->EGameState = EEGGameState::E_InPlay;
-
+		break;
+		//============================================================================================
+	default:
+		UE_LOG(LogTemp, Log, TEXT("New Game"));
+		break;
 	}
 
-	else
-		EGLOG(Warning, TEXT("NewGame"));
 	//GameInstance의 Load Game Phase에 연동
 	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEGPlayerCharacter::LoadGameData);
 

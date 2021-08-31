@@ -202,8 +202,7 @@ void AGruntCharacter::PostInitializeComponents()
 		Player->TakeDamage(AtkMeleeAtk, DamageEvent, GetController(), this);
 		EGLOG(Warning, TEXT("Give Damgae : %d"), AtkMeleeAtk);
 	}
-	else
-		EGLOG(Error, TEXT("Notjhiog"));
+	
 
 	});
 

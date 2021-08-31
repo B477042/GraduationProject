@@ -147,7 +147,7 @@ void UEGGameInstance::LoadGame(const EEGSaveSlot SaveSlot)
 
 		//LoadGame 상태로
 		EGameState = EEGGameState::E_LoadGame;
-	
+		UE_LOG(LogTemp, Log, TEXT("Current Game State is Load Game "));
 		LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(Name_SaveSlot0, UserIndex));
 		if (!LoadInstance)
 		{
@@ -160,7 +160,7 @@ void UEGGameInstance::LoadGame(const EEGSaveSlot SaveSlot)
 	case EEGSaveSlot::E_CheckPoint:
 		//Check Point 상태로
 		EGameState = EEGGameState::E_Death;
-
+		UE_LOG(LogTemp, Log, TEXT("Current Game State is Death(Check Point)"));
 
 		LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(Name_CheckPointSlot, UserIndex));
 		if (!LoadInstance)
@@ -168,6 +168,7 @@ void UEGGameInstance::LoadGame(const EEGSaveSlot SaveSlot)
 			EGLOG(Error, TEXT("Load Insatnce Failed"));
 			return;
 		}
+
 		break;
 	default:
 		EGLOG(Error, TEXT("Save Slot input param error"));

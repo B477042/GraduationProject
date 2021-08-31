@@ -280,11 +280,12 @@ void UStatComponent_Player::ResetCombo()
 void UStatComponent_Player::GainExp(const int32 & DropExp)
 {
 	Exp += DropExp;
+	UE_LOG(LogTemp, Log, TEXT("Player Gain Exp : %d "),DropExp);
 	//if Level up
 	if (Exp >= NextExp)
 	{
 		levelUp();
-		
+		UE_LOG(LogTemp, Log, TEXT("Level Up"));
 	}
 }
 //
