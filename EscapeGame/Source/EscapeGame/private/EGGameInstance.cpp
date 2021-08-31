@@ -13,8 +13,7 @@
 
 UEGGameInstance::UEGGameInstance()
 {
-	SaveSlotName = TEXT("TESTSave");
-	OptionsSlotName = TEXT("Options");
+ 
 	UserIndex = 0;
 	EGameState = EEGGameState::E_NewGame;
 
@@ -43,23 +42,34 @@ void UEGGameInstance::Init()
 	}
 
 	//Check Save Data File
-	auto checkSaveData= UGameplayStatics::LoadGameFromSlot(SaveSlotName, UserIndex);
+	USaveGame* checkSaveData= UGameplayStatics::LoadGameFromSlot(Name_SaveSlot0, UserIndex);
 	if (!checkSaveData)
 	{
 		auto SaveInstance = NewObject<UEGSaveGame>();
 		if (!SaveInstance)return;
-		UGameplayStatics::SaveGameToSlot(SaveInstance, SaveSlotName, UserIndex);
+		UGameplayStatics::SaveGameToSlot(SaveInstance, Name_SaveSlot0, UserIndex);
 		EGLOG(Error, TEXT("Can't find Save Data. Create New One"));
 	}
 
-	auto checkOptionsData = UGameplayStatics::LoadGameFromSlot(OptionsSlotName, UserIndex);
+	USaveGame* checkOptionsData = UGameplayStatics::LoadGameFromSlot(Name_OptionsSlot, UserIndex);
 	if (!checkOptionsData)
 	{
 		auto OptionsInstance = NewObject<UOptionSaveGame>();
 		if (!OptionsInstance)return;
-		UGameplayStatics::SaveGameToSlot(OptionsInstance, OptionsSlotName, UserIndex);
+		UGameplayStatics::SaveGameToSlot(OptionsInstance, Name_OptionsSlot, UserIndex);
 		EGLOG(Error, TEXT("Can't find Options Data. Create New One"));
 	}
+	USaveGame* checkCPData = UGameplayStatics::LoadGameFromSlot(Name_CheckPointSlot, UserIndex);
+	if (!checkCPData)
+	{
+		auto SaveInstance = NewObject<UEGSaveGame>();
+		if (!SaveInstance)return;
+		UGameplayStatics::SaveGameToSlot(SaveInstance, Name_CheckPointSlot, UserIndex);
+		EGLOG(Error, TEXT("Can't find Check Point Data. Create New One"));
+	}
+
+
+
 
 	FCoreUObjectDelegates::PreLoadMap.AddUObject(this, &UEGGameInstance::BeginLoadingScreen);
 	FCoreUObjectDelegates::PostLoadMapWithWorld.AddUObject(this, &UEGGameInstance::EndLoadingScreen);
@@ -69,7 +79,7 @@ void UEGGameInstance::Init()
 
 
 //Save Game이 호출될 경우는 메뉴에서 저장하거나 자동저장 오브젝트와 닿았을 때 일것이다
-void UEGGameInstance::SaveGame()
+void UEGGameInstance::SaveGame(const EEGSaveSlot SaveSlot)
 {
 	
 	auto SaveInstance = NewObject<UEGSaveGame>();
@@ -82,23 +92,39 @@ void UEGGameInstance::SaveGame()
 		OnSaveGamePhaseDelegate.Broadcast(SaveInstance);
 		EGLOG(Error, TEXT("Save Game Delegate BroadCasted"));
 
-		//Game State 정보 저장
+		//Save Game State Informations
 		auto egGameState = Cast<AEGGameState>(GetWorld()->GetGameState());
 		if (!egGameState)return;
 
-		//EGameState = EEGGameState::E_LoadGame;
+		//Save Current Level Name
 		FString LevelName = GetWorld()->GetMapName();
 		LevelName.RemoveFromStart(GetWorld()->StreamingLevelsPrefix);
 		SaveInstance->GameProgressData.LevelName = FName(*LevelName);
-		
+
+
+		//Save Game Data To Slot
+		switch (SaveSlot)
+		{
+		case EEGSaveSlot::E_SaveSlot:
+
+			UGameplayStatics::SaveGameToSlot(SaveInstance, Name_SaveSlot0, UserIndex);
+			break;
+		case EEGSaveSlot::E_CheckPoint:
+
+			UGameplayStatics::SaveGameToSlot(SaveInstance, Name_CheckPointSlot, UserIndex);
+			break;
+		default:
+			EGLOG(Error, TEXT("Save Slot input param error"));
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Save Game Error"));
+		}
 
 		//슬롯에 저장
-		UGameplayStatics::SaveGameToSlot(SaveInstance, SaveSlotName,UserIndex);
+		
 	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Save"));
-		EGLOG(Error, TEXT("Load Set Move To : %s"), *SaveInstance->GameProgressData.LevelName.ToString());
+		//EGLOG(Error, TEXT("Load Set Move To : %s"), *SaveInstance->GameProgressData.LevelName.ToString());
 }
 
-void UEGGameInstance::LoadGame()
+void UEGGameInstance::LoadGame(const EEGSaveSlot SaveSlot)
 {
 	//레벨을 오픈하고 게임의 진행 상황을 LoadGame으로 바꿔준다.
 	//각 Controller와 오브젝트는 게임이 시작될 때 Load 게임인 상태인지 확인하고
@@ -108,20 +134,58 @@ void UEGGameInstance::LoadGame()
 		Player의 BeginPlay에 맞춰 정보들을 로딩하기로 한다.
 	*/
 
-	//LoadGame 상태로
-	EGameState = EEGGameState::E_LoadGame;
 	
 
-	auto LoadInstance = Cast<UEGSaveGame> (UGameplayStatics::LoadGameFromSlot(SaveSlotName, UserIndex));
-	if (!LoadInstance)
+	UEGSaveGame* LoadInstance = nullptr;
+
+
+	switch (SaveSlot)
 	{
-		EGLOG(Error, TEXT("Load Insatnce Failed"));
-		return; 
+
+
+	case EEGSaveSlot::E_SaveSlot:
+
+		//LoadGame 상태로
+		EGameState = EEGGameState::E_LoadGame;
+	
+		LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(Name_SaveSlot0, UserIndex));
+		if (!LoadInstance)
+		{
+			EGLOG(Error, TEXT("Load Insatnce Failed"));
+			return;
+		}
+		break;
+
+
+	case EEGSaveSlot::E_CheckPoint:
+		//Check Point 상태로
+		EGameState = EEGGameState::E_Death;
+
+
+		LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(Name_CheckPointSlot, UserIndex));
+		if (!LoadInstance)
+		{
+			EGLOG(Error, TEXT("Load Insatnce Failed"));
+			return;
+		}
+		break;
+	default:
+		EGLOG(Error, TEXT("Save Slot input param error"));
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Load Game Error"));
+		return;
 	}
 
 
 
-	EGLOG(Error, TEXT("Load Set Move To : %s"), *LoadInstance->GameProgressData.LevelName.ToString());
+	if (!LoadInstance)
+	{
+		EGLOG(Warning, TEXT("Load instance is nullptr"));
+		return;
+	}
+
+
+
+	EGLOG(Error, TEXT("Load Level : %s"), *LoadInstance->GameProgressData.LevelName.ToString());
 	UGameplayStatics::OpenLevel(this,LoadInstance->GameProgressData.LevelName);
 	EGLOG(Error, TEXT("Load Complete"));
 	//Load 처리가 끝나면 Player가 BeginPlay단계에서 데이터 로드를 시도한다
@@ -133,7 +197,7 @@ void UEGGameInstance::SaveOptions(float sld_Master, float sld_BGM, float sld_SE,
 	if (!SaveInstance)return;
 
 	SaveInstance->SetValues(sld_Master, sld_BGM, sld_SE, sld_Voice, sld_UI, ScreenResoultion, WindowMode);
-	UGameplayStatics::SaveGameToSlot(SaveInstance, OptionsSlotName, UserIndex);
+	UGameplayStatics::SaveGameToSlot(SaveInstance, Name_OptionsSlot, UserIndex);
 }
 
 UOptionSaveGame* UEGGameInstance::LoadOptions()
@@ -143,7 +207,7 @@ UOptionSaveGame* UEGGameInstance::LoadOptions()
 	//옵션을 불러오게 해선 안 된다.
 
 
-	auto LoadInstance = Cast<UOptionSaveGame>(UGameplayStatics::LoadGameFromSlot(OptionsSlotName, UserIndex));
+	auto LoadInstance = Cast<UOptionSaveGame>(UGameplayStatics::LoadGameFromSlot(Name_OptionsSlot, UserIndex));
 	if (!LoadInstance)
 	{
 		EGLOG(Error, TEXT("Load Insatnce Failed"));

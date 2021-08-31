@@ -22,13 +22,28 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSaveGamePhase, UEGSaveGame*, Save
 UENUM(BlueprintType)
 enum class EEGGameState :uint8
 {
+	
 	E_InPlay = 0 UMETA(DisplayName = "InPlay"),
+	//Tittle UI -> New Game
 	E_NewGame  UMETA(DisplayName = "NewGame"),
+	//Tittle UI -> Load Game
 	E_LoadGame UMETA(DisplayName = "LoadGame"),
+
 	E_ClearGame UMETA(DisplayName = "ClearGame"),
-	E_NextStage UMETA(DisplayName = "NextStage")
+	//If Stage been cleared
+	E_NextStage UMETA(DisplayName = "NextStage"),
+	//If Player dead
+	E_Death UMETA(DisplayName = "Death")
 
 };
+
+UENUM(BlueprintType, meta = (ScriptName = "EGSaveType"))
+enum class EEGSaveSlot : uint8
+{
+	E_SaveSlot = 0 UMETA(DisplayName = "To Save Slot"),
+	E_CheckPoint UMETA(DisplayName="To Check Point")
+};
+
 
 UCLASS()
 class ESCAPEGAME_API UEGGameInstance : public UGameInstance
@@ -39,7 +54,7 @@ public:
 	virtual void Init()override;
 
 	UFUNCTION(BlueprintCallable)
-		void SaveGame();
+		void SaveGame(const EEGSaveSlot SaveSlot);
 	UFUNCTION(BlueprintCallable)
 		void LoadGame();
 	UFUNCTION(BlueprintCallable)
@@ -53,7 +68,7 @@ public:
 		virtual void EndLoadingScreen(UWorld* InLoadedWorld);
 
 
-	const FString GetSaveSlotName() { return SaveSlotName; }
+	const FString GetSaveSlotName() { return Name_SaveSlot0; }
 	const int32 GetSavedUserIndex() { return UserIndex; }
 	
 
@@ -82,8 +97,9 @@ public:
 	UPROPERTY( VisibleAnywhere, BlueprintReadWrite, Category = "Data")
 		EEGGameState EGameState;
 private:
-	FString SaveSlotName;
-	FString OptionsSlotName;
+	const FString Name_SaveSlot0 = TEXT("SaveSlot0");
+	const FString Name_OptionsSlot = TEXT("Options");
+	const FString Name_CheckPointSlot=TEXT("CheckPoint");
 	int32 UserIndex;
 
 	TWeakObjectPtr<class AEGPostProcessVolume> PostProcessVolume;
