@@ -150,32 +150,7 @@ void AEnemyCharacter_Gunner::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	Anim = Cast<UAnimInstance_Gunner>(GetMesh()->GetAnimInstance());
-	if (!Anim)EGLOG(Error, TEXT("********Anim Cast Failed********"));
-
-	OnHpChangedDelegate.AddLambda([this]()->void{
-		HPBar = Cast<UProgressBar>(HPBarWidget->GetUserWidgetObject()->GetWidgetFromName(TEXT("HPBar")));
-		if (!HPBar)
-		{
-			EGLOG(Warning, TEXT(" HPBar Failed"));
-			return;
-		}
-		HPBar->SetPercent(StatComponent->GetHPRatio());
-	});
-
-	OnHPIsZeroDelegate.AddLambda([this]()->void {
-		//Anim Dead 설정
-		//AIController 중단
-
-		Anim->SetDead(true);
-		auto AICon = Cast<AEnemyAIController_Gunner>(GetController());
-		if (AICon)
-		{
-			AICon->StopAI();
-		}
-
-
-	});
+	
 	
 
 
@@ -199,6 +174,33 @@ void AEnemyCharacter_Gunner::BeginPlay()
 	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEnemyCharacter_Gunner::LoadGame);
 	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AEnemyCharacter_Gunner::SaveGame);
 
+
+	Anim = Cast<UAnimInstance_Gunner>(GetMesh()->GetAnimInstance());
+	if (!Anim)EGLOG(Error, TEXT("********Anim Cast Failed********"));
+
+	StatComponent->HPChangedDelegate.AddLambda([this]()->void {
+		HPBar = Cast<UProgressBar>(HPBarWidget->GetUserWidgetObject()->GetWidgetFromName(TEXT("HPBar")));
+		if (!HPBar)
+		{
+			EGLOG(Warning, TEXT(" HPBar Failed"));
+			return;
+		}
+		HPBar->SetPercent(StatComponent->GetHPRatio());
+		});
+
+	StatComponent->HPZeroDelegate.AddLambda([this]()->void {
+		//Anim Dead 설정
+		//AIController 중단
+
+		Anim->SetDead(true);
+		auto AICon = Cast<AEnemyAIController_Gunner>(GetController());
+		if (AICon)
+		{
+			AICon->StopAI();
+		}
+
+
+		});
 }
 
 void AEnemyCharacter_Gunner::BeginDestroy()
@@ -348,6 +350,7 @@ float AEnemyCharacter_Gunner::TakeDamage(float DamageAmount, FDamageEvent const 
 		{
 			player->GetStatComponent()->GainExp(StatComponent->GetDropExp());
 		}
+		StatComponent->SetDamageable(false);
 	}
 
 

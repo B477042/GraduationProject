@@ -78,8 +78,12 @@ void UStatComponent::TakeDamage(float NewDamage)
 
 	}
 
-	if(!IsDead())
-	HPChangedDelegate.Broadcast();
+	//Check is hp under 0?
+	//If so, Broadcast Dead Delegate
+	if (!IsDead())
+	{
+		HPChangedDelegate.Broadcast();
+	}
 }
 
 //Set a point 

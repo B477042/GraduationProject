@@ -86,16 +86,6 @@ void UStatComponent_Gunner::LoadGame(const FEnemyData* LoadData)
 void UStatComponent_Gunner::TakeDamage(float Damage)
 {
 	
-	AEnemyCharacter_Gunner* OwnerChara = Cast<AEnemyCharacter_Gunner>(GetOwner());
-	if (!OwnerChara)return;
-
-	CurrentHP -= Damage;
-	OwnerChara->OnHpChangedDelegate.Broadcast();
-
-	if (CurrentHP <= 0)
-	{
-		UE_LOG(LogTemp, Log, TEXT("%s Died"), *OwnerChara->GetName());
-		OwnerChara->OnHPIsZeroDelegate.Broadcast();
-	}
+	Super::TakeDamage(Damage);
 }
 
