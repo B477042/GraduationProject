@@ -3,9 +3,9 @@
 #pragma once
 
 #include "EscapeGame.h"
-#include "StateComponent.h"
+#include "StatComponent_Enemy.h"
 #include "EGSaveGame.h"
-#include "StateComponent_Gunner.generated.h"
+#include "StatComponent_Gunner.generated.h"
 
 /**
  * 
@@ -24,30 +24,28 @@ enum class EGunnerState : uint8
 
 
 UCLASS()
-class ESCAPEGAME_API UStateComponent_Gunner : public UActorComponent
+class ESCAPEGAME_API UStatComponent_Gunner : public UStatComponent_Enemy
 {
 	GENERATED_BODY()
 
 public:
-	UStateComponent_Gunner();
+	UStatComponent_Gunner();
 protected:
 	virtual void BeginPlay()override;
 public:
 	void SetState(EGunnerState NewState);
 	EGunnerState GetState();
 
-	UFUNCTION(BlueprintCallable)
-	void SaveGame(FEnemyData& SaveData);
-	UFUNCTION(BlueprintCallable)
-	void LoadGame(const FEnemyData& LoadData);
-
-	void TakeDamage(float Damage);
+	virtual void SaveGame(FEnemyData* SaveData)override;
 	
-	float GetHPRatio() { return Hp / DefaultHp; }
-	int32 GetExp() { return Exp; }
+	virtual void LoadGame(const FEnemyData* LoadData)override;
+
+	virtual void TakeDamage(float Damage)override;
+	
+	
 
 
-private:
+protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		EGunnerState State;
@@ -55,10 +53,7 @@ private:
 		float JogSpeed;
 	UPROPERTY(Transient, EditInstanceOnly, BlueprintReadWrite, Category = "Settings", meta = (AllowPrivateAccess = "true"))
 		float ADSSpeed;
-	UPROPERTY(Transient, EditInstanceOnly, BlueprintReadWrite, Category = "Stats", meta = (AllowPrivateAccess = "true"))
-		float Hp;
-	UPROPERTY(Transient, EditInstanceOnly, BlueprintReadWrite, Category = "Stats", meta = (AllowPrivateAccess = "true"))
-		int32 Exp;
+	
 
 	const float DefaultHp = 110.0f;
 };

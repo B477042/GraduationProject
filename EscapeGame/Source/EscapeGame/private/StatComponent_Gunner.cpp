@@ -1,20 +1,21 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "StateComponent_Gunner.h"
+#include "StatComponent_Gunner.h"
 #include "EnemyCharacter_Gunner.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
-UStateComponent_Gunner::UStateComponent_Gunner()
+UStatComponent_Gunner::UStatComponent_Gunner()
 {
 	State = EGunnerState::E_Idle;
 
 	JogSpeed = 300.0f;
 	ADSSpeed = 150.0f;
-	Hp = DefaultHp;
-	Exp = 100;
+	CurrentHP = DefaultHp;
+	MaxHP = DefaultHp;
+	DropExp = 100;
 }
-void UStateComponent_Gunner::BeginPlay()
+void UStatComponent_Gunner::BeginPlay()
 {
 
 	Super::BeginPlay();
@@ -23,7 +24,7 @@ void UStateComponent_Gunner::BeginPlay()
 }
 
 
-void UStateComponent_Gunner::SetState(EGunnerState NewState)
+void UStatComponent_Gunner::SetState(EGunnerState NewState)
 {
 	State = NewState;
 
@@ -50,47 +51,51 @@ void UStateComponent_Gunner::SetState(EGunnerState NewState)
 
 }
 
-EGunnerState UStateComponent_Gunner::GetState()
+EGunnerState UStatComponent_Gunner::GetState()
 {
 	return State;
 }
 
-void UStateComponent_Gunner::SaveGame(FEnemyData& SaveData)
+void UStatComponent_Gunner::SaveGame(FEnemyData* SaveData)
 {
 	/*if (!SaveData)
 	{
 		EGLOG(Error, TEXT("SaveData is nullptr"));
 		return;
 	}*/
-	SaveData.Hp = Hp;
+	Super::SaveGame(SaveData);
 	
 	
 
 
 }
 
-void UStateComponent_Gunner::LoadGame(const FEnemyData& LoadData)
+void UStatComponent_Gunner::LoadGame(const FEnemyData* LoadData)
 {
-	
+	Super::LoadGame(LoadData);
 	/*if (!LoadData)
 	{
 		EGLOG(Error, TEXT("LoadData is nullptr"));
 		return;
 	}*/
-	Hp = LoadData.Hp;
+	
 
 
 }
 
-void UStateComponent_Gunner::TakeDamage(float Damage)
+void UStatComponent_Gunner::TakeDamage(float Damage)
 {
-	Hp -= Damage;
-	auto OwnerChara = Cast<AEnemyCharacter_Gunner>(GetOwner());
+	
+	AEnemyCharacter_Gunner* OwnerChara = Cast<AEnemyCharacter_Gunner>(GetOwner());
 	if (!OwnerChara)return;
 
+	CurrentHP -= Damage;
 	OwnerChara->OnHpChangedDelegate.Broadcast();
 
-	if (Hp <= 0)
+	if (CurrentHP <= 0)
+	{
+		UE_LOG(LogTemp, Log, TEXT("%s Died"), *OwnerChara->GetName());
 		OwnerChara->OnHPIsZeroDelegate.Broadcast();
+	}
 }
 
