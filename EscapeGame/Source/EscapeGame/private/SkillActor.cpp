@@ -68,9 +68,9 @@ void ASkillActor::SetSafety(UParticleSystemComponent* PSystem)
 void ASkillActor::initComponents()
 {
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("ROOT"));
-	VFX_Main = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("FIREBALL"));
+	VFX_Main = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("MainVFX"));
 //	ReactEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("ReactEffect"));
-	VFX_Hit = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("HIT"));
+	VFX_Hit = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("HitVFX"));
 	MainCollision = CreateDefaultSubobject<USphereComponent>(TEXT("COLLISION"));
 	
 	SFX_Passing = CreateDefaultSubobject<UAudioComponent >(TEXT("SOUNDPassing"));

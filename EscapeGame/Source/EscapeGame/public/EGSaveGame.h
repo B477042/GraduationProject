@@ -148,7 +148,7 @@ class ESCAPEGAME_API UEGSaveGame : public USaveGame
 {
 	GENERATED_BODY()
 public:
-	//Data TArray of Players
+	//Data of Players
 	UPROPERTY(BlueprintReadWrite, Category = "Data")
 		FPlayerData D_Player;
 	//엔진 에디터에 지정된 이름으로 정보를 관리합니다

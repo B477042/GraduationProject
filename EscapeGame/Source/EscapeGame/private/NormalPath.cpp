@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "NormalPath.h"
-
+#include "Components/BoxComponent.h"
 // Sets default values
 ANormalPath::ANormalPath()
 {
@@ -109,7 +109,11 @@ ANormalPath::ANormalPath()
 	MiniMapTileMesh->SetRelativeLocation(FVector(-160, -180, POS_Minimap.Z));
 	MiniMapTileMesh->SetRelativeScale3D(FVector(3.4375f, 3.8125f, 1.0f));
 	
-
+	/*
+*	Trigger Settings
+*/
+	TileTrigger->SetRelativeLocation(FVector(-150, -180, 220));
+	TileTrigger->SetBoxExtent(FVector(181.952499f, 187.690567f, 234.089142f));
 
 }
 

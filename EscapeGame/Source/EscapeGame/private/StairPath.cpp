@@ -2,6 +2,7 @@
 
 #include "StairPath.h"
 #include"NormalPath.h"
+#include "Components/BoxComponent.h"
 // Sets default values
 AStairPath::AStairPath()
 {
@@ -13,7 +14,12 @@ AStairPath::AStairPath()
 	SettingWorldMatrix();
 	MakeComponentsTree();
 
-	
+	/*
+	* Trigger Setting
+	*/
+	TileTrigger->SetRelativeLocation(FVector(90, -130, 210));
+	TileTrigger->SetBoxExtent(FVector(285.576141f, 373.145172f, 344.731171f));
+
 
 	
 	LampLight1->SetInnerConeAngle(19.809523f);

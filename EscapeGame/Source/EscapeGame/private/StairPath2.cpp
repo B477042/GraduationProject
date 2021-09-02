@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "StairPath2.h"
-
+#include "Components/BoxComponent.h"
 // Sets default values
 AStairPath2::AStairPath2()
 {
@@ -13,7 +13,12 @@ AStairPath2::AStairPath2()
 	SettingWorldMatrix();
 	MakeComponentsTree();
 
-
+	/*
+	* Trigger Setting
+	*/
+	float X, Y, Z;
+	TileTrigger->SetRelativeLocation(FVector(X = 50.000000f, Y = -130.000000f, Z = 210.000000f));
+	TileTrigger->SetBoxExtent(FVector(X = 285.576141f, Y = 373.145172f, Z = 344.731171f));
 
 	LampLight1->SetInnerConeAngle(19.809523f);
 	LampLight1->SetOuterConeAngle(25.076189f);

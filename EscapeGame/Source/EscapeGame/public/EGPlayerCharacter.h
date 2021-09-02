@@ -10,7 +10,6 @@
 #include "GameFramework/Character.h"
 #include "StatComponent_Player.h"
 #include "Anim_Player.h"
-#include "Component_SelfDamage.h"
 #include "Component_Inventory.h"
 #include "SkillContainer_PlayerHitEffect.h"
 #include "Components/BoxComponent.h"
@@ -185,11 +184,8 @@ private:
 		USkillContainer_PlayerHitEffect* Container_Hit;
 		UPROPERTY(VisibleAnywhere)
 		UParticleSystemComponent* SwordEffect;
-
-	
-		UPROPERTY(EditAnywhere, Category = "Damage")
-		UComponent_SelfDamage* SelfDamage;
-		
+		UPROPERTY(VisibleAnywhere, Category = "Effect")
+		class UBarrierEffectComponent* BarrierEffect;
 
 	float minMiniMapArmLength;
 	float maxMiniMapArmLength;

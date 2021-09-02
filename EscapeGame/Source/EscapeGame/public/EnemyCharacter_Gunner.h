@@ -6,7 +6,7 @@
 #include "EnemyCharacter.h"
 #include "Component_Mag.h"
 #include "Components/AudioComponent.h"
-#include "StateComponent_Gunner.h"
+#include "StatComponent_Gunner.h"
 
 #include "EnemyCharacter_Gunner.generated.h"
 
@@ -93,7 +93,7 @@ protected:
 	UPROPERTY(Transient, VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 		FVector Point_Muzzle;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-		UStateComponent_Gunner* StateComponent;
+		UStatComponent_Gunner* StatComponent;
 	UPROPERTY()
 		class UAnimInstance_Gunner* Anim;
 	

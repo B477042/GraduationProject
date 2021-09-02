@@ -34,6 +34,10 @@ AGruntCharacter::AGruntCharacter()
 	VFX_HitEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("VFX_HitEffect"));
 	SFX_Explosion = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_EXPLOSION"));
 	SFX_Burst = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Burst"));
+	SFX_Death = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Death"));
+
+	
+
 	/*
 	*	VFX Muzzle Effect Settings
 	* 
@@ -81,6 +85,15 @@ AGruntCharacter::AGruntCharacter()
 		SFX_Burst->bAutoActivate = false;
 		SFX_Burst->SetupAttachment(RootComponent);
 	}
+	/*
+	* SFX Death Settings
+	*/
+	static ConstructorHelpers::FObjectFinder<USoundBase>SB_Death(TEXT("SoundWave'/Game/MyFolder/Sound/Voice/334660__vultraz168__robotic-scream.334660__vultraz168__robotic-scream'"));
+	{
+		SFX_Death->SetSound(SB_Death.Object);
+		SFX_Death->bAutoActivate = false;
+		SFX_Death->SetupAttachment(RootComponent);
+	}
 
 	/*
 	 *	SFX Sound Attenuation
@@ -91,8 +104,11 @@ AGruntCharacter::AGruntCharacter()
 	{
 		SFX_Burst->AttenuationSettings = SA_Burst.Object;
 		SFX_Explosion->AttenuationSettings = SA_Burst.Object;
+		SFX_Death->AttenuationSettings = SA_Burst.Object;
 	}
 	
+
+
 	
 	//Set Melee Attack Range To 100cm
 	MeleeAttackRange = 240.0f;
@@ -202,15 +218,14 @@ void AGruntCharacter::PostInitializeComponents()
 		Player->TakeDamage(AtkMeleeAtk, DamageEvent, GetController(), this);
 		EGLOG(Warning, TEXT("Give Damgae : %d"), AtkMeleeAtk);
 	}
-	else
-		EGLOG(Error, TEXT("Notjhiog"));
+	
 
 	});
 
 	//체력이 0이 됐을 때 호출될 람다 함수
 	Stat->HPZeroDelegate.AddLambda([this]()->void {
-		auto anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
-		if (!anim)
+		auto Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
+		if (!Anim)
 		{
 			
 			return;
@@ -218,7 +233,15 @@ void AGruntCharacter::PostInitializeComponents()
 
 		EGLOG(Error, TEXT("%s is Down"),*GetName());
 
-		anim->PlayDeadAnim();
+		if (Anim->IsAnyMontagePlaying())
+		{
+			Anim->StopAllMontages(0.0f);
+		}
+
+		Anim->PlayDeadAnim();
+		
+
+
 	});
 
 
@@ -409,6 +432,15 @@ void AGruntCharacter::FireAttack()
 		SFX_Explosion->Activate();
 	}
 	
+}
+
+void AGruntCharacter::PlayDeathEffect()
+{
+	VFX_HitEffect->SetWorldLocation(GetActorLocation());
+	VFX_HitEffect->Activate();
+	SFX_Explosion->SetWorldLocation(GetActorLocation());
+	SFX_Explosion->Activate();
+	SFX_Death->Activate();
 }
 
 

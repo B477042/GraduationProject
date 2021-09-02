@@ -51,7 +51,7 @@ public:
 	const static float MaxRunningSpeed;
 	const static float MinWalkingSpeed;
 
-	
+	void PlayDeathEffect();
 	UFUNCTION(BlueprintCallable)
 		float DropExp() { return Stat->GetDropExp(); }
 	UPROPERTY(EditInstanceOnly)
@@ -71,11 +71,16 @@ protected:
 	UAudioComponent* SFX_Explosion;
 	UPROPERTY(EditInstanceOnly, Category = "SFX")
 	UAudioComponent* SFX_Burst;
+	UPROPERTY(EditInstanceOnly, Category = "SFX")
+	UAudioComponent* SFX_Death;
 	UPROPERTY(EditInstanceOnly, Category = "VFX")
 	UParticleSystemComponent* VFX_MuzzleEffect;
 	UPROPERTY(EditInstanceOnly, Category = "VFX")
 	UParticleSystemComponent* VFX_HitEffect;
 	
+
+
+
 	//Stat Component 정리되면 거기에 넣는다. 전방 탐지 범위
 	UPROPERTY(VisibleInstanceOnly, Category = Stat)
 		float MeleeAttackRange;

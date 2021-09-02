@@ -25,7 +25,7 @@ AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
 	SFX_Foot_L = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Foot_L"));
 	SFX_Foot_R = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Foot_R"));
 	MagComponent = CreateDefaultSubobject<UComponent_Mag>(TEXT("MagComponent"));
-	StateComponent = CreateDefaultSubobject<UStateComponent_Gunner>(TEXT("StateComponent"));
+	StatComponent = CreateDefaultSubobject<UStatComponent_Gunner>(TEXT("StatComponent"));
 	
 
 	//	AiConfigSight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("AIConfigSight"));
@@ -150,32 +150,7 @@ void AEnemyCharacter_Gunner::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	Anim = Cast<UAnimInstance_Gunner>(GetMesh()->GetAnimInstance());
-	if (!Anim)EGLOG(Error, TEXT("********Anim Cast Failed********"));
-
-	OnHpChangedDelegate.AddLambda([this]()->void{
-		HPBar = Cast<UProgressBar>(HPBarWidget->GetUserWidgetObject()->GetWidgetFromName(TEXT("HPBar")));
-		if (!HPBar)
-		{
-			EGLOG(Warning, TEXT(" HPBar Failed"));
-			return;
-		}
-		HPBar->SetPercent(StateComponent->GetHPRatio());
-	});
-
-	OnHPIsZeroDelegate.AddLambda([this]()->void {
-		//Anim Dead 설정
-		//AIController 중단
-
-		Anim->SetDead(true);
-		auto AICon = Cast<AEnemyAIController_Gunner>(GetController());
-		if (AICon)
-		{
-			AICon->StopAI();
-		}
-
-
-	});
+	
 	
 
 
@@ -199,6 +174,33 @@ void AEnemyCharacter_Gunner::BeginPlay()
 	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEnemyCharacter_Gunner::LoadGame);
 	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AEnemyCharacter_Gunner::SaveGame);
 
+
+	Anim = Cast<UAnimInstance_Gunner>(GetMesh()->GetAnimInstance());
+	if (!Anim)EGLOG(Error, TEXT("********Anim Cast Failed********"));
+
+	StatComponent->HPChangedDelegate.AddLambda([this]()->void {
+		HPBar = Cast<UProgressBar>(HPBarWidget->GetUserWidgetObject()->GetWidgetFromName(TEXT("HPBar")));
+		if (!HPBar)
+		{
+			EGLOG(Warning, TEXT(" HPBar Failed"));
+			return;
+		}
+		HPBar->SetPercent(StatComponent->GetHPRatio());
+		});
+
+	StatComponent->HPZeroDelegate.AddLambda([this]()->void {
+		//Anim Dead 설정
+		//AIController 중단
+
+		Anim->SetDead(true);
+		auto AICon = Cast<AEnemyAIController_Gunner>(GetController());
+		if (AICon)
+		{
+			AICon->StopAI();
+		}
+
+
+		});
 }
 
 void AEnemyCharacter_Gunner::BeginDestroy()
@@ -225,7 +227,7 @@ void AEnemyCharacter_Gunner::SaveGame(UEGSaveGame * SaveInstance)
 		return;
 	}
 	//Hp저장
-	StateComponent->SaveGame(*SaveData);
+	StatComponent->SaveGame(SaveData);
 	
 
 }
@@ -244,7 +246,7 @@ void AEnemyCharacter_Gunner::LoadGame(const UEGSaveGame * LoadInstance)
 		EGLOG(Error, TEXT("LaodData FAILED"));
 		return;
 	}
-	StateComponent->LoadGame(*LoadData);
+	StatComponent->LoadGame(LoadData);
 }
 
 void  AEnemyCharacter_Gunner::initComponents()
@@ -305,7 +307,7 @@ void AEnemyCharacter_Gunner::Attack()
 	bCanFire = false;
 	SetActorTickEnabled(true);
 	//애니메이션과 소리 재생
-	Anim->PlayFire(StateComponent->GetState());
+	Anim->PlayFire(StatComponent->GetState());
 	playSFXGun();
 	//Mag에서 총 발사
 	//Point_Muzzle =  WeaponMesh->GetSocketLocation(TEXT("Muzzle"));
@@ -318,19 +320,19 @@ void AEnemyCharacter_Gunner::Attack()
 }
 void AEnemyCharacter_Gunner::Reload()
 {
-	Anim->PlayReload(StateComponent->GetState());
+	Anim->PlayReload(StatComponent->GetState());
 
 
 }
 void AEnemyCharacter_Gunner::SetADS()
 {
-	StateComponent->SetState(EGunnerState::E_ADS);
+	StatComponent->SetState(EGunnerState::E_ADS);
 	Anim->SetIronsights(true);
 
 }
 void AEnemyCharacter_Gunner::ReleaseADS()
 {
-	StateComponent->SetState(EGunnerState::E_Idle);
+	StatComponent->SetState(EGunnerState::E_Idle);
 	Anim->SetIronsights(false);
 }
 
@@ -338,16 +340,17 @@ float AEnemyCharacter_Gunner::TakeDamage(float DamageAmount, FDamageEvent const 
 {
 	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
-	StateComponent->TakeDamage(FinalDamage);
+	StatComponent->TakeDamage(FinalDamage);
 
 	//죽었다면 causer가 player인지 검사하고 경험치를 준다
-	if (StateComponent->GetHPRatio() <= 0.0f)
+	if (StatComponent->GetHPRatio() <= 0.0f)
 	{
 		auto player = Cast<AEGPlayerCharacter>(DamageCauser);
 		if (player)
 		{
-			player->GetStatComponent()->GainExp(StateComponent->GetExp());
+			player->GetStatComponent()->GainExp(StatComponent->GetDropExp());
 		}
+		StatComponent->SetDamageable(false);
 	}
 
 
