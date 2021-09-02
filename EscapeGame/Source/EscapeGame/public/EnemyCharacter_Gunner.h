@@ -62,10 +62,8 @@ protected:
 	// Delegate 등록은 자식 클레스에서
 		virtual	void LoadGame(const class UEGSaveGame* LoadInstance);
 
-	
-	void initComponents();
-	void loadAssets();
-	void playSFXGun();
+
+	void PlaySFXGun();
 	
 	
 	//init ai perception component

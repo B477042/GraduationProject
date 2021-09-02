@@ -288,9 +288,11 @@ void AGruntCharacter::SaveGame(UEGSaveGame * SaveInstance)
 //Stat 관련 정보를 Load하면 된다. 위치 정보 불러오기는 부모에서 처리했다
 void AGruntCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 {
-	if (!LoadInstance)
+	Super::LoadGame(LoadInstance);
+
+	if (!GetOwner())
 	{
-		EGLOG(Error, TEXT("LoadInstance is nullptr"));
+		UE_LOG(LogTemp,Error, TEXT("Dead actor"));
 		return;
 	}
 
@@ -298,7 +300,7 @@ void AGruntCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 	if (!LoadData)
 	{
 		EGLOG(Error, TEXT("LaodData FAILED"));
-		SetActorHiddenInGame(true);
+		//Destroy();
 		return;
 	}
 
