@@ -64,6 +64,7 @@ void UStatComponent::TakeDamage(float NewDamage)
 	if (bIsDamageable)
 	{
 		CurrentHP -= NewDamage;
+		EGLOG(Log, TEXT("%s Take damage! amount : %f"), *GetOwner()->GetName(), NewDamage);
 		if (NewDamage >= 10.0f)
 		{
 			auto player = Cast<AEGPlayerCharacter>(GetOwner());
@@ -94,6 +95,28 @@ void UStatComponent::SetHP(float NewHP)
 	if (CurrentHP > MaxHP)MaxHP = CurrentHP;
 	if (!IsDead())
 	HPChangedDelegate.Broadcast();
+}
+// return True If dead
+bool UStatComponent::IsDead()
+{
+	if (CurrentHP > 0)return false;
+
+
+
+	//Delegate Call once
+	if (bIsDamageable)
+	{
+		CurrentHP = 0.0f;
+		HPChangedDelegate.Broadcast();
+		HPZeroDelegate.Broadcast();
+		bIsDamageable = false;
+		EGLOG(Log, TEXT("%s is Dead"), *GetOwner()->GetName());
+		return true;
+	}
+
+	EGLOG(Log, TEXT("%s is already dead"), *GetOwner()->GetName());
+
+	return true;
 }
 
 //Plus(Heal) HP
@@ -153,17 +176,6 @@ void UStatComponent::SetWalking()
 		auto Movement = Character->GetCharacterMovement();
 		Movement->MaxWalkSpeed = MaxWalkingSpeed;
 	}
-}
-// return True If dead
-bool UStatComponent::IsDead()
-{
-	if (CurrentHP > 0)return false;
-	CurrentHP = 0.0f;
-//	EGLOG(Error, TEXT("%s is Dead"),*GetOwner()->GetName());
-	
-	HPChangedDelegate.Broadcast();
-	HPZeroDelegate.Broadcast();
-	return true;
 }
 
 void UStatComponent::SetSpeedLimits(const float & maxWalk, const float & minWalk, const float & maxRunning)

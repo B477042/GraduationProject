@@ -2,8 +2,9 @@
 
 
 #include "Anim_Grunt.h"
-
-
+#include "GruntCharacter.h"
+#include "EnemyAIController_Grunt.h"
+#include "Components/CapsuleComponent.h"
 
 UAnim_Grunt::UAnim_Grunt()
 {
@@ -54,6 +55,35 @@ void UAnim_Grunt::AnimNotify_Notify_CheckRange()
 void UAnim_Grunt::AnimNotify_Notify_FireStart()
 {
 	OnFireAttack.Execute();
+}
+
+void UAnim_Grunt::AnimNotify_AnimNotify_DeadStart()
+{
+	 AGruntCharacter* const OwnerChara = Cast<AGruntCharacter>(GetOwningActor());
+	if (!OwnerChara)
+	{
+		EGLOG(Error, TEXT("Casting Failed"));
+		return;
+	}
+
+	AEnemyAIController_Grunt* const AICon = Cast<AEnemyAIController_Grunt>(OwnerChara->GetController());
+	if (!AICon)
+	{
+		EGLOG(Error, TEXT("Casting Failed"));
+		return;
+	}
+
+	OwnerChara->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	OwnerChara->PlayDeathEffect();
+	
+	AICon->StopAI();
+	
+}
+
+void UAnim_Grunt::AnimNotify_AnimNotify_DeadEnd()
+{
+	
+	GetOwningActor()->Destroy();
 }
 
 void UAnim_Grunt::PlayDeadAnim()

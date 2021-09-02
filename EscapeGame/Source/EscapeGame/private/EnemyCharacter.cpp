@@ -156,7 +156,8 @@ void AEnemyCharacter::SaveGame(UEGSaveGame * SaveInstance)
 	auto LoadData = LoadInstance->D_Enemies.Find(GetName());
 	if (!LoadData)
 	{
-		EGLOG(Error, TEXT("%s Can't find Data"), *GetName());
+		EGLOG(Log, TEXT("%s Can't find Data"), *GetName());
+		Destroy();
 		return;
 	}
 

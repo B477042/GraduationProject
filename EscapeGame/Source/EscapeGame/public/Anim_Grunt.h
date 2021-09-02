@@ -26,7 +26,11 @@ public:
 	UFUNCTION()
 	void AnimNotify_Notify_CheckRange();
 	UFUNCTION()
-		void AnimNotify_Notify_FireStart();
+	void AnimNotify_Notify_FireStart();
+	UFUNCTION()
+	void AnimNotify_AnimNotify_DeadStart();
+	UFUNCTION()
+	void AnimNotify_AnimNotify_DeadEnd();
 	
 	UFUNCTION()
 	void PlayDeadAnim();
@@ -40,5 +44,8 @@ protected:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		bool bIsDead;
 
+
+	class USoundWave* SFX_Death;
+	class UParticleSystem* VFX_Explosion;
  
 };

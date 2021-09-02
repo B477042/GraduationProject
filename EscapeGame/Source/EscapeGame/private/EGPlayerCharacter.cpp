@@ -136,7 +136,7 @@ void AEGPlayerCharacter::BeginPlay()
 		EGLOG(Error, TEXT("OnLoadGamePhase Delegate Broadcasted"));
 		GameInstance->OnLoadGamePhaseDelegate.Broadcast(LoadInstance);
 
-		//LoadGameData(LoadInstance);
+		//
 		GameInstance->EGameState = EEGGameState::E_InPlay;
 
 		break;

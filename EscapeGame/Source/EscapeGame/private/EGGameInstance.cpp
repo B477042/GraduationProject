@@ -132,6 +132,7 @@ void UEGGameInstance::LoadGame(const EEGSaveSlot SaveSlot)
 	
 	/*
 		Player의 BeginPlay에 맞춰 정보들을 로딩하기로 한다.
+		
 	*/
 
 	

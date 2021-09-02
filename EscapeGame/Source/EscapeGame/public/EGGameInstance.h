@@ -65,6 +65,9 @@ public:
 		void SaveGame(const EEGSaveSlot SaveSlot);
 	UFUNCTION(BlueprintCallable)
 		void LoadGame(const EEGSaveSlot SaveSlot);
+	
+
+
 	UFUNCTION(BlueprintCallable)
 		void SaveOptions(float sld_Master,float sld_BGM,float sld_SE,float sld_Voice,float sld_UI,FIntPoint ScreenResoultion,EWindowMode::Type WindowMode);
 	UFUNCTION(BlueprintCallable)
