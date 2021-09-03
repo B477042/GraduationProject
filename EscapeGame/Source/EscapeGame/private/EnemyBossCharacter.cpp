@@ -374,6 +374,8 @@ void AEnemyBossCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 	}
 
 	auto LoadData = LoadInstance->BossData;
+	
+
 	SetActorLocationAndRotation(LoadData.Location, LoadData.Rotation);
 	bIsMpCharging = LoadData.bIsMpCharging;
 
@@ -383,7 +385,9 @@ void AEnemyBossCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 	EGLOG(Error, TEXT("Load instance data MP : %f"), LoadInstance->BossData.MP);
 	auto AICon = Cast<AEnemyAIController_Boss>(GetController());
 	if (!AICon)
+	{
 		return;
+	}
 	AICon->LoadGame(LoadData);
 	Stat->LoadGame(DowncastedData);
 }
