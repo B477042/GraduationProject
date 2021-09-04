@@ -51,7 +51,7 @@ UAnim_Player::UAnim_Player()
 		SFX_Death->SetSound(SC_Death.Object);
 		SFX_Death->bAutoActivate = false;
 	}
-	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Foot(TEXT("SoundCue'/Game/MyFolder/Sound/SE/Foot_left_Cue.Foot_left_Cue'"));
+	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Foot(TEXT("SoundCue'/Game/MyFolder/Sound/SE/SC_Plant.SC_Plant'"));
 	if (SC_Foot.Succeeded())
 	{
 		SFX_FootStep->SetSound(SC_Foot.Object);
@@ -172,10 +172,7 @@ void UAnim_Player::AnimNotify_RollingStart()
 	}
 	//
 	Owner->GetMesh()->SetCollisionProfileName(TEXT("Rolling"));
-//	Owner->bCanBeDamaged = false;
-	EGLOG(Warning, TEXT("Actor Location : %s"), *Owner->GetActorLocation().ToString());
-	EGLOG(Warning, TEXT("Mesh Location : %s"), *(Owner->GetActorLocation() +Owner->GetMesh()->GetRelativeLocation()).ToString());
-
+ 
 }
 
 void UAnim_Player::AnimNotify_RollingEnd()
@@ -187,9 +184,7 @@ void UAnim_Player::AnimNotify_RollingEnd()
 		return;
 	}
 	Owner->GetMesh()->SetCollisionProfileName(TEXT("PlayerCharacter"));
-	//Owner->bCanBeDamaged = true;
-	EGLOG(Warning, TEXT("Actor Location : %s"), *Owner->GetActorLocation().ToString());
-	EGLOG(Warning, TEXT("Mesh Location : %s"), *(Owner->GetActorLocation() + Owner->GetMesh()->GetRelativeLocation()).ToString());
+	 
 }
 
 //Rolling Animation의 재생이 끝나면 호출 될 것이다. 
@@ -283,34 +278,26 @@ void UAnim_Player::AnimNotify_DeadEnd()
 
 }
 
-void UAnim_Player::AnimNotify_LeftPlant()
+void UAnim_Player::AnimNotify_Plant()
 {
-	EGLOG(Error, TEXT(" l start"));
-	const auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
-
-	if (!player)return;
-	const auto world = GEngine->GetWorld();
-	if (!IsValid(world))return;
+	if (!GetOwningActor())
+	{
+		UE_LOG(LogTemp, Log, TEXT("invalid owing actor"));
+		return;
+	} 
+	FVector Location = GetOwningActor()->GetActorLocation();
 	
-	UGameplayStatics::PlaySoundAtLocation( world, SFX_FootStep->Sound, player->GetActorLocation());
+	
+	SFX_FootStep->SetWorldLocation(Location);
+	if (SFX_FootStep->IsPlaying())
+	{
+		SFX_FootStep->Deactivate();
+	}
+	SFX_FootStep->Activate();
 
-	SFX_FootStep->Play();
-
-	EGLOG(Error, TEXT(" left tep"));
 }
-void UAnim_Player::AnimNotify_RightPlant()
-{
-	EGLOG(Error, TEXT(" r start"));
-	auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
 
-	if (!player)return;
-	const auto world = GEngine->GetWorld();
-	if (!IsValid(world))return;
 
-	UGameplayStatics::PlaySoundAtLocation(world, SFX_FootStep->Sound, player->GetActorLocation());
-	SFX_FootStep->Play();
-	EGLOG(Error, TEXT(" right tep"));
-}
 void UAnim_Player::AnimNotify_ReactDamagedEnd()
 {
 	bIsDamaged = false;
