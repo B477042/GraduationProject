@@ -61,9 +61,8 @@ public:
 	void AnimNotify_DeadEnd();
 
 	UFUNCTION()
-		void AnimNotify_LeftPlant();
-	UFUNCTION()
-		void AnimNotify_RightPlant();
+		void AnimNotify_Plant();
+	
 	UFUNCTION()
 		void AnimNotify_ReactDamagedEnd();
 	
@@ -103,7 +102,7 @@ private:
 	UPROPERTY()
 	UAudioComponent* SFX_FootStep;
 	UPROPERTY()
-		UAudioComponent* SFX_Pain;
+	UAudioComponent* SFX_Pain;
 
 	////통상공격 몽타주
 	//UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))

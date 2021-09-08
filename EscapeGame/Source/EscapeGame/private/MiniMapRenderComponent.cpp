@@ -20,16 +20,16 @@ UMiniMapRenderComponent::UMiniMapRenderComponent()
 
 	}
 
-	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Post(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_OutLineShader.MI_OutLineShader'"));
-	if (MI_Post.Succeeded())
-	{
-		FWeightedBlendable Weighted;
-		Weighted.Object = Cast<UMaterialInstance>(MI_Post.Object);
-		Weighted.Weight = 2;
+	//static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Post(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_OutLineShader.MI_OutLineShader'"));
+	//if (MI_Post.Succeeded())
+	//{
+	//	FWeightedBlendable Weighted;
+	//	Weighted.Object = Cast<UMaterialInstance>(MI_Post.Object);
+	//	Weighted.Weight = 2;
 
-		PostProcessSettings.WeightedBlendables.Array.Add(Weighted);
+	//	PostProcessSettings.WeightedBlendables.Array.Add(Weighted);
 
-	}
+	//}
 
 	ProjectionType = ECameraProjectionMode::Orthographic;
 	FOVAngle=120;

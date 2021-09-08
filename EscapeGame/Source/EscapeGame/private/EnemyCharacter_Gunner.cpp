@@ -235,11 +235,13 @@ void AEnemyCharacter_Gunner::SaveGame(UEGSaveGame * SaveInstance)
 void AEnemyCharacter_Gunner::LoadGame(const UEGSaveGame * LoadInstance)
 {
 	Super::LoadGame(LoadInstance);
-	if (!LoadInstance)
+	
+	if (!GetOwner())
 	{
-		EGLOG(Error, TEXT("LoadInstance is nullptr"));
+		UE_LOG(LogTemp, Error, TEXT("Dead actor"));
 		return;
 	}
+
 	auto LoadData = LoadInstance->D_Enemies.Find(GetOwner()->GetName());
 	if (!LoadData)
 	{
@@ -249,19 +251,8 @@ void AEnemyCharacter_Gunner::LoadGame(const UEGSaveGame * LoadInstance)
 	StatComponent->LoadGame(LoadData);
 }
 
-void  AEnemyCharacter_Gunner::initComponents()
-{
-	
 
-	loadAssets();
-}
-
-void  AEnemyCharacter_Gunner::loadAssets()
-{
-	
-}
-
-void AEnemyCharacter_Gunner::playSFXGun()
+void AEnemyCharacter_Gunner::PlaySFXGun()
 {
 	bool bTemp = UKismetMathLibrary::RandomBool();
 
@@ -308,7 +299,7 @@ void AEnemyCharacter_Gunner::Attack()
 	SetActorTickEnabled(true);
 	//애니메이션과 소리 재생
 	Anim->PlayFire(StatComponent->GetState());
-	playSFXGun();
+	PlaySFXGun();
 	//Mag에서 총 발사
 	//Point_Muzzle =  WeaponMesh->GetSocketLocation(TEXT("Muzzle"));
 	MagComponent->FireBullet(

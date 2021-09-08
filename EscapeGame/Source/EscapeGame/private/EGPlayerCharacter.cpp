@@ -388,24 +388,13 @@ void AEGPlayerCharacter::StopRunning()
 }
 
 
-/*
-	호출시점 : Shift + Space
-	구르는 동작을 시작한다
-	구르기 시작하는 과정이 여기에 들어간다
 
-*/
 void AEGPlayerCharacter::Roll()
 {
 	//Anim의 bIsRolling을 true로 바꿔주면 AnimBP에서 구르는 애니메이션을 재생하게 된다.
 	Anim->SetRolling(true);
-	UE_LOG(LogTemp, Log, TEXT("roll"));
-	//float interval = Anim->GetRollingLength();
-
-	////Actor를 뒤로 후퇴시킬 방향
-	//FVector jumpPoint = GetActorForwardVector()*interval;
-
-	////입력을 제한 시킨다
-	//RestricInput();
+	
+	
 
 }
 //회복 아이템을 사용한다. 기본적으로 키를 입력하면 호출된다. 강제로 사용하게 만드는 방법도 만들 수 있을 것 같다
@@ -544,8 +533,8 @@ void AEGPlayerCharacter::InitComponents()
 	SpringArm->TargetArmLength = 500.0f;
 
 	MiniMapArm->TargetArmLength = POS_Minimap.Z+minMiniMapArmLength;
-	MiniMapArm->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
-	MiniMapArm->SetRelativeRotation(FRotator(-90.0f, 0.0f,0.0f));
+	MiniMapArm->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, 0.0f), FRotator(-90.0f, 0.0f, 0.0f));
+	 
 	MiniMapArm->bDoCollisionTest = false;
 
 	//마커 초기값 설정
@@ -553,8 +542,8 @@ void AEGPlayerCharacter::InitComponents()
 	MiniMapMarkerComponent->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
 	
 	//무기 설정
-	WeaponCollision->SetRelativeLocation(FVector(X = 0.976299f, Y = 1.777855f, Z = 66.010002f));
-	WeaponCollision->SetRelativeRotation(FRotator(Pitch = -1.184324, Yaw = 155.845551, Roll = 0.682941));
+	WeaponCollision->SetRelativeLocationAndRotation(FVector(X = 0.976299f, Y = 1.777855f, Z = 66.010002f), FRotator(Pitch = -1.184324, Yaw = 155.845551, Roll = 0.682941));
+	 
 	WeaponCollision->SetBoxExtent(FVector(X = 9.093354, Y = 6.199887, Z = 63.501183));
 	WeaponCollision->SetCollisionProfileName(TEXT("NoCollision"));
 
@@ -654,11 +643,8 @@ void AEGPlayerCharacter::UpDown( float  NewAxisValue)
  
 	if (NewAxisValue == 0.0f)return;
 	 
-		//AddMovementInput(GetActorForwardVector(), NewAxisValue);
-		//진행방향으로 캐릭터를 돌리는 방식
-		//AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::X), NewAxisValue);
-
-		////양수면 앞, 음수면 뒤
+		
+	////양수면 앞, 음수면 뒤
 	
 
 
@@ -674,9 +660,7 @@ void AEGPlayerCharacter::LeftRight( float NewAxisValue)
 	
 	if (NewAxisValue == 0.0f)return;
  
-	//진행방향으로 캐릭터를 돌리는 방식
-	//AddMovementInput(FRotationMatrix(GetControlRotation()).GetUnitAxis(EAxis::Y), NewAxisValue);
-	//EGLOG(Warning, TEXT("Left or Right Pressed"));
+ 
 	
 	////양수면 오른쪽, 음수면 왼쪽
 	
@@ -690,16 +674,7 @@ void AEGPlayerCharacter::LeftRight( float NewAxisValue)
 void AEGPlayerCharacter::LookUp(float NewAxisValue)
 {
 	if (NewAxisValue == 0.0f)return;
-	/*if (GetVelocity() == FVector::ZeroVector)
-	{
-		auto CurrentControllerPitch = GetControlRotation().Pitch;
-		if (CurrentControllerPitch + NewAxisValue >= 30.0f)
-			NewAxisValue = -CurrentControllerPitch + 30.0f;
-		else if(CurrentControllerPitch + NewAxisValue <= -30.0f)
-			NewAxisValue = -CurrentControllerPitch - 30.0f;
-	}*/
-	/*if (GetCharacterMovement()->IsWalking())
-		EGLOG(Warning, TEXT("Walk!"));*/
+	   
 	AddControllerPitchInput(NewAxisValue);
 	
 }
@@ -714,21 +689,7 @@ void AEGPlayerCharacter::Jump()
 {
 	if(!Stat->IsAttacking())
 	Super::Jump();
-	////Test용
-	//auto World = GetWorld();
-	//if (!World)
-	//{
-	//	return;
-	//}
-	//TArray<AActor*>Results;
-
-	//UGameplayStatics::GetAllActorsOfClass(World, AMiniMapTileManager::StaticClass(), Results);
-
-	//auto Manager = Cast<AMiniMapTileManager>(Results[0]);
-
-	////Run Thread 
-	//(new FAutoDeleteAsyncTask<CalcMiniMapTileAsyncTask>(Manager, this))->StartBackgroundTask();
-
+	
 	
 }
 
