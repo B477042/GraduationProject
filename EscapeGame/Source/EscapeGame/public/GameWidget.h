@@ -50,7 +50,7 @@ public:
 	void LoadGame(float Time) { GameTimer = Time; }
 
 private:
-	void loadImages();
+
 
 private:
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
@@ -79,8 +79,7 @@ private:
 	UImage* Img_RecoveryItem;
 
 
-	UPROPERTY()
-	UImage* Img_Blood;
+	
 	 
 
 	UPROPERTY()

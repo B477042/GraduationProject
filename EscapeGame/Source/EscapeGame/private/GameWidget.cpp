@@ -25,7 +25,7 @@ void UGameWidget::NativeConstruct()
 	Img_Battery = Cast<UImage>(GetWidgetFromName(TEXT("HPImage")));
 	Img_RecoveryItem = Cast<UImage>(GetWidgetFromName(TEXT("RecoveryItemImage")));
 	Img_Cardkey = Cast<UImage>(GetWidgetFromName(TEXT("img_Cardkey")));
-	Img_Blood= Cast<UImage>(GetWidgetFromName(TEXT("Img_Bloody")));
+	
 	RecoveryItemNum = Cast<UTextBlock>(GetWidgetFromName(TEXT("RecoveryItemNum0")));
 	//Txt_TimerBlock=Cast<UTextBlock>(GetWidgetFromName(TEXT("TimerBlock")));
 
@@ -127,11 +127,7 @@ float UGameWidget::CheackTimeOut(float NewValue)
 
 	return (NewValue >= 0.0f) ? NewValue: 0.0f;
 }
-//UI에서 사용될 이미지들을 불러옵니다
-void UGameWidget::loadImages()
-{
-	//static ConstructorHelpers::FObjectFinder<UImage>(TEXT(""))
-}
+
 
 void UGameWidget::TimeExtend(float addTime)
 {
@@ -193,7 +189,7 @@ void UGameWidget::BindCharacterInven(UComponent_Inventory * newInven)
 
 float UGameWidget::GetGameTimer()
 {
-	//GameTimer= floorf(GameTimer * 100) / 100;
+	
 	return GameTimer;
 }
 

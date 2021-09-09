@@ -66,15 +66,15 @@ void AEnemyCharacter::BeginPlay()
 	}
 	HPBar->SetPercent(1.0f);
 	
-	//Add this Object to GameState.
-	auto GameState = Cast<AEGGameState>(GetWorld()->GetGameState());
-	if (GameState)
-	{
-		
-		GameState->A_Enemies.Add(this);
-	}
-	
-	
+	////Add this Object to GameState.
+	//auto GameState = Cast<AEGGameState>(GetWorld()->GetGameState());
+	//if (GameState)
+	//{
+	//	
+	//	GameState->A_Enemies.Add(this);
+	//}
+	//
+	//
 }
 
 void AEnemyCharacter::BeginDestroy()
