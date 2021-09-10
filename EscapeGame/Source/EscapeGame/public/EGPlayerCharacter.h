@@ -187,6 +187,14 @@ private:
 		UPROPERTY(VisibleAnywhere, Category = "Effect")
 		class UBarrierEffectComponent* BarrierEffect;
 
+
+	/*
+	* Fury System	
+	*/
+		UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Fury", meta = (AllowPrivateAccess = true))
+			class UComponent_Fury* FuryComponent;
+
+
 	float minMiniMapArmLength;
 	float maxMiniMapArmLength;
 	bool bSetMapArm;

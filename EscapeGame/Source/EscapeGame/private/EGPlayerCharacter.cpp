@@ -21,6 +21,7 @@
 #include "MiniMapMarkerComponent.h"
 #include "MiniMapTileManager.h"
 #include "BarrierEffectComponent.h"
+#include "Component_Fury.h"
 
 // Sets default values
 AEGPlayerCharacter::AEGPlayerCharacter()
@@ -260,6 +261,7 @@ float AEGPlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent con
 
 	Anim->TakeDamage(DamageCauser);
 	Stat->TakeDamage(FinalDamage);
+	FuryComponent->TakeDamage(FinalDamage);
 
 	return FinalDamage;
 }
@@ -511,7 +513,7 @@ void AEGPlayerCharacter::InitComponents()
 	AttackSound = CreateDefaultSubobject<UAudioComponent>(TEXT("AttackSound"));
 	MiniMapMarkerComponent = CreateDefaultSubobject<UMiniMapMarkerComponent>(TEXT("MiniMapMarker"));
 	BarrierEffect = CreateDefaultSubobject<UBarrierEffectComponent>(TEXT("BarrierEffectComponent"));
-
+	FuryComponent = CreateDefaultSubobject<UComponent_Fury>(TEXT("FuryComponent"));
 	//====================================================================================================
 	//Components Tree
 	SpringArm->SetupAttachment(GetCapsuleComponent());
