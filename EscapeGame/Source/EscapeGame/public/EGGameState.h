@@ -21,12 +21,24 @@ class ESCAPEGAME_API AEGGameState : public AGameState
 public:
 	AEGGameState();
 
+protected:
+	virtual void BeginPlay()override;
+
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
 public:
+	virtual void Tick(float DeltaSeconds);
+
+	void SetTimer(float NewTimeValue);
+	void AddTime(float Value);
+	float const GetTimer() { return RemainTimes; }
+
+
+protected:
 	//Escape restriction time
 	UPROPERTY(Transient, VisibleAnywhere, BlueprintReadWrite, Category = "Data")
 		float RemainTimes;
-	
 
+public:
 	////Level에 존재하는 EnemyCharacter의 리스트
 	//UPROPERTY(Transient, VisibleAnywhere, Category = "List", meta = (AllowPrivateAccess = "true"))
 	//	TArray<TWeakObjectPtr<AEnemyCharacter>>A_Enemies;

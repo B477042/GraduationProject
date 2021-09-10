@@ -11,3 +11,32 @@ AEGGameState::AEGGameState()
 	LevelName = TEXT("Default");
 
 }
+
+void AEGGameState::BeginPlay()
+{
+	Super::BeginPlay();
+
+}
+
+void AEGGameState::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+}
+
+void AEGGameState::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+
+
+}
+
+void AEGGameState::SetTimer(float NewTimeValue)
+{
+	if (NewTimeValue < 0.0f)
+	{
+		NewTimeValue = 0.0f;
+	}
+
+	RemainTimes = NewTimeValue;
+}
