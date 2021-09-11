@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "Component_Fury.generated.h"
 
+DECLARE_DYNAMIC_DELEGATE_OneParam(FOnFuryChanged, float,Ratio);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ESCAPEGAME_API UComponent_Fury : public UActorComponent
@@ -15,6 +16,10 @@ class ESCAPEGAME_API UComponent_Fury : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UComponent_Fury();
+	//Called When Fury value changed
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Delegate")
+	FOnFuryChanged OnFuryChanged;
+
 
 protected:
 	// Called when the game starts
@@ -25,7 +30,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	float TakeDamage(const float NewDamage);
-
+	float GetFuryRatio() { return Fury / MaximumFury; }
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Value", meta = (AllowPrivateAccess = true, UIMax = 0.00, UIMin = 100.00))
 	float Fury=0.0f; 

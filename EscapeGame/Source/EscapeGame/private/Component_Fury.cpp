@@ -41,7 +41,7 @@ float UComponent_Fury::TakeDamage(const float NewDamage)
 
 
 	Fury += NewDamage;
-	//Notify Fury has been changed
+	
 
 
 
@@ -53,8 +53,8 @@ float UComponent_Fury::TakeDamage(const float NewDamage)
 
 
 	}
-
-
+	//Notify Fury has been changed
+	OnFuryChanged.Execute(GetFuryRatio());
 
 
 	return Fury;

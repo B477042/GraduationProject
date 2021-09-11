@@ -5,7 +5,7 @@
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
 #include "GameFramework/Character.h"
-
+#include "Component_Fury.h"
 #include "Item_CardKey.h"
 #include "Item_Recover.h"
 //#include"GameStat.h"
@@ -22,6 +22,7 @@ void UGameWidget::NativeConstruct()
 	Super::NativeConstruct();
 	//PB_HP = Cast<UProgressBar>(GetWidgetFromName(TEXT("HPBar")));
 	PB_Stamina = Cast<UProgressBar>(GetWidgetFromName(TEXT("StaminaBar")));
+	PB_Fury = Cast<UProgressBar>(GetWidgetFromName(TEXT("FuryBar")));
 	Img_Battery = Cast<UImage>(GetWidgetFromName(TEXT("HPImage")));
 	Img_RecoveryItem = Cast<UImage>(GetWidgetFromName(TEXT("RecoveryItemImage")));
 	Img_Cardkey = Cast<UImage>(GetWidgetFromName(TEXT("img_Cardkey")));
@@ -113,6 +114,22 @@ void UGameWidget::UpdateItemes(FName ItemName, int Amount)
 	
 }
 
+void UGameWidget::UpdateFury(float Ratio)
+{
+	if (!CurrentPlayerFury.IsValid()||!PB_Fury)
+	{
+		EGLOG(Error, TEXT("Invalid"));
+		return;
+	}
+
+
+	PB_Fury->SetPercent(Ratio);
+	if (Ratio==1.0f)
+	{
+		
+	}
+}
+
 
 float UGameWidget::CheackTimeOut(float NewValue)
 {
@@ -158,11 +175,7 @@ void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 	CurrentCharacterStat = newStat;
 	CurrentCharacterStat->HPChangedDelegate.AddUObject(this, &UGameWidget::UpdateCharacterStat);
 	CurrentCharacterStat->StaminaChangedDelegate.AddUObject(this, &UGameWidget::UpdateStamina);
-	auto temp = Cast<ACharacter>(CurrentCharacterStat->GetOwner());
-	if(temp)
-		{
-		OwnerChara = temp;
-		}
+	 
 
 	
 	
@@ -183,6 +196,20 @@ void UGameWidget::BindCharacterInven(UComponent_Inventory * newInven)
 	CurrentPlayerInventory = newInven;
 	//인벤토리의 델리게이트와 위젯 연동
 	CurrentPlayerInventory->OnItemUpdated.BindUFunction(this, "UpdateItemes");
+
+}
+
+void UGameWidget::BindCharacterFury(UComponent_Fury* newFury)
+{
+	if (!newFury)
+	{
+		EGLOG(Error, TEXT("Component null"));
+		return;
+	}
+
+	CurrentPlayerFury = newFury;
+	//Bind Fury delegate
+	CurrentPlayerFury->OnFuryChanged.BindUFunction(this, "UpdateFury");
 
 }
 

@@ -29,6 +29,7 @@ public:
 	void TimeExtend(float addTime);
 	void BindCharacterStat( UStatComponent_Player* newStat);
 	void BindCharacterInven(class UComponent_Inventory* newInven);
+	void BindCharacterFury(class UComponent_Fury* newFury);
 	float GetGameTimer();
 	//FBindStat BindStatDelegate;
 	//Update UI's Hp
@@ -40,7 +41,8 @@ public:
 	//Update Item's Info. Call by Delegate in inventory Comp
 	UFUNCTION(BlueprintCallable)
 	void UpdateItemes(FName ItemName, int Amount);
-	
+	UFUNCTION(BlueprintCallable)
+		void UpdateFury(float Ratio);
 	UFUNCTION(BlueprintCallable)
 		float CheackTimeOut(float NewValue);
 
@@ -57,13 +59,16 @@ private:
 	TWeakObjectPtr<class UStatComponent_Player>CurrentCharacterStat;
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
 	TWeakObjectPtr<class UComponent_Inventory>CurrentPlayerInventory;
-
+	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
+	TWeakObjectPtr<class UComponent_Fury>CurrentPlayerFury;
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
 	TWeakObjectPtr<class ACharacter>OwnerChara;
 
 	
 	UPROPERTY()
 	class UProgressBar* PB_Stamina;
+	UPROPERTY()
+	class UProgressBar* PB_Fury;
 	//Image Box of Player's Hp
 	UPROPERTY()
 	UImage* Img_Battery;
