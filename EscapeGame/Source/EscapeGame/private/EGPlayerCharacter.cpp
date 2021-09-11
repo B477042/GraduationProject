@@ -282,7 +282,7 @@ UComponent_Inventory * AEGPlayerCharacter::GetInventory()
 	return Inventory;
 }
 
-UComponent_Fury* AEGPlayerCharacter::GetFuryCopmonent()
+UComponent_Fury* AEGPlayerCharacter::GetFuryComponent()
 {
 	return FuryComponent;
 }

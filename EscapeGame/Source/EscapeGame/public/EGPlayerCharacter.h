@@ -60,7 +60,7 @@ public:
 	
 	 UStatComponent_Player* GetStatComponent();
 	 UComponent_Inventory* GetInventory();
-	 UComponent_Fury* GetFuryCopmonent();
+	 UComponent_Fury* GetFuryComponent();
 	 
 	 void ActiveThunder();
 	 //User Input Disable
