@@ -26,8 +26,13 @@ void AEGGameState::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void AEGGameState::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+	if (RemainTimes > 0)
+	{
+		RemainTimes -= DeltaSeconds;
+		OnTimeChanged.Execute(RemainTimes);
 
-
+	}
+	
 
 }
 
@@ -39,4 +44,33 @@ void AEGGameState::SetTimer(float NewTimeValue)
 	}
 
 	RemainTimes = NewTimeValue;
+	OnTimeChanged.Execute(RemainTimes);
+}
+
+void AEGGameState::AddTime(float Value)
+{
+
+	RemainTimes += Value;
+	OnTimeChanged.Execute(RemainTimes);
+}
+
+void AEGGameState::SaveGame(UEGSaveGame* SaveInstance)
+{
+	if (!SaveInstance)
+	{
+		return;
+	}
+
+	SaveInstance->GameProgressData.RemainTimes = RemainTimes;
+}
+
+void AEGGameState::LoadGame(const UEGSaveGame* LoadInstance)
+{
+	if (!LoadInstance)
+	{
+		return;
+
+	}
+	RemainTimes = LoadInstance->GameProgressData.RemainTimes;
+
 }

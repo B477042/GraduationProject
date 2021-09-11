@@ -477,21 +477,25 @@ void AEGPlayerCharacter::ActiveThunder()
 
 void AEGPlayerCharacter::RestricInput()
 {
-	auto myCon = Cast<APlayerController>(GetController());
+	/*auto myCon = Cast<APlayerController>(GetController());
 	if (myCon != nullptr)
 	{
 		
 		DisableInput(myCon);
-	}
+	}*/
+
+	bRestricAxisInput = true;
 }
 
 void AEGPlayerCharacter::RecoverInput()
 {
-	auto myCon = Cast<APlayerController>(GetController());
+	/*auto myCon = Cast<APlayerController>(GetController());
 	if (myCon != nullptr)
 	{
 		EnableInput(myCon);
-	}
+	}*/
+	bRestricAxisInput = false;
+
 }
 
 
@@ -649,7 +653,8 @@ void AEGPlayerCharacter::UpDown( float  NewAxisValue)
 {
  
 	if (NewAxisValue == 0.0f)return;
-	 
+	if (bRestricAxisInput)return;
+
 		
 	////양수면 앞, 음수면 뒤
 	
@@ -666,7 +671,7 @@ void AEGPlayerCharacter::LeftRight( float NewAxisValue)
 {
 	
 	if (NewAxisValue == 0.0f)return;
- 
+	if (bRestricAxisInput)return;
  
 	
 	////양수면 오른쪽, 음수면 왼쪽

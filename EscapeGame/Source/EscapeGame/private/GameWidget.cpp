@@ -8,14 +8,10 @@
 #include "Component_Fury.h"
 #include "Item_CardKey.h"
 #include "Item_Recover.h"
+#include "EGGameState.h"
 //#include"GameStat.h"
 
-//void UGameWidget::BindCharacterStat(UGameStat * NewCharacterStat)
-//{
-//	if (NewCharacterStat == nullptr)return;
-//	CurrentCharacterStat = NewCharacterStat;
-//	
-//}
+
 
 void UGameWidget::NativeConstruct()
 {

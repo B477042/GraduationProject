@@ -11,7 +11,7 @@
  *
  */
 
-
+DECLARE_DYNAMIC_DELEGATE_OneParam(FOnTimeChanged, float, Time);
 
 
 UCLASS(Config = "GameStateValue")
@@ -32,7 +32,13 @@ public:
 	void AddTime(float Value);
 	float const GetTimer() { return RemainTimes; }
 
+	UFUNCTION(BlueprintCallable)
+		virtual	void SaveGame(class UEGSaveGame* SaveInstance);
+	 
+	UFUNCTION(BlueprintCallable)
+		virtual	void LoadGame(const class UEGSaveGame* LoadInstance);
 
+	FOnTimeChanged OnTimeChanged;
 protected:
 	//Escape restriction time
 	UPROPERTY(Transient, VisibleAnywhere, BlueprintReadWrite, Category = "Data")
