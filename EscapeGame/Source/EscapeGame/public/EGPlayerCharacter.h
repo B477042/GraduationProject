@@ -13,6 +13,7 @@
 #include "Component_Inventory.h"
 #include "SkillContainer_PlayerHitEffect.h"
 #include "Components/BoxComponent.h"
+#include "Component_Fury.h"
 #include "EGPlayerCharacter.generated.h"
 
 //DECLARE_DELEGATE(FOnKeyPressed);
@@ -59,7 +60,7 @@ public:
 	
 	 UStatComponent_Player* GetStatComponent();
 	 UComponent_Inventory* GetInventory();
-
+	 UComponent_Fury* GetFuryCopmonent();
 	 
 	 void ActiveThunder();
 	 //User Input Disable
@@ -105,7 +106,7 @@ private:
 	void SetDeath();
 
 	void Move(float DeltaTime);
-
+	void PressFury();
 	/*
 	 * Reflact All Projectile Type Attack
 	 * 
@@ -192,7 +193,7 @@ private:
 	* Fury System	
 	*/
 		UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Fury", meta = (AllowPrivateAccess = true))
-			class UComponent_Fury* FuryComponent;
+			UComponent_Fury* FuryComponent;
 
 
 	float minMiniMapArmLength;

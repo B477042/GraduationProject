@@ -21,7 +21,7 @@
 #include "MiniMapMarkerComponent.h"
 #include "MiniMapTileManager.h"
 #include "BarrierEffectComponent.h"
-#include "Component_Fury.h"
+
 
 // Sets default values
 AEGPlayerCharacter::AEGPlayerCharacter()
@@ -205,7 +205,7 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::PressGuard);
 	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Released, this, &AEGPlayerCharacter::ReleaseGuard);
 	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::UsingStaminaTick);
-
+	PlayerInputComponent->BindAction(TEXT("Fury"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::PressFury);
 
 	EGLOG(Warning, TEXT("Player input component"));
 }
@@ -280,6 +280,11 @@ UStatComponent_Player* AEGPlayerCharacter::GetStatComponent()
 UComponent_Inventory * AEGPlayerCharacter::GetInventory()
 {
 	return Inventory;
+}
+
+UComponent_Fury* AEGPlayerCharacter::GetFuryCopmonent()
+{
+	return FuryComponent;
 }
 
 void AEGPlayerCharacter::ChargeAttack()
@@ -724,6 +729,15 @@ void AEGPlayerCharacter::Move(float DeltaTime)
 	MoveDirection.Normalize();
 	AddMovementInput(MoveDirection, CurrentVelocity * DeltaTime);
 	MoveDirection.Set(0.0f, 0.0f, 0.0f);
+}
+
+void AEGPlayerCharacter::PressFury()
+{
+	if (FuryComponent->UseFury())
+	{
+		UE_LOG(LogTemp, Log, TEXT("Fury used"));
+
+	}
 }
 
 float AEGPlayerCharacter::ReflectProjectiles(AActor* DamageCauser, float FinalDamage)

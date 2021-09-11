@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "UMG/Public/Components/Image.h"
 #include "StatComponent_Player.h"
+#include "Math/Color.h"
 #include "GameWidget.generated.h"
 
 /**
@@ -45,6 +46,9 @@ public:
 		void UpdateFury(float Ratio);
 	UFUNCTION(BlueprintCallable)
 		float CheackTimeOut(float NewValue);
+	
+		
+
 
 	UPROPERTY(BlueprintReadWrite, Category = Timer, Meta = (AllowPrivateAccess = true))
 		float RemainTime;
@@ -105,7 +109,11 @@ private:
 	UPROPERTY(BlueprintReadOnly, Category = Inventory, Meta = (AllowPrivateAccess = true))
 	int N_CardKeyItems=0;
 	
+	UPROPERTY(BlueprintReadWrite, Category = "Fury", meta = (AllowPrivateAccess = true))
+		FLinearColor FuryBarColor1;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Fury", meta = (AllowPrivateAccess = true))
+		FLinearColor FuryBarColor2;
 	//Inventory UI Data Variables
 
 

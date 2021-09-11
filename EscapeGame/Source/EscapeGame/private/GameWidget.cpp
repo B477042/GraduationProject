@@ -38,7 +38,8 @@ void UGameWidget::NativeConstruct()
 	PlayerHP = 100.0f;
 	PlayerStamina = 100.0f;
 	HPAmount = 0;
-	
+	FuryBarColor1 = FLinearColor::Black;
+	FuryBarColor2 = FLinearColor::Red;
 }
 //연동된 character의 stat component에서 채력이 바뀔 때, 호출된다. 
 void UGameWidget::UpdateCharacterStat()
@@ -128,6 +129,10 @@ void UGameWidget::UpdateFury(float Ratio)
 	{
 		
 	}
+
+	FLinearColor NewColor = FLinearColor::LerpUsingHSV(FuryBarColor1, FuryBarColor2, Ratio);
+	PB_Fury->SetFillColorAndOpacity(NewColor );
+
 }
 
 
