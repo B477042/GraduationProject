@@ -87,7 +87,7 @@ private:
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UImage* Img_RecoveryItem;
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	UTextBlock* Txt_TimerBlock;
+	class UTextBlock* Txt_TimerBlock;
 	
 	 
 

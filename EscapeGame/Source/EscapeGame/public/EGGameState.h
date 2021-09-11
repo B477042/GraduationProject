@@ -29,7 +29,7 @@ public:
 	
 
 	void SetTimer(float NewTimeValue);
-	
+	float GetRemainTimes() { return RemainTimes; }
 	
 
 	UFUNCTION(BlueprintCallable)
