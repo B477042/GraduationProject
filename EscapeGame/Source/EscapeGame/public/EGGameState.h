@@ -26,11 +26,11 @@ protected:
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
 public:
-	virtual void Tick(float DeltaSeconds);
+	
 
 	void SetTimer(float NewTimeValue);
-	void AddTime(float Value);
-	float const GetTimer() { return RemainTimes; }
+	
+	
 
 	UFUNCTION(BlueprintCallable)
 		virtual	void SaveGame(class UEGSaveGame* SaveInstance);
@@ -38,7 +38,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 		virtual	void LoadGame(const class UEGSaveGame* LoadInstance);
 
-	FOnTimeChanged OnTimeChanged;
+
 protected:
 	//Escape restriction time
 	UPROPERTY(Transient, VisibleAnywhere, BlueprintReadWrite, Category = "Data")

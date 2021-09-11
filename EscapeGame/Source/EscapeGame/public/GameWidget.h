@@ -46,12 +46,12 @@ public:
 		void UpdateFury(float Ratio);
 	UFUNCTION(BlueprintCallable)
 		float CheackTimeOut(float NewValue);
-	
-		
+	UFUNCTION(BlueprintCallable)
+		FText BindingTimeText();
+	UFUNCTION(BlueprintCallable)
+		FLinearColor BindingTimeColor();
 
-
-	UPROPERTY(BlueprintReadWrite, Category = Timer, Meta = (AllowPrivateAccess = true))
-		float RemainTime;
+ 
 	
 	void LoadGame(float Time) { GameTimer = Time; }
 
@@ -86,8 +86,8 @@ private:
 	//Image of Itme Recovery Item
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UImage* Img_RecoveryItem;
-
-
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UTextBlock* Txt_TimerBlock;
 	
 	 
 

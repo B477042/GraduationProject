@@ -24,18 +24,23 @@ void UGameWidget::NativeConstruct()
 	Img_Cardkey = Cast<UImage>(GetWidgetFromName(TEXT("img_Cardkey")));
 	
 	RecoveryItemNum = Cast<UTextBlock>(GetWidgetFromName(TEXT("RecoveryItemNum0")));
-	//Txt_TimerBlock=Cast<UTextBlock>(GetWidgetFromName(TEXT("TimerBlock")));
+	Txt_TimerBlock=Cast<UTextBlock>(GetWidgetFromName(TEXT("TimerBlock")));
 
 	
 	
 	EGLOG(Error, TEXT("Test Widget"));
 	GameTimer = 60.0f;
-	RemainTime = GameTimer;
+	
 	PlayerHP = 100.0f;
 	PlayerStamina = 100.0f;
 	HPAmount = 0;
 	FuryBarColor1 = FLinearColor::Black;
 	FuryBarColor2 = FLinearColor::Red;
+
+
+	Txt_TimerBlock->TextDelegate.BindUFunction(this, TEXT("BindingTimeText"));
+	Txt_TimerBlock->ColorAndOpacityDelegate.BindUFunction(this, TEXT("BindingTimeColor"));
+	 
 }
 //연동된 character의 stat component에서 채력이 바뀔 때, 호출된다. 
 void UGameWidget::UpdateCharacterStat()
@@ -134,16 +139,38 @@ void UGameWidget::UpdateFury(float Ratio)
 
 float UGameWidget::CheackTimeOut(float NewValue)
 {
-	RemainTime = NewValue;
+	 
 	if (NewValue <= 0.0f)
 	{
 		//EGLOG(Error, TEXT("DIEEE"));
 		CurrentCharacterStat->TakeDamage(9.0f);
-		EGLOG(Error, TEXT("TimeOUT"));
+	 
 	}
-
+	
 
 	return (NewValue >= 0.0f) ? NewValue: 0.0f;
+}
+
+FText UGameWidget::BindingTimeText()
+{
+	FText Retval;
+	AEGGameState* GameState = Cast<AEGGameState>( UGameplayStatics::GetGameState());
+	if (!GameState)
+	{
+		EGLOG(Error, TEXT("Game State Failed"));
+		Retval = FText("State failed");
+		return Retval;
+	}
+	
+
+
+	return Retval;
+}
+
+FLinearColor UGameWidget::BindingTimeColor()
+{
+	FLinearColor Retval;
+	return Retval;
 }
 
 
@@ -151,20 +178,20 @@ void UGameWidget::TimeExtend(float addTime)
 {
 	GameTimer += addTime;
 
+	
+	//15초 미마이면 빨간색
+	if (GameTimer < 15.0f)
+	{
+		
+	
+		Txt_TimerBlock->SetColorAndOpacity(FLinearColor::Red);
+	}
+	else if (GameTimer < 30.0f)
+	{
+		
 
-	////15초 미마이면 빨간색
-	//if (GameTimer < 15.0f)
-	//{
-	//	FSlateColor RedColor(FLinearColor(1.0f,0.0f,0.0f,1.0f));
-	//
-	//	Txt_TimerBlock->SetColorAndOpacity(RedColor);
-	//}
-	//else if (GameTimer < 30.0f)
-	//{
-	//	FSlateColor YellowColor(FLinearColor(1.0f, 0.744f, 0.0f, 1.0f));
-
-	//	Txt_TimerBlock->SetColorAndOpacity(YellowColor);
-	//}
+		Txt_TimerBlock->SetColorAndOpacity(FLinearColor::Yellow);
+	}
 }
 
 void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
