@@ -227,30 +227,30 @@ void UAnim_Player::AnimNotify_PlayHitSound()
 void UAnim_Player::AnimNotify_Skill1Start()
 {
 //	EGLOG(Warning, TEXT("Jot na gin name "));
-	auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
+	auto Player = Cast<AEGPlayerCharacter>(GetOwningActor());
 
-	if (!player)return;
-	player->RestricInput();
+	if (!Player)return;
+	Player->RestricInput();
 	SFX_Laugh->Play();
 }
 
 void UAnim_Player::AnimNotify_SkillEnd()
 {
-	auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
+	auto Player = Cast<AEGPlayerCharacter>(GetOwningActor());
 
-	if (!player)return;
+	if (!Player)return;
 
-	player->RecoverInput();
+	Player->RecoverInput();
 	StopAllMontages(0.0f);
-	player->Stat->ResetCombo();
+	Player->Stat->ResetCombo();
 }
 
 void UAnim_Player::AnimNotify_AnimNotify_ThunderStart()
 {
-	auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
+	auto Player = Cast<AEGPlayerCharacter>(GetOwningActor());
 
-	if (!player)return;
-	player->ActiveThunder();
+	if (!Player)return;
+	Player->ActiveThunder();
 }
 
 void UAnim_Player::AnimNotify_DeadStart()
@@ -313,11 +313,11 @@ void UAnim_Player::PlaySkillMontage(int Combo)
 	/*int playNum = Combo - 1;
 	if (Montage_Skills.IsValidIndex(playNum))
 	{
-		auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
+		auto Player = Cast<AEGPlayerCharacter>(GetOwningActor());
 
-		if (!player)return;
+		if (!Player)return;
 
-		player->RestricInput();
+		Player->RestricInput();
 
 
 		Montage_Play(Montage_Skills[0],1.0f);

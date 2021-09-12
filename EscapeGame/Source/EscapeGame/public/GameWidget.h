@@ -102,8 +102,14 @@ private:
 	UPROPERTY(BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		float PlayerStamina;
 	
+	//Default Value of Game Timer
+	//This Value can be changed when player contact with Hp box
+	//When Save Game Called, Game State recieve this value as RemainTimes value
 	UPROPERTY(BlueprintReadWrite, Category = Timer, Meta = (AllowPrivateAccess = true))
 		float GameTimer;
+	//The value actually displayed in the game.  
+	float DisplayTime;
+
 	UPROPERTY(BlueprintReadOnly, Category = Inventory, Meta = (AllowPrivateAccess = true))
 	int N_RecoveryItems=0;
 	UPROPERTY(BlueprintReadOnly, Category = Inventory, Meta = (AllowPrivateAccess = true))
@@ -117,5 +123,5 @@ private:
 	//Inventory UI Data Variables
 
 
-	
+	 
 };

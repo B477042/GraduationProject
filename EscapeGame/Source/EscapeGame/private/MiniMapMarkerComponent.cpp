@@ -18,7 +18,7 @@ UMiniMapMarkerComponent::UMiniMapMarkerComponent()
 		
 	}
 
-
+	
 	
 }
 

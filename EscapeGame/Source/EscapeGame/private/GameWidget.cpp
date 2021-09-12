@@ -28,7 +28,7 @@ void UGameWidget::NativeConstruct()
 
 	
 	
-	EGLOG(Error, TEXT("Test Widget"));
+	DisplayTime = 0.0f;
 	GameTimer = 60.0f;
 	
 	PlayerHP = 100.0f;
@@ -36,7 +36,9 @@ void UGameWidget::NativeConstruct()
 	HPAmount = 0;
 	FuryBarColor1 = FLinearColor::Black;
 	FuryBarColor2 = FLinearColor::Red;
+ 
 
+	EGLOG(Error, TEXT("Wdiget Native Constructor"));
 
 	Txt_TimerBlock->TextDelegate.BindUFunction(this, TEXT("BindingTimeText"));
 	Txt_TimerBlock->ColorAndOpacityDelegate.BindUFunction(this, TEXT("BindingTimeColor"));
@@ -151,18 +153,31 @@ float UGameWidget::CheackTimeOut(float NewValue)
 	return (NewValue >= 0.0f) ? NewValue: 0.0f;
 }
 
+
+//Tick처럼 구동되는 점 확인
+//BP에 바인딩 된 함수를 덮어서 실행 됨
 FText UGameWidget::BindingTimeText()
 {
 	FText Retval;
-	AEGGameState* GameState = Cast<AEGGameState>( UGameplayStatics::GetGameState());
-	if (!GameState)
+	
+	if (!OwnerChara.IsValid())
 	{
-		EGLOG(Error, TEXT("Game State Failed"));
-		Retval = FText("State failed");
+		 
+		EGLOG(Error, TEXT("OwnerChara is nullptr"));
 		return Retval;
 	}
+	float PlayedTime = OwnerChara->GetController()->GetGameTimeSinceCreation();
+	DisplayTime = GameTimer - PlayedTime;
+	//EGLOG(Log, TEXT("Time : %f"), DisplayTime);
+	//If Time Over
+	if (DisplayTime <= 0)
+	{
+		FDamageEvent DamageEvent;
+		OwnerChara->TakeDamage(100,DamageEvent,OwnerChara->GetController(), OwnerChara->GetController());
+		DisplayTime = 0;
+	}
 	
-
+	Retval = FText::AsNumber(DisplayTime);
 
 	return Retval;
 }
@@ -170,6 +185,25 @@ FText UGameWidget::BindingTimeText()
 FLinearColor UGameWidget::BindingTimeColor()
 {
 	FLinearColor Retval;
+	float TimePercent = DisplayTime / GameTimer;
+
+
+
+	//Under 65%, Yellow, Under 20%, Red, else Green
+
+	if (TimePercent < 0.65)
+	{
+		Retval = FLinearColor(1.000000, 0.421295, 0.000000, 1.000000);
+	}
+	
+	else if (TimePercent < 0.2)
+	{
+		Retval = FLinearColor::Red;
+	}
+	else
+	{
+		Retval = FLinearColor::Green;
+	}
 	return Retval;
 }
 
@@ -178,20 +212,7 @@ void UGameWidget::TimeExtend(float addTime)
 {
 	GameTimer += addTime;
 
-	
-	//15초 미마이면 빨간색
-	if (GameTimer < 15.0f)
-	{
-		
-	
-		Txt_TimerBlock->SetColorAndOpacity(FLinearColor::Red);
-	}
-	else if (GameTimer < 30.0f)
-	{
-		
 
-		Txt_TimerBlock->SetColorAndOpacity(FLinearColor::Yellow);
-	}
 }
 
 void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
@@ -203,8 +224,10 @@ void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 	CurrentCharacterStat = newStat;
 	CurrentCharacterStat->HPChangedDelegate.AddUObject(this, &UGameWidget::UpdateCharacterStat);
 	CurrentCharacterStat->StaminaChangedDelegate.AddUObject(this, &UGameWidget::UpdateStamina);
-	 
-
+	if (!OwnerChara.IsValid())
+	{
+		OwnerChara = Cast<ACharacter>(newStat->GetOwner());
+	}
 	
 	
 }
