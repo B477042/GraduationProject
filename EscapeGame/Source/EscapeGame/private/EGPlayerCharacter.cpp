@@ -379,7 +379,7 @@ void AEGPlayerCharacter::UsingStaminaTick()
 	else
 	{
 		//EGLOG(Warning, TEXT("Using Stamina"));
-		Stat->UseStamina(GetWorld()->DeltaTimeSeconds);
+		Stat->UseStaminaTick(GetWorld()->DeltaTimeSeconds);
 	}
 
 }

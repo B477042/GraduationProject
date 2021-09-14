@@ -103,7 +103,7 @@ AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
 		SFX_Foot_R->bAutoActivate = false;
 	}
 
-
+	WeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("GunPos"));
 
 
 	bCanFire = true;
