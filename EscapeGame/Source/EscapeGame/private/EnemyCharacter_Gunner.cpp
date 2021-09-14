@@ -201,6 +201,15 @@ void AEnemyCharacter_Gunner::BeginPlay()
 
 
 		});
+
+	//Async Test
+
+	
+	EGLOG(Log, TEXT("%s"),* BodyMaterials[0].ToString());
+	
+
+
+
 }
 
 void AEnemyCharacter_Gunner::BeginDestroy()

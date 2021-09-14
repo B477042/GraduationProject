@@ -44,9 +44,9 @@ void UTutorialWidget::ReceiveMessage( FText  NotifyTittle,  FText  Describe, FSo
 	auto gameInstance = Cast< UEGGameInstance>(GetWorld()->GetGameInstance());
 	if (!gameInstance)return;
 
-	pathobject = ObjectPath;
+	path_Object = ObjectPath;
 
-	EGLOG(Error, TEXT("%s"),*pathobject.GetAssetPathString());
+	EGLOG(Error, TEXT("%s"),*path_Object.GetAssetPathString());
 	
 	auto returnvalue = gameInstance->StreamableManager.RequestAsyncLoad(ObjectPath, FStreamableDelegate::CreateUObject(this,&UTutorialWidget::AsyncImageLoad));
 
@@ -77,7 +77,7 @@ void UTutorialWidget::AsyncImageLoad()
 {
 	
 
-	TSoftObjectPtr<UAnimatedTexture2D> ImageAsset(pathobject);
+	TSoftObjectPtr<UAnimatedTexture2D> ImageAsset(path_Object);
 	UAnimatedTexture2D* newImage = ImageAsset.Get();
 	if (newImage)
 	{

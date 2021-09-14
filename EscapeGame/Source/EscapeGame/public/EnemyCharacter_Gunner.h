@@ -19,7 +19,7 @@
 DECLARE_MULTICAST_DELEGATE(FOnHpIsZero);
 
 
-UCLASS()
+UCLASS(Config = "GunnerCharacter")
 class ESCAPEGAME_API AEnemyCharacter_Gunner : public AEnemyCharacter
 {
 	GENERATED_BODY()
@@ -96,6 +96,13 @@ protected:
 		class UAnimInstance_Gunner* Anim;
 	
 
+	//Material Object Path
+	UPROPERTY(Config, VisibleAnywhere, Category = "async")
+	TArray<FSoftObjectPath> BodyMaterials;
+	UPROPERTY(Config, VisibleAnywhere, Category = "async")
+	TArray<FSoftObjectPath> VisorMaterials;
+	UPROPERTY(Config, VisibleAnywhere, Category = "async")
+	TArray<FSoftObjectPath> DecalMaterials;
 
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	//	class UAISenseConfig_Sight * AiConfigSight;
