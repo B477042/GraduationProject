@@ -204,8 +204,8 @@ void AEnemyCharacter_Gunner::BeginPlay()
 
 	//Async Test
 
-	
-	EGLOG(Log, TEXT("%s"),* BodyMaterials[0].ToString());
+
+	//EGLOG(Log, TEXT("%s"),* BodyMaterials[0].ToString());
 	
 
 
@@ -269,6 +269,47 @@ void AEnemyCharacter_Gunner::PlaySFXGun()
 		SFX_Fire1->Play();
 	else
 		SFX_Fire2->Play();
+}
+
+void AEnemyCharacter_Gunner::LoadGunnerMaterialAsset()
+{
+	UEGGameInstance* const GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	if (!GameInstance)
+	{
+		EGLOG(Error, TEXT("Game Instance Error"));
+		return;
+	}
+
+
+
+	//Mix materials
+	idx_Body = FMath::RandRange(0,BodyMaterials.Num());
+	idx_Decal = FMath::RandRange(0, DecalMaterials.Num());
+	idx_Visor = FMath::RandRange(0, VisorMaterials.Num());
+
+
+	ToLoad.Add(BodyMaterials[idx_Body]);
+	ToLoad.Add(VisorMaterials[idx_Visor]);
+	ToLoad.Add(DecalMaterials[idx_Decal]);
+
+	//Load Body Material
+	 GameInstance->StreamableManager.RequestAsyncLoad(ToLoad,
+		FStreamableDelegate::CreateUObject(this, &AEnemyCharacter_Gunner::LoadMaterial));
+	
+	 ToLoad.Empty();
+}
+
+void AEnemyCharacter_Gunner::LoadMaterial()
+{
+	if (ToLoad.Num() <= 0)
+	{
+		EGLOG(Error, TEXT("Nothing Loaded!"));
+		return;
+	}
+
+
+
+	
 }
 
 //void AEnemyCharacter_Gunner::setupPerception()

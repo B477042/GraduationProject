@@ -91,7 +91,7 @@ void UTutorialWidget::AsyncImageLoad()
 		
 
 		Img_Gif->SetBrushResourceObject(temp);
-		EGLOG(Error, TEXT("good"));
+		//EGLOG(Error, TEXT("good"));
 	}
 	else
 		EGLOG(Error, TEXT("failed"));
