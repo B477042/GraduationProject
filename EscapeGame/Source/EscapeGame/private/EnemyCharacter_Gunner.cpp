@@ -38,7 +38,7 @@ AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
 	float Pitch = 0.0f, Yaw = 0.0f, Roll = 0.0f;
 	float X = 0.0f, Y = 0.0f, Z = 0.0f;
 
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh>SM_BODY(TEXT("SkeletalMesh'/Game/Scanned3DPeoplePack/RP_Character/rp_nathan_rigged_003_ue4/rp_nathan_rigged_003_ue4.rp_nathan_rigged_003_ue4'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh>SM_BODY(TEXT("SkeletalMesh'/Game/SciFi_Robot/MESHES/SCIFI_ROBOT_IK_SK.SCIFI_ROBOT_IK_SK'"));
 	if (SM_BODY.Succeeded())
 	{
 		GetMesh()->SetSkeletalMesh(SM_BODY.Object);
@@ -46,7 +46,7 @@ AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
 		GetMesh()->SetRelativeRotation(FRotator(Pitch = 0.000000f, Yaw = 270.000f, Roll = 0.000000f));
 	}
 
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh>SM_Weapon(TEXT("SkeletalMesh'/Game/FPS_Weapon_Bundle/Weapons/Meshes/Ka47/SK_KA47_X.SK_KA47_X'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh>SM_Weapon(TEXT("SkeletalMesh'/Game/SciFiWeapLight/Weapons/White_AssaultRifle.White_AssaultRifle'"));
 	if (SM_Weapon.Succeeded())
 	{
 		WeaponMesh->SetSkeletalMesh(SM_Weapon.Object);
