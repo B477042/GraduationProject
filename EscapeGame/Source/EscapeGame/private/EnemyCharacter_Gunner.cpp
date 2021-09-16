@@ -10,6 +10,7 @@
 #include "AnimInstance_Gunner.h"
 #include "Sound/SoundCue.h"
 #include "Perception/AISenseConfig.h"
+#include "Materials/Material.h"
 
 AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
 {
@@ -50,10 +51,7 @@ AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
 	if (SM_Weapon.Succeeded())
 	{
 		WeaponMesh->SetSkeletalMesh(SM_Weapon.Object);
-		//WeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale,TEXT("GunPos"));
-		//WeaponMesh->SetupAttachment(GetMesh(), TEXT("GunPos"));
-		//WeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("GunPos"));
-
+		
 	//	SFX_Fire1->AttachToComponent(WeaponMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 	//	SFX_Fire2->AttachToComponent(WeaponMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 		SFX_Fire1->SetupAttachment(WeaponMesh);
@@ -203,7 +201,7 @@ void AEnemyCharacter_Gunner::BeginPlay()
 		});
 
 	//Async Test
-
+	LoadGunnerMaterialAsset();
 
 	//EGLOG(Log, TEXT("%s"),* BodyMaterials[0].ToString());
 	
@@ -283,33 +281,59 @@ void AEnemyCharacter_Gunner::LoadGunnerMaterialAsset()
 
 
 	//Mix materials
-	idx_Body = FMath::RandRange(0,BodyMaterials.Num());
-	idx_Decal = FMath::RandRange(0, DecalMaterials.Num());
-	idx_Visor = FMath::RandRange(0, VisorMaterials.Num());
+	idx_Body = FMath::RandRange(0,BodyMaterials.Num()-1);
+	idx_Decal = FMath::RandRange(0, DecalMaterials.Num()-1);
+	idx_Visor = FMath::RandRange(0, VisorMaterials.Num()-1);
 
 
 	ToLoad.Add(BodyMaterials[idx_Body]);
 	ToLoad.Add(VisorMaterials[idx_Visor]);
 	ToLoad.Add(DecalMaterials[idx_Decal]);
 
+	for (int i = 0; i < 3; ++i)
+	{
+		EGLOG(Error, TEXT("%s" ), *ToLoad[i].ToString());
+	}
+
 	//Load Body Material
 	 GameInstance->StreamableManager.RequestAsyncLoad(ToLoad,
 		FStreamableDelegate::CreateUObject(this, &AEnemyCharacter_Gunner::LoadMaterial));
 	
-	 ToLoad.Empty();
+	 
 }
 
 void AEnemyCharacter_Gunner::LoadMaterial()
 {
+	EGLOG(Error, TEXT(" Loaded!"));
 	if (ToLoad.Num() <= 0)
 	{
 		EGLOG(Error, TEXT("Nothing Loaded!"));
 		return;
 	}
+	TSoftObjectPtr<UMaterial>BodyMaterialAsset(ToLoad[idx_MBody]);
+	UMaterial* BodyMaterial = BodyMaterialAsset.Get();
+	if (BodyMaterial)
+	{
+		GetMesh()->SetMaterial(idx_MBody, BodyMaterial);
+		UE_LOG(LogTemp, Log, TEXT("Body Loaded"));
+	}
 
+	TSoftObjectPtr<UMaterial>VisorMaterialAsset(ToLoad[idx_MVisor]);
+	UMaterial* VisorMaterial = VisorMaterialAsset.Get();
+	if (VisorMaterial)
+	{
+		GetMesh()->SetMaterial(idx_MVisor, VisorMaterial);
+		UE_LOG(LogTemp, Log, TEXT("Visor Loaded"));
+	}
+	TSoftObjectPtr<UMaterial>DecalMaterialAsset(ToLoad[idx_MDecal]);
+	UMaterial* DecalMaterial = DecalMaterialAsset.Get();
+	if (DecalMaterial)
+	{
+		GetMesh()->SetMaterial(idx_MDecal,DecalMaterial);
+		UE_LOG(LogTemp, Log, TEXT("Decal Loaded"));
+	}
 
-
-	
+	ToLoad.Empty();
 }
 
 //void AEnemyCharacter_Gunner::setupPerception()

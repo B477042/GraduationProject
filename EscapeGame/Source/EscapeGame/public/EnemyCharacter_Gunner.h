@@ -15,7 +15,6 @@
  */
 
 
-
 DECLARE_MULTICAST_DELEGATE(FOnHpIsZero);
 
 
