@@ -42,7 +42,7 @@ public:
 	
 
 
-	void SyncStatToHUD();
+	void BindComponentsToHUD();
 	void IsMoveKeyPressed();
 	const class UDataTable* GetDT_Player();
 	FOnKeyTest KeyInputTest;

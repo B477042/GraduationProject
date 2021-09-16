@@ -22,6 +22,7 @@
 #include "MiniMapTileManager.h"
 #include "BarrierEffectComponent.h"
 
+
 // Sets default values
 AEGPlayerCharacter::AEGPlayerCharacter()
 {
@@ -204,7 +205,7 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::PressGuard);
 	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Released, this, &AEGPlayerCharacter::ReleaseGuard);
 	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::UsingStaminaTick);
-
+	PlayerInputComponent->BindAction(TEXT("Fury"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::PressFury);
 
 	EGLOG(Warning, TEXT("Player input component"));
 }
@@ -260,6 +261,7 @@ float AEGPlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent con
 
 	Anim->TakeDamage(DamageCauser);
 	Stat->TakeDamage(FinalDamage);
+	FuryComponent->TakeDamage(FinalDamage);
 
 	return FinalDamage;
 }
@@ -278,6 +280,11 @@ UStatComponent_Player* AEGPlayerCharacter::GetStatComponent()
 UComponent_Inventory * AEGPlayerCharacter::GetInventory()
 {
 	return Inventory;
+}
+
+UComponent_Fury* AEGPlayerCharacter::GetFuryComponent()
+{
+	return FuryComponent;
 }
 
 void AEGPlayerCharacter::ChargeAttack()
@@ -372,7 +379,7 @@ void AEGPlayerCharacter::UsingStaminaTick()
 	else
 	{
 		//EGLOG(Warning, TEXT("Using Stamina"));
-		Stat->UseStamina(GetWorld()->DeltaTimeSeconds);
+		Stat->UseStaminaTick(GetWorld()->DeltaTimeSeconds);
 	}
 
 }
@@ -470,21 +477,25 @@ void AEGPlayerCharacter::ActiveThunder()
 
 void AEGPlayerCharacter::RestricInput()
 {
-	auto myCon = Cast<APlayerController>(GetController());
+	/*auto myCon = Cast<APlayerController>(GetController());
 	if (myCon != nullptr)
 	{
 		
 		DisableInput(myCon);
-	}
+	}*/
+
+	bRestricAxisInput = true;
 }
 
 void AEGPlayerCharacter::RecoverInput()
 {
-	auto myCon = Cast<APlayerController>(GetController());
+	/*auto myCon = Cast<APlayerController>(GetController());
 	if (myCon != nullptr)
 	{
 		EnableInput(myCon);
-	}
+	}*/
+	bRestricAxisInput = false;
+
 }
 
 
@@ -511,7 +522,7 @@ void AEGPlayerCharacter::InitComponents()
 	AttackSound = CreateDefaultSubobject<UAudioComponent>(TEXT("AttackSound"));
 	MiniMapMarkerComponent = CreateDefaultSubobject<UMiniMapMarkerComponent>(TEXT("MiniMapMarker"));
 	BarrierEffect = CreateDefaultSubobject<UBarrierEffectComponent>(TEXT("BarrierEffectComponent"));
-
+	FuryComponent = CreateDefaultSubobject<UComponent_Fury>(TEXT("FuryComponent"));
 	//====================================================================================================
 	//Components Tree
 	SpringArm->SetupAttachment(GetCapsuleComponent());
@@ -642,7 +653,8 @@ void AEGPlayerCharacter::UpDown( float  NewAxisValue)
 {
  
 	if (NewAxisValue == 0.0f)return;
-	 
+	if (bRestricAxisInput)return;
+
 		
 	////양수면 앞, 음수면 뒤
 	
@@ -659,7 +671,7 @@ void AEGPlayerCharacter::LeftRight( float NewAxisValue)
 {
 	
 	if (NewAxisValue == 0.0f)return;
- 
+	if (bRestricAxisInput)return;
  
 	
 	////양수면 오른쪽, 음수면 왼쪽
@@ -722,6 +734,15 @@ void AEGPlayerCharacter::Move(float DeltaTime)
 	MoveDirection.Normalize();
 	AddMovementInput(MoveDirection, CurrentVelocity * DeltaTime);
 	MoveDirection.Set(0.0f, 0.0f, 0.0f);
+}
+
+void AEGPlayerCharacter::PressFury()
+{
+	if (FuryComponent->UseFury())
+	{
+		UE_LOG(LogTemp, Log, TEXT("Fury used"));
+
+	}
 }
 
 float AEGPlayerCharacter::ReflectProjectiles(AActor* DamageCauser, float FinalDamage)

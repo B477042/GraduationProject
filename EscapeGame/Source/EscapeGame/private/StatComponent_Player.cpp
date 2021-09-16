@@ -123,7 +123,7 @@ void UStatComponent_Player::SetComboEndState()
 
 	SetWalking();
 }
-void UStatComponent_Player::UseStamina(float DeltaTime)
+void UStatComponent_Player::UseStaminaTick(float DeltaTime)
 {
 	if (!bCanUsingStamina)
 	{
@@ -142,7 +142,7 @@ void UStatComponent_Player::UseStamina(float DeltaTime)
 		Stamina = 0.0f;
 		return;
 	}
-	Stamina -= DeltaTime * 100.0f;
+	Stamina -= DeltaTime * 5.0f;
 	StaminaChangedDelegate.Broadcast();
 }
 
@@ -156,7 +156,7 @@ void UStatComponent_Player::UseStamina(float DeltaTime)
 //	//켜준다
 //	bIsStaminaUsing = true;
 //	/*float DeltaTime = GetWorld()->GetDeltaSeconds();
-//	UseStamina(DeltaTime);*/
+//	UseStaminaTick(DeltaTime);*/
 //	
 //
 //}

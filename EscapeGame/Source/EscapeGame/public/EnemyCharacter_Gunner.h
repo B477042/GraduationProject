@@ -15,11 +15,10 @@
  */
 
 
-
 DECLARE_MULTICAST_DELEGATE(FOnHpIsZero);
 
 
-UCLASS()
+UCLASS(Config = "GunnerCharacter")
 class ESCAPEGAME_API AEnemyCharacter_Gunner : public AEnemyCharacter
 {
 	GENERATED_BODY()
@@ -65,7 +64,11 @@ protected:
 
 	void PlaySFXGun();
 	
+	void LoadGunnerMaterialAsset();
+
+	void LoadMaterial();
 	
+
 	//init ai perception component
 	//void setupPerception();
 
@@ -96,6 +99,23 @@ protected:
 		class UAnimInstance_Gunner* Anim;
 	
 
+	//Material Object Path
+	UPROPERTY(Config, VisibleAnywhere, Category = "async")
+	TArray<FSoftObjectPath> BodyMaterials;
+	UPROPERTY(Config, VisibleAnywhere, Category = "async")
+	TArray<FSoftObjectPath> VisorMaterials;
+	UPROPERTY(Config, VisibleAnywhere, Category = "async")
+	TArray<FSoftObjectPath> DecalMaterials;
+	//Mesh's Material Index
+	const uint8 idx_MBody = 0;
+	const uint8 idx_MVisor = 1;
+	const uint8 idx_MDecal=2;
+	//index to browse from Array
+	uint8 idx_Body=0;
+	uint8 idx_Visor = 0;
+	uint8 idx_Decal = 0;
+	//The assets to load
+	TArray<FSoftObjectPath> ToLoad;
 
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	//	class UAISenseConfig_Sight * AiConfigSight;

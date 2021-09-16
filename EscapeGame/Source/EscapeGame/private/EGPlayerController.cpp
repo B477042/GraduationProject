@@ -67,7 +67,7 @@ void AEGPlayerController::BeginPlay()
 	//PlayerStat = Cast<UGameStat>(PlayerStat);
 	//if (PlayerStat == nullptr)return;
 	//HUD->BindCharacterStat(PlayerStat);
-	SyncStatToHUD();
+	BindComponentsToHUD();
 	EGLOG(Warning, TEXT("Controller begin play"));
 
 	
@@ -77,13 +77,7 @@ void AEGPlayerController::BeginPlay()
 	FInputModeGameOnly GameOnly;
 	SetInputMode(GameOnly);
 
-	auto EGPlayer = Cast<AEGPlayerCharacter>(GetPawn());
-	if (!EGPlayer)
-	{
-	
-		return;
-	}
-	HUD->BindCharacterInven(EGPlayer->GetInventory());
+
 
 	/*EGPlayer->Inventory->OnItemUpdated.BindUFunction(HUD, FName("UpdateItemes"));
 	EGPlayer->Inventory->OnItemUpdated.Execute(FString("hi"),0);*/
@@ -121,7 +115,7 @@ void AEGPlayerController::OnPossess(APawn * aPawn)
 {
 	Super::OnPossess(aPawn);
 	
-	EGLOG(Error, TEXT("Player con Possess"));
+	EGLOG(Log, TEXT("Player con Possess"));
 	
 
 	
@@ -229,17 +223,18 @@ void AEGPlayerController::OnKillMode()
 
 
 
- void AEGPlayerController::SyncStatToHUD()
+ void AEGPlayerController::BindComponentsToHUD()
  {
-	 auto player = Cast<AEGPlayerCharacter>(GetCharacter());
-	 if (player==nullptr)
+	 auto EGPlayer = Cast<AEGPlayerCharacter>(GetCharacter());
+	 if (EGPlayer ==nullptr)
 	 {
 		 EGLOG(Error, TEXT("Dynamic failed"));
 		 return;
 	 }
-	 HUD->BindCharacterStat(player->GetStatComponent());
-	
-	 
+	 HUD->BindCharacterStat(EGPlayer->GetStatComponent());
+
+	 HUD->BindCharacterInven(EGPlayer->GetInventory());
+	 HUD->BindCharacterFury(EGPlayer->GetFuryComponent());
  }
 
 

@@ -11,34 +11,43 @@
  *
  */
 
-//UENUM(BlueprintType)
-//enum class EEGGameState :uint8
-//{
-//	E_InPlay=0 UMETA(DisplayName = "InPlay"),
-//	E_NewGame  UMETA(DisplayName = "NewGame"),
-//	E_LoadGame UMETA(DisplayName = "LoadGame"),
-//	E_ClearGame UMETA(DisplayName = "ClearGame"),
-//	E_NextStage UMETA(DisplayName = "NextStage")
-//	
-//};
+DECLARE_DYNAMIC_DELEGATE_OneParam(FOnTimeChanged, float, Time);
 
 
-UCLASS()
+UCLASS(Config = "GameStateValue")
 class ESCAPEGAME_API AEGGameState : public AGameState
 {
 	GENERATED_BODY()
 public:
 	AEGGameState();
 
+protected:
+	virtual void BeginPlay()override;
+
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
 public:
+	
+
+	void SetTimer(float NewTimeValue);
+	float GetRemainTimes() { return RemainTimes; }
+	
+
+	UFUNCTION(BlueprintCallable)
+		virtual	void SaveGame(class UEGSaveGame* SaveInstance);
+	 
+	UFUNCTION(BlueprintCallable)
+		virtual	void LoadGame(const class UEGSaveGame* LoadInstance);
+
+
+protected:
 	//Escape restriction time
 	UPROPERTY(Transient, VisibleAnywhere, BlueprintReadWrite, Category = "Data")
 		float RemainTimes;
-	
 
-	//Level에 존재하는 EnemyCharacter의 리스트
-	UPROPERTY(Transient, VisibleAnywhere, Category = "List", meta = (AllowPrivateAccess = "true"))
-		TArray<TWeakObjectPtr<AEnemyCharacter>>A_Enemies;
+public:
+	////Level에 존재하는 EnemyCharacter의 리스트
+	//UPROPERTY(Transient, VisibleAnywhere, Category = "List", meta = (AllowPrivateAccess = "true"))
+	//	TArray<TWeakObjectPtr<AEnemyCharacter>>A_Enemies;
 
 	UPROPERTY(Transient, VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		FString LevelName;

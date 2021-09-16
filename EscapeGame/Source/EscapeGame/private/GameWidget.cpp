@@ -5,39 +5,44 @@
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
 #include "GameFramework/Character.h"
-
+#include "Component_Fury.h"
 #include "Item_CardKey.h"
 #include "Item_Recover.h"
+#include "EGGameState.h"
 //#include"GameStat.h"
 
-//void UGameWidget::BindCharacterStat(UGameStat * NewCharacterStat)
-//{
-//	if (NewCharacterStat == nullptr)return;
-//	CurrentCharacterStat = NewCharacterStat;
-//	
-//}
+
 
 void UGameWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 	//PB_HP = Cast<UProgressBar>(GetWidgetFromName(TEXT("HPBar")));
 	PB_Stamina = Cast<UProgressBar>(GetWidgetFromName(TEXT("StaminaBar")));
+	PB_Fury = Cast<UProgressBar>(GetWidgetFromName(TEXT("FuryBar")));
 	Img_Battery = Cast<UImage>(GetWidgetFromName(TEXT("HPImage")));
 	Img_RecoveryItem = Cast<UImage>(GetWidgetFromName(TEXT("RecoveryItemImage")));
 	Img_Cardkey = Cast<UImage>(GetWidgetFromName(TEXT("img_Cardkey")));
-	Img_Blood= Cast<UImage>(GetWidgetFromName(TEXT("Img_Bloody")));
+	
 	RecoveryItemNum = Cast<UTextBlock>(GetWidgetFromName(TEXT("RecoveryItemNum0")));
-	//Txt_TimerBlock=Cast<UTextBlock>(GetWidgetFromName(TEXT("TimerBlock")));
+	Txt_TimerBlock=Cast<UTextBlock>(GetWidgetFromName(TEXT("TimerBlock")));
 
 	
 	
-	EGLOG(Error, TEXT("Test Widget"));
+	DisplayTime = 0.0f;
 	GameTimer = 60.0f;
-	RemainTime = GameTimer;
+	
 	PlayerHP = 100.0f;
 	PlayerStamina = 100.0f;
 	HPAmount = 0;
-	
+	FuryBarColor1 = FLinearColor::Black;
+	FuryBarColor2 = FLinearColor::Red;
+ 
+
+	EGLOG(Error, TEXT("Wdiget Native Constructor"));
+
+	Txt_TimerBlock->TextDelegate.BindUFunction(this, TEXT("BindingTimeText"));
+	Txt_TimerBlock->ColorAndOpacityDelegate.BindUFunction(this, TEXT("BindingTimeColor"));
+	 
 }
 //연동된 character의 stat component에서 채력이 바뀔 때, 호출된다. 
 void UGameWidget::UpdateCharacterStat()
@@ -113,44 +118,101 @@ void UGameWidget::UpdateItemes(FName ItemName, int Amount)
 	
 }
 
+void UGameWidget::UpdateFury(float Ratio)
+{
+	if (!CurrentPlayerFury.IsValid()||!PB_Fury)
+	{
+		EGLOG(Error, TEXT("Invalid"));
+		return;
+	}
+
+
+	PB_Fury->SetPercent(Ratio);
+	if (Ratio==1.0f)
+	{
+		
+	}
+
+	FLinearColor NewColor = FLinearColor::LerpUsingHSV(FuryBarColor1, FuryBarColor2, Ratio);
+	PB_Fury->SetFillColorAndOpacity(NewColor );
+
+}
+
 
 float UGameWidget::CheackTimeOut(float NewValue)
 {
-	RemainTime = NewValue;
+	 
 	if (NewValue <= 0.0f)
 	{
 		//EGLOG(Error, TEXT("DIEEE"));
 		CurrentCharacterStat->TakeDamage(9.0f);
-		EGLOG(Error, TEXT("TimeOUT"));
+	 
 	}
-
+	
 
 	return (NewValue >= 0.0f) ? NewValue: 0.0f;
 }
-//UI에서 사용될 이미지들을 불러옵니다
-void UGameWidget::loadImages()
+
+
+//Tick처럼 구동되는 점 확인
+//BP에 바인딩 된 함수를 덮어서 실행 됨
+FText UGameWidget::BindingTimeText()
 {
-	//static ConstructorHelpers::FObjectFinder<UImage>(TEXT(""))
+	FText Retval;
+	
+	if (!OwnerChara.IsValid())
+	{
+		 
+		EGLOG(Error, TEXT("OwnerChara is nullptr"));
+		return Retval;
+	}
+	float PlayedTime = OwnerChara->GetController()->GetGameTimeSinceCreation();
+	DisplayTime = GameTimer - PlayedTime;
+	//EGLOG(Log, TEXT("Time : %f"), DisplayTime);
+	//If Time Over
+	if (DisplayTime <= 0)
+	{
+		FDamageEvent DamageEvent;
+		OwnerChara->TakeDamage(100,DamageEvent,OwnerChara->GetController(), OwnerChara->GetController());
+		DisplayTime = 0;
+	}
+	
+	Retval = FText::AsNumber(DisplayTime);
+
+	return Retval;
 }
+
+FLinearColor UGameWidget::BindingTimeColor()
+{
+	FLinearColor Retval;
+	float TimePercent = DisplayTime / GameTimer;
+
+
+
+	//Under 65%, Yellow, Under 20%, Red, else Green
+
+	if (TimePercent < 0.65)
+	{
+		Retval = FLinearColor(1.000000, 0.421295, 0.000000, 1.000000);
+	}
+	
+	else if (TimePercent < 0.2)
+	{
+		Retval = FLinearColor::Red;
+	}
+	else
+	{
+		Retval = FLinearColor::Green;
+	}
+	return Retval;
+}
+
 
 void UGameWidget::TimeExtend(float addTime)
 {
 	GameTimer += addTime;
 
 
-	////15초 미마이면 빨간색
-	//if (GameTimer < 15.0f)
-	//{
-	//	FSlateColor RedColor(FLinearColor(1.0f,0.0f,0.0f,1.0f));
-	//
-	//	Txt_TimerBlock->SetColorAndOpacity(RedColor);
-	//}
-	//else if (GameTimer < 30.0f)
-	//{
-	//	FSlateColor YellowColor(FLinearColor(1.0f, 0.744f, 0.0f, 1.0f));
-
-	//	Txt_TimerBlock->SetColorAndOpacity(YellowColor);
-	//}
 }
 
 void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
@@ -162,12 +224,10 @@ void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 	CurrentCharacterStat = newStat;
 	CurrentCharacterStat->HPChangedDelegate.AddUObject(this, &UGameWidget::UpdateCharacterStat);
 	CurrentCharacterStat->StaminaChangedDelegate.AddUObject(this, &UGameWidget::UpdateStamina);
-	auto temp = Cast<ACharacter>(CurrentCharacterStat->GetOwner());
-	if(temp)
-		{
-		OwnerChara = temp;
-		}
-
+	if (!OwnerChara.IsValid())
+	{
+		OwnerChara = Cast<ACharacter>(newStat->GetOwner());
+	}
 	
 	
 }
@@ -190,10 +250,24 @@ void UGameWidget::BindCharacterInven(UComponent_Inventory * newInven)
 
 }
 
+void UGameWidget::BindCharacterFury(UComponent_Fury* newFury)
+{
+	if (!newFury)
+	{
+		EGLOG(Error, TEXT("Component null"));
+		return;
+	}
+
+	CurrentPlayerFury = newFury;
+	//Bind Fury delegate
+	CurrentPlayerFury->OnFuryChanged.BindUFunction(this, "UpdateFury");
+
+}
+
 
 float UGameWidget::GetGameTimer()
 {
-	//GameTimer= floorf(GameTimer * 100) / 100;
+	
 	return GameTimer;
 }
 

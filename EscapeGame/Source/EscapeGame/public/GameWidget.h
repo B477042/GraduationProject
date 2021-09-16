@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "UMG/Public/Components/Image.h"
 #include "StatComponent_Player.h"
+#include "Math/Color.h"
 #include "GameWidget.generated.h"
 
 /**
@@ -29,6 +30,7 @@ public:
 	void TimeExtend(float addTime);
 	void BindCharacterStat( UStatComponent_Player* newStat);
 	void BindCharacterInven(class UComponent_Inventory* newInven);
+	void BindCharacterFury(class UComponent_Fury* newFury);
 	float GetGameTimer();
 	//FBindStat BindStatDelegate;
 	//Update UI's Hp
@@ -40,30 +42,37 @@ public:
 	//Update Item's Info. Call by Delegate in inventory Comp
 	UFUNCTION(BlueprintCallable)
 	void UpdateItemes(FName ItemName, int Amount);
-	
+	UFUNCTION(BlueprintCallable)
+		void UpdateFury(float Ratio);
 	UFUNCTION(BlueprintCallable)
 		float CheackTimeOut(float NewValue);
+	UFUNCTION(BlueprintCallable)
+		FText BindingTimeText();
+	UFUNCTION(BlueprintCallable)
+		FLinearColor BindingTimeColor();
 
-	UPROPERTY(BlueprintReadWrite, Category = Timer, Meta = (AllowPrivateAccess = true))
-		float RemainTime;
+ 
 	
 	void LoadGame(float Time) { GameTimer = Time; }
 
 private:
-	void loadImages();
+
 
 private:
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
 	TWeakObjectPtr<class UStatComponent_Player>CurrentCharacterStat;
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
 	TWeakObjectPtr<class UComponent_Inventory>CurrentPlayerInventory;
-
+	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
+	TWeakObjectPtr<class UComponent_Fury>CurrentPlayerFury;
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
 	TWeakObjectPtr<class ACharacter>OwnerChara;
 
 	
 	UPROPERTY()
 	class UProgressBar* PB_Stamina;
+	UPROPERTY()
+	class UProgressBar* PB_Fury;
 	//Image Box of Player's Hp
 	UPROPERTY()
 	UImage* Img_Battery;
@@ -77,10 +86,9 @@ private:
 	//Image of Itme Recovery Item
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UImage* Img_RecoveryItem;
-
-
-	UPROPERTY()
-	UImage* Img_Blood;
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class UTextBlock* Txt_TimerBlock;
+	
 	 
 
 	UPROPERTY()
@@ -94,16 +102,26 @@ private:
 	UPROPERTY(BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		float PlayerStamina;
 	
+	//Default Value of Game Timer
+	//This Value can be changed when player contact with Hp box
+	//When Save Game Called, Game State recieve this value as RemainTimes value
 	UPROPERTY(BlueprintReadWrite, Category = Timer, Meta = (AllowPrivateAccess = true))
 		float GameTimer;
+	//The value actually displayed in the game.  
+	float DisplayTime;
+
 	UPROPERTY(BlueprintReadOnly, Category = Inventory, Meta = (AllowPrivateAccess = true))
 	int N_RecoveryItems=0;
 	UPROPERTY(BlueprintReadOnly, Category = Inventory, Meta = (AllowPrivateAccess = true))
 	int N_CardKeyItems=0;
 	
+	UPROPERTY(BlueprintReadWrite, Category = "Fury", meta = (AllowPrivateAccess = true))
+		FLinearColor FuryBarColor1;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Fury", meta = (AllowPrivateAccess = true))
+		FLinearColor FuryBarColor2;
 	//Inventory UI Data Variables
 
 
-	
+	 
 };

@@ -13,6 +13,7 @@
 #include "Component_Inventory.h"
 #include "SkillContainer_PlayerHitEffect.h"
 #include "Components/BoxComponent.h"
+#include "Component_Fury.h"
 #include "EGPlayerCharacter.generated.h"
 
 //DECLARE_DELEGATE(FOnKeyPressed);
@@ -59,13 +60,13 @@ public:
 	
 	 UStatComponent_Player* GetStatComponent();
 	 UComponent_Inventory* GetInventory();
-
+	 UComponent_Fury* GetFuryComponent();
 	 
 	 void ActiveThunder();
-	 //User Input Disable
+	 
 	 UFUNCTION(BlueprintCallable)
 	 void RestricInput();
-	 //User Input Enable
+	 
 	 UFUNCTION(BlueprintCallable)
 	 void RecoverInput();
 	 
@@ -105,7 +106,7 @@ private:
 	void SetDeath();
 
 	void Move(float DeltaTime);
-
+	void PressFury();
 	/*
 	 * Reflact All Projectile Type Attack
 	 * 
@@ -187,13 +188,21 @@ private:
 		UPROPERTY(VisibleAnywhere, Category = "Effect")
 		class UBarrierEffectComponent* BarrierEffect;
 
+
+	/*
+	* Fury System	
+	*/
+		UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Fury", meta = (AllowPrivateAccess = true))
+			UComponent_Fury* FuryComponent;
+
+
 	float minMiniMapArmLength;
 	float maxMiniMapArmLength;
 	bool bSetMapArm;
 
-	float CurrentVelocity;
+	
   
-	UPROPERTY(VisibleInstanceOnly,/*BlueprintReadOnly,*/ Category = Anim, Meta=(AllowPrivateAccess=true))
+	UPROPERTY(VisibleInstanceOnly,  Category = Anim, Meta=(AllowPrivateAccess=true))
 		class UAnim_Player* Anim;
 	UPROPERTY(VisibleInstanceOnly, Category = "SkillActor", meta = (AllowPrivateAccess = "true"))
 		TWeakObjectPtr<class ASkillActor_ThunderType> Skill_Thunder;
@@ -201,13 +210,18 @@ private:
 	//디버그 모드면 플레이어는 죽지 않는다
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Debug", meta = (AllowPrivateAccess = "true"))
 	bool bIsDebugMode;
-	//가드하고 있으면 투사체를 튕겨낸다.
+	//가드
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Debug", meta = (AllowPrivateAccess = "true"))
 		bool bIsGuarding;
-
-	//
+	//=============================================
+	//Moving
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Direction", meta = (AllowPrivateAccess = "true"))
 		FVector MoveDirection;
+	float CurrentVelocity;
 
+	/*
+	* input 
+	*/
+	bool bRestricAxisInput=false;
 
 };
