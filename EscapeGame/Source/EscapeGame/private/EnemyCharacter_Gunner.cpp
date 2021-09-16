@@ -11,6 +11,7 @@
 #include "Sound/SoundCue.h"
 #include "Perception/AISenseConfig.h"
 #include "Materials/Material.h"
+#include "Materials/MaterialInstance.h"
 
 AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
 {
@@ -318,8 +319,8 @@ void AEnemyCharacter_Gunner::LoadMaterial()
 		UE_LOG(LogTemp, Log, TEXT("Body Loaded"));
 	}
 
-	TSoftObjectPtr<UMaterial>VisorMaterialAsset(ToLoad[idx_MVisor]);
-	UMaterial* VisorMaterial = VisorMaterialAsset.Get();
+	TSoftObjectPtr<UMaterialInstance>VisorMaterialAsset(ToLoad[idx_MVisor]);
+	UMaterialInstance* VisorMaterial = VisorMaterialAsset.Get();
 	if (VisorMaterial)
 	{
 		GetMesh()->SetMaterial(idx_MVisor, VisorMaterial);
