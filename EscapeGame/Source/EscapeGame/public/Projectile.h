@@ -4,6 +4,7 @@
 
 #include "EscapeGame.h"
 #include "SkillActor.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 #include "Projectile.generated.h"
 
 /*
@@ -35,7 +36,6 @@ public:
 	UFUNCTION()
 	void OnPlayerEntered(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult);
 	
-	//void TripleDamage() { Damage *= 3.0f; }
 
 	void SetCollision(const FName&name) { MainCollision->SetCollisionProfileName(name); }
 
@@ -43,8 +43,6 @@ public:
 	UFUNCTION()
 	void Reflected();
 
-	//UFUNCTION(BlueprintCallable)
-	//void BP_Fire(FVector Location, FRotator Rotation, FVector Dir);
 
 protected:
 	// Called when the game starts or when spawned
@@ -74,5 +72,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"), Category = FireInformation)
 		float Acceleration;
 	
+	//UProjectileMovementComponent* move;
+
 	bool bIsDebugMode;
 };
