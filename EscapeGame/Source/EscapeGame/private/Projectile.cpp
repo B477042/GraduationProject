@@ -12,13 +12,17 @@ AProjectile::AProjectile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+
+	MovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("MovementComponent"));
+	
 	Acceleration = 10.5f;
 	
 	Trigger_Passing = CreateDefaultSubobject<USphereComponent>(TEXT("Trigger_Passing"));
 	Trigger_Passing->SetupAttachment(RootComponent);
 	Trigger_Passing->SetCollisionProfileName(TEXT("NoCollision"));
 
-	bIsFire = false;
+	bIsFired = false;
 	FireDir = FVector::ZeroVector;
 
 
@@ -89,7 +93,7 @@ void AProjectile::ReadyToFire(const FVector & Dir_Vector, const FVector& Locatio
 
 void AProjectile::fire()
 {
-	bIsFire = true;
+	bIsFired = true;
 	//EGLOG(Error, TEXT("Free fire"));
 	VFX_Main->Activate();
 
@@ -107,7 +111,7 @@ void AProjectile::SetSafety(UParticleSystemComponent* PSystem)
 void AProjectile::ActivateHitEffect()
 {
 	Super::ActivateHitEffect();
-	bIsFire = false;
+	bIsFired = false;
 }
 
 
@@ -127,7 +131,7 @@ void AProjectile::OnSomethingHit(UPrimitiveComponent * OverlappedComp, AActor * 
 
 	EGLOG(Error, TEXT(" Hit : %s"), *OtherActor->GetName());
 
-	//bIsFire = false;
+	//bIsFired = false;
 }
 
 void AProjectile::Reflected()
@@ -166,7 +170,7 @@ void AProjectile::OnPlayerEntered(UPrimitiveComponent * OverlappedComp, AActor *
 
 void AProjectile::gliding()
 {
-	if (!bIsFire)return;
+	if (!bIsFired)return;
 	//EGLOG(Error, TEXT("Gliding"));
 	FVector NewLocation = GetActorLocation() + (FireDir*Acceleration);
 	SetActorLocation(NewLocation);

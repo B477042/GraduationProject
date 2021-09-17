@@ -64,15 +64,15 @@ protected:
 		USphereComponent*Trigger_Passing;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"),Category = FireInformation)
-		bool bIsFire;
+		bool bIsFired;
 	//발사방향
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"), Category = FireInformation)
 		FVector FireDir;
 	//속도
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"), Category = FireInformation)
 		float Acceleration;
-	
-	//UProjectileMovementComponent* move;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"), Category = Movement)
+	UProjectileMovementComponent* MovementComponent;
 
 	bool bIsDebugMode;
 };
