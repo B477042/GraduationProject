@@ -8,10 +8,12 @@
 #include "Weapon.generated.h"
 
 /*
-
-	BP에서 상속으로 무기를 제작해주는게 좋을거 같다
-
+*	*AWeapon
+*	Gunner들이 사용하는 Weapon들의 공용 클래스
+*	자식 클래스로 BP를 활용할 것
+*	
 */
+
 
 UENUM(BlueprintType)
 enum class EWeaponTypes : uint8
@@ -45,22 +47,18 @@ public:
 
 	EWeaponTypes GetWeaponType()const { return WeaponType; }
 	 
-
+	void AttachedBy(AActor* OtherActor);
 
 protected:
 
-	UFUNCTION(BlueprintCallable)
-		bool AttachMuzzleEffect();
 	 
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		UStaticMeshComponent* MainBody;
  
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VFX", meta = (AllowPrivateAccess = true))
-		UParticleSystemComponent* VFX_Muzzle;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "SFX", meta = (AllowPrivateAccess = true))
-		UAudioComponent* SFX_Muzzle;
+	UPROPERTY(VisibleInstanceOnly, Category = Anim, Meta = (AllowPrivateAccess = true))
+		class UAnim_Weapon* Anim;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		ACharacter* OwnerChara;

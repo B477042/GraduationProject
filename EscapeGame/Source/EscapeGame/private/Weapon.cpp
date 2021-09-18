@@ -2,8 +2,7 @@
 
 
 #include "Weapon.h"
-#include "EGPlayerCharacter.h"
-
+#include "Anim_Weapon.h"
 // Sets default values
 AWeapon::AWeapon()
 {
@@ -12,13 +11,10 @@ AWeapon::AWeapon()
 
 
 	MainBody = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MAINBODY"));
-	VFX_Muzzle = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("VFX_Muzzle"));
-	SFX_Muzzle = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Muzzle"));
 
- 
-	
 	MainBody->SetupAttachment(RootComponent);
-	SFX_Muzzle->SetupAttachment(VFX_Muzzle);
+	MainBody->SetRelativeRotation(FRotator(0.0f,90.0f,0.0f));
+
 
 	WeaponType = EWeaponTypes::Default;
  
@@ -30,13 +26,14 @@ void AWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	
- 
+	VFX_Muzzle->AttachToComponent(MainBody, FAttachmentTransformRules::SnapToTargetNotIncludingScale, "Muzzle");
 
 }
 void AWeapon::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	
+	Anim = Cast<UAnim_Weapon>(MainBody->)
 	 
 }
 
@@ -48,12 +45,8 @@ void AWeapon::Tick(float DeltaTime)
 
 }
 
-bool AWeapon::AttachMuzzleEffect()
-{
-	return VFX_Muzzle->AttachToComponent(MainBody, FAttachmentTransformRules::SnapToTargetNotIncludingScale, "Muzzle");
 
-}
- 
+
  
 
  

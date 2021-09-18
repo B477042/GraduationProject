@@ -20,3 +20,4 @@ void UAnim_Weapon::NativeUpdateAnimation(float DeltaSeconds)
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
 }
+

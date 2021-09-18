@@ -18,9 +18,11 @@ public:
 	UAnim_Weapon();
 	virtual void NativeBeginPlay()override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds)override;
-
+protected:
+	
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
 		TEnumAsByte<EWeaponTypes>WeaponType;
+
 };
