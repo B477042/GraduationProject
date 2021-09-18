@@ -10,7 +10,18 @@ AWeapon::AWeapon()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	initComponents();
+
+	MainBody = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MAINBODY"));
+	VFX_Muzzle = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("VFX_Muzzle"));
+	SFX_Muzzle = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Muzzle"));
+
+ 
+	
+	MainBody->SetupAttachment(RootComponent);
+	SFX_Muzzle->SetupAttachment(VFX_Muzzle);
+
+	WeaponType = EWeaponTypes::Default;
+ 
 
 }
 
@@ -19,15 +30,14 @@ void AWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	Effect->bAutoActivate = false;
+ 
 
 }
 void AWeapon::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	
-	AttackRangeBox->OnComponentBeginOverlap.AddDynamic(this, &AWeapon::OnActorBeginOverlap);
-
+	 
 }
 
 
@@ -38,44 +48,14 @@ void AWeapon::Tick(float DeltaTime)
 
 }
 
-float AWeapon::GetDamage()
+bool AWeapon::AttachMuzzleEffect()
 {
-	return Damage;
-}
-
-void AWeapon::EquipTo(ACharacter * OtherActor)
-{
-	OwnerChara = OtherActor;
-}
-
-void AWeapon::initComponents()
-{
-	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BODY"));
-	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Effect"));
-	AttackRangeBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BOXCOMP"));
-	RootComponent = AttackRangeBox;
-	Effect->SetupAttachment(RootComponent);
-	Body->SetupAttachment(RootComponent);
-	Damage = 10;
+	return VFX_Muzzle->AttachToComponent(MainBody, FAttachmentTransformRules::SnapToTargetNotIncludingScale, "Muzzle");
 
 }
+ 
+ 
 
-void AWeapon::OnActorBeginOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
-{
-	//EGLOG(Error, TEXT("Hi Master"));
-	auto player = Cast<AEGPlayerCharacter>(OtherActor);
-	if (!player) { return; }
-	Effect->Activate();
-	
-}
+ 
 
-
-void AWeapon::initBodyCollision()
-{
-	if (!Body->GetStaticMesh())return;
-
-	Body->SetCollisionProfileName(TEXT("PlayerWeapon"));
-	
-
-}
-
+ 

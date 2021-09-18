@@ -14,8 +14,10 @@ AProjectile::AProjectile()
 	PrimaryActorTick.bCanEverTick = true;
 
 
-	MovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("MovementComponent"));
-	
+	//MovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("MovementComponent"));
+	//MovementComponent->InitialSpeed = 1000.0f;
+	//MovementComponent->bShouldBounce = false;
+
 	Acceleration = 10.5f;
 	
 	Trigger_Passing = CreateDefaultSubobject<USphereComponent>(TEXT("Trigger_Passing"));
@@ -40,7 +42,7 @@ void AProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//EGLOG(Warning, TEXT("d"));
-	gliding();
+	Gliding();
 }
 
 // Called when the game starts or when spawned
@@ -168,7 +170,7 @@ void AProjectile::OnPlayerEntered(UPrimitiveComponent * OverlappedComp, AActor *
 }
  
 
-void AProjectile::gliding()
+void AProjectile::Gliding()
 {
 	if (!bIsFired)return;
 	//EGLOG(Error, TEXT("Gliding"));

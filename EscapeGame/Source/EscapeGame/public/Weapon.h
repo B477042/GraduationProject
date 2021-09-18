@@ -13,6 +13,18 @@
 
 */
 
+UENUM(BlueprintType)
+enum class EWeaponTypes : uint8
+{
+	Default=0,
+	Rifle,
+	Sniper,
+	ShotGun,
+	Rocket
+
+};
+
+
 UCLASS(Blueprintable)
 class ESCAPEGAME_API AWeapon : public AActor
 {
@@ -27,37 +39,32 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void PostInitializeComponents()override;
 
-
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	float GetDamage();
-
-	UFUNCTION()
-	void EquipTo(ACharacter* OtherActor);
+	EWeaponTypes GetWeaponType()const { return WeaponType; }
+	 
 
 
-private:
-	void initComponents();
+protected:
 
 	UFUNCTION(BlueprintCallable)
-		void OnActorBeginOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+		bool AttachMuzzleEffect();
+	 
 
-	//Init Body(Component) Collision Profile Name
-	UFUNCTION(BlueprintCallable)
-		void initBodyCollision();
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UStaticMeshComponent* MainBody;
+ 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VFX", meta = (AllowPrivateAccess = true))
+		UParticleSystemComponent* VFX_Muzzle;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "SFX", meta = (AllowPrivateAccess = true))
+		UAudioComponent* SFX_Muzzle;
 
-private:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UStaticMeshComponent* Body;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		float Damage;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UParticleSystemComponent* Effect;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		ACharacter* OwnerChara;
-	//도신을 덮는다
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UBoxComponent* AttackRangeBox;
+
+	UPROPERTY(BlueprintReadOnly)
+		TEnumAsByte<EWeaponTypes>WeaponType;
 };

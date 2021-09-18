@@ -49,7 +49,7 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void PostInitializeComponents()override;
 
-	void gliding();
+	void Gliding();
 	void fire();
 
 
@@ -71,8 +71,8 @@ protected:
 	//¼Óµµ
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"), Category = FireInformation)
 		float Acceleration;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"), Category = Movement)
-	UProjectileMovementComponent* MovementComponent;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"), Category = Movement)
+	//UProjectileMovementComponent* MovementComponent;
 
 	bool bIsDebugMode;
 };

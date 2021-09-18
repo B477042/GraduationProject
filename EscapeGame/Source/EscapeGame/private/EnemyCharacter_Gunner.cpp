@@ -190,6 +190,12 @@ void AEnemyCharacter_Gunner::BeginPlay()
 	StatComponent->HPZeroDelegate.AddLambda([this]()->void {
 		//Anim Dead 설정
 		//AIController 중단
+		
+		/*if (Anim->IsAnyMontagePlaying())
+		{
+			Anim->StopAllMontages(0.0f);
+			Anim->StopSlotAnimation();
+		}*/
 
 		Anim->SetDead(true);
 		auto AICon = Cast<AEnemyAIController_Gunner>(GetController());
