@@ -302,13 +302,13 @@ void UStatComponent_Player::GainExp(const int32 & DropExp)
 //	//PlayerTable = DataTab
 //	
 //	
-//	auto OwnerChara = Cast<ACharacter>(GetOwner());
-//	if (OwnerChara == nullptr)
+//	auto OwnerActor = Cast<ACharacter>(GetOwner());
+//	if (OwnerActor == nullptr)
 //	{
 //		EGLOG(Warning, TEXT("Owner is not Character class"));
 //		return;
 //	}
-//	auto OwnerCon = Cast<AEGPlayerController>(OwnerChara->Controller);
+//	auto OwnerCon = Cast<AEGPlayerController>(OwnerActor->Controller);
 //	if (OwnerCon == nullptr)
 //	{
 //		EGLOG(Warning, TEXT("Owner controller Casting failed"));

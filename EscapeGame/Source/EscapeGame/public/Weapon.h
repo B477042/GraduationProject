@@ -26,8 +26,19 @@ enum class EWeaponTypes : uint8
 
 };
 
+USTRUCT(BlueprintType)
+struct FBulletTypeData
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+		float Acceleration;
 
-UCLASS(Blueprintable)
+
+};
+
+
+UCLASS(Abstract, Blueprintable)
 class ESCAPEGAME_API AWeapon : public AActor
 {
 	GENERATED_BODY()
@@ -47,21 +58,26 @@ public:
 
 	EWeaponTypes GetWeaponType()const { return WeaponType; }
 	 
-	void AttachedBy(AActor* OtherActor);
+	void AttachedBy(class ACharacter* OtherCharacter);
+
+
+
 
 protected:
 
 	 
 
 protected:
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = true))
+		USceneComponent* SceneRoot;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UStaticMeshComponent* MainBody;
- 
+		USkeletalMeshComponent* MainBody;
+
 	UPROPERTY(VisibleInstanceOnly, Category = Anim, Meta = (AllowPrivateAccess = true))
 		class UAnim_Weapon* Anim;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-		ACharacter* OwnerChara;
+		TWeakObjectPtr<class ACharacter> OwnerCharacter;
 
 	UPROPERTY(BlueprintReadOnly)
 		TEnumAsByte<EWeaponTypes>WeaponType;

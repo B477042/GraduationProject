@@ -3,6 +3,7 @@
 
 #include "Weapon.h"
 #include "Anim_Weapon.h"
+#include "GameFramework/Character.h"
 // Sets default values
 AWeapon::AWeapon()
 {
@@ -10,14 +11,16 @@ AWeapon::AWeapon()
 	PrimaryActorTick.bCanEverTick = true;
 
 
-	MainBody = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MAINBODY"));
-
-	MainBody->SetupAttachment(RootComponent);
-	MainBody->SetRelativeRotation(FRotator(0.0f,90.0f,0.0f));
-
+	MainBody = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MAINBODY"));
+	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("SceneRoot"));
+	
+	RootComponent = SceneRoot;
+	MainBody->AttachTo(RootComponent);
+	MainBody->SetRelativeRotation(FRotator(0,-90,0));
+	
 
 	WeaponType = EWeaponTypes::Default;
- 
+	OwnerCharacter = nullptr;
 
 }
 
@@ -26,14 +29,14 @@ void AWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	VFX_Muzzle->AttachToComponent(MainBody, FAttachmentTransformRules::SnapToTargetNotIncludingScale, "Muzzle");
+
 
 }
 void AWeapon::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	
-	Anim = Cast<UAnim_Weapon>(MainBody->)
+	
 	 
 }
 
@@ -43,6 +46,12 @@ void AWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AWeapon::AttachedBy(ACharacter* OtherCharacter)
+{
+	if (OwnerCharacter.IsValid())return;
+	OwnerCharacter = OtherCharacter;
 }
 
 
