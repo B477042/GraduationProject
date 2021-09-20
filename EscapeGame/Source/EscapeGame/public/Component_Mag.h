@@ -33,7 +33,7 @@ public:
 	void CreateMag();
 	
 	void ReloadMag();
-	void FireBullet(FVector FireLoation, FRotator FireRotation,FVector FireFWVector);
+	void FireBullet(const FVector& FireLoation, const FRotator& FireRotation,const FVector& FireFWVector);
 
 protected:
 

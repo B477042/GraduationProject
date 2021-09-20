@@ -12,6 +12,7 @@
 #include "Perception/AISenseConfig.h"
 #include "Materials/Material.h"
 #include "Materials/MaterialInstance.h"
+
 #include "Weapon.h"
 
 AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
@@ -399,6 +400,26 @@ void AEnemyCharacter_Gunner::Attack()
 	////	EGLOG(Error, TEXT("Cant fire"));
 	//	return;
 	//}
+
+	/*
+	*	Find Target Form Black Board
+	*/
+
+	auto const AIController = Cast<AEnemyAIController_Gunner>(Controller);
+	if (!AIController)
+	{
+		EGLOG(Warning, TEXT("Controller Casting Failed"));
+			return;
+	}
+
+	FVector TargetLocation;
+	bool bResult = AIController->GetTargetLocation(TargetLocation);
+	if (!bResult)
+	{
+		return;
+	}
+
+	Weapon->Attack(TargetLocation);
 
 	//발사불가, Tick 활성화
 	//bCanFire = false;
