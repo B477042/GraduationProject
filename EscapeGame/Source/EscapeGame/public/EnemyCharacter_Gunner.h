@@ -61,44 +61,35 @@ protected:
 	// Delegate 등록은 자식 클레스에서
 		virtual	void LoadGame(const class UEGSaveGame* LoadInstance);
 
-
-	void PlaySFXGun();
+ 
 	
 	void LoadGunnerMaterialAsset();
 
 	void LoadMaterial();
 	
+	void LoadWeapon();
+	// Spawn BP Gun 
+	void SpawnAndAttachGun();
+
 
 	//init ai perception component
 	//void setupPerception();
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-		USkeletalMeshComponent* WeaponMesh;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-		UAudioComponent* SFX_Fire1;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-		UAudioComponent* SFX_Fire2;
+ 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SFX")
 		UAudioComponent* SFX_Foot_L;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SFX")
 		UAudioComponent* SFX_Foot_R;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-		UComponent_Mag* MagComponent;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-		bool bCanFire;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-		float Cooltime;
-
-	UPROPERTY(Transient, VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-		FVector Point_Muzzle;
+	 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		UStatComponent_Gunner* StatComponent;
 	UPROPERTY()
 		class UAnimInstance_Gunner* Anim;
 	
-
+	/*
+	* Material Patterns
+	*/
 	//Material Object Path
 	UPROPERTY(Config, VisibleAnywhere, Category = "async")
 	TArray<FSoftObjectPath> BodyMaterials;
@@ -114,11 +105,21 @@ protected:
 	uint8 idx_Body=0;
 	uint8 idx_Visor = 0;
 	uint8 idx_Decal = 0;
+
 	//The assets to load
 	TArray<FSoftObjectPath> ToLoad;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	//	class UAISenseConfig_Sight * AiConfigSight;
+	/*
+	*	Weapon BP 
+	*/
+	//Usalbe Weapon BP
+	UPROPERTY(Config, VisibleAnywhere, Category = "async")
+	TArray<FSoftClassPath> Path_Weapons;
+	//For Save Data. This Object Using This Weapon.
+	FSoftClassPath* Path_UsingThisWeapon;
+	UPROPERTY(BlueprintReadWrite, VisibleInstanceOnly, Category = "Weapon", meta = (AllowPrivateAccess = true))
+		TSoftObjectPtr<class AWeapon> Weapon;
+
 
 
 };

@@ -71,9 +71,11 @@ protected:
 	UPROPERTY(VisibleInstanceOnly, Category = Anim, Meta = (AllowPrivateAccess = true))
 		class UAnim_Weapon* Anim;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-		TWeakObjectPtr<class ACharacter> OwnerCharacter;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	//	TWeakObjectPtr<class ACharacter> OwnerCharacter;
 
 	UPROPERTY(BlueprintReadOnly)
 		TEnumAsByte<EWeaponTypes>WeaponType;
+
+
 };

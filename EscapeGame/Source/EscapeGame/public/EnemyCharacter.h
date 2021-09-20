@@ -48,8 +48,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void Turn(float NewAxisValue);
 
-	//UFUNCTION(BlueprintNativeEvent)
-	virtual void Attack() PURE_VIRTUAL(AEnemyCharacter::Attack,);
+	//Pure Virtual Discard 
+	//virtual void Attack() PURE_VIRTUAL(AEnemyCharacter::Attack,);
+
+	virtual void Attack() {}
 
 protected:
 	

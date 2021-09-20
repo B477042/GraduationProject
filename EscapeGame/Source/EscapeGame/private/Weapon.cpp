@@ -20,7 +20,7 @@ AWeapon::AWeapon()
 	
 
 	WeaponType = EWeaponTypes::Default;
-	OwnerCharacter = nullptr;
+	//OwnerCharacter = nullptr;
 
 }
 
@@ -57,12 +57,12 @@ void AWeapon::Tick(float DeltaTime)
 
 void AWeapon::AttachedBy(ACharacter* OtherCharacter)
 {
-	if (OwnerCharacter.IsValid())
+	if (GetOwner())
 	{
 		EGLOG(Error, TEXT("Owner Character is already setted"));
 		return;
 	}
-	OwnerCharacter = OtherCharacter;
+	//setown = OtherCharacter;
 }
 
 
