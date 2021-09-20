@@ -60,12 +60,7 @@ public:
 	 
 	void AttachedBy(class ACharacter* OtherCharacter);
 
-
-
-
-protected:
-
-	 
+	void Attack();
 
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = true))

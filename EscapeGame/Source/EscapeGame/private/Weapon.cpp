@@ -36,7 +36,14 @@ void AWeapon::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	
-	
+	Anim = Cast<UAnim_Weapon>(MainBody->GetAnimInstance());
+	if (!Anim)
+	{
+		EGLOG(Log, TEXT("Casting Error"));
+		return;
+	}
+
+
 	 
 }
 
@@ -50,7 +57,11 @@ void AWeapon::Tick(float DeltaTime)
 
 void AWeapon::AttachedBy(ACharacter* OtherCharacter)
 {
-	if (OwnerCharacter.IsValid())return;
+	if (OwnerCharacter.IsValid())
+	{
+		EGLOG(Error, TEXT("Owner Character is already setted"));
+		return;
+	}
 	OwnerCharacter = OtherCharacter;
 }
 

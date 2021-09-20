@@ -18,11 +18,13 @@ public:
 	UAnim_Weapon();
 	virtual void NativeBeginPlay()override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds)override;
-protected:
 	
+	void SetIsFired(bool NewValue) { bIsFired = NewValue; }
 
 protected:
-	UPROPERTY(BlueprintReadOnly)
-		TEnumAsByte<EWeaponTypes>WeaponType;
+	UPROPERTY(BlueprintReadOnly, Category = "Variables", meta = (AllowPrivateAccess = true))
+		bool bIsFired;
+
+	
 
 };
