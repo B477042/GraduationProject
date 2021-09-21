@@ -8,6 +8,7 @@
 #include "Perception/AISenseConfig.h"
 #include "Perception/AIPerceptionTypes.h"
 #include "Perception/AISenseConfig_Sight.h"
+#include "Perception/AISenseConfig_Hearing.h"
 #include "EnemyAIController_Gunner.generated.h"
 
 /**
@@ -43,7 +44,8 @@ protected:
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
-		class UAISenseConfig_Sight * AiConfigSight;
-
+		UAISenseConfig_Sight * AiConfigSight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
+		UAISenseConfig_Hearing* AiConfigHearing;
 
 };

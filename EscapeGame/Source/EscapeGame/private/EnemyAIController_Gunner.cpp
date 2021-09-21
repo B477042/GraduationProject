@@ -23,7 +23,7 @@ AEnemyAIController_Gunner::AEnemyAIController_Gunner()
 
 	PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("PERCEPTIONCOMPONENT"));
 	AiConfigSight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("AIConfigSight"));
-	
+	AiConfigHearing = CreateDefaultSubobject < UAISenseConfig_Hearing>(TEXT("AIConfigHearing"));
 //	FAISenseID
 	//AIPerceptionComponent->ConfigureSense
 
@@ -37,10 +37,12 @@ AEnemyAIController_Gunner::AEnemyAIController_Gunner()
 	AiConfigSight->DetectionByAffiliation.bDetectNeutrals = true;
 	AiConfigSight->DetectionByAffiliation.bDetectFriendlies = true;
 	AiConfigSight->SetMaxAge(10.0f);
-
+	
 
 	PerceptionComponent->ConfigureSense(*AiConfigSight);
 	PerceptionComponent->SetDominantSense(UAISense_Sight::StaticClass());
+
+	//AI Hearing Settings
 
 
 }
