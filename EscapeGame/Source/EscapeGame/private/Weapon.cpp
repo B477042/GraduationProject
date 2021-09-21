@@ -23,7 +23,9 @@ AWeapon::AWeapon()
 	
 
 	WeaponType = EWeaponTypes::Default;
- 
+	FireControl_DistanceOffset = 30.0f;
+	FireControl_Radius = 200.0f;
+
 
 }
 
@@ -47,7 +49,10 @@ void AWeapon::PostInitializeComponents()
 		return;
 	}
 
-
+	//Bind Ejection
+	Anim->OnEjectionEnd.BindLambda([this]()->void{
+		bIsEjcting = false;
+	});
 	 
 }
 
@@ -55,6 +60,25 @@ void AWeapon::PostInitializeComponents()
 FVector AWeapon::CalcFireDirection(const FVector& TargetLocation)
 {
 	FVector Retval = GetActorForwardVector();
+
+	
+
+	FVector MuzzleLocation = MainBody->GetSocketLocation(Name_Muzzle);
+	//원의 중심 위치
+	FVector Center =  MuzzleLocation+ (GetActorForwardVector() * FireControl_DistanceOffset);
+	//조준 지점. 원의 위치에서 랜덤하게 한다
+	FVector AimPoint;
+	AimPoint.X = FMath::RandRange(Center.X - FireControl_Radius, Center.X + FireControl_Radius);
+	AimPoint.Y = FMath::RandRange(Center.Y - FireControl_Radius, Center.Y + FireControl_Radius);
+	AimPoint.Z = FMath::RandRange(Center.Z - FireControl_Radius, Center.Z + FireControl_Radius);
+
+	//
+
+
+
+	 AimPoint.Normalize();
+	 EGLOG(Log, TEXT("Anim Point is normalized : %s"), *AimPoint.ToString());
+	 Retval = AimPoint;
 
 
 	return Retval;
@@ -92,6 +116,8 @@ bool AWeapon::Attack(const FVector& TargetLocation)
 
 	Mag->FireBullet(FireLocation, FireRotation, FireDirection);
 	bIsEjcting = true;
+	Anim->SetIsFired(true);
+	//SetActorTickEnabled(true);
 
 	return true;
 }

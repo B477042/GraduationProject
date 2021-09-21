@@ -395,11 +395,7 @@ void AEnemyCharacter_Gunner::SpawnAndAttachGun()
 void AEnemyCharacter_Gunner::Attack()
 {
 
-	//if (!bCanFire)
-	//{
-	////	EGLOG(Error, TEXT("Cant fire"));
-	//	return;
-	//}
+	
 
 	/*
 	*	Find Target Form Black Board
@@ -419,22 +415,18 @@ void AEnemyCharacter_Gunner::Attack()
 		return;
 	}
 
-	Weapon->Attack(TargetLocation);
+	//If Weapon can fire = true
+	bool bWeaponAvailable = Weapon->Attack(TargetLocation);
 
-	//발사불가, Tick 활성화
-	//bCanFire = false;
-	//SetActorTickEnabled(true);
-	//애니메이션과 소리 재생
-	Anim->PlayFire(StatComponent->GetState());
-	//PlaySFXGun();
-	//Mag에서 총 발사
-	//Point_Muzzle =  WeaponMesh->GetSocketLocation(TEXT("Muzzle"));
-	/*MagComponent->FireBullet(
-		WeaponMesh->GetSocketLocation(TEXT("Muzzle")),
-		WeaponMesh->GetComponentRotation(),
-		WeaponMesh->GetForwardVector()
-		);*/
+	if (bWeaponAvailable)
+	{
+		//애니메이션 재생
+		Anim->PlayFire(StatComponent->GetState());
 
+	}
+	
+	
+	
 }
 void AEnemyCharacter_Gunner::Reload()
 {

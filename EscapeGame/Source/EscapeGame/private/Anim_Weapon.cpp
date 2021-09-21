@@ -21,3 +21,9 @@ void UAnim_Weapon::NativeUpdateAnimation(float DeltaSeconds)
 
 }
 
+void UAnim_Weapon::AnimNotify_OnEjectionEnd()
+{
+	OnEjectionEnd.Execute();
+	bIsFired = false;
+}
+

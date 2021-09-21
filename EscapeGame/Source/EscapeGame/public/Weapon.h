@@ -89,7 +89,12 @@ protected:
 	bool bIsEjcting;
 	const FName Name_Muzzle = TEXT("Muzzle");
 
+	// 발사 지점에서 원까지 거리 
+	float FireControl_DistanceOffset;
+	//원 지름
+	float FireControl_Radius;
  
+	
 
 	UPROPERTY(BlueprintReadOnly)
 		TEnumAsByte<EWeaponTypes>WeaponType;

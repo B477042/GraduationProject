@@ -10,6 +10,8 @@
 /**
  * 
  */
+DECLARE_DELEGATE(FOnEjectionEnd);
+
 UCLASS()
 class ESCAPEGAME_API UAnim_Weapon : public UAnimInstance
 {
@@ -20,6 +22,13 @@ public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds)override;
 	
 	void SetIsFired(bool NewValue) { bIsFired = NewValue; }
+
+	FOnEjectionEnd OnEjectionEnd;
+
+protected:
+
+	UFUNCTION()
+		void AnimNotify_OnEjectionEnd();
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Variables", meta = (AllowPrivateAccess = true))
