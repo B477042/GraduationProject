@@ -5,6 +5,7 @@
 #include "EscapeGame.h"
 #include "GameFramework/Actor.h"
 #include "Components/BoxComponent.h"
+#include "Component_Mag.h"
 #include "Weapon.generated.h"
 
 /*

@@ -25,5 +25,6 @@ void UAnim_Weapon::AnimNotify_OnEjectionEnd()
 {
 	OnEjectionEnd.Execute();
 	bIsFired = false;
+	EGLOG(Log, TEXT("eject"));
 }
 

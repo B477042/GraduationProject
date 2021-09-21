@@ -4,7 +4,7 @@
 #include "Weapon.h"
 #include "Anim_Weapon.h"
 #include "GameFramework/Character.h"
-#include "Component_Mag.h"
+
 // Sets default values
 AWeapon::AWeapon()
 {
@@ -26,7 +26,7 @@ AWeapon::AWeapon()
 	FireControl_DistanceOffset = 30.0f;
 	FireControl_Radius = 200.0f;
 
-
+	MainBody->SetCollisionProfileName(TEXT("NoCollision"));
 }
 
 // Called when the game starts or when spawned
@@ -105,7 +105,7 @@ void AWeapon::AttachedBy(ACharacter* OtherCharacter)
 
 bool AWeapon::Attack(const FVector& TargetLocation)
 {
-	if (!bIsEjcting)
+	if (bIsEjcting)
 	{
 		return false;
 	}
