@@ -32,6 +32,11 @@ public:
 		const class UBlackboardData* GetBlackBoard() { return BBData; }
 			virtual	void RunAI();
 	virtual	void StopAI();
+
+	//Find Target Object's Location. If Target is nullptr, return false
+	bool GetTargetLocation(FVector& Retval);
+	
+
 protected:
 	virtual void BeginPlay()override;
 	virtual void PostInitializeComponents()override;

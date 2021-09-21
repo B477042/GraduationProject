@@ -5,15 +5,41 @@
 #include "EscapeGame.h"
 #include "GameFramework/Actor.h"
 #include "Components/BoxComponent.h"
+#include "Component_Mag.h"
 #include "Weapon.generated.h"
 
 /*
-
-	BP에서 상속으로 무기를 제작해주는게 좋을거 같다
-
+*	*AWeapon
+*	Gunner들이 사용하는 Weapon들의 공용 클래스
+*	자식 클래스로 BP를 활용할 것
+*	
 */
 
-UCLASS(Blueprintable)
+
+UENUM(BlueprintType)
+enum class EWeaponTypes : uint8
+{
+	Default=0,
+	Rifle,
+	Sniper,
+	ShotGun,
+	Rocket
+
+};
+
+USTRUCT(BlueprintType)
+struct FBulletTypeData
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+		float Acceleration;
+
+
+};
+
+
+UCLASS(Abstract, Blueprintable)
 class ESCAPEGAME_API AWeapon : public AActor
 {
 	GENERATED_BODY()
@@ -27,37 +53,52 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void PostInitializeComponents()override;
 
+	FVector CalcFireDirection(const FVector& TargetLocation);
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	float GetDamage();
+	EWeaponTypes GetWeaponType()const { return WeaponType; }
+	 
+	void AttachedBy(class ACharacter* OtherCharacter);
+	//Return True If This Weapon can fire a bullet
+	bool Attack(const FVector& TargetLocation);
+	
 
-	UFUNCTION()
-	void EquipTo(ACharacter* OtherActor);
 
 
-private:
-	void initComponents();
+protected:
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = true))
+		USceneComponent* SceneRoot;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+		USkeletalMeshComponent* MainBody;
+	UPROPERTY(BlueprintReadOnly, VisibleInstanceOnly, meta = (AllowPrivateAccess = true))
+		class UComponent_Mag* Mag;
 
-	UFUNCTION(BlueprintCallable)
-		void OnActorBeginOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UPROPERTY(VisibleInstanceOnly, Category = Anim, Meta = (AllowPrivateAccess = true))
+		class UAnim_Weapon* Anim;
+	
+	
+	/*
+	* Fire Controll
+	*/
+	
+	//FireRate
+	float RPM;
+	//If Ture Ejecting is on progress. Can't Fire
+	bool bIsEjcting;
+	const FName Name_Muzzle = TEXT("Muzzle");
 
-	//Init Body(Component) Collision Profile Name
-	UFUNCTION(BlueprintCallable)
-		void initBodyCollision();
+	// 발사 지점에서 원까지 거리 
+	float FireControl_DistanceOffset;
+	//원 지름
+	float FireControl_Radius;
+ 
+	
 
-private:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UStaticMeshComponent* Body;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		float Damage;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UParticleSystemComponent* Effect;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-		ACharacter* OwnerChara;
-	//도신을 덮는다
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UBoxComponent* AttackRangeBox;
+	UPROPERTY(BlueprintReadOnly)
+		TEnumAsByte<EWeaponTypes>WeaponType;
+
+
 };

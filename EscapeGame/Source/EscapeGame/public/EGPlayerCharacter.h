@@ -2,8 +2,7 @@
 
 #pragma once
 
-#include "EscapeGame.h"
-
+#include "GameCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "MinimapRenderComponent.h"
@@ -21,7 +20,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTakeHugeDamage);
 
 UCLASS()
-class ESCAPEGAME_API AEGPlayerCharacter : public ACharacter
+class ESCAPEGAME_API AEGPlayerCharacter : public AGameCharacter
 {
 	GENERATED_BODY()
 

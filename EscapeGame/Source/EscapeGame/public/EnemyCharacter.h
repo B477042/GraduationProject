@@ -2,8 +2,7 @@
 
 #pragma once
 
-#include "EscapeGame.h"
-#include "GameFramework/Character.h"
+#include "GameCharacter.h"
 #include "StatComponent_Enemy.h"
 #include "Components/WidgetComponent.h"
 #include "Components/ProgressBar.h"
@@ -15,7 +14,7 @@
 
 
 UCLASS(Abstract)
-class ESCAPEGAME_API AEnemyCharacter : public ACharacter
+class ESCAPEGAME_API AEnemyCharacter : public AGameCharacter
 {
 	GENERATED_BODY()
 
@@ -49,8 +48,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void Turn(float NewAxisValue);
 
-	//UFUNCTION(BlueprintNativeEvent)
-	virtual void Attack() PURE_VIRTUAL(AEnemyCharacter::Attack,);
+	//Pure Virtual Discard 
+	//virtual void Attack() PURE_VIRTUAL(AEnemyCharacter::Attack,);
+
+	virtual void Attack() {}
 
 protected:
 	

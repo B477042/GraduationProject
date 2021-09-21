@@ -132,13 +132,13 @@ void AEnemyAIController_Gunner::OnTargetPerceptionUpdated(AActor* Actor, FAIStim
 	//성공시 값을 저장하고 return
 	if (bSenseResult)
 	{
-		EGLOG(Error, TEXT("Find %s "), *Actor->GetName());
+		EGLOG(Log, TEXT("Find %s "), *Actor->GetName());
 		GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, Actor);
 		return;
 	}
 
 	//실패시 관련 BB값 초기화
-	EGLOG(Error, TEXT("Lose %s"), *Actor->GetName());
+	EGLOG(Log, TEXT("Lose %s"), *Actor->GetName());
 	GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, nullptr);
 	GetBlackboardComponent()->SetValueAsVector(AEnemyAIController::TargetPos, Actor->GetActorLocation());
 	

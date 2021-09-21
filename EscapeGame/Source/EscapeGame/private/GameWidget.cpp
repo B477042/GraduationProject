@@ -163,7 +163,7 @@ FText UGameWidget::BindingTimeText()
 	if (!OwnerChara.IsValid())
 	{
 		 
-		EGLOG(Error, TEXT("OwnerChara is nullptr"));
+		EGLOG(Error, TEXT("OwnerActor is nullptr"));
 		return Retval;
 	}
 	float PlayedTime = OwnerChara->GetController()->GetGameTimeSinceCreation();

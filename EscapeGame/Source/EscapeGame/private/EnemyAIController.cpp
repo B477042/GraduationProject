@@ -75,3 +75,16 @@ void AEnemyAIController::StopAI()
 	
 
 }
+
+bool AEnemyAIController::GetTargetLocation(FVector& Retval)
+{
+	
+	const auto Actor = Cast<AActor>(GetBlackboardComponent()->GetValueAsObject(AEnemyAIController::TargetPlayer));
+	if (!Actor)
+	{
+		EGLOG(Error, TEXT("Can't find target"));
+		return false;
+	}
+	Retval = Actor->GetActorLocation();
+	return true;
+}

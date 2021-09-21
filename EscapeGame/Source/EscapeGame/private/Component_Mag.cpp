@@ -84,7 +84,7 @@ void UComponent_Mag::ReloadMag()
 	
 }
 
-void UComponent_Mag::FireBullet(FVector FireLoation, FRotator FireRotation, FVector FireFWVector)
+void UComponent_Mag::FireBullet(const FVector& FireLoation,const  FRotator& FireRotation, const FVector& FireFWVector)
 {
 
 	TopBullet->SetActorLocationAndRotation(FireLoation, FireRotation);

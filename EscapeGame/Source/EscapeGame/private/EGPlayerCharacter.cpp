@@ -717,9 +717,11 @@ void AEGPlayerCharacter::SetDeath()
 	//디버깅 모드라면 죽지 않는다
 	if (bIsDebugMode)return;
 	
+	//Anim->StopAllMontages(0.0f);
+
 	Anim->SetDead();
 	RestricInput();
-	Anim->Montage_Stop(0.0f);
+	
 
 
 

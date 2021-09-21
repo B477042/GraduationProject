@@ -402,7 +402,7 @@ void AGruntCharacter::FireAttack()
 	}
 
 	//디버그용 라인
-	DrawDebugLine(World, PosPSPlay, EndPoint, FColor::Cyan, false, 10.0f);
+//	DrawDebugLine(World, PosPSPlay, EndPoint, FColor::Cyan, false, 10.0f);
 
 
 	
