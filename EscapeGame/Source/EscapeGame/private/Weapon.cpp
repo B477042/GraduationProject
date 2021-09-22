@@ -59,13 +59,17 @@ void AWeapon::PostInitializeComponents()
 //Using Spread Sphere
 FVector AWeapon::CalcFireDirection(const FVector& TargetLocation)
 {
-	FVector Retval = GetActorForwardVector();
+	FVector Retval = TargetLocation;
 
 	
 
 	FVector MuzzleLocation = MainBody->GetSocketLocation(Name_Muzzle);
+
+	FVector DistVec = TargetLocation - MuzzleLocation;
+	//DistVec.Normalize();
 	//원의 중심 위치
-	FVector Center =  MuzzleLocation+ (GetActorForwardVector() * FireControl_DistanceOffset);
+	//FVector Center =  MuzzleLocation + (TargetLocation * FireControl_DistanceOffset);
+	FVector Center = DistVec* FireControl_DistanceOffset;
 	//조준 지점. 원의 위치에서 랜덤하게 한다
 	FVector AimPoint;
 	AimPoint.X = FMath::RandRange(Center.X - FireControl_Radius, Center.X + FireControl_Radius);
@@ -73,14 +77,33 @@ FVector AWeapon::CalcFireDirection(const FVector& TargetLocation)
 	AimPoint.Z = FMath::RandRange(Center.Z - FireControl_Radius, Center.Z + FireControl_Radius);
 
 	//
-
+	
 
 
 	 AimPoint.Normalize();
-	 EGLOG(Log, TEXT("Anim Point is normalized : %s"), *AimPoint.ToString());
+	 //EGLOG(Log, TEXT("Anim Point is normalized : %s"), *AimPoint.ToString());
+	 //EGLOG(Log, TEXT("TargetLocation is : %s"), *TargetLocation.ToString());
+
 	 Retval = AimPoint;
 
 
+	return Retval;
+}
+
+FRotator AWeapon::CalcRotationForBullet(const FVector& FireDirection)
+{
+	FRotator Retval = GetActorRotation();
+	FVector FW = GetActorForwardVector();
+	
+	EGLOG(Log, TEXT("Forward : %s"), *FW.ToString());
+	EGLOG(Log, TEXT("Fire Direction : %s"), *FireDirection.ToString());
+
+
+	float Dot = FVector::DotProduct(FW, FireDirection);
+	float Angle = FMath::Acos(Dot / (FW.Size() * FireDirection.Size()))*100;
+	EGLOG(Warning, TEXT("Angle : %f"), Angle);
+	Retval.Yaw += Angle;
+	
 	return Retval;
 }
 
@@ -111,8 +134,11 @@ bool AWeapon::Attack(const FVector& TargetLocation)
 	}
 
 	FVector FireLocation = MainBody->GetSocketLocation(Name_Muzzle);
-	FRotator FireRotation = GetActorRotation();
-	FVector FireDirection = CalcFireDirection(TargetLocation);
+	
+	FVector FireDirection = CalcFireDirection(TargetLocation); 
+	
+	FRotator FireRotation = CalcRotationForBullet(FireDirection);
+
 
 	Mag->FireBullet(FireLocation, FireRotation, FireDirection);
 	bIsEjcting = true;

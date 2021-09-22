@@ -14,7 +14,7 @@ UComponent_Mag::UComponent_Mag()
 	MaxCapacity = 30;
 
 	idxBullet = 0;
-
+	SpawnBulletClass = AGunnerBullet::StaticClass();
 
 
 	// ...
@@ -68,7 +68,7 @@ void UComponent_Mag::CreateMag()
 
 	for(int i =0;i<MaxCapacity;++i)
 	{
-		Mag.Add(GetWorld()->SpawnActor<AGunnerBullet>());
+		Mag.Add(GetWorld()->SpawnActor<AGunnerBullet>(SpawnBulletClass));
 
 	}
 

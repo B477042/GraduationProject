@@ -44,6 +44,8 @@ protected:
 		TArray<TSoftObjectPtr<AGunnerBullet>> Mag;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		TSoftObjectPtr<AGunnerBullet> TopBullet;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,  meta = (AllowPrivateAccess = true))
+		TSubclassOf<AGunnerBullet>SpawnBulletClass;
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	int idxBullet;
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))

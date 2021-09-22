@@ -58,10 +58,10 @@ protected:
 	
 
 	//맞으면 나는 소리
-	UPROPERTY(VisibleAnywhere, Category = Contents)
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Contents")
 	UAudioComponent* SFX_Hit;
 	//주변에서 나는 소리
-	UPROPERTY(VisibleAnywhere, Category = Contents)
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Contents")
 	UAudioComponent* SFX_Passing;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"), Category = Info)
