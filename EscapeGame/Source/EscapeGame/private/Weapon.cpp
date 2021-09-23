@@ -18,11 +18,11 @@ AWeapon::AWeapon()
 
 
 	RootComponent = SceneRoot;
-	MainBody->AttachTo(RootComponent);
+	MainBody->SetupAttachment(RootComponent);
 	MainBody->SetRelativeRotation(FRotator(0,-90,0));
 	
 
-	WeaponType = EWeaponTypes::Default;
+	//WeaponType = EWeaponTypes::Default;
 	FireControl_DistanceOffset = 30.0f;
 	FireControl_Radius = 200.0f;
 

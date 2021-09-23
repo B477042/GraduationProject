@@ -101,6 +101,9 @@ float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Damag
 {
 	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
+	//EGLOG(Error, TEXT("Damage Causer %s"), *DamageCauser->GetName());
+
+	OnTakeDamaged.Execute(DamageCauser);
 	//Stat->TakeDamage(DamageAmount);
 
 	return FinalDamage;

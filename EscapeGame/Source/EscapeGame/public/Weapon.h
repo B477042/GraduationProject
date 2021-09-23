@@ -59,7 +59,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	EWeaponTypes GetWeaponType()const { return WeaponType; }
+	//EWeaponTypes GetWeaponType()const { return WeaponType; }
 	 
 	void AttachedBy(class ACharacter* OtherCharacter);
 	//Return True If This Weapon can fire a bullet
@@ -97,8 +97,8 @@ protected:
  
 	
 
-	UPROPERTY(BlueprintReadOnly)
-		TEnumAsByte<EWeaponTypes>WeaponType;
+	//UPROPERTY(BlueprintReadOnly)
+	//	TEnumAsByte<EWeaponTypes>WeaponType;
 
 
 };

@@ -12,6 +12,8 @@
 #include "EnemyCharacter.generated.h"
 
 
+DECLARE_DELEGATE_OneParam(FOnTakeDamaged, AActor* );
+
 
 UCLASS(Abstract)
 class ESCAPEGAME_API AEnemyCharacter : public AGameCharacter
@@ -52,6 +54,11 @@ public:
 	//virtual void Attack() PURE_VIRTUAL(AEnemyCharacter::Attack,);
 
 	virtual void Attack() {}
+
+	//Execute when Take Damage. 
+	//Bind to Controller.
+	//Execute : Check BB value TargetActor. if nullptr point that actor
+	FOnTakeDamaged OnTakeDamaged;
 
 protected:
 	

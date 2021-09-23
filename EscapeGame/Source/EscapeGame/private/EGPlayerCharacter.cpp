@@ -787,7 +787,7 @@ void AEGPlayerCharacter::OnCheckCanComboAttack(UAnimMontage* Montage, bool bInte
 {
 	if (Stat->CheckCanComboAttack())
 	{
-		EGLOG(Error, TEXT("lambda check combo"));
+		//EGLOG(Error, TEXT("lambda check combo"));
 		//AnimNotify_CanComboAttack 에서 호출될 함수다
 		Stat->SetComboStartState();
 		Anim->JumpToComboAttackSection(Stat->GetCurrentCombo());

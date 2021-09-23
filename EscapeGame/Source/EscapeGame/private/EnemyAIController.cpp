@@ -4,7 +4,7 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
-
+#include "EnemyCharacter.h"
 
 
 
@@ -21,8 +21,24 @@ AEnemyAIController::AEnemyAIController()
 void AEnemyAIController::OnPossess(APawn * InPawn)
 {
 	Super::OnPossess(InPawn);
-	EGLOG(Warning, TEXT("AIController Online : %s"), *InPawn->GetName());
+	//EGLOG(Warning, TEXT("AIController Online : %s"), *InPawn->GetName());
 
+	AEnemyCharacter const* TempCharacter = Cast<AEnemyCharacter>(InPawn);
+	if (!TempCharacter)
+	{
+		EGLOG(Error, TEXT("Casting Failed"));
+		return;
+	}
+	//Bind Function
+	TempCharacter->OnTakeDamaged.CreateLambda([this](AActor* OtherActor)->void {
+		auto ResultActor = GetBlackboardComponent()->GetValueAsObject(TargetPlayer);
+		if(!ResultActor)
+		{ 
+			GetBlackboardComponent()->SetValueAsObject(TargetPlayer, OtherActor);
+			return;
+		}
+		
+		});
 
 }
 
