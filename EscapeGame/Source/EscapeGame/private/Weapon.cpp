@@ -102,7 +102,7 @@ FRotator AWeapon::CalcRotationForBullet(const FVector& FireDirection)
 	float Dot = FVector::DotProduct(FW, FireDirection);
 	float Angle = FMath::Acos(Dot / (FW.Size() * FireDirection.Size()))*100;
 	EGLOG(Warning, TEXT("Angle : %f"), Angle);
-	Retval.Yaw += Angle;
+	Retval.Yaw -= Angle;
 	
 	return Retval;
 }
@@ -137,8 +137,8 @@ bool AWeapon::Attack(const FVector& TargetLocation)
 	
 	FVector FireDirection = CalcFireDirection(TargetLocation); 
 	
-	FRotator FireRotation = CalcRotationForBullet(FireDirection);
-
+	// FRotator FireRotation = CalcRotationForBullet(FireDirection);
+	FRotator FireRotation =GetOwner()-> GetActorRotation();
 
 	Mag->FireBullet(FireLocation, FireRotation, FireDirection);
 	bIsEjcting = true;
