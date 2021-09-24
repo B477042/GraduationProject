@@ -68,8 +68,8 @@ FVector AWeapon::CalcFireDirection(const FVector& TargetLocation)
 	FVector DistVec = TargetLocation - MuzzleLocation;
 	//DistVec.Normalize();
 	//원의 중심 위치
-	FVector Center =  MuzzleLocation + (TargetLocation * FireControl_DistanceOffset);
-	//FVector Center = DistVec* FireControl_DistanceOffset;
+	//FVector Center =  MuzzleLocation + (TargetLocation * FireControl_DistanceOffset);
+	FVector Center = DistVec* FireControl_DistanceOffset;
 	//조준 지점. 원의 위치에서 랜덤하게 한다
 	FVector AimPoint;
 	AimPoint.X = FMath::RandRange(Center.X - FireControl_Radius, Center.X + FireControl_Radius);
@@ -90,21 +90,30 @@ FVector AWeapon::CalcFireDirection(const FVector& TargetLocation)
 	return Retval;
 }
 
+//Reference https://amored8701.tistory.com/132
 FRotator AWeapon::CalcRotationForBullet(const FVector& FireDirection)
 {
 	FRotator Retval = GetActorRotation();
 	FVector FW = GetActorForwardVector();
 	
-	EGLOG(Log, TEXT("Forward : %s"), *FW.ToString());
-	EGLOG(Log, TEXT("Fire Direction : %s"), *FireDirection.ToString());
-
+	//EGLOG(Log, TEXT("Forward : %s"), *FW.ToString());
+	//EGLOG(Log, TEXT("Fire Direction : %s"), *FireDirection.ToString());
+	 
 
 	float Dot = FVector::DotProduct(FW, FireDirection);
 	float Angle = FMath::Acos(Dot / (FW.Size() * FireDirection.Size()))*100;
 	EGLOG(Warning, TEXT("Angle : %f"), Angle);
+	FVector Cross = FVector::CrossProduct(FW,FireDirection);
+if(Cross.Z>0)
+{
+	return Retval;
+}
+
 	Retval.Yaw -= Angle;
 	
 	return Retval;
+
+	
 }
 
 
@@ -137,7 +146,7 @@ bool AWeapon::Attack(const FVector& TargetLocation)
 	
 	FVector FireDirection = CalcFireDirection(TargetLocation); 
 	
-	// FRotator FireRotation = CalcRotationForBullet(FireDirection);
+	//FRotator FireRotation = CalcRotationForBullet(FireDirection);
 	FRotator FireRotation =GetOwner()-> GetActorRotation();
 
 	Mag->FireBullet(FireLocation, FireRotation, FireDirection);
