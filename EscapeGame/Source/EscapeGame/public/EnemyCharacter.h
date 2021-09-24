@@ -12,7 +12,7 @@
 #include "EnemyCharacter.generated.h"
 
 
-DECLARE_DELEGATE_OneParam(FOnTakeDamaged, AActor* );
+DECLARE_DELEGATE_OneParam(FOnTakeDamaged, AActor*);
 
 
 UCLASS(Abstract)

@@ -23,23 +23,9 @@ void AEnemyAIController::OnPossess(APawn * InPawn)
 	Super::OnPossess(InPawn);
 	//EGLOG(Warning, TEXT("AIController Online : %s"), *InPawn->GetName());
 
-	AEnemyCharacter const* TempCharacter = Cast<AEnemyCharacter>(InPawn);
-	if (!TempCharacter)
-	{
-		EGLOG(Error, TEXT("Casting Failed"));
-		return;
-	}
-	//Bind Function
-	TempCharacter->OnTakeDamaged.CreateLambda([this](AActor* OtherActor)->void {
-		auto ResultActor = GetBlackboardComponent()->GetValueAsObject(TargetPlayer);
-		if(!ResultActor)
-		{ 
-			GetBlackboardComponent()->SetValueAsObject(TargetPlayer, OtherActor);
-			return;
-		}
-		
-		});
-
+	
+	
+	
 }
 
 void AEnemyAIController::OnUnPossess()
@@ -62,6 +48,17 @@ void AEnemyAIController::PostInitializeComponents()
 
 void AEnemyAIController::perceptionUpdated(const TArray<AActor*>& UpdatedActors)
 {
+}
+
+void AEnemyAIController::OnTakeDamaged(AActor* OtherActor)
+{
+	EGLOG(Log, TEXT("Execute"));
+	auto ResultActor = GetBlackboardComponent()->GetValueAsObject(TargetPlayer);
+	if (!ResultActor)
+	{
+		GetBlackboardComponent()->SetValueAsObject(TargetPlayer, OtherActor);
+		return;
+	}
 }
 
 void AEnemyAIController::RunAI()
@@ -92,7 +89,7 @@ void AEnemyAIController::StopAI()
 
 }
 
-bool AEnemyAIController::GetTargetLocation(FVector& Retval)
+bool AEnemyAIController::GetTargetPlayerLocation(FVector& Retval)
 {
 	
 	const auto Actor = Cast<AActor>(GetBlackboardComponent()->GetValueAsObject(AEnemyAIController::TargetPlayer));

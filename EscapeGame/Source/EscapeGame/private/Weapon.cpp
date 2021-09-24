@@ -68,8 +68,8 @@ FVector AWeapon::CalcFireDirection(const FVector& TargetLocation)
 	FVector DistVec = TargetLocation - MuzzleLocation;
 	//DistVec.Normalize();
 	//원의 중심 위치
-	//FVector Center =  MuzzleLocation + (TargetLocation * FireControl_DistanceOffset);
-	FVector Center = DistVec* FireControl_DistanceOffset;
+	FVector Center =  MuzzleLocation + (TargetLocation * FireControl_DistanceOffset);
+	//FVector Center = DistVec* FireControl_DistanceOffset;
 	//조준 지점. 원의 위치에서 랜덤하게 한다
 	FVector AimPoint;
 	AimPoint.X = FMath::RandRange(Center.X - FireControl_Radius, Center.X + FireControl_Radius);

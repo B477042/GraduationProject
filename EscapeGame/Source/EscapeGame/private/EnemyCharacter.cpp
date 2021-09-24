@@ -6,6 +6,8 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "MiniMapMarkerComponent.h"
+#include "EnemyAIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
 {
@@ -70,6 +72,22 @@ void AEnemyCharacter::BeginPlay()
 		return;
 	}
 	HPBar->SetPercent(1.0f);
+
+	
+	auto AIController = Cast<AEnemyAIController>(GetController());
+	if (!AIController)
+	{
+		EGLOG(Error, TEXT("Controller Casting Error"));
+		return;
+	}
+
+	OnTakeDamaged.BindLambda([this,AIController](AActor* OtherActor)->void {
+		auto Retval = AIController->GetBlackboardComponent()->GetValueAsObject(AEnemyAIController::TargetPlayer);
+		if (!Retval)
+		{
+			AIController->GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, this);
+		}
+		});
 	
 	////Add this Object to GameState.
 	//auto GameState = Cast<AEGGameState>(GetWorld()->GetGameState());
@@ -86,7 +104,10 @@ void AEnemyCharacter::BeginDestroy()
 {
 	Super::BeginDestroy();
 
-
+	if (OnTakeDamaged.IsBound())
+	{
+		OnTakeDamaged.Unbind();
+	}
 }
 
 void AEnemyCharacter::PostInitializeComponents()
@@ -102,7 +123,7 @@ float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Damag
 	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
 	//EGLOG(Error, TEXT("Damage Causer %s"), *DamageCauser->GetName());
-
+	if(OnTakeDamaged.IsBound())
 	OnTakeDamaged.Execute(DamageCauser);
 	//Stat->TakeDamage(DamageAmount);
 

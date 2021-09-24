@@ -409,7 +409,7 @@ void AEnemyCharacter_Gunner::Attack()
 	}
 
 	FVector TargetLocation;
-	bool bResult = AIController->GetTargetLocation(TargetLocation);
+	bool bResult = AIController->GetTargetPlayerLocation(TargetLocation);
 	if (!bResult)
 	{
 		return;
