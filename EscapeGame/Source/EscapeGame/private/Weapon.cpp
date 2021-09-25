@@ -146,8 +146,8 @@ bool AWeapon::Attack(const FVector& TargetLocation)
 	
 	FVector FireDirection = CalcFireDirection(TargetLocation); 
 	
-	//FRotator FireRotation = CalcRotationForBullet(FireDirection);
-	FRotator FireRotation =GetOwner()-> GetActorRotation();
+	FRotator FireRotation = CalcRotationForBullet(FireDirection);
+	//FRotator FireRotation =GetOwner()-> GetActorRotation();
 
 	Mag->FireBullet(FireLocation, FireRotation, FireDirection);
 	bIsEjcting = true;
