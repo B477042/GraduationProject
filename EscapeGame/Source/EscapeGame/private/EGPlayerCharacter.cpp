@@ -748,11 +748,15 @@ void AEGPlayerCharacter::Move(float DeltaTime)
 
 void AEGPlayerCharacter::PressFury()
 {
-	if (FuryComponent->UseFury())
+	if (!FuryComponent->UseFury())
 	{
-		UE_LOG(LogTemp, Log, TEXT("Fury used"));
+		return;
 
 	}
+	
+	UE_LOG(LogTemp, Log, TEXT("Fury used"));
+
+
 }
 
 float AEGPlayerCharacter::ReflectProjectiles(AActor* DamageCauser, float FinalDamage)
