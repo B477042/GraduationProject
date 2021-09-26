@@ -41,6 +41,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	
 	bIsGuarding = false;
 	bIsDebugMode = false;
+	bResticLMBInput = false;
 
 	MoveDirection = FVector::ZeroVector;
 	CurrentVelocity = 78.f;
@@ -289,8 +290,17 @@ UComponent_Fury* AEGPlayerCharacter::GetFuryComponent()
 
 void AEGPlayerCharacter::ChargeAttack()
 {
+	if (!bResticLMBInput)
+	{
+		return;
+	}
+
 	//Charge Attack은 시동이 걸린 상태에서만 실행될 것이다
-	if (!Stat->IsAttacking())return;
+	if (!Stat->IsAttacking())
+	{ 
+		return; 
+	}
+
 
 	Anim->PlaySkillMontage(Stat->GetCurrentCombo());
 	
@@ -349,7 +359,7 @@ void AEGPlayerCharacter::AirAttack()
 
 void AEGPlayerCharacter::StartRunning()
 {
-	EGLOG(Warning, TEXT("Run Key Preesed"));
+//	EGLOG(Warning, TEXT("Run Key Preesed"));
 
 	//if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::ZeroVector)return;
 	//Stat->SetRunning();//달릴 상태로 만들어 준다
@@ -359,6 +369,7 @@ void AEGPlayerCharacter::StartRunning()
 	if (Stat->CanUseStamina())
 	{
 		Stat->SetStaminaUsing(true);
+		Anim->SetJogPlayRate(true);
 		GetCharacterMovement()->MaxWalkSpeed = 1000.0f;
 	}
 
@@ -389,6 +400,7 @@ void AEGPlayerCharacter::StopRunning()
 {
 	/*EGLOG(Warning, TEXT("Run Key Released"));*/
 	Stat->SetStaminaUsing(false);
+	Anim->SetJogPlayRate(false);
 	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 	/*if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::ZeroVector)return;
 	Stat->SetWalking();*/
@@ -477,14 +489,10 @@ void AEGPlayerCharacter::ActiveThunder()
 
 void AEGPlayerCharacter::RestricInput()
 {
-	/*auto myCon = Cast<APlayerController>(GetController());
-	if (myCon != nullptr)
-	{
-		
-		DisableInput(myCon);
-	}*/
+	 
 
 	bRestricAxisInput = true;
+	bResticLMBInput = true;
 }
 
 void AEGPlayerCharacter::RecoverInput()
@@ -495,7 +503,7 @@ void AEGPlayerCharacter::RecoverInput()
 		EnableInput(myCon);
 	}*/
 	bRestricAxisInput = false;
-
+	bResticLMBInput = false;
 }
 
 

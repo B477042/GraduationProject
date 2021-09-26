@@ -100,6 +100,7 @@ Build/Android/res/*/*
 Content/*
 !Content/MyFolder/
 
-
+#Vs code
+.vscode/
 
 # End of https://www.gitignore.io/api/c++,unrealengine

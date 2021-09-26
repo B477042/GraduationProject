@@ -222,5 +222,5 @@ private:
 	* input 
 	*/
 	bool bRestricAxisInput=false;
-
+	bool bResticLMBInput;
 };
