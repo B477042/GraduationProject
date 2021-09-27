@@ -80,12 +80,12 @@ void AEnemyCharacter::BeginPlay()
 		EGLOG(Error, TEXT("Controller Casting Error"));
 		return;
 	}
-
+	
 	OnTakeDamaged.BindLambda([this,AIController](AActor* OtherActor)->void {
 		auto Retval = AIController->GetBlackboardComponent()->GetValueAsObject(AEnemyAIController::TargetPlayer);
 		if (!Retval)
 		{
-			AIController->GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, this);
+			AIController->GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, OtherActor);
 		}
 		});
 	
@@ -143,8 +143,8 @@ void AEnemyCharacter::Tick(float DeltaTime)
 void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AEnemyCharacter::Turn);
-	EGLOG(Warning, TEXT("Turn Synced"));
+	//PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AEnemyCharacter::Turn);
+	//EGLOG(Warning, TEXT("Turn Synced"));
 }
 
 void AEnemyCharacter::Turn(float NewAxisValue)

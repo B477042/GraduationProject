@@ -150,17 +150,17 @@ void AEnemyAIController_Gunner::SetUpAiPerception()
 	AiConfigSight->SightRadius = SightRadius;
 	AiConfigSight->LoseSightRadius = LoseSightRadius;
 	AiConfigSight->PeripheralVisionAngleDegrees = PeripheralVisionAngleDegrees;
-	AiConfigSight->DetectionByAffiliation.bDetectEnemies = bDetectEnemies;
-	AiConfigSight->DetectionByAffiliation.bDetectNeutrals = bDetectNeutrals;
-	AiConfigSight->DetectionByAffiliation.bDetectFriendlies = bDetectFriendlies;
+	AiConfigSight->DetectionByAffiliation.bDetectEnemies = true;
+	AiConfigSight->DetectionByAffiliation.bDetectNeutrals = true;
+	AiConfigSight->DetectionByAffiliation.bDetectFriendlies = true;
 	AiConfigSight->SetMaxAge(MaxAge);
 
 	//Hearing Setting
 	AiConfigHearing->HearingRange = HearingRange;
 	AiConfigHearing->LoSHearingRange = LoSHearingRange;
-	AiConfigHearing->DetectionByAffiliation.bDetectFriendlies = bDetectFriendlies;
-	AiConfigHearing->DetectionByAffiliation.bDetectEnemies = bDetectEnemies;
-	AiConfigHearing->DetectionByAffiliation.bDetectNeutrals = bDetectNeutrals;
+	AiConfigHearing->DetectionByAffiliation.bDetectFriendlies = true;
+	AiConfigHearing->DetectionByAffiliation.bDetectEnemies = true;
+	AiConfigHearing->DetectionByAffiliation.bDetectNeutrals = true;
 	AiConfigHearing->SetMaxAge(MaxAge);
 
 
