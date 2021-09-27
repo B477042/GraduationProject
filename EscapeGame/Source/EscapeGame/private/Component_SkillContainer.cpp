@@ -53,6 +53,7 @@ void UComponent_SkillContainer::AddSkillObj(TWeakObjectPtr<ASkillActor> Input)
 	}
 	
 	SkillObjects[Index] = Input.Get();
+	SkillObjects[Index]->SetOwner(GetOwner());
 
 	revolve();
 

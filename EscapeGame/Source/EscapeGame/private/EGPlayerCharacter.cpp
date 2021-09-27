@@ -21,7 +21,8 @@
 #include "MiniMapMarkerComponent.h"
 #include "MiniMapTileManager.h"
 #include "BarrierEffectComponent.h"
-
+#include "Perception/AISenseConfig_Sight.h"
+#include "Perception/AISenseConfig_Hearing.h"
 
 // Sets default values
 AEGPlayerCharacter::AEGPlayerCharacter()
@@ -290,8 +291,9 @@ UComponent_Fury* AEGPlayerCharacter::GetFuryComponent()
 
 void AEGPlayerCharacter::ChargeAttack()
 {
-	if (!bResticLMBInput)
+	if (bResticLMBInput)
 	{
+		
 		return;
 	}
 
@@ -531,6 +533,9 @@ void AEGPlayerCharacter::InitComponents()
 	MiniMapMarkerComponent = CreateDefaultSubobject<UMiniMapMarkerComponent>(TEXT("MiniMapMarker"));
 	BarrierEffect = CreateDefaultSubobject<UBarrierEffectComponent>(TEXT("BarrierEffectComponent"));
 	FuryComponent = CreateDefaultSubobject<UComponent_Fury>(TEXT("FuryComponent"));
+	AIPerceptionStimuliSource = CreateDefaultSubobject< UAIPerceptionStimuliSourceComponent>(TEXT("AIPerceptionStimuliSource"));
+
+
 	//====================================================================================================
 	//Components Tree
 	SpringArm->SetupAttachment(GetCapsuleComponent());
@@ -570,12 +575,10 @@ void AEGPlayerCharacter::InitComponents()
 	SetupSpringArm();
 	
 	
-	////포스트 프로세스 값 지정
-	//FPostProcessSettings& PostProcessSettings = Camera->PostProcessSettings;
-
-	//
-
-
+	//====================================================================================================
+	//AIPerceptionStimuliSource
+	AIPerceptionStimuliSource->RegisterForSense(UAISense_Sight::StaticClass());
+	AIPerceptionStimuliSource->RegisterForSense(UAISense_Hearing::StaticClass());
 
 }
 
@@ -792,7 +795,7 @@ void AEGPlayerCharacter::OnWeaponBeginOverlap(UPrimitiveComponent * OverlappedCo
 	EGLOG(Error, TEXT("Hit : %s"), *OtherActor->GetName());
 	OtherActor->TakeDamage(Stat->GetATK(),DamageEvent,Controller,this );
 
-	Container_Hit->SetEffectAt(OtherActor->GetActorLocation());
+	Container_Hit->ActivateEffectAt(OtherActor->GetActorLocation());
 }
 
 void AEGPlayerCharacter::OnCheckCanComboAttack(UAnimMontage* Montage, bool bInterrupted)

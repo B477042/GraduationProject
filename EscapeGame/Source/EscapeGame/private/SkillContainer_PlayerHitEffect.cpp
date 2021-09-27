@@ -36,7 +36,7 @@ void USkillContainer_PlayerHitEffect::UseSkill(const AActor & TargetActor, const
 	revolve();
 }
 
-void USkillContainer_PlayerHitEffect::SetEffectAt(const FVector & At, int n_Count)
+void USkillContainer_PlayerHitEffect::ActivateEffectAt(const FVector & At, int n_Count)
 {
 	auto something = Cast<ASkillActor_Hit>(CurrentIndex);
 	if (!something) {

@@ -106,6 +106,7 @@ FRotator AWeapon::CalcRotationForBullet(const FVector& FireDirection)
 	FVector Cross = FVector::CrossProduct(FW,FireDirection);
 if(Cross.Z>0)
 {
+	Retval.Yaw = Angle;
 	return Retval;
 }
 

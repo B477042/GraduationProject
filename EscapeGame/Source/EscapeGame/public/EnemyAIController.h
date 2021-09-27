@@ -40,7 +40,7 @@ public:
 protected:
 	virtual void BeginPlay()override;
 	virtual void PostInitializeComponents()override;
-	virtual void perceptionUpdated(const TArray<AActor*>& UpdatedActors);
+	virtual void PerceptionUpdated(const TArray<AActor*>& UpdatedActors);
 	
 
 	void OnTakeDamaged(AActor* OtherActor);

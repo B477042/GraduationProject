@@ -14,7 +14,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Config = "GameAi")
 class ESCAPEGAME_API AEnemyAIController_Gunner : public AEnemyAIController
 {
 	GENERATED_BODY()
@@ -40,11 +40,32 @@ protected:
 	UFUNCTION()
 	void OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
 	
+	void SetUpAiPerception();
+
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 		UAISenseConfig_Sight * AiConfigSight;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 		UAISenseConfig_Hearing* AiConfigHearing;
+
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "AiSense")
+		float SightRadius;
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "AiSense")
+		float LoseSightRadius;
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "AiSense")
+		float PeripheralVisionAngleDegrees;
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "AiSense")
+		float HearingRange;
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "AiSense")
+		float LoSHearingRange;
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "AiSense")
+		float MaxAge;
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "AiSense")
+		uint8 bDetectFriendlies :1;
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "AiSense")
+		uint8 bDetectEnemies : 1;
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "AiSense")
+		uint8 bDetectNeutrals : 1;
 
 };

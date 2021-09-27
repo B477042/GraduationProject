@@ -66,8 +66,8 @@ void ASkillActor_Hit::UseSkill(const FVector & Point)
 	{
 		for (auto it : OverlapResults)
 		{
-			it.GetActor()->TakeDamage(10.0f, DamageEvent, playerCon, this);
-			EGLOG(Error, TEXT("Additional Damage To : %s"), *it.GetActor()->GetName());
+			it.GetActor()->TakeDamage(10.0f, DamageEvent, playerCon, GetOwner());
+			//EGLOG(Error, TEXT("Additional Damage To : %s"), *it.GetActor()->GetName());
 		}
 	}
 

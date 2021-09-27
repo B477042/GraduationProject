@@ -46,7 +46,7 @@ void AEnemyAIController::PostInitializeComponents()
 	Super::PostInitializeComponents();
 }
 
-void AEnemyAIController::perceptionUpdated(const TArray<AActor*>& UpdatedActors)
+void AEnemyAIController::PerceptionUpdated(const TArray<AActor*>& UpdatedActors)
 {
 }
 

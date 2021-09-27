@@ -12,8 +12,7 @@
 
 //Input Param is percent of stamina
 DECLARE_DELEGATE_OneParam(FOnStaminaChanged, float);
-
-
+ 
 
 
 UCLASS(ClassGroup = "Custom", Config = "GameComponent", meta = (BlueprintSpawnableComponent))
@@ -26,9 +25,11 @@ public:
 	//bool CanUseStamina() { return bCanUsingStamina; }
 	float GetStaminaRatio();
 
-	//
-	void TurnOnStamina ();
-	
+	// Tik-based stamina usage function. Like sprint, blocking
+	void TurnOnTickStamina ();
+	// Roll, Jump 
+	void UseStaticStamina();
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -47,13 +48,16 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Config, VisibleAnywhere, Category = "Stamina", meta = (AllowPrivateAccess = true))
 		float MaxStamina;
 	UPROPERTY(BlueprintReadOnly, Config, VisibleAnywhere, Category = "Stamina", meta = (AllowPrivateAccess = true))
-		float RecoverElement;
+		float RecoverFactor;
 	UPROPERTY(BlueprintReadOnly, Config, VisibleAnywhere, Category = "Stamina", meta = (AllowPrivateAccess = true))
-		float UsingElement;
+		float UsingFactor;
+	UPROPERTY(BlueprintReadOnly, Config, VisibleAnywhere, Category = "Stamina", meta = (AllowPrivateAccess = true))
+		float UsageOfStatic;
 
 
 	UPROPERTY(BlueprintReadOnly, Config, VisibleAnywhere, Category = "Stamina", meta = (AllowPrivateAccess = true))
 		uint8 bCanUsingStamina : 1;
 	UPROPERTY(BlueprintReadOnly, Config, VisibleAnywhere, Category = "Stamina", meta = (AllowPrivateAccess = true))
 		uint8 bIsStaminaUsing:1;
+	 
 };

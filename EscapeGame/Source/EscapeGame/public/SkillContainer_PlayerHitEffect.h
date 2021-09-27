@@ -24,6 +24,6 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	virtual void UseSkill(const AActor& TargetActor, const FVector& Direction, int n_Count = 1)override;
-	void SetEffectAt(const FVector& At, int n_Count = 1);
+	void ActivateEffectAt(const FVector& At, int n_Count = 1);
 	
 };

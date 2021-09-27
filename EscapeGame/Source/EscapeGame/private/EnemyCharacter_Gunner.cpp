@@ -123,7 +123,7 @@ void AEnemyCharacter_Gunner::PostInitializeComponents()
 	
 
 
-//	AIPerceptionComponent->OnPerceptionUpdated.AddDynamic(this,&AEnemyCharacter_Gunner::perceptionUpdated);
+//	AIPerceptionComponent->OnPerceptionUpdated.AddDynamic(this,&AEnemyCharacter_Gunner::PerceptionUpdated);
 
 }
 
