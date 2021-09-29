@@ -32,7 +32,7 @@ AEnemyAIController_Gunner::AEnemyAIController_Gunner()
 	PerceptionComponent->ConfigureSense(*AiConfigSight);
 	PerceptionComponent->ConfigureSense(*AiConfigHearing);
 	PerceptionComponent->SetDominantSense(UAISense_Sight::StaticClass());
-
+	PerceptionComponent->SetSenseEnabled(UAISense_Hearing::StaticClass(), true);
 	
 
 

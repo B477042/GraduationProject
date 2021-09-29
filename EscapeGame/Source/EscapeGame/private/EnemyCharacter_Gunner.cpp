@@ -423,7 +423,7 @@ void AEnemyCharacter_Gunner::Attack()
 	{
 		//애니메이션 재생
 		Anim->PlayFire(StatComponent->GetState());
-		EGLOG(Log, TEXT("Fire"));
+		//EGLOG(Log, TEXT("Fire"));
 	}
 	
 	

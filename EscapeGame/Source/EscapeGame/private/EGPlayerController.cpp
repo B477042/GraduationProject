@@ -351,7 +351,7 @@ void AEGPlayerController::LoadGame(UEGSaveGame* LoadInstance)
 
 	}
 
-
+	EGLOG(Error, TEXT("Player Load game called"));
 
 }
 
