@@ -39,6 +39,8 @@ public:
 	//리엑션 관련 계수 조작. React Direction, bIsDamaged 조작
 	void TakeDamage(const AActor* OtherActor);
 
+	//Jog Play Rate 조절. True : Running, False : Jog
+	void SetJogPlayRate(bool bIsRunnuing);
 
 	UFUNCTION()
 		void AnimNotify_RollingStart();
@@ -46,11 +48,10 @@ public:
 		void AnimNotify_RollingEnd();
 	UFUNCTION()
 		void AnimNotify_AnimEnd();
-	UFUNCTION()
-		void AnimNotify_PlayHitSound();
+	
 
 	UFUNCTION()
-		void AnimNotify_Skill1Start();
+		void AnimNotify_SkillStart();
 	UFUNCTION()
 		void AnimNotify_SkillEnd();
 	UFUNCTION()
@@ -66,12 +67,7 @@ public:
 	UFUNCTION()
 		void AnimNotify_ReactDamagedEnd();
 	
-
-	/*UFUNCTION()
-		void OnMontageStart(UAnimMontage* Montage);
-	UFUNCTION()
-		void OnMontageEnd(UAnimMontage* Montage, bool bInterrupted);*/
-
+ 
 
 	//Input 값은 Player의 Combo
 	void PlaySkillMontage(int Combo);
@@ -79,12 +75,18 @@ public:
 
 	float GetRollingLength() { return RollingLength; }
 	void SetDead();
+
+	
+	
+
+
 private:
 	//const int32 StartCombo = 1;//Attack Montage에서 처음 액션 번호
 	//const int32 EndCombo = 4;//Attack Montage에서 마지막 액션 번호
 
 	float RollingLength = 570.0f;
 
+	
 
 	////Charge Attack Montage
 	//UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
@@ -93,16 +95,15 @@ private:
 		TArray<UAnimMontage*> Montage_Skills;
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
 		UAnimMontage* Montage_Roll;
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
+		UAnimMontage* Montage_Fury;
 
-	UPROPERTY()
-	UAudioComponent* SFX_Laugh;
 
 	UPROPERTY()
 	UAudioComponent* SFX_Death;
 	UPROPERTY()
 	UAudioComponent* SFX_FootStep;
-	UPROPERTY()
-	UAudioComponent* SFX_Pain;
+
 
 	////통상공격 몽타주
 	//UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))
@@ -125,7 +126,15 @@ private:
 		float ReactDirection;
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
 	bool bIsDamaged;
+	
+	//Walk Play rate property
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = true))
+	float CurrentJogPlayRate;
 
+	UPROPERTY(VisibleDefaultsOnly,  Category = Character, Meta = (AllowPrivateAccess = true))
+	float JogPlayRate;
+	UPROPERTY(VisibleDefaultsOnly,  Category = Character, Meta = (AllowPrivateAccess = true))
+	float RunningPlayRate;
 
 
 };

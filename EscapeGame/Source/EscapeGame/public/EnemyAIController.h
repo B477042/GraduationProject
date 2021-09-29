@@ -34,13 +34,16 @@ public:
 	virtual	void StopAI();
 
 	//Find Target Object's Location. If Target is nullptr, return false
-	bool GetTargetLocation(FVector& Retval);
+	virtual bool GetTargetPlayerLocation(FVector& Retval);
 	
 
 protected:
 	virtual void BeginPlay()override;
 	virtual void PostInitializeComponents()override;
-	virtual void perceptionUpdated(const TArray<AActor*>& UpdatedActors);
+	virtual void PerceptionUpdated(const TArray<AActor*>& UpdatedActors);
+	
+
+	void OnTakeDamaged(AActor* OtherActor);
 //private:
 
 //private:

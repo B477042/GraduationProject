@@ -4,7 +4,7 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
-
+#include "EnemyCharacter.h"
 
 
 
@@ -21,9 +21,11 @@ AEnemyAIController::AEnemyAIController()
 void AEnemyAIController::OnPossess(APawn * InPawn)
 {
 	Super::OnPossess(InPawn);
-	EGLOG(Warning, TEXT("AIController Online : %s"), *InPawn->GetName());
+	//EGLOG(Warning, TEXT("AIController Online : %s"), *InPawn->GetName());
 
-
+	
+	
+	
 }
 
 void AEnemyAIController::OnUnPossess()
@@ -44,8 +46,19 @@ void AEnemyAIController::PostInitializeComponents()
 	Super::PostInitializeComponents();
 }
 
-void AEnemyAIController::perceptionUpdated(const TArray<AActor*>& UpdatedActors)
+void AEnemyAIController::PerceptionUpdated(const TArray<AActor*>& UpdatedActors)
 {
+}
+
+void AEnemyAIController::OnTakeDamaged(AActor* OtherActor)
+{
+	EGLOG(Log, TEXT("Execute"));
+	auto ResultActor = GetBlackboardComponent()->GetValueAsObject(TargetPlayer);
+	if (!ResultActor)
+	{
+		GetBlackboardComponent()->SetValueAsObject(TargetPlayer, OtherActor);
+		return;
+	}
 }
 
 void AEnemyAIController::RunAI()
@@ -76,7 +89,7 @@ void AEnemyAIController::StopAI()
 
 }
 
-bool AEnemyAIController::GetTargetLocation(FVector& Retval)
+bool AEnemyAIController::GetTargetPlayerLocation(FVector& Retval)
 {
 	
 	const auto Actor = Cast<AActor>(GetBlackboardComponent()->GetValueAsObject(AEnemyAIController::TargetPlayer));

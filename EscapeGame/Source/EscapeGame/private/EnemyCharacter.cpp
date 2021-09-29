@@ -6,6 +6,8 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "MiniMapMarkerComponent.h"
+#include "EnemyAIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
 {
@@ -51,6 +53,11 @@ AEnemyCharacter::AEnemyCharacter()
 //	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
 	AIPerceptionStimuliSourceComponent = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("AIPerceptionStimuliSourceComponent"));
 	
+	//Control 관련 설정
+	bUseControllerRotationYaw = false;
+	GetCharacterMovement()->bUseControllerDesiredRotation = true;
+	GetCharacterMovement()->RotationRate.Yaw = 360;
+	GetCharacterMovement()->bOrientRotationToMovement = false;
 }
 
 // Called when the game starts or when spawned
@@ -65,6 +72,22 @@ void AEnemyCharacter::BeginPlay()
 		return;
 	}
 	HPBar->SetPercent(1.0f);
+
+	
+	auto AIController = Cast<AEnemyAIController>(GetController());
+	if (!AIController)
+	{
+		EGLOG(Error, TEXT("Controller Casting Error"));
+		return;
+	}
+	
+	OnTakeDamaged.BindLambda([this,AIController](AActor* OtherActor)->void {
+		auto Retval = AIController->GetBlackboardComponent()->GetValueAsObject(AEnemyAIController::TargetPlayer);
+		if (!Retval)
+		{
+			AIController->GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, OtherActor);
+		}
+		});
 	
 	////Add this Object to GameState.
 	//auto GameState = Cast<AEGGameState>(GetWorld()->GetGameState());
@@ -81,7 +104,10 @@ void AEnemyCharacter::BeginDestroy()
 {
 	Super::BeginDestroy();
 
-
+	if (OnTakeDamaged.IsBound())
+	{
+		OnTakeDamaged.Unbind();
+	}
 }
 
 void AEnemyCharacter::PostInitializeComponents()
@@ -96,6 +122,9 @@ float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Damag
 {
 	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
+	//EGLOG(Error, TEXT("Damage Causer %s"), *DamageCauser->GetName());
+	if(OnTakeDamaged.IsBound())
+	OnTakeDamaged.Execute(DamageCauser);
 	//Stat->TakeDamage(DamageAmount);
 
 	return FinalDamage;
@@ -114,8 +143,8 @@ void AEnemyCharacter::Tick(float DeltaTime)
 void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AEnemyCharacter::Turn);
-	EGLOG(Warning, TEXT("Turn Synced"));
+	//PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AEnemyCharacter::Turn);
+	//EGLOG(Warning, TEXT("Turn Synced"));
 }
 
 void AEnemyCharacter::Turn(float NewAxisValue)
@@ -142,7 +171,7 @@ void AEnemyCharacter::SaveGame(UEGSaveGame * SaveInstance)
 	SaveData.Rotation = GetActorRotation();
 	
 	SaveInstance->D_Enemies.Add(GetName(), SaveData);
-	
+	EGLOG(Error, TEXT("Add %s's Data to Enemy list"), *GetOwner()->GetName());
 }
 
  void AEnemyCharacter::LoadGame(const UEGSaveGame * LoadInstance)
@@ -160,7 +189,7 @@ void AEnemyCharacter::SaveGame(UEGSaveGame * SaveInstance)
 		Destroy();
 		return;
 	}
-
+	EGLOG(Error, TEXT("%s find Data"), *GetName());
 	SetActorLocationAndRotation(LoadData->Location, LoadData->Rotation);
 
 

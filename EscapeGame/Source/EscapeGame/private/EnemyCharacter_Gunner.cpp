@@ -123,7 +123,7 @@ void AEnemyCharacter_Gunner::PostInitializeComponents()
 	
 
 
-//	AIPerceptionComponent->OnPerceptionUpdated.AddDynamic(this,&AEnemyCharacter_Gunner::perceptionUpdated);
+//	AIPerceptionComponent->OnPerceptionUpdated.AddDynamic(this,&AEnemyCharacter_Gunner::PerceptionUpdated);
 
 }
 
@@ -206,10 +206,10 @@ void AEnemyCharacter_Gunner::SaveGame(UEGSaveGame * SaveInstance)
 		return;
 	}
 
-	auto SaveData = SaveInstance->D_Enemies.Find(GetOwner()->GetName());
+	auto SaveData = SaveInstance->D_Enemies.Find(GetName());
 	if (!SaveData)
 	{
-		EGLOG(Error, TEXT("Can't find %s's Data"), *GetOwner()->GetName());
+		EGLOG(Error, TEXT("Can't find %s's Data"), *GetName());
 		return;
 	}
 	//Hp저장
@@ -228,13 +228,14 @@ void AEnemyCharacter_Gunner::LoadGame(const UEGSaveGame * LoadInstance)
 		return;
 	}
 
-	auto LoadData = LoadInstance->D_Enemies.Find(GetOwner()->GetName());
+	auto LoadData = LoadInstance->D_Enemies.Find(GetName());
 	if (!LoadData)
 	{
-		EGLOG(Error, TEXT("LaodData FAILED"));
+		EGLOG(Log, TEXT("%s Can't find Data"), *GetName());
 		return;
 	}
 	StatComponent->LoadGame(LoadData);
+	EGLOG(Error, TEXT("Find %s's Data"), *GetName());
 }
 
 
@@ -409,7 +410,7 @@ void AEnemyCharacter_Gunner::Attack()
 	}
 
 	FVector TargetLocation;
-	bool bResult = AIController->GetTargetLocation(TargetLocation);
+	bool bResult = AIController->GetTargetPlayerLocation(TargetLocation);
 	if (!bResult)
 	{
 		return;
@@ -422,7 +423,7 @@ void AEnemyCharacter_Gunner::Attack()
 	{
 		//애니메이션 재생
 		Anim->PlayFire(StatComponent->GetState());
-		EGLOG(Log, TEXT("Fire"));
+		//EGLOG(Log, TEXT("Fire"));
 	}
 	
 	

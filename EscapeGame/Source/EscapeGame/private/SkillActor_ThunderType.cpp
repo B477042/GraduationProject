@@ -86,7 +86,7 @@ void ASkillActor_ThunderType::UseSkill(const FVector & Location)
 			auto player = Cast<AEGPlayerCharacter>(OverlapResult.Actor);
 			if (player)continue;
 			/*
-			DrawDebugPoint(World, OverlapResult.Actor->GetTargetLocation(), 100.0f, FColor::Red, false, 0.2f);
+			DrawDebugPoint(World, OverlapResult.Actor->GetTargetPlayerLocation(), 100.0f, FColor::Red, false, 0.2f);
 			EGLOG(Error, TEXT(" Hit Actor : %s , Damage : %d"), *OverlapResult.Actor->GetName(),Damage);*/
 			
 			OverlapResult.Actor->TakeDamage(Damage,DamageEvent,World->GetFirstPlayerController(),this);

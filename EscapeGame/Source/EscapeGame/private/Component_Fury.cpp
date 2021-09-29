@@ -40,7 +40,7 @@ float UComponent_Fury::TakeDamage(const float NewDamage)
 	}
 
 
-	Fury += NewDamage;
+	Fury += NewDamage*2.3f;
 	
 
 
@@ -53,7 +53,7 @@ float UComponent_Fury::TakeDamage(const float NewDamage)
 
 
 	}
-	//Notify Fury has been changed
+	//Notify Fury changed
 	OnFuryChanged.Execute(GetFuryRatio());
 
 
@@ -62,7 +62,7 @@ float UComponent_Fury::TakeDamage(const float NewDamage)
 
 bool  UComponent_Fury::UseFury()
 {
-	if (Fury < 1.0f)
+	if (GetFuryRatio() < 1.0f)
 	{
 		UE_LOG(LogTemp, Log, TEXT("Not enough fury"));
 		return false;

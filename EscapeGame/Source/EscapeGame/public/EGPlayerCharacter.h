@@ -13,6 +13,8 @@
 #include "SkillContainer_PlayerHitEffect.h"
 #include "Components/BoxComponent.h"
 #include "Component_Fury.h"
+#include "Component_Stamina.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "EGPlayerCharacter.generated.h"
 
 //DECLARE_DELEGATE(FOnKeyPressed);
@@ -117,6 +119,7 @@ private:
 	//현재 체력에 따라 카메라에 이펙트를 준다. HP가 변하면 업데이트가 되게끔
 	void DamagedPostEffect();
 
+	
 
 	UFUNCTION(BlueprintCallable)
 	void LoadGameData(const class UEGSaveGame* LoadInstance);
@@ -193,7 +196,11 @@ private:
 	*/
 		UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Fury", meta = (AllowPrivateAccess = true))
 			UComponent_Fury* FuryComponent;
-
+	/*
+	* AI
+	*/
+		UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Ai Perception", meta = (AllowPrivateAccess = true))
+			UAIPerceptionStimuliSourceComponent* AIPerceptionStimuliSource;
 
 	float minMiniMapArmLength;
 	float maxMiniMapArmLength;
@@ -222,5 +229,5 @@ private:
 	* input 
 	*/
 	bool bRestricAxisInput=false;
-
+	bool bResticLMBInput;
 };

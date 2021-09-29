@@ -60,7 +60,7 @@ void UBTService_Advanced_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, ui
 				//	//DrawDebugBox(World, Center, DetectBoxSize, 16, FColor::Purple, false, 0.2f);
 				//	//Draw Point Detected Player
 				//	//탐지된 플레이어 위에 표시하기
-				//	DrawDebugPoint(World, resultChara->GetTargetLocation(), 100.0f, FColor::Magenta, false, 0.2f);
+				//	DrawDebugPoint(World, resultChara->GetTargetPlayerLocation(), 100.0f, FColor::Magenta, false, 0.2f);
 
 				//	FVector DebugFVPoint = ControllingPawn->GetActorLocation() + ControllingPawn->GetActorForwardVector()/**FVector(1.0f,1.0f,1.0f)*/*600.0f;
 				//	DrawDebugLine(World, ControllingPawn->GetActorLocation(), DebugFVPoint, FColor::Red, false, 2.0f);

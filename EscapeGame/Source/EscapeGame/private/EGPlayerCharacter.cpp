@@ -21,7 +21,8 @@
 #include "MiniMapMarkerComponent.h"
 #include "MiniMapTileManager.h"
 #include "BarrierEffectComponent.h"
-
+#include "Perception/AISenseConfig_Sight.h"
+#include "Perception/AISenseConfig_Hearing.h"
 
 // Sets default values
 AEGPlayerCharacter::AEGPlayerCharacter()
@@ -41,6 +42,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	
 	bIsGuarding = false;
 	bIsDebugMode = false;
+	bResticLMBInput = false;
 
 	MoveDirection = FVector::ZeroVector;
 	CurrentVelocity = 78.f;
@@ -134,7 +136,7 @@ void AEGPlayerCharacter::BeginPlay()
 		}
 
 		//다른 오브젝트들에게 Load Game을 활성화 시킨다
-		EGLOG(Error, TEXT("OnLoadGamePhase Delegate Broadcasted"));
+		EGLOG(Error, TEXT("OnCheckPoint Delegate Broadcasted"));
 		GameInstance->OnLoadGamePhaseDelegate.Broadcast(LoadInstance);
 
 		//
@@ -289,8 +291,18 @@ UComponent_Fury* AEGPlayerCharacter::GetFuryComponent()
 
 void AEGPlayerCharacter::ChargeAttack()
 {
+	if (bResticLMBInput)
+	{
+		
+		return;
+	}
+
 	//Charge Attack은 시동이 걸린 상태에서만 실행될 것이다
-	if (!Stat->IsAttacking())return;
+	if (!Stat->IsAttacking())
+	{ 
+		return; 
+	}
+
 
 	Anim->PlaySkillMontage(Stat->GetCurrentCombo());
 	
@@ -349,7 +361,7 @@ void AEGPlayerCharacter::AirAttack()
 
 void AEGPlayerCharacter::StartRunning()
 {
-	EGLOG(Warning, TEXT("Run Key Preesed"));
+//	EGLOG(Warning, TEXT("Run Key Preesed"));
 
 	//if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::ZeroVector)return;
 	//Stat->SetRunning();//달릴 상태로 만들어 준다
@@ -359,6 +371,7 @@ void AEGPlayerCharacter::StartRunning()
 	if (Stat->CanUseStamina())
 	{
 		Stat->SetStaminaUsing(true);
+		Anim->SetJogPlayRate(true);
 		GetCharacterMovement()->MaxWalkSpeed = 1000.0f;
 	}
 
@@ -389,6 +402,7 @@ void AEGPlayerCharacter::StopRunning()
 {
 	/*EGLOG(Warning, TEXT("Run Key Released"));*/
 	Stat->SetStaminaUsing(false);
+	Anim->SetJogPlayRate(false);
 	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 	/*if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::ZeroVector)return;
 	Stat->SetWalking();*/
@@ -477,14 +491,10 @@ void AEGPlayerCharacter::ActiveThunder()
 
 void AEGPlayerCharacter::RestricInput()
 {
-	/*auto myCon = Cast<APlayerController>(GetController());
-	if (myCon != nullptr)
-	{
-		
-		DisableInput(myCon);
-	}*/
+	 
 
 	bRestricAxisInput = true;
+	bResticLMBInput = true;
 }
 
 void AEGPlayerCharacter::RecoverInput()
@@ -495,7 +505,7 @@ void AEGPlayerCharacter::RecoverInput()
 		EnableInput(myCon);
 	}*/
 	bRestricAxisInput = false;
-
+	bResticLMBInput = false;
 }
 
 
@@ -523,6 +533,9 @@ void AEGPlayerCharacter::InitComponents()
 	MiniMapMarkerComponent = CreateDefaultSubobject<UMiniMapMarkerComponent>(TEXT("MiniMapMarker"));
 	BarrierEffect = CreateDefaultSubobject<UBarrierEffectComponent>(TEXT("BarrierEffectComponent"));
 	FuryComponent = CreateDefaultSubobject<UComponent_Fury>(TEXT("FuryComponent"));
+	AIPerceptionStimuliSource = CreateDefaultSubobject< UAIPerceptionStimuliSourceComponent>(TEXT("AIPerceptionStimuliSource"));
+
+
 	//====================================================================================================
 	//Components Tree
 	SpringArm->SetupAttachment(GetCapsuleComponent());
@@ -562,12 +575,10 @@ void AEGPlayerCharacter::InitComponents()
 	SetupSpringArm();
 	
 	
-	////포스트 프로세스 값 지정
-	//FPostProcessSettings& PostProcessSettings = Camera->PostProcessSettings;
-
-	//
-
-
+	//====================================================================================================
+	//AIPerceptionStimuliSource
+	AIPerceptionStimuliSource->RegisterForSense(UAISense_Sight::StaticClass());
+	AIPerceptionStimuliSource->RegisterForSense(UAISense_Hearing::StaticClass());
 
 }
 
@@ -721,8 +732,12 @@ void AEGPlayerCharacter::SetDeath()
 
 	Anim->SetDead();
 	RestricInput();
-	
-
+	auto EGGameInstance = Cast<UEGGameInstance>(GetGameInstance());
+	if (!EGGameInstance)
+	{
+		return;
+	}
+	EGGameInstance->EGameState = EEGGameState::E_Death;
 
 
 }
@@ -740,11 +755,15 @@ void AEGPlayerCharacter::Move(float DeltaTime)
 
 void AEGPlayerCharacter::PressFury()
 {
-	if (FuryComponent->UseFury())
+	if (!FuryComponent->UseFury())
 	{
-		UE_LOG(LogTemp, Log, TEXT("Fury used"));
+		return;
 
 	}
+	
+	UE_LOG(LogTemp, Log, TEXT("Fury used"));
+
+
 }
 
 float AEGPlayerCharacter::ReflectProjectiles(AActor* DamageCauser, float FinalDamage)
@@ -780,14 +799,14 @@ void AEGPlayerCharacter::OnWeaponBeginOverlap(UPrimitiveComponent * OverlappedCo
 	EGLOG(Error, TEXT("Hit : %s"), *OtherActor->GetName());
 	OtherActor->TakeDamage(Stat->GetATK(),DamageEvent,Controller,this );
 
-	Container_Hit->SetEffectAt(OtherActor->GetActorLocation());
+	Container_Hit->ActivateEffectAt(OtherActor->GetActorLocation());
 }
 
 void AEGPlayerCharacter::OnCheckCanComboAttack(UAnimMontage* Montage, bool bInterrupted)
 {
 	if (Stat->CheckCanComboAttack())
 	{
-		EGLOG(Error, TEXT("lambda check combo"));
+		//EGLOG(Error, TEXT("lambda check combo"));
 		//AnimNotify_CanComboAttack 에서 호출될 함수다
 		Stat->SetComboStartState();
 		Anim->JumpToComboAttackSection(Stat->GetCurrentCombo());

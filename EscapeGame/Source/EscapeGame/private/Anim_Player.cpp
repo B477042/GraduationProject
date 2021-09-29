@@ -11,11 +11,10 @@
 
 UAnim_Player::UAnim_Player()
 {
-	SFX_Laugh = CreateDefaultSubobject<UAudioComponent>(TEXT("LAUGH"));
+	
 	SFX_Death = CreateDefaultSubobject<UAudioComponent>(TEXT("S_DEATH"));
 	SFX_FootStep = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Foot"));
 
-	SFX_Pain = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_Pain"));
 
 	bIsGuarding = false;
 	static ConstructorHelpers::FObjectFinder <UAnimMontage>NORMAL_ATTACK(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/m_NormalAttack.m_NormalAttack'"));
@@ -24,25 +23,41 @@ UAnim_Player::UAnim_Player()
 		AttackMontage = NORMAL_ATTACK.Object;
 		
 	}
-	//AnimMontage'/Game/MyFolder/AnimationBlueprint/Montage_Skill1.Montage_Skill1'
+	/*
+		Load Skill Montages
+	*/
 
-	static ConstructorHelpers::FObjectFinder <UAnimMontage>Skill_1(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/Montage_Skill1.Montage_Skill1'"));
+	static ConstructorHelpers::FObjectFinder <UAnimMontage>Skill_0(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/PlayerSkill/Montage_Skill0.Montage_Skill0'"));
+	if (Skill_0.Succeeded())
+	{
+		Montage_Skills.Add(Skill_0.Object);
+	}
+	static ConstructorHelpers::FObjectFinder <UAnimMontage>Skill_1(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/PlayerSkill/Montage_Skill1.Montage_Skill1'"));
 	if (Skill_1.Succeeded())
 	{
 		Montage_Skills.Add(Skill_1.Object);
 	}
+	static ConstructorHelpers::FObjectFinder <UAnimMontage>Skill_2(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/PlayerSkill/Montage_Skill2.Montage_Skill2'"));
+	if (Skill_2.Succeeded())
+	{
+		Montage_Skills.Add(Skill_2.Object);
+	}
 
-
+	/*
+		Air Attack
+	*/
 	static ConstructorHelpers::FObjectFinder <UAnimMontage>AIR_ATTACK(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/m_AirAttackMontage.m_AirAttackMontage'"));
 	if (AIR_ATTACK.Succeeded())
 	{
 		AirAttackMontage = AIR_ATTACK.Object;
 	}
-	static ConstructorHelpers:: FObjectFinder<USoundCue>SC_Laugh(TEXT("SoundCue'/Game/ParagonKwang/Characters/Heroes/Kwang/Sounds/SoundCues/Kwang_Effort_Laugh.Kwang_Effort_Laugh'"));
-	if (SC_Laugh.Succeeded())
+	/*
+		Fury Montatge
+	*/
+	static ConstructorHelpers::FObjectFinder <UAnimMontage>FURY(TEXT("AnimMontage'/Game/MyFolder/AnimationBlueprint/PlayerSkill/Montage_Fury.Montage_Fury'"));
+	if (FURY.Succeeded())
 	{
-		SFX_Laugh->SetSound(SC_Laugh.Object);
-		SFX_Laugh->bAutoActivate = false;
+		Montage_Fury = FURY.Object;
 	}
 
 	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Death(TEXT("SoundCue'/Game/ParagonKwang/Characters/Heroes/Kwang/Sounds/SoundCues/Kwang_Effort_Death.Kwang_Effort_Death'"));
@@ -58,13 +73,7 @@ UAnim_Player::UAnim_Player()
 		SFX_FootStep->bAutoActivate = false;
 	}
 	
-	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Pain(TEXT("SoundCue'/Game/MyFolder/Sound/Voice/Kwang_Effort_Pain.Kwang_Effort_Pain'"));
-	if (SC_Pain.Succeeded())
-	{
-		SFX_Pain->SetSound(SC_Pain.Object);
-		SFX_Pain->bAutoActivate = false;
-	}
-
+	
 
 	//UCharacterAnimInstance::StartCombo = 1;
 	StartCombo = 1;
@@ -74,6 +83,11 @@ UAnim_Player::UAnim_Player()
 	ReactDirection = 0.0f;
 	Direction = 0.0f;
 	bIsDamaged = false;
+	
+	JogPlayRate = 1.0f;
+	RunningPlayRate = 1.5f;
+	CurrentJogPlayRate = JogPlayRate;
+
 }
 void UAnim_Player::NativeBeginPlay()
 {
@@ -205,33 +219,16 @@ void UAnim_Player::AnimNotify_AnimEnd()
 	//Owner->RecoverInput();
 }
 
-void UAnim_Player::AnimNotify_PlayHitSound()
-{
-	EGLOG(Error, TEXT(" p start"));
-	auto player = GetOwningActor();
-
-	if (!player)return;
-	const auto world = GEngine->GetWorld();
-	if (!IsValid(world))return;
-
-	UGameplayStatics::PlaySoundAtLocation(world, SFX_Pain->Sound, player->GetActorLocation());
 
 
-//	SFX_Pain->Play();
-	EGLOG(Error, TEXT("Play Sound"));
-//	Owner->AttackSound->Play();
-
-
-}
-
-void UAnim_Player::AnimNotify_Skill1Start()
+void UAnim_Player::AnimNotify_SkillStart()
 {
 //	EGLOG(Warning, TEXT("Jot na gin name "));
 	auto Player = Cast<AEGPlayerCharacter>(GetOwningActor());
 
 	if (!Player)return;
 	Player->RestricInput();
-	SFX_Laugh->Play();
+	//SFX_Laugh->Play();
 }
 
 void UAnim_Player::AnimNotify_SkillEnd()
@@ -278,6 +275,7 @@ void UAnim_Player::AnimNotify_DeadEnd()
 
 }
 
+
 void UAnim_Player::AnimNotify_Plant()
 {
 	if (!GetOwningActor())
@@ -288,13 +286,14 @@ void UAnim_Player::AnimNotify_Plant()
 	FVector Location = GetOwningActor()->GetActorLocation();
 	
 	
+
 	SFX_FootStep->SetWorldLocation(Location);
 	if (SFX_FootStep->IsPlaying())
 	{
 		SFX_FootStep->Deactivate();
 	}
 	SFX_FootStep->Activate();
-
+	//EGLOG(Log, TEXT("plant"));
 }
 
 
@@ -308,23 +307,14 @@ void UAnim_Player::AnimNotify_ReactDamagedEnd()
 //Input °ªÀº PlayerÀÇ Combo
 void UAnim_Player::PlaySkillMontage(int Combo)
 {
-	Montage_Play(Montage_Skills[0], 1.0f);
+	//Montage_Play(Montage_Skills[0], 1.0f);
 
-	/*int playNum = Combo - 1;
-	if (Montage_Skills.IsValidIndex(playNum))
-	{
-		auto Player = Cast<AEGPlayerCharacter>(GetOwningActor());
-
-		if (!Player)return;
-
-		Player->RestricInput();
-
-
-		Montage_Play(Montage_Skills[0],1.0f);
-
-		
-
-	}*/
+	int PlayNum = Combo - 1;
+	if (Montage_Skills.IsValidIndex(PlayNum))
+	{ 
+		Montage_Play(Montage_Skills[PlayNum],1.0f);
+		 
+	}
 
 
 }
@@ -350,6 +340,11 @@ void UAnim_Player::TakeDamage(const AActor* OtherActor)
 	ReactDirection = degree;
 
 	EGLOG(Error, TEXT("Degree : %f"),ReactDirection);
+}
+
+void UAnim_Player::SetJogPlayRate(bool bIsRunnuing)
+{
+	bIsRunnuing ? CurrentJogPlayRate = RunningPlayRate : CurrentJogPlayRate = JogPlayRate;
 }
 
 void UAnim_Player::SetDead()

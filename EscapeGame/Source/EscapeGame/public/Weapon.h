@@ -54,12 +54,12 @@ protected:
 	virtual void PostInitializeComponents()override;
 
 	FVector CalcFireDirection(const FVector& TargetLocation);
-
+	FRotator CalcRotationForBullet(const FVector& FireDirection);
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	EWeaponTypes GetWeaponType()const { return WeaponType; }
+	//EWeaponTypes GetWeaponType()const { return WeaponType; }
 	 
 	void AttachedBy(class ACharacter* OtherCharacter);
 	//Return True If This Weapon can fire a bullet
@@ -73,8 +73,8 @@ protected:
 		USceneComponent* SceneRoot;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 		USkeletalMeshComponent* MainBody;
-	UPROPERTY(BlueprintReadOnly, VisibleInstanceOnly, meta = (AllowPrivateAccess = true))
-		class UComponent_Mag* Mag;
+	UPROPERTY(BlueprintReadWrite, VisibleInstanceOnly, meta = (AllowPrivateAccess = true))
+		UComponent_Mag* Mag;
 
 	UPROPERTY(VisibleInstanceOnly, Category = Anim, Meta = (AllowPrivateAccess = true))
 		class UAnim_Weapon* Anim;
@@ -97,8 +97,8 @@ protected:
  
 	
 
-	UPROPERTY(BlueprintReadOnly)
-		TEnumAsByte<EWeaponTypes>WeaponType;
+	//UPROPERTY(BlueprintReadOnly)
+	//	TEnumAsByte<EWeaponTypes>WeaponType;
 
 
 };

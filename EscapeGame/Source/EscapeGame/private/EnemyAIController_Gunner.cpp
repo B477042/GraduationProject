@@ -23,32 +23,25 @@ AEnemyAIController_Gunner::AEnemyAIController_Gunner()
 
 	PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("PERCEPTIONCOMPONENT"));
 	AiConfigSight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("AIConfigSight"));
-	
+	AiConfigHearing = CreateDefaultSubobject < UAISenseConfig_Hearing>(TEXT("AIConfigHearing"));
 //	FAISenseID
 	//AIPerceptionComponent->ConfigureSense
 
-	//https://docs.unrealengine.com/en-US/API/Runtime/AIModule/Perception/UAISenseConfig_Sight/index.html
-	//UAISenseConfig_Sight Document
-	//AISenseConfig_Sight senseConfig_Sight;
-	AiConfigSight->SightRadius = 1500.0f;
-	AiConfigSight->LoseSightRadius = 1600.0f;
-	AiConfigSight->PeripheralVisionAngleDegrees = 60.0f;
-	AiConfigSight->DetectionByAffiliation.bDetectEnemies = true;
-	AiConfigSight->DetectionByAffiliation.bDetectNeutrals = true;
-	AiConfigSight->DetectionByAffiliation.bDetectFriendlies = true;
-	AiConfigSight->SetMaxAge(10.0f);
-
-
+	
+	//Regist Ai Sense
 	PerceptionComponent->ConfigureSense(*AiConfigSight);
+	PerceptionComponent->ConfigureSense(*AiConfigHearing);
 	PerceptionComponent->SetDominantSense(UAISense_Sight::StaticClass());
+	PerceptionComponent->SetSenseEnabled(UAISense_Hearing::StaticClass(), true);
+	
 
 
 }
 void AEnemyAIController_Gunner::BeginPlay()
 {
 	Super::BeginPlay();
-	//RunAI();
-	//EGLOG(Error,TEXT("ConBegin"))
+	
+	
 }
 
 void AEnemyAIController_Gunner::PostInitializeComponents()
@@ -56,9 +49,10 @@ void AEnemyAIController_Gunner::PostInitializeComponents()
 	Super::PostInitializeComponents();
 
 
-
-	//PerceptionComponent->OnPerceptionUpdated.AddDynamic(this, &AEnemyAIController_Gunner::OnPerceptionUpdated);
+	SetUpAiPerception();
+//	PerceptionComponent->OnPerceptionUpdated.AddDynamic(this, &AEnemyAIController_Gunner::OnPerceptionUpdated);
 	PerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyAIController_Gunner::OnTargetPerceptionUpdated);
+	//PerceptionComponent->OnPerceptionUpdated
 	//PerceptionComponent->GetSenseConfig()
 }
 
@@ -128,7 +122,7 @@ void AEnemyAIController_Gunner::OnTargetPerceptionUpdated(AActor* Actor, FAIStim
 	//탐지결과
 	//True = 감지 성공  | False = 사라짐
 	bool bSenseResult = Stimulus.WasSuccessfullySensed();
-
+	
 	//성공시 값을 저장하고 return
 	if (bSenseResult)
 	{
@@ -143,6 +137,31 @@ void AEnemyAIController_Gunner::OnTargetPerceptionUpdated(AActor* Actor, FAIStim
 	GetBlackboardComponent()->SetValueAsVector(AEnemyAIController::TargetPos, Actor->GetActorLocation());
 	
 		
+
+
+}
+
+void AEnemyAIController_Gunner::SetUpAiPerception()
+{
+
+	//https://docs.unrealengine.com/en-US/API/Runtime/AIModule/Perception/UAISenseConfig_Sight/index.html
+	//UAISenseConfig_Sight Document
+	//AISenseConfig_Sight senseConfig_Sight;
+	AiConfigSight->SightRadius = SightRadius;
+	AiConfigSight->LoseSightRadius = LoseSightRadius;
+	AiConfigSight->PeripheralVisionAngleDegrees = PeripheralVisionAngleDegrees;
+	AiConfigSight->DetectionByAffiliation.bDetectEnemies = true;
+	AiConfigSight->DetectionByAffiliation.bDetectNeutrals = true;
+	AiConfigSight->DetectionByAffiliation.bDetectFriendlies = true;
+	AiConfigSight->SetMaxAge(MaxAge);
+
+	//Hearing Setting
+	AiConfigHearing->HearingRange = HearingRange;
+	AiConfigHearing->LoSHearingRange = LoSHearingRange;
+	AiConfigHearing->DetectionByAffiliation.bDetectFriendlies = true;
+	AiConfigHearing->DetectionByAffiliation.bDetectEnemies = true;
+	AiConfigHearing->DetectionByAffiliation.bDetectNeutrals = true;
+	AiConfigHearing->SetMaxAge(MaxAge);
 
 
 }
