@@ -54,7 +54,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Store")
 	void SaveGame(class UEGSaveGame* SaveInstance);
 	UFUNCTION(BlueprintCallable, Category = "Store")
-	void LoadGame(class UEGSaveGame* LoadInstance);
+	void LoadGame(const class UEGSaveGame* LoadInstance);
 
 
 	void ShowTutorialMessage(uint8 TutorialMessage);
