@@ -269,10 +269,10 @@ void AGruntCharacter::SaveGame(UEGSaveGame * SaveInstance)
 		return;
 	}
 
-	auto SaveData = SaveInstance->D_Enemies.Find(GetOwner()->GetName());
+	auto SaveData = SaveInstance->D_Enemies.Find(GetName());
 	if (!SaveData)
 	{
-		EGLOG(Error, TEXT("Can't find %s's Data"), *GetOwner()->GetName());
+		EGLOG(Error, TEXT("Can't find %s's Data"), *GetName());
 		return;
 	}
 
@@ -296,16 +296,16 @@ void AGruntCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 		return;
 	}
 
-	auto LoadData = LoadInstance->D_Enemies.Find(GetOwner()->GetName());
+	auto LoadData = LoadInstance->D_Enemies.Find(GetName());
 	if (!LoadData)
 	{
-		EGLOG(Error, TEXT("LaodData FAILED"));
+		EGLOG(Error, TEXT("Can't find %s's Data"),*GetName());
 		//Destroy();
 		return;
 	}
 
 	Stat->LoadGame(LoadData);
-
+	EGLOG(Error, TEXT("Find %s's Data"), *GetName());
 
 
 }

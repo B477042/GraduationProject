@@ -6,7 +6,7 @@
 #include "GameFramework/Character.h"
 #include "GameCharacter.generated.h"
 
-UCLASS(Abstract, Blueprintable)
+UCLASS( Blueprintable)
 class ESCAPEGAME_API AGameCharacter : public ACharacter
 {
 	GENERATED_BODY()

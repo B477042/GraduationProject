@@ -15,7 +15,7 @@
 DECLARE_DELEGATE_OneParam(FOnTakeDamaged, AActor*);
 
 
-UCLASS(Abstract)
+UCLASS()
 class ESCAPEGAME_API AEnemyCharacter : public AGameCharacter
 {
 	GENERATED_BODY()

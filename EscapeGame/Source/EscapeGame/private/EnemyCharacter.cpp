@@ -171,7 +171,7 @@ void AEnemyCharacter::SaveGame(UEGSaveGame * SaveInstance)
 	SaveData.Rotation = GetActorRotation();
 	
 	SaveInstance->D_Enemies.Add(GetName(), SaveData);
-	
+	EGLOG(Error, TEXT("Add %s's Data to Enemy list"), *GetOwner()->GetName());
 }
 
  void AEnemyCharacter::LoadGame(const UEGSaveGame * LoadInstance)
@@ -189,7 +189,7 @@ void AEnemyCharacter::SaveGame(UEGSaveGame * SaveInstance)
 		Destroy();
 		return;
 	}
-
+	EGLOG(Error, TEXT("%s find Data"), *GetName());
 	SetActorLocationAndRotation(LoadData->Location, LoadData->Rotation);
 
 
