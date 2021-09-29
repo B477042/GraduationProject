@@ -40,7 +40,7 @@ protected:
 	UFUNCTION()
 	void OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
 	
-	void SetUpAiPerception();
+	//void SetUpAiPerception();
 
 
 protected:
@@ -49,7 +49,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 		UAISenseConfig_Hearing* AiConfigHearing;
 
-	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "AiSense")
+	/*UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "AiSense")
 		float SightRadius;
 	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "AiSense")
 		float LoseSightRadius;
@@ -66,6 +66,6 @@ protected:
 	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "AiSense")
 		uint8 bDetectEnemies : 1;
 	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "AiSense")
-		uint8 bDetectNeutrals : 1;
+		uint8 bDetectNeutrals : 1;*/
 
 };
