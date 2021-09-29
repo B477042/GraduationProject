@@ -136,7 +136,7 @@ void AEGPlayerCharacter::BeginPlay()
 		}
 
 		//다른 오브젝트들에게 Load Game을 활성화 시킨다
-		EGLOG(Error, TEXT("OnLoadGamePhase Delegate Broadcasted"));
+		EGLOG(Error, TEXT("OnCheckPoint Delegate Broadcasted"));
 		GameInstance->OnLoadGamePhaseDelegate.Broadcast(LoadInstance);
 
 		//
@@ -732,8 +732,12 @@ void AEGPlayerCharacter::SetDeath()
 
 	Anim->SetDead();
 	RestricInput();
-	
-
+	auto EGGameInstance = Cast<UEGGameInstance>(GetGameInstance());
+	if (!EGGameInstance)
+	{
+		return;
+	}
+	EGGameInstance->EGameState = EEGGameState::E_Death;
 
 
 }
