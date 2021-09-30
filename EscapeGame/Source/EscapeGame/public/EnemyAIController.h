@@ -7,6 +7,7 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "EnvironmentQuery/EnvQuery.h"
 #include "EnemyAIController.generated.h"
 
 /**
@@ -44,14 +45,15 @@ protected:
 	
 
 	void OnTakeDamaged(AActor* OtherActor);
-//private:
-
-//private:
+ 
 	//Blackboard Data File Data
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 		class UBlackboardData* BBData;
 	//Behavior Tree File Data
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 		class UBehaviorTree* BTData;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="AI",meta=(AllowPrivateAccess=true))
+	UEnvQuery *PathHelpersEQS;
 	
 };
