@@ -41,7 +41,7 @@ protected:
 	void OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
 	
 	//void SetUpAiPerception();
-
+	static FName SoundPlayed;
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))

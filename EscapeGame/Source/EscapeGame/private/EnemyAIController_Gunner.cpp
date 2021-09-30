@@ -5,7 +5,7 @@
 
 #include "EGPlayerCharacter.h"
 #include "EGPlayerController.h"
-
+FName AEnemyAIController_Gunner::SoundPlayed = TEXT("SoundPlayed");
 
 AEnemyAIController_Gunner::AEnemyAIController_Gunner()
 {
@@ -29,7 +29,7 @@ AEnemyAIController_Gunner::AEnemyAIController_Gunner()
 	AiConfigSight->SightRadius = 1500.0f;
 	AiConfigSight->LoseSightRadius = 1600.0f;
 	AiConfigSight->PeripheralVisionAngleDegrees = 60.0f;
-	AiConfigSight->AutoSuccessRangeFromLastSeenLocation = 1500.0f;
+	AiConfigSight->AutoSuccessRangeFromLastSeenLocation = 500.0f;
 	AiConfigSight->DetectionByAffiliation.bDetectEnemies = true;
 	AiConfigSight->DetectionByAffiliation.bDetectNeutrals = true;
 	AiConfigSight->DetectionByAffiliation.bDetectFriendlies = true;
@@ -64,8 +64,8 @@ void AEnemyAIController_Gunner::PostInitializeComponents()
 
 
 	//SetUpAiPerception();
-	PerceptionComponent->OnPerceptionUpdated.AddDynamic(this, &AEnemyAIController_Gunner::OnPerceptionUpdated);
-	//PerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyAIController_Gunner::OnTargetPerceptionUpdated);
+	//PerceptionComponent->OnPerceptionUpdated.AddDynamic(this, &AEnemyAIController_Gunner::OnPerceptionUpdated);
+	PerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyAIController_Gunner::OnTargetPerceptionUpdated);
 	//PerceptionComponent->OnPerceptionUpdated
 	//PerceptionComponent->GetSenseConfig()
 }
@@ -156,7 +156,7 @@ void AEnemyAIController_Gunner::OnTargetPerceptionUpdated(AActor* Actor, FAIStim
 	EGLOG(Log, TEXT("Lose %s"), *Actor->GetName());
 	GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, nullptr);
 	GetBlackboardComponent()->SetValueAsVector(AEnemyAIController::TargetPos, Actor->GetActorLocation());
-	
+	GetBlackboardComponent()->SetValueAsBool(AEnemyAIController_Gunner::SoundPlayed, false);
 		
 
 
