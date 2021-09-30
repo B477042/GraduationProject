@@ -97,18 +97,24 @@ void AEnemyAIController_Gunner::StopAI()
 
 void AEnemyAIController_Gunner::OnPerceptionUpdated(const TArray<AActor*>& UpdatedActors)
 {
-	//EGLOG(Error, TEXT("something Detected"));
+	 
 	for (auto it : UpdatedActors)
 	{
-		//EGLOG(Warning, TEXT("hi friend"));
-		//범용성을 생각하면 Player controller로 검사하는게 맞는 코드 같다
-		AEGPlayerCharacter* TempActor = Cast<AEGPlayerCharacter>(it);
+		 
 		
+		ACharacter* TempCharacter = Cast<ACharacter>(it);
+		if (!TempCharacter)
+		{
+			continue;
+		}
+		//범용성을 생각하면 Player controller로 검사하는게 맞는 코드 같다
+		AEGPlayerController* TempCon = Cast<AEGPlayerController>(TempCharacter->GetController());
+
 		//가장먼저 확인된 player를 타겟으로
-		if (TempActor!=nullptr)
+		if (TempCon!=nullptr)
 		{
 
-			GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, TempActor);
+			GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, TempCharacter);
 			EGLOG( Error, TEXT("Target Set"));
 			return;
 		}
