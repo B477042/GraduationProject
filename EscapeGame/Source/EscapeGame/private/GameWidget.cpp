@@ -22,7 +22,7 @@ void UGameWidget::NativeConstruct()
 	Img_Battery = Cast<UImage>(GetWidgetFromName(TEXT("HPImage")));
 	Img_RecoveryItem = Cast<UImage>(GetWidgetFromName(TEXT("RecoveryItemImage")));
 	Img_Cardkey = Cast<UImage>(GetWidgetFromName(TEXT("Image_CardKey")));
-	
+	Txt_CardKey = Cast<UTextBlock>(GetWidgetFromName(TEXT("CardKeyText")));
 	RecoveryItemNum = Cast<UTextBlock>(GetWidgetFromName(TEXT("RecoveryItemNum0")));
 	Txt_TimerBlock=Cast<UTextBlock>(GetWidgetFromName(TEXT("TimerBlock")));
 
@@ -114,20 +114,14 @@ void UGameWidget::UpdateItemes(FName ItemName, int Amount)
 		N_CardKeyItems = Amount;
 		if(N_CardKeyItems<=0)
 		{
-			if (Img_Cardkeys[0] == nullptr)
-			{
-				EGLOG(Error, TEXT("Nullptr"));
-				return;
-			}
+			
+			Txt_CardKey->SetColorAndOpacity(FLinearColor::White);
 			Img_Cardkey->SetBrushFromTexture(Img_Cardkeys[0]);
 		}
 		else
 		{
-			if (Img_Cardkeys[1] == nullptr)
-			{
-				EGLOG(Error, TEXT("Nullptr"));
-				return;
-			}
+			
+			Txt_CardKey->SetColorAndOpacity(FLinearColor::Green);
 			Img_Cardkey->SetBrushFromTexture(Img_Cardkeys[1]);
 		}
 		

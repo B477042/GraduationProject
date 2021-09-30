@@ -83,6 +83,8 @@ private:
 	TArray<UTexture2D*> Imgs_Battary;
 	UPROPERTY(BlueprintReadWrite, Category = "Images", meta = (AllowPrivateAccess = "true"))
 	TArray<UTexture2D*> Img_Cardkeys;
+	UPROPERTY()
+		class UTextBlock* Txt_CardKey;
 	//Image of Itme Recovery Item
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UImage* Img_RecoveryItem;
