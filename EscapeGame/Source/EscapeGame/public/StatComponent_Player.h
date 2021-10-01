@@ -78,7 +78,7 @@ public:
 	
 private:
 	//Called when Exp is enough to level up
-	void levelUp();
+	void LevelUp();
 	//data table에서 level에 맞는 data를 가져온다
 	void LoadLevelData();
 
