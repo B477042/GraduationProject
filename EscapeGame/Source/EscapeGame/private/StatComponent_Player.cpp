@@ -305,8 +305,8 @@ void UStatComponent_Player::GainExp(const int32 & DropExp)
 {
 	Exp += DropExp;
 	UE_LOG(LogTemp, Log, TEXT("Player Gain Exp : %d "),DropExp); 
-	EGLOG(Error, TEXT("Exp : %d"), Exp);
-	EGLOG(Error, TEXT("Exp : %d"), NextExp);
+	/*EGLOG(Error, TEXT("Exp : %d"), Exp);
+	EGLOG(Error, TEXT("Exp : %d"), NextExp);*/
 	//if Level up
 	if (Exp >= NextExp)
 	{

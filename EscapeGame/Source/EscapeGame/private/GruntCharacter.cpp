@@ -253,6 +253,20 @@ float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Damag
 	Stat->TakeDamage(FinalDamage);
 	
 
+	//죽었다면 causer가 player인지 검사하고 경험치를 준다
+	if (StatComponent->GetHPRatio() <= 0.0f)
+	{
+		auto player = Cast<AEGPlayerCharacter>(DamageCauser);
+		if (player)
+		{
+			if (StatComponent->GetIsDamageable())
+			{
+				player->GetStatComponent()->GainExp(StatComponent->GetDropExp());
+			}
+		}
+		StatComponent->SetDamageable(false);
+	}
+
 
 
 	return FinalDamage;
