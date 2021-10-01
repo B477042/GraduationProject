@@ -29,7 +29,7 @@ AGruntCharacter::AGruntCharacter()
 	AIControllerClass = AEnemyAIController_Grunt::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	
-	Stat = CreateDefaultSubobject<UStatComponent_EGrunt>(TEXT("STAT"));
+	StatComponent = CreateDefaultSubobject<UStatComponent_EGrunt>(TEXT("STAT"));
 	VFX_MuzzleEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("VFX_MuzzleEffect"));
 	VFX_HitEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("VFX_HitEffect"));
 	SFX_Explosion = CreateDefaultSubobject<UAudioComponent>(TEXT("SFX_EXPLOSION"));
@@ -155,10 +155,10 @@ void AGruntCharacter::BeginPlay()
 		EGLOG(Warning, TEXT(" HPBar Failed"));
 		return;
 	}
-	Stat->HPChangedDelegate.AddLambda([this]()->void {
-		HPBar->SetPercent(Stat->GetHPRatio());
+	StatComponent->HPChangedDelegate.AddLambda([this]()->void {
+		HPBar->SetPercent(StatComponent->GetHPRatio());
 	});
-	HPBar->SetPercent(Stat->GetHPRatio());
+	HPBar->SetPercent(StatComponent->GetHPRatio());
 
 	//Bind Muzzle Fire 
 	Anim->OnFireAttack.BindUObject(this, &AGruntCharacter::PlayMuzzleEffect);
@@ -183,8 +183,8 @@ void AGruntCharacter::PostInitializeComponents()
 	
 	//Set Limit of Speeds
 
-	if(Stat!=nullptr)
-	Stat->SetSpeedLimits(MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
+	if(StatComponent !=nullptr)
+	StatComponent->SetSpeedLimits(MaxWalkingSpeed, MinWalkingSpeed, MaxRunningSpeed);
 
 	Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
 	if (!Anim)return;
@@ -223,7 +223,7 @@ void AGruntCharacter::PostInitializeComponents()
 	});
 
 	//체력이 0이 됐을 때 호출될 람다 함수
-	Stat->HPZeroDelegate.AddLambda([this]()->void {
+	StatComponent->HPZeroDelegate.AddLambda([this]()->void {
 		auto Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
 		if (!Anim)
 		{
@@ -250,7 +250,7 @@ void AGruntCharacter::PostInitializeComponents()
 float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
 {
 	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-	Stat->TakeDamage(FinalDamage);
+	StatComponent->TakeDamage(FinalDamage);
 	
 
 	//죽었다면 causer가 player인지 검사하고 경험치를 준다
@@ -292,7 +292,7 @@ void AGruntCharacter::SaveGame(UEGSaveGame * SaveInstance)
 
 	
 	
-	Stat->SaveGame(SaveData);
+	StatComponent->SaveGame(SaveData);
 	 
 
 	
@@ -318,7 +318,7 @@ void AGruntCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 		return;
 	}
 
-	Stat->LoadGame(LoadData);
+	StatComponent->LoadGame(LoadData);
 	EGLOG(Error, TEXT("Find %s's Data"), *GetName());
 
 
