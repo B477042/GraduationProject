@@ -205,6 +205,11 @@ float UStatComponent::GetHP() const
 
 
 
+bool UStatComponent::GetIsDamageable() const
+{
+	return bIsDamageable;
+}
+
 bool UStatComponent::IsAttacking() const
 {
 	return bIsAttacking;

@@ -459,7 +459,10 @@ float AEnemyCharacter_Gunner::TakeDamage(float DamageAmount, FDamageEvent const 
 		auto player = Cast<AEGPlayerCharacter>(DamageCauser);
 		if (player)
 		{
-			player->GetStatComponent()->GainExp(StatComponent->GetDropExp());
+			if (StatComponent->GetIsDamageable())
+			{
+				player->GetStatComponent()->GainExp(StatComponent->GetDropExp());
+			}
 		}
 		StatComponent->SetDamageable(false);
 	}
