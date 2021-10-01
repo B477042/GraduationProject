@@ -26,7 +26,7 @@ void UGameWidget::NativeConstruct()
 	Txt_CardKey = Cast<UTextBlock>(GetWidgetFromName(TEXT("CardKeyText")));
 	RecoveryItemNum = Cast<UTextBlock>(GetWidgetFromName(TEXT("RecoveryItemNum0")));
 	Txt_TimerBlock=Cast<UTextBlock>(GetWidgetFromName(TEXT("TimerBlock")));
-
+	Txt_Level= Cast<UTextBlock>(GetWidgetFromName(TEXT("LevelText")));
 	
 	
 	DisplayTime = 0.0f;
@@ -45,19 +45,7 @@ void UGameWidget::NativeConstruct()
 	Txt_TimerBlock->ColorAndOpacityDelegate.BindUFunction(this, TEXT("BindingTimeColor"));
 
 
-	/*static ConstructorHelpers::FObjectFinder<UTexture2D>Card0(TEXT(""));
-	if (Card0.Succeeded())
-	{
-		Img_Cardkeys.Add(Card0.Object);
-	}
-	static ConstructorHelpers::FObjectFinder<UTexture2D>Card1(TEXT(""));
-	if (Card1.Succeeded())
-	{
-		Img_Cardkeys.Add(Card1.Object);
-	}
-	Texture2D'/Game/MyFolder/UI/img/1668933.1668933'
-	Texture2D'/Game/MyFolder/UI/img/1668984.1668984'
-	 */
+	
 }
 //연동된 character의 stat component에서 채력이 바뀔 때, 호출된다. 
 void UGameWidget::UpdateCharacterStat()
@@ -254,6 +242,26 @@ void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 	CurrentCharacterStat->HPChangedDelegate.AddUObject(this, &UGameWidget::UpdateCharacterStat);
 	CurrentCharacterStat->StaminaChangedDelegate.BindUObject(this, &UGameWidget::UpdateStamina);
 	CurrentCharacterStat->OnExpChanged.BindUObject(this, &UGameWidget::UpdateExp);
+
+	//========================================================
+	//Level Text Update Lambda
+	CurrentCharacterStat->OnLevelUP.BindLambda([this]()->void {
+		int32 Level = CurrentCharacterStat->GetLevel();
+		FString LevelText;
+		if (Level < 10)
+		{
+			LevelText = TEXT("Lv 0")+FString::FromInt(Level);
+			EGLOG(Log, TEXT("Level Text %s"), *LevelText);
+		}
+		else
+		{
+			LevelText = TEXT("Lv 0") + FString::FromInt(Level);
+			EGLOG(Log, TEXT("Level Text %s"), *LevelText);
+		}
+		
+		Txt_Level->SetText(FText::FromString(LevelText));
+		});
+	//==================================================
 	if (!OwnerChara.IsValid())
 	{
 		OwnerChara = Cast<ACharacter>(newStat->GetOwner());

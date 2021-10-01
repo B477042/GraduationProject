@@ -47,6 +47,10 @@ void UStatComponent_Player::BeginDestroy()
 	{
 		OnExpChanged.Unbind();
 	}
+	if (OnLevelUP.IsBound())
+	{
+		OnLevelUP.Unbind();
+	}
 }
 
 void UStatComponent_Player::BeginPlay()
@@ -56,7 +60,15 @@ void UStatComponent_Player::BeginPlay()
 
 	//Init Stamina 
 	Stamina = MaxStamina;
-	StaminaChangedDelegate.Execute();
+	if (StaminaChangedDelegate.IsBound())
+	{
+		StaminaChangedDelegate.Execute();
+	}
+	if (OnLevelUP.IsBound())
+	{
+		OnLevelUP.Execute();
+	}
+
 }
 
 
@@ -310,7 +322,7 @@ void UStatComponent_Player::GainExp(const int32 & DropExp)
 	//if Level up
 	if (Exp >= NextExp)
 	{
-		levelUp();
+		LevelUp();
 		UE_LOG(LogTemp, Log, TEXT("Level Up"));
 	}
 
@@ -362,15 +374,20 @@ void UStatComponent_Player::LoadGameStat(int32 newLevel, float newExp, float new
 	
 }
 
-void UStatComponent_Player::levelUp()
+void UStatComponent_Player::LevelUp()
 {
 	//Exp가 NextExp를 초과한 만큼 빼주고
 	Exp -= NextExp;
 	//0미만이면 Exp를 0으로 설정해준다
 	if (Exp < 0)Exp = 0;
-	Level++;
+	++Level;
 	
 	LoadLevelData();
+	if (OnLevelUP.IsBound())
+	{
+		OnLevelUP.Execute();
+	}
+
 }
 
 void UStatComponent_Player::LoadLevelData()

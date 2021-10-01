@@ -94,8 +94,11 @@ private:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UTextBlock* Txt_TimerBlock;
 	
-	 
-
+	/*
+	*
+	*/
+	UPROPERTY()
+		class UTextBlock* Txt_Level;
 	UPROPERTY()
 		class UTextBlock* RecoveryItemNum;//Write 'HP'
 	UPROPERTY(BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = true))

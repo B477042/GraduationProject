@@ -14,6 +14,7 @@
  */
 DECLARE_DELEGATE(FStaminaChangedDelegate);
 DECLARE_DELEGATE(FOnExpChanged);
+DECLARE_DELEGATE(FOnLevelUP);
 
 UCLASS()
 class ESCAPEGAME_API UStatComponent_Player : public UStatComponent
@@ -70,6 +71,7 @@ public:
 
 	FStaminaChangedDelegate StaminaChangedDelegate;
 	FOnExpChanged OnExpChanged;
+	FOnLevelUP OnLevelUP;
 	//virtual  void LoadDataTable()override ;
 
 	void LoadGameStat(int32 newLevel, float newExp, float newHp);
