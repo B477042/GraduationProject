@@ -27,6 +27,7 @@ public:
 	//UGameWidget();
 	//void BindCharacterStat(class UGameStat* NewCharacterStat);
 	virtual void NativeConstruct() override;
+	virtual void NativeDestruct()override;
 	void TimeExtend(float addTime);
 	void BindCharacterStat( UStatComponent_Player* newStat);
 	void BindCharacterInven(class UComponent_Inventory* newInven);
@@ -56,8 +57,7 @@ public:
 	
 	void LoadGame(float Time) { GameTimer = Time; }
 
-private:
-
+ 
 
 private:
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
@@ -129,7 +129,7 @@ private:
 	UPROPERTY(BlueprintReadWrite, Category = "Fury", meta = (AllowPrivateAccess = true))
 		FLinearColor FuryBarColor2;
 	//Inventory UI Data Variables
-
-
+	//UPROPERTY(VisibleAnywhere, Category = "GamState")
+	TWeakObjectPtr<class AEGGameState>GameState;
 	 
 };

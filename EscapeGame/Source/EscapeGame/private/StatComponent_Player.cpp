@@ -413,6 +413,12 @@ void UStatComponent_Player::LoadLevelData()
 	auto DataTable = OwnerCon->GetDT_Player();
 
 	FPlayerTableRow* PlayerTableRow;
+
+	if (!DataTable)
+	{
+		EGLOG(Error, TEXT("Table row null"));
+		return;
+	}
 	PlayerTableRow = DataTable->FindRow<FPlayerTableRow>(FName(*(FString::FormatAsNumber(Level))), FString(""));
 
 	MaxHP = PlayerTableRow->MaxHp;

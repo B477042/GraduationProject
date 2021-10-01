@@ -44,8 +44,12 @@ void UGameWidget::NativeConstruct()
 	Txt_TimerBlock->TextDelegate.BindUFunction(this, TEXT("BindingTimeText"));
 	Txt_TimerBlock->ColorAndOpacityDelegate.BindUFunction(this, TEXT("BindingTimeColor"));
 
-
-	
+	/*GameState = Cast<AEGGameState>(UGameplayStatics::GetGameState(this));
+	if (!GameState.IsValid())
+	{
+		EGLOG(Error, TEXT("failed"));
+	}
+	GameTimer = GameState->GetRemainTimes();*/
 }
 //연동된 character의 stat component에서 채력이 바뀔 때, 호출된다. 
 void UGameWidget::UpdateCharacterStat()
@@ -194,6 +198,8 @@ FText UGameWidget::BindingTimeText()
 		DisplayTime = 0;
 	}
 	
+	//GameState->SetRemainTimes(DisplayTime);
+
 	Retval = FText::AsNumber(DisplayTime);
 
 	return Retval;
@@ -224,6 +230,15 @@ FLinearColor UGameWidget::BindingTimeColor()
 	return Retval;
 }
 
+
+void UGameWidget::NativeDestruct()
+{
+	Super::NativeDestruct();
+	////CurrentCharacterStat.Get();
+	////CurrentPlayerFury.Get();
+	////CurrentPlayerInventory.Get();
+	//GameState.Get();
+}
 
 void UGameWidget::TimeExtend(float addTime)
 {

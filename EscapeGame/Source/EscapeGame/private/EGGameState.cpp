@@ -24,8 +24,8 @@ void AEGGameState::BeginPlay()
 		return;
 	}
 
-	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AEGGameState::SaveGame);
-	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEGGameState::LoadGame);
+	//GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AEGGameState::SaveGame);
+	//GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEGGameState::LoadGame);
 
 }
 
@@ -34,17 +34,13 @@ void AEGGameState::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	Super::EndPlay(EndPlayReason);
 }
 
-
-void AEGGameState::SetTimer(float NewTimeValue)
-{
-	if (NewTimeValue < 0.0f)
-	{
-		NewTimeValue = 0.0f;
-	}
-
-	RemainTimes = NewTimeValue;
-	
-}
+//void AEGGameState::SetRemainTimes(float NewValue)
+//{
+//	RemainTimes = NewValue;
+//}
+//
+//
+// 
 
 
 void AEGGameState::SaveGame(UEGSaveGame* SaveInstance)
