@@ -37,13 +37,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void UpdateCharacterStat();
 	//Update UI's Stamina
-	UFUNCTION(BlueprintCallable)
 		void UpdateStamina();
 	//Update Item's Info. Call by Delegate in inventory Comp
 	UFUNCTION(BlueprintCallable)
 	void UpdateItemes(FName ItemName, int Amount);
 	UFUNCTION(BlueprintCallable)
 		void UpdateFury(float Ratio);
+	
+		void UpdateExp();
 	UFUNCTION(BlueprintCallable)
 		float CheackTimeOut(float NewValue);
 	UFUNCTION(BlueprintCallable)
@@ -73,6 +74,8 @@ private:
 	class UProgressBar* PB_Stamina;
 	UPROPERTY()
 	class UProgressBar* PB_Fury;
+	UPROPERTY()
+		class UProgressBar* PB_Exp;
 	//Image Box of Player's Hp
 	UPROPERTY()
 	UImage* Img_Battery;

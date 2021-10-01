@@ -19,6 +19,7 @@ void UGameWidget::NativeConstruct()
 	//PB_HP = Cast<UProgressBar>(GetWidgetFromName(TEXT("HPBar")));
 	PB_Stamina = Cast<UProgressBar>(GetWidgetFromName(TEXT("StaminaBar")));
 	PB_Fury = Cast<UProgressBar>(GetWidgetFromName(TEXT("FuryBar")));
+	PB_Exp = Cast<UProgressBar>(GetWidgetFromName(TEXT("ExpBar")));
 	Img_Battery = Cast<UImage>(GetWidgetFromName(TEXT("HPImage")));
 	Img_RecoveryItem = Cast<UImage>(GetWidgetFromName(TEXT("RecoveryItemImage")));
 	Img_Cardkey = Cast<UImage>(GetWidgetFromName(TEXT("Image_CardKey")));
@@ -156,6 +157,16 @@ void UGameWidget::UpdateFury(float Ratio)
 
 }
 
+void UGameWidget::UpdateExp()
+{
+	if (CurrentCharacterStat.IsValid())
+	{
+		float Ratio = CurrentCharacterStat->GetExpRatio();
+		PB_Exp->SetPercent(Ratio);
+		EGLOG(Error, TEXT("EXP!! : %f"),Ratio);
+	}
+}
+
 
 float UGameWidget::CheackTimeOut(float NewValue)
 {
@@ -241,7 +252,8 @@ void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 	}
 	CurrentCharacterStat = newStat;
 	CurrentCharacterStat->HPChangedDelegate.AddUObject(this, &UGameWidget::UpdateCharacterStat);
-	CurrentCharacterStat->StaminaChangedDelegate.AddUObject(this, &UGameWidget::UpdateStamina);
+	CurrentCharacterStat->StaminaChangedDelegate.BindUObject(this, &UGameWidget::UpdateStamina);
+	CurrentCharacterStat->OnExpChanged.BindUObject(this, &UGameWidget::UpdateExp);
 	if (!OwnerChara.IsValid())
 	{
 		OwnerChara = Cast<ACharacter>(newStat->GetOwner());

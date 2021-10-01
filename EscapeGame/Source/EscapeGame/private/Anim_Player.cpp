@@ -348,7 +348,7 @@ void UAnim_Player::TakeDamage(const AActor* OtherActor)
 
 	ReactDirection = degree;
 
-	EGLOG(Error, TEXT("Degree : %f"),ReactDirection);
+	//EGLOG(Error, TEXT("Degree : %f"),ReactDirection);
 }
 
 void UAnim_Player::SetJogPlayRate(bool bIsRunnuing)
@@ -358,5 +358,6 @@ void UAnim_Player::SetJogPlayRate(bool bIsRunnuing)
 
 void UAnim_Player::SetDead()
 {
+	StopAllMontages(0.0f);
 	bIsDead = true;
 }

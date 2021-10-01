@@ -12,7 +12,8 @@
  * Add Additional Stat
  * Add Combo Condition
  */
-DECLARE_MULTICAST_DELEGATE(FStaminaChangedDelegate);
+DECLARE_DELEGATE(FStaminaChangedDelegate);
+DECLARE_DELEGATE(FOnExpChanged);
 
 UCLASS()
 class ESCAPEGAME_API UStatComponent_Player : public UStatComponent
@@ -22,6 +23,7 @@ public:
 	UStatComponent_Player();
 
 	virtual void InitializeComponent()override;
+	virtual void BeginDestroy()override;
 
 protected:
 	// Called when the game starts
@@ -57,6 +59,7 @@ public:
 	int32 GetLevel();
 	//return exp
 	float GetExp();
+	float GetExpRatio();
 	
 	void AddCombo(int32 Amount);
 	void ResetCombo();
@@ -66,6 +69,7 @@ public:
 	void GainExp(const int32 &DropExp );
 
 	FStaminaChangedDelegate StaminaChangedDelegate;
+	FOnExpChanged OnExpChanged;
 	//virtual  void LoadDataTable()override ;
 
 	void LoadGameStat(int32 newLevel, float newExp, float newHp);
