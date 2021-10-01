@@ -8,7 +8,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/AudioComponent.h"
 #include "Components/CapsuleComponent.h"
-
+#include "Perception/AIPerceptionComponent.h"
 UAnim_Player::UAnim_Player()
 {
 	
@@ -293,7 +293,16 @@ void UAnim_Player::AnimNotify_Plant()
 		SFX_FootStep->Deactivate();
 	}
 	SFX_FootStep->Activate();
-	//EGLOG(Log, TEXT("plant"));
+	
+	//Make Noise Sense
+	if (OnPlant.IsBound())
+	{
+		OnPlant.Execute();
+	}
+	
+	
+	//UAIPerceptionSystem::ReportEvent()
+
 }
 
 
@@ -339,7 +348,7 @@ void UAnim_Player::TakeDamage(const AActor* OtherActor)
 
 	ReactDirection = degree;
 
-	EGLOG(Error, TEXT("Degree : %f"),ReactDirection);
+	//EGLOG(Error, TEXT("Degree : %f"),ReactDirection);
 }
 
 void UAnim_Player::SetJogPlayRate(bool bIsRunnuing)
@@ -349,5 +358,6 @@ void UAnim_Player::SetJogPlayRate(bool bIsRunnuing)
 
 void UAnim_Player::SetDead()
 {
+	StopAllMontages(0.0f);
 	bIsDead = true;
 }

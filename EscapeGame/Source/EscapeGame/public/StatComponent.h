@@ -70,6 +70,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	float GetHP()const;
 	
+	bool GetIsDamageable()const;
 	bool IsAttacking()const;
 	//PURE_VIRTUAL( 함수 이름, 기본 리턴 값;)
 	//virtual void LoadDataTable() PURE_VIRTUAL(StatComponent::LoadDataTable, ;);

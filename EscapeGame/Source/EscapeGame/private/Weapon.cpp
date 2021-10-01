@@ -91,6 +91,7 @@ FVector AWeapon::CalcFireDirection(const FVector& TargetLocation)
 }
 
 //Reference https://amored8701.tistory.com/132
+//Cross
 FRotator AWeapon::CalcRotationForBullet(const FVector& FireDirection)
 {
 	FRotator Retval = GetActorRotation();

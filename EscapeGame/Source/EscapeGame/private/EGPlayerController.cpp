@@ -107,7 +107,7 @@ void AEGPlayerController::PostInitializeComponents()
 		return;
 	}
 	GameInstance->OnSaveGamePhaseDelegate.AddDynamic(this, &AEGPlayerController::SaveGame);
-
+	GameInstance->OnLoadGamePhaseDelegate.AddDynamic(this, &AEGPlayerController::LoadGame);
 	
 }
 
@@ -291,10 +291,11 @@ void AEGPlayerController::SaveGame(UEGSaveGame* SaveInstance)
 
 	SaveInstance->D_Player=playerData;
 
+	EGLOG(Error, TEXT("Player SAve game called"));
 
 }
 
-void AEGPlayerController::LoadGame(UEGSaveGame* LoadInstance)
+void AEGPlayerController::LoadGame(const UEGSaveGame* LoadInstance)
 {
 	if (!LoadInstance)
 	{

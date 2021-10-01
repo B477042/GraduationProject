@@ -109,7 +109,7 @@ bool UStatComponent::IsDead()
 		CurrentHP = 0.0f;
 		HPChangedDelegate.Broadcast();
 		HPZeroDelegate.Broadcast();
-		bIsDamageable = false;
+	//	bIsDamageable = false;
 		EGLOG(Log, TEXT("%s is Dead"), *GetOwner()->GetName());
 		return true;
 	}
@@ -204,6 +204,11 @@ float UStatComponent::GetHP() const
 }
 
 
+
+bool UStatComponent::GetIsDamageable() const
+{
+	return bIsDamageable;
+}
 
 bool UStatComponent::IsAttacking() const
 {

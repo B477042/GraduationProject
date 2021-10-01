@@ -12,7 +12,9 @@
  * Add Additional Stat
  * Add Combo Condition
  */
-DECLARE_MULTICAST_DELEGATE(FStaminaChangedDelegate);
+DECLARE_DELEGATE(FStaminaChangedDelegate);
+DECLARE_DELEGATE(FOnExpChanged);
+DECLARE_DELEGATE(FOnLevelUP);
 
 UCLASS()
 class ESCAPEGAME_API UStatComponent_Player : public UStatComponent
@@ -22,6 +24,7 @@ public:
 	UStatComponent_Player();
 
 	virtual void InitializeComponent()override;
+	virtual void BeginDestroy()override;
 
 protected:
 	// Called when the game starts
@@ -57,6 +60,7 @@ public:
 	int32 GetLevel();
 	//return exp
 	float GetExp();
+	float GetExpRatio();
 	
 	void AddCombo(int32 Amount);
 	void ResetCombo();
@@ -66,13 +70,15 @@ public:
 	void GainExp(const int32 &DropExp );
 
 	FStaminaChangedDelegate StaminaChangedDelegate;
+	FOnExpChanged OnExpChanged;
+	FOnLevelUP OnLevelUP;
 	//virtual  void LoadDataTable()override ;
 
 	void LoadGameStat(int32 newLevel, float newExp, float newHp);
 	
 private:
 	//Called when Exp is enough to level up
-	void levelUp();
+	void LevelUp();
 	//data table에서 level에 맞는 data를 가져온다
 	void LoadLevelData();
 

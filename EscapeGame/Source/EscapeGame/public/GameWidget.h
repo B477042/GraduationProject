@@ -27,6 +27,7 @@ public:
 	//UGameWidget();
 	//void BindCharacterStat(class UGameStat* NewCharacterStat);
 	virtual void NativeConstruct() override;
+	virtual void NativeDestruct()override;
 	void TimeExtend(float addTime);
 	void BindCharacterStat( UStatComponent_Player* newStat);
 	void BindCharacterInven(class UComponent_Inventory* newInven);
@@ -37,13 +38,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void UpdateCharacterStat();
 	//Update UI's Stamina
-	UFUNCTION(BlueprintCallable)
 		void UpdateStamina();
 	//Update Item's Info. Call by Delegate in inventory Comp
 	UFUNCTION(BlueprintCallable)
 	void UpdateItemes(FName ItemName, int Amount);
 	UFUNCTION(BlueprintCallable)
 		void UpdateFury(float Ratio);
+	
+		void UpdateExp();
 	UFUNCTION(BlueprintCallable)
 		float CheackTimeOut(float NewValue);
 	UFUNCTION(BlueprintCallable)
@@ -55,8 +57,7 @@ public:
 	
 	void LoadGame(float Time) { GameTimer = Time; }
 
-private:
-
+ 
 
 private:
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
@@ -73,6 +74,8 @@ private:
 	class UProgressBar* PB_Stamina;
 	UPROPERTY()
 	class UProgressBar* PB_Fury;
+	UPROPERTY()
+		class UProgressBar* PB_Exp;
 	//Image Box of Player's Hp
 	UPROPERTY()
 	UImage* Img_Battery;
@@ -83,14 +86,19 @@ private:
 	TArray<UTexture2D*> Imgs_Battary;
 	UPROPERTY(BlueprintReadWrite, Category = "Images", meta = (AllowPrivateAccess = "true"))
 	TArray<UTexture2D*> Img_Cardkeys;
+	UPROPERTY()
+		class UTextBlock* Txt_CardKey;
 	//Image of Itme Recovery Item
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UImage* Img_RecoveryItem;
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UTextBlock* Txt_TimerBlock;
 	
-	 
-
+	/*
+	*
+	*/
+	UPROPERTY()
+		class UTextBlock* Txt_Level;
 	UPROPERTY()
 		class UTextBlock* RecoveryItemNum;//Write 'HP'
 	UPROPERTY(BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
@@ -121,7 +129,7 @@ private:
 	UPROPERTY(BlueprintReadWrite, Category = "Fury", meta = (AllowPrivateAccess = true))
 		FLinearColor FuryBarColor2;
 	//Inventory UI Data Variables
-
-
+	//UPROPERTY(VisibleAnywhere, Category = "GamState")
+	TWeakObjectPtr<class AEGGameState>GameState;
 	 
 };

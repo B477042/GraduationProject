@@ -378,7 +378,7 @@ void AEnemyBossCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 
 	SetActorLocationAndRotation(LoadData.Location, LoadData.Rotation);
 	bIsMpCharging = LoadData.bIsMpCharging;
-
+	//UStruct Down Casting
 	auto DowncastedData = static_cast<FEnemyData*>(&LoadData);
 
 

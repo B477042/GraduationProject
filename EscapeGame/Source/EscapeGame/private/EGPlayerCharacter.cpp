@@ -23,6 +23,8 @@
 #include "BarrierEffectComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 #include "Perception/AISenseConfig_Hearing.h"
+#include "Perception/AISense_Hearing.h"
+
 
 // Sets default values
 AEGPlayerCharacter::AEGPlayerCharacter()
@@ -225,8 +227,10 @@ void AEGPlayerCharacter::PostInitializeComponents()
 		EGLOG(Error, TEXT("AnimInstance is not UAnim_Player"));
 		return;
 	}
-	
 
+	
+	//발소리 소음 이벤트
+	Anim->OnPlant.BindUObject(this, &AEGPlayerCharacter::OnMakeNoiseEvenet);
 
 
 	//Weapon Hit 판정
@@ -534,7 +538,7 @@ void AEGPlayerCharacter::InitComponents()
 	BarrierEffect = CreateDefaultSubobject<UBarrierEffectComponent>(TEXT("BarrierEffectComponent"));
 	FuryComponent = CreateDefaultSubobject<UComponent_Fury>(TEXT("FuryComponent"));
 	AIPerceptionStimuliSource = CreateDefaultSubobject< UAIPerceptionStimuliSourceComponent>(TEXT("AIPerceptionStimuliSource"));
-
+	
 
 	//====================================================================================================
 	//Components Tree
@@ -764,6 +768,14 @@ void AEGPlayerCharacter::PressFury()
 	UE_LOG(LogTemp, Log, TEXT("Fury used"));
 
 
+}
+
+void AEGPlayerCharacter::OnMakeNoiseEvenet()
+{
+	UAISense_Hearing::ReportNoiseEvent(this,GetActorLocation(),
+		1.0f,this,200.0f,TEXT("Player"));
+
+	//EGLOG(Log, TEXT("tep"));
 }
 
 float AEGPlayerCharacter::ReflectProjectiles(AActor* DamageCauser, float FinalDamage)

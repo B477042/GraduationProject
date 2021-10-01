@@ -53,7 +53,7 @@ public:
 
 	void PlayDeathEffect();
 	UFUNCTION(BlueprintCallable)
-		float DropExp() { return Stat->GetDropExp(); }
+		float DropExp() { return StatComponent->GetDropExp(); }
 	UPROPERTY(EditInstanceOnly)
 	bool bAllowRandStat;
 
@@ -66,7 +66,7 @@ protected:
 		void ReadToDead();
 	
 	UPROPERTY(EditInstanceOnly, Category = "Stat")
-	UStatComponent_EGrunt* Stat;
+	UStatComponent_EGrunt* StatComponent;
 	UPROPERTY(EditInstanceOnly, Category = "SFX")
 	UAudioComponent* SFX_Explosion;
 	UPROPERTY(EditInstanceOnly, Category = "SFX")

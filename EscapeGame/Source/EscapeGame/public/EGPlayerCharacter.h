@@ -14,6 +14,7 @@
 #include "Components/BoxComponent.h"
 #include "Component_Fury.h"
 #include "Component_Stamina.h"
+#include "Perception/AIPerceptionComponent.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "EGPlayerCharacter.generated.h"
 
@@ -112,6 +113,10 @@ private:
 	 * Reflact All Projectile Type Attack
 	 * 
 	 */
+	void OnMakeNoiseEvenet();
+
+
+
 	float ReflectProjectiles(AActor* DamageCauser, float FinalDamage);
 
 	void OnNextStage(const class UEGSaveGame* LoadInstance);
@@ -202,6 +207,7 @@ private:
 		UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Ai Perception", meta = (AllowPrivateAccess = true))
 			UAIPerceptionStimuliSourceComponent* AIPerceptionStimuliSource;
 
+		
 	float minMiniMapArmLength;
 	float maxMiniMapArmLength;
 	bool bSetMapArm;

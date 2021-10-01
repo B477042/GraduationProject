@@ -35,6 +35,24 @@ void UStatComponent_Player::InitializeComponent()
 	Super::InitializeComponent();
 }
 
+void UStatComponent_Player::BeginDestroy()
+{
+	Super::BeginDestroy();
+
+	if (StaminaChangedDelegate.IsBound())
+	{
+		StaminaChangedDelegate.Unbind();
+	}
+	if (OnExpChanged.IsBound())
+	{
+		OnExpChanged.Unbind();
+	}
+	if (OnLevelUP.IsBound())
+	{
+		OnLevelUP.Unbind();
+	}
+}
+
 void UStatComponent_Player::BeginPlay()
 {
 	Super::BeginPlay();
@@ -42,7 +60,15 @@ void UStatComponent_Player::BeginPlay()
 
 	//Init Stamina 
 	Stamina = MaxStamina;
-	StaminaChangedDelegate.Broadcast();
+	if (StaminaChangedDelegate.IsBound())
+	{
+		StaminaChangedDelegate.Execute();
+	}
+	if (OnLevelUP.IsBound())
+	{
+		OnLevelUP.Execute();
+	}
+
 }
 
 
@@ -143,7 +169,7 @@ void UStatComponent_Player::UseStaminaTick(float DeltaTime)
 		return;
 	}
 	Stamina -= DeltaTime * 5.0f;
-	StaminaChangedDelegate.Broadcast();
+	StaminaChangedDelegate.Execute();
 }
 
 ////Call when Running Start
@@ -181,7 +207,7 @@ void UStatComponent_Player::RecoverStamina(float DeltaTime)
 	{
 		
 		//EGLOG(Warning, TEXT("Stamina is full"));
-		StaminaChangedDelegate.Broadcast();
+		StaminaChangedDelegate.Execute();
 		return;
 	}
 
@@ -208,7 +234,7 @@ void UStatComponent_Player::RecoverStamina(float DeltaTime)
 		TimerStamina = 0.0f;
 		Stamina += 0.5f;
 		//EGLOG(Warning, TEXT("Stamina Added"));
-		StaminaChangedDelegate.Broadcast();
+		StaminaChangedDelegate.Execute();
 		return;
 	}
 	else if (Stamina > 30.0f)
@@ -218,7 +244,7 @@ void UStatComponent_Player::RecoverStamina(float DeltaTime)
 		Stamina += 1.0f;
 		bCanUsingStamina = true;
 		//EGLOG(Warning, TEXT("Stamina Added"));
-		StaminaChangedDelegate.Broadcast();
+		StaminaChangedDelegate.Execute();
 		return;
 	}
 	else
@@ -227,7 +253,7 @@ void UStatComponent_Player::RecoverStamina(float DeltaTime)
 		TimerStamina = 0.0f;
 		Stamina += 0.5f;
 		//EGLOG(Warning, TEXT("Stamina Added"));
-		StaminaChangedDelegate.Broadcast();
+		StaminaChangedDelegate.Execute();
 		return;
 	}
 }
@@ -253,6 +279,8 @@ float UStatComponent_Player::GetStamina()
 
 float UStatComponent_Player::GetStaminaRatio()
 {
+	
+
 	return (Stamina<0.0f)? 0.0f : Stamina/MaxStamina;
 }
 
@@ -264,6 +292,14 @@ int32 UStatComponent_Player::GetLevel()
 float UStatComponent_Player::GetExp()
 {
 	return Exp;
+}
+
+float UStatComponent_Player::GetExpRatio()
+{
+	float fExp = Exp;
+	float fNextExp = NextExp;
+	
+	return (fExp <= 0.0f) ? 0.0f : fExp / fNextExp;
 }
 
 
@@ -280,12 +316,19 @@ void UStatComponent_Player::ResetCombo()
 void UStatComponent_Player::GainExp(const int32 & DropExp)
 {
 	Exp += DropExp;
-	UE_LOG(LogTemp, Log, TEXT("Player Gain Exp : %d "),DropExp);
+	UE_LOG(LogTemp, Log, TEXT("Player Gain Exp : %d "),DropExp); 
+	/*EGLOG(Error, TEXT("Exp : %d"), Exp);
+	EGLOG(Error, TEXT("Exp : %d"), NextExp);*/
 	//if Level up
 	if (Exp >= NextExp)
 	{
-		levelUp();
+		LevelUp();
 		UE_LOG(LogTemp, Log, TEXT("Level Up"));
+	}
+
+	if (OnExpChanged.IsBound())
+	{
+		OnExpChanged.Execute();
 	}
 }
 //
@@ -331,15 +374,20 @@ void UStatComponent_Player::LoadGameStat(int32 newLevel, float newExp, float new
 	
 }
 
-void UStatComponent_Player::levelUp()
+void UStatComponent_Player::LevelUp()
 {
 	//Exp가 NextExp를 초과한 만큼 빼주고
 	Exp -= NextExp;
 	//0미만이면 Exp를 0으로 설정해준다
 	if (Exp < 0)Exp = 0;
-	Level++;
+	++Level;
 	
 	LoadLevelData();
+	if (OnLevelUP.IsBound())
+	{
+		OnLevelUP.Execute();
+	}
+
 }
 
 void UStatComponent_Player::LoadLevelData()
@@ -365,6 +413,12 @@ void UStatComponent_Player::LoadLevelData()
 	auto DataTable = OwnerCon->GetDT_Player();
 
 	FPlayerTableRow* PlayerTableRow;
+
+	if (!DataTable)
+	{
+		EGLOG(Error, TEXT("Table row null"));
+		return;
+	}
 	PlayerTableRow = DataTable->FindRow<FPlayerTableRow>(FName(*(FString::FormatAsNumber(Level))), FString(""));
 
 	MaxHP = PlayerTableRow->MaxHp;

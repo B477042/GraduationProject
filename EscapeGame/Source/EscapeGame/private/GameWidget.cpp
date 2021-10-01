@@ -19,13 +19,14 @@ void UGameWidget::NativeConstruct()
 	//PB_HP = Cast<UProgressBar>(GetWidgetFromName(TEXT("HPBar")));
 	PB_Stamina = Cast<UProgressBar>(GetWidgetFromName(TEXT("StaminaBar")));
 	PB_Fury = Cast<UProgressBar>(GetWidgetFromName(TEXT("FuryBar")));
+	PB_Exp = Cast<UProgressBar>(GetWidgetFromName(TEXT("ExpBar")));
 	Img_Battery = Cast<UImage>(GetWidgetFromName(TEXT("HPImage")));
 	Img_RecoveryItem = Cast<UImage>(GetWidgetFromName(TEXT("RecoveryItemImage")));
-	Img_Cardkey = Cast<UImage>(GetWidgetFromName(TEXT("img_Cardkey")));
-	
+	Img_Cardkey = Cast<UImage>(GetWidgetFromName(TEXT("Image_CardKey")));
+	Txt_CardKey = Cast<UTextBlock>(GetWidgetFromName(TEXT("CardKeyText")));
 	RecoveryItemNum = Cast<UTextBlock>(GetWidgetFromName(TEXT("RecoveryItemNum0")));
 	Txt_TimerBlock=Cast<UTextBlock>(GetWidgetFromName(TEXT("TimerBlock")));
-
+	Txt_Level= Cast<UTextBlock>(GetWidgetFromName(TEXT("LevelText")));
 	
 	
 	DisplayTime = 0.0f;
@@ -42,7 +43,13 @@ void UGameWidget::NativeConstruct()
 
 	Txt_TimerBlock->TextDelegate.BindUFunction(this, TEXT("BindingTimeText"));
 	Txt_TimerBlock->ColorAndOpacityDelegate.BindUFunction(this, TEXT("BindingTimeColor"));
-	 
+
+	/*GameState = Cast<AEGGameState>(UGameplayStatics::GetGameState(this));
+	if (!GameState.IsValid())
+	{
+		EGLOG(Error, TEXT("failed"));
+	}
+	GameTimer = GameState->GetRemainTimes();*/
 }
 //연동된 character의 stat component에서 채력이 바뀔 때, 호출된다. 
 void UGameWidget::UpdateCharacterStat()
@@ -100,11 +107,15 @@ void UGameWidget::UpdateItemes(FName ItemName, int Amount)
 		N_CardKeyItems = Amount;
 		if(N_CardKeyItems<=0)
 		{
-			//Img_Cardkey->SetBrushFromTexture(Img_Cardkeys[0]);
+			
+			Txt_CardKey->SetColorAndOpacity(FLinearColor::White);
+			Img_Cardkey->SetBrushFromTexture(Img_Cardkeys[0]);
 		}
 		else
 		{
-			//Img_Cardkey->SetBrushFromTexture(Img_Cardkeys[1]);
+			
+			Txt_CardKey->SetColorAndOpacity(FLinearColor::Green);
+			Img_Cardkey->SetBrushFromTexture(Img_Cardkeys[1]);
 		}
 		
 	}
@@ -136,6 +147,16 @@ void UGameWidget::UpdateFury(float Ratio)
 	FLinearColor NewColor = FLinearColor::LerpUsingHSV(FuryBarColor1, FuryBarColor2, Ratio);
 	PB_Fury->SetFillColorAndOpacity(NewColor );
 
+}
+
+void UGameWidget::UpdateExp()
+{
+	if (CurrentCharacterStat.IsValid())
+	{
+		float Ratio = CurrentCharacterStat->GetExpRatio();
+		PB_Exp->SetPercent(Ratio);
+		EGLOG(Error, TEXT("EXP!! : %f"),Ratio);
+	}
 }
 
 
@@ -177,6 +198,8 @@ FText UGameWidget::BindingTimeText()
 		DisplayTime = 0;
 	}
 	
+	//GameState->SetRemainTimes(DisplayTime);
+
 	Retval = FText::AsNumber(DisplayTime);
 
 	return Retval;
@@ -208,6 +231,15 @@ FLinearColor UGameWidget::BindingTimeColor()
 }
 
 
+void UGameWidget::NativeDestruct()
+{
+	Super::NativeDestruct();
+	////CurrentCharacterStat.Get();
+	////CurrentPlayerFury.Get();
+	////CurrentPlayerInventory.Get();
+	//GameState.Get();
+}
+
 void UGameWidget::TimeExtend(float addTime)
 {
 	GameTimer += addTime;
@@ -223,7 +255,28 @@ void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 	}
 	CurrentCharacterStat = newStat;
 	CurrentCharacterStat->HPChangedDelegate.AddUObject(this, &UGameWidget::UpdateCharacterStat);
-	CurrentCharacterStat->StaminaChangedDelegate.AddUObject(this, &UGameWidget::UpdateStamina);
+	CurrentCharacterStat->StaminaChangedDelegate.BindUObject(this, &UGameWidget::UpdateStamina);
+	CurrentCharacterStat->OnExpChanged.BindUObject(this, &UGameWidget::UpdateExp);
+
+	//========================================================
+	//Level Text Update Lambda
+	CurrentCharacterStat->OnLevelUP.BindLambda([this]()->void {
+		int32 Level = CurrentCharacterStat->GetLevel();
+		FString LevelText;
+		if (Level < 10)
+		{
+			LevelText = TEXT("Lv 0")+FString::FromInt(Level);
+			EGLOG(Log, TEXT("Level Text %s"), *LevelText);
+		}
+		else
+		{
+			LevelText = TEXT("Lv 0") + FString::FromInt(Level);
+			EGLOG(Log, TEXT("Level Text %s"), *LevelText);
+		}
+		
+		Txt_Level->SetText(FText::FromString(LevelText));
+		});
+	//==================================================
 	if (!OwnerChara.IsValid())
 	{
 		OwnerChara = Cast<ACharacter>(newStat->GetOwner());

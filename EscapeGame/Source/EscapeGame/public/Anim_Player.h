@@ -12,7 +12,7 @@
  */
 DECLARE_MULTICAST_DELEGATE(FPlayerRollingStartDelegate);
 DECLARE_MULTICAST_DELEGATE(FPlayerRollingEndDelegate);
-
+DECLARE_DELEGATE(FOnPlant);
 
 
 UCLASS()
@@ -77,7 +77,7 @@ public:
 	void SetDead();
 
 	
-	
+	FOnPlant OnPlant;
 
 
 private:

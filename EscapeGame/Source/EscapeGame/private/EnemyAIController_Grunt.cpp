@@ -33,6 +33,7 @@ AEnemyAIController_Grunt::AEnemyAIController_Grunt()
 	AiConfigSight->SightRadius = 1500.0f;
 	AiConfigSight->LoseSightRadius = 1600.0f;
 	AiConfigSight->PeripheralVisionAngleDegrees = 60.0f;
+	AiConfigSight->AutoSuccessRangeFromLastSeenLocation = 1500.0f;
 	AiConfigSight->DetectionByAffiliation.bDetectEnemies = true;
 	AiConfigSight->DetectionByAffiliation.bDetectNeutrals = true;
 	AiConfigSight->DetectionByAffiliation.bDetectFriendlies = true;
