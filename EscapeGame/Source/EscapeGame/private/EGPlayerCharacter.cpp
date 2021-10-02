@@ -363,6 +363,48 @@ void AEGPlayerCharacter::AirAttack()
 
 }
 
+void AEGPlayerCharacter::SlashAttack()
+{
+	//Box Scan
+	//Hit All scanned actor
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Warning, TEXT("World is invalid"));
+		return;
+	}
+	FVector Start = GetActorLocation();
+	FVector End = 200.0f * GetActorForwardVector() + Start;
+	FVector HalfSize = FVector(100, 100, 100);
+	FRotator Orientation = GetActorRotation();
+
+	TArray<AActor*> Ignores;
+	TArray<FHitResult>HitResult;
+	bool bResult = UKismetSystemLibrary::BoxTraceMultiByProfile(World,Start,End,HalfSize,Orientation,TEXT("PlayerWeapon"),false, Ignores,EDrawDebugTrace::None,HitResult,true);
+	if (!bResult)
+	{
+		EGLOG(Log, TEXT("NO hit"));
+		return;
+	}
+	//Find Enemy Character Types
+	for (auto it : HitResult)
+	{
+		auto TargetActor = Cast<AEnemyCharacter>(it.Actor);
+		if (!TargetActor)
+		{
+			EGLOG(Log, TEXT("Not Enemy Character types"));
+			continue;
+		}
+		FDamageEvent DamageEvent;
+
+		TargetActor->TakeDamage(75, DamageEvent, GetController(), this);
+		Container_Hit->ActivateEffectAt(TargetActor->GetActorLocation());
+
+	}
+
+
+}
+
 void AEGPlayerCharacter::StartRunning()
 {
 //	EGLOG(Warning, TEXT("Run Key Preesed"));

@@ -50,6 +50,7 @@ public:
 	 void ChargeAttack();
 	 void ComboAttack();
 	 void AirAttack();
+	 void SlashAttack();
 	 void StartRunning();
 	 void UsingStaminaTick();
 	 void StopRunning();

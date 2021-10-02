@@ -311,6 +311,10 @@ void UAnim_Player::AnimNotify_ReactDamagedEnd()
 	bIsDamaged = false;
 }
 
+void UAnim_Player::AnimNotify_Skill1Check()
+{
+}
+
 
 
 //Input °ªÀº PlayerÀÇ Combo
