@@ -66,8 +66,10 @@ public:
 	
 	UFUNCTION()
 		void AnimNotify_ReactDamagedEnd();
-	
- 
+	UFUNCTION()
+		void AnimNotify_Skill1Check();
+	UFUNCTION()
+		void AnimNotify_BuffActive();
 
 	//Input °ªÀº PlayerÀÇ Combo
 	void PlaySkillMontage(int Combo);

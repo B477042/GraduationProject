@@ -313,6 +313,15 @@ void UAnim_Player::AnimNotify_ReactDamagedEnd()
 
 void UAnim_Player::AnimNotify_Skill1Check()
 {
+	AEGPlayerCharacter* Player = Cast<AEGPlayerCharacter>(GetOwningActor());
+
+	if (!Player)return;
+	Player->SlashAttack();
+}
+
+void UAnim_Player::AnimNotify_BuffActive()
+{
+
 }
 
 
