@@ -130,7 +130,7 @@ void AEnemyAIController_Gunner::OnPerceptionUpdated(const TArray<AActor*>& Updat
 }
 void AEnemyAIController_Gunner::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-	EGLOG(Log, TEXT("Hi : %s"), *Actor->GetName());
+	//EGLOG(Log, TEXT("Hi : %s"), *Actor->GetName());
 	//감지된 엑터가 player인지 검사합니다
 	auto target = Cast<APawn>(Actor);
 	if (target == nullptr)return;

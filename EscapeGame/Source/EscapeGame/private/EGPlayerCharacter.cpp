@@ -44,7 +44,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	
 	bIsGuarding = false;
 	bIsDebugMode = false;
-	bResticLMBInput = false;
+	
 
 	MoveDirection = FVector::ZeroVector;
 	CurrentVelocity = 78.f;
@@ -318,6 +318,13 @@ void AEGPlayerCharacter::ChargeAttack()
 
 void AEGPlayerCharacter::ComboAttack()
 {
+	//입력 제한 확인
+	if (bResticLMBInput)
+	{
+		return;
+	}
+
+
 	if (GetCharacterMovement()->IsFalling())
 	{
 		
@@ -360,6 +367,48 @@ void AEGPlayerCharacter::AirAttack()
 		Anim->PlayAirAttackMontage();
 	}
 	
+
+}
+
+void AEGPlayerCharacter::SlashAttack()
+{
+	//Box Scan
+	//Hit All scanned actor
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Warning, TEXT("World is invalid"));
+		return;
+	}
+	FVector Start = GetActorLocation();
+	FVector End = 200.0f * GetActorForwardVector() + Start;
+	FVector HalfSize = FVector(100, 100, 100);
+	FRotator Orientation = GetActorRotation();
+
+	TArray<AActor*> Ignores;
+	TArray<FHitResult>HitResult;
+	bool bResult = UKismetSystemLibrary::BoxTraceMultiByProfile(World,Start,End,HalfSize,Orientation,TEXT("PlayerWeapon"),false, Ignores,EDrawDebugTrace::None,HitResult,true);
+	if (!bResult)
+	{
+		EGLOG(Log, TEXT("NO hit"));
+		return;
+	}
+	//Find Enemy Character Types
+	for (auto it : HitResult)
+	{
+		auto TargetActor = Cast<AEnemyCharacter>(it.Actor);
+		if (!TargetActor)
+		{
+			EGLOG(Log, TEXT("Not Enemy Character types"));
+			continue;
+		}
+		FDamageEvent DamageEvent;
+
+		TargetActor->TakeDamage(75, DamageEvent, GetController(), this);
+		Container_Hit->ActivateEffectAt(TargetActor->GetActorLocation());
+
+	}
+
 
 }
 
@@ -493,23 +542,52 @@ void AEGPlayerCharacter::ActiveThunder()
 	Skill_Thunder->UseSkill(GetActorLocation());
 }
 
-void AEGPlayerCharacter::RestricInput()
+void AEGPlayerCharacter::RestricInput(const ERestricInputType& Type)
 {
-	 
+	switch(Type)
+	{
+	case ERestricInputType::E_AxisMoving:
+		bRestricAxisInput = true;
+		break;
+	case ERestricInputType::E_LMB:
+		bResticLMBInput = true;
+		break;
+	case ERestricInputType::E_RMB:
+		bRestricRMBInput = true;
+		break;
+	case ERestricInputType::E_LRMB:
+		bResticLMBInput = true;
+		bRestricRMBInput = true;
+		break;
+	default:
+		EGLOG(Log, TEXT("None"));
+	}
 
-	bRestricAxisInput = true;
-	bResticLMBInput = true;
+	
+	
 }
 
-void AEGPlayerCharacter::RecoverInput()
+void AEGPlayerCharacter::RecoverInput(const ERestricInputType& Type)
 {
-	/*auto myCon = Cast<APlayerController>(GetController());
-	if (myCon != nullptr)
+	switch (Type)
 	{
-		EnableInput(myCon);
-	}*/
-	bRestricAxisInput = false;
-	bResticLMBInput = false;
+	case ERestricInputType::E_AxisMoving:
+		bRestricAxisInput = false;
+		break;
+	case ERestricInputType::E_LMB:
+		bResticLMBInput = false;
+		break;
+	case ERestricInputType::E_RMB:
+		bRestricRMBInput = false;
+		break;
+	case ERestricInputType::E_LRMB:
+		bRestricRMBInput = false;
+		bResticLMBInput = false;
+		break;
+	default:
+		EGLOG(Log, TEXT("None"));
+	}
+ 
 }
 
 
@@ -735,7 +813,8 @@ void AEGPlayerCharacter::SetDeath()
 	//Anim->StopAllMontages(0.0f);
 
 	Anim->SetDead();
-	RestricInput();
+	RestricInput(ERestricInputType::E_AxisMoving);
+	RestricInput(ERestricInputType::E_LRMB);
 	auto EGGameInstance = Cast<UEGGameInstance>(GetGameInstance());
 	if (!EGGameInstance)
 	{

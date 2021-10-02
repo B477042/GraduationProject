@@ -58,7 +58,7 @@ void UAnimInstance_Boss::AnimNotify_DeadEnd()
 	
 	Chara->Destroy();
 
-	UGameplayStatics::OpenLevel(this,TEXT("Ending"));
+	//UGameplayStatics::OpenLevel(this,TEXT("Ending"));
 
 }
 

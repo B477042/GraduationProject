@@ -22,6 +22,20 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTakeHugeDamage);
 
+UENUM(BlueprintType)
+enum class ERestricInputType : uint8
+{
+	//Left Mouse Button
+	E_LMB = 0 UMETA(DisplayName="Left Mouse Button") ,
+	//Right Mouse Button
+	E_RMB UMETA(DisplayName="Right Mouse Button"),
+	//Both Mouse Button
+	E_LRMB UMETA(DisplayName="Both Mouse Button"),
+	//Axis Input Moving
+	E_AxisMoving UMETA(DisplayName = "Axis Input Moving")
+};
+
+
 UCLASS()
 class ESCAPEGAME_API AEGPlayerCharacter : public AGameCharacter
 {
@@ -50,6 +64,7 @@ public:
 	 void ChargeAttack();
 	 void ComboAttack();
 	 void AirAttack();
+	 void SlashAttack();
 	 void StartRunning();
 	 void UsingStaminaTick();
 	 void StopRunning();
@@ -67,10 +82,10 @@ public:
 	 void ActiveThunder();
 	 
 	 UFUNCTION(BlueprintCallable)
-	 void RestricInput();
+	 void RestricInput(const ERestricInputType& Type );
 	 
 	 UFUNCTION(BlueprintCallable)
-	 void RecoverInput();
+	 void RecoverInput(const ERestricInputType& Type);
 	 
 	 //Over 10 Damage -> Reacting
 	 UPROPERTY(BlueprintAssignable)
@@ -232,8 +247,10 @@ private:
 	float CurrentVelocity;
 
 	/*
-	* input 
+	*  Restric input 
 	*/
 	bool bRestricAxisInput=false;
-	bool bResticLMBInput;
+	bool bResticLMBInput=false;
+	bool bRestricRMBInput = false;
+	
 };
