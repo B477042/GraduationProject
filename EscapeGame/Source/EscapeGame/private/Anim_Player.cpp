@@ -227,7 +227,8 @@ void UAnim_Player::AnimNotify_SkillStart()
 	auto Player = Cast<AEGPlayerCharacter>(GetOwningActor());
 
 	if (!Player)return;
-	Player->RestricInput();
+	Player->RestricInput(ERestricInputType::E_LRMB);
+	Player->RestricInput(ERestricInputType::E_AxisMoving);
 	//SFX_Laugh->Play();
 }
 
@@ -237,7 +238,8 @@ void UAnim_Player::AnimNotify_SkillEnd()
 
 	if (!Player)return;
 
-	Player->RecoverInput();
+	Player->RecoverInput(ERestricInputType::E_LRMB);
+	Player->RecoverInput(ERestricInputType::E_AxisMoving);
 	StopAllMontages(0.0f);
 	Player->Stat->ResetCombo();
 }
@@ -252,12 +254,13 @@ void UAnim_Player::AnimNotify_AnimNotify_ThunderStart()
 
 void UAnim_Player::AnimNotify_DeadStart()
 {
-	auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
+	auto Player = Cast<AEGPlayerCharacter>(GetOwningActor());
 
-	if (!player)return;
+	if (!Player)return;
 	SFX_Death->Play();
-	player->RestricInput();
-	player->GetCapsuleComponent()->SetCollisionProfileName(TEXT("NoCollision"));
+	Player->RestricInput(ERestricInputType::E_LRMB);
+	Player->RestricInput(ERestricInputType::E_AxisMoving);
+	Player->GetCapsuleComponent()->SetCollisionProfileName(TEXT("NoCollision"));
 	
 
 }

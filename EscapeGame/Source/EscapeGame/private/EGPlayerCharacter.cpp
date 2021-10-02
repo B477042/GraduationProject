@@ -44,7 +44,7 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	
 	bIsGuarding = false;
 	bIsDebugMode = false;
-	bResticLMBInput = false;
+	
 
 	MoveDirection = FVector::ZeroVector;
 	CurrentVelocity = 78.f;
@@ -318,6 +318,13 @@ void AEGPlayerCharacter::ChargeAttack()
 
 void AEGPlayerCharacter::ComboAttack()
 {
+	//입력 제한 확인
+	if (bResticLMBInput)
+	{
+		return;
+	}
+
+
 	if (GetCharacterMovement()->IsFalling())
 	{
 		
@@ -535,23 +542,52 @@ void AEGPlayerCharacter::ActiveThunder()
 	Skill_Thunder->UseSkill(GetActorLocation());
 }
 
-void AEGPlayerCharacter::RestricInput()
+void AEGPlayerCharacter::RestricInput(const ERestricInputType& Type)
 {
-	 
+	switch(Type)
+	{
+	case ERestricInputType::E_AxisMoving:
+		bRestricAxisInput = true;
+		break;
+	case ERestricInputType::E_LMB:
+		bResticLMBInput = true;
+		break;
+	case ERestricInputType::E_RMB:
+		bRestricRMBInput = true;
+		break;
+	case ERestricInputType::E_LRMB:
+		bResticLMBInput = true;
+		bRestricRMBInput = true;
+		break;
+	default:
+		EGLOG(Log, TEXT("None"));
+	}
 
-	bRestricAxisInput = true;
-	bResticLMBInput = true;
+	
+	
 }
 
-void AEGPlayerCharacter::RecoverInput()
+void AEGPlayerCharacter::RecoverInput(const ERestricInputType& Type)
 {
-	/*auto myCon = Cast<APlayerController>(GetController());
-	if (myCon != nullptr)
+	switch (Type)
 	{
-		EnableInput(myCon);
-	}*/
-	bRestricAxisInput = false;
-	bResticLMBInput = false;
+	case ERestricInputType::E_AxisMoving:
+		bRestricAxisInput = false;
+		break;
+	case ERestricInputType::E_LMB:
+		bResticLMBInput = false;
+		break;
+	case ERestricInputType::E_RMB:
+		bRestricRMBInput = false;
+		break;
+	case ERestricInputType::E_LRMB:
+		bRestricRMBInput = false;
+		bResticLMBInput = false;
+		break;
+	default:
+		EGLOG(Log, TEXT("None"));
+	}
+ 
 }
 
 
@@ -777,7 +813,8 @@ void AEGPlayerCharacter::SetDeath()
 	//Anim->StopAllMontages(0.0f);
 
 	Anim->SetDead();
-	RestricInput();
+	RestricInput(ERestricInputType::E_AxisMoving);
+	RestricInput(ERestricInputType::E_LRMB);
 	auto EGGameInstance = Cast<UEGGameInstance>(GetGameInstance());
 	if (!EGGameInstance)
 	{
