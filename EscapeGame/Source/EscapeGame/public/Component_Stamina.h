@@ -11,7 +11,7 @@
  */
 
 
-
+DECLARE_DELEGATE(FOnStaminaChanged);
 
 UCLASS(ClassGroup = "Custom", Config = "GameComponent", meta = (BlueprintSpawnableComponent))
 class ESCAPEGAME_API UComponent_Stamina : public UGameComponent
@@ -29,7 +29,7 @@ public:
 	void UseStaticStamina();
 	//True : Using Stamina , false : Not Using Stamina
 	void SetUsingStamina(bool bResult);
-
+	FOnStaminaChanged OnStaminaChanged;
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

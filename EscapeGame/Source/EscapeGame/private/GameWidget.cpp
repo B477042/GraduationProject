@@ -245,7 +245,7 @@ void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 	}
 	CurrentPlayerStat = newStat;
 	CurrentPlayerStat->HPChangedDelegate.AddUObject(this, &UGameWidget::UpdateCharacterStat);
-	CurrentPlayerStat->StaminaChangedDelegate.BindUObject(this, &UGameWidget::UpdateStamina);
+	//CurrentPlayerStat->StaminaChangedDelegate.BindUObject(this, &UGameWidget::UpdateStamina);
 	CurrentPlayerStat->OnExpChanged.BindUObject(this, &UGameWidget::UpdateExp);
 
 	//========================================================
@@ -316,6 +316,13 @@ void UGameWidget::BindCharacterTimeLimit(UComponent_TimeLimit* NewTimeLimit)
 void UGameWidget::BindCharacterStamina(UComponent_Stamina* NewStamina)
 {
 	CurrentPlayerStamina = NewStamina;
+
+	CurrentPlayerStamina->OnStaminaChanged.BindUObject(this, &UGameWidget::UpdateStamina);
+	if (CurrentPlayerStamina->OnStaminaChanged.IsBound())
+	{
+	CurrentPlayerStamina->OnStaminaChanged.Execute();
+	}
+
 }
 
 

@@ -40,6 +40,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void UpdateCharacterStat();
 	//Update UI's Stamina
+	//UFUNCTION(BlueprintCallable)
 		void UpdateStamina();
 	//Update Item's Info. Call by Delegate in inventory Comp
 	UFUNCTION(BlueprintCallable)
