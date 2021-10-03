@@ -9,6 +9,7 @@
 #include "Item_CardKey.h"
 #include "Item_Recover.h"
 #include "EGGameState.h"
+#include "Component_TimeLimit.h"
 //#include"GameStat.h"
 
 
@@ -30,7 +31,7 @@ void UGameWidget::NativeConstruct()
 	
 	
 	DisplayTime = 0.0f;
-	GameTimer = 60.0f;
+	
 	
 	PlayerHP = 100.0f;
 	PlayerStamina = 100.0f;
@@ -41,25 +42,28 @@ void UGameWidget::NativeConstruct()
 
 	EGLOG(Error, TEXT("Wdiget Native Constructor"));
 
-	Txt_TimerBlock->TextDelegate.BindUFunction(this, TEXT("BindingTimeText"));
-	Txt_TimerBlock->ColorAndOpacityDelegate.BindUFunction(this, TEXT("BindingTimeColor"));
+	/*Txt_TimerBlock->TextDelegate.BindUFunction(this, FName("BindingTimeText"));
+	Txt_TimerBlock->ColorAndOpacityDelegate.BindUFunction(this, FName("BindingTimeColor"));*/
 
-	/*GameState = Cast<AEGGameState>(UGameplayStatics::GetGameState(this));
-	if (!GameState.IsValid())
-	{
-		EGLOG(Error, TEXT("failed"));
-	}
-	GameTimer = GameState->GetRemainTimes();*/
+
 }
+
+void UGameWidget::NativeOnInitialized()
+{
+	Super::NativeOnInitialized();
+
+}
+
+
 //연동된 character의 stat component에서 채력이 바뀔 때, 호출된다. 
 void UGameWidget::UpdateCharacterStat()
 {
-	if (CurrentCharacterStat.IsValid())
+	if (CurrentPlayerStat.IsValid())
 	{
 		
-		PlayerHP=CurrentCharacterStat->GetHP();
-		float PlayerHPRatio = CurrentCharacterStat->GetHPRatio()*100.0f;
-		float BlurRate = 0.5f*(1.0f - CurrentCharacterStat->GetHPRatio());
+		PlayerHP=CurrentPlayerStat->GetHP();
+		float PlayerHPRatio = CurrentPlayerStat->GetHPRatio()*100.0f;
+		float BlurRate = 0.5f*(1.0f - CurrentPlayerStat->GetHPRatio());
 
 
 		//Ui 피 효과. 제거 2021 03 12
@@ -82,7 +86,7 @@ void UGameWidget::UpdateCharacterStat()
 	/*	if (GameTimer <= 0.0f)
 		{
 			EGLOG(Error, TEXT("Time out"));
-			CurrentCharacterStat->TakeDamage(200.0f);
+			CurrentPlayerStat->TakeDamage(200.0f);
 		}*/
 
 	}
@@ -91,11 +95,11 @@ void UGameWidget::UpdateCharacterStat()
 
 void UGameWidget::UpdateStamina()
 {
-	if (CurrentCharacterStat.IsValid())
+	if (CurrentPlayerStat.IsValid())
 	{
 		if (PB_Stamina != nullptr)
-			PB_Stamina->SetPercent(CurrentCharacterStat->GetStaminaRatio());
-		PlayerStamina = CurrentCharacterStat->GetStamina();
+			PB_Stamina->SetPercent(CurrentPlayerStat->GetStaminaRatio());
+		PlayerStamina = CurrentPlayerStat->GetStamina();
 	}
 }
 
@@ -151,28 +155,15 @@ void UGameWidget::UpdateFury(float Ratio)
 
 void UGameWidget::UpdateExp()
 {
-	if (CurrentCharacterStat.IsValid())
+	if (CurrentPlayerStat.IsValid())
 	{
-		float Ratio = CurrentCharacterStat->GetExpRatio();
+		float Ratio = CurrentPlayerStat->GetExpRatio();
 		PB_Exp->SetPercent(Ratio);
 		EGLOG(Error, TEXT("EXP!! : %f"),Ratio);
 	}
 }
 
 
-float UGameWidget::CheackTimeOut(float NewValue)
-{
-	 
-	if (NewValue <= 0.0f)
-	{
-		//EGLOG(Error, TEXT("DIEEE"));
-		CurrentCharacterStat->TakeDamage(9.0f);
-	 
-	}
-	
-
-	return (NewValue >= 0.0f) ? NewValue: 0.0f;
-}
 
 
 //Tick처럼 구동되는 점 확인
@@ -187,18 +178,14 @@ FText UGameWidget::BindingTimeText()
 		EGLOG(Error, TEXT("OwnerActor is nullptr"));
 		return Retval;
 	}
-	float PlayedTime = OwnerChara->GetController()->GetGameTimeSinceCreation();
-	DisplayTime = GameTimer - PlayedTime;
-	//EGLOG(Log, TEXT("Time : %f"), DisplayTime);
-	//If Time Over
-	if (DisplayTime <= 0)
+	if (!CurrentPlayerTimeLimit.IsValid())
 	{
-		FDamageEvent DamageEvent;
-		OwnerChara->TakeDamage(100,DamageEvent,OwnerChara->GetController(), OwnerChara->GetController());
-		DisplayTime = 0;
+		return Retval;
 	}
+	DisplayTime = CurrentPlayerTimeLimit->GetCurrentRemainTime();
 	
-	//GameState->SetRemainTimes(DisplayTime);
+	
+	
 
 	Retval = FText::AsNumber(DisplayTime);
 
@@ -208,7 +195,16 @@ FText UGameWidget::BindingTimeText()
 FLinearColor UGameWidget::BindingTimeColor()
 {
 	FLinearColor Retval;
-	float TimePercent = DisplayTime / GameTimer;
+	if (!OwnerChara.IsValid())
+	{
+
+		EGLOG(Error, TEXT("OwnerActor is nullptr"));
+		return Retval;
+	}
+
+	
+
+	float TimePercent = DisplayTime / 60.0f;
 
 
 
@@ -231,21 +227,17 @@ FLinearColor UGameWidget::BindingTimeColor()
 }
 
 
+
 void UGameWidget::NativeDestruct()
 {
 	Super::NativeDestruct();
-	////CurrentCharacterStat.Get();
+	////CurrentPlayerStat.Get();
 	////CurrentPlayerFury.Get();
 	////CurrentPlayerInventory.Get();
 	//GameState.Get();
 }
 
-void UGameWidget::TimeExtend(float addTime)
-{
-	GameTimer += addTime;
 
-
-}
 
 void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 {
@@ -253,15 +245,15 @@ void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 		EGLOG(Error, TEXT("No Character Stat Componenet"));
 		return;
 	}
-	CurrentCharacterStat = newStat;
-	CurrentCharacterStat->HPChangedDelegate.AddUObject(this, &UGameWidget::UpdateCharacterStat);
-	CurrentCharacterStat->StaminaChangedDelegate.BindUObject(this, &UGameWidget::UpdateStamina);
-	CurrentCharacterStat->OnExpChanged.BindUObject(this, &UGameWidget::UpdateExp);
+	CurrentPlayerStat = newStat;
+	CurrentPlayerStat->HPChangedDelegate.AddUObject(this, &UGameWidget::UpdateCharacterStat);
+	CurrentPlayerStat->StaminaChangedDelegate.BindUObject(this, &UGameWidget::UpdateStamina);
+	CurrentPlayerStat->OnExpChanged.BindUObject(this, &UGameWidget::UpdateExp);
 
 	//========================================================
 	//Level Text Update Lambda
-	CurrentCharacterStat->OnLevelUP.BindLambda([this]()->void {
-		int32 Level = CurrentCharacterStat->GetLevel();
+	CurrentPlayerStat->OnLevelUP.BindLambda([this]()->void {
+		int32 Level = CurrentPlayerStat->GetLevel();
 		FString LevelText;
 		if (Level < 10)
 		{
@@ -317,12 +309,10 @@ void UGameWidget::BindCharacterFury(UComponent_Fury* newFury)
 
 }
 
-
-float UGameWidget::GetGameTimer()
+void UGameWidget::BindCharacterTimeLimit(UComponent_TimeLimit* NewTimeLimit)
 {
-	
-	return GameTimer;
-}
+	CurrentPlayerTimeLimit = NewTimeLimit;
 
+}
 
 

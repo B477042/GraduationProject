@@ -14,6 +14,7 @@
 #include "Components/BoxComponent.h"
 #include "Component_Fury.h"
 #include "Component_Stamina.h"
+#include "Component_TimeLimit.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "EGPlayerCharacter.generated.h"
@@ -75,10 +76,10 @@ public:
 	 void ReleaseGuard();
 
 	
-	 UStatComponent_Player* GetStatComponent();
-	 UComponent_Inventory* GetInventory();
-	 UComponent_Fury* GetFuryComponent();
-	 
+	 UStatComponent_Player* GetStatComponent()const;
+	 UComponent_Inventory* GetInventory()const;
+	 UComponent_Fury* GetFuryComponent()const;
+	 UComponent_TimeLimit* GetTimeLimitComponent()const;
 	 void ActiveThunder();
 	 
 	 UFUNCTION(BlueprintCallable)
@@ -216,6 +217,13 @@ private:
 	*/
 		UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Fury", meta = (AllowPrivateAccess = true))
 			UComponent_Fury* FuryComponent;
+	/*
+	*	Time Limit	
+	*/
+		UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Fury", meta = (AllowPrivateAccess = true))
+			UComponent_TimeLimit* TimeLimitComponent;
+
+
 	/*
 	* AI
 	*/

@@ -235,6 +235,7 @@ void AEGPlayerController::OnKillMode()
 
 	 HUD->BindCharacterInven(EGPlayer->GetInventory());
 	 HUD->BindCharacterFury(EGPlayer->GetFuryComponent());
+	 HUD->BindCharacterTimeLimit(EGPlayer->GetTimeLimitComponent());
  }
 
 

@@ -28,11 +28,13 @@ public:
 	//void BindCharacterStat(class UGameStat* NewCharacterStat);
 	virtual void NativeConstruct() override;
 	virtual void NativeDestruct()override;
-	void TimeExtend(float addTime);
+	
 	void BindCharacterStat( UStatComponent_Player* newStat);
 	void BindCharacterInven(class UComponent_Inventory* newInven);
 	void BindCharacterFury(class UComponent_Fury* newFury);
-	float GetGameTimer();
+	void BindCharacterTimeLimit(class UComponent_TimeLimit* NewTimeLimit);
+
+	
 	//FBindStat BindStatDelegate;
 	//Update UI's Hp
 	UFUNCTION(BlueprintCallable)
@@ -46,26 +48,33 @@ public:
 		void UpdateFury(float Ratio);
 	
 		void UpdateExp();
-	UFUNCTION(BlueprintCallable)
-		float CheackTimeOut(float NewValue);
+
 	UFUNCTION(BlueprintCallable)
 		FText BindingTimeText();
 	UFUNCTION(BlueprintCallable)
 		FLinearColor BindingTimeColor();
 
+	
  
 	
-	void LoadGame(float Time) { GameTimer = Time; }
 
  
 
-private:
+protected:
+
+	virtual void NativeOnInitialized() override;
+
+
+
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
-	TWeakObjectPtr<class UStatComponent_Player>CurrentCharacterStat;
+	TWeakObjectPtr<class UStatComponent_Player>CurrentPlayerStat;
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
 	TWeakObjectPtr<class UComponent_Inventory>CurrentPlayerInventory;
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
 	TWeakObjectPtr<class UComponent_Fury>CurrentPlayerFury;
+	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
+	TWeakObjectPtr<class UComponent_TimeLimit>CurrentPlayerTimeLimit;
+
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
 	TWeakObjectPtr<class ACharacter>OwnerChara;
 
@@ -110,12 +119,6 @@ private:
 	UPROPERTY(BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		float PlayerStamina;
 	
-	//Default Value of Game Timer
-	//This Value can be changed when player contact with Hp box
-	//When Save Game Called, Game State recieve this value as RemainTimes value
-	UPROPERTY(BlueprintReadWrite, Category = Timer, Meta = (AllowPrivateAccess = true))
-		float GameTimer;
-	//The value actually displayed in the game.  
 	float DisplayTime;
 
 	UPROPERTY(BlueprintReadOnly, Category = Inventory, Meta = (AllowPrivateAccess = true))

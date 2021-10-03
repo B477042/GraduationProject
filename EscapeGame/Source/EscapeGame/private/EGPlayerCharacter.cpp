@@ -69,7 +69,17 @@ void AEGPlayerCharacter::BeginPlay()
 		return;
 		
 	}*/
-	
+//================================================
+//||		TimeLimit 관련 Delegate 등록			||
+//================================================
+	TimeLimitComponent->OnTimeOver.BindLambda([&]()->void {
+		FDamageEvent DamageEvent;
+		TakeDamage(10000.0f, DamageEvent, GetController(), this);
+		//SetDeath();
+
+		});
+
+
 	
 //================================================
 //||			Stat 관련 Delegate 등록			||
@@ -249,7 +259,7 @@ float AEGPlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent con
 	
 
 	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-	//bCanBeDamaged가 0이라면 데미지를 받지 않는다
+	
 	
 	/*if (bCanBeDamaged == false)
 	{
@@ -278,19 +288,24 @@ void AEGPlayerCharacter::HealHP(float addHP)
 	Stat->HealHP(addHP);
 }
 
-UStatComponent_Player* AEGPlayerCharacter::GetStatComponent()
+UStatComponent_Player* AEGPlayerCharacter::GetStatComponent()const
 {
 	return Stat;
 }
 
-UComponent_Inventory * AEGPlayerCharacter::GetInventory()
+UComponent_Inventory * AEGPlayerCharacter::GetInventory()const
 {
 	return Inventory;
 }
 
-UComponent_Fury* AEGPlayerCharacter::GetFuryComponent()
+UComponent_Fury* AEGPlayerCharacter::GetFuryComponent()const
 {
 	return FuryComponent;
+}
+
+UComponent_TimeLimit* AEGPlayerCharacter::GetTimeLimitComponent() const
+{
+	return TimeLimitComponent;
 }
 
 void AEGPlayerCharacter::ChargeAttack()
@@ -616,7 +631,7 @@ void AEGPlayerCharacter::InitComponents()
 	BarrierEffect = CreateDefaultSubobject<UBarrierEffectComponent>(TEXT("BarrierEffectComponent"));
 	FuryComponent = CreateDefaultSubobject<UComponent_Fury>(TEXT("FuryComponent"));
 	AIPerceptionStimuliSource = CreateDefaultSubobject< UAIPerceptionStimuliSourceComponent>(TEXT("AIPerceptionStimuliSource"));
-	
+	TimeLimitComponent = CreateDefaultSubobject<UComponent_TimeLimit>(TEXT("TimeLimitComponent"));
 
 	//====================================================================================================
 	//Components Tree
