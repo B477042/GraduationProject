@@ -487,9 +487,11 @@ void AEGPlayerCharacter::StopRunning()
 
 void AEGPlayerCharacter::Roll()
 {
-	//Anim의 bIsRolling을 true로 바꿔주면 AnimBP에서 구르는 애니메이션을 재생하게 된다.
-	Anim->SetRolling(true);
-	StaminaComponent->UseStaticStamina();
+	if (StaminaComponent->UseStaticStamina())
+	{
+		//Anim의 bIsRolling을 true로 바꿔주면 AnimBP에서 구르는 애니메이션을 재생하게 된다.
+		Anim->SetRolling(true);
+	}
 	
 
 }
@@ -820,9 +822,13 @@ void AEGPlayerCharacter::Turn( float  NewAxisValue)
 
 void AEGPlayerCharacter::Jump()
 {
-	if(!Stat->IsAttacking())
-	Super::Jump();
-	StaminaComponent->UseStaticStamina();
+	if (!Stat->IsAttacking()&& StaminaComponent->UseStaticStamina())
+	{
+
+		Super::Jump();
+	}
+	
+	
 	
 }
 

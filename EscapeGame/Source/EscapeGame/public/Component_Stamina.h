@@ -26,7 +26,7 @@ public:
 	// Tik-based stamina usage function. Like sprint, blocking
 	void TurnOnTickStamina ();
 	// Roll, Jump 
-	void UseStaticStamina();
+	bool UseStaticStamina();
 	//True : Using Stamina , false : Not Using Stamina
 	void SetUsingStamina(bool bResult);
 	FOnStaminaChanged OnStaminaChanged;

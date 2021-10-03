@@ -23,20 +23,27 @@ void UComponent_Stamina::TurnOnTickStamina()
 	SetComponentTickEnabled(true);
 }
 
-void UComponent_Stamina::UseStaticStamina()
+bool UComponent_Stamina::UseStaticStamina()
 {
 	if (!bCanUsingStamina)
 	{
 		EGLOG(Log, TEXT("Can't using Stamina"));
-		return;
+		return false;
 	}
+	
+	if (Stamina < UsageOfStatic)
+	{
+		EGLOG(Log, TEXT("Can't using Stamina"));
+		return false;
+	}
+
 	Stamina -= UsageOfStatic;
 	if (Stamina <= 0.0f)
 	{
 		Stamina = 0.0f;
 	}
 
-
+	return true;
 
 }
 
