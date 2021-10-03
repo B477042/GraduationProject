@@ -10,6 +10,7 @@
 #include "Item_Recover.h"
 #include "EGGameState.h"
 #include "Component_TimeLimit.h"
+#include "Component_Stamina.h"
 //#include"GameStat.h"
 
 
@@ -34,7 +35,7 @@ void UGameWidget::NativeConstruct()
 	
 	
 	PlayerHP = 100.0f;
-	PlayerStamina = 100.0f;
+	//PlayerStamina = 100.0f;
 	HPAmount = 0;
 	FuryBarColor1 = FLinearColor::Black;
 	FuryBarColor2 = FLinearColor::Red;
@@ -98,8 +99,8 @@ void UGameWidget::UpdateStamina()
 	if (CurrentPlayerStat.IsValid())
 	{
 		if (PB_Stamina != nullptr)
-			PB_Stamina->SetPercent(CurrentPlayerStat->GetStaminaRatio());
-		PlayerStamina = CurrentPlayerStat->GetStamina();
+			PB_Stamina->SetPercent(CurrentPlayerStamina->GetStaminaRatio());
+		//PlayerStamina = CurrentPlayerStat->GetStamina();
 	}
 }
 
@@ -204,18 +205,17 @@ FLinearColor UGameWidget::BindingTimeColor()
 
 	
 
-	float TimePercent = DisplayTime / 60.0f;
 
 
 
-	//Under 65%, Yellow, Under 20%, Red, else Green
+	//Under 30, Yellow, Under 15, Red, else Green
 
-	if (TimePercent < 0.65)
+	if (DisplayTime < 30.0f)
 	{
 		Retval = FLinearColor(1.000000, 0.421295, 0.000000, 1.000000);
 	}
 	
-	else if (TimePercent < 0.2)
+	else if (DisplayTime < 15.0f)
 	{
 		Retval = FLinearColor::Red;
 	}
@@ -313,6 +313,11 @@ void UGameWidget::BindCharacterTimeLimit(UComponent_TimeLimit* NewTimeLimit)
 {
 	CurrentPlayerTimeLimit = NewTimeLimit;
 
+}
+
+void UGameWidget::BindCharacterStamina(UComponent_Stamina* NewStamina)
+{
+	CurrentPlayerStamina = NewStamina;
 }
 
 

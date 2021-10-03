@@ -10,9 +10,7 @@
  * Deal with Stamina System
  */
 
-//Input Param is percent of stamina
-DECLARE_DELEGATE_OneParam(FOnStaminaChanged, float);
- 
+
 
 
 UCLASS(ClassGroup = "Custom", Config = "GameComponent", meta = (BlueprintSpawnableComponent))
@@ -22,26 +20,28 @@ class ESCAPEGAME_API UComponent_Stamina : public UGameComponent
 public:
 	UComponent_Stamina();
 
-	//bool CanUseStamina() { return bCanUsingStamina; }
+	bool CanUseStamina();
 	float GetStaminaRatio();
 
 	// Tik-based stamina usage function. Like sprint, blocking
 	void TurnOnTickStamina ();
 	// Roll, Jump 
 	void UseStaticStamina();
+	//True : Using Stamina , false : Not Using Stamina
+	void SetUsingStamina(bool bResult);
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 	virtual void BeginDestroy()override;
 	
-	void UsingTick(float DeltaTime);
+	void UsingTick();
 	void RecoverTick(float DeltaTime);
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	FOnStaminaChanged OnStaminaChanged;
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Config, VisibleAnywhere, Category = "Stamina", meta = (AllowPrivateAccess = true))
 		float Stamina;

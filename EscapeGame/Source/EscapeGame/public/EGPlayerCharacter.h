@@ -80,6 +80,8 @@ public:
 	 UComponent_Inventory* GetInventory()const;
 	 UComponent_Fury* GetFuryComponent()const;
 	 UComponent_TimeLimit* GetTimeLimitComponent()const;
+	 UComponent_Stamina* GetStaminaComponenet()const;
+
 	 void ActiveThunder();
 	 
 	 UFUNCTION(BlueprintCallable)
@@ -220,10 +222,13 @@ private:
 	/*
 	*	Time Limit	
 	*/
-		UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Fury", meta = (AllowPrivateAccess = true))
+		UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "TimeLimit", meta = (AllowPrivateAccess = true))
 			UComponent_TimeLimit* TimeLimitComponent;
-
-
+	/*
+	*	Stamina
+	*/
+		UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Stamina", meta = (AllowPrivateAccess = true))
+			UComponent_Stamina* StaminaComponent;
 	/*
 	* AI
 	*/

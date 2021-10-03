@@ -7,6 +7,10 @@ UComponent_Stamina::UComponent_Stamina()
 {
 
 }
+bool UComponent_Stamina::CanUseStamina()
+{
+	return  bCanUsingStamina;
+}
 float UComponent_Stamina::GetStaminaRatio()
 {
 	return (Stamina < 0.0f) ? 0.0f : Stamina / MaxStamina; 
@@ -27,11 +31,16 @@ void UComponent_Stamina::UseStaticStamina()
 	Stamina -= UsageOfStatic;
 	if (Stamina <= 0.0f)
 	{
-
+		Stamina = 0.0f;
 	}
 
-	OnStaminaChanged.Execute(GetStaminaRatio());
 
+
+}
+
+void UComponent_Stamina::SetUsingStamina(bool bResult)
+{
+	bIsStaminaUsing = bResult;
 }
 
 void UComponent_Stamina::BeginPlay()
@@ -42,31 +51,27 @@ void UComponent_Stamina::BeginPlay()
 void UComponent_Stamina::BeginDestroy()
 {
 	Super::BeginDestroy();
-	if (OnStaminaChanged.IsBound())
-	{
-		OnStaminaChanged.Unbind();
-	}
 	
 	 
 }
 
-void UComponent_Stamina::UsingTick(float DeltaTime)
+void UComponent_Stamina::UsingTick()
 {
 	if (Stamina <= 0.0f)
 	{
 		bCanUsingStamina = false;
-
+		bIsStaminaUsing = false;
 	}
 
 	//Use Tick
-	if (!bIsStaminaUsing|| !bCanUsingStamina)
+	if (bIsStaminaUsing==false&& bCanUsingStamina==false)
 	{
 
 		return;
 	}
 	
 	Stamina -= UsingFactor;
-	
+	EGLOG(Log, TEXT("TUUUUSIGN"));
 }
 
 void UComponent_Stamina::RecoverTick(float DeltaTime)
@@ -93,7 +98,7 @@ void UComponent_Stamina::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	
 
 	//Subtract Stamina as owner use
-	UsingTick(DeltaTime);
+	UsingTick();
 	//Recover Stamina until Stamina value same as MaxStamina value
 	RecoverTick(DeltaTime);
 }

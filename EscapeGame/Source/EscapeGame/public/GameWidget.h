@@ -33,7 +33,7 @@ public:
 	void BindCharacterInven(class UComponent_Inventory* newInven);
 	void BindCharacterFury(class UComponent_Fury* newFury);
 	void BindCharacterTimeLimit(class UComponent_TimeLimit* NewTimeLimit);
-
+	void BindCharacterStamina(class UComponent_Stamina* NewStamina);
 	
 	//FBindStat BindStatDelegate;
 	//Update UI's Hp
@@ -74,6 +74,8 @@ protected:
 	TWeakObjectPtr<class UComponent_Fury>CurrentPlayerFury;
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
 	TWeakObjectPtr<class UComponent_TimeLimit>CurrentPlayerTimeLimit;
+	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
+	TWeakObjectPtr<class UComponent_Stamina>CurrentPlayerStamina;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Custom", meta = (AllowPrivateAccess = "true"))
 	TWeakObjectPtr<class ACharacter>OwnerChara;
@@ -116,8 +118,8 @@ protected:
 	
 	UPROPERTY(BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
 		float PlayerHP;
-	UPROPERTY(BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
-		float PlayerStamina;
+	//UPROPERTY(BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = true))
+	//	float PlayerStamina;
 	
 	float DisplayTime;
 
