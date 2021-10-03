@@ -212,13 +212,13 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction(TEXT("ChargeAttack"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::ChargeAttack);
 	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::StartRunning);
 	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Released, this, &AEGPlayerCharacter::StopRunning);
-	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::UsingStaminaTick);
+	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::OnStaminaTicking);
 	PlayerInputComponent->BindAction(TEXT("Roll"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::Roll);
 	PlayerInputComponent->BindAction(TEXT("Recovery"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::UseRecoveryItem);
 	PlayerInputComponent->BindAction(TEXT("ToggleMap"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::ToggleMap);
 	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::PressGuard);
 	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Released, this, &AEGPlayerCharacter::ReleaseGuard);
-	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::UsingStaminaTick);
+	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::OnStaminaTicking);
 	PlayerInputComponent->BindAction(TEXT("Fury"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::PressFury);
 
 	EGLOG(Warning, TEXT("Player input component"));
@@ -456,14 +456,14 @@ void AEGPlayerCharacter::StartRunning()
 //호출 시점 IE_Repeated
 //누르고 있는지 좀 돼야 반응한다
 //스테미나를 사용하는 기능에서 호출됩니다. 달리기/막기
-void AEGPlayerCharacter::UsingStaminaTick()
+void AEGPlayerCharacter::OnStaminaTicking()
 {
 	
-	//if (!Stat->CanUseStamina())
-	//{
-	//	StopRunning();
-	//	ReleaseGuard();
-	//}
+	if (!StaminaComponent->CanUseStamina())
+	{
+		StopRunning();
+		ReleaseGuard();
+	}
 	//else
 	//{
 	//	//EGLOG(Warning, TEXT("Using Stamina"));

@@ -209,16 +209,14 @@ FLinearColor UGameWidget::BindingTimeColor()
 
 
 	//Under 30, Yellow, Under 15, Red, else Green
-
-	if (DisplayTime < 30.0f)
-	{
-		Retval = FLinearColor(1.000000, 0.421295, 0.000000, 1.000000);
-	}
-	
-	else if (DisplayTime < 15.0f)
+	if (DisplayTime < 15.0f)
 	{
 		Retval = FLinearColor::Red;
 	}
+	else if (DisplayTime < 30.0f)
+	{
+		Retval = FLinearColor(1.000000, 0.421295, 0.000000, 1.000000);
+	}	
 	else
 	{
 		Retval = FLinearColor::Green;

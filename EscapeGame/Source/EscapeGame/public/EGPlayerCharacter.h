@@ -67,7 +67,7 @@ public:
 	 void AirAttack();
 	 void SlashAttack();
 	 void StartRunning();
-	 void UsingStaminaTick();
+	 void OnStaminaTicking();
 	 void StopRunning();
 	 void Roll();
 	 void UseRecoveryItem();

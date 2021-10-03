@@ -5,7 +5,8 @@
 
 UComponent_Stamina::UComponent_Stamina()
 {
-
+	bCanUsingStamina = true;
+	bIsStaminaUsing = false;
 }
 bool UComponent_Stamina::CanUseStamina()
 {
@@ -63,13 +64,17 @@ void UComponent_Stamina::UsingTick()
 		bIsStaminaUsing = false;
 	}
 
-	//Use Tick
-	if (bIsStaminaUsing==false&& bCanUsingStamina==false)
-	{
 
+	if (!bIsStaminaUsing)
+	{
 		return;
 	}
-	
+	if (!bCanUsingStamina)
+	{
+		return;
+	}
+
+
 	Stamina -= UsingFactor;
 	EGLOG(Log, TEXT("TUUUUSIGN"));
 }
