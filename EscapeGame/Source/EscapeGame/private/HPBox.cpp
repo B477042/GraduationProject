@@ -141,11 +141,7 @@ void AHPBox::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * O
 	if (Player == nullptr)return;
 
 	Player->HealHP(Heal);
-	auto Controller = Cast<AEGPlayerController>(Player->GetController());
-	if (Controller != nullptr)
-	{
-		Controller->GetHUDWidget()->TimeExtend(BounsTime);
-	}
+	Player->GetTimeLimitComponent()->TimeExtend(BounsTime);
 
 	Effect->Activate(true);
 	//EGLOG(Error, TEXT("Collision -> false"));

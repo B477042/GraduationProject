@@ -5,7 +5,13 @@
 
 UComponent_Stamina::UComponent_Stamina()
 {
-
+	bCanUsingStamina = true;
+	bIsStaminaUsing = false;
+	
+}
+bool UComponent_Stamina::CanUseStamina()
+{
+	return  bCanUsingStamina;
 }
 float UComponent_Stamina::GetStaminaRatio()
 {
@@ -17,56 +23,69 @@ void UComponent_Stamina::TurnOnTickStamina()
 	SetComponentTickEnabled(true);
 }
 
-void UComponent_Stamina::UseStaticStamina()
+bool UComponent_Stamina::UseStaticStamina()
 {
 	if (!bCanUsingStamina)
 	{
 		EGLOG(Log, TEXT("Can't using Stamina"));
-		return;
+		return false;
 	}
+	
+	if (Stamina < UsageOfStatic)
+	{
+		EGLOG(Log, TEXT("Can't using Stamina"));
+		return false;
+	}
+
 	Stamina -= UsageOfStatic;
 	if (Stamina <= 0.0f)
 	{
-
+		Stamina = 0.0f;
 	}
 
-	OnStaminaChanged.Execute(GetStaminaRatio());
+	return true;
 
+}
+
+void UComponent_Stamina::SetUsingStamina(bool bResult)
+{
+	bIsStaminaUsing = bResult;
 }
 
 void UComponent_Stamina::BeginPlay()
 {
 	Super::BeginPlay();
+	SetComponentTickEnabled(false);
 }
 
 void UComponent_Stamina::BeginDestroy()
 {
 	Super::BeginDestroy();
-	if (OnStaminaChanged.IsBound())
-	{
-		OnStaminaChanged.Unbind();
-	}
 	
 	 
 }
 
-void UComponent_Stamina::UsingTick(float DeltaTime)
+void UComponent_Stamina::UsingTick()
 {
 	if (Stamina <= 0.0f)
 	{
 		bCanUsingStamina = false;
-
+		bIsStaminaUsing = false;
 	}
 
-	//Use Tick
-	if (!bIsStaminaUsing|| !bCanUsingStamina)
-	{
 
+	if (!bIsStaminaUsing)
+	{
 		return;
 	}
-	
+	if (!bCanUsingStamina)
+	{
+		return;
+	}
+
+
 	Stamina -= UsingFactor;
-	
+
 }
 
 void UComponent_Stamina::RecoverTick(float DeltaTime)
@@ -93,7 +112,11 @@ void UComponent_Stamina::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	
 
 	//Subtract Stamina as owner use
-	UsingTick(DeltaTime);
+	UsingTick();
 	//Recover Stamina until Stamina value same as MaxStamina value
 	RecoverTick(DeltaTime);
+	if (OnStaminaChanged.IsBound())
+	{
+		OnStaminaChanged.Execute();
+	}
 }

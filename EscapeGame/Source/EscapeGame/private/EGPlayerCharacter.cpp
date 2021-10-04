@@ -69,7 +69,17 @@ void AEGPlayerCharacter::BeginPlay()
 		return;
 		
 	}*/
-	
+//================================================
+//||		TimeLimit 관련 Delegate 등록			||
+//================================================
+	TimeLimitComponent->OnTimeOver.BindLambda([&]()->void {
+		FDamageEvent DamageEvent;
+		TakeDamage(10000.0f, DamageEvent, GetController(), this);
+		//SetDeath();
+
+		});
+
+
 	
 //================================================
 //||			Stat 관련 Delegate 등록			||
@@ -202,13 +212,13 @@ void AEGPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction(TEXT("ChargeAttack"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::ChargeAttack);
 	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::StartRunning);
 	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Released, this, &AEGPlayerCharacter::StopRunning);
-	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::UsingStaminaTick);
+	PlayerInputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::OnStaminaTicking);
 	PlayerInputComponent->BindAction(TEXT("Roll"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::Roll);
 	PlayerInputComponent->BindAction(TEXT("Recovery"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::UseRecoveryItem);
 	PlayerInputComponent->BindAction(TEXT("ToggleMap"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::ToggleMap);
 	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::PressGuard);
 	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Released, this, &AEGPlayerCharacter::ReleaseGuard);
-	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::UsingStaminaTick);
+	PlayerInputComponent->BindAction(TEXT("Guard"), EInputEvent::IE_Repeat, this, &AEGPlayerCharacter::OnStaminaTicking);
 	PlayerInputComponent->BindAction(TEXT("Fury"), EInputEvent::IE_Pressed, this, &AEGPlayerCharacter::PressFury);
 
 	EGLOG(Warning, TEXT("Player input component"));
@@ -249,7 +259,7 @@ float AEGPlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent con
 	
 
 	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-	//bCanBeDamaged가 0이라면 데미지를 받지 않는다
+	
 	
 	/*if (bCanBeDamaged == false)
 	{
@@ -278,19 +288,29 @@ void AEGPlayerCharacter::HealHP(float addHP)
 	Stat->HealHP(addHP);
 }
 
-UStatComponent_Player* AEGPlayerCharacter::GetStatComponent()
+UStatComponent_Player* AEGPlayerCharacter::GetStatComponent()const
 {
 	return Stat;
 }
 
-UComponent_Inventory * AEGPlayerCharacter::GetInventory()
+UComponent_Inventory * AEGPlayerCharacter::GetInventory()const
 {
 	return Inventory;
 }
 
-UComponent_Fury* AEGPlayerCharacter::GetFuryComponent()
+UComponent_Fury* AEGPlayerCharacter::GetFuryComponent()const
 {
 	return FuryComponent;
+}
+
+UComponent_TimeLimit* AEGPlayerCharacter::GetTimeLimitComponent() const
+{
+	return TimeLimitComponent;
+}
+
+UComponent_Stamina* AEGPlayerCharacter::GetStaminaComponenet() const
+{
+	return StaminaComponent;
 }
 
 void AEGPlayerCharacter::ChargeAttack()
@@ -421,9 +441,11 @@ void AEGPlayerCharacter::StartRunning()
 	//
 	if (Stat->IsAttacking())return;
 
-	if (Stat->CanUseStamina())
+	
+	if (StaminaComponent->CanUseStamina())
 	{
-		Stat->SetStaminaUsing(true);
+		StaminaComponent->TurnOnTickStamina();
+		StaminaComponent->SetUsingStamina(true);
 		Anim->SetJogPlayRate(true);
 		GetCharacterMovement()->MaxWalkSpeed = 1000.0f;
 	}
@@ -434,19 +456,19 @@ void AEGPlayerCharacter::StartRunning()
 //호출 시점 IE_Repeated
 //누르고 있는지 좀 돼야 반응한다
 //스테미나를 사용하는 기능에서 호출됩니다. 달리기/막기
-void AEGPlayerCharacter::UsingStaminaTick()
+void AEGPlayerCharacter::OnStaminaTicking()
 {
 	
-	if (!Stat->CanUseStamina())
+	if (!StaminaComponent->CanUseStamina())
 	{
 		StopRunning();
 		ReleaseGuard();
 	}
-	else
-	{
-		//EGLOG(Warning, TEXT("Using Stamina"));
-		Stat->UseStaminaTick(GetWorld()->DeltaTimeSeconds);
-	}
+	//else
+	//{
+	//	//EGLOG(Warning, TEXT("Using Stamina"));
+	//	Stat->UseStaminaTick(GetWorld()->DeltaTimeSeconds);
+	//}
 
 }
 //호출시점IE_Released
@@ -454,7 +476,7 @@ void AEGPlayerCharacter::UsingStaminaTick()
 void AEGPlayerCharacter::StopRunning()
 {
 	/*EGLOG(Warning, TEXT("Run Key Released"));*/
-	Stat->SetStaminaUsing(false);
+	StaminaComponent->SetUsingStamina(false);
 	Anim->SetJogPlayRate(false);
 	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 	/*if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::ZeroVector)return;
@@ -465,9 +487,11 @@ void AEGPlayerCharacter::StopRunning()
 
 void AEGPlayerCharacter::Roll()
 {
-	//Anim의 bIsRolling을 true로 바꿔주면 AnimBP에서 구르는 애니메이션을 재생하게 된다.
-	Anim->SetRolling(true);
-	
+	if (StaminaComponent->UseStaticStamina())
+	{
+		//Anim의 bIsRolling을 true로 바꿔주면 AnimBP에서 구르는 애니메이션을 재생하게 된다.
+		Anim->SetRolling(true);
+	}
 	
 
 }
@@ -506,13 +530,15 @@ void AEGPlayerCharacter::ToggleMap()
 void AEGPlayerCharacter::PressGuard()
 {
 
-	if (Stat->CanUseStamina())
+	if (StaminaComponent->CanUseStamina())
 	{
 		BarrierEffect->ActivateEffect(GetActorLocation());
-		Stat->SetStaminaUsing(true);
-		
+		StaminaComponent->TurnOnTickStamina();
+		StaminaComponent->SetUsingStamina(true);
+
 		Stat->SetDamageable(false);
-		Stat->SetDontMove();
+		RestricInput(ERestricInputType::E_LRMB);
+		RestricInput(ERestricInputType::E_AxisMoving);
 	//GetCharacterMovement()
 	//RestricInput();
 	
@@ -528,7 +554,10 @@ void AEGPlayerCharacter::PressGuard()
 void AEGPlayerCharacter::ReleaseGuard()
 {
 	BarrierEffect->DeactivateEffect();
-	Stat->SetDamageable(true);
+	StaminaComponent->TurnOnTickStamina();
+	StaminaComponent->SetUsingStamina(false);
+	RecoverInput(ERestricInputType::E_LRMB);
+	RecoverInput(ERestricInputType::E_AxisMoving);
 	Stat->SetWalking();
 	
 	//RecoverInput();
@@ -616,7 +645,8 @@ void AEGPlayerCharacter::InitComponents()
 	BarrierEffect = CreateDefaultSubobject<UBarrierEffectComponent>(TEXT("BarrierEffectComponent"));
 	FuryComponent = CreateDefaultSubobject<UComponent_Fury>(TEXT("FuryComponent"));
 	AIPerceptionStimuliSource = CreateDefaultSubobject< UAIPerceptionStimuliSourceComponent>(TEXT("AIPerceptionStimuliSource"));
-	
+	TimeLimitComponent = CreateDefaultSubobject<UComponent_TimeLimit>(TEXT("TimeLimitComponent"));
+	StaminaComponent = CreateDefaultSubobject<UComponent_Stamina>(TEXT("StaminaComponent"));
 
 	//====================================================================================================
 	//Components Tree
@@ -792,8 +822,12 @@ void AEGPlayerCharacter::Turn( float  NewAxisValue)
 
 void AEGPlayerCharacter::Jump()
 {
-	if(!Stat->IsAttacking())
-	Super::Jump();
+	if (!Stat->IsAttacking()&& StaminaComponent->UseStaticStamina())
+	{
+
+		Super::Jump();
+	}
+	
 	
 	
 }
@@ -1069,5 +1103,8 @@ void AEGPlayerCharacter::OnNextStage(const UEGSaveGame * LoadInstance)
 		EGLOG(Warning, TEXT("This Item is Spawned. %s"), *newItem->GetName());
 	}
 
-
+	//Save Time
+	TimeLimitComponent->LoadTime(LoadInstance->GameProgressData.RemainTimes);
+	//Save Fury
+	FuryComponent->LoadFury(PlayerData.Fury);
 }

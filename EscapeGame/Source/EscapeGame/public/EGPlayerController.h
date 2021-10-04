@@ -39,11 +39,16 @@ public:
 	class UGameWidget* GetHUDWidget()const;
 
 
+	UFUNCTION(BlueprintCallable)
+		void OnCineamticStart();
 	
+	UFUNCTION(BlueprintCallable)
+		void OnCineamticEnd();
 
+	void OnPlayerDead();
 
 	void BindComponentsToHUD();
-	void IsMoveKeyPressed();
+ 
 	const class UDataTable* GetDT_Player();
 	FOnKeyTest KeyInputTest;
 	
@@ -73,6 +78,8 @@ public:
 		TSubclassOf<class UUserWidget>PAUSEWidgetClass;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UTutorialWidget>TUTOWidgetClass;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
+		TSubclassOf<class UUserWidget>DeadWidgetClass;
 
 	//Viewport Priority
 	const uint8 VP_HUD = 1;
@@ -80,6 +87,8 @@ public:
 	const uint8 VP_Tutorial = 2;
 	//Viewport Priority
 	const uint8  VP_Pause = 3;
+	//Viewport Priority
+	const uint8 VP_Dead = 4;
 
 private:
 
@@ -94,7 +103,8 @@ private:
 		class UUserWidget* PauseUI;
 	UPROPERTY(VisibleAnywhere, Category = "UI", meta = (AllowPrivateAccess = true))
 		class UTutorialWidget* TutorialUI;
-
+	UPROPERTY(VisibleAnywhere, Category = "UI", meta = (AllowPrivateAccess = true))
+		class  UUserWidget* DeadUI;
 
 	//UPROPERTY()
 	//	bool bIsPauseCalled;
