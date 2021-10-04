@@ -43,26 +43,3 @@ void AEGGameState::EndPlay(const EEndPlayReason::Type EndPlayReason)
 // 
 
 
-void AEGGameState::SaveGame(UEGSaveGame* SaveInstance)
-{
-	if (!SaveInstance)
-	{
-		return;
-	}
-
-	EGLOG(Log, TEXT("State Saved"));
-
-	SaveInstance->GameProgressData.RemainTimes = RemainTimes;
-}
-
-void AEGGameState::LoadGame(const UEGSaveGame* LoadInstance)
-{
-	if (!LoadInstance)
-	{
-		return;
-
-	}
-	EGLOG(Log, TEXT("State Loaded"));
-	RemainTimes = LoadInstance->GameProgressData.RemainTimes;
-
-}

@@ -59,6 +59,8 @@ public:
 		int32 n_CardKeys;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 		int32 n_RecoverItmes;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+		float Fury;
 
 
 };

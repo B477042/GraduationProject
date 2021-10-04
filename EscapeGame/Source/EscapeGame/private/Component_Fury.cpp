@@ -14,6 +14,29 @@ UComponent_Fury::UComponent_Fury()
 }
 
 
+float UComponent_Fury::GetFury() const
+{
+	return Fury;
+}
+
+void UComponent_Fury::LoadFury(const float& NewFury)
+{
+	Fury = NewFury;
+	if (OnFuryChanged.IsBound())
+	{
+		OnFuryChanged.Execute(GetFuryRatio());
+	}
+}
+
+void UComponent_Fury::BeginDestroy()
+{
+	Super::BeginDestroy();
+	if (OnFuryChanged.IsBound())
+	{
+		OnFuryChanged.Unbind();
+	}
+}
+
 // Called when the game starts
 void UComponent_Fury::BeginPlay()
 {
@@ -54,7 +77,10 @@ float UComponent_Fury::TakeDamage(const float NewDamage)
 
 	}
 	//Notify Fury changed
-	OnFuryChanged.Execute(GetFuryRatio());
+	if (OnFuryChanged.IsBound())
+	{
+		OnFuryChanged.Execute(GetFuryRatio());
+	}
 
 
 	return Fury;
@@ -68,7 +94,11 @@ bool  UComponent_Fury::UseFury()
 		return false;
 	}
 	Fury = 0.0f;
-	OnFuryChanged.Execute(GetFuryRatio());
+	if (OnFuryChanged.IsBound())
+	{
+		OnFuryChanged.Execute(GetFuryRatio());
+	}
+
 	return true;
 }
 

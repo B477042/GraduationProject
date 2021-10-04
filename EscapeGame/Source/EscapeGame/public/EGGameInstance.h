@@ -78,14 +78,19 @@ public:
 	UFUNCTION()
 		virtual void EndLoadingScreen(UWorld* InLoadedWorld);
 
-	const FString Name_SaveSlot0 = TEXT("SaveSlot0");
-	const FString Name_OptionsSlot = TEXT("Options");
-	const FString Name_CheckPointSlot = TEXT("CheckPoint");
-	const FString GetSaveSlotName() { return Name_SaveSlot0; }
-	const int32 GetSavedUserIndex() { return UserIndex; }
 	
-	 
-
+	const FString Name_SaveSlot0 = TEXT("SaveSlot0");
+	
+	const FString Name_OptionsSlot = TEXT("Options");
+	
+	const FString Name_CheckPointSlot = TEXT("CheckPoint");
+	UFUNCTION(BlueprintCallable)
+	FString GetSaveSlotName() { return Name_SaveSlot0; }
+	UFUNCTION(BlueprintCallable)
+	int32 GetSavedUserIndex() { return UserIndex; }
+	UFUNCTION(BlueprintCallable)
+		FString GetCheckPointSlot() { return Name_CheckPointSlot; }
+	
 	//Player가 BeginPlay를 호출할때 실행될 것. 모든 엑터들은 자신의 정보를 불러온다
 	//PostInitiliazeComponents에서 함수 등록
 	FOnLoadGamePhase OnLoadGamePhaseDelegate;

@@ -9,6 +9,7 @@
 #include "Components/AudioComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Perception/AIPerceptionComponent.h"
+#include "EGPlayerController.h"
 UAnim_Player::UAnim_Player()
 {
 	
@@ -267,13 +268,23 @@ void UAnim_Player::AnimNotify_DeadStart()
 
 void UAnim_Player::AnimNotify_DeadEnd()
 {
-	auto player = Cast<AEGPlayerCharacter>(GetOwningActor());
+	auto Player = Cast<AEGPlayerCharacter>(GetOwningActor());
 
-	if (!player)return;
-	player->SetActorHiddenInGame(true);
+	if (!Player)
+	{
+		return;
+	}
+	//Player->SetActorHiddenInGame(true);
 	
+	auto Controller = Cast<AEGPlayerController>(Player->GetController());
+	if (!Controller)
+	{
+		return;
+	}
+	Controller->OnPlayerDead();
+
 	//FLatentActionInfo LatentInfo;
-	UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+	//UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 	
 
 }
