@@ -237,15 +237,16 @@ void AEGPlayerController::OnKillMode()
 
  void AEGPlayerController::OnCineamticStart()
  {
-	 HUD->Visibility = ESlateVisibility::Hidden;
-	 
+	 HUD->RemoveFromViewport();
+	 DisableInput(this);
  }
 
 
 
  void AEGPlayerController::OnCineamticEnd()
  {
-	 HUD->Visibility = ESlateVisibility::Visible;
+	 HUD->AddToViewport(VP_HUD);
+	 EnableInput(this);
  }
 
  void AEGPlayerController::OnPlayerDead()
