@@ -19,8 +19,9 @@ public:
 	//Called When Fury value changed
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Delegate")
 	FOnFuryChanged OnFuryChanged;
-
-
+	float GetFury()const;
+	void LoadFury(const float& NewFury);
+	virtual void BeginDestroy()override;
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

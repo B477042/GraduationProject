@@ -272,8 +272,8 @@ void AEGPlayerController::SaveGame(UEGSaveGame* SaveInstance)
 		return;
 	}
 
-	auto egPlayer = Cast<AEGPlayerCharacter>(GetPawn());
-	if (!egPlayer)
+	auto EGPlayer = Cast<AEGPlayerCharacter>(GetPawn());
+	if (!EGPlayer)
 	{
 		EGLOG(Error, TEXT("Casting failed in player controller"));
 		return;
@@ -282,16 +282,17 @@ void AEGPlayerController::SaveGame(UEGSaveGame* SaveInstance)
 	//SaveInstance에 Player의 정보를 저장해야된다
 	
 	FPlayerData playerData;
-	playerData.ActorName= egPlayer->GetName();
-	playerData.Location = egPlayer->GetActorLocation();
-	playerData.Rotation = egPlayer->GetActorRotation();
-	playerData.Level = egPlayer->GetStatComponent()->GetLevel();
-	playerData.Exp = egPlayer->GetStatComponent()->GetExp();
-	playerData.Hp = egPlayer->GetStatComponent()->GetHP();
-	playerData.n_CardKeys = egPlayer->GetInventory()->GetAmountItem(AItem_CardKey::Tag);
-	playerData.n_RecoverItmes = egPlayer->GetInventory()->GetAmountItem(AItem_Recover::Tag);
+	playerData.ActorName= EGPlayer->GetName();
+	playerData.Location = EGPlayer->GetActorLocation();
+	playerData.Rotation = EGPlayer->GetActorRotation();
+	playerData.Level = EGPlayer->GetStatComponent()->GetLevel();
+	playerData.Exp = EGPlayer->GetStatComponent()->GetExp();
+	playerData.Hp = EGPlayer->GetStatComponent()->GetHP();
+	playerData.n_CardKeys = EGPlayer->GetInventory()->GetAmountItem(AItem_CardKey::Tag);
+	playerData.n_RecoverItmes = EGPlayer->GetInventory()->GetAmountItem(AItem_Recover::Tag);
 
 	SaveInstance->D_Player=playerData;
+	SaveInstance->GameProgressData.RemainTimes = EGPlayer->GetTimeLimitComponent()->GetCurrentRemainTime();
 
 	EGLOG(Error, TEXT("Player SAve game called"));
 
@@ -306,14 +307,14 @@ void AEGPlayerController::LoadGame(const UEGSaveGame* LoadInstance)
 
 	}
 
-	auto egPlayer = Cast<AEGPlayerCharacter>(GetPawn());
-	if (!egPlayer)
+	auto EGPlayer = Cast<AEGPlayerCharacter>(GetPawn());
+	if (!EGPlayer)
 	{
 		EGLOG(Error, TEXT("Casting failed in player controller"));
 		return;
 	}
 
-	auto loadData = LoadInstance->D_Player;
+	auto LoadData = LoadInstance->D_Player;
 
 	/*
 		Player의 데이터를 불러오는 과정
@@ -321,41 +322,44 @@ void AEGPlayerController::LoadGame(const UEGSaveGame* LoadInstance)
 		2. 스텟 불러오기
 		3. 아이템 갯수 불러오기
 	*/
-	egPlayer->SetActorLocationAndRotation(loadData.Location, loadData.Rotation);
-	egPlayer->GetStatComponent()->LoadGameStat(loadData.Level, loadData.Exp, loadData.Hp);
+	EGPlayer->SetActorLocationAndRotation(LoadData.Location, LoadData.Rotation);
+	EGPlayer->GetStatComponent()->LoadGameStat(LoadData.Level, LoadData.Exp, LoadData.Hp);
 
 	//Item > 0일 경우에만 불러온다
-	if (loadData.n_RecoverItmes > 0)
+	if (LoadData.n_RecoverItmes > 0)
 	{
 		//World에 Recover Item을 스폰
-		auto tempRecover = Cast<AItem_Recover>(GetWorld()->SpawnActor(AItem_Recover::StaticClass()));
-		if (!tempRecover)
+		auto TempRecover = Cast<AItem_Recover>(GetWorld()->SpawnActor(AItem_Recover::StaticClass()));
+		if (!TempRecover)
 		{
 			EGLOG(Error, TEXT("Null Item"));
 			return;
 		}
 
-		egPlayer->GetInventory()->LoadGameData(tempRecover, loadData.n_RecoverItmes);
+		EGPlayer->GetInventory()->LoadGameData(TempRecover, LoadData.n_RecoverItmes);
 
 
 	}
 
-	if (loadData.n_CardKeys > 0)
+	if (LoadData.n_CardKeys > 0)
 	{
 		//World에 Recover Item을 스폰
-		auto tempRecover = Cast<AItem_CardKey>(GetWorld()->SpawnActor(AItem_CardKey::StaticClass()));
-		if (!tempRecover)
+		auto TempRecover = Cast<AItem_CardKey>(GetWorld()->SpawnActor(AItem_CardKey::StaticClass()));
+		if (!TempRecover)
 		{
 			EGLOG(Error, TEXT("Null Item"));
 			return;
 		}
 
-		egPlayer->GetInventory()->LoadGameData(tempRecover, loadData.n_CardKeys);
+		EGPlayer->GetInventory()->LoadGameData(TempRecover, LoadData.n_CardKeys);
 
 	}
 
+	
+	//Time 불러오기
+	EGPlayer->GetTimeLimitComponent()->LoadTime(LoadInstance->GameProgressData.RemainTimes);
+	EGPlayer->GetFuryComponent()->LoadFury(LoadData.Fury);
 	EGLOG(Error, TEXT("Player Load game called"));
-
 }
 
 //넘어오는 enum(uint8)을 기준으로 그 열의 데이터를 불러와 튜토리얼위젯을 꾸민다

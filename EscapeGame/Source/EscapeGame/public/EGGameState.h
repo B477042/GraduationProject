@@ -31,13 +31,7 @@ public:
 	//float GetRemainTimes() { return  RemainTimes; }
 	//
 
-	UFUNCTION(BlueprintCallable)
-		virtual	void SaveGame(class UEGSaveGame* SaveInstance);
-	 
-	UFUNCTION(BlueprintCallable)
-		virtual	void LoadGame(const class UEGSaveGame* LoadInstance);
-
- 
+	
 
 protected:
 	//Escape restriction time

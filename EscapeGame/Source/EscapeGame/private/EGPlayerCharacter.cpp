@@ -1103,5 +1103,8 @@ void AEGPlayerCharacter::OnNextStage(const UEGSaveGame * LoadInstance)
 		EGLOG(Warning, TEXT("This Item is Spawned. %s"), *newItem->GetName());
 	}
 
-
+	//Save Time
+	TimeLimitComponent->LoadTime(LoadInstance->GameProgressData.RemainTimes);
+	//Save Fury
+	FuryComponent->LoadFury(PlayerData.Fury);
 }
