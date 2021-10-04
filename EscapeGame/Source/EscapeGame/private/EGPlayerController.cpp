@@ -11,6 +11,7 @@
 #include "Engine.h"
 #include "EGGameInstance.h"
 #include "TutorialWidget.h"
+#include "SaveInfoWidget.h"
 
 //#include"GameStat.h"
 
@@ -34,6 +35,13 @@ AEGPlayerController::AEGPlayerController()
 	 {
 		TUTOWidgetClass = UI_TUTORIAL_C.Class;
 	}
+	static ConstructorHelpers::FClassFinder<UUserWidget>UI_DEAD_C(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Dead.UI_Dead_C'"));
+	if (UI_DEAD_C.Succeeded())
+	{
+		DeadWidgetClass = UI_DEAD_C.Class;
+	}
+
+
 
 	static ConstructorHelpers::FObjectFinder<UDataTable>DT_PLAYER(TEXT("DataTable'/Game/MyFolder/DataTable/DT_PlayerStat.DT_PlayerStat'"));
 	if (DT_PLAYER.Succeeded())
@@ -46,7 +54,7 @@ AEGPlayerController::AEGPlayerController()
 	{
 		DT_Tutorial = DT_TUTO.Object;
 	}
-
+	
 	
 
 	//bIsPauseCalled = false;
@@ -155,6 +163,12 @@ void AEGPlayerController::OnEscPressed()
 	{
 		CloseTutorialMessage();
 	}
+	//죽은 상태면 미출력
+	if (DeadUI->IsInViewport())
+	{
+		return;
+	}
+
 
 	//Pasue 호출하기
 	else if (!GetWorld()->IsPaused())
@@ -221,7 +235,29 @@ void AEGPlayerController::OnKillMode()
 	return HUD;
 }
 
+ void AEGPlayerController::OnCineamticStart()
+ {
+	 HUD->Visibility = ESlateVisibility::Hidden;
+	 
+ }
 
+
+
+ void AEGPlayerController::OnCineamticEnd()
+ {
+	 HUD->Visibility = ESlateVisibility::Visible;
+ }
+
+ void AEGPlayerController::OnPlayerDead()
+ {
+	 DeadUI = CreateWidget< UUserWidget >(this, DeadWidgetClass);
+
+	 HUD->RemoveFromViewport();
+	 DeadUI->AddToViewport(VP_Dead);
+	 //UIInput mode로 전환
+	 ChangeInputMode(false);
+	 SetPause(true);
+ }
 
  void AEGPlayerController::BindComponentsToHUD()
  {

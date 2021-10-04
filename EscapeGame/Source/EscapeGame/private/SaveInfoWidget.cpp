@@ -52,10 +52,10 @@ bool USaveInfoWidget::LoadSaveData()
 	FString TempString = FString::Printf(TEXT("Player Level : %d"),  PlayerData.Level);
 	Txt_PlayerLevel->SetText(FText::FromString( TempString));
 	//Player Fury
-	TempString = FString::Printf(TEXT("Player Fury : %d"), PlayerData.Fury);
+	TempString = FString::Printf(TEXT("Player Fury : %.0f"), PlayerData.Fury);
 	Txt_PlayerFury->SetText(FText::FromString(TempString));
 	//Player HP
-	TempString = FString::Printf(TEXT("Player HP : %d"), PlayerData.Hp);
+	TempString = FString::Printf(TEXT("Player HP : %.0f"), PlayerData.Hp);
 	Txt_PlayerHP->SetText(FText::FromString(TempString));
 	//Player RemainTime
 	TempString = FString::Printf(TEXT("Remain Time : %.2f"), ProgressData.RemainTimes);
