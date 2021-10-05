@@ -164,7 +164,7 @@ void AEGPlayerController::OnEscPressed()
 		CloseTutorialMessage();
 	}
 	//죽은 상태면 미출력
-	if (DeadUI->IsInViewport())
+	if (DeadUI)
 	{
 		return;
 	}

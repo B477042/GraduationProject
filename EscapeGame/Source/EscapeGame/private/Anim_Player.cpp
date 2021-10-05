@@ -95,6 +95,7 @@ void UAnim_Player::NativeBeginPlay()
 	Super::NativeBeginPlay();
 	//OnMontageStarted.AddDynamic(this, UAnim_Player::OnMontageStarted );
 
+	Player = Cast<AEGPlayerCharacter>(GetOwningActor());
 }
 
 
@@ -102,19 +103,13 @@ void UAnim_Player::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
-	auto Pawn = TryGetPawnOwner();
-	if (::IsValid(Pawn))
-	{
-		auto Player = Cast<AEGPlayerCharacter>(Pawn);
-		if (!Player)return;
-		
+	if (!Player.IsValid())return;
 		//Moving Directing
 		Direction = CalculateDirection(Player->GetVelocity(), Player->GetActorRotation());
 		
+	
+	
 		
-
-		
-	}
 
 }
 
@@ -179,27 +174,23 @@ void UAnim_Player::SetRolling(bool bResult)
 */
 void UAnim_Player::AnimNotify_RollingStart()
 {
-	auto Owner = Cast<AEGPlayerCharacter>(GetOwningActor());
-	if (Owner == nullptr)
-	{
-		EGLOG(Warning, TEXT("Animation Rolling's Owner actor is not Vailed"));
-		return;
-	}
-	//
-	Owner->GetMesh()->SetCollisionProfileName(TEXT("Rolling"));
+	
+	if (!Player.IsValid())return;
+	
+	Player->GetMesh()->SetCollisionProfileName(TEXT("Rolling"));
+	
+
  
 }
 
 void UAnim_Player::AnimNotify_RollingEnd()
 {
-	auto Owner = Cast<AEGPlayerCharacter>(GetOwningActor());
-	if (Owner == nullptr)
-	{
-		EGLOG(Warning, TEXT("Animation Rolling's Owner actor is not Vailed in  RollingEnd"));
-		return;
-	}
-	Owner->GetMesh()->SetCollisionProfileName(TEXT("PlayerCharacter"));
+
+	if (!Player.IsValid())return;
+	Player->GetMesh()->SetCollisionProfileName(TEXT("PlayerCharacter"));
 	 
+	
+
 }
 
 //Rolling Animation의 재생이 끝나면 호출 될 것이다. 
@@ -208,15 +199,7 @@ void UAnim_Player::AnimNotify_AnimEnd()
 {
 	bIsRolling = false;
 
-	auto Owner = Cast<AEGPlayerCharacter>(GetOwningActor());
-	if (Owner == nullptr)
-	{
-		EGLOG(Warning, TEXT("Animation Rolling's Owner actor is not Vailed"));
-		return;
-	}
-	EGLOG(Warning, TEXT("Actor Location : %s"), *Owner->GetActorLocation().ToString());
-	EGLOG(Warning, TEXT("Mesh Location : %s"), *(Owner->GetActorLocation() + Owner->GetMesh()->GetRelativeLocation()).ToString());
-
+	
 	//Owner->RecoverInput();
 }
 
@@ -225,19 +208,19 @@ void UAnim_Player::AnimNotify_AnimEnd()
 void UAnim_Player::AnimNotify_SkillStart()
 {
 //	EGLOG(Warning, TEXT("Jot na gin name "));
-	auto Player = Cast<AEGPlayerCharacter>(GetOwningActor());
+	if (!Player.IsValid())return;
 
-	if (!Player)return;
 	Player->RestricInput(ERestricInputType::E_LRMB);
 	Player->RestricInput(ERestricInputType::E_AxisMoving);
+	
+	
 	//SFX_Laugh->Play();
 }
 
 void UAnim_Player::AnimNotify_SkillEnd()
 {
-	auto Player = Cast<AEGPlayerCharacter>(GetOwningActor());
-
-	if (!Player)return;
+	
+	if (!Player.IsValid())return;
 
 	Player->RecoverInput(ERestricInputType::E_LRMB);
 	Player->RecoverInput(ERestricInputType::E_AxisMoving);
@@ -247,17 +230,14 @@ void UAnim_Player::AnimNotify_SkillEnd()
 
 void UAnim_Player::AnimNotify_AnimNotify_ThunderStart()
 {
-	auto Player = Cast<AEGPlayerCharacter>(GetOwningActor());
-
-	if (!Player)return;
+	if (!Player.IsValid())return;
 	Player->ActiveThunder();
 }
 
 void UAnim_Player::AnimNotify_DeadStart()
 {
-	auto Player = Cast<AEGPlayerCharacter>(GetOwningActor());
+	if (!Player.IsValid())return;
 
-	if (!Player)return;
 	SFX_Death->Play();
 	Player->RestricInput(ERestricInputType::E_LRMB);
 	Player->RestricInput(ERestricInputType::E_AxisMoving);
@@ -268,13 +248,7 @@ void UAnim_Player::AnimNotify_DeadStart()
 
 void UAnim_Player::AnimNotify_DeadEnd()
 {
-	auto Player = Cast<AEGPlayerCharacter>(GetOwningActor());
-
-	if (!Player)
-	{
-		return;
-	}
-	//Player->SetActorHiddenInGame(true);
+	if (!Player.IsValid())return;
 	
 	auto Controller = Cast<AEGPlayerController>(Player->GetController());
 	if (!Controller)
@@ -327,15 +301,52 @@ void UAnim_Player::AnimNotify_ReactDamagedEnd()
 
 void UAnim_Player::AnimNotify_Skill1Check()
 {
-	AEGPlayerCharacter* Player = Cast<AEGPlayerCharacter>(GetOwningActor());
-
-	if (!Player)return;
+	if (!Player.IsValid())return;
 	Player->SlashAttack();
 }
 
 void UAnim_Player::AnimNotify_BuffActive()
 {
+	if (!Player.IsValid())return;
+}
 
+void UAnim_Player::AnimNotify_FuryStart()
+{
+	if (!Player.IsValid())return;
+	Player->RestricInput(ERestricInputType::E_AxisMoving);
+	Player->RestricInput(ERestricInputType::E_LRMB);
+
+}
+
+void UAnim_Player::AnimNotify_FuryLeftArm()
+{
+	if (!Player.IsValid())return;
+	Player->ToggleFuryLeftArm(true);
+}
+
+void UAnim_Player::AnimNotify_FuryRightArm()
+{
+	if (!Player.IsValid())return;
+	Player->ToggleFuryRightArm(true);
+}
+
+void UAnim_Player::AnimNotify_FuryExtend()
+{
+	if (!Player.IsValid())return;
+	Player->ToggleFuryArmExtend(true);
+}
+
+void UAnim_Player::AnimNotify_FuryDamage()
+{
+	if (!Player.IsValid())return;
+}
+
+void UAnim_Player::AnimNotify_FuryEnd()
+{
+	if (!Player.IsValid())return;
+	Player->RecoverInput(ERestricInputType::E_AxisMoving);
+	Player->RecoverInput(ERestricInputType::E_LRMB);
+	Player->ToggleFuryArmExtend(false);
 }
 
 
@@ -387,4 +398,14 @@ void UAnim_Player::SetDead()
 {
 	StopAllMontages(0.0f);
 	bIsDead = true;
+}
+
+void UAnim_Player::PlayFury()
+{
+	if (IsAnyMontagePlaying())
+	{
+		StopAllMontages(0.0f);
+	}
+
+	Montage_Play(Montage_Fury,2.0f);
 }

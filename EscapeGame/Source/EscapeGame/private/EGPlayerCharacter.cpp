@@ -288,6 +288,48 @@ void AEGPlayerCharacter::HealHP(float addHP)
 	Stat->HealHP(addHP);
 }
 
+void AEGPlayerCharacter::ToggleFuryArmExtend(bool bResult)
+{
+	if (bResult)
+	{
+	 
+
+		PS_FuryArmLeft->SetRelativeScale3D(FVector(2.3f, 2.3f, 2.3f));
+		PS_FuryArmRight->SetRelativeScale3D(FVector(2.3f, 2.3f, 2.3f));
+	}
+	else
+	{
+		PS_FuryArmLeft->Deactivate();
+		PS_FuryArmRight->Deactivate();
+		PS_FuryArmLeft->SetRelativeScale3D(FVector(1.0f, 1.0f, 1.0f));
+		PS_FuryArmRight->SetRelativeScale3D(FVector(1.0f, 1.0f,1.0f));
+	}
+}
+
+void AEGPlayerCharacter::ToggleFuryLeftArm(bool bResult)
+{
+	if (bResult)
+	{
+		PS_FuryArmLeft->Activate();		
+	}
+	else
+	{
+		PS_FuryArmLeft->Deactivate();
+	}
+}
+void AEGPlayerCharacter::ToggleFuryRightArm(bool bResult)
+{
+	if (bResult)
+	{
+		PS_FuryArmRight->Activate();
+	}
+	else
+	{
+		PS_FuryArmRight->Deactivate();
+	}
+
+}
+
 UStatComponent_Player* AEGPlayerCharacter::GetStatComponent()const
 {
 	return Stat;
@@ -405,9 +447,14 @@ void AEGPlayerCharacter::SlashAttack()
 	FVector HalfSize = FVector(100, 100, 100);
 	FRotator Orientation = GetActorRotation();
 
+	//UKismetSystemLibrary::DrawDebugBox(World, End, HalfSize * 2, FLinearColor::Red, GetActorRotation(), 5.0f);
+
 	TArray<AActor*> Ignores;
 	TArray<FHitResult>HitResult;
-	bool bResult = UKismetSystemLibrary::BoxTraceMultiByProfile(World,Start,End,HalfSize,Orientation,TEXT("PlayerWeapon"),false, Ignores,EDrawDebugTrace::None,HitResult,true);
+	
+	bool bResult = World->SweepMultiByChannel(HitResult, Start, End,
+		FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2,
+		FCollisionShape::MakeBox(HalfSize));
 	if (!bResult)
 	{
 		EGLOG(Log, TEXT("NO hit"));
@@ -647,6 +694,8 @@ void AEGPlayerCharacter::InitComponents()
 	AIPerceptionStimuliSource = CreateDefaultSubobject< UAIPerceptionStimuliSourceComponent>(TEXT("AIPerceptionStimuliSource"));
 	TimeLimitComponent = CreateDefaultSubobject<UComponent_TimeLimit>(TEXT("TimeLimitComponent"));
 	StaminaComponent = CreateDefaultSubobject<UComponent_Stamina>(TEXT("StaminaComponent"));
+	PS_FuryArmLeft = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("FuryArmLeft"));
+	PS_FuryArmRight = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("FuryArmRight"));
 
 	//====================================================================================================
 	//Components Tree
@@ -657,6 +706,9 @@ void AEGPlayerCharacter::InitComponents()
 	WeaponCollision->SetupAttachment(SwordEffect);
 	AttackSound->SetupAttachment(RootComponent);
 	MiniMapMarkerComponent->SetupAttachment(RootComponent);
+
+	PS_FuryArmLeft->SetupAttachment(GetMesh(), FName("FuryLeft"));
+	PS_FuryArmRight->SetupAttachment(GetMesh(), FName("FuryRight"));
 
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 	//====================================================================================================
@@ -740,6 +792,18 @@ void AEGPlayerCharacter::LoadAssets()
 	{
 		MiniMapMarkerComponent->SetMaterial(0, MI_Marker.Object);
 	}
+
+	/*Fury Arm Effect Load*/
+	static ConstructorHelpers::FObjectFinder<UParticleSystem>PS_FuryArm(TEXT("ParticleSystem'/Game/ParagonKwang/FX/Particles/FX/P_Kwang_Recall_ArmCharge.P_Kwang_Recall_ArmCharge'"));
+	if (PS_FuryArm.Succeeded())
+	{
+		PS_FuryArmLeft->SetTemplate(PS_FuryArm.Object);
+		PS_FuryArmRight->SetTemplate(PS_FuryArm.Object);
+
+		PS_FuryArmLeft->bAutoActivate = false;
+		PS_FuryArmRight->bAutoActivate = false;
+	}
+
 
 }
 
@@ -878,9 +942,9 @@ void AEGPlayerCharacter::PressFury()
 
 	}
 	
-	UE_LOG(LogTemp, Log, TEXT("Fury used"));
+	//UE_LOG(LogTemp, Log, TEXT("Fury used"));
 
-
+	Anim->PlayFury();
 }
 
 void AEGPlayerCharacter::OnMakeNoiseEvenet()

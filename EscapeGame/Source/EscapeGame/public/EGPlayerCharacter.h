@@ -60,7 +60,7 @@ public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)override;
 	void HealHP(float addHP);
 	
-	
+	//============================================
 	//Actions
 	 void ChargeAttack();
 	 void ComboAttack();
@@ -75,7 +75,19 @@ public:
 	 void PressGuard();
 	 void ReleaseGuard();
 
-	
+	 //============================================
+	 //Fury Effect
+
+	 //True : Extend Fury Arm effect to 2.3, False : Deactivate
+	 void ToggleFuryArmExtend(bool bResult);
+	 //True : Activate, False : Deactivate
+	 void ToggleFuryLeftArm(bool bResult);
+	 //True : Activate, False : Deactivate
+	 void ToggleFuryRightArm(bool bResult);
+	 void ActiveFuryDamage();
+
+	 //============================================
+	 //Componenet
 	 UStatComponent_Player* GetStatComponent()const;
 	 UComponent_Inventory* GetInventory()const;
 	 UComponent_Fury* GetFuryComponent()const;
@@ -234,8 +246,13 @@ private:
 	*/
 		UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Ai Perception", meta = (AllowPrivateAccess = true))
 			UAIPerceptionStimuliSourceComponent* AIPerceptionStimuliSource;
-
-		
+	/*
+	*	Fury Effect
+	*/
+		UPROPERTY(VisibleAnywhere, Category = "FuryParticle")
+			UParticleSystemComponent* PS_FuryArmRight;
+		UPROPERTY(VisibleAnywhere, Category = "FuryParticle")
+			UParticleSystemComponent* PS_FuryArmLeft;
 	float minMiniMapArmLength;
 	float maxMiniMapArmLength;
 	bool bSetMapArm;

@@ -44,7 +44,8 @@ void USkillContainer_PlayerHitEffect::ActivateEffectAt(const FVector & At, int n
 		//CurrentIndex = SkillObjects[Index];
 	}
 
+
 	something->UseSkill(At);
 	revolve();
-
+	
 }

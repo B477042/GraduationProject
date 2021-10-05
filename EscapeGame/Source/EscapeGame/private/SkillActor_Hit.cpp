@@ -13,6 +13,7 @@ ASkillActor_Hit::ASkillActor_Hit()
 	if (PS_Main.Succeeded())
 	{
 		VFX_Main->SetTemplate(PS_Main.Object);
+		VFX_Main->bAutoActivate = false;
 	}
 	static ConstructorHelpers::FObjectFinder<USoundCue>SC_Effect(TEXT("SoundCue'/Game/MyFolder/Sound/SE/CUE_GroundExplosion.CUE_GroundExplosion'"));
 	if (SC_Effect.Succeeded())

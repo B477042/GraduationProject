@@ -28,10 +28,7 @@ public:
 
 	virtual void JumpToComboAttackSection(int32 NewSection);//ComboAttack 사이를 재생 시키는 함수
 	 void JumpToChargetAttackSection(int32 NewSection);//ChargeAttack으로 넘어가 ChargeAttack을 재생시키는 함수
-	//Section값이 Combo값과 일치 하는지 검사한다
-	//일치 하지 않는다면 Failed라는 FName이 반환된다
-	//	virtual FName GetAttackMontageSectionName(int32 Section);
-	//void PlayAttackMontage();
+	 
 	virtual void PlayAirAttackMontage();
 	UAnimMontage* GetAttackMontage()const;
 	void SetRolling(bool bResult);
@@ -41,35 +38,62 @@ public:
 
 	//Jog Play Rate 조절. True : Running, False : Jog
 	void SetJogPlayRate(bool bIsRunnuing);
-
+	//When rolling strat
 	UFUNCTION()
 		void AnimNotify_RollingStart();
+	//When rolling end
 	UFUNCTION()
 		void AnimNotify_RollingEnd();
+	
 	UFUNCTION()
 		void AnimNotify_AnimEnd();
 	
-
+	//On Skill Montage Start
 	UFUNCTION()
 		void AnimNotify_SkillStart();
+	//On Skill Montage End
 	UFUNCTION()
 		void AnimNotify_SkillEnd();
+	//On Thunder called. Skill 3
 	UFUNCTION()
 		void AnimNotify_AnimNotify_ThunderStart();
+	//On Dead Animation Start
 	UFUNCTION()
 	void AnimNotify_DeadStart();
+	//On Dead Animation end
 	UFUNCTION()
 	void AnimNotify_DeadEnd();
-
+	//When Play Plant
 	UFUNCTION()
 		void AnimNotify_Plant();
 	
 	UFUNCTION()
 		void AnimNotify_ReactDamagedEnd();
+	//Skill 1 Damage Check
 	UFUNCTION()
 		void AnimNotify_Skill1Check();
+	//Skill 2 Buff
 	UFUNCTION()
 		void AnimNotify_BuffActive();
+	//OnFury Montage Start
+	UFUNCTION()
+		void AnimNotify_FuryStart();
+	//Active Left Arm Particle
+	UFUNCTION()
+		void AnimNotify_FuryLeftArm();
+	//Active Right Arm Particle
+	UFUNCTION()
+		void AnimNotify_FuryRightArm();
+	//Extend Particle on Arms
+	UFUNCTION()
+		void AnimNotify_FuryExtend();
+	//Apply damage to enemies
+	UFUNCTION()
+		void AnimNotify_FuryDamage();
+	//OnFury Montage End
+	UFUNCTION()
+		void AnimNotify_FuryEnd();
+
 
 	//Input 값은 Player의 Combo
 	void PlaySkillMontage(int Combo);
@@ -81,6 +105,7 @@ public:
 	
 	FOnPlant OnPlant;
 
+	void PlayFury();
 
 private:
 	//const int32 StartCombo = 1;//Attack Montage에서 처음 액션 번호
@@ -138,5 +163,6 @@ private:
 	UPROPERTY(VisibleDefaultsOnly,  Category = Character, Meta = (AllowPrivateAccess = true))
 	float RunningPlayRate;
 
-
+	UPROPERTY()
+		TWeakObjectPtr<class AEGPlayerCharacter> Player;
 };
