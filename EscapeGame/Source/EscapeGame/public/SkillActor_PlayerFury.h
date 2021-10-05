@@ -19,5 +19,5 @@ public:
 protected:
 	virtual void PostInitializeComponents()override;
 	UFUNCTION()
-		void OnSystemEnd(UParticleSystemComponent* PS);
+		void OnAudioFinished();
 };

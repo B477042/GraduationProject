@@ -2,6 +2,7 @@
 
 
 #include "Component_Fury.h"
+#include "Sound/SoundWave.h"
 
 // Sets default values for this component's properties
 UComponent_Fury::UComponent_Fury()
@@ -9,6 +10,13 @@ UComponent_Fury::UComponent_Fury()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
+
+	static ConstructorHelpers::FObjectFinder<USoundWave>SW(TEXT("SoundWave'/Game/ParagonKwang/Characters/Heroes/Kwang/Sounds/SoundWaves/Kwang_Ability_Ultimate_Ready_020.Kwang_Ability_Ultimate_Ready_020'"));
+	if (SW.Succeeded())
+	{
+		SFX_FuryMax = SW.Object;
+		
+	}
 
 	// ...
 }
@@ -73,7 +81,7 @@ float UComponent_Fury::TakeDamage(const float NewDamage)
 		Fury = MaximumFury;
 		
 		//Notify Fury is full
-
+		UGameplayStatics::PlaySound2D(this, SFX_FuryMax);
 
 	}
 	//Notify Fury changed

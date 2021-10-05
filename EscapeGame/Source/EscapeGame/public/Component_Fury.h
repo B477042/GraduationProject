@@ -38,7 +38,7 @@ protected:
 	float Fury=0.0f; 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Value", meta = (AllowPrivateAccess = true, UIMax = 0.00, UIMin = 100.00))
 	float MaximumFury = 100.0f;
-	
-	
+	UPROPERTY(VisibleAnywhere, Category = "Sound")
+		class USoundWave* SFX_FuryMax;
 		
 };

@@ -62,11 +62,13 @@ void ASkillActor_PlayerFury::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	VFX_Main->OnSystemFinished.AddDynamic(this, &ASkillActor_PlayerFury::OnSystemEnd);
+	SFX_Hit->OnAudioFinished.AddDynamic(this, &ASkillActor_PlayerFury::OnAudioFinished);
+	//VFX_Main->OnSystemFinished.AddDynamic(this, &ASkillActor_PlayerFury::OnSystemEnd);
 }
 
-void ASkillActor_PlayerFury::OnSystemEnd(UParticleSystemComponent* PS)
+void ASkillActor_PlayerFury::OnAudioFinished()
 {
-	SetSafety(PS);
-
+	SetSafety(VFX_Main);
 }
+
+
