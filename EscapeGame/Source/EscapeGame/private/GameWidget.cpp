@@ -146,7 +146,8 @@ void UGameWidget::UpdateFury(float Ratio)
 	PB_Fury->SetPercent(Ratio);
 	if (Ratio==1.0f)
 	{
-		
+		PB_Fury->SetFillColorAndOpacity(FLinearColor::Yellow);
+		return;
 	}
 
 	FLinearColor NewColor = FLinearColor::LerpUsingHSV(FuryBarColor1, FuryBarColor2, Ratio);
