@@ -13,6 +13,7 @@
 #include "GameSetting/public/EGCharacterSetting.h"
 #include "Sound/SoundCue.h"
 #include "SkillActor_ThunderType.h"
+#include "SkillActor_PlayerFury.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "EGGameInstance.h"
 #include "EGGameState.h"
@@ -57,7 +58,7 @@ void AEGPlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 
 
-	LoadHitEffects();
+	LoadPlayerSkillObjects();
 	EGLOG(Error, TEXT("Player Begin Play"));
 	/*
 	 * Inventory 관련 Delegate 등록
@@ -328,6 +329,49 @@ void AEGPlayerCharacter::ToggleFuryRightArm(bool bResult)
 		PS_FuryArmRight->Deactivate();
 	}
 
+}
+
+
+void AEGPlayerCharacter::ActiveFuryDamage()
+{
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Warning, TEXT("World is invalid"));
+		return;
+	}
+
+	float Width = 500.0f;
+	float Height = 100.0f;
+	FVector HalfSize = FVector(Width, Width, Height);
+	FVector ActorLocation = GetActorLocation();
+	FVector Forward = GetActorForwardVector();
+
+	FVector Start = ActorLocation + (Forward * Width);
+	FVector End = ActorLocation - (Forward * Width);
+
+	TArray<AActor*> Ignores;
+	TArray<FHitResult>HitResult;
+	
+	FDamageEvent DamageEvent;
+	bool bResult = World->SweepMultiByChannel(HitResult, Start, End,
+		FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2,
+		FCollisionShape::MakeBox(HalfSize));
+	//Find Enemy Character Types
+	for (auto it : HitResult)
+	{
+		auto TargetActor = Cast<AEnemyCharacter>(it.Actor);
+		if (!TargetActor)
+		{
+			EGLOG(Log, TEXT("Not Enemy Character types"));
+			continue;
+		}
+		FDamageEvent DamageEvent;
+
+		
+		Container_Fury->ActivateEffectAt(TargetActor->GetActorLocation(),1);
+
+	}
 }
 
 UStatComponent_Player* AEGPlayerCharacter::GetStatComponent()const
@@ -696,7 +740,7 @@ void AEGPlayerCharacter::InitComponents()
 	StaminaComponent = CreateDefaultSubobject<UComponent_Stamina>(TEXT("StaminaComponent"));
 	PS_FuryArmLeft = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("FuryArmLeft"));
 	PS_FuryArmRight = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("FuryArmRight"));
-
+	Container_Fury = CreateDefaultSubobject<USkillContainer_PlayerFury>(TEXT("Fury Container"));
 	//====================================================================================================
 	//Components Tree
 	SpringArm->SetupAttachment(GetCapsuleComponent());
@@ -1064,7 +1108,7 @@ void AEGPlayerCharacter::DamagedPostEffect()
 }
 
 // 스킬 이펙트를 생성하고 스킬 컨테이너 컴포넌트에 넣어줍니다.
-void AEGPlayerCharacter::LoadHitEffects()
+void AEGPlayerCharacter::LoadPlayerSkillObjects()
 {
 	if (!GetWorld()) { EGLOG(Warning, TEXT("No0 world")); return; }
 	int cap = Container_Hit->GetCapacity();
@@ -1073,6 +1117,9 @@ void AEGPlayerCharacter::LoadHitEffects()
 
 	Skill_Thunder = GetWorld()->SpawnActor < ASkillActor_ThunderType>();
 
+	cap = Container_Fury->GetCapacity();
+	for (int i = 0; i < cap; i++)
+		Container_Fury->AddSkillObj(GetWorld()->SpawnActor<ASkillActor_PlayerFury>());
 }
 
 void AEGPlayerCharacter::LoadGameData(const UEGSaveGame* LoadInstance)

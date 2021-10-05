@@ -20,8 +20,11 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
+	
 	void nextBullet();
+
+
+
 public:	
 
 
@@ -34,8 +37,8 @@ public:
 	
 	void ReloadMag();
 	void FireBullet(const FVector& FireLoation, const FRotator& FireRotation,const FVector& FireFWVector);
+	void ClearBullet();
 
-protected:
 
 	
 

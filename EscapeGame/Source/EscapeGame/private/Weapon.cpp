@@ -29,6 +29,12 @@ AWeapon::AWeapon()
 	MainBody->SetCollisionProfileName(TEXT("NoCollision"));
 }
 
+void AWeapon::BeginDestroy()
+{
+	Super::BeginDestroy();
+	EGLOG(Log, TEXT("Weapon Destory"));
+}
+
 // Called when the game starts or when spawned
 void AWeapon::BeginPlay()
 {
@@ -124,6 +130,12 @@ void AWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AWeapon::DiscardWeapon()
+{
+	Mag->ClearBullet();
+	Destroy();
 }
 
 void AWeapon::AttachedBy(ACharacter* OtherCharacter)

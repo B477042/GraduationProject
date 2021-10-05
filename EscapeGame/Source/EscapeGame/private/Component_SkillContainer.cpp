@@ -26,12 +26,9 @@ void UComponent_SkillContainer::BeginPlay()
 void UComponent_SkillContainer::BeginDestroy()
 {
 	Super::BeginDestroy();
-	/*for (auto it : SkillObjects)
-	{
-		it->Destroy();
-	}
-	SkillObjects.Empty();
-*/
+
+	
+
 }
 
 

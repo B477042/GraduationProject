@@ -3,7 +3,7 @@
 
 #include "Component_Mag.h"
 #include "EGSaveGame.h"
-
+#include "Weapon.h"
 
 // Sets default values for this component's properties
 UComponent_Mag::UComponent_Mag()
@@ -27,10 +27,18 @@ void UComponent_Mag::BeginPlay()
 	Super::BeginPlay();
 	CreateMag();
 	// ...
+	auto OwnerActor = Cast<AWeapon>(GetOwner());
+	if (!OwnerActor)
+	{
+		EGLOG(Error, TEXT("Casting failed"));
+		return;
+	}
+	
 
 	
 
 }
+
 
 void UComponent_Mag::nextBullet()
 {
@@ -74,7 +82,7 @@ void UComponent_Mag::CreateMag()
 
 	TopBullet=Mag[0];
 	idxBullet=0;
-
+	EGLOG(Error, TEXT("Create"));
 }
 
 
@@ -92,6 +100,27 @@ void UComponent_Mag::FireBullet(const FVector& FireLoation,const  FRotator& Fire
 	TopBullet->ReadyToFire(FireFWVector, FireLoation, FireRotation);
 	nextBullet();
 
+
+}
+
+void UComponent_Mag::ClearBullet()
+{
+	EGLOG(Error, TEXT("Clear Bullet"));
+	if (Mag.Num() == 0)
+	{
+		return;
+	}
+
+	for (auto it : Mag)
+	{
+		if (it.IsValid())
+		{
+			it.Get()->Destroy();
+			EGLOG(Log, TEXT("Destory"));
+		}
+	}
+	Mag.Empty();
+	TopBullet.Get();
 
 }
 

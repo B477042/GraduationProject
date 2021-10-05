@@ -47,6 +47,7 @@ class ESCAPEGAME_API AWeapon : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AWeapon();
+	virtual void BeginDestroy()override;
 
 protected:
 	// Called when the game starts or when spawned
@@ -59,8 +60,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	//EWeaponTypes GetWeaponType()const { return WeaponType; }
-	 
+	void DiscardWeapon();
+
+
 	void AttachedBy(class ACharacter* OtherCharacter);
 	//Return True If This Weapon can fire a bullet
 	bool Attack(const FVector& TargetLocation);

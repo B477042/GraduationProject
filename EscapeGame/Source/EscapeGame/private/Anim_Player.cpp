@@ -339,6 +339,7 @@ void UAnim_Player::AnimNotify_FuryExtend()
 void UAnim_Player::AnimNotify_FuryDamage()
 {
 	if (!Player.IsValid())return;
+	Player->ActiveFuryDamage();
 }
 
 void UAnim_Player::AnimNotify_FuryEnd()

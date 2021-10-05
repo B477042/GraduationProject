@@ -44,10 +44,13 @@ public:
 	
 	//False¸é left true¸é right
 	void PlaySFXFoot(bool bResult);
-	//state component-> take damage ¿¡¼­ broadcast µÊ
-	FOnHpIsZero OnHPIsZeroDelegate;
-	//state component-> take damage ¿¡¼­ broadcast µÊ
-	FOnHPChangeDelegate OnHpChangedDelegate;
+	////state component-> take damage ¿¡¼­ broadcast µÊ
+	//FOnHpIsZero OnHPIsZeroDelegate;
+	////state component-> take damage ¿¡¼­ broadcast µÊ
+	//FOnHPChangeDelegate OnHpChangedDelegate;
+
+	UStatComponent_Gunner* GetGunnerStatComponent()const;
+
 
 protected:
 	

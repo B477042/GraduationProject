@@ -174,9 +174,14 @@ void AEnemyCharacter_Gunner::BeginPlay()
 			AICon->StopAI();
 		}
 
+		if (Weapon.IsValid())
+		{
+			Weapon.Get()->DiscardWeapon();
+
+		}
 
 		});
-
+	
 	//Async Materials of mesh
 	LoadGunnerMaterialAsset();
 	//Async Load Weapon
@@ -415,6 +420,12 @@ void AEnemyCharacter_Gunner::Attack()
 	{
 		return;
 	}
+	if (!Weapon.IsValid())
+	{
+		EGLOG(Error, TEXT("Wepon not valid"));
+		return;
+	}
+
 
 	//If Weapon can fire = true
 	bool bWeaponAvailable = Weapon->Attack(TargetLocation);
@@ -477,5 +488,12 @@ void AEnemyCharacter_Gunner::PlaySFXFoot(bool bResult)
 		SFX_Foot_R->Play();
 	else
 		SFX_Foot_L->Play();
+}
+
+
+
+UStatComponent_Gunner* AEnemyCharacter_Gunner::GetGunnerStatComponent() const
+{
+	return StatComponent;
 }
 

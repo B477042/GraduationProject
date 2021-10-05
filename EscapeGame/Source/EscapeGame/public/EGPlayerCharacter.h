@@ -11,6 +11,7 @@
 #include "Anim_Player.h"
 #include "Component_Inventory.h"
 #include "SkillContainer_PlayerHitEffect.h"
+#include "SkillContainer_PlayerFury.h"
 #include "Components/BoxComponent.h"
 #include "Component_Fury.h"
 #include "Component_Stamina.h"
@@ -84,6 +85,7 @@ public:
 	 void ToggleFuryLeftArm(bool bResult);
 	 //True : Activate, False : Deactivate
 	 void ToggleFuryRightArm(bool bResult);
+	 //Scan Enemy around Player to Apply Damage. Range 10m. Box Size W=10m, H = 2m
 	 void ActiveFuryDamage();
 
 	 //============================================
@@ -116,7 +118,7 @@ public:
 private:
 	void InitComponents();
 	void LoadAssets();
-	void LoadHitEffects();
+	void LoadPlayerSkillObjects();
 	//void SetupMiniMap();
 	//=========================
 	//Camera Category Init Functions
@@ -253,6 +255,8 @@ private:
 			UParticleSystemComponent* PS_FuryArmRight;
 		UPROPERTY(VisibleAnywhere, Category = "FuryParticle")
 			UParticleSystemComponent* PS_FuryArmLeft;
+		UPROPERTY(VisibleAnywhere, Category = "Fury")
+			USkillContainer_PlayerFury* Container_Fury;
 	float minMiniMapArmLength;
 	float maxMiniMapArmLength;
 	bool bSetMapArm;
