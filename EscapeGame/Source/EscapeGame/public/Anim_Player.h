@@ -38,16 +38,31 @@ public:
 
 	//Jog Play Rate 조절. True : Running, False : Jog
 	void SetJogPlayRate(bool bIsRunnuing);
+
+
+	//Input 값은 Player의 Combo
+	void PlaySkillMontage(int Combo);
+	void SetGuarding(bool bResult) { bIsGuarding = bResult; }
+
+	float GetRollingLength() { return RollingLength; }
+	void SetDead();
+
+	
+	FOnPlant OnPlant;
+
+	void PlayFury();
+
+private:
 	//When rolling strat
 	UFUNCTION()
 		void AnimNotify_RollingStart();
 	//When rolling end
 	UFUNCTION()
 		void AnimNotify_RollingEnd();
-	
+
 	UFUNCTION()
 		void AnimNotify_AnimEnd();
-	
+
 	//On Skill Montage Start
 	UFUNCTION()
 		void AnimNotify_SkillStart();
@@ -59,14 +74,14 @@ public:
 		void AnimNotify_AnimNotify_ThunderStart();
 	//On Dead Animation Start
 	UFUNCTION()
-	void AnimNotify_DeadStart();
+		void AnimNotify_DeadStart();
 	//On Dead Animation end
 	UFUNCTION()
-	void AnimNotify_DeadEnd();
+		void AnimNotify_DeadEnd();
 	//When Play Plant
 	UFUNCTION()
 		void AnimNotify_Plant();
-	
+
 	UFUNCTION()
 		void AnimNotify_ReactDamagedEnd();
 	//Skill 1 Damage Check
@@ -95,25 +110,19 @@ public:
 		void AnimNotify_FuryEnd();
 
 
-	//Input 값은 Player의 Combo
-	void PlaySkillMontage(int Combo);
-	void SetGuarding(bool bResult) { bIsGuarding = bResult; }
-
-	float GetRollingLength() { return RollingLength; }
-	void SetDead();
-
-	
-	FOnPlant OnPlant;
-
-	void PlayFury();
+	void BuffTick(float DeltaSeconds);
 
 private:
 	//const int32 StartCombo = 1;//Attack Montage에서 처음 액션 번호
 	//const int32 EndCombo = 4;//Attack Montage에서 마지막 액션 번호
 
 	float RollingLength = 570.0f;
-
-	
+	const float PlayRateNormal = 1.0f;
+	const float PlayRateBuff = 1.2f;
+	float CurrentPlayRate = 1.0f;
+	bool bIsBuffActive;
+	const float BuffDuration = 7.0f;
+	float CurrentBuffDuration = 0.0f;
 
 	////Charge Attack Montage
 	//UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = true))

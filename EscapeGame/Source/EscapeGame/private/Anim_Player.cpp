@@ -84,7 +84,8 @@ UAnim_Player::UAnim_Player()
 	ReactDirection = 0.0f;
 	Direction = 0.0f;
 	bIsDamaged = false;
-	
+	bIsBuffActive = false;
+
 	JogPlayRate = 1.0f;
 	RunningPlayRate = 1.5f;
 	CurrentJogPlayRate = JogPlayRate;
@@ -108,7 +109,10 @@ void UAnim_Player::NativeUpdateAnimation(float DeltaSeconds)
 		Direction = CalculateDirection(Player->GetVelocity(), Player->GetActorRotation());
 		
 	
-	
+	if (bIsBuffActive)
+	{
+		BuffTick(DeltaSeconds);
+	}
 		
 
 }
@@ -154,7 +158,7 @@ void UAnim_Player::JumpToChargetAttackSection(int32 NewSection)
 
 void UAnim_Player::PlayAirAttackMontage()
 {
-	Montage_Play(AirAttackMontage, 1.0f);
+	Montage_Play(AirAttackMontage, CurrentPlayRate);
 
 }
 
@@ -304,10 +308,18 @@ void UAnim_Player::AnimNotify_Skill1Check()
 	if (!Player.IsValid())return;
 	Player->SlashAttack();
 }
-
+// Accelrate play rate during buff duration
 void UAnim_Player::AnimNotify_BuffActive()
 {
 	if (!Player.IsValid())return;
+	bIsBuffActive = true;
+
+	CurrentPlayRate = PlayRateBuff;
+	if (CurrentBuffDuration == BuffDuration)
+	{
+		CurrentBuffDuration = 0.0f;
+	}
+
 }
 
 void UAnim_Player::AnimNotify_FuryStart()
@@ -350,6 +362,18 @@ void UAnim_Player::AnimNotify_FuryEnd()
 	Player->ToggleFuryArmExtend(false);
 }
 
+void UAnim_Player::BuffTick(float DeltaSeconds)
+{
+	CurrentBuffDuration += DeltaSeconds;
+	if (CurrentBuffDuration >= BuffDuration)
+	{
+		CurrentBuffDuration = BuffDuration;
+		bIsBuffActive = false;
+		CurrentPlayRate = PlayRateNormal;
+	}
+
+}
+
 
 
 //Input °ªÀº PlayerÀÇ Combo
@@ -360,7 +384,7 @@ void UAnim_Player::PlaySkillMontage(int Combo)
 	int PlayNum = Combo - 1;
 	if (Montage_Skills.IsValidIndex(PlayNum))
 	{ 
-		Montage_Play(Montage_Skills[PlayNum],1.0f);
+		Montage_Play(Montage_Skills[PlayNum], CurrentPlayRate);
 		 
 	}
 
@@ -408,5 +432,5 @@ void UAnim_Player::PlayFury()
 		StopAllMontages(0.0f);
 	}
 
-	Montage_Play(Montage_Fury,2.0f);
+	Montage_Play(Montage_Fury,1.6f);
 }

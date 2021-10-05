@@ -6,7 +6,7 @@
 #include "DT_DataStruct.h"
 #include "EGGameInstance.h"
 #include "GameFramework/Character.h"
-
+#include "Particles/ParticleSystem.h"
 
 
 UStatComponent_Player::UStatComponent_Player()
@@ -24,10 +24,18 @@ UStatComponent_Player::UStatComponent_Player()
 	MinWalkingSpeed = 0.0f;
 	MaxWalkingSpeed = 600.0f;
 	MaxRunningSpeed = 1000.0f;
-//	Stamina = 0;
-//	TimerStamina = 0.0f;
-//	bIsStaminaUsing = false;
-//	bCanUsingStamina = true;
+
+	static ConstructorHelpers::FObjectFinder<USoundWave>SW_LevelUp(TEXT("SoundWave'/Game/ParagonKwang/Characters/Heroes/Kwang/Sounds/SoundWaves/Kwang_DraftLock_020.Kwang_DraftLock_020'"));
+	if (SW_LevelUp.Succeeded())
+	{
+		SFX_LevelUp = SW_LevelUp.Object;
+	}
+	static ConstructorHelpers::FObjectFinder<UParticleSystem>PS_LevelUp(TEXT("ParticleSystem'/Game/ParagonKwang/FX/Particles/Abilities/Ultimate/FX/P_Kwang_Ult_Lightning.P_Kwang_Ult_Lightning'"));
+	if (PS_LevelUp.Succeeded())
+	{
+		VFX_LevelUp = PS_LevelUp.Object;
+		VFX_LevelUp->bAutoDeactivate = true;
+	}
 }
 
 void UStatComponent_Player::InitializeComponent()
@@ -58,12 +66,7 @@ void UStatComponent_Player::BeginPlay()
 	Super::BeginPlay();
 	LoadLevelData();
 
-	//Init Stamina 
-	//Stamina = MaxStamina;
-	//if (StaminaChangedDelegate.IsBound())
-	//{
-	//	StaminaChangedDelegate.Execute();
-	//}
+
 	if (OnLevelUP.IsBound())
 	{
 		OnLevelUP.Execute();
@@ -76,9 +79,6 @@ void UStatComponent_Player::BeginPlay()
 void UStatComponent_Player::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	//EGLOG(Warning, TEXT("Player Stat Tick"));
-	//Tick이 켜진 컴포넌트인 것 확인 됨
-	//RecoverStamina(DeltaTime);
 
 }
 
@@ -126,7 +126,7 @@ void UStatComponent_Player::SetComboStartState()
 	bCanChargeAttack = true;
 	bCanComboAttack = true;
 	bIsAttacking = true;
-	//bCanUsingStamina = false;
+
 	AddCombo(1);
 	////������ ���� ������ ���� �Է��� �ʱ�ȭ ��Ų��
 	bIsChargeAttackInputOn = false;
@@ -149,143 +149,6 @@ void UStatComponent_Player::SetComboEndState()
 
 	SetWalking();
 }
-
-//void UStatComponent_Player::UseStaminaTick(float DeltaTime)
-//{
-//	if (!bCanUsingStamina)
-//	{
-//		//EGLOG(Warning, TEXT("Can't use Stamina"));
-//		return;
-//	}
-//	//if (!bIsStaminaUsing)SetStaminaUsing(true);
-//	if (Stamina == 0.0f)
-//	{
-//		bIsStaminaUsing = false;
-//		return;
-//	}
-//	if (Stamina < 0.0f)
-//	{
-//		bIsStaminaUsing = false;
-//		Stamina = 0.0f;
-//		return;
-//	}
-//	Stamina -= DeltaTime * 5.0f;
-//	StaminaChangedDelegate.Execute();
-//}
-
-////Call when Running Start
-//void UStatComponent_Player::SetRunning()
-//{
-//	if (!bCanUsingStamina)return;
-//	//if (!GetWorld())return;
-//
-//
-//	//켜준다
-//	bIsStaminaUsing = true;
-//	/*float DeltaTime = GetWorld()->GetDeltaSeconds();
-//	UseStaminaTick(DeltaTime);*/
-//	
-//
-//}
-/*
-	will Call in Tick
-*/
-
-//
-//void UStatComponent_Player::RecoverStamina(float DeltaTime)
-//{
-//	if (bIsStaminaUsing)
-//	{
-//		
-//		return;
-//	}
-//		
-//	if (Stamina > MaxStamina)
-//	{
-//		Stamina = MaxStamina;
-//		return;
-//	}
-//		
-//	if (Stamina == MaxStamina)
-//	{
-//		
-//		//EGLOG(Warning, TEXT("Stamina is full"));
-//		StaminaChangedDelegate.Execute();
-//		return;
-//	}
-//
-//	//EGLOG(Warning, TEXT("Time Added"));
-//	TimerStamina += DeltaTime;
-//
-//	//만약 stamina를 다 써버렸다면
-//	if (Stamina == 0.0f)
-//	{
-//		if (TimerStamina < 3.0f)return;
-//		bCanUsingStamina = false;
-//		TimerStamina = 0.0f;
-//		Stamina += 1.0f;
-//	}
-//	/*
-//		구간별로 스테미너 회복 곡선을 다르게 표현할 것이다
-//		0~30은 천천히 31~70은 빠르게
-//		70~100은 천천히 회복되게 할 것이다
-//	*/
-//	if (Stamina > 70.0f)
-//	{
-//		if (TimerStamina < 0.004f)return;
-//
-//		TimerStamina = 0.0f;
-//		Stamina += 0.5f;
-//		//EGLOG(Warning, TEXT("Stamina Added"));
-//		StaminaChangedDelegate.Execute();
-//		return;
-//	}
-//	else if (Stamina > 30.0f)
-//	{
-//		if (TimerStamina < 0.002f)return;
-//		TimerStamina = 0.0f;
-//		Stamina += 1.0f;
-//		bCanUsingStamina = true;
-//		//EGLOG(Warning, TEXT("Stamina Added"));
-//		StaminaChangedDelegate.Execute();
-//		return;
-//	}
-//	else
-//	{
-//		if (TimerStamina < 0.004f)return;
-//		TimerStamina = 0.0f;
-//		Stamina += 0.5f;
-//		//EGLOG(Warning, TEXT("Stamina Added"));
-//		StaminaChangedDelegate.Execute();
-//		return;
-//	}
-//}
-//
-//bool UStatComponent_Player::SetStaminaUsing(bool bResult)
-//{
-//	bIsStaminaUsing = bResult;
-//	return bIsStaminaUsing;
-//}
-//
-//bool UStatComponent_Player::CanUseStamina()
-//{
-//	if (Stamina <= 0)
-//		return false;
-//	else
-//		return true;
-//}
-//
-//float UStatComponent_Player::GetStamina()
-//{
-//	return Stamina;
-//}
-//
-//float UStatComponent_Player::GetStaminaRatio()
-//{
-//	
-//
-//	return (Stamina<0.0f)? 0.0f : Stamina/MaxStamina;
-//}
 
 int32 UStatComponent_Player::GetLevel()
 {
@@ -390,6 +253,9 @@ void UStatComponent_Player::LevelUp()
 	{
 		OnLevelUP.Execute();
 	}
+
+	UGameplayStatics::PlaySound2D(this, SFX_LevelUp);
+	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), VFX_LevelUp, GetOwner()->GetTransform());
 
 }
 

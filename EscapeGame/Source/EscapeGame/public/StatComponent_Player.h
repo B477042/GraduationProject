@@ -46,16 +46,6 @@ public:
 	void SetChargeAttackInput(bool bResult);
 	void SetComboStartState();
 	void SetComboEndState();
-	//===========
-	//Stamina관련
-	//============
-	//void UseStaminaTick(float DeltaTime);
-	////void SetRunning();
-	//bool SetStaminaUsing(bool bResult);
-	//bool CanUseStamina();
-
-	//float GetStamina();
-	//float GetStaminaRatio();
 
 	int32 GetLevel();
 	//return exp
@@ -69,7 +59,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void GainExp(const int32 &DropExp );
 
-	//FStaminaChangedDelegate StaminaChangedDelegate;
+
 	FOnExpChanged OnExpChanged;
 	FOnLevelUP OnLevelUP;
 	//virtual  void LoadDataTable()override ;
@@ -82,10 +72,7 @@ private:
 	//data table에서 level에 맞는 data를 가져온다
 	void LoadLevelData();
 
-	//void RecoverStamina(float DeltaTime);
-
-	/*const float MaxStamina = 100.0f;
-	float TimerStamina;*/
+	
 private:
 
 	
@@ -95,8 +82,7 @@ private:
 	UPROPERTY(VisibleInstanceOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
 		int32 MaxCombo;
 
-	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
-	//	float Stamina;
+
 	//Player level
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
 		int32 Level;
@@ -122,13 +108,11 @@ private:
 	//Can next Charge Attack
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attacking, Meta = (AllowPrivateAccess = true))
 		bool bCanChargeAttack;
-	////현재 Stamina가 사용되고 있는지 체크를 한다
-	//UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
-	//	bool bIsStaminaUsing;
-	//UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
-	//	bool bCanUsingStamina;
-
-
+	
+	UPROPERTY(VisibleAnywhere, Category = "Effect")
+		USoundWave* SFX_LevelUp;
+	UPROPERTY(VisibleAnywhere, Category = "Effect")
+		class UParticleSystem* VFX_LevelUp;
 
 	/*UPROPERTY( VisibleInstanceOnly, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
 		FPlayerTableRow* PlayerTableRow;*/
