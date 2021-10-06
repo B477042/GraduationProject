@@ -236,7 +236,15 @@ void UStatComponent_Player::LoadGameStat(int32 newLevel, float newExp, float new
 	SetHP( newHp);
 	Exp = newExp;
 
-	
+	if (OnLevelUP.IsBound())
+	{
+		OnLevelUP.Execute();
+	}
+	if (HPChangedDelegate.IsBound())
+	{
+		HPChangedDelegate.Broadcast();
+	}
+
 	
 }
 

@@ -43,9 +43,7 @@ void UGameWidget::NativeConstruct()
 
 	EGLOG(Error, TEXT("Wdiget Native Constructor"));
 
-	/*Txt_TimerBlock->TextDelegate.BindUFunction(this, FName("BindingTimeText"));
-	Txt_TimerBlock->ColorAndOpacityDelegate.BindUFunction(this, FName("BindingTimeColor"));*/
-
+	
 
 }
 
@@ -304,7 +302,7 @@ void UGameWidget::BindCharacterFury(UComponent_Fury* newFury)
 
 	CurrentPlayerFury = newFury;
 	//Bind Fury delegate
-	CurrentPlayerFury->OnFuryChanged.BindUFunction(this, "UpdateFury");
+	CurrentPlayerFury->OnFuryChanged.BindUObject(this,&UGameWidget::UpdateFury );
 
 }
 

@@ -62,6 +62,13 @@ void AAStarFinder::PostInitializeComponents()
 
 void AAStarFinder::PathFind(AAstarNode * Start,EPathTarget Mode)
 {
+	if (!Start)
+	{
+		EGLOG(Error, TEXT("Start is nullptr"));
+		return;
+	}
+
+
 //	EGLOG(Error, TEXT("AStar Lunched At :%s"),*Start->GetName());
 	ToVisiteNodes.Empty();
 	//	EGLOG(Error, TEXT("AStar Start"));
@@ -122,18 +129,36 @@ void AAStarFinder::ShowPath(EPathTarget Mode)
 
 void AAStarFinder::StartPathFinder(AAstarNode * Other, EPathTarget Mode)
 {
+	if (!Other)
+	{
+		EGLOG(Error, TEXT("Nullptr"));
+		return;
+	}
+
 	
 		PathFind(Other,Mode);
 	
 }
 void AAStarFinder::SetKeyPoint(AAstarNode* Other)
 {
+	if (!Other)
+	{
+		EGLOG(Error, TEXT("Nullptr"));
+		return;
+	}
+
 	KeyNode = Other;
 }
 
 //Game instance에서 목표가 되는 오브젝트를 우선적으로 불러와서 찾아준다. 
 void AAStarFinder::SetGoalPoint(AAstarNode * Other)
 {
+	if (!Other)
+	{
+		EGLOG(Error, TEXT("Nullptr"));
+		return;
+	}
+
 	GoalNode = Other;
 }
 //모든 노드의 PathFind 연산값을 지워준다
@@ -149,6 +174,12 @@ void AAStarFinder::ResetResult()
 
 void AAStarFinder::AddNode(AAstarNode * Other)
 {
+	if (!Other)
+	{
+		EGLOG(Error, TEXT("Nullptr"));
+		return;
+	}
+
 	AllNodes.Add(Other);
 	EGLOG(Warning, TEXT("Add : %s"), *AllNodes.Top()->GetName());
 	EGLOG(Warning, TEXT("Capacity : %d"), AllNodes.Num());
@@ -168,6 +199,19 @@ void AAStarFinder::ClearNodes()
 
 void AAStarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 {
+
+	if (!Start)
+	{
+		EGLOG(Error, TEXT("Nullptr"));
+		return;
+	}
+	if (!Goal)
+	{
+		EGLOG(Error, TEXT("Nullptr"));
+		return;
+	}
+
+
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Goal Finder"));
 	TWeakObjectPtr<AAstarNode> PopedNode;
 	int i = 0;
@@ -181,6 +225,13 @@ void AAStarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 
 		//Queue에서 하나를 꺼낸다
 		ToVisiteNodes.Dequeue(PopedNode);
+
+		if (!PopedNode.IsValid())
+		{
+			EGLOG(Error, TEXT("PopedNode is invalid"));
+			return;
+		}
+
 		//EGLOG(Warning, TEXT("Current Node : %s"), *PopedNode->GetName());
 		//노드의 방문을 마친다
 		PopedNode->VisitNode();
@@ -259,7 +310,18 @@ void AAStarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 void AAStarFinder::KeyFind(AAstarNode * Start, AAstarNode * Key)
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Key Finder"));
-	
+	if (!Start)
+	{
+		EGLOG(Error, TEXT("Nullptr"));
+		return;
+	}
+	if (!Key)
+	{
+		EGLOG(Error, TEXT("Nullptr"));
+		return;
+	}
+
+
 	TWeakObjectPtr<AAstarNode> PopedNode;
 	int i = 0;
 	//EGLOG(Error, TEXT("======================="));
@@ -274,6 +336,12 @@ void AAStarFinder::KeyFind(AAstarNode * Start, AAstarNode * Key)
 		//Queue에서 하나를 꺼낸다
 		ToVisiteNodes.Dequeue(PopedNode);
 	//	EGLOG(Warning, TEXT("Current Node : %s"), *PopedNode->GetName());
+	// 
+		if (!PopedNode.IsValid())
+		{
+			EGLOG(Error, TEXT("PopedNode is invalid"));
+			return;
+		}
 		//노드의 방문을 마친다
 		PopedNode->VisitNode();
 

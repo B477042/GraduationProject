@@ -6,7 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "Component_Fury.generated.h"
 
-DECLARE_DYNAMIC_DELEGATE_OneParam(FOnFuryChanged, float,Ratio);
+DECLARE_DELEGATE_OneParam(FOnFuryChanged, float);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ESCAPEGAME_API UComponent_Fury : public UActorComponent
@@ -17,7 +17,7 @@ public:
 	// Sets default values for this component's properties
 	UComponent_Fury();
 	//Called When Fury value changed
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Delegate")
+	
 	FOnFuryChanged OnFuryChanged;
 	float GetFury()const;
 	void LoadFury(const float& NewFury);

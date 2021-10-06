@@ -1037,15 +1037,16 @@ float AEGPlayerCharacter::ReflectProjectiles(AActor* DamageCauser, float FinalDa
 //Player가 아닌 모든 것에 Take Damage를 일으킵니다
 void AEGPlayerCharacter::OnWeaponBeginOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	auto target = Cast<AEGPlayerCharacter>(OtherActor);
-	if (target) { 
-		EGLOG(Error, TEXT("that's player character"));
-		return; }
+	auto target = Cast<AEnemyCharacter>(OtherActor);
+	if (!target) { 
+		EGLOG(Error, TEXT("Not Enemy Character"));
+		return;
+	}
 	FDamageEvent DamageEvent;
-	EGLOG(Error, TEXT("Hit : %s"), *OtherActor->GetName());
-	OtherActor->TakeDamage(Stat->GetATK(),DamageEvent,Controller,this );
+	EGLOG(Error, TEXT("Hit : %s"), *target->GetName());
+	target->TakeDamage(Stat->GetATK(),DamageEvent,Controller,this );
 
-	Container_Hit->ActivateEffectAt(OtherActor->GetActorLocation());
+	Container_Hit->ActivateEffectAt(target->GetActorLocation());
 }
 
 void AEGPlayerCharacter::OnCheckCanComboAttack(UAnimMontage* Montage, bool bInterrupted)

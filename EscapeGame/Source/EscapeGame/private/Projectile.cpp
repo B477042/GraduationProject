@@ -128,10 +128,10 @@ void AProjectile::OnSomethingHit(UPrimitiveComponent * OverlappedComp, AActor * 
 	auto isPawn = Cast<APawn>(OtherActor);
 	if (GetWorld()->GetFirstPlayerController() && isPawn != nullptr)
 	{
-		OtherActor->TakeDamage(Damage, damageEvent, GetWorld()->GetFirstPlayerController(), this);
+		isPawn->TakeDamage(Damage, damageEvent, GetWorld()->GetFirstPlayerController(), this);
 	}
 
-	EGLOG(Error, TEXT(" Hit : %s"), *OtherActor->GetName());
+	EGLOG(Error, TEXT(" Hit : %s"), *isPawn ->GetName());
 
 	//bIsFired = false;
 }

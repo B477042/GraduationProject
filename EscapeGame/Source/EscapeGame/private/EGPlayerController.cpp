@@ -93,11 +93,7 @@ void AEGPlayerController::BeginPlay()
 
 
 
-	/*EGPlayer->Inventory->OnItemUpdated.BindUFunction(HUD, FName("UpdateItemes"));
-	EGPlayer->Inventory->OnItemUpdated.Execute(FString("hi"),0);*/
-	//TutorialUI->Test(FText::FromString(TEXT("TestTs")), FText::FromString(TEXT("notitnotif")));
-
-
+	
 }
 
 void AEGPlayerController::SetupInputComponent()
@@ -425,6 +421,8 @@ void AEGPlayerController::LoadGame(const UEGSaveGame* LoadInstance)
 	//Time 불러오기
 	EGPlayer->GetTimeLimitComponent()->LoadTime(LoadInstance->GameProgressData.RemainTimes);
 	EGPlayer->GetFuryComponent()->LoadFury(LoadData.Fury);
+
+
 	EGLOG(Error, TEXT("Player Load game called"));
 }
 

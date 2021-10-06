@@ -422,16 +422,15 @@ void AGruntCharacter::FireAttack()
 	
 	//All Block Trace
 	bool bResult = World->LineTraceSingleByChannel(HitResult, PosPSPlay, EndPoint, ECollisionChannel::ECC_GameTraceChannel4);
-	//맞았다면
-	if(bResult)
+	//Miss
+	if (!bResult)
 	{
-		EGLOG(Warning, TEXT("Hit Target : %s"), *HitResult.Actor->GetName());
+		EGLOG(Log, TEXT("miss missle"));
+		return;
+	}
 		//맞은 지점의 위치
 		FVector PosHit= HitResult.ImpactPoint;
-		//데미지 처리
-		FDamageEvent DamageEvent;
-		HitResult.Actor->TakeDamage(AtkFireAtk, DamageEvent, GetController(), this);
-
+		
 		//히트 판정 파티클&사운드 출력
 		VFX_HitEffect->SetWorldLocation(PosHit);
 		SFX_Explosion->SetWorldLocation(PosHit);
@@ -446,7 +445,24 @@ void AGruntCharacter::FireAttack()
 		
 		VFX_HitEffect->Activate();
 		SFX_Explosion->Activate();
-	}
+
+		//데미지 처리
+		FDamageEvent DamageEvent;
+		if (!HitResult.Actor.IsValid())
+		{
+			EGLOG(Error, TEXT(" Hit Actor is invalid"));
+			return;
+		}
+		auto Player = Cast<AEGPlayerCharacter>(HitResult.Actor);
+		if (!Player)
+		{
+			EGLOG(Error, TEXT("Not Player"));
+			return;
+		}
+		Player->TakeDamage(AtkFireAtk, DamageEvent, GetController(), this);
+		EGLOG(Warning, TEXT("Hit Target : %s"), *Player->GetName());
+
+	
 	
 }
 

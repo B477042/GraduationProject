@@ -49,6 +49,12 @@ void ASkillActor_PlayerFury::UseSkill(const FVector& Point)
 	FCollisionQueryParams CollisionQueryParam(NAME_None, false, this);
 	FDamageEvent DamageEvent;
 	auto playerCon = World->GetFirstPlayerController();
+	if (!playerCon)
+	{
+		EGLOG(Error, TEXT("Cating fail"));
+		return;
+	}
+
 	//PlayerCharacter를 Overlap 반응으로 찾아낸다. 모양은 DetectRadius만한 구
 	bool bResult = World->OverlapMultiByChannel(OverlapResults, Point, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2,
 		FCollisionShape::MakeSphere(100.0f), CollisionQueryParam);
@@ -56,7 +62,11 @@ void ASkillActor_PlayerFury::UseSkill(const FVector& Point)
 	{
 		for (auto it : OverlapResults)
 		{
-			it.GetActor()->TakeDamage(10.0f, DamageEvent, playerCon, GetOwner());
+			if (it.GetActor()->IsValidLowLevel())
+			{
+				it.GetActor()->TakeDamage(10.0f, DamageEvent, playerCon, GetOwner());
+			}
+			
 			//EGLOG(Error, TEXT("Additional Damage To : %s"), *it.GetActor()->GetName());
 		}
 	}
