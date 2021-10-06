@@ -290,7 +290,7 @@ void UGameWidget::BindCharacterInven(UComponent_Inventory * newInven)
 	 
 	CurrentPlayerInventory = newInven;
 	//인벤토리의 델리게이트와 위젯 연동
-	CurrentPlayerInventory->OnItemUpdated.BindUFunction(this, "UpdateItemes");
+	CurrentPlayerInventory->OnItemUpdated.BindUObject(this,&UGameWidget::UpdateItemes);
 
 }
 

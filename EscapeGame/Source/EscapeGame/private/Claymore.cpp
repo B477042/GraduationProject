@@ -102,7 +102,7 @@ void AClaymore::loadAssets()
 	}
 	//set matrial color
 	
-	static ConstructorHelpers::FObjectFinder<UMaterialInstance>Material_BODY(TEXT("/Game/FPS_Weapon_Bundle/Weapons/Materials/Accessories/M_V_Grip_Green.M_V_Grip_Green"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInstance>Material_BODY(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_Claymore.MI_Claymore'"));
 	if (Material_BODY.Succeeded())
 	{
 		Body->SetMaterial(0,Material_BODY.Object);
@@ -214,7 +214,12 @@ float AClaymore::getDamage()
 bool AClaymore::bIsActorInFrontSide(FHitResult &hitResult)
 {
 
-
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return false;
+	}
 		//FHitResult hitResult;
 		FCollisionQueryParams param(NAME_None, false, this);
 		
@@ -231,7 +236,7 @@ bool AClaymore::bIsActorInFrontSide(FHitResult &hitResult)
  
 
 		//전방으로 detecte range만큼 탐색한다. 레이를 쏜다
-		bool bResult = GetWorld()->LineTraceSingleByChannel(hitResult, ClaymorePos , myTargetVec,
+		bool bResult = World->LineTraceSingleByChannel(hitResult, ClaymorePos , myTargetVec,
 			//All Block Trace
 			ECollisionChannel::ECC_GameTraceChannel4);
 		//EdgePos = myTargetVec;
@@ -301,6 +306,13 @@ void AClaymore::ClearMe(UParticleSystemComponent *Particle)
 
 void AClaymore::explosion()
 {
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
+
 	Body->SetHiddenInGame(true, false);
 	BoxCollision->SetCollisionProfileName(TEXT("NoCollision"));
 	
@@ -311,7 +323,7 @@ void AClaymore::explosion()
 
 	FVector targetPos = target->GetActorLocation();
 
-	bool result = GetWorld()->SweepSingleByChannel(hitResult, GetActorLocation(), targetPos,
+	bool result = World->SweepSingleByChannel(hitResult, GetActorLocation(), targetPos,
 		FQuat::MakeFromEuler(getNormalVectorDistance(&targetPos)),
 		//Explosion
 		ECollisionChannel::ECC_GameTraceChannel4,

@@ -13,7 +13,7 @@
 
 
 //DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnItemChanged);
-DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnItemUpdated, FName, ItemName, int, Amount);
+DECLARE_DELEGATE_TwoParams(FOnItemUpdated, FName, int);
 
 
 
@@ -113,7 +113,7 @@ public:
 
 	bool LoadGameData(AItemActor* newItem, int Amount);
 	
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Delegate")
+	//UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Delegate")
 	FOnItemUpdated OnItemUpdated;
 	
 	

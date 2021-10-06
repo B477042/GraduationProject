@@ -45,6 +45,12 @@ void ASkillActor_Hit::Tick(float DeltaTime)
 
 void ASkillActor_Hit::UseSkill(const FVector & Point)
 {
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
 	SetActorHiddenInGame(false);
 	Root->SetHiddenInGame(false);
 	VFX_Main->SetHiddenInGame(false);
@@ -59,15 +65,19 @@ void ASkillActor_Hit::UseSkill(const FVector & Point)
 	TArray<FOverlapResult>OverlapResults;
 	FCollisionQueryParams CollisionQueryParam(NAME_None, false, this);
 	FDamageEvent DamageEvent;
-	auto playerCon = GetWorld()->GetFirstPlayerController();
+	auto playerCon = World->GetFirstPlayerController();
 	//PlayerCharacter를 Overlap 반응으로 찾아낸다. 모양은 DetectRadius만한 구
-	bool bResult = GetWorld()->OverlapMultiByChannel(OverlapResults, Point, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2,
+	bool bResult = World->OverlapMultiByChannel(OverlapResults, Point, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2,
 		FCollisionShape::MakeSphere(50.0f), CollisionQueryParam);
 	if (bResult)
 	{
 		for (auto it : OverlapResults)
 		{
-			it.GetActor()->TakeDamage(10.0f, DamageEvent, playerCon, GetOwner());
+			if (it.GetActor()->IsValidLowLevel())
+			{
+				it.GetActor()->TakeDamage(10.0f, DamageEvent, playerCon, playerCon->GetPawn());
+			}
+			
 			//EGLOG(Error, TEXT("Additional Damage To : %s"), *it.GetActor()->GetName());
 		}
 	}

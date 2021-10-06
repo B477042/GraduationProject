@@ -28,8 +28,13 @@ AAstarNode::AAstarNode()
 void AAstarNode::BeginPlay()
 {
 	Super::BeginPlay();
-
-	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
+	auto GameInstance = Cast<UEGGameInstance>(World->GetGameInstance());
 	if (!GameInstance)return;
 
 	auto finder = GameInstance->GetAStarFinder();
@@ -68,8 +73,13 @@ void AAstarNode::PostInitializeComponents()
 void AAstarNode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
-
-	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
+	auto GameInstance = Cast<UEGGameInstance>(World->GetGameInstance());
 	if (!GameInstance)return;
 
 	auto finder = GameInstance->GetAStarFinder();
@@ -87,7 +97,12 @@ void AAstarNode::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void AAstarNode::OnActorOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	//OnPlayerEnter.Broadcast(this);
-	
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
 	auto player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (!player)return;
 
@@ -98,7 +113,7 @@ void AAstarNode::OnActorOverlap(UPrimitiveComponent * OverlappedComp, AActor * O
 	else
 		Mode = EPathTarget::Key;
 	
-	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	auto GameInstance = Cast<UEGGameInstance>(World->GetGameInstance());
 	if (!GameInstance)return;
 
 	auto finder = GameInstance->GetAStarFinder();
@@ -115,7 +130,14 @@ void AAstarNode::OnActorOverlap(UPrimitiveComponent * OverlappedComp, AActor * O
 
 void AAstarNode::OnActorOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
-	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
+
+	auto GameInstance = Cast<UEGGameInstance>(World->GetGameInstance());
 	if (!GameInstance)return;
 
 	auto finder = GameInstance->GetAStarFinder();

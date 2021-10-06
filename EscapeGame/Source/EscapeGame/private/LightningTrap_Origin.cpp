@@ -174,13 +174,18 @@ void ALightningTrap_Origin::turnOffTrap()
 
 void ALightningTrap_Origin::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-
+	
 	OtherActor->TakeDamage(Damage, ActorTakeDamageEvent, OtherActor->GetInstigatorController(), this);
 	
 }
 
 void ALightningTrap_Origin::OnCharacterHit(UPrimitiveComponent * HitComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit)
 {
+	if (!OtherActor)
+	{
+		EGLOG(Error, TEXT("Null"));
+		return;
+	}
 	auto player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (!player)return;
 

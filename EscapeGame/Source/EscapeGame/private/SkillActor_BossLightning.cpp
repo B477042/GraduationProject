@@ -87,8 +87,14 @@ void ASkillActor_BossLightning::DeactivateEffect()
 
 void ASkillActor_BossLightning::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
 	FDamageEvent DamageEvent;
-	OtherActor->TakeDamage(Damage, DamageEvent,GetWorld()->GetFirstPlayerController() ,this );
+	OtherActor->TakeDamage(Damage, DamageEvent,World->GetFirstPlayerController() ,this );
 }
 
 void ASkillActor_BossLightning::loadAsset()

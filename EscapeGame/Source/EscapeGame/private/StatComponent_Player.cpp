@@ -242,6 +242,12 @@ void UStatComponent_Player::LoadGameStat(int32 newLevel, float newExp, float new
 
 void UStatComponent_Player::LevelUp()
 {
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
 	//Exp가 NextExp를 초과한 만큼 빼주고
 	Exp -= NextExp;
 	//0미만이면 Exp를 0으로 설정해준다
@@ -255,7 +261,7 @@ void UStatComponent_Player::LevelUp()
 	}
 
 	UGameplayStatics::PlaySound2D(this, SFX_LevelUp);
-	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), VFX_LevelUp, GetOwner()->GetTransform());
+	UGameplayStatics::SpawnEmitterAtLocation(World, VFX_LevelUp, GetOwner()->GetTransform());
 
 }
 

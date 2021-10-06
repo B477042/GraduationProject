@@ -25,6 +25,12 @@ ASkillActor_PlayerFury::ASkillActor_PlayerFury()
 
 void ASkillActor_PlayerFury::UseSkill(const FVector& Point)
 {
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
 	SetActorHiddenInGame(false);
 	Root->SetHiddenInGame(false);
 	VFX_Main->SetHiddenInGame(false);
@@ -42,9 +48,9 @@ void ASkillActor_PlayerFury::UseSkill(const FVector& Point)
 	TArray<FOverlapResult>OverlapResults;
 	FCollisionQueryParams CollisionQueryParam(NAME_None, false, this);
 	FDamageEvent DamageEvent;
-	auto playerCon = GetWorld()->GetFirstPlayerController();
+	auto playerCon = World->GetFirstPlayerController();
 	//PlayerCharacter를 Overlap 반응으로 찾아낸다. 모양은 DetectRadius만한 구
-	bool bResult = GetWorld()->OverlapMultiByChannel(OverlapResults, Point, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2,
+	bool bResult = World->OverlapMultiByChannel(OverlapResults, Point, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2,
 		FCollisionShape::MakeSphere(100.0f), CollisionQueryParam);
 	if (bResult)
 	{

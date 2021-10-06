@@ -30,7 +30,12 @@ void AEnemyBossCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	reloadSkillObjs();
-	
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
 
 	/*UProgressBar**/
 
@@ -45,12 +50,12 @@ void AEnemyBossCharacter::BeginPlay()
 	});
 	HPBar->SetPercent(Stat->GetHPRatio());
 
-	SA_Thunder = GetWorld()->SpawnActor<ASkillActor_BossLightning>();
+	SA_Thunder = World->SpawnActor<ASkillActor_BossLightning>();
 	SA_Thunder->DeactivateEffect();
 
 	/*Save & Load*/
 
-	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	auto GameInstance = Cast<UEGGameInstance>(World->GetGameInstance());
 	if (!GameInstance)
 	{
 		EGLOG(Error, TEXT("Gameinstance is nullptr"));
@@ -76,7 +81,8 @@ void AEnemyBossCharacter::PostInitializeComponents()
 			EGLOG(Warning, TEXT("DEAD"));
 			return;
 		}OwnerCon->StopAI();
-
+		auto Anim = GetMesh()->GetAnimInstance();
+		Anim->StopAllMontages(0.0f);
 		
 
 	});
@@ -92,7 +98,7 @@ float AEnemyBossCharacter::TakeDamage(float DamageAmount, FDamageEvent const & D
 	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	Stat->TakeDamage(FinalDamage);
 
-	EGLOG(Warning, TEXT("HP : %f"),Stat->GetHP());
+//	EGLOG(Warning, TEXT("HP : %f"),Stat->GetHP());
 	return FinalDamage;
 }
 

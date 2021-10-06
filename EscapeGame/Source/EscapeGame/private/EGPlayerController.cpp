@@ -64,6 +64,12 @@ void AEGPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	ChangeInputMode(true);
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
 
 	HUD = CreateWidget<UGameWidget>(this, HUDWidgetClass);
 	TutorialUI = CreateWidget<UTutorialWidget>(this, TUTOWidgetClass);
@@ -80,7 +86,7 @@ void AEGPlayerController::BeginPlay()
 
 	
 	
-	EGLOG(Warning, TEXT("Current Game Mode : %s"), *GetWorld()->GetFirstPlayerController()->GetName());
+	EGLOG(Warning, TEXT("Current Game Mode : %s"), *World->GetFirstPlayerController()->GetName());
 	
 	FInputModeGameOnly GameOnly;
 	SetInputMode(GameOnly);
@@ -106,9 +112,14 @@ void AEGPlayerController::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	EGLOG(Warning, TEXT("Controller post initialize components"));
-
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
 	
-	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	auto GameInstance = Cast<UEGGameInstance>(World->GetGameInstance());
 	if (!GameInstance)
 	{
 		EGLOG(Error, TEXT("Game Instance is not UEGGameInstance"));
@@ -157,7 +168,13 @@ void AEGPlayerController::ChangeInputMode(bool bGameMode)
 */
 void AEGPlayerController::OnEscPressed()
 {
-	
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
+
 	//Tutorial UI 닫기
 	if (TutorialUI->IsInViewport())
 	{
@@ -171,7 +188,7 @@ void AEGPlayerController::OnEscPressed()
 
 
 	//Pasue 호출하기
-	else if (!GetWorld()->IsPaused())
+	else if (!World->IsPaused())
 	{
 		//EGLOG(Warning, TEXT("TIMEEE"));
 		if(!PauseUI)
@@ -204,6 +221,12 @@ void AEGPlayerController::OnEscPressed()
 
 void AEGPlayerController::OnKillMode()
 {
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
 	auto chara = GetCharacter();
 	if (!chara)return;
 
@@ -213,7 +236,7 @@ void AEGPlayerController::OnKillMode()
 	FDamageEvent DamageEvent;
 	
 	
-	bool bResult = GetWorld()->OverlapMultiByChannel(OverlapResults, chara->GetActorLocation(), FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2,
+	bool bResult = World->OverlapMultiByChannel(OverlapResults, chara->GetActorLocation(), FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2,
 		FCollisionShape::MakeSphere(10000.0f), CollisionQueryParam);
 	if (bResult)
 	{
@@ -337,6 +360,12 @@ void AEGPlayerController::SaveGame(UEGSaveGame* SaveInstance)
 
 void AEGPlayerController::LoadGame(const UEGSaveGame* LoadInstance)
 {
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
 	if (!LoadInstance)
 	{
 		EGLOG(Error, TEXT("Load Instance is not vaild"));
@@ -366,7 +395,7 @@ void AEGPlayerController::LoadGame(const UEGSaveGame* LoadInstance)
 	if (LoadData.n_RecoverItmes > 0)
 	{
 		//World에 Recover Item을 스폰
-		auto TempRecover = Cast<AItem_Recover>(GetWorld()->SpawnActor(AItem_Recover::StaticClass()));
+		auto TempRecover = Cast<AItem_Recover>(World->SpawnActor(AItem_Recover::StaticClass()));
 		if (!TempRecover)
 		{
 			EGLOG(Error, TEXT("Null Item"));
@@ -381,7 +410,7 @@ void AEGPlayerController::LoadGame(const UEGSaveGame* LoadInstance)
 	if (LoadData.n_CardKeys > 0)
 	{
 		//World에 Recover Item을 스폰
-		auto TempRecover = Cast<AItem_CardKey>(GetWorld()->SpawnActor(AItem_CardKey::StaticClass()));
+		auto TempRecover = Cast<AItem_CardKey>(World->SpawnActor(AItem_CardKey::StaticClass()));
 		if (!TempRecover)
 		{
 			EGLOG(Error, TEXT("Null Item"));

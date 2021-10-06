@@ -133,8 +133,15 @@ void AEnemyCharacter_Gunner::BeginPlay()
 	//if(WeaponMesh)
 	//WeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("GunPos"));
 	//EGLOG(Error, TEXT("Chara Begin"));
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
 
-	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+
+	auto GameInstance = Cast<UEGGameInstance>(World->GetGameInstance());
 	if (!GameInstance)
 	{
 		EGLOG(Error, TEXT("Gameinstance is nullptr"));
@@ -256,7 +263,13 @@ void AEnemyCharacter_Gunner::LoadGame(const UEGSaveGame * LoadInstance)
 
 void AEnemyCharacter_Gunner::LoadGunnerMaterialAsset()
 {
-	UEGGameInstance* const GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
+	UEGGameInstance* const GameInstance = Cast<UEGGameInstance>(World->GetGameInstance());
 	if (!GameInstance)
 	{
 		EGLOG(Error, TEXT("Game Instance Error"));
@@ -322,7 +335,13 @@ void AEnemyCharacter_Gunner::LoadMaterial()
 
 void AEnemyCharacter_Gunner::LoadWeapon()
 {
-	UEGGameInstance* const GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
+	UEGGameInstance* const GameInstance = Cast<UEGGameInstance>(World->GetGameInstance());
 	if (!GameInstance)
 	{
 		EGLOG(Error, TEXT("Game Instance Error"));

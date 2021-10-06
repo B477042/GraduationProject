@@ -25,7 +25,13 @@ void AAStarFinder::BeginPlay()
 void AAStarFinder::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
+	auto GameInstance = Cast<UEGGameInstance>(World->GetGameInstance());
 	if (!GameInstance)return;
 
 	if (GameInstance->SetAStarFinder(this))

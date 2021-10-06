@@ -56,7 +56,12 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 void AEGPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
 
 	LoadPlayerSkillObjects();
 	EGLOG(Error, TEXT("Player Begin Play"));
@@ -88,9 +93,14 @@ void AEGPlayerCharacter::BeginPlay()
 
 	Stat->HPZeroDelegate.AddUObject(this, &AEGPlayerCharacter::SetDeath);
 	Stat->HPChangedDelegate.AddLambda([this]()->void {
-
+		auto World = GetWorld();
+		if (!World)
+		{
+			EGLOG(Error, TEXT("World is null"));
+			return;
+		}
 		//현재 hp 비율을 GameInstance를 통해 postprocess로 넘겨줘서 피격효과가 나타나게 해준다.
-		auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+		auto GameInstance = Cast<UEGGameInstance>(World->GetGameInstance());
 		if (!GameInstance)return;
 
 		if (GameInstance->GetPostProcessVolume().IsValid())
@@ -113,7 +123,7 @@ void AEGPlayerCharacter::BeginPlay()
 //=====================================================
 
 	//GameInstance에서 GameState를 검사한다
-	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	auto GameInstance = Cast<UEGGameInstance>(World->GetGameInstance());
 	if (!GameInstance)
 	{
 		EGLOG(Error, TEXT("Game Instance is not EGGameInstance"));
@@ -366,7 +376,7 @@ void AEGPlayerCharacter::ActiveFuryDamage()
 			EGLOG(Log, TEXT("Not Enemy Character types"));
 			continue;
 		}
-		FDamageEvent DamageEvent;
+
 
 		
 		Container_Fury->ActivateEffectAt(TargetActor->GetActorLocation(),1);
@@ -538,7 +548,7 @@ void AEGPlayerCharacter::StartRunning()
 		StaminaComponent->TurnOnTickStamina();
 		StaminaComponent->SetUsingStamina(true);
 		Anim->SetJogPlayRate(true);
-		GetCharacterMovement()->MaxWalkSpeed = 1000.0f;
+		GetCharacterMovement()->MaxWalkSpeed = 1500.0f;
 	}
 
 
@@ -569,7 +579,7 @@ void AEGPlayerCharacter::StopRunning()
 	/*EGLOG(Warning, TEXT("Run Key Released"));*/
 	StaminaComponent->SetUsingStamina(false);
 	Anim->SetJogPlayRate(false);
-	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+	GetCharacterMovement()->MaxWalkSpeed = 1000.0f;
 	/*if (GetCharacterMovement()->GetCurrentAcceleration() == FVector::ZeroVector)return;
 	Stat->SetWalking();*/
 }
@@ -788,6 +798,9 @@ void AEGPlayerCharacter::InitComponents()
 	AIPerceptionStimuliSource->RegisterForSense(UAISense_Sight::StaticClass());
 	AIPerceptionStimuliSource->RegisterForSense(UAISense_Hearing::StaticClass());
 
+	//=============
+	// Speed Set
+	GetCharacterMovement()->MaxWalkSpeed = 1000.0f;
 }
 
 void AEGPlayerCharacter::LoadAssets()
@@ -866,7 +879,7 @@ void AEGPlayerCharacter::SetupSpringArm()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->bUseControllerDesiredRotation = false;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
-	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+	GetCharacterMovement()->MaxWalkSpeed = 1000.0f;
 	
 
 	////ArmLengthTo = 420.0f;
@@ -1129,7 +1142,12 @@ void AEGPlayerCharacter::LoadGameData(const UEGSaveGame* LoadInstance)
 		EGLOG(Error, TEXT("LoadInstance is nullptr"));
 		return;
 	}
-
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
 
 	auto PlayerData = LoadInstance->D_Player;
 	
@@ -1142,7 +1160,7 @@ void AEGPlayerCharacter::LoadGameData(const UEGSaveGame* LoadInstance)
 	//Load CardKeys
 	if (PlayerData.n_CardKeys > 0)
 	{
-		auto newItem = GetWorld()->SpawnActor<AItem_CardKey>();
+		auto newItem = World->SpawnActor<AItem_CardKey>();
 
 		if (!newItem)
 		{
@@ -1154,7 +1172,7 @@ void AEGPlayerCharacter::LoadGameData(const UEGSaveGame* LoadInstance)
 
 	if (PlayerData.n_RecoverItmes > 0)
 	{
-		auto newItem = GetWorld()->SpawnActor<AItem_Recover>();
+		auto newItem = World->SpawnActor<AItem_Recover>();
 
 		if (!newItem)
 		{
@@ -1173,6 +1191,13 @@ void AEGPlayerCharacter::LoadGameData(const UEGSaveGame* LoadInstance)
 
 void AEGPlayerCharacter::OnNextStage(const UEGSaveGame * LoadInstance)
 {
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
+
 	if (!LoadInstance)
 	{
 		EGLOG(Error, TEXT("LoadInstance is nullptr"));
@@ -1189,7 +1214,7 @@ void AEGPlayerCharacter::OnNextStage(const UEGSaveGame * LoadInstance)
 	//이전 스테이지에서 획득한 아이템들을 불러온다
 	if (PlayerData.n_CardKeys > 0)
 	{
-		auto newItem = GetWorld()->SpawnActor<AItem_CardKey>();
+		auto newItem = World->SpawnActor<AItem_CardKey>();
 
 		if (!newItem)
 		{
@@ -1201,7 +1226,7 @@ void AEGPlayerCharacter::OnNextStage(const UEGSaveGame * LoadInstance)
 
 	if (PlayerData.n_RecoverItmes > 0)
 	{
-		auto newItem = GetWorld()->SpawnActor<AItem_Recover>();
+		auto newItem = World->SpawnActor<AItem_Recover>();
 
 		if (!newItem)
 		{
