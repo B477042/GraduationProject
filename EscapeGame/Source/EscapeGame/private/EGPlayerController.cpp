@@ -55,9 +55,8 @@ AEGPlayerController::AEGPlayerController()
 		DT_Tutorial = DT_TUTO.Object;
 	}
 	
-	
+ 
 
-	//bIsPauseCalled = false;
 }
 
 void AEGPlayerController::BeginPlay()
@@ -430,29 +429,63 @@ void AEGPlayerController::LoadGame(const UEGSaveGame* LoadInstance)
 void AEGPlayerController::ShowTutorialMessage(uint8 TutorialMessage)
 {
 	auto tempData = DT_Tutorial->FindRow<FTutorialDataTable>(FName(*FString::FormatAsNumber(TutorialMessage)), FString(""));
-	if (tempData)
+	if (!tempData)
 	{
-		
-		if (!TutorialUI->IsInViewport())
-		TutorialUI->AddToViewport(VP_Tutorial);
-
-		TutorialUI->ReceiveMessage(tempData->NotifyTittle, FText::FromString(tempData->Describe),tempData->GifPath);
-
-
-		SetInputMode(GameAndUIMode);
-		bShowMouseCursor = true;
+		EGLOG(Error, TEXT(" Data Load FAiled"));
+		return;
 	}
+
+		
+	if (!TutorialUI->IsInViewport())
+	TutorialUI->AddToViewport(VP_Tutorial);
+
+	TutorialUI->ReceiveMessage(tempData->NotifyTittle, FText::FromString(tempData->Describe),tempData->GifPath);
+
+
+	SetInputMode(GameAndUIMode);
+	bShowMouseCursor = true;
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
+
+	//Pause Game
+	if (!World->IsPaused())
+	{
+		SetPause(true);
+	}
+
+
+	
 
 }
 
 void AEGPlayerController::CloseTutorialMessage()
 {
-	if (TutorialUI->IsInViewport())
+	if (!TutorialUI->IsInViewport())
 	{
-		TutorialUI->RemoveFromViewport();
-		SetInputMode(GameInputMode);
-		bShowMouseCursor = false;
+		EGLOG(Log, TEXT("Close Failed"));
+		return;
 	}
+	TutorialUI->RemoveFromViewport();
+	SetInputMode(GameInputMode);
+	bShowMouseCursor = false;
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
+
+	//UnPause Game
+	if (World->IsPaused())
+	{
+		SetPause(false);
+	}
+
+
 }
 
 

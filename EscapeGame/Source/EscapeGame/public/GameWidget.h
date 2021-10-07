@@ -103,6 +103,8 @@ protected:
 	//Image of Itme Recovery Item
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UImage* Img_RecoveryItem;
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UImage* Img_Fury;
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UTextBlock* Txt_TimerBlock;
 	

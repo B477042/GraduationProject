@@ -29,7 +29,7 @@ void UGameWidget::NativeConstruct()
 	RecoveryItemNum = Cast<UTextBlock>(GetWidgetFromName(TEXT("RecoveryItemNum0")));
 	Txt_TimerBlock=Cast<UTextBlock>(GetWidgetFromName(TEXT("TimerBlock")));
 	Txt_Level= Cast<UTextBlock>(GetWidgetFromName(TEXT("LevelText")));
-	
+	Img_Fury = Cast<UImage>(GetWidgetFromName(TEXT("FuryImage")));
 	
 	DisplayTime = 0.0f;
 	
@@ -145,11 +145,14 @@ void UGameWidget::UpdateFury(float Ratio)
 	if (Ratio==1.0f)
 	{
 		PB_Fury->SetFillColorAndOpacity(FLinearColor::Yellow);
+
+		Img_Fury->SetOpacity(1.0f);
 		return;
 	}
 
 	FLinearColor NewColor = FLinearColor::LerpUsingHSV(FuryBarColor1, FuryBarColor2, Ratio);
 	PB_Fury->SetFillColorAndOpacity(NewColor );
+	Img_Fury->SetOpacity(0.0f);
 
 }
 

@@ -110,6 +110,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditInstanceOnly, Category = "Data", meta = (AllowPrivateAccess = true))
 	ENotifyType NotifyType;
 
+	bool bIsNotifyed ;
 
 	/*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = true))
 		TSubclassOf<class UUserWidget>TutoWidgetClass;

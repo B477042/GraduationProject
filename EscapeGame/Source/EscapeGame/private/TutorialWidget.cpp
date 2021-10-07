@@ -64,13 +64,15 @@ void UTutorialWidget::OnButtonClicked()
 {
 	if (IsInViewport())
 		RemoveFromViewport();
+	
+
 	auto controller = Cast<AEGPlayerController>(GetOwningPlayer());
 	if (controller)
 	{
-		controller->ChangeInputMode(true);
-		controller->bShowMouseCursor = false;
-
+		controller->CloseTutorialMessage();
 	}
+
+
 
 }
 void UTutorialWidget::AsyncImageLoad()

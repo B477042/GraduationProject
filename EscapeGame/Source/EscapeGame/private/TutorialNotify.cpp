@@ -38,7 +38,7 @@ ATutorialNotify::ATutorialNotify()
 
 	
 	bIsImportant = false;
-
+	bIsNotifyed = false;
 	NotifyType = ENotifyType::E_None;
 
 
@@ -111,7 +111,11 @@ void ATutorialNotify::PostInitializeComponents()
 
 void ATutorialNotify::OnOverlapBegin(AActor * OvelappedActor, AActor * OtherActor)
 {
-	
+	if (bIsNotifyed)
+	{
+		EGLOG(Log, TEXT("%s is Notifyted"), *GetName());
+	}
+
 	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (!Player)return;
 
@@ -150,14 +154,8 @@ void ATutorialNotify::OnOverlapEnd(AActor * OvelappedActor, AActor * OtherActor)
 	if (!Controller)return;
 
 	Controller->CloseTutorialMessage();
-
-//
-//	////띄워준 ui를 화면에서 지워야 된다
-//	if (!TutoWidget)return;
-//	TutoWidget->RemoveFromViewport();
-////	TutoWidget->RemoveFromParent();
-//
-//	
+	bIsNotifyed=true;
+ 
 }
 
 
