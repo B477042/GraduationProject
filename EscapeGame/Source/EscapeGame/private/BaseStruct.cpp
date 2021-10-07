@@ -48,7 +48,7 @@ ABaseStruct::ABaseStruct()
 	MiniMapTileMesh->SetRelativeLocation(POS_Minimap);
 
 	
-	Color_OnPlayer = FLinearColor(255, 255, 255, 1);
+	Color_OnPlayer = FLinearColor::Blue;
 
 	
 	/*

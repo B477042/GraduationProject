@@ -175,6 +175,8 @@ void AEGPlayerCharacter::BeginPlay()
 			EGLOG(Error, TEXT("Load Insatnce Failed"));
 			return;
 		}
+		EGLOG(Log, TEXT("NExt STage"));
+
 		//Player의  스텟들만 불러온다
 		OnNextStage(LoadInstance);
 

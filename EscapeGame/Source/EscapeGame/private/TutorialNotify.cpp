@@ -114,6 +114,7 @@ void ATutorialNotify::OnOverlapBegin(AActor * OvelappedActor, AActor * OtherActo
 	if (bIsNotifyed)
 	{
 		EGLOG(Log, TEXT("%s is Notifyted"), *GetName());
+		return;
 	}
 
 	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
@@ -140,7 +141,7 @@ void ATutorialNotify::OnOverlapBegin(AActor * OvelappedActor, AActor * OtherActo
 	//}
 
 	Controller->ShowTutorialMessage((uint8)NotifyType);
-
+	bIsNotifyed = true;
 
 	//TutoWidget->AddToViewport(2);
 	
@@ -154,7 +155,7 @@ void ATutorialNotify::OnOverlapEnd(AActor * OvelappedActor, AActor * OtherActor)
 	if (!Controller)return;
 
 	Controller->CloseTutorialMessage();
-	bIsNotifyed=true;
+	
  
 }
 
