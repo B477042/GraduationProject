@@ -565,11 +565,7 @@ void AEGPlayerCharacter::OnStaminaTicking()
 		StopRunning();
 		ReleaseGuard();
 	}
-	//else
-	//{
-	//	//EGLOG(Warning, TEXT("Using Stamina"));
-	//	Stat->UseStaminaTick(GetWorld()->DeltaTimeSeconds);
-	//}
+
 
 }
 //호출시점IE_Released

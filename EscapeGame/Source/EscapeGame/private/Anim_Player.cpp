@@ -261,10 +261,7 @@ void UAnim_Player::AnimNotify_DeadEnd()
 	}
 	Controller->OnPlayerDead();
 
-	//FLatentActionInfo LatentInfo;
-	//UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 	
-
 }
 
 

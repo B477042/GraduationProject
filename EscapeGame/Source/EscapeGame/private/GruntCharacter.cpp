@@ -148,7 +148,13 @@ void AGruntCharacter::BeginPlay()
 	Super::BeginPlay();
 	//Check Direction of This Actor. Will Draw a line that point to Front 2m
 	//DrawDebugLine(GetWorld(), GetActorLocation(), GetActorLocation() + GetActorForwardVector()*200.0f,FColor ::Red, true);
-	
+	auto World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is null"));
+		return;
+	}
+
 	HPBar = Cast<UProgressBar>(HPBarWidget->GetUserWidgetObject()->GetWidgetFromName(TEXT("HPBar")));
 	if (!HPBar)
 	{
@@ -165,7 +171,7 @@ void AGruntCharacter::BeginPlay()
 
 	/*Save & Load*/
 
-	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
+	auto GameInstance = Cast<UEGGameInstance>(World->GetGameInstance());
 	if (!GameInstance)
 	{
 		EGLOG(Error, TEXT("Gameinstance is nullptr"));
@@ -196,12 +202,19 @@ void AGruntCharacter::PostInitializeComponents()
 	 * 
 	 */
 	Anim->AttackEvent_Delegate.AddLambda([this]()->void {
+		auto World = GetWorld();
+		if (!World)
+		{
+			EGLOG(Error, TEXT("World is null"));
+			return;
+		}
+
 	FHitResult HitResult;
 	FVector EndPoint = GetActorLocation() + GetActorForwardVector()*MeleeAttackRange;
 	FCollisionQueryParams Params(NAME_None, false, this);
 
 	//ECC_EngineTraceChannel2 = 'Player' Trace
-	bool bResult = GetWorld()->SweepSingleByObjectType(HitResult, GetActorLocation(), EndPoint,
+	bool bResult = World->SweepSingleByObjectType(HitResult, GetActorLocation(), EndPoint,
 			FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, FCollisionShape::MakeBox(MeleeAttackExtent),Params);
 
 	//if hit
@@ -262,6 +275,7 @@ float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Damag
 			if (StatComponent->GetIsDamageable())
 			{
 				player->GetStatComponent()->GainExp(StatComponent->GetDropExp());
+				EGLOG(Log, TEXT("Player Gain %d"), StatComponent->GetDropExp());
 			}
 		}
 		StatComponent->SetDamageable(false);
@@ -351,8 +365,7 @@ void AGruntCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	
 	
-	//FVector DPoint = GetActorLocation()+GetMesh()->GetForwardVector()*500.0f;
-	//DrawDebugLine(GetWorld(), GetActorLocation(), DPoint, FColor::Cyan, false);
+
 }
 
 void AGruntCharacter::Attack()

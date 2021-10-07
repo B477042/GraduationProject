@@ -115,13 +115,25 @@ void AHPBox::setupCollision()
 void AHPBox::setBoxStateToOpened()
 {
 	
-		bIsOpened = true;
+	bIsOpened = true;
 
 	
 	Effect->Activate(false);
 
 	auto temp = MeshArray.GetData();
+	if (!temp)
+	{
+		EGLOG(Error, TEXT("Null"));
+		return;
+	}
+
 	temp++;
+	if (!temp)
+	{
+		EGLOG(Error, TEXT("Null"));
+		return;
+	}
+
 	Body->SetStaticMesh(*temp);
 
 	SetActorEnableCollision(true);
@@ -136,9 +148,19 @@ void AHPBox::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * O
 		//EGLOG(Error, TEXT("opend box"));
 		return; 
 	}
+	if (!OtherActor)
+	{
+		EGLOG(Error, TEXT("Ohter Actor is nullptr"));
+		return;
+	}
+
 
 	auto Player = Cast<AEGPlayerCharacter>(OtherActor);
-	if (Player == nullptr)return;
+	if (!Player)
+	{
+		EGLOG(Error, TEXT("Not Player character"));
+		return; 
+	}
 
 	Player->HealHP(Heal);
 	Player->GetTimeLimitComponent()->TimeExtend(BounsTime);
@@ -148,7 +170,7 @@ void AHPBox::OnCharacterOverlap(UPrimitiveComponent * OverlappedComp, AActor * O
 	SetActorEnableCollision(false);
 	PopSound->Play();
 	setBoxStateToOpened();
-	
+	EGLOG(Log, TEXT("Box Opened"));
 	
 }
 

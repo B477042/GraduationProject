@@ -82,7 +82,11 @@ void UAnim_Grunt::AnimNotify_AnimNotify_DeadStart()
 
 void UAnim_Grunt::AnimNotify_AnimNotify_DeadEnd()
 {
-	
+	if (!GetOwningActor())
+	{
+		EGLOG(Error, TEXT("Owner is dead"));
+		return;
+	}
 	GetOwningActor()->Destroy();
 }
 
