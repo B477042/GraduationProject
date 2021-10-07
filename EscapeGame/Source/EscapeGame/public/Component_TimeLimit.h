@@ -22,6 +22,11 @@ public:
 	void LoadTime(float NewTime);
 	void SetTimerActive(bool bResult);
 	virtual void BeginDestroy()override;
+
+	UFUNCTION(BlueprintCallable, Category = "custom")
+		void PasueTimer();
+	UFUNCTION(BlueprintCallable, Category = "custom")
+		void ResumeTimer();
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

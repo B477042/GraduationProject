@@ -46,6 +46,16 @@ void UComponent_TimeLimit::BeginDestroy()
 	}
 }
 
+void UComponent_TimeLimit::PasueTimer()
+{
+	SetComponentTickEnabled(false);
+}
+
+void UComponent_TimeLimit::ResumeTimer()
+{
+	SetComponentTickEnabled(true);
+}
+
 // Called when the game starts
 void UComponent_TimeLimit::BeginPlay()
 {
