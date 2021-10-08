@@ -87,7 +87,15 @@ void UAnim_Grunt::AnimNotify_AnimNotify_DeadEnd()
 		EGLOG(Error, TEXT("Owner is dead"));
 		return;
 	}
-	GetOwningActor()->Destroy();
+	//GetOwningActor()->Destroy();
+	auto OwnerActor = GetOwningActor();
+	if (!OwnerActor)
+	{
+		EGLOG(Error, TEXT("Owing Actor is nullptr"));
+		return;
+	}
+	OwnerActor->SetHidden(true);
+
 }
 
 void UAnim_Grunt::PlayDeadAnim()
