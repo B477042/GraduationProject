@@ -41,7 +41,16 @@ void UTutorialWidget::ReceiveMessage( FText  NotifyTittle,  FText  Describe, FSo
 		Describe = FText::FromString(strDia);
 		
 	}
-	auto gameInstance = Cast< UEGGameInstance>(GetWorld()->GetGameInstance());
+	
+	auto const World = GetWorld();
+	if (!World)
+	{
+		EGLOG(Error, TEXT("World is nullptr"));
+		return;
+	}
+
+
+	auto gameInstance = Cast< UEGGameInstance>(World->GetGameInstance());
 	if (!gameInstance)return;
 
 	path_Object = ObjectPath;

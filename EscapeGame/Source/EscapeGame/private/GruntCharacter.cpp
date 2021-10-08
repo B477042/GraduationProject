@@ -400,15 +400,16 @@ void AGruntCharacter::FireAttack()
 	 *	원으로 스프레이 형식으로 만들어 랜덤한 방향으로 Ray를 발사
 	 */
 
-	// 발사 지점에서 원까지 거리 
+
+	 // 발사 지점에서 구까지 거리 
 	float DistOffset = 30.0f;
 	//유효 사정거리
 	float Range = 3000.0f;
-	//원 지름
+	//구의 반지름
 	float Radius = 200.0f;
-	//원의 중심 위치
+	//구의 중심 위치
 	FVector Center = PosPSPlay + (GetActorForwardVector() * DistOffset);
-	//조준 지점. 원의 위치에서 랜덤하게 한다
+	//조준 지점. 구의 위치에서 랜덤하게 한다
 	FVector AimPoint;
 	AimPoint.X = FMath::RandRange(Center.X - Radius, Center.X + Radius);
 	AimPoint.Y = FMath::RandRange(Center.Y - Radius, Center.Y + Radius);
