@@ -94,7 +94,7 @@ void UAnim_Grunt::AnimNotify_AnimNotify_DeadEnd()
 		EGLOG(Error, TEXT("Owing Actor is nullptr"));
 		return;
 	}
-	OwnerActor->SetHidden(true);
+	OwnerActor->Destroy();
 
 }
 

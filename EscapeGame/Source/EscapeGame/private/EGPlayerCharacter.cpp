@@ -1240,6 +1240,7 @@ void AEGPlayerCharacter::OnNextStage(const UEGSaveGame * LoadInstance)
 
 	//Save Time
 	TimeLimitComponent->LoadTime(LoadInstance->GameProgressData.RemainTimes);
+	TimeLimitComponent->TimeExtend(60.0f);
 	//Save Fury
 	FuryComponent->LoadFury(PlayerData.Fury);
 }
