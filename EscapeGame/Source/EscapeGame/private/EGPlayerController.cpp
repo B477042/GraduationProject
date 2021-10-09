@@ -10,7 +10,7 @@
 #include "EGGameState.h"
 #include "Engine.h"
 #include "EGGameInstance.h"
-#include "TutorialWidget.h"
+#include "TutorialLogWidget.h"
 #include "SaveInfoWidget.h"
 
 //#include"GameStat.h"
@@ -30,11 +30,18 @@ AEGPlayerController::AEGPlayerController()
 	{
 		PAUSEWidgetClass = UI_PAUSE_C.Class;
 	}
-	static ConstructorHelpers::FClassFinder<UTutorialWidget>UI_TUTORIAL_C(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Tutorial.UI_Tutorial_C'"));
+	//static ConstructorHelpers::FClassFinder<UTutorialWidget>UI_TUTORIAL_C(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Tutorial.UI_Tutorial_C'"));
+	//if (UI_TUTORIAL_C.Succeeded())
+	// {
+	//	TUTOWidgetClass = UI_TUTORIAL_C.Class;
+	//}
+	
+	static ConstructorHelpers::FClassFinder<UTutorialLogWidget>UI_TUTORIAL_C(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_MessageTypeLog.UI_MessageTypeLog_C'"));
 	if (UI_TUTORIAL_C.Succeeded())
-	 {
+	{
 		TUTOWidgetClass = UI_TUTORIAL_C.Class;
 	}
+
 	static ConstructorHelpers::FClassFinder<UUserWidget>UI_DEAD_C(TEXT("WidgetBlueprint'/Game/MyFolder/UI/UI_Dead.UI_Dead_C'"));
 	if (UI_DEAD_C.Succeeded())
 	{
@@ -54,8 +61,13 @@ AEGPlayerController::AEGPlayerController()
 	{
 		DT_Tutorial = DT_TUTO.Object;
 	}
-	
- 
+	static ConstructorHelpers::FObjectFinder<USoundWave>PopUpSound(TEXT("SoundWave'/Game/MyFolder/Sound/UI/cncl07.cncl07'"));
+	if (PopUpSound.Succeeded())
+	{
+		SFX_TutorialPop = PopUpSound.Object;
+
+	}
+
 
 }
 
@@ -71,7 +83,7 @@ void AEGPlayerController::BeginPlay()
 	}
 
 	HUD = CreateWidget<UGameWidget>(this, HUDWidgetClass);
-	TutorialUI = CreateWidget<UTutorialWidget>(this, TUTOWidgetClass);
+	TutorialUI = CreateWidget<UTutorialLogWidget>(this, TUTOWidgetClass);
 
 	//번호가 높을수록 위에 뜨는 ui 가 된다
 	HUD->AddToViewport(VP_HUD);
@@ -439,23 +451,38 @@ void AEGPlayerController::ShowTutorialMessage(uint8 TutorialMessage)
 	if (!TutorialUI->IsInViewport())
 	TutorialUI->AddToViewport(VP_Tutorial);
 
-	TutorialUI->ReceiveMessage(tempData->NotifyTittle, FText::FromString(tempData->Describe),tempData->GifPath);
+	FText NotifyTittle = tempData->NotifyTittle;
+	FText NotifyDescribe = FText::FromString(tempData->Describe);
 
+	TutorialUI->ReceiveMessage(NotifyTittle,NotifyDescribe );
 
-	SetInputMode(GameAndUIMode);
-	bShowMouseCursor = true;
-	auto World = GetWorld();
+	//Play Sound
+
+	auto const World = GetWorld();
 	if (!World)
 	{
-		EGLOG(Error, TEXT("World is null"));
+		EGLOG(Error, TEXT("World is nullptr"));
 		return;
 	}
 
-	//Pause Game
-	if (!World->IsPaused())
-	{
-		SetPause(true);
-	}
+	UGameplayStatics::PlaySound2D(this,SFX_TutorialPop);
+
+
+
+	//SetInputMode(GameAndUIMode);
+	//bShowMouseCursor = true;
+	//auto World = GetWorld();
+	//if (!World)
+	//{
+	//	EGLOG(Error, TEXT("World is null"));
+	//	return;
+	//}
+
+	////Pause Game
+	//if (!World->IsPaused())
+	//{
+	//	SetPause(true);
+	//}
 
 
 	

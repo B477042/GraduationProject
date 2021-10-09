@@ -24,7 +24,7 @@ AWeapon::AWeapon()
 
 	//WeaponType = EWeaponTypes::Default;
 	FireControl_DistanceOffset = 30.0f;
-	FireControl_Radius = 200.0f;
+	FireControl_Radius = 400.0f;
 
 	MainBody->SetCollisionProfileName(TEXT("NoCollision"));
 }
@@ -67,28 +67,20 @@ FVector AWeapon::CalcFireDirection(const FVector& TargetLocation)
 {
 	FVector Retval = TargetLocation;
 
-	
-
 	FVector MuzzleLocation = MainBody->GetSocketLocation(Name_Muzzle);
 
-	FVector DistVec = TargetLocation - MuzzleLocation;
-	//DistVec.Normalize();
-	//원의 중심 위치
-	//FVector Center =  MuzzleLocation + (TargetLocation * FireControl_DistanceOffset);
-	FVector Center = DistVec* FireControl_DistanceOffset;
+	//Muzzle to TargetLocation
+	FVector DistanceVector = TargetLocation - MuzzleLocation;
+	//DistanceVector.Normalize();
+	//Spread Sphere Center Location
+	FVector SphereCenter = DistanceVector* FireControl_DistanceOffset;
 	//조준 지점. 원의 위치에서 랜덤하게 한다
 	FVector AimPoint;
-	AimPoint.X = FMath::RandRange(Center.X - FireControl_Radius, Center.X + FireControl_Radius);
-	AimPoint.Y = FMath::RandRange(Center.Y - FireControl_Radius, Center.Y + FireControl_Radius);
-	AimPoint.Z = FMath::RandRange(Center.Z - FireControl_Radius, Center.Z + FireControl_Radius);
+	AimPoint.X = FMath::RandRange(SphereCenter.X - FireControl_Radius, SphereCenter.X + FireControl_Radius);
+	AimPoint.Y = FMath::RandRange(SphereCenter.Y - FireControl_Radius, SphereCenter.Y + FireControl_Radius);
+	AimPoint.Z = FMath::RandRange(SphereCenter.Z - FireControl_Radius, SphereCenter.Z + FireControl_Radius);
 
-	//
-	
-
-
-	 AimPoint.Normalize();
-	 //EGLOG(Log, TEXT("Anim Point is normalized : %s"), *AimPoint.ToString());
-	 //EGLOG(Log, TEXT("TargetLocation is : %s"), *TargetLocation.ToString());
+	AimPoint.Normalize();
 
 	 Retval = AimPoint;
 
@@ -103,10 +95,7 @@ FRotator AWeapon::CalcRotationForBullet(const FVector& FireDirection)
 	FRotator Retval = GetActorRotation();
 	FVector FW = GetActorForwardVector();
 	
-	//EGLOG(Log, TEXT("Forward : %s"), *FW.ToString());
-	//EGLOG(Log, TEXT("Fire Direction : %s"), *FireDirection.ToString());
-	 
-
+ 
 	float Dot = FVector::DotProduct(FW, FireDirection);
 	float Angle = FMath::Acos(Dot / (FW.Size() * FireDirection.Size()))*100;
 	EGLOG(Warning, TEXT("Angle : %f"), Angle);

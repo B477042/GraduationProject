@@ -76,8 +76,12 @@ public:
 		TSubclassOf<class UGameWidget>HUDWidgetClass;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UUserWidget>PAUSEWidgetClass;
+	/*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
+		TSubclassOf<class UTutorialWidget>TUTOWidgetClass;*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
-		TSubclassOf<class UTutorialWidget>TUTOWidgetClass;
+		TSubclassOf<class UTutorialLogWidget>TUTOWidgetClass;
+
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 		TSubclassOf<class UUserWidget>DeadWidgetClass;
 
@@ -101,8 +105,12 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "UI", meta = (AllowPrivateAccess = true))
 		class UUserWidget* PauseUI;
+	//UPROPERTY(VisibleAnywhere, Category = "UI", meta = (AllowPrivateAccess = true))
+	//	class UTutorialWidget* TutorialUI;
 	UPROPERTY(VisibleAnywhere, Category = "UI", meta = (AllowPrivateAccess = true))
-		class UTutorialWidget* TutorialUI;
+		class 	UTutorialLogWidget* TutorialUI;
+ 
+
 	UPROPERTY(VisibleAnywhere, Category = "UI", meta = (AllowPrivateAccess = true))
 		class  UUserWidget* DeadUI;
 
@@ -116,8 +124,8 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
 		class UDataTable* DT_Tutorial;
 
-
-
+	UPROPERTY()
+		USoundWave* SFX_TutorialPop;
 
 	FInputModeGameOnly GameInputMode;
 	FInputModeUIOnly UIInputMode;

@@ -50,10 +50,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void Turn(float NewAxisValue);
 
-	//Pure Virtual Discard 
-	//virtual void Attack() PURE_VIRTUAL(AEnemyCharacter::Attack,);
+	
+	virtual void Attack() PURE_VIRTUAL(AEnemyCharacter::Attack,);
 
-	virtual void Attack() {}
+	//virtual void Attack() {}
 
 	//Execute when Take Damage. 
 	//Bind to Controller.

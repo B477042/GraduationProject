@@ -50,14 +50,14 @@ void UTutorialWidget::ReceiveMessage( FText  NotifyTittle,  FText  Describe, FSo
 	}
 
 
-	auto gameInstance = Cast< UEGGameInstance>(World->GetGameInstance());
-	if (!gameInstance)return;
+	auto GameInstance = Cast< UEGGameInstance>(World->GetGameInstance());
+	if (!GameInstance)return;
 
 	path_Object = ObjectPath;
 
 	EGLOG(Error, TEXT("%s"),*path_Object.GetAssetPathString());
 	
-	auto returnvalue = gameInstance->StreamableManager.RequestAsyncLoad(ObjectPath, FStreamableDelegate::CreateUObject(this,&UTutorialWidget::AsyncImageLoad));
+	auto returnvalue = GameInstance->StreamableManager.RequestAsyncLoad(ObjectPath, FStreamableDelegate::CreateUObject(this,&UTutorialWidget::AsyncImageLoad));
 
 	if (!returnvalue)
 	{

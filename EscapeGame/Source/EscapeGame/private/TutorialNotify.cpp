@@ -93,7 +93,7 @@ void ATutorialNotify::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	OnActorBeginOverlap.AddDynamic(this, &ATutorialNotify::OnOverlapBegin);
-	OnActorEndOverlap.AddDynamic(this, &ATutorialNotify::OnOverlapEnd);
+	//OnActorEndOverlap.AddDynamic(this, &ATutorialNotify::OnOverlapEnd);
 	
 	auto GameInstance = Cast<UEGGameInstance>(GetWorld()->GetGameInstance());
 	if (!GameInstance)
