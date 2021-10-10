@@ -309,4 +309,5 @@ void UStatComponent_Player::LoadLevelData()
 	NextExp = PlayerTableRow->NextExp;
 	CurrentATK = PlayerTableRow->Atk;
 	ItemSlot = PlayerTableRow->Slot;
+	HPChangedDelegate.Broadcast();
 }

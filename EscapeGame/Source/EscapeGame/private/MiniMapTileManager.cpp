@@ -118,6 +118,11 @@ void AMiniMapTileManager::CalculateStructsOpacity(const FVector& Pos_Player)
 
 	for (auto it : Array_Structures)
 	{
+		if (!it)
+		{
+			EGLOG(Error, TEXT("iterator failed"));
+			break;
+		}
 		const float DistanceZ = CalcHowFarToPlayer(Pos_Player, it->GetActorLocation());
 		
 		/*
@@ -208,19 +213,32 @@ void Thread_CalcOpacity::CalcOpacityOfStruct( AMiniMapTileManager* Manager, cons
 	if (!Manager)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Manager is Nullptr"));
+		return;
 	}
 	if (!Player)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Player is Nullptr"));
+		return;
 	}
 	
-	while (Player->IsValidLowLevel()&& UGameplayStatics::GetGameInstance(Manager))
+	while (Player->IsValidLowLevel() &&UGameplayStatics::GetGameInstance(Manager))
 	{
 		/*
 			Is Thread Works? 
 		*/
 		/*UE_LOG(LogTemp, Log, TEXT("Hello Thread"));
 		FPlatformProcess::Sleep(0.01);*/
+		if (!Manager)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Manager is Nullptr"));
+			return;
+		}
+		if (!Player)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Player is Nullptr"));
+			return;
+		}
+
 
 		Manager->CalculateStructsOpacity(Player->GetActorLocation());
 		FPlatformProcess::Sleep(0.01);
