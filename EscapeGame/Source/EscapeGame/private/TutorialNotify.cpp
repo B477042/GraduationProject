@@ -56,11 +56,11 @@ ATutorialNotify::ATutorialNotify()
 	{ENotifyType::E_MoveInput,TEXT("MoveInput")},
 	{ENotifyType::E_GoldenGate ,TEXT("GoldenGate")},
 	{ENotifyType::E_SubBattery,TEXT("SubBattery")},
-	{ENotifyType::E_GruntEnemy,TEXT("Grunt")},
-	{ENotifyType::E_Gunner,TEXT("Gunner")},
+	{ENotifyType::E_Fury,TEXT("Fury")},
+	{ENotifyType::E_Enemy,TEXT("Enemy")},
 	{ENotifyType::E_Boss,TEXT("Boss")},
 	{ENotifyType::E_Guard,TEXT("Guard")},
-	{ENotifyType::E_ShutterTrap,TEXT("E_ShutterTrap")}
+	{ENotifyType::E_Roll,TEXT("Roll")}
 	};
 
 

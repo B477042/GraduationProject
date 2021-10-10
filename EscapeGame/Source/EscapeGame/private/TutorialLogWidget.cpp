@@ -67,7 +67,8 @@ void UTutorialLogWidget::ReceiveMessage( FText& NotifyTittle, FText& Describe)
 
 	Txt_NotifyTittle->SetText(NotifyTittle);
 	Txt_Describe->SetText(FText::FromString( FString::Printf(TEXT("%s"), *FixedDescribe)));
-	
+	//Reset Timer
+	ActiveTimer = 0.0f;
 
 }
 	

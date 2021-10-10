@@ -37,12 +37,12 @@ enum class ENotifyType :uint8
 	E_MoveInput UMETA(DisplayName = "MoveInput"),
 	E_GoldenGate UMETA(DisplayName = "Golden Gate"),
 	E_SubBattery UMETA(DisplayName = "SubBattery"),
-	E_GruntEnemy UMETA(DisplayName = "GruntEnemy"),
-	E_Gunner UMETA(DisplayName = "Gunner"),
+	E_Fury UMETA(DisplayName = "Fury"),
+	E_Enemy UMETA(DisplayName = "Enemy"),
 	E_Boss UMETA(DisplayName = "Boss"),
 	E_Guard UMETA(DisplayName = "Guard"), 
 	E_Sprint UMETA(DisplayName = "Sprint"),
-	E_ShutterTrap UMETA(DisplayName = "ShutterTrap")
+	E_Roll UMETA(DisplayName = "Roll")
 	
 	
 	

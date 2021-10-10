@@ -71,9 +71,9 @@ struct FTutorialDataTable :public FTableRowBase
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DataTable")
 	FString Describe;
 	
-	//gif 경로
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DataTable")
-	FSoftObjectPath GifPath;
+	////gif 경로
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DataTable")
+	//FSoftObjectPath GifPath;
 
 };
 
