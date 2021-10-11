@@ -61,22 +61,6 @@ void AEGPostProcessVolume::SyncHpPercent(float ratio)
 
 	float applyRatio = 1.0f - ratio;
 
-
-	//Settings.ColorGamma = MaxColorGamma * applyRatio;
-	//Settings.ColorContrast = MaxColorContrast * applyRatio;
-	//Settings.ColorSaturation = MaxColorSaturation * applyRatio;
-	//Settings.GrainJitter = MaxGrainJitter * applyRatio;
-	//Settings.GrainIntensity = MaxGrainIntensity * applyRatio;
-	//Settings.VignetteIntensity = MaxVignetteIntensity * applyRatio;
-
-
-	/*Settings.ColorGamma = MaxColorGamma * applyRatio;
-	Settings.ColorContrast = MaxColorContrast * applyRatio;
-	Settings.ColorSaturation = MaxColorSaturation * applyRatio;
-	Settings.GrainJitter = MaxGrainJitter * applyRatio;
-	Settings.GrainIntensity = MaxGrainIntensity * applyRatio;
-	Settings.VignetteIntensity = MaxVignetteIntensity * applyRatio;
-*/
 	Settings.ColorGamma.W = FMath::Lerp<float, float>(DefaultColorGamma.W,MaxColorGamma.W,applyRatio);
 	Settings.ColorContrast.W = FMath::Lerp<float, float>(DefaultColorContrast.W, MaxColorContrast.W, applyRatio);
 	Settings.ColorSaturation.W = FMath::Lerp<float, float>(DefaultColorSaturation.W, MaxColorSaturation.W, applyRatio);

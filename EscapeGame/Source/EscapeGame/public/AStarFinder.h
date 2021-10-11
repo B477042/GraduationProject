@@ -54,7 +54,7 @@ private:
 	
 	//방문해야될 노드
 	//UPROPERTY(Transient)
-	TQueue<TWeakObjectPtr<AAstarNode>>ToVisiteNodes;
+	TQueue<TWeakObjectPtr<AAstarNode>>ToVisitNodes;
 
 	//Goal Node in map
 	UPROPERTY(Transient, EditInstanceOnly, meta = (AllowPrivateAccess = "true"))

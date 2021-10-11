@@ -51,11 +51,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "effect")
 	UParticleSystemComponent* VFX_Hit;
 
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
 	USphereComponent* MainCollision;
-
-	
 
 	//맞으면 나는 소리
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Contents")
