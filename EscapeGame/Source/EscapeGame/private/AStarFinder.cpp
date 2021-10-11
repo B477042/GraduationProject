@@ -70,9 +70,9 @@ void AAStarFinder::PathFind(AAstarNode * Start,EPathTarget Mode)
 
 
 //	EGLOG(Error, TEXT("AStar Lunched At :%s"),*Start->GetName());
-	ToVisiteNodes.Empty();
+	ToVisitNodes.Empty();
 	//	EGLOG(Error, TEXT("AStar Start"));
-		ToVisiteNodes.Enqueue(Start);
+		ToVisitNodes.Enqueue(Start);
 		switch (Mode)
 		{
 		case EPathTarget::Key:
@@ -189,7 +189,7 @@ void AAStarFinder::AddNode(AAstarNode * Other)
 	if(GoalNode.IsValid())
 	EGLOG(Warning, TEXT("GoalNode is : %s"), *GoalNode->GetName());
 
-	EGLOG(Warning, TEXT("ToVisiteNodes : %d "), ToVisiteNodes.IsEmpty());
+	EGLOG(Warning, TEXT("ToVisitNodes : %d "), ToVisitNodes.IsEmpty());
 }
 
 void AAStarFinder::ClearNodes()
@@ -218,13 +218,13 @@ void AAStarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 
 
 	//방문해야될 노드가 비워질 때까지
-	while (!ToVisiteNodes.IsEmpty())
+	while (!ToVisitNodes.IsEmpty())
 	{
 		//EGLOG(Warning, TEXT("%d Try"), i);
 		i++;
 
 		//Queue에서 하나를 꺼낸다
-		ToVisiteNodes.Dequeue(PopedNode);
+		ToVisitNodes.Dequeue(PopedNode);
 
 		if (!PopedNode.IsValid())
 		{
@@ -242,7 +242,7 @@ void AAStarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 			//GoalNode를 설정해주고 ToVisiteNode를 비워준다
 		//	EGLOG(Error, TEXT("Goal Find! : %s"), *PopedNode->GetName());
 			GoalNode = PopedNode.Get();
-			ToVisiteNodes.Empty();
+			ToVisitNodes.Empty();
 			break;
 		}
 
@@ -292,7 +292,7 @@ void AAStarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 				if (it->IsVisitedNode())continue;
 				//PopedNode->VisitNode();
 			//	EGLOG(Warning, TEXT("Enqueue : %s"), *it->GetName());
-				ToVisiteNodes.Enqueue(it.Get());
+				ToVisitNodes.Enqueue(it.Get());
 
 
 			}
@@ -329,12 +329,12 @@ void AAStarFinder::KeyFind(AAstarNode * Start, AAstarNode * Key)
 	//EGLOG(Error, TEXT("Gate Node : %s"), *GoalNode->GetName());
 	//EGLOG(Error, TEXT("======================="));
 	//방문해야될 노드가 비워질 때까지
-	while (!ToVisiteNodes.IsEmpty())
+	while (!ToVisitNodes.IsEmpty())
 	{
 	//	EGLOG(Warning, TEXT("%d Try"), i);
 		i++;
 		//Queue에서 하나를 꺼낸다
-		ToVisiteNodes.Dequeue(PopedNode);
+		ToVisitNodes.Dequeue(PopedNode);
 	//	EGLOG(Warning, TEXT("Current Node : %s"), *PopedNode->GetName());
 	// 
 		if (!PopedNode.IsValid())
@@ -351,7 +351,7 @@ void AAStarFinder::KeyFind(AAstarNode * Start, AAstarNode * Key)
 			//GoalNode를 설정해주고 ToVisiteNode를 비워준다
 	//		EGLOG(Error, TEXT("Key Find! : %s"), *PopedNode->GetName());
 			KeyNode = PopedNode.Get();
-			ToVisiteNodes.Empty();
+			ToVisitNodes.Empty();
 			break;
 		}
 
@@ -398,7 +398,7 @@ void AAStarFinder::KeyFind(AAstarNode * Start, AAstarNode * Key)
 				if (it->IsVisitedNode())continue;
 				//PopedNode->VisitNode();
 	//			EGLOG(Warning, TEXT("Enqueue : %s"), *it->GetName());
-				ToVisiteNodes.Enqueue(it.Get());
+				ToVisitNodes.Enqueue(it.Get());
 
 
 			}
