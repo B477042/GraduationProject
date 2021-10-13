@@ -43,9 +43,10 @@ void AFireBallTrap::initComponents()
 	RootComponent = Root;
 	FirePoint->SetupAttachment(RootComponent);
 	Trigger->SetupAttachment(RootComponent);
+	Trigger->SetupAttachment(RootComponent);
 	
-	FirePoint->SetRelativeLocation(FVector(0.0f,600.0f, 90.0f));
-	FirePoint->SetRelativeRotation(FRotator(0.000000f, 270.0f, 0.000000f));
+	FirePoint->SetRelativeLocation(FVector(600.0f, 0.0f, 90.0f));
+	FirePoint->SetRelativeRotation(FRotator(0.000000f, -180.0f, 0.000000f));
 
 	//StaticMesh'/Game/StarterBundle/ModularScifiProps/Meshes/SM_Coaster.SM_Coaster'
 	static ConstructorHelpers::FObjectFinder <UStaticMesh>SM_Mesh(TEXT("StaticMesh'/Game/StarterBundle/ModularScifiProps/Meshes/SM_Coaster.SM_Coaster'"));
@@ -61,7 +62,7 @@ void AFireBallTrap::setupCollision()
 	Root->SetCollisionProfileName(TEXT("OnTrapTrigger"));
 	Trigger->SetCollisionProfileName(TEXT("OnTrapTrigger"));
 	Trigger->SetRelativeLocation(FVector(0.0f, 0.0f, 70.0f));
-	Trigger->SetBoxExtent(FVector(150.000000f, 70.000000f, 67.991219f));
+	Trigger->SetBoxExtent(FVector(70.000000f, 150.000000f, 67.991219f));
 	Trigger->SetGenerateOverlapEvents(true);
 }
 

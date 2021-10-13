@@ -192,7 +192,7 @@ void AFireBallActor::flying(const float& DeltaTime)
 {
 	if (!bIsFlying)return;
 
-	Speed += 0.6f;
+	Speed += 0.1f;
 	flyingTime += DeltaTime;
 	if (DeltaTime >= MaxFlyingTime)
 	{
