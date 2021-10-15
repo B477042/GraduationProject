@@ -128,7 +128,7 @@ void UStatComponent_Player::SetComboStartState()
 	bIsAttacking = true;
 
 	AddCombo(1);
-	////������ ���� ������ ���� �Է��� �ʱ�ȭ ��Ų��
+
 	bIsChargeAttackInputOn = false;
 	bIsComboAttackInputOn = false;
 
@@ -141,8 +141,7 @@ void UStatComponent_Player::SetComboEndState()
 	bCanComboAttack = false;
 	bCanChargeAttack = false;
 	bIsAttacking = false;
-	//bCanUsingStamina = true;
-	//������ �Ұ����ϰ� ���ش�
+	
 	bIsChargeAttackInputOn = false;
 	bIsComboAttackInputOn = false;
 	ResetCombo();
