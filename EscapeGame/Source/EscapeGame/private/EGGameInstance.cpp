@@ -1,14 +1,18 @@
 
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "EGGameInstance.h"
-#include "EGPlayerController.h"
-#include "Sound/SoundMix.h"
-#include "EGPostProcessVolume.h"
-#include "EGPlayerState.h"
-#include "EGGameState.h"
-#include "AStarFinder.h"
+
+#include "UnrealCore/EGGameInstance.h"
+
+
+
 #include "MoviePlayer.h"
+#include "Blueprint/UserWidget.h"
+#include "UnrealCore/EGGameState.h"
+#include "UnrealCore/SaveGame/EGSaveGame.h"
+#include "UnrealCore/SaveGame/OptionSaveGame.h"
+#include "Modules/ModuleManager.h"
+#include "AbilitySystemGlobals.h"
 
 
 UEGGameInstance::UEGGameInstance()
@@ -24,7 +28,7 @@ UEGGameInstance::UEGGameInstance()
 		LoadingScreenWidgetClass = UI_LOADING.Class;
 	}
 	
-	
+		
 
 	AStarFinder = nullptr;
 	bIsDebugMode = false;
@@ -74,11 +78,17 @@ void UEGGameInstance::Init()
 	FCoreUObjectDelegates::PreLoadMap.AddUObject(this, &UEGGameInstance::BeginLoadingScreen);
 	FCoreUObjectDelegates::PostLoadMapWithWorld.AddUObject(this, &UEGGameInstance::EndLoadingScreen);
 
-
+	// Gas init
+	UAbilitySystemGlobals& gameAbilityGlobal = UAbilitySystemGlobals::Get();
+	if (!gameAbilityGlobal.IsAbilitySystemGlobalsInitialized())
+	{
+		gameAbilityGlobal.InitGlobalData();
+		gameAbilityGlobal.InitGlobalTags();
+	}
 }
 
 
-//Save GameÀÌ È£ÃâµÉ °æ¿ì´Â ¸Þ´º¿¡¼­ ÀúÀåÇÏ°Å³ª ÀÚµ¿ÀúÀå ¿ÀºêÁ§Æ®¿Í ´ê¾ÒÀ» ¶§ ÀÏ°ÍÀÌ´Ù
+//Save Gameï¿½ï¿½ È£ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°Å³ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ï°ï¿½ï¿½Ì´ï¿½
 void UEGGameInstance::SaveGame(const EEGSaveSlot SaveSlot)
 {
 	
@@ -86,9 +96,9 @@ void UEGGameInstance::SaveGame(const EEGSaveSlot SaveSlot)
 		if (!SaveInstance)return;
 	
 		
-		//Á¤º¸ÀÇ ÀúÀå ¹æ½ÄÀº µ¨¸®°ÔÀÌÆ®ÀÇ È£Ãâ·Î ÇÑ´Ù
-		//Controller¿¡¼­ Á¤º¸ÀÇ ÀúÀåÀ» ½ÃµµÇÏ°Ô ÇÑ´Ù
-		//ÇöÀç µî·ÏµÈ Class : EGPlayerController, ItemActor, EnemyCharacterÀÇ ÀÚ¼Õ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ È£ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½
+		//Controllerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ãµï¿½ï¿½Ï°ï¿½ ï¿½Ñ´ï¿½
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ïµï¿½ Class : EGPlayerController, ItemActor, EnemyCharacterï¿½ï¿½ ï¿½Ú¼ï¿½
 		OnSaveGamePhaseDelegate.Broadcast(SaveInstance);
 		EGLOG(Error, TEXT("Save Game Delegate BroadCasted"));
 
@@ -118,7 +128,7 @@ void UEGGameInstance::SaveGame(const EEGSaveSlot SaveSlot)
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Save Game Error"));
 		}
 
-		//½½·Ô¿¡ ÀúÀå
+		//ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½
 		
 	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Save"));
 		//EGLOG(Error, TEXT("Load Set Move To : %s"), *SaveInstance->GameProgressData.LevelName.ToString());
@@ -126,12 +136,12 @@ void UEGGameInstance::SaveGame(const EEGSaveSlot SaveSlot)
 
 void UEGGameInstance::LoadGame(const EEGSaveSlot SaveSlot)
 {
-	//·¹º§À» ¿ÀÇÂÇÏ°í °ÔÀÓÀÇ ÁøÇà »óÈ²À» LoadGameÀ¸·Î ¹Ù²ãÁØ´Ù.
-	//°¢ Controller¿Í ¿ÀºêÁ§Æ®´Â °ÔÀÓÀÌ ½ÃÀÛµÉ ¶§ Load °ÔÀÓÀÎ »óÅÂÀÎÁö È®ÀÎÇÏ°í
-	//Load GameÀÌ¶ó¸é Á¤º¸¸¦ ºÒ·¯¿Â´Ù
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È²ï¿½ï¿½ LoadGameï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½Ø´ï¿½.
+	//ï¿½ï¿½ Controllerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ûµï¿½ ï¿½ï¿½ Load ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï°ï¿½
+	//Load Gameï¿½Ì¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½Â´ï¿½
 	
 	/*
-		PlayerÀÇ BeginPlay¿¡ ¸ÂÃç Á¤º¸µéÀ» ·ÎµùÇÏ±â·Î ÇÑ´Ù.
+		Playerï¿½ï¿½ BeginPlayï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½Ï±ï¿½ï¿½ ï¿½Ñ´ï¿½.
 		
 	*/
 
@@ -146,7 +156,7 @@ void UEGGameInstance::LoadGame(const EEGSaveSlot SaveSlot)
 
 	case EEGSaveSlot::E_SaveSlot:
 
-		//LoadGame »óÅÂ·Î
+		//LoadGame ï¿½ï¿½ï¿½Â·ï¿½
 		EGameState = EEGGameState::E_LoadGame;
 		UE_LOG(LogTemp, Log, TEXT("Current Game State is Load Game "));
 		LoadInstance = Cast<UEGSaveGame>(UGameplayStatics::LoadGameFromSlot(Name_SaveSlot0, UserIndex));
@@ -159,7 +169,7 @@ void UEGGameInstance::LoadGame(const EEGSaveSlot SaveSlot)
 
 
 	case EEGSaveSlot::E_CheckPoint:
-		//Check Point »óÅÂ·Î
+		//Check Point ï¿½ï¿½ï¿½Â·ï¿½
 		EGameState = EEGGameState::E_Death;
 		UE_LOG(LogTemp, Log, TEXT("Current Game State is Death(Check Point)"));
 
@@ -190,7 +200,7 @@ void UEGGameInstance::LoadGame(const EEGSaveSlot SaveSlot)
 	EGLOG(Error, TEXT("Load Level : %s"), *LoadInstance->GameProgressData.LevelName.ToString());
 	UGameplayStatics::OpenLevel(this,LoadInstance->GameProgressData.LevelName);
 	EGLOG(Error, TEXT("Load Complete"));
-	//Load Ã³¸®°¡ ³¡³ª¸é Player°¡ BeginPlay´Ü°è¿¡¼­ µ¥ÀÌÅÍ ·Îµå¸¦ ½ÃµµÇÑ´Ù
+	//Load Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Playerï¿½ï¿½ BeginPlayï¿½Ü°è¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµå¸¦ ï¿½Ãµï¿½ï¿½Ñ´ï¿½
 }
 
 void UEGGameInstance::SaveOptions(float sld_Master, float sld_BGM, float sld_SE, float sld_Voice, float sld_UI, FIntPoint ScreenResoultion, EWindowMode::Type WindowMode)
@@ -204,9 +214,9 @@ void UEGGameInstance::SaveOptions(float sld_Master, float sld_BGM, float sld_SE,
 
 UOptionSaveGame* UEGGameInstance::LoadOptions()
 {
-	//°ÔÀÓ ½ÃÀÛ½Ã ÀúÀåµÆ´ø ¿É¼ÇÀ» ºÒ·¯¿Â´Ù.
-	//¸¸¾à ºÒ·¯¿ÂÀûÀÌ ÀÖ´Ù¸é °ÔÀÓ ÇÃ·¹ÀÌ°¡ Á¾·áµÇ±â Àü±îÁö
-	//¿É¼ÇÀ» ºÒ·¯¿À°Ô ÇØ¼± ¾È µÈ´Ù.
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ´ï¿½ ï¿½É¼ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½Â´ï¿½.
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½Ç±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	//ï¿½É¼ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¼ï¿½ ï¿½ï¿½ ï¿½È´ï¿½.
 
 
 	auto LoadInstance = Cast<UOptionSaveGame>(UGameplayStatics::LoadGameFromSlot(Name_OptionsSlot, UserIndex));
@@ -223,7 +233,7 @@ UOptionSaveGame* UEGGameInstance::LoadOptions()
 
 }
 
-//loading screenÀ» ºÒ·¯¿Â´Ù
+//loading screenï¿½ï¿½ ï¿½Ò·ï¿½ï¿½Â´ï¿½
 void UEGGameInstance::BeginLoadingScreen(const FString & MapName)
 {
 	
@@ -243,7 +253,7 @@ void UEGGameInstance::BeginLoadingScreen(const FString & MapName)
 	
 	}
 }
-//loading screenÀ» ´Ý´Â´Ù
+//loading screenï¿½ï¿½ ï¿½Ý´Â´ï¿½
 void UEGGameInstance::EndLoadingScreen(UWorld * InLoadedWorld)
 {
 	EGLOG(Error, TEXT("close loading screen"));
@@ -264,16 +274,16 @@ TWeakObjectPtr<class AAStarFinder>UEGGameInstance::GetAStarFinder()
 	return AStarFinder;
 }
 
-bool  UEGGameInstance::SetPostProcessVolume(AEGPostProcessVolume* Object)
+bool  UEGGameInstance::SetPostProcessVolume(TWeakObjectPtr<AEGPostProcessVolume> Object)
 {
-	if (!Object)return false;
+	if (!Object.IsValid())return false;
 
-	PostProcessVolume = Object;
+	PostProcessVolume =  Object;
 	return true;
 }
-bool  UEGGameInstance::SetAStarFinder(AAStarFinder* Object)
+bool  UEGGameInstance::SetAStarFinder(TWeakObjectPtr<AAStarFinder> Object)
 {
-	if (!Object)return false;
+	if (!Object.IsValid())return false;
 
 	if (AStarFinder!=nullptr)
 	{

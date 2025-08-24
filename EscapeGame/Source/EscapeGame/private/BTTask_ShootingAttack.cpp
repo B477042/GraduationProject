@@ -1,9 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTTask_ShootingAttack.h"
-#include "EnemyAIController_Grunt.h"
-#include "GruntCharacter.h"
+#include "AI/BTTask_ShootingAttack.h"
+
+#include "Actor/Character/GruntCharacter.h"
+#include "Actor/Controller/EnemyAIController_Grunt.h"
+
 UBTTask_ShootingAttack::UBTTask_ShootingAttack()
 {
 	NodeName = TEXT("Shooting Attack For Grunt");

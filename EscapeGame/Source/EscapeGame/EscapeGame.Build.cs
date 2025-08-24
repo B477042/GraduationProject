@@ -8,9 +8,9 @@ public class EscapeGame : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","UMG","AIModule","NavigationSystem", "GameplayTasks", "Json", "JsonUtilities", "SlateCore","EngineSettings", "MoviePlayer", "AnimatedTexture", "Paper2D" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","UMG","AIModule","NavigationSystem", "GameplayTasks", "Json", "JsonUtilities", "SlateCore","EngineSettings", "MoviePlayer", "Paper2D","GameplayAbilities","GameplayTags","GameplayTasks","GameplayAbilities" });
 
-		PrivateDependencyModuleNames.AddRange(new string[] {"GameSetting"  });
+		PrivateDependencyModuleNames.AddRange(new string[] {"GameSetting","DialoguePrompt", "AnimGraphRuntime" });
 
         // Uncomment if you are using Slate UI
         // PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
@@ -19,9 +19,7 @@ public class EscapeGame : ModuleRules
         // PrivateDependencyModuleNames.Add("OnlineSubsystem");
 
         // To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
-
-        bLegacyPublicIncludePaths = false;
-
+        bUseUnity = true;
 
         //Faster Build https://answers.unrealengine.com/questions/3647/how-to-improve-compile-times-for-a-c-project.html
         //MinFilesUsingPrecompiledHeaderOverride = 1;

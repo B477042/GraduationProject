@@ -1,15 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Anim_Player.h"
-#include "EGPlayerCharacter.h"
+#include "Animation/Anim_Player.h"
+
+#include "KismetAnimationLibrary.h"
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "Actor/Character/EGPlayerController.h"
+#include "Component/StatComponent_Player.h"
 #include "Sound/SoundCue.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/AudioComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Perception/AIPerceptionComponent.h"
-#include "EGPlayerController.h"
 UAnim_Player::UAnim_Player()
 {
 	
@@ -106,7 +109,7 @@ void UAnim_Player::NativeUpdateAnimation(float DeltaSeconds)
 
 	if (!Player.IsValid())return;
 		//Moving Directing
-		Direction = CalculateDirection(Player->GetVelocity(), Player->GetActorRotation());
+		Direction = UKismetAnimationLibrary::CalculateDirection(Player->GetVelocity(), Player->GetActorRotation());
 		
 	
 	if (bIsBuffActive)
@@ -172,9 +175,9 @@ void UAnim_Player::SetRolling(bool bResult)
 	bIsRolling=bResult;
 }
 /*
-	±¸¸£±â ½ÃÀÛÇÒ ¶§ È£ÃâµÈ´Ù. 
-	±¸¸£±â ½ÃÀÛÇÏ¸é µ¥¹ÌÁö¸¦ ¹ÞÁö ¾Ê¾Æ¾ß µÈ´Ù.
-	±¸¸£±â ½ÃÀÛÇÏ¸é ±× ¹æÇâÀ¸·Î¸¸ ±¼·¯¾ß µÈ´Ù. 
+	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½È´ï¿½. 
+	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Æ¾ï¿½ ï¿½È´ï¿½.
+	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È´ï¿½. 
 */
 void UAnim_Player::AnimNotify_RollingStart()
 {
@@ -197,8 +200,8 @@ void UAnim_Player::AnimNotify_RollingEnd()
 
 }
 
-//Rolling AnimationÀÇ Àç»ýÀÌ ³¡³ª¸é È£Ãâ µÉ °ÍÀÌ´Ù. 
-//Notify´Â °°Àº ½ºÄ¶·¹Åæ ³»ºÎ¿¡¼­ ÀÌ¸§À» °øÀ¯ÇÏ°Ô µÇ´Ï±î ¹Ù²ã¾ß°Ú´Ù. 
+//Rolling Animationï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½. 
+//Notifyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ç´Ï±ï¿½ ï¿½Ù²ï¿½ß°Ú´ï¿½. 
 void UAnim_Player::AnimNotify_AnimEnd()
 {
 	bIsRolling = false;
@@ -214,8 +217,8 @@ void UAnim_Player::AnimNotify_SkillStart()
 //	EGLOG(Warning, TEXT("Jot na gin name "));
 	if (!Player.IsValid())return;
 
-	Player->RestricInput(ERestricInputType::E_LRMB);
-	Player->RestricInput(ERestricInputType::E_AxisMoving);
+	Player->RestrictInput(ERestricInputType::E_LRMB);
+	Player->RestrictInput(ERestricInputType::E_AxisMoving);
 	
 	
 	//SFX_Laugh->Play();
@@ -243,8 +246,8 @@ void UAnim_Player::AnimNotify_DeadStart()
 	if (!Player.IsValid())return;
 
 	SFX_Death->Play();
-	Player->RestricInput(ERestricInputType::E_LRMB);
-	Player->RestricInput(ERestricInputType::E_AxisMoving);
+	Player->RestrictInput(ERestricInputType::E_LRMB);
+	Player->RestrictInput(ERestricInputType::E_AxisMoving);
 	Player->GetCapsuleComponent()->SetCollisionProfileName(TEXT("NoCollision"));
 	
 
@@ -322,8 +325,8 @@ void UAnim_Player::AnimNotify_BuffActive()
 void UAnim_Player::AnimNotify_FuryStart()
 {
 	if (!Player.IsValid())return;
-	Player->RestricInput(ERestricInputType::E_AxisMoving);
-	Player->RestricInput(ERestricInputType::E_LRMB);
+	Player->RestrictInput(ERestricInputType::E_AxisMoving);
+	Player->RestrictInput(ERestricInputType::E_LRMB);
 
 }
 
@@ -373,7 +376,7 @@ void UAnim_Player::BuffTick(float DeltaSeconds)
 
 
 
-//Input °ªÀº PlayerÀÇ Combo
+//Input ï¿½ï¿½ï¿½ï¿½ Playerï¿½ï¿½ Combo
 void UAnim_Player::PlaySkillMontage(int Combo)
 {
 	//Montage_Play(Montage_Skills[0], 1.0f);
@@ -388,16 +391,16 @@ void UAnim_Player::PlaySkillMontage(int Combo)
 
 }
 
-//µ¥¹ÌÁö¸¦ ¹Þ¾ÒÀ» ¶§ ¸ÂÀº ¹æÇâÀ» °è»êÇÕ´Ï´Ù
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½
 void UAnim_Player::TakeDamage(const AActor* OtherActor)
 {
 	bIsDamaged = true;
 	auto Owner = GetOwningActor();
 	if (!Owner)return;
-	//À§Ä¡ ºÒ·¯¿À±â
+	//ï¿½ï¿½Ä¡ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
 	FVector OtherPos = OtherActor->GetActorLocation();
 	FVector OwnerPos = Owner->GetActorLocation();
-	//¹æÇâ º¤ÅÍ »ý¼º
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	FVector dir_Other = (OtherPos - OwnerPos);
 	FVector dir_fwd = Owner->GetActorForwardVector();
 

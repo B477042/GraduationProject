@@ -1,13 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "EnemyAIController_Grunt.h"
-#include "DT_DataStruct.h"
-#include "Perception/AIPerceptionComponent.h"
-#include "Perception/AISenseConfig.h"
-#include "EGPlayerCharacter.h"
-#include "EGPlayerController.h"
+#include "Actor/Controller/EnemyAIController_Grunt.h"
 
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "Actor/Character/EGPlayerController.h"
+#include "Perception/AIPerceptionComponent.h"
 
 AEnemyAIController_Grunt::AEnemyAIController_Grunt()
 {
@@ -80,10 +78,10 @@ void AEnemyAIController_Grunt::OnPerceptionUpdated(const TArray<AActor*>& Update
 	for (auto it : UpdatedActors)
 	{
 		EGLOG(Warning, TEXT("hi friend"));
-		//¹ü¿ë¼ºÀ» »ý°¢ÇÏ¸é Player controller·Î °Ë»çÇÏ´Â°Ô ¸Â´Â ÄÚµå °°´Ù
+		//ï¿½ï¿½ï¿½ë¼ºï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ Player controllerï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ï´Â°ï¿½ ï¿½Â´ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½
 		AEGPlayerCharacter* tempActor = Cast<AEGPlayerCharacter>(it);
 
-		//°¡Àå¸ÕÀú È®ÀÎµÈ player¸¦ Å¸°ÙÀ¸·Î
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½Îµï¿½ playerï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if (tempActor != nullptr)
 		{
 			GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, tempActor);
@@ -93,7 +91,7 @@ void AEnemyAIController_Grunt::OnPerceptionUpdated(const TArray<AActor*>& Update
 
 	}
 
-	//°Ë»öµÈ player°¡ ¾ø´Ù¸é null·Î ¹Ù²ãÁØ´Ù
+	//ï¿½Ë»ï¿½ï¿½ï¿½ playerï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½ nullï¿½ï¿½ ï¿½Ù²ï¿½ï¿½Ø´ï¿½
 
 	GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, nullptr);
 
@@ -101,7 +99,7 @@ void AEnemyAIController_Grunt::OnPerceptionUpdated(const TArray<AActor*>& Update
 
 void AEnemyAIController_Grunt::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-	//°¨ÁöµÈ ¿¢ÅÍ°¡ playerÀÎÁö °Ë»çÇÕ´Ï´Ù
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í°ï¿½ playerï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Õ´Ï´ï¿½
 	auto target = Cast<APawn>(Actor);
 	if (target == nullptr)return;
 
@@ -110,11 +108,11 @@ void AEnemyAIController_Grunt::OnTargetPerceptionUpdated(AActor* Actor, FAIStimu
 
 
 
-	//Å½Áö°á°ú
-	//True = °¨Áö ¼º°ø  | False = »ç¶óÁü
+	//Å½ï¿½ï¿½ï¿½ï¿½ï¿½
+	//True = ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½  | False = ï¿½ï¿½ï¿½ï¿½ï¿½
 	bool bSenseResult = Stimulus.WasSuccessfullySensed();
 
-	//¼º°ø½Ã °ªÀ» ÀúÀåÇÏ°í return
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ return
 	if (bSenseResult)
 	{
 		EGLOG(Error, TEXT("Find %s "), *Actor->GetName());
@@ -122,7 +120,7 @@ void AEnemyAIController_Grunt::OnTargetPerceptionUpdated(AActor* Actor, FAIStimu
 		return;
 	}
 
-	//½ÇÆÐ½Ã °ü·Ã BB°ª ÃÊ±âÈ­
+	//ï¿½ï¿½ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ BBï¿½ï¿½ ï¿½Ê±ï¿½È­
 	EGLOG(Error, TEXT("Lose %s"), *Actor->GetName());
 	GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, nullptr);
 	GetBlackboardComponent()->SetValueAsVector(AEnemyAIController::TargetPos, Actor->GetActorLocation());

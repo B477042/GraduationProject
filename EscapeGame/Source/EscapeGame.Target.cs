@@ -8,7 +8,13 @@ public class EscapeGameTarget : TargetRules
 	public EscapeGameTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
-
+		DefaultBuildSettings = BuildSettingsVersion.V5;
 		ExtraModuleNames.AddRange( new string[] { "EscapeGame","GameSetting", "Building", "PathfindTest"/*"PCG"*/ } );
+		RegisterModulesCreatedByRider();
+	}
+
+	private void RegisterModulesCreatedByRider()
+	{
+		ExtraModuleNames.AddRange(new string[] {"DialoguePrompt" });
 	}
 }

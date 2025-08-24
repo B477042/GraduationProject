@@ -1,13 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "TutorialWidget.h"
+#include "GameSystem/Tutorial/TutorialWidget.h"
+
+#include "EscapeGame.h"
+#include "Actor/Character/EGPlayerController.h"
 #include "Components/Image.h"
 #include "Components/Button.h"
 #include "Components/EditableText.h"
-#include "AnimatedTexture2D.h"
 #include "Engine/Texture2D.h"
-#include "EGPlayerController.h"
+#include "UnrealCore/EGGameInstance.h"
+
 
 void UTutorialWidget::NativeConstruct()
 {
@@ -72,7 +75,7 @@ void UTutorialWidget::ReceiveMessage( FText  NotifyTittle,  FText  Describe, FSo
 void UTutorialWidget::OnButtonClicked()
 {
 	if (IsInViewport())
-		RemoveFromViewport();
+		RemoveFromParent();
 	
 
 	auto controller = Cast<AEGPlayerController>(GetOwningPlayer());
@@ -87,24 +90,24 @@ void UTutorialWidget::OnButtonClicked()
 void UTutorialWidget::AsyncImageLoad()
 {
 	
-
-	TSoftObjectPtr<UAnimatedTexture2D> ImageAsset(path_Object);
-	UAnimatedTexture2D* newImage = ImageAsset.Get();
-	if (newImage)
-	{
-		auto temp = Cast<UTexture>(newImage);
-		if (!temp)
-		{
-			EGLOG(Error, TEXT("castubg fialse"));
-			return;
-		}
-
-		
-
-		Img_Gif->SetBrushResourceObject(temp);
-		//EGLOG(Error, TEXT("good"));
-	}
-	else
+	//
+	// TSoftObjectPtr<UAnimatedTexture2D> ImageAsset(path_Object);
+	// UAnimatedTexture2D* newImage = ImageAsset.Get();
+	// if (newImage)
+	// {
+	// 	auto temp = Cast<UTexture>(newImage);
+	// 	if (!temp)
+	// 	{
+	// 		EGLOG(Error, TEXT("castubg fialse"));
+	// 		return;
+	// 	}
+	//
+	// 	
+	//
+	// 	Img_Gif->SetBrushResourceObject(temp);
+	// 	//EGLOG(Error, TEXT("good"));
+	// }
+	// else
 		EGLOG(Error, TEXT("failed"));
 
 

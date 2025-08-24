@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "4.26",
+	"EngineAssociation": "{8EB46B68-4EF9-1DC2-4CC5-77B6B155EE11}",
 	"Category": "",
 	"Description": "",
 	"Enterprise": true,
@@ -43,6 +43,11 @@
 				"Engine",
 				"CoreUObject"
 			]
+		},
+		{
+			"Name": "DialoguePrompt",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
 		}
 	],
 	"Plugins": [
@@ -52,7 +57,7 @@
 		},
 		{
 			"Name": "LogViewer",
-			"Enabled": true,
+			"Enabled": false,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/4853cdc0a6a54d7b9c0712cbe72f6b68"
 		},
 		{
@@ -62,12 +67,12 @@
 		},
 		{
 			"Name": "GraphFormatter",
-			"Enabled": true,
+			"Enabled": false,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/297159d6d3f4425b9c095b18a811a401"
 		},
 		{
 			"Name": "ModuleGeneration",
-			"Enabled": true,
+			"Enabled": false,
 			"MarketplaceURL": "https://www.unrealengine.com/marketplace/en-US/product/new-c-module-tool"
 		},
 		{
@@ -77,8 +82,12 @@
 		},
 		{
 			"Name": "AnimatedTexture",
-			"Enabled": true,
+			"Enabled": false,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/4e16df6426df4096aff1f67e3084b929"
+		},
+		{
+			"Name": "GameplayAbilities",
+			"Enabled": true
 		}
 	]
 }

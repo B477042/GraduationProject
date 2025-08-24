@@ -1,13 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Pawn_Camera.h"
-#include "NPCCharacter.h"
-#include "DialogueWidget.h"
-#include "Tutorial_Controller.h"
+#include "GameSystem/DialogueOld/Pawn_Camera.h"
 
-//int APawn_Camera::n_Act = 0;
-
+#include "Actor/Character/NPCCharacter.h"
+#include "GameSystem/DialogueOld/DialogueWidget.h"
+#include "GameSystem/Tutorial/Tutorial_Controller.h"
 // Sets default values
 APawn_Camera::APawn_Camera()
 {
@@ -93,11 +91,11 @@ void APawn_Camera::StartListenTo(TWeakObjectPtr<ANPCCharacter>Talker)
 	
 	auto widget = getWidget();
 	if (!widget)return;
-	//Widget¿¡ ÀÌ¸§À» Àû¾îÁØ´Ù
+	//Widgetï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½
 	//widget->SetTalker(Talker, FText::FromString(Talker->GetName()));
 	
 	EGLOG(Error, TEXT("I Told U!!!!!"));
-	//ÇÏ³ª¶óµµ Âü°¡ ÇßÀ¸´Ï ÇÑ¹ø Ãâ·ÂÇÑ´Ù
+	//ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¹ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½
 	startTalk();
 }
  
@@ -165,7 +163,7 @@ void APawn_Camera::prevLog()
 
 void APawn_Camera::printLog()
 {
-	//´ëÈ­¸¦ ´Ù ÀÐ¾úÀ»°æ¿ì
+	//ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (c_Talk >= maxLine)
 	{
 		//n_Act++;

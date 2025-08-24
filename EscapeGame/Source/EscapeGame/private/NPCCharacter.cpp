@@ -1,8 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "NPCCharacter.h"
-
+#include "Actor/Character/NPCCharacter.h"
 // Sets default values
 ANPCCharacter::ANPCCharacter()
 {

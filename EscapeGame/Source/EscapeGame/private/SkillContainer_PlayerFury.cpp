@@ -1,7 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SkillContainer_PlayerFury.h"
+
+#include "Actor/SklillActor/SkillContainer_PlayerFury.h"
+
+#include "Actor/SklillActor/SkillActor_PlayerFury.h"
 
 USkillContainer_PlayerFury::USkillContainer_PlayerFury()
 {

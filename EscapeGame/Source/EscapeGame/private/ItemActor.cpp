@@ -1,11 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "ItemActor.h"
-#include "EGSaveGame.h"
-#include "EGGameInstance.h"
-#include "MiniMapMarkerComponent.h"
 
+#include "Actor/Item/ItemActor.h"
 
+#include "EscapeGame.h"
+#include "GameSystem/MiniMap/MiniMapMarkerComponent.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "UnrealCore/EGGameInstance.h"
+#include "UnrealCore/SaveGame/EGSaveGame.h"
 // Sets default values
 AItemActor::AItemActor()
 {
@@ -94,11 +96,11 @@ void  AItemActor::SetItemDisable()
 
 /*
 	2020 11 07
-	└·└х╡╔ ╛╞└╠┼█╡щ : ┐∙╡х┐б ╣ш─б╡╚ ╛╞└╠┼█
-	└·└х╡╟╝▒ ╛╚╡╔ ╛╞└╠┼█╡щ : ╟├╖╣└╠╛ю╕ж ╖╬╡х╟╥ ╢з ╗¤▒ф ╛╞└╠┼█
-	-> Tag╖╬ ║╨╖∙ Item. 
+	я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜█╡я┐╜ : я┐╜я┐╜я┐╜х┐б я┐╜я┐╜─бя┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜
+	я┐╜я┐╜я┐╜я┐╜╟╝я┐╜ я┐╜╚╡я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜█╡я┐╜ : я┐╜├╖я┐╜я┐╜╠╛ю╕ж я┐╜╬╡я┐╜я┐╜я┐╜ я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜
+	-> Tagя┐╜я┐╜ я┐╜╨╖я┐╜ Item. 
 	https://docs.unrealengine.com/ko/Gameplay/Tags/index.html
-	Tag ┬№┴╢
+	Tag я┐╜я┐╜я┐╜я┐╜
 */
 void AItemActor::SaveGame(UEGSaveGame * SaveInstance)
 {
@@ -107,14 +109,14 @@ void AItemActor::SaveGame(UEGSaveGame * SaveInstance)
 		EGLOG(Error, TEXT("SaveInstance is null"));
 		return;
 	}
-	//Tag┴▀┐б ╜║╞∙╡╩└╠ └╓└╕╕щ └·└х╟╧┴Ў ╛╩┤┬┤┘
+	//Tagя┐╜▀┐я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜╩┤┬┤я┐╜
 	if (Tags.Contains(TSpawned))
 	{
 		EGLOG(Error, TEXT("%s can't store data. Contain Tag - Spawned"),*GetName());
 		return;
 	}
 
-	//Map┐б ╡ю╖╧╡╟┴Ў ╛╩╛╞╛▀ ╡╚┤┘
+	//Mapя┐╜я┐╜ я┐╜я┐╜╧╡я┐╜я┐╜я┐╜ я┐╜╩╛╞╛я┐╜ я┐╜╚┤я┐╜
 	if (!SaveInstance->D_Items.Contains(GetName()))
 	{
 		FItemData ItemData;
@@ -148,7 +150,7 @@ void AItemActor::LoadGame(const UEGSaveGame * LoadInstance)
 	SetActorLocationAndRotation(LoadData->Location, LoadData->Rotation);
 	bIsItemVaild = LoadData->bIsVaild;
 	
-	//└п╚┐╟╧┴Ў ╛╩┤┬ ╛╞└╠┼█└╠╢є╕щ ╝√▒ш├│╕о
+	//я┐╜я┐╜╚┐я┐╜я┐╜я┐╜я┐╜ я┐╜╩┤я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜╠╢я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜├│я┐╜я┐╜
 	if (!bIsItemVaild)
 		SetItemDisable();
 }

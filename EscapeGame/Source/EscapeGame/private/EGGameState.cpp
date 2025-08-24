@@ -1,8 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "EGGameState.h"
-#include "EGGameInstance.h"
+
+#include "UnrealCore/EGGameState.h"
+
+#include "UnrealCore/EGGameInstance.h"
+
+
+
 
 AEGGameState::AEGGameState()
 {
@@ -34,12 +39,6 @@ void AEGGameState::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	Super::EndPlay(EndPlayReason);
 }
 
-//void AEGGameState::SetRemainTimes(float NewValue)
-//{
-//	RemainTimes = NewValue;
-//}
-//
-//
-// 
+
 
 

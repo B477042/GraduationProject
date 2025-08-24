@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "EGPostProcessVolume.h"
-#include "EGGameInstance.h"
-#include "EGSaveGame.h"
+#include "UnrealCore/EGPostProcessVolume.h"
 
+#include "UnrealCore/EGGameInstance.h"
+#include "UnrealCore/SaveGame/EGSaveGame.h"
 
 AEGPostProcessVolume::AEGPostProcessVolume()
 {
@@ -15,8 +15,8 @@ AEGPostProcessVolume::AEGPostProcessVolume()
 	Settings.bOverride_ColorGamma = true;
 	Settings.bOverride_ColorContrast = true;
 	Settings.bOverride_ColorSaturation = true;
-	Settings.bOverride_GrainIntensity = true;
-	Settings.bOverride_GrainJitter = true;
+	Settings.bOverride_GrainIntensity_DEPRECATED = true;
+	Settings.bOverride_GrainJitter_DEPRECATED = true;
 	Settings.bOverride_VignetteIntensity = true;
 	Settings.bOverride_BloomIntensity = true;
 	Settings.bOverride_ScreenSpaceReflectionMaxRoughness = true;
@@ -36,7 +36,7 @@ AEGPostProcessVolume::AEGPostProcessVolume()
 	Settings.ScreenSpaceReflectionQuality = 80.952385f;
 	Settings.ScreenSpaceReflectionMaxRoughness = 0.613429f;
 
-	//Post Process Matrial ·Îµå. 
+	//Post Process Matrial ï¿½Îµï¿½. 
 	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Post(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_OutLineShader.MI_OutLineShader'"));
 	if (MI_Post.Succeeded())
 	{
@@ -53,10 +53,10 @@ AEGPostProcessVolume::AEGPostProcessVolume()
 
 void AEGPostProcessVolume::SyncHpPercent(float ratio)
 {
-	/*	½Ä
-	*	Àû¿ë°ª = ÃÖ´ëÀû¿ë°ª*(1.0f - ratio)
-	*	Ã¤·ÂÀÌ ÃÖ´ë¶ó¸é | Àû¿ë°ª = 0
-	*	Ã¤·ÂÀÌ 0ÀÌ¶ó¸é | Àû¿ë°ª = ÃÖ´ëÀû¿ë°ª * (1.0-0) = ÃÖ´ëÀû¿ë°ª
+	/*	ï¿½ï¿½
+	*	ï¿½ï¿½ï¿½ë°ª = ï¿½Ö´ï¿½ï¿½ï¿½ï¿½ë°ª*(1.0f - ratio)
+	*	Ã¤ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ | ï¿½ï¿½ï¿½ë°ª = 0
+	*	Ã¤ï¿½ï¿½ï¿½ï¿½ 0ï¿½Ì¶ï¿½ï¿½ | ï¿½ï¿½ï¿½ë°ª = ï¿½Ö´ï¿½ï¿½ï¿½ï¿½ë°ª * (1.0-0) = ï¿½Ö´ï¿½ï¿½ï¿½ï¿½ë°ª
 	*/
 
 	float applyRatio = 1.0f - ratio;
@@ -64,8 +64,8 @@ void AEGPostProcessVolume::SyncHpPercent(float ratio)
 	Settings.ColorGamma.W = FMath::Lerp<float, float>(DefaultColorGamma.W,MaxColorGamma.W,applyRatio);
 	Settings.ColorContrast.W = FMath::Lerp<float, float>(DefaultColorContrast.W, MaxColorContrast.W, applyRatio);
 	Settings.ColorSaturation.W = FMath::Lerp<float, float>(DefaultColorSaturation.W, MaxColorSaturation.W, applyRatio);
-	Settings.GrainJitter = FMath::Lerp<float, float>(DefaultGrainJitter, MaxGrainJitter, applyRatio);
-	Settings.GrainIntensity = FMath::Lerp<float, float>(DefaultGrainIntensity, MaxGrainIntensity, applyRatio);
+	Settings.GrainJitter_DEPRECATED = FMath::Lerp<float, float>(DefaultGrainJitter, MaxGrainJitter, applyRatio);
+	Settings.GrainIntensity_DEPRECATED = FMath::Lerp<float, float>(DefaultGrainIntensity, MaxGrainIntensity, applyRatio);
 	Settings.VignetteIntensity = FMath::Lerp<float, float>(DefaultVignettelIntensity, MaxVignetteIntensity, applyRatio);
 
 
@@ -99,8 +99,8 @@ void AEGPostProcessVolume::SaveGame(UEGSaveGame* SaveInstance)
 	data.ColorContrastValue = Settings.ColorContrast;
 	data.ColorGammaValue = Settings.ColorGamma;
 	data.ColorSaturation = Settings.ColorSaturation;
-	data.GrainJitter= Settings.GrainJitter;
-	data.GrainIntensity= Settings.GrainIntensity;
+	data.GrainJitter= Settings.GrainJitter_DEPRECATED;
+	data.GrainIntensity= Settings.GrainIntensity_DEPRECATED;
 	SaveInstance->PostProcessData = data;
 
 }
@@ -112,7 +112,7 @@ void AEGPostProcessVolume::LoadGame(const UEGSaveGame* LoadInstance)
 	Settings.ColorContrast= data.ColorContrastValue ;
 	Settings.ColorGamma = data.ColorGammaValue;
 	Settings.ColorSaturation = data.ColorSaturation;
-	Settings.GrainJitter = data.GrainJitter;
-	Settings.GrainIntensity = data.GrainIntensity;
+	Settings.GrainJitter_DEPRECATED = data.GrainJitter;
+	Settings.GrainIntensity_DEPRECATED = data.GrainIntensity;
 
 }

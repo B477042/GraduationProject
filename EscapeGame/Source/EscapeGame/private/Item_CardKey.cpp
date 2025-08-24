@@ -1,10 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Item_CardKey.h"
-#include "EGPlayerCharacter.h"
+#include "Actor/Item/Item_CardKey.h"
 
-
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "GameAbility/Component_Inventory.h"
+#include "Particles/ParticleSystemComponent.h"
 const FName AItem_CardKey::Tag = TEXT("CardKey");
 
 AItem_CardKey::AItem_CardKey()
@@ -24,7 +25,7 @@ FName AItem_CardKey::GetTag()
 {
 	return Tag;
 }
-//¹® ¿©´Âµ¥ »ç¿ëµÇ´Ï±î ¾Æ¹«°Íµµ ¾È ÇØµµ µÉ°Å °°´Ù
+//ï¿½ï¿½ ï¿½ï¿½ï¿½Âµï¿½ ï¿½ï¿½ï¿½Ç´Ï±ï¿½ ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½ï¿½ ï¿½Øµï¿½ ï¿½É°ï¿½ ï¿½ï¿½ï¿½ï¿½
 void AItem_CardKey::UseMe(ACharacter * UserActor)
 {
 	
@@ -38,7 +39,7 @@ void AItem_CardKey::PostInitializeComponents()
 	DetectCollision->OnComponentBeginOverlap.AddDynamic(this, &AItem_CardKey::OnPlayerOverlap);
 }
 
-//OtherActor°¡ OwnerActor°¡ µÈ´Ù
+//OtherActorï¿½ï¿½ OwnerActorï¿½ï¿½ ï¿½È´ï¿½
 void AItem_CardKey::BePickedUp(ACharacter * OtherActor)
 {
 	Super::BePickedUp(OtherActor);
@@ -61,7 +62,7 @@ void AItem_CardKey::loadAssets()
 		
 	}
 
-	//¹ÝÂ¦ÀÌ¸é¼­ À§Ä¡¸¦ ³ªÅ¸³¾ ÄÄÆ÷³ÍÆ®
+	//ï¿½ï¿½Â¦ï¿½Ì¸é¼­ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 	static ConstructorHelpers::FObjectFinder<UParticleSystem>U_EFFECT(TEXT("ParticleSystem'/Game/MagicModule/VFX/P_Buff.P_Buff'"));
 	if (U_EFFECT.Succeeded())
 	{

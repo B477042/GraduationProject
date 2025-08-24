@@ -1,16 +1,19 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "GameWidget.h"
-#include "Component_Inventory.h"
+
+#include "UI/GameWidget.h"
+
+#include "Actor/Item/Item_CardKey.h"
+#include "Actor/Item/Item_Recover.h"
+#include "Component/Component_TimeLimit.h"
+#include "Component/StatComponent_Player.h"
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
 #include "GameFramework/Character.h"
-#include "Component_Fury.h"
-#include "Item_CardKey.h"
-#include "Item_Recover.h"
-#include "EGGameState.h"
-#include "Component_TimeLimit.h"
-#include "Component_Stamina.h"
+#include "Components/Image.h"
+#include "GameAbility/Component_Fury.h"
+#include "GameAbility/Component_Inventory.h"
+#include "GameAbility/Component_Stamina.h"
 //#include"GameStat.h"
 
 
@@ -41,7 +44,7 @@ void UGameWidget::NativeConstruct()
 	FuryBarColor2 = FLinearColor::Red;
  
 
-	EGLOG(Error, TEXT("Wdiget Native Constructor"));
+	EGLOG(Error, TEXT("Widget Native Constructor"));
 
 	
 
@@ -54,7 +57,7 @@ void UGameWidget::NativeOnInitialized()
 }
 
 
-//¿¬µ¿µÈ characterÀÇ stat component¿¡¼­ Ã¤·ÂÀÌ ¹Ù²ð ¶§, È£ÃâµÈ´Ù. 
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ characterï¿½ï¿½ stat componentï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ ï¿½ï¿½, È£ï¿½ï¿½È´ï¿½. 
 void UGameWidget::UpdateCharacterStat()
 {
 	if (CurrentPlayerStat.IsValid())
@@ -65,9 +68,9 @@ void UGameWidget::UpdateCharacterStat()
 		float BlurRate = 0.5f*(1.0f - CurrentPlayerStat->GetHPRatio());
 
 
-		//Ui ÇÇ È¿°ú. Á¦°Å 2021 03 12
+		//Ui ï¿½ï¿½ È¿ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ 2021 03 12
 		//Img_Blood->SetBrushTintColor(FSlateColor(FLinearColor(1.0f, 1.0f, 1.0f,BlurRate )));
-		//ÀÌ¹ÌÁöµéÀº BP¿¡¼­ ºÒ·¯¿ÍÁø °ÍµéÀÌ´Ù
+		//ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ BPï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Íµï¿½ï¿½Ì´ï¿½
 		if (PlayerHPRatio > 90.0f)
 			Img_Battery->SetBrushFromTexture(Imgs_Battary[0]);
 		else if (PlayerHPRatio >= 80.0f)
@@ -81,7 +84,7 @@ void UGameWidget::UpdateCharacterStat()
 		else if(PlayerHPRatio <=0.0f)
 			Img_Battery->SetBrushFromTexture(Imgs_Battary[5]);
 
-		//timer°¡ 0ÀÌ µÇ¸é
+		//timerï¿½ï¿½ 0ï¿½ï¿½ ï¿½Ç¸ï¿½
 	/*	if (GameTimer <= 0.0f)
 		{
 			EGLOG(Error, TEXT("Time out"));
@@ -104,7 +107,7 @@ void UGameWidget::UpdateStamina()
 
 void UGameWidget::UpdateItemes(FName ItemName, int Amount)
 {
-	//Card Key Item Ã³¸®
+	//Card Key Item Ã³ï¿½ï¿½
 	if(ItemName ==AItem_CardKey::Tag)
 	{
 		N_CardKeyItems = Amount;
@@ -122,7 +125,7 @@ void UGameWidget::UpdateItemes(FName ItemName, int Amount)
 		}
 		
 	}
-	//Recover Item Ã³¸®
+	//Recover Item Ã³ï¿½ï¿½
 	else if (ItemName==AItem_Recover::Tag)
 	{
 		N_RecoveryItems = Amount;
@@ -169,8 +172,8 @@ void UGameWidget::UpdateExp()
 
 
 
-//TickÃ³·³ ±¸µ¿µÇ´Â Á¡ È®ÀÎ
-//BP¿¡ ¹ÙÀÎµù µÈ ÇÔ¼ö¸¦ µ¤¾î¼­ ½ÇÇà µÊ
+//TickÃ³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½ï¿½ È®ï¿½ï¿½
+//BPï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î¼­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 FText UGameWidget::BindingTimeText()
 {
 	FText Retval;
@@ -277,20 +280,20 @@ void UGameWidget::BindCharacterStat( UStatComponent_Player * newStat)
 	
 }
 
-void UGameWidget::BindCharacterInven(UComponent_Inventory * newInven)
+void UGameWidget::BindCharacterInventory(UComponent_Inventory * newInven)
 {
 	if (newInven == nullptr) {
 		EGLOG(Error, TEXT("Inputed Param is nullptr"));
 		return;
 	}
-	//ÀÌ¹Ì ¼³Á¤ µÆÀ¸¸é Æ¨±ä´Ù
+	//ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ¨ï¿½ï¿½ï¿½
 	if (CurrentPlayerInventory!=nullptr) {
 		EGLOG(Error, TEXT("Inven comp is already setted "));
 		return;
 	}
 	 
 	CurrentPlayerInventory = newInven;
-	//ÀÎº¥Åä¸®ÀÇ µ¨¸®°ÔÀÌÆ®¿Í À§Á¬ ¿¬µ¿
+	//ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	CurrentPlayerInventory->OnItemUpdated.BindUObject(this,&UGameWidget::UpdateItemes);
 
 }

@@ -1,10 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Anim_Grunt.h"
-#include "GruntCharacter.h"
-#include "EnemyAIController_Grunt.h"
+#include "Animation/Anim_Grunt.h"
+
+#include "Actor/Character/GruntCharacter.h"
+#include "Actor/Controller/EnemyAIController_Grunt.h"
 #include "Components/CapsuleComponent.h"
+
+class AGruntCharacter;
+class AEnemyAIController_Grunt;
 
 UAnim_Grunt::UAnim_Grunt()
 {

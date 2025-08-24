@@ -1,12 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "StatComponent_EGrunt.h"
-#include "EnemyAIController_Grunt.h"
-#include "DT_DataStruct.h"
-#include "GruntCharacter.h"
-#include "EGSaveGame.h"
+#include "Component/StatComponent_EGrunt.h"
 
+#include "Actor/Character/GruntCharacter.h"
+#include "Actor/Controller/EnemyAIController_Grunt.h"
+#include "Data/DT_DataStruct.h"
+#include "UnrealCore/SaveGame/EGSaveGame.h"
+struct FEnemyTableRow;
 
 UStatComponent_EGrunt::UStatComponent_EGrunt()
 {
@@ -58,7 +59,7 @@ void UStatComponent_EGrunt::loadTypeData()
 	}
 	else
 	{
-		Type = FMath::FRandRange(1, 5);
+		Type = FMath::FRandRange(1.f, 5.f);
 		FEnemyTableRow* MyTable = DataTable->FindRow<FEnemyTableRow>(FName(*(FString::FormatAsNumber(Type))), FString(""));
 
 		MaxHP = MyTable->MaxHp;

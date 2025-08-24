@@ -1,0 +1,29 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class EGCharacterBase
+class EGPlayerCharacter
+class AbilitySystemComponent
+class EGAttributeSet
+class EGPlayerState
+class EGPlayerController
+
+
+'heritage
+EGCharacterBase <|-- EGPlayerCharacter
+EGPlayerController <--> EGPlayerCharacter : Possess
+EGPlayerState<---EGPlayerController
+EGPlayerState --o EGPlayerCharacter
+EGPlayerCharacter *--AbilitySystemComponent
+EGPlayerState *--EGAttributeSet
+EGAttributeSet <.. EGPlayerController : WeakPtr
+
+'Contain
+EGPlayerCharacter : +AbilitySystemComponent
+EGPlayerState : +EGAttributeSet
+EGPlayerController : *WeakPtr<EGAttributeSet>
+
+AbilitySystemComponent : +EGAttributeSet
+AbilitySystemComponent : +GameAbility[]
+
+@enduml

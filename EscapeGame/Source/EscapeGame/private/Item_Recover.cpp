@@ -1,10 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Item_Recover.h"
-#include "EGPlayerCharacter.h"
+#include "Actor/Item/Item_Recover.h"
 
-
+#include "EscapeGame.h"
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "GameAbility/Component_Inventory.h"
+#include "Particles/ParticleSystemComponent.h"
 const FName AItem_Recover::Tag = TEXT("Recover");
 
 AItem_Recover::AItem_Recover()
@@ -72,20 +74,20 @@ FName AItem_Recover::GetTag()
 
 void AItem_Recover::OnPlayerOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	//°ãÄ£ player Ä³½ºÆÃ
+	//ï¿½ï¿½Ä£ player Ä³ï¿½ï¿½ï¿½ï¿½
 	auto player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (!player)
 	{
 		EGLOG(Warning, TEXT("Not Player Actor "));
 		return;
 	}
-	//°ÔÀÓ¿¡¼­ Ç¥½ÃµÇÁö ¾Ê°í overlapÀÌº¥Æ®µµ ²¨ÁØ´Ù
+	//ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ Ç¥ï¿½Ãµï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ overlapï¿½Ìºï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Ø´ï¿½
 	Body->SetCollisionProfileName(FName("No collision"));
 	//SetActorHiddenInGame(true);
 	Body->SetHiddenInGame(true);
 	Body->SetGenerateOverlapEvents(false);
 	PickupSound->Play();
-	//È¸º¹ ¾ÆÀÌÅÛÀº ÇÑ¹ø¿¡ 1°³¿¡¼­ 3°³ È¹µæ
+	//È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¹ï¿½ï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ È¹ï¿½ï¿½
 	int amount = FMath::RandRange(1.0f, 4.0f);
 
 	if (player->GetInventory()->AddItem(this,amount))
@@ -95,7 +97,7 @@ void AItem_Recover::OnPlayerOverlap(UPrimitiveComponent * OverlappedComp, AActor
 	
 	bIsItemVaild = false;
 
-	//¿©±â¼­ ¾ÆÀÌÅÛÀ» player¿¡°Ô ³Ñ°ÜÁØ´Ù
+	//ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ playerï¿½ï¿½ï¿½ï¿½ ï¿½Ñ°ï¿½ï¿½Ø´ï¿½
 
 
 }
@@ -156,7 +158,7 @@ void AItem_Recover::loadAsset()
 	PickupSound->SetupAttachment(RootComponent);
 }
 
-//»ç¿îµå°¡ Á¾·áµÉ ¶§ ½ÇÇàµÇ°í effect¸¦ °ÔÀÓ¿¡¼­ ¾È º¸ÀÌ°Ô ÇÏ°í Àç»ýµµ Á¾·áÇÏ´Ï´Ù
+//ï¿½ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ effectï¿½ï¿½ ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´Ï´ï¿½
 void AItem_Recover::turnOffEffect()
 {
 	Effect->SetHiddenInGame(true);

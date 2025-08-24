@@ -1,10 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AstarFinder.h"
-#include "Engine/Engine.h"
+#include "GameSystem/AStarFinder.h"
+
 #include "Kismet/KismetMathLibrary.h"
-#include "EGGameInstance.h"
+#include "UnrealCore/EGGameInstance.h"
+
 // Sets default values
 AAStarFinder::AAStarFinder()
 {
@@ -110,12 +111,12 @@ void AAStarFinder::ShowPath(EPathTarget Mode)
 	}
 	
 	if (!temp.IsValid())EGLOG(Error, TEXT("Goal node is null"));
-	//Ã³À½ ½ÃÀÛÁ¡À¸·Î ¿Â´Ù¸é 
+	//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Â´Ù¸ï¿½ 
 	while (temp.IsValid())
 	{
 		/*
-			³ëµå¸¦ °æ·Î·Î ¼³Á¤ÇØÁÖ°í
-			È°¼ºÈ­ ½ÃÅ² ÈÄ, deref¸¦ ÇÏ¸é¼­ ÀÌÀü ³ëµå·Î ´Ù½Ã ¸µÅ©ÇØÁØ´Ù.
+			ï¿½ï¿½å¸¦ ï¿½ï¿½Î·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½
+			È°ï¿½ï¿½È­ ï¿½ï¿½Å² ï¿½ï¿½, derefï¿½ï¿½ ï¿½Ï¸é¼­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½ï¿½Ø´ï¿½.
 		
 		*/
 
@@ -150,7 +151,7 @@ void AAStarFinder::SetKeyPoint(AAstarNode* Other)
 	KeyNode = Other;
 }
 
-//Game instance¿¡¼­ ¸ñÇ¥°¡ µÇ´Â ¿ÀºêÁ§Æ®¸¦ ¿ì¼±ÀûÀ¸·Î ºÒ·¯¿Í¼­ Ã£¾ÆÁØ´Ù. 
+//Game instanceï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ì¼±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½Í¼ï¿½ Ã£ï¿½ï¿½ï¿½Ø´ï¿½. 
 void AAStarFinder::SetGoalPoint(AAstarNode * Other)
 {
 	if (!Other)
@@ -161,7 +162,7 @@ void AAStarFinder::SetGoalPoint(AAstarNode * Other)
 
 	GoalNode = Other;
 }
-//¸ðµç ³ëµåÀÇ PathFind ¿¬»ê°ªÀ» Áö¿öÁØ´Ù
+//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ PathFind ï¿½ï¿½ï¿½ê°ªï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½
 void AAStarFinder::ResetResult()
 {
 	for (auto it : AllNodes)
@@ -217,13 +218,13 @@ void AAStarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 	int i = 0;
 
 
-	//¹æ¹®ÇØ¾ßµÉ ³ëµå°¡ ºñ¿öÁú ¶§±îÁö
+	//ï¿½æ¹®ï¿½Ø¾ßµï¿½ ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	while (!ToVisitNodes.IsEmpty())
 	{
 		//EGLOG(Warning, TEXT("%d Try"), i);
 		i++;
 
-		//Queue¿¡¼­ ÇÏ³ª¸¦ ²¨³½´Ù
+		//Queueï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		ToVisitNodes.Dequeue(PopedNode);
 
 		if (!PopedNode.IsValid())
@@ -233,28 +234,28 @@ void AAStarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 		}
 
 		//EGLOG(Warning, TEXT("Current Node : %s"), *PopedNode->GetName());
-		//³ëµåÀÇ ¹æ¹®À» ¸¶Ä£´Ù
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½æ¹®ï¿½ï¿½ ï¿½ï¿½Ä£ï¿½ï¿½
 		PopedNode->VisitNode();
 
-		//²¨³½ ³ëµå°¡ Goal°ú À§Ä¡°¡ °°´Ù¸é 
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½å°¡ Goalï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½ 
 		if (PopedNode->GetActorLocation() == Goal->GetActorLocation())
 		{
-			//GoalNode¸¦ ¼³Á¤ÇØÁÖ°í ToVisiteNode¸¦ ºñ¿öÁØ´Ù
+			//GoalNodeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ ToVisiteNodeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø´ï¿½
 		//	EGLOG(Error, TEXT("Goal Find! : %s"), *PopedNode->GetName());
 			GoalNode = PopedNode.Get();
 			ToVisitNodes.Empty();
 			break;
 		}
 
-		//ÀÎ±Ù³ëµåµéÀÇ ÁÖº¯ ³ëµåµéÀÌ ÀÖ´Ù¸é
+		//ï¿½Î±Ù³ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Öºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
 		if (PopedNode->NearNodes.GetData() != nullptr)
-			//ÀÎ±Ù ³ëµåµéÀÇ °ªÀ» °è»êÇÑ´Ù
+			//ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½
 		{
 			for (auto it : PopedNode->NearNodes)
 			{
-				//À¯È¿ÇÏÁö ¾Ê´Ù¸é ³Ñ¾î°£´Ù
+				//ï¿½ï¿½È¿ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Ù¸ï¿½ ï¿½Ñ¾î°£ï¿½ï¿½
 				if (!it.IsValid())continue;
-				//¹æ¹®Çß´ø ³ëµå¸é ³Ñ¾î°£´Ù.
+				//ï¿½æ¹®ï¿½ß´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾î°£ï¿½ï¿½.
 				if (it->IsVisitedNode())continue;
 
 				it->CalcFCount(Start->GetActorLocation(), Goal->GetActorLocation());
@@ -262,16 +263,16 @@ void AAStarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 			
 			}
 
-			//²¨³½ ³ëµåÀÇ ÁÖº¯ ³ëµåµéÀÇ ÀÌÀü ³ëµå¸¦ ²¨³½ ³ëµå·Î ¼³Á¤ÇØÁØ´Ù. 
+			//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Öºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½. 
 			PopedNode->SetNearNodesPrevAsMe();
 					
 		
-			//fcount ¼øÀ¸·Î Á¤·Ä
+			//fcount ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			for (int k = 0; k < PopedNode->NearNodes.Num();++k)
 			{
 				for (int j = k+1 ; j < PopedNode->NearNodes.Num()-1; ++j)
 				{
-					//ºñ±³Àü À¯È¿¼º °Ë»ç
+					//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¿ï¿½ï¿½ ï¿½Ë»ï¿½
 					if (!PopedNode->NearNodes[k].IsValid() || !PopedNode->NearNodes[j].IsValid())continue;
 					if (PopedNode->NearNodes[k]->GetF() > PopedNode->NearNodes[j]->GetF())
 						PopedNode->NearNodes.Swap(k, j);
@@ -281,14 +282,14 @@ void AAStarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 
 		 
 			
-			//Á¤·ÄµÈ ¼ø¼­´ë·Î ³Ö´Â´Ù
+			//ï¿½ï¿½ï¿½Äµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Â´ï¿½
 			for (auto it : PopedNode->NearNodes)
 			{
 				
-				//À¯È¿ÇÏÁö ¾Ê´Ù¸é ³Ñ¾î°£´Ù
+				//ï¿½ï¿½È¿ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Ù¸ï¿½ ï¿½Ñ¾î°£ï¿½ï¿½
 				if (!it.IsValid())continue;
 
-				//¹æ¹®Çß´ø ³ëµå¸é ´Ù½Ã ¾È ³Ö¾îµµ µÈ´Ù
+				//ï¿½æ¹®ï¿½ß´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ ï¿½Ö¾îµµ ï¿½È´ï¿½
 				if (it->IsVisitedNode())continue;
 				//PopedNode->VisitNode();
 			//	EGLOG(Warning, TEXT("Enqueue : %s"), *it->GetName());
@@ -302,7 +303,7 @@ void AAStarFinder::GoalFind(AAstarNode * Start, AAstarNode * Goal)
 		}
 	}
 
-	//°ñ ³ëµå¸¦ Ã£¾Ò´Ù¸é °æ·ÎµéÀ» È°¼ºÈ­ ½ÃÄÑÁØ´Ù
+	//ï¿½ï¿½ ï¿½ï¿½å¸¦ Ã£ï¿½Ò´Ù¸ï¿½ ï¿½ï¿½Îµï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½
 	if (GoalNode.IsValid())
 		ShowPath(EPathTarget::Gate);
 }
@@ -328,12 +329,12 @@ void AAStarFinder::KeyFind(AAstarNode * Start, AAstarNode * Key)
 	//EGLOG(Error, TEXT("Key Node : %s"), *KeyNode->GetName());
 	//EGLOG(Error, TEXT("Gate Node : %s"), *GoalNode->GetName());
 	//EGLOG(Error, TEXT("======================="));
-	//¹æ¹®ÇØ¾ßµÉ ³ëµå°¡ ºñ¿öÁú ¶§±îÁö
+	//ï¿½æ¹®ï¿½Ø¾ßµï¿½ ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	while (!ToVisitNodes.IsEmpty())
 	{
 	//	EGLOG(Warning, TEXT("%d Try"), i);
 		i++;
-		//Queue¿¡¼­ ÇÏ³ª¸¦ ²¨³½´Ù
+		//Queueï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		ToVisitNodes.Dequeue(PopedNode);
 	//	EGLOG(Warning, TEXT("Current Node : %s"), *PopedNode->GetName());
 	// 
@@ -342,28 +343,28 @@ void AAStarFinder::KeyFind(AAstarNode * Start, AAstarNode * Key)
 			EGLOG(Error, TEXT("PopedNode is invalid"));
 			return;
 		}
-		//³ëµåÀÇ ¹æ¹®À» ¸¶Ä£´Ù
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½æ¹®ï¿½ï¿½ ï¿½ï¿½Ä£ï¿½ï¿½
 		PopedNode->VisitNode();
 
-		//²¨³½ ³ëµå°¡Key¿Í À§Ä¡°¡ °°´Ù¸é 
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½å°¡Keyï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½ 
 		if (PopedNode->GetActorLocation() == Key->GetActorLocation())
 		{
-			//GoalNode¸¦ ¼³Á¤ÇØÁÖ°í ToVisiteNode¸¦ ºñ¿öÁØ´Ù
+			//GoalNodeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ ToVisiteNodeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø´ï¿½
 	//		EGLOG(Error, TEXT("Key Find! : %s"), *PopedNode->GetName());
 			KeyNode = PopedNode.Get();
 			ToVisitNodes.Empty();
 			break;
 		}
 
-		//ÀÎ±Ù³ëµåµéÀÇ ÁÖº¯ ³ëµåµéÀÌ ÀÖ´Ù¸é
+		//ï¿½Î±Ù³ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Öºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
 		if (PopedNode->NearNodes.GetData() != nullptr)
-			//ÀÎ±Ù ³ëµåµéÀÇ °ªÀ» °è»êÇÑ´Ù
+			//ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½
 		{
 			for (auto it : PopedNode->NearNodes)
 			{
-				//À¯È¿ÇÏÁö ¾Ê´Ù¸é ³Ñ¾î°£´Ù
+				//ï¿½ï¿½È¿ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Ù¸ï¿½ ï¿½Ñ¾î°£ï¿½ï¿½
 				if (!it.IsValid())continue;
-				//¹æ¹®Çß´ø ³ëµå¸é ³Ñ¾î°£´Ù.
+				//ï¿½æ¹®ï¿½ß´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾î°£ï¿½ï¿½.
 				if (it->IsVisitedNode())continue;
 
 				it->CalcFCount(Start->GetActorLocation(), Key->GetActorLocation());
@@ -371,16 +372,16 @@ void AAStarFinder::KeyFind(AAstarNode * Start, AAstarNode * Key)
 				
 			}
 
-			//²¨³½ ³ëµåÀÇ ÁÖº¯ ³ëµåµéÀÇ ÀÌÀü ³ëµå¸¦ ²¨³½ ³ëµå·Î ¼³Á¤ÇØÁØ´Ù. 
+			//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Öºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½. 
 			PopedNode->SetNearNodesPrevAsMe();
 
 
-			//fcount ¼øÀ¸·Î Á¤·Ä
+			//fcount ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			for (int k = 0; k < PopedNode->NearNodes.Num(); ++k)
 			{
 				for (int j = k + 1; j < PopedNode->NearNodes.Num() - 1; ++j)
 				{
-					//ºñ±³Àü À¯È¿¼º °Ë»ç
+					//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¿ï¿½ï¿½ ï¿½Ë»ï¿½
 					if (!PopedNode->NearNodes[k].IsValid() || !PopedNode->NearNodes[j].IsValid())continue;
 					if (PopedNode->NearNodes[k]->GetF() > PopedNode->NearNodes[j]->GetF())
 						PopedNode->NearNodes.Swap(k, j);
@@ -389,12 +390,12 @@ void AAStarFinder::KeyFind(AAstarNode * Start, AAstarNode * Key)
 			}
 
 
-			//ÁÖº¯ ³ëµåµéÀ» FCount°¡ ÀÛÀº ¼øÀ¸·Î ³Ö¾î¾ß µÈ´Ù.
+			//ï¿½Öºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ FCountï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ ï¿½È´ï¿½.
 			for (auto it : PopedNode->NearNodes)
 			{
-				//À¯È¿ÇÏÁö ¾Ê´Ù¸é ³Ñ¾î°£´Ù
+				//ï¿½ï¿½È¿ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Ù¸ï¿½ ï¿½Ñ¾î°£ï¿½ï¿½
 				if (!it.IsValid())continue;
-				//¹æ¹®Çß´ø ³ëµå¸é ´Ù½Ã ¾È ³Ö¾îµµ µÈ´Ù
+				//ï¿½æ¹®ï¿½ß´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ ï¿½Ö¾îµµ ï¿½È´ï¿½
 				if (it->IsVisitedNode())continue;
 				//PopedNode->VisitNode();
 	//			EGLOG(Warning, TEXT("Enqueue : %s"), *it->GetName());
@@ -408,7 +409,7 @@ void AAStarFinder::KeyFind(AAstarNode * Start, AAstarNode * Key)
 		}
 	}
 
-	//°ñ ³ëµå¸¦ Ã£¾Ò´Ù¸é °æ·ÎµéÀ» È°¼ºÈ­ ½ÃÄÑÁØ´Ù
+	//ï¿½ï¿½ ï¿½ï¿½å¸¦ Ã£ï¿½Ò´Ù¸ï¿½ ï¿½ï¿½Îµï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½
 	if (KeyNode.IsValid())
 		ShowPath(EPathTarget::Key);
 }

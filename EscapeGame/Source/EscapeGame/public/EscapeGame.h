@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Engine/DamageEvents.h"
 #include "Kismet/GameplayStatics.h"
 
 //Debug 매크로 선언
@@ -35,9 +36,9 @@ enum class ESixDirection :uint8
 	E_Backward UMETA(DisplayName = "Backward"),
 	E_Up UMETA(DisplayName = "Up"),
 	E_Down UMETA(DisplayName = "Down")
-
-	
 };
+
+
 
 
 //#define ABLOG_CALLINFO (FString(__FUNCTION__) + TEXT("(") + FString::FromInt(__LINE__) + TEXT(")"))

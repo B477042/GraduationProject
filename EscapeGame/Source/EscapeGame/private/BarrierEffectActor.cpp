@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BarrierEffectActor.h"
+#include "Actor/SklillActor/BarrierEffectActor.h"
+
 #include "Materials/MaterialInstance.h"
 #include "Components/AudioComponent.h"
 

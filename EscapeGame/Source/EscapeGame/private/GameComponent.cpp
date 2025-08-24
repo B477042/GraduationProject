@@ -1,8 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "GameComponent.h"
-
+#include "GameAbility/GameComponent.h"
 // Sets default values for this component's properties
 UGameComponent::UGameComponent()
 {

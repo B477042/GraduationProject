@@ -1,19 +1,23 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "EnemyCharacter.h"
-#include "EGGameState.h"
-#include "EGSaveGame.h"
+
+#include "Actor/Character/EnemyCharacter.h"
+
+#include "Actor/Controller/EnemyAIController.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "MiniMapMarkerComponent.h"
-#include "EnemyAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Components/ProgressBar.h"
+#include "Components/WidgetComponent.h"
+#include "GameSystem/MiniMap/MiniMapMarkerComponent.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "UnrealCore/SaveGame/EGSaveGame.h"
 // Sets default values
-AEnemyCharacter::AEnemyCharacter()
+AEnemyCharacter::AEnemyCharacter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	//¸¶Ä¿ ÃÊ±â°ª ¼³Á¤
+	//ï¿½ï¿½Ä¿ ï¿½Ê±â°ª ï¿½ï¿½ï¿½ï¿½
 	MiniMapMarkerComponent = CreateDefaultSubobject<UMiniMapMarkerComponent>(TEXT("MiniMapMarker"));
 	MiniMapMarkerComponent->SetupAttachment(RootComponent);
 	static ConstructorHelpers::FObjectFinder<UMaterialInstance>MI_Marker(TEXT("MaterialInstanceConstant'/Game/MyFolder/My_Material/MaterialInstance/MI_Marker_Enemy.MI_Marker_Enemy'"));
@@ -53,7 +57,7 @@ AEnemyCharacter::AEnemyCharacter()
 //	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
 	AIPerceptionStimuliSourceComponent = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("AIPerceptionStimuliSourceComponent"));
 	
-	//Control °ü·Ã ¼³Á¤
+	//Control ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bUseControllerDesiredRotation = true;
 	GetCharacterMovement()->RotationRate.Yaw = 360;
@@ -167,7 +171,7 @@ void AEnemyCharacter::SaveGame(UEGSaveGame * SaveInstance)
 		EGLOG(Error, TEXT("SaveInstance is nullptr"));
 		return;
 	}
-	//ÀÚ½Ä Å¬·¡½º¿¡¼­ Save GameÀ» »ç¿ëÇÒ °æ¿ì, ÀÌ¹Ì µî·ÏµÈ µ¥ÀÌÅÍ¸¦ ºÒ·¯¿Í¼­ Ãß°¡·Î ÆíÁýÇÏ´Â ÀÛ¾÷À¸·Î ÇÑ´Ù.
+	//ï¿½Ú½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Save Gameï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½Ì¹ï¿½ ï¿½ï¿½Ïµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½Ò·ï¿½ï¿½Í¼ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
 	FEnemyData SaveData;
 	SaveData.Location = GetActorLocation();
 	SaveData.Rotation = GetActorRotation();

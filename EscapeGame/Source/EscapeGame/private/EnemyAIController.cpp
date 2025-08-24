@@ -1,14 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "EnemyAIController.h"
-#include "BehaviorTree/BehaviorTree.h"
-#include "BehaviorTree/BehaviorTreeComponent.h"
-#include "BehaviorTree/BlackboardComponent.h"
-#include "EnemyCharacter.h"
 
-
-
-
+#include "Actor/Controller/EnemyAIController.h"
 const FName AEnemyAIController::TargetPlayer(TEXT("TargetPlayer"));
 const FName AEnemyAIController::HomePos(TEXT("HomePos"));
 const FName AEnemyAIController::PatrolPos(TEXT("PatrolPos"));
@@ -22,8 +15,6 @@ void AEnemyAIController::OnPossess(APawn * InPawn)
 {
 	Super::OnPossess(InPawn);
 	//EGLOG(Warning, TEXT("AIController Online : %s"), *InPawn->GetName());
-
-	
 	
 	
 }
@@ -65,8 +56,8 @@ void AEnemyAIController::RunAI()
 {
 	if (BBData == nullptr) { EGLOG(Error, TEXT("BBDataError")) return; }
 	//if(Blackboard)
-
-	if (UseBlackboard(BBData, Blackboard))
+	UBlackboardComponent* BlackboardComponent = GetBlackboardComponent();
+	if (UseBlackboard(BBData, BlackboardComponent ))
 	{
 		Blackboard->SetValueAsVector(HomePos, GetPawn()->GetActorLocation());
 	}
@@ -82,7 +73,6 @@ void AEnemyAIController::StopAI()
 	{
 		
 		BehaviorTreeComponent->StopTree(EBTStopMode::Safe);
-		return;
 	}
 
 	

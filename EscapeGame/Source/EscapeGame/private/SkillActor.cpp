@@ -1,8 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SkillActor.h"
-
+#include "Actor/SklillActor/SkillActor.h"
 // Sets default values
 ASkillActor::ASkillActor()
 {

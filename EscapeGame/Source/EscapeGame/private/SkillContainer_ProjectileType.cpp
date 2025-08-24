@@ -1,8 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SkillContainer_ProjectileType.h"
-#include "Projectile.h"
+
+#include "Actor/SklillActor/SkillContainer_ProjectileType.h"
+
+#include "Actor/Trap/Projectile.h"
+
 
 USkillContainer_ProjectileType::USkillContainer_ProjectileType()
 {
@@ -36,7 +39,7 @@ void USkillContainer_ProjectileType::BP_UseSkill(FVector Loc, FRotator Rot, FVec
 	auto something = Cast<AProjectile>(CurrentIndex);
 	if (!something) {
 		return;
-		CurrentIndex = SkillObjects[Index];
+	
 	}
 
 
@@ -53,12 +56,12 @@ void USkillContainer_ProjectileType::BP_UseSkill(FVector Loc, FRotator Rot, FVec
 void USkillContainer_ProjectileType::aimTo( const FVector & Dir_Vector, int n_Count)
 {
 	
-	//�߻�ü
+	//�߻�ü
 	
 	auto something=Cast<AProjectile>(CurrentIndex);
 	if (!something) { 
 		return;
-		CurrentIndex = SkillObjects[Index];
+	
 	}
 
 	

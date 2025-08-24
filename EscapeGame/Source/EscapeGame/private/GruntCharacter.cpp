@@ -1,15 +1,23 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "GruntCharacter.h"
-#include "EnemyAIController_Grunt.h"
-#include "CharacterAnimInstance.h"
+
 //#include "DrawDebugHelpers.h"
-#include "EGPlayerCharacter.h"
-#include "EGSaveGame.h"
-#include "EGGameInstance.h"
+#include "Actor/Character/GruntCharacter.h"
+
 #include "DrawDebugHelpers.h"
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "Actor/Controller/EnemyAIController_Grunt.h"
+#include "Animation/Anim_Grunt.h"
+#include "Component/StatComponent_EGrunt.h"
+#include "Component/StatComponent_Player.h"
+#include "Components/AudioComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/ProgressBar.h"
+#include "Components/WidgetComponent.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "UnrealCore/EGGameInstance.h"
+#include "UnrealCore/SaveGame/EGSaveGame.h"
 
 
 //const float AGruntCharacter::MaxHP = 200.0f;
@@ -18,7 +26,7 @@ const float AGruntCharacter::MaxWalkingSpeed = 200.0f;
 const float AGruntCharacter::MaxRunningSpeed = 700.0f;
 
 
-AGruntCharacter::AGruntCharacter()
+AGruntCharacter::AGruntCharacter(const FObjectInitializer& ObjectInitializer):Super(ObjectInitializer)
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
@@ -131,14 +139,14 @@ AGruntCharacter::AGruntCharacter()
 	if (CA_Anim.Succeeded())
 	{
 		
-		GetMesh()->SetAnimClass(CA_Anim.Class);
+		GetMesh()->SetAnimInstanceClass(CA_Anim.Class);
 		//EGLOG(Warning, TEXT("Anim!!!!"));
 	}
 	else
 		EGLOG(Warning, TEXT("Faile"));
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
  
-	//CSV FileÀ» ±â¹ÝÀ¸·Î ÇÑ ½ºÅÝ ºÎ¿© ¼³Á¤
+	//CSV Fileï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½
 	bAllowRandStat = true;
 
 }
@@ -197,8 +205,8 @@ void AGruntCharacter::PostInitializeComponents()
 	
 	/*
 	 *	Attack Event Delegate Add Lambda
-	 *	¶÷´Ù ÇÔ¼ö ¹ÙÀÎµù
-	 *	°ø°ÝÀ» ÇÃ·¹ÀÌÇÒ ¶§ È£ÃâµÇ°í °ø°Ý¿¡ ´ëÇÑ ÆÇÁ¤À» ½ÃµµÇÕ´Ï´Ù. 
+	 *	ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½Îµï¿½
+	 *	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½Ý¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ãµï¿½ï¿½Õ´Ï´ï¿½. 
 	 * 
 	 */
 	Anim->AttackEvent_Delegate.AddLambda([this]()->void {
@@ -235,7 +243,7 @@ void AGruntCharacter::PostInitializeComponents()
 
 	});
 
-	//Ã¼·ÂÀÌ 0ÀÌ µÆÀ» ¶§ È£ÃâµÉ ¶÷´Ù ÇÔ¼ö
+	//Ã¼ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
 	StatComponent->HPZeroDelegate.AddLambda([this]()->void {
 		auto Anim = Cast<UAnim_Grunt>(GetMesh()->GetAnimInstance());
 		if (!Anim)
@@ -266,7 +274,7 @@ float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Damag
 	StatComponent->TakeDamage(FinalDamage);
 	
 
-	//Á×¾ú´Ù¸é causer°¡ playerÀÎÁö °Ë»çÇÏ°í °æÇèÄ¡¸¦ ÁØ´Ù
+	//ï¿½×¾ï¿½ï¿½Ù¸ï¿½ causerï¿½ï¿½ playerï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ø´ï¿½
 	if (StatComponent->GetHPRatio() <= 0.0f)
 	{
 		auto player = Cast<AEGPlayerCharacter>(DamageCauser);
@@ -287,7 +295,7 @@ float AGruntCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Damag
 }
 
 
-//Stat°ú °ü·ÃµÈ Á¤º¸¸¦ ÀúÀåÇÏ¸é µÈ´Ù. 
+//Statï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½È´ï¿½. 
 void AGruntCharacter::SaveGame(UEGSaveGame * SaveInstance)
 {
 	Super::SaveGame(SaveInstance);
@@ -313,7 +321,7 @@ void AGruntCharacter::SaveGame(UEGSaveGame * SaveInstance)
 }
 
 
-//Stat °ü·Ã Á¤º¸¸¦ LoadÇÏ¸é µÈ´Ù. À§Ä¡ Á¤º¸ ºÒ·¯¿À±â´Â ºÎ¸ð¿¡¼­ Ã³¸®Çß´Ù
+//Stat ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Loadï¿½Ï¸ï¿½ ï¿½È´ï¿½. ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ð¿¡¼ï¿½ Ã³ï¿½ï¿½ï¿½ß´ï¿½
 void AGruntCharacter::LoadGame(const UEGSaveGame * LoadInstance)
 {
 	Super::LoadGame(LoadInstance);
@@ -386,36 +394,36 @@ void AGruntCharacter::Attack()
 void AGruntCharacter::FireAttack()
 {
 	if (!Anim)return;
-	//Montage Àç»ý
+	//Montage ï¿½ï¿½ï¿½
 	Anim->Montage_Play(Anim->GetFireAttackMontage());
 	
-	//¹ß»ç ÆÄÆ¼Å¬À» ¸¸µé À§Ä¡
+	//ï¿½ß»ï¿½ ï¿½ï¿½Æ¼Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
 	FVector PosPSPlay = GetMesh()->GetSocketLocation(SockFirePointR);
-	//¹ß»ç ÆÄÆ¼Å¬ÀÇ È¸Àü °ª
+	//ï¿½ß»ï¿½ ï¿½ï¿½Æ¼Å¬ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½
 	FRotator RotPSPlay = GetActorRotation();
 
 	/*
-	 *	¹ß»ç ¹æ½Ä
-	 *	Ray TracingÀ» ÅëÇÑ Å¸°Ý ÆÇÁ¤À» ½ÃÇà
-	 *	¿øÀ¸·Î ½ºÇÁ·¹ÀÌ Çü½ÄÀ¸·Î ¸¸µé¾î ·£´ýÇÑ ¹æÇâÀ¸·Î Ray¸¦ ¹ß»ç
+	 *	ï¿½ß»ï¿½ ï¿½ï¿½ï¿½
+	 *	Ray Tracingï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	 *	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Rayï¿½ï¿½ ï¿½ß»ï¿½
 	 */
 
 
-	 // ¹ß»ç ÁöÁ¡¿¡¼­ ±¸±îÁö °Å¸® 
+	 // ï¿½ß»ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ 
 	float DistOffset = 30.0f;
-	//À¯È¿ »çÁ¤°Å¸®
+	//ï¿½ï¿½È¿ ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½
 	float Range = 3000.0f;
-	//±¸ÀÇ ¹ÝÁö¸§
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	float Radius = 200.0f;
-	//±¸ÀÇ Áß½É À§Ä¡
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ ï¿½ï¿½Ä¡
 	FVector Center = PosPSPlay + (GetActorForwardVector() * DistOffset);
-	//Á¶ÁØ ÁöÁ¡. ±¸ÀÇ À§Ä¡¿¡¼­ ·£´ýÇÏ°Ô ÇÑ´Ù
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ñ´ï¿½
 	FVector AimPoint;
 	AimPoint.X = FMath::RandRange(Center.X - Radius, Center.X + Radius);
 	AimPoint.Y = FMath::RandRange(Center.Y - Radius, Center.Y + Radius);
 	AimPoint.Z = FMath::RandRange(Center.Z - Radius, Center.Z + Radius);
 
-	//RayÀÇ ³¡ÁöÁ¡
+	//Rayï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	FVector EndPoint= AimPoint + (GetActorForwardVector() * Range);
 	FHitResult HitResult;
 	
@@ -429,7 +437,7 @@ void AGruntCharacter::FireAttack()
 		return;
 	}
 
-	//µð¹ö±×¿ë ¶óÀÎ
+	//ï¿½ï¿½ï¿½ï¿½×¿ï¿½ ï¿½ï¿½ï¿½ï¿½
 //	DrawDebugLine(World, PosPSPlay, EndPoint, FColor::Cyan, false, 10.0f);
 
 
@@ -442,10 +450,10 @@ void AGruntCharacter::FireAttack()
 		EGLOG(Log, TEXT("miss missle"));
 		return;
 	}
-		//¸ÂÀº ÁöÁ¡ÀÇ À§Ä¡
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
 		FVector PosHit= HitResult.ImpactPoint;
 		
-		//È÷Æ® ÆÇÁ¤ ÆÄÆ¼Å¬&»ç¿îµå Ãâ·Â
+		//ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¼Å¬&ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		VFX_HitEffect->SetWorldLocation(PosHit);
 		SFX_Explosion->SetWorldLocation(PosHit);
 		if(VFX_HitEffect->IsActive())
@@ -460,14 +468,14 @@ void AGruntCharacter::FireAttack()
 		VFX_HitEffect->Activate();
 		SFX_Explosion->Activate();
 
-		//µ¥¹ÌÁö Ã³¸®
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
 		FDamageEvent DamageEvent;
-		if (!HitResult.Actor.IsValid())
+		if (!HitResult.GetActor())
 		{
 			EGLOG(Error, TEXT(" Hit Actor is invalid"));
 			return;
 		}
-		auto Player = Cast<AEGPlayerCharacter>(HitResult.Actor);
+		auto Player = Cast<AEGPlayerCharacter>(HitResult.GetActor());
 		if (!Player)
 		{
 			EGLOG(Error, TEXT("Not Player"));
@@ -489,10 +497,15 @@ void AGruntCharacter::PlayDeathEffect()
 	SFX_Death->Activate();
 }
 
+float AGruntCharacter::DropExp()
+{
+	return StatComponent->GetDropExp(); 
+}
 
-//»èÁ¦ÇÏ±â Àü¿¡ ÄÁÆ®·Ñ·¯ÀÇ BT¸¦ ²¨ÁØ´Ù
-//ÄÝ¸®ÀüÀº ²¨ÁØ´Ù
-//animÀÇ Dead AnimationÀ» Àç»ý½ÃÅ°°Ô ÇØÁØ´Ù
+
+//ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ï¿½ï¿½ BTï¿½ï¿½ ï¿½ï¿½ï¿½Ø´ï¿½
+//ï¿½Ý¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø´ï¿½
+//animï¿½ï¿½ Dead Animationï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½Ø´ï¿½
 void AGruntCharacter::ReadToDead()
 {
 	auto con = Cast<AEnemyAIController_Grunt>(Controller);

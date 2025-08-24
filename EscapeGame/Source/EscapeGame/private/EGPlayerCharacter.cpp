@@ -1,35 +1,47 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "EGPlayerCharacter.h"
-#include "EGPlayerController.h"
-#include "Item_Recover.h"
-#include "GameFramework/CharacterMovementComponent.h"
+
+#include "Actor/Character/EGPlayerCharacter.h"
+
+#include "Actor/Character/EnemyCharacter.h"
+#include "Actor/Item/Item_CardKey.h"
+#include "Actor/Item/Item_Recover.h"
+#include "Actor/SklillActor/SkillActor_Hit.h"
+#include "Actor/SklillActor/SkillActor_PlayerFury.h"
+#include "Actor/SklillActor/SkillActor_ThunderType.h"
+#include "Actor/SklillActor/SkillContainer_PlayerFury.h"
+#include "Actor/SklillActor/SkillContainer_PlayerHitEffect.h"
+#include "Actor/Trap/Projectile.h"
+#include "Animation/Anim_Player.h"
+#include "Camera/CameraComponent.h"
+#include "Component/Component_TimeLimit.h"
+#include "Component/EGCharacterMovementComponent.h"
+#include "Component/StatComponent_Player.h"
+#include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Components/AudioComponent.h"
-#include "Particles/ParticleSystemComponent.h"
-#include "GameWidget.h"
-#include "Components/InputComponent.h"
-#include "Projectile.h"
-#include "GameSetting/public/EGCharacterSetting.h"
-#include "Sound/SoundCue.h"
-#include "SkillActor_ThunderType.h"
-#include "SkillActor_PlayerFury.h"
+#include "GameAbility/BarrierEffectComponent.h"
+#include "GameAbility/Component_Fury.h"
+#include "GameAbility/Component_Inventory.h"
+#include "GameAbility/Component_Stamina.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "GameSystem/MiniMap/MiniMapMarkerComponent.h"
+#include "GameSystem/MiniMap/MiniMapRenderComponent.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "EGGameInstance.h"
-#include "EGGameState.h"
-#include "Item_CardKey.h"
-#include "EGPostProcessVolume.h"
-#include "MiniMapMarkerComponent.h"
-#include "MiniMapTileManager.h"
-#include "BarrierEffectComponent.h"
-#include "Perception/AISenseConfig_Sight.h"
-#include "Perception/AISenseConfig_Hearing.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "Perception/AISense_Hearing.h"
-
-
+#include "Perception/AISense_Sight.h"
+#include "Sound/SoundCue.h"
+#include "UnrealCore/EGGameInstance.h"
+#include "UnrealCore/EGPostProcessVolume.h"
+#include "UnrealCore/SaveGame/EGSaveGame.h"
 // Sets default values
-AEGPlayerCharacter::AEGPlayerCharacter()
+AEGPlayerCharacter::AEGPlayerCharacter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
+	
+	
+	
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -45,7 +57,6 @@ AEGPlayerCharacter::AEGPlayerCharacter()
 	
 	bIsGuarding = false;
 	bIsDebugMode = false;
-	
 
 	MoveDirection = FVector::ZeroVector;
 	CurrentVelocity = 78.f;
@@ -253,7 +264,7 @@ void AEGPlayerCharacter::PostInitializeComponents()
 
 	
 	//발소리 소음 이벤트
-	Anim->OnPlant.BindUObject(this, &AEGPlayerCharacter::OnMakeNoiseEvenet);
+	Anim->OnPlant.BindUObject(this, &AEGPlayerCharacter::OnMakeNoiseEvent);
 
 
 	//Weapon Hit 판정
@@ -372,7 +383,7 @@ void AEGPlayerCharacter::ActiveFuryDamage()
 	//Find Enemy Character Types
 	for (auto it : HitResult)
 	{
-		auto TargetActor = Cast<AEnemyCharacter>(it.Actor);
+		auto TargetActor = Cast<AEnemyCharacter>(it.GetActor());
 		if (!TargetActor)
 		{
 			EGLOG(Log, TEXT("Not Enemy Character types"));
@@ -519,7 +530,7 @@ void AEGPlayerCharacter::SlashAttack()
 	//Find Enemy Character Types
 	for (auto it : HitResult)
 	{
-		auto TargetActor = Cast<AEnemyCharacter>(it.Actor);
+		auto TargetActor = Cast<AEnemyCharacter>(it.GetActor());
 		if (!TargetActor)
 		{
 			EGLOG(Log, TEXT("Not Enemy Character types"));
@@ -636,8 +647,8 @@ void AEGPlayerCharacter::PressGuard()
 		StaminaComponent->SetUsingStamina(true);
 
 		Stat->SetDamageable(false);
-		RestricInput(ERestricInputType::E_LRMB);
-		RestricInput(ERestricInputType::E_AxisMoving);
+		RestrictInput(ERestricInputType::E_LRMB);
+		RestrictInput(ERestricInputType::E_AxisMoving);
 	//GetCharacterMovement()
 	//RestricInput();
 	
@@ -670,7 +681,7 @@ void AEGPlayerCharacter::ActiveThunder()
 	Skill_Thunder->UseSkill(GetActorLocation());
 }
 
-void AEGPlayerCharacter::RestricInput(const ERestricInputType& Type)
+void AEGPlayerCharacter::RestrictInput(const ERestricInputType& Type)
 {
 	switch(Type)
 	{
@@ -717,12 +728,6 @@ void AEGPlayerCharacter::RecoverInput(const ERestricInputType& Type)
 	}
  
 }
-
-
-
-
-
-
 
 
 
@@ -966,8 +971,8 @@ void AEGPlayerCharacter::SetDeath()
 	//Anim->StopAllMontages(0.0f);
 
 	Anim->SetDead();
-	RestricInput(ERestricInputType::E_AxisMoving);
-	RestricInput(ERestricInputType::E_LRMB);
+	RestrictInput(ERestricInputType::E_AxisMoving);
+	RestrictInput(ERestricInputType::E_LRMB);
 	auto EGGameInstance = Cast<UEGGameInstance>(GetGameInstance());
 	if (!EGGameInstance)
 	{
@@ -1002,7 +1007,7 @@ void AEGPlayerCharacter::PressFury()
 	Anim->PlayFury();
 }
 
-void AEGPlayerCharacter::OnMakeNoiseEvenet()
+void AEGPlayerCharacter::OnMakeNoiseEvent()
 {
 	UAISense_Hearing::ReportNoiseEvent(this,GetActorLocation(),
 		1.0f,this,200.0f,TEXT("Player"));

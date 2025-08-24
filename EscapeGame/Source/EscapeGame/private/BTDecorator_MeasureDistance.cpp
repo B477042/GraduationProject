@@ -1,8 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTDecorator_MeasureDistance.h"
-#include "EnemyAIController_Grunt.h"
+#include "AI/BTDecorator_MeasureDistance.h"
+
+#include "AIController.h"
+#include "EscapeGame.h"
+#include "BehaviorTree/BlackboardComponent.h"
+
 
 UBTDecorator_MeasureDistance::UBTDecorator_MeasureDistance()
 {

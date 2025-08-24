@@ -1,8 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 
-#include "ShutterTrap.h"
-#include "EGPlayerCharacter.h"
 
+#include "Actor/Trap/ShutterTrap.h"
+
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "Components/AudioComponent.h"
 // Sets default values
 AShutterTrap::AShutterTrap()
 {
@@ -21,7 +22,7 @@ void AShutterTrap::BeginPlay()
 {
 	Super::BeginPlay();
 
-	////¹®Á¦ ÄÚµå
+	////ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½
 	for (int i = 0; i < n_spears; i++)
 	{
 		Spears.Emplace(GetWorld()->SpawnActor<ASpearActor>());
@@ -31,7 +32,7 @@ void AShutterTrap::BeginPlay()
 			Spears[i]->SetActorHiddenInGame(true);
 
 			//?????? ??? ???
-			//??? ?????? ??? ??? ??????? ????? ?????? ???¢¥?
+			//??? ?????? ??? ??? ??????? ????? ?????? ???ï¿½ï¿½?
 			//??? ???? ?? -> ?? ???????? ?????? ???. x,y????? ??? ???????
 			SoundEffect->SetRelativeLocation(SoundEffect->GetRelativeLocation() + FVector(-90 + (30 * i), -6.0f + (1.5*i), -120.0f));
 			FVector finallocation = SoundEffect->GetComponentLocation() ;
@@ -80,7 +81,7 @@ void AShutterTrap::Tick(float DeltaTime)
 
 void AShutterTrap::RiseUpSpears(float deltaTime)
 {
-	//¹®Á¦ ÀÖÀ» ¼ö ÀÖ´Â ÄÚµå
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Úµï¿½
 	float newZ=(spear_last-spear_start)/StreachTime*deltaTime;
 	for (int i = 0; i < n_spears; i++)
 	{
@@ -150,26 +151,26 @@ void AShutterTrap::setupCollision()
 
 void AShutterTrap::setSpearsDefaultPos()
 {
-	//¿øÁ¡¿¡¼­ Ã¢µéÀÌ ¼ÚÀº ÁöÁ¡À» ¹Ù¶óº¼ ¶§, ±×°ÍÀÌ ÀÏ·Ä·Î ³ª¿­µÇ¾î ÀÖ¾î¾ß ÇÑ´Ù. ±×·¡¾ß ±æÀÌ ¸·È÷´Ï±î.
-	//¿øÁ¡¿¡¼­ box ÄÝ¸®Àü±îÁö ±æÀÌ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶ï¿½ ï¿½ï¿½, ï¿½×°ï¿½ï¿½ï¿½ ï¿½Ï·Ä·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½Ö¾ï¿½ï¿½ ï¿½Ñ´ï¿½. ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½.
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ box ï¿½Ý¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	const float distToBox = Trigger->GetRelativeTransform().GetLocation().Y;
 	const FVector CurrentPos = GetActorLocation();
 	const FRotator CurrentRot = GetActorRotation();
 
 	//Way 1
 
-	////³»°¡ »ç¿ëÇÏ±â ¿øÇÏ´Â º¤ÅÍ´Â Àü¹æº¤ÅÍÀÇ x,y°ªÀÌ ¼­·Î ½º¿ÒµÈ °ªÀÌ´Ù. ±×¸®°í ³»°¡ ¿øÇÏ´Â º¤ÅÍÀÇ x°ªÀº -1ÀÌ °öÇØÁø´Ù.
-	////ÀÌ·¸°Ô ÇÑ´Ù¸é º¤ÅÍ´Â ³»ÂÊÀ» ¹Ù¶óº¸°Ô µÈ´Ù
+	////ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Í´ï¿½ ï¿½ï¿½ï¿½æº¤ï¿½ï¿½ï¿½ï¿½ x,yï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Òµï¿½ ï¿½ï¿½ï¿½Ì´ï¿½. ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ xï¿½ï¿½ï¿½ï¿½ -1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+	////ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½Ñ´Ù¸ï¿½ ï¿½ï¿½ï¿½Í´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶óº¸°ï¿½ ï¿½È´ï¿½
 	//FVector newVec = GetActorForwardVector();
 	//newVec.Y *= -1.0f;
 	//const FVector myFwVec = FVector(newVec.Y, newVec.X, newVec.Z);
 
-	////Àú ¹æÇâ´ë·Î µðÅØÆ® ¹üÀ§¸¦ °öÇÑÈÄ, »ó´ë ÁÂÇ¥°è¿¡¼­ 5°³ÀÇ Ã¢ÀÇ Áß½ÉÁ¡ÀÌ µÉ °÷ÀÌ ³ª¿Ã °ÍÀÌ´Ù.
+	////ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½è¿¡ï¿½ï¿½ 5ï¿½ï¿½ï¿½ï¿½ Ã¢ï¿½ï¿½ ï¿½ß½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½.
 	//const FVector mySpearCenterPos = (myFwVec * distToBox) ;
 
 
-	//¿øÁ¡À¸·Î µÇµ¹¸°´Ù.
-	//±×·³ »ó´ëÁÂÇ¥¸¦ Á÷Á¢ ÁöÁ¤ÇØµµ µÉ Å×´Ï±î
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½.
+	//ï¿½×·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ ï¿½ï¿½ ï¿½×´Ï±ï¿½
 	SetActorRotation(FRotator::ZeroRotator);
 
 	for (int i = 0; i < n_spears; i++)
@@ -180,12 +181,12 @@ void AShutterTrap::setSpearsDefaultPos()
 
 			Spears[i]->SetActorHiddenInGame(true);
 
-			////¹®Á¦°¡ ÀÖ´Â ÄÚµå
-			////ÀÌ°Å ¶§¹®¿¡ Ã¢ÀÌ ¾î´À ¹æÇâÀÌ°Ç ¶È°°Àº ¹æÇâ¿¡¼­ ³ª¿Â´Ù
-			////´Ù½Ã ¸¸µé °Í -> °ª Á¶Àý¿¡¼­ ¹®Á¦°¡ ÀÖ´Ù. x,yÁÂÇ¥¸¦ ´Ù½Ã °è»êÇÏÀÚ
+			////ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Úµï¿½
+			////ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½È°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½Â´ï¿½
+			////ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ -> ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½. x,yï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			 
 			FVector NewLocation = FVector(100.0f - (50.0f*i), -10.0f, -120.0f);
-			//È¸Àü ¹Ý°æ
+			//È¸ï¿½ï¿½ ï¿½Ý°ï¿½
 			FVector Radius = FVector(NewLocation.X, 0.0f, 0.0f);
 			float Angle = CurrentRot.Yaw;
 			FVector RotateValue = Radius.RotateAngleAxis(Angle, FVector(0.0f, 0.0f, 1.0f));
@@ -204,7 +205,7 @@ void AShutterTrap::setSpearsDefaultPos()
 
 	}
 
-	//¹èÄ¡°¡ ³¡³µÀ¸´Ï µÇµ¹¸°´Ù
+	//ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½
 	SetActorRotation(CurrentRot);
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AShutterTrap::OnPlayerEntered);
 

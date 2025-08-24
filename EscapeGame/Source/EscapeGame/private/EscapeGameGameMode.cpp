@@ -1,12 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "EscapeGameGameMode.h"
-#include "EGPlayerCharacter.h"
-#include "EGPlayerController.h"
-#include "EGGameState.h"
-#include "EGPlayerState.h"
+
 //#include "DT_DataStruct.h"
 
+
+#include "UnrealCore/EscapeGameGameMode.h"
+
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "Actor/Character/EGPlayerController.h"
+#include "UnrealCore/EGGameState.h"
+#include "UnrealCore/EGPlayerState.h"
 
 AEscapeGameGameMode::AEscapeGameGameMode()
 {
@@ -14,7 +17,6 @@ AEscapeGameGameMode::AEscapeGameGameMode()
 	PlayerControllerClass = AEGPlayerController::StaticClass();
 	GameStateClass = AEGGameState::StaticClass();
 	PlayerStateClass = AEGPlayerState::StaticClass();
-
 }
 
 void AEscapeGameGameMode::PostLogin(APlayerController * NewPlayer)

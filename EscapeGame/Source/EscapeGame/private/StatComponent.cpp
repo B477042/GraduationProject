@@ -1,13 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "StatComponent.h"
-#include "EGPlayerCharacter.h"
-#include "EnemyCharacter.h"
+
+#include "Component/StatComponent.h"
+
+#include "Actor/Character/EGPlayerCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
-
-
-
-
 // Sets default values for this component's properties
 UStatComponent::UStatComponent()
 {
@@ -161,7 +158,7 @@ void UStatComponent::SetRunning()
 	auto Character = Cast<ACharacter>(GetOwner());
 	if (Character != nullptr)
 	{
-		//°ø°ÝÁßÀÌ¸é ¶ÙÁö ¸øÇÏ°Ô
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½
 		if (bIsAttacking)return;
 		auto Movement = Character->GetCharacterMovement();
 		Movement->MaxWalkSpeed = MaxRunningSpeed;

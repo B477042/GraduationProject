@@ -1,7 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "LightningTrap_Origin.h"
-#include "EGPlayerCharacter.h"
+
+#include "Actor/Trap/LightningTrap_Origin.h"
+
+#include "Actor/Character/EGPlayerCharacter.h"
 // Sets default values
 ALightningTrap_Origin::ALightningTrap_Origin()
 {

@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SkillContainer_PlayerHitEffect.h"
+#include "Actor/SklillActor/SkillContainer_PlayerHitEffect.h"
 
-
+#include "Actor/SklillActor/SkillActor_Hit.h"
 
 USkillContainer_PlayerHitEffect::USkillContainer_PlayerHitEffect()
 {
@@ -23,7 +23,7 @@ void USkillContainer_PlayerHitEffect::TickComponent(float DeltaTime, ELevelTick 
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
-//Hit ÀÌÆåÆ®°¡ ¾Æ´Ñ ¹«¾ð°¡¸¦ ³ÖÀ¸¸é µ¿ÀÛÇÏÁö ¾Ê´Â´Ù
+//Hit ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ð°¡¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Â´ï¿½
 void USkillContainer_PlayerHitEffect::UseSkill(const AActor & TargetActor, const FVector & Direction, int n_Count)
 {
 	auto something = Cast<ASkillActor_Hit>(CurrentIndex);

@@ -1,10 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SaveInfoWidget.h"
-#include "EGGameInstance.h"
-#include "EGSaveGame.h"
+#include "UI/SaveInfoWidget.h"
 
+#include "EscapeGame.h"
+#include "UnrealCore/EGGameInstance.h"
+#include "UnrealCore/SaveGame/EGSaveGame.h"
 
 void  USaveInfoWidget::NativePreConstruct()
 {

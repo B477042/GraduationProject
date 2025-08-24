@@ -1,8 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "MiniMapTileManager.h"
-#include "BaseStruct.h"
+#include "GameSystem/MiniMap/MiniMapTileManager.h"
+
+#include "DecoActor/BaseStruct.h"
 //bool AMiniMapTileManager::bIsUniqueObj = false;
 // Sets default values
 AMiniMapTileManager::AMiniMapTileManager()

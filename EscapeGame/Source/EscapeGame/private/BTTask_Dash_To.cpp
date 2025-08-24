@@ -1,9 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTTask_Dash_To.h"
-#include "EnemyAIController.h"
-#include "EnemyBossCharacter.h"
+#include "AI/BTTask_Dash_To.h"
+
+#include "AIController.h"
+#include "Actor/Character/EnemyBossCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 UBTTask_Dash_To::UBTTask_Dash_To()

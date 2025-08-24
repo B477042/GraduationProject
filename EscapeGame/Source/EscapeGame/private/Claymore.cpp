@@ -1,6 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Claymore.h"
+
+#include "Actor/Trap/Claymore.h"
+
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "Components/AudioComponent.h"
+#include "Components/BoxComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 //#include "..\public\Claymore.h"
 
 
@@ -199,18 +205,18 @@ float AClaymore::getDamage()
 	float distance = getDistanceToTarget();
 	if (distance == -1.0f)	return 0.0f;
 
-	//ÃÖ´ë µ¥¹ÌÁö ¹üÀ§ ¾È¿¡ ÀÖ´Ù¸é
+	//ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ ï¿½Ö´Ù¸ï¿½
 	if (distance < maxDamageRange)
 		return MaxDamage;
-	//³ªÁß¿¡ µ¥¹ÌÁö ÇÁ·¹ÀÓ ¸¸µé±â
+	//ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (distance < minDamageRange)
 		return MinDamage;
-	//¹üÀ§¸¦ ¹þ¾î³²
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î³²
 	else
 		return 0.0f;
 }
 
-//max detect range¾È¿¡ ¿¢ÅÍ¶û ºÎµúÃÆ´Ù¸é true
+//max detect rangeï¿½È¿ï¿½ ï¿½ï¿½ï¿½Í¶ï¿½ ï¿½Îµï¿½ï¿½Æ´Ù¸ï¿½ true
 bool AClaymore::bIsActorInFrontSide(FHitResult &hitResult)
 {
 
@@ -225,17 +231,17 @@ bool AClaymore::bIsActorInFrontSide(FHitResult &hitResult)
 		
 		const FVector ClaymorePos = Body->GetComponentLocation();
 
-	//³»°¡ »ç¿ëÇÏ±â ¿øÇÏ´Â º¤ÅÍ´Â Àü¹æº¤ÅÍÀÇ x,y°ªÀÌ ¼­·Î ½º¿ÒµÈ °ªÀÌ´Ù. ±×¸®°í ³»°¡ ¿øÇÏ´Â º¤ÅÍÀÇ x°ªÀº -1ÀÌ °öÇØÁø´Ù
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Í´ï¿½ ï¿½ï¿½ï¿½æº¤ï¿½ï¿½ï¿½ï¿½ x,yï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Òµï¿½ ï¿½ï¿½ï¿½Ì´ï¿½. ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ xï¿½ï¿½ï¿½ï¿½ -1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		FVector newVec = GetActorForwardVector();
 		newVec.Y *= -1.0f;
 		const FVector myFwVec = FVector(newVec.Y, newVec.X, newVec.Z);
 
-		//Àú ¹æÇâ´ë·Î µðÅØÆ® ¹üÀ§¸¦ °öÇÑÈÄ, claymorePosÀ» ´õÇÏ¸é ¿ùµå ÁÂÇ¥°è¿¡¼­ µðÅØÆ® ¹üÀ§ ³¡ Á¡¿¡ À§Ä¡ÇÑ Á¡ÀÌ ³ª¿Ã °ÍÀÌ´Ù.
+		//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, claymorePosï¿½ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½è¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½.
 		const FVector myTargetVec = (myFwVec * maxDetectRange) + ClaymorePos;
 
  
 
-		//Àü¹æÀ¸·Î detecte range¸¸Å­ Å½»öÇÑ´Ù. ·¹ÀÌ¸¦ ½ð´Ù
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ detecte rangeï¿½ï¿½Å­ Å½ï¿½ï¿½ï¿½Ñ´ï¿½. ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½
 		bool bResult = World->LineTraceSingleByChannel(hitResult, ClaymorePos , myTargetVec,
 			//All Block Trace
 			ECollisionChannel::ECC_GameTraceChannel4);
@@ -250,30 +256,30 @@ bool AClaymore::bIsActorInFrontSide(FHitResult &hitResult)
 		return true;
 }
 
-//¾Õ¼­ ¾òÀº °á°ú¸¦ ¹ÙÅÁÀ¸·Î ¹Ú½º¸¦ ´Ù½Ã ¼öÁ¤ÇÑ´Ù. ¹Ú½ºÀÇ ±æÀÌ¸¦ 
+//ï¿½Õ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½. ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ 
 void AClaymore::changeBoxExtent(const FHitResult& hitResult)
 {
-	//Å½Áö¿¡ ´êÀº ÁöÁ¡
+	//Å½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	const auto impactPoint = hitResult.ImpactPoint;
 
 	float newBoxYPos=0.0f;
 	float newBoxYLength=0.0f;
 	
 
-	//ÇöÀç Box Extent·Î ¼³Á¤µÈ °ªÀ» º¹»çÇÑ´Ù. 100 100 30ÀÏ °ÍÀÌ´Ù
-	//ÃÊ±âÈ­ °ªÀ» ÇöÀç »óÅÂ °ªµé·Î ÇÑ´Ù
+	//ï¿½ï¿½ï¿½ï¿½ Box Extentï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½. 100 100 30ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½
+	//ï¿½Ê±ï¿½È­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½
 	FVector newBoxExtent = BoxCollision->GetScaledBoxExtent();
 	FVector newBoxPos = BoxCollision->GetRelativeTransform().GetLocation();
 
-	//ÀÌÁ¦ »õ·Î¿î À§Ä¡¿Í ±æÀÌ¸¦ °è»êÇÑ´Ù.
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 	newBoxYLength = FVector::Distance(hitResult.TraceStart,impactPoint)/2.0f;
 	newBoxYPos = newBoxYLength;
 
-	//°è»ê ÇÑ °ÍÀ» new vector¿¡ ³Ö´Â´Ù
+	//ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ new vectorï¿½ï¿½ ï¿½Ö´Â´ï¿½
 	newBoxExtent.Y = newBoxYLength;
 	newBoxPos.Y = newBoxYPos;
 
-	//»õ·Î¿î °ªÀ» ¼³Á¤ÇØ¼­ ³Ö¾îÁØ´Ù
+	//ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½Ö¾ï¿½ï¿½Ø´ï¿½
 	BoxCollision->SetRelativeLocation(newBoxPos);
 	BoxCollision->SetBoxExtent(newBoxExtent);
 	
@@ -333,7 +339,7 @@ void AClaymore::explosion()
 	EGLOG(Error, TEXT("Distance : %f"), getDistanceToTarget());
 	if (result)
 	{
-		if (hitResult.Actor.IsValid())
+		if (hitResult.GetActor())
 		{
 
 			EGLOG(Error, TEXT("%s has attacked by Claymore"), *hitResult.GetActor()->GetName());

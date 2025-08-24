@@ -1,9 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Component_Fury.h"
-#include "Sound/SoundWave.h"
-
+#include "GameAbility/Component_Fury.h"
 // Sets default values for this component's properties
 UComponent_Fury::UComponent_Fury()
 {

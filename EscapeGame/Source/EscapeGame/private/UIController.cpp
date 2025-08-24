@@ -1,6 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "UIController.h"
+
+#include "Actor/Controller/UIController.h"
+
+#include "EscapeGame.h"
 #include "Blueprint/UserWidget.h"
 void AUIController::BeginPlay()
 {

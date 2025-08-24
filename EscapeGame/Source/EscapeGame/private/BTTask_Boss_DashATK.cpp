@@ -1,9 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTTask_Boss_DashATK.h"
-#include "EnemyAIController_Boss.h"
-#include "EnemyBossCharacter.h"
+#include "AI/BTTask_Boss_DashATK.h"
+
+#include "AIController.h"
+#include "Actor/Character/EnemyBossCharacter.h"
+
 UBTTask_Boss_DashATK::UBTTask_Boss_DashATK()
 {
 	NodeName = TEXT("Throw Fire Ball");

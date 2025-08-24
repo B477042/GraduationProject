@@ -1,10 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "MiniMapRenderComponent.h"
-#include "Engine/TextureRenderTarget2D.h"
-#include "Materials/MaterialInstance.h"
-#include "GameSetting/public/EGCharacterSetting.h"
 
+#include "GameSystem/MiniMap/MiniMapRenderComponent.h"
+
+#include "Engine/TextureRenderTarget2D.h"
 // Sets default values for this component's properties
 UMiniMapRenderComponent::UMiniMapRenderComponent()
 {

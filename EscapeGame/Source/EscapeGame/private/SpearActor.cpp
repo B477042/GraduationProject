@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "SpearActor.h"
 
+#include "Actor/Trap/SpearActor.h"
 // Sets default values
 ASpearActor::ASpearActor()
 {

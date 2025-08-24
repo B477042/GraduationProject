@@ -1,9 +1,49 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Component_Inventory.h"
+#include "GameAbility/Component_Inventory.h"
 
-#include"ItemActor.h"
+#include "EscapeGame.h"
+#include "Actor/Item/ItemActor.h"
+
+bool FItemDataInfo::UseItem(ACharacter* UserActor)
+{
+	if (n_item <= 0)return false;
+	//Use Item
+	n_item --;
+	//OnItemChanged.Broadcast();
+
+	//If the number is less than zero after use,retun false.
+	if (n_item <= 0)
+	{
+		Item->UseMe(UserActor);
+			
+		return false;
+	}
+	Item->UseMe(UserActor);
+	return true;
+}
+
+void FItemDataInfo::AddItem(int num)
+{
+	if (num <= 0)return;
+
+	//OnItemChanged.Broadcast();
+
+	n_item +=  num;
+		
+}
+
+void FItemDataInfo::SetItemInfo(AItemActor* Other, int num)
+{
+	Item = Other;
+	if (num >= 0)n_item = num;
+}
+
+TWeakObjectPtr<AItemActor> FItemDataInfo::GetItem()
+{
+	return Item;
+}
 
 // Sets default values for this component's properties
 UComponent_Inventory::UComponent_Inventory()
@@ -37,16 +77,16 @@ void UComponent_Inventory::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 /*
 
-	ÀÔ·Â ¹ÞÀº ¾ÆÀÌÅÛÀ» ÀÎº¥Åä¸®¿¡ Ãß°¡ÇÕ´Ï´Ù
-	ÀÔ·Â ¹ÞÀº ¾ÆÀÌÅÛÀÇ Å×±×¸¦ itmes¿¡ Å×±×¸¦ °Ë»öÇÏ°í
+	ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Õ´Ï´ï¿½
+	ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×±×¸ï¿½ itmesï¿½ï¿½ ï¿½×±×¸ï¿½ ï¿½Ë»ï¿½ï¿½Ï°ï¿½
 
-	ÀÖÀ»°æ¿ì) °¹¼ö¸¦ ´Ã·Á°í
-	¾øÀ»°æ¿ì) »õ·Î Ãß°¡ÇØÁÝ´Ï´Ù
+	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½
+	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½Ý´Ï´ï¿½
 */
 bool UComponent_Inventory::AddItem(AItemActor * AddItem, int Amount)
 {
 	if (!AddItem)return false;
-	//¸¸¾à ÀÌ ¾ÆÀÌÅÛÀÌ ÀÌ¹Ì °¡Áö°í ÀÖ´Â °ÍÀÌ¶ó¸é
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½
 	FName ItemTag = AddItem->GetTag();
 	
 	if (Items.Contains(ItemTag))
@@ -57,24 +97,21 @@ bool UComponent_Inventory::AddItem(AItemActor * AddItem, int Amount)
 		return true;
 	}
 
-	//Ã³À½ »ý¼ºÇÒ ¶§
-	else
-	{
-		FItemDataInfo tempData ;
-		tempData.SetItemInfo(AddItem, Amount);
-		Items.Add(tempData.GetItem()->GetTag(), tempData);
-		OnItemUpdated.Execute(ItemTag, Amount);
-		return true;
-	}
+	//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 	
-	return false;
+	FItemDataInfo tempData ;
+	tempData.SetItemInfo(AddItem, Amount);
+	Items.Add(tempData.GetItem()->GetTag(), tempData);
+	OnItemUpdated.Execute(ItemTag, Amount);
+	return true;
+	
 }
-//¾ÆÀÌÅÛÀ» »ç¿ëÇÕ´Ï´Ù. ¼º°øÀûÀ¸·Î »ç¿ëÇß´Ù¸é »ç¿ëÀÚÀÇ À§Ä¡¿¡ ÀÌÆåÆ®¸¦ »Ñ·ÁÁÝ´Ï´Ù.
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ß´Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ñ·ï¿½ï¿½Ý´Ï´ï¿½.
 bool UComponent_Inventory::UseItem(FName ItemName, ACharacter* UserActor)
 {
 	if (!Items.Contains(ItemName)) { EGLOG(Warning, TEXT("There is no such item")); return false; }
-	//¾ÆÀÌÅÛÀ» »ç¿ëÇÕ´Ï´Ù.
-	//¾ÆÀÌÅÛÀÇ °¹¼ö°¡ 0 ÀÌÇÏ°¡ µÇ¸é ÀÌ ¾ÆÀÌÅÛÀº inventory¿¡¼­ »ç¶óÁ®¾ß µË´Ï´Ù.
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0 ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ç¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ inventoryï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë´Ï´ï¿½.
 	if (!Items[ItemName].UseItem(UserActor))
 	{
 		OnItemUpdated.Execute(ItemName, 0);
@@ -98,7 +135,7 @@ bool UComponent_Inventory::HasItem(FName ItemName)
 
 int UComponent_Inventory::GetAmountItem(FName Name)
 {	
-	//¾øÀ¸¸é À½¼ö·Î º¸³½´Ù
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (!Items.Contains(Name))return -1;
 
 	return Items[Name].GetAmountItems();
@@ -106,11 +143,11 @@ int UComponent_Inventory::GetAmountItem(FName Name)
 
 bool UComponent_Inventory::LoadGameData(AItemActor * newItem, int Amount)
 {
-	//¸¸¾à ½ÇÆÐÇÏ¸é false·Î ¹Ù²ã¼­ ¸®ÅÏ
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ falseï¿½ï¿½ ï¿½Ù²ã¼­ ï¿½ï¿½ï¿½ï¿½
 	bool bResult = true;
 	/*
-		1. ¹Þ¾Æ¿Â Item ActorÀÇ ÄÝ¸°Àü ¹ÝÀÀÀ» ²ô°í °ÔÀÓ¿¡¼­ ¼û±ä´Ù
-		2. ÀÌ Item ActorÀÇ Tag·Î ÀÎº¥Åä¸®¿¡ ³Ö¾îÁØ´Ù.
+		1. ï¿½Þ¾Æ¿ï¿½ Item Actorï¿½ï¿½ ï¿½Ý¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+		2. ï¿½ï¿½ Item Actorï¿½ï¿½ Tagï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ø´ï¿½.
 	*/
 	newItem->SetItemDisable();
 	bResult = AddItem(newItem, Amount);

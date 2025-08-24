@@ -1,8 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "EnemyAIController_Boss.h"
 
+#include "Actor/Controller/EnemyAIController_Boss.h"
+#include "UnrealCore/SaveGame/EGSaveGame.h"
 
 //FName AEnemyAIController_Boss::Name_TargetPos = TEXT("TargetPos");
 FName AEnemyAIController_Boss::ActionTimer = TEXT("ActionTimer");
@@ -54,7 +55,7 @@ void AEnemyAIController_Boss::StopAI()
 	Super::StopAI();
 }
 
-//Boss Character¿¡¼­ È£Ãâ
+//Boss Characterï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½
 void AEnemyAIController_Boss::SaveGame(FBossData& BossData)
 {
 	/*if (!SaveInstance)
@@ -70,7 +71,7 @@ void AEnemyAIController_Boss::SaveGame(FBossData& BossData)
 	EGLOG(Error, TEXT("Boss Save Complete MP : %f"), GetBlackboardComponent()->GetValueAsFloat(MP));
 
 }
-//¿¡¼­ È£Ãâ
+//ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½
 void AEnemyAIController_Boss::LoadGame(const FBossData& BossData)
 {
 	/*if (!LoadInstance)

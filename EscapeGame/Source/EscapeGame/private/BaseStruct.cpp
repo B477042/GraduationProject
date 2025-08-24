@@ -1,13 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BaseStruct.h"
-#include "Materials/MaterialInstance.h"
+#include "DecoActor/BaseStruct.h"
+
+#include "Actor/Character/EGPlayerCharacter.h"
 #include "Components/BoxComponent.h"
-#include "EGPlayerCharacter.h"
-#include "MiniMapTileManager.h"
-
-
+#include "GameSystem/MiniMap/MiniMapMarkerComponent.h"
+#include "GameSystem/MiniMap/MiniMapTileManager.h"
 bool ABaseStruct::bIsPlayerCaptured = false;
 
 // Sets default values

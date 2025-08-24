@@ -1,10 +1,10 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "StatComponent_Player.h"
-#include "EGPlayerController.h"
-#include "DT_DataStruct.h"
-#include "EGGameInstance.h"
+#include "Component/StatComponent_Player.h"
+
+#include "Actor/Character/EGPlayerController.h"
+#include "Data/DT_DataStruct.h"
 #include "GameFramework/Character.h"
 #include "Particles/ParticleSystem.h"
 

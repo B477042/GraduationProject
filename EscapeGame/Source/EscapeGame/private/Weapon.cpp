@@ -1,8 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Weapon.h"
-#include "Anim_Weapon.h"
+#include "Actor/Weapon.h"
+
+#include "Animation/Anim_Weapon.h"
+#include "GameAbility/Component_Mag.h"
 #include "GameFramework/Character.h"
 
 // Sets default values
@@ -74,7 +76,7 @@ FVector AWeapon::CalcFireDirection(const FVector& TargetLocation)
 	//DistanceVector.Normalize();
 	//Spread Sphere Center Location
 	FVector SphereCenter = DistanceVector* FireControl_DistanceOffset;
-	//Á¶ÁØ ÁöÁ¡. ¿øÀÇ À§Ä¡¿¡¼­ ·£´ýÇÏ°Ô ÇÑ´Ù
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ñ´ï¿½
 	FVector AimPoint;
 	AimPoint.X = FMath::RandRange(SphereCenter.X - FireControl_Radius, SphereCenter.X + FireControl_Radius);
 	AimPoint.Y = FMath::RandRange(SphereCenter.Y - FireControl_Radius, SphereCenter.Y + FireControl_Radius);

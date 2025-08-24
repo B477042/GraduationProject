@@ -1,15 +1,17 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "DialogueWidget.h"
+#include "GameSystem/DialogueOld/DialogueWidget.h"
+
+#include "Components/EditableText.h"
+#include "Components/EditableTextBox.h"
 
 
-
-//Dialogue ÀÇ TEXT ³»¿ë
+//Dialogue ï¿½ï¿½ TEXT ï¿½ï¿½ï¿½ï¿½
 void UDialogueWidget::PrintLog(FText Dialogue)
 {
 	if (!TextDialogue)return;
-	//\n±ÛÀÚ¸¦ Ã£¾Æ¼­ ¿£ÅÍ·Î ¹Ù²ãÁÖ´Â ÀÛ¾÷
+	//\nï¿½ï¿½ï¿½Ú¸ï¿½ Ã£ï¿½Æ¼ï¿½ ï¿½ï¿½ï¿½Í·ï¿½ ï¿½Ù²ï¿½ï¿½Ö´ï¿½ ï¿½Û¾ï¿½
 	auto strDia = Dialogue.ToString();
 	int num=0;
 	if (strDia.FindChar('\\', num))

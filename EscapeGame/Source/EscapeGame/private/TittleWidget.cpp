@@ -1,7 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "TittleWidget.h"
+
+#include "UI/TittleWidget.h"
+
 #include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
 

@@ -1,0 +1,31 @@
+@startuml
+
+'https://plantuml.com/sequence-diagram
+
+
+
+
+autonumber
+participant EGPlayerState
+participant EGPlayerController
+participant EGPlayerCharacter
+participant AbilitySystemComponent as asc
+
+
+== GAS Initialization ==
+EGPlayerController -> EGPlayerCharacter : OnPossess
+activate EGPlayerCharacter
+EGPlayerState -> EGPlayerController : Player's AttributeData
+EGPlayerController -> EGPlayerCharacter : Set AttributeData
+EGPlayerCharacter -> asc : Set AttributeData
+EGPlayerState -> EGPlayerController : Player's Ability
+EGPlayerController -> EGPlayerCharacter : Player's Ability
+EGPlayerCharacter -> asc : Set Ability
+deactivate EGPlayerCharacter
+== OnAttributeChanged ==
+->EGPlayerController : TakeDamage
+EGPlayerController -> EGPlayerState : AttributeChange
+
+
+
+@enduml

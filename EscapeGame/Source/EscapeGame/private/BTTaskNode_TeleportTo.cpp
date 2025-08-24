@@ -1,9 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTTaskNode_TeleportTo.h"
-#include "EnemyCharacter.h"
-#include "EnemyAIController.h"
+#include "AI/BTTaskNode_TeleportTo.h"
+
+#include "AIController.h"
+#include "Actor/Character/EnemyCharacter.h"
+#include "Actor/Controller/EnemyAIController.h"
 #include "Kismet/KismetMathLibrary.h"
 
 UBTTaskNode_TeleportTo::UBTTaskNode_TeleportTo()
@@ -56,7 +58,7 @@ FVector UBTTaskNode_TeleportTo::CalcTeleportPos(const FVector & TargetPos)
 }
 
 
-//Line Trace·Î ¹Ù´ÚÀÌ ÀÖ´ÂÁö °Ë»çÇÑ´Ù. ¹Ù´ÚÀÌ ¾øÀ¸¸é ±×°÷Àº °¥¼ö ¾ø´Â °÷ÀÌ´Ù.
+//Line Traceï¿½ï¿½ ï¿½Ù´ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ñ´ï¿½. ï¿½Ù´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½.
 bool UBTTaskNode_TeleportTo::CanTeleportThere(const FVector & TeleportPos, const AActor* IgnoreActor)
 {
 	if (!IgnoreActor)return false;
@@ -69,7 +71,7 @@ bool UBTTaskNode_TeleportTo::CanTeleportThere(const FVector & TeleportPos, const
 	bool Result = false;
 
 
-	//¹ØÀ¸·Î 150cm±îÁö ¶óÀÎÀ» ½ð´Ù
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 150cmï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	bool bResult = GetWorld()->LineTraceSingleByChannel(hitResult, TeleportPos, TeleportPos - FVector(0.0f,0.0f,500.0f),
 		//All Block Trace
 		ECollisionChannel::ECC_GameTraceChannel2);

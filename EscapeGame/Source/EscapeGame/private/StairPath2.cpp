@@ -1,13 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "StairPath2.h"
+
+#include "DecoActor/StairPath2.h"
+
+#include "EscapeGame.h"
 #include "Components/BoxComponent.h"
+#include "Components/SpotLightComponent.h"
+#include "GameSystem/MiniMap/MiniMapMarkerComponent.h"
 // Sets default values
 AStairPath2::AStairPath2()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-	// UPROPERTY ¸â¹ö º¯¼ö ÃÊ±âÈ­
+	// UPROPERTY ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 	InitUPropertys();
 	LoadAssets();
 	SettingWorldMatrix();

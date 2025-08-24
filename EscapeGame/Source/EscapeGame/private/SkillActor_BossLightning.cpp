@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SkillActor_BossLightning.h"
-#include "Sound/SoundCue.h"
+#include "Actor/SklillActor/SkillActor_BossLightning.h"
 
+#include "Sound/SoundCue.h"
 
 ASkillActor_BossLightning::ASkillActor_BossLightning()
 {
@@ -48,7 +48,7 @@ void ASkillActor_BossLightning::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	if (!bIsActivated)return;
-	//RandÇÏ°Ô ´õÇØ¼­ Á¾·á ½Ã°£À» ´Ù¸£°Ô ÇÑ´Ù
+	//Randï¿½Ï°ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½
 	Timer += DeltaTime ;
 	if (Timer >= Limit)
 	{

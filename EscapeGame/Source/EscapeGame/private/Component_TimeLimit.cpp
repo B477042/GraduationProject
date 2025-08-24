@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Component_TimeLimit.h"
-#include "GameFramework/Character.h"
+#include "Component/Component_TimeLimit.h"
 
+#include "GameFramework/Character.h"
 // Sets default values for this component's properties
 UComponent_TimeLimit::UComponent_TimeLimit()
 {

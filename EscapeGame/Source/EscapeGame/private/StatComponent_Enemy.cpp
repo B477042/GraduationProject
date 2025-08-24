@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Component/StatComponent_Enemy.h"
+#include "UnrealCore/SaveGame/EGSaveGame.h"
 
-#include "StatComponent_Enemy.h"
 
 
 UStatComponent_Enemy::UStatComponent_Enemy()

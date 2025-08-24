@@ -1,14 +1,19 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "OneSideOpendPath.h"
+
+#include "DecoActor/OneSideOpendPath.h"
+
+#include "EscapeGame.h"
 #include "Components/BoxComponent.h"
+#include "Components/SpotLightComponent.h"
+#include "GameSystem/MiniMap/MiniMapMarkerComponent.h"
 // Sets default values
 AOneSideOpendPath::AOneSideOpendPath()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
-	// UPROPERTY ¸â¹ö º¯¼ö ÃÊ±âÈ­
+	// UPROPERTY ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 	Plate = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PLATE"));
 	LeftSideWall = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LEFTSIDEWALL"));
 	RightSideWall = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("RIGHTSIDEWALL"));
@@ -19,28 +24,28 @@ AOneSideOpendPath::AOneSideOpendPath()
 	LampLight = CreateDefaultSubobject<USpotLightComponent>(TEXT("LAMPLIGHT"));
 
 
-	//¿¡¼Â ·Îµå
-	//¹Ù´Ú
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½
+	//ï¿½Ù´ï¿½
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_PLATE(TEXT("/Game/StarterBundle/ModularSci_Int/Meshes/SM_FloorPanel_A_2.SM_FloorPanel_A_2"));
 	if (SM_PLATE.Succeeded())
 	{
 		Plate->SetStaticMesh(SM_PLATE.Object);
 	}
-	//¿ìº®
+	//ï¿½ìº®
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_LEFT(TEXT("/Game/StarterBundle/ModularSci_Int/Meshes/SM_Wall_A_2.SM_Wall_A_2"));
 	if (SM_LEFT.Succeeded())
 	{
 		LeftSideWall->SetStaticMesh(SM_LEFT.Object);
 	}
-	//ÁÂº®
+	//ï¿½Âºï¿½
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_RIGHT(TEXT("/Game/StarterBundle/ModularSci_Int/Meshes/SM_Wall_A_2.SM_Wall_A_2"));
 	if (SM_RIGHT.Succeeded())
 	{
 		RightSideWall->SetStaticMesh(SM_RIGHT.Object);
 	}
 
-	//Áßº®
+	//ï¿½ßºï¿½
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_MIDDLE(TEXT("/Game/StarterBundle/ModularSci_Int/Meshes/SM_Wall_A_2.SM_Wall_A_2"));
 	if (SM_MIDDLE.Succeeded())
 	{
@@ -48,14 +53,14 @@ AOneSideOpendPath::AOneSideOpendPath()
 	}
 
 
-	//ÃµÀå
+	//Ãµï¿½ï¿½
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_CEILING(TEXT("/Game/StarterBundle/ModularSci_Int/Meshes/SM_Ceiling_B_4.SM_Ceiling_B_4"));
 	if (SM_CEILING.Object)
 	{
 		Ceiling->SetStaticMesh(SM_CEILING.Object);
 	}
-	//µîºÒ
+	//ï¿½ï¿½ï¿½
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SM_LAMPMESH(TEXT("/Game/StarterBundle/ModularSci_Int/Meshes/SM_Light_Square.SM_Light_Square"));
 	if (SM_LAMPMESH.Succeeded())
@@ -68,7 +73,7 @@ AOneSideOpendPath::AOneSideOpendPath()
 	//(X=-330.000000,Y=10.000000,Z=0.000000)
 	//(Pitch=0.000000,Yaw=90.000000,Roll=0.000000)
 
-	//Objectµé À§Ä¡ ¹èÄ¡
+	//Objectï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½Ä¡
 
 	Plate->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
 	Plate->SetMobility(EComponentMobility::Stationary);
@@ -101,7 +106,7 @@ AOneSideOpendPath::AOneSideOpendPath()
 	//(Pitch=-90.000000,Yaw=0.000000,Roll=0.000000)
 	LampLight->SetRelativeLocation(FVector(-160.0f, -130.0f, 410.0f));
 	LampLight->SetRelativeRotation(FRotator(-90.0f, 0.0f, 0.0f));
-	//SpotLight ¹à±â Á¶Àý
+	//SpotLight ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	LampLight->SetIntensity(5000.695313f);
 	LampLight->SetAttenuationRadius(428.286865f);
 	LampLight->SetInnerConeAngle(21.464767f);
@@ -115,7 +120,7 @@ AOneSideOpendPath::AOneSideOpendPath()
 	LampMesh->SetMobility(EComponentMobility::Stationary);
 	LampLight->SetMobility(EComponentMobility::Stationary);
 	MiddleWall->SetMobility(EComponentMobility::Stationary);
-	//UPROPERTY °èÃþ±¸Á¶ ¸¸µé±â
+	//UPROPERTY ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	Plate->SetupAttachment(RootComponent);
 	LeftSideWall->SetupAttachment(Plate);
 	RightSideWall->SetupAttachment(Plate);
@@ -124,7 +129,7 @@ AOneSideOpendPath::AOneSideOpendPath()
 	LampMesh->SetupAttachment(Plate);;
 
 	LampLight->SetupAttachment(Plate);
-	//MiniMapTile¼³Á¤
+	//MiniMapTileï¿½ï¿½ï¿½ï¿½
 	MiniMapTileMesh->SetRelativeLocation(FVector(-160, -180, POS_Minimap.Z));
 	MiniMapTileMesh->SetRelativeScale3D(FVector(3.4375f, 3.8125f, 1.0f));
 	/*

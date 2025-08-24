@@ -1,8 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "NPC_DrJoe.h"
-#include "Pawn_Camera.h"
+#include "Actor/Character/NPC_DrJoe.h"
+
+#include "Engine/OverlapResult.h"
+#include "GameSystem/DialogueOld/Pawn_Camera.h"
 
 ANPC_DrJoe::ANPC_DrJoe()
 {
@@ -16,12 +18,12 @@ ANPC_DrJoe::ANPC_DrJoe()
 	static ConstructorHelpers::FClassFinder<UAnimInstance>ANIM(TEXT("AnimBlueprint'/Game/MyFolder/BP_Tutorial/BP_AnimDoctor.BP_AnimDoctor_C'"));
 	if (ANIM.Succeeded())
 	{
-		GetMesh()->SetAnimClass(ANIM.Class);
+		GetMesh()->SetAnimInstanceClass(ANIM.Class);
 	}
 
 	TalkingCount = 0;
 	OtherPlayer = nullptr;
-	name = "Dr.Joe";
+	name = TEXT("Dr.Joe");
 
 }
 
@@ -34,7 +36,7 @@ void ANPC_DrJoe::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//¸» ÇÏ°í ½Í¾îÇÏ´Â ÇÃ·¹ÀÌ¾î°¡ ¾ø´Ù¸é Ã£½À´Ï´Ù
+	//ï¿½ï¿½ ï¿½Ï°ï¿½ ï¿½Í¾ï¿½ï¿½Ï´ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½Ù¸ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½
 	if (OtherPlayer == nullptr)
 	{
 		WannaTalkTo();
@@ -56,12 +58,12 @@ void ANPC_DrJoe::WannaTalkTo()
 	
 
 
-	//Å½ÁöµÈ ¿©·¯°¡ÁöÀÇ °á°úµé
+	//Å½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	TArray<FOverlapResult>OverlapResults;
 	FCollisionQueryParams CollisionQueryParam(NAME_None, false, this);
 
 
-	//PlayerCharacter¸¦ Overlap ¹ÝÀÀÀ¸·Î Ã£¾Æ³½´Ù. ¸ð¾çÀº DetectRadius¸¸ÇÑ ±¸
+	//PlayerCharacterï¿½ï¿½ Overlap ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ³ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ DetectRadiusï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 	bool bResult = World->OverlapMultiByChannel(OverlapResults, Center, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel12,
 		FCollisionShape::MakeSphere(DetectRadius), CollisionQueryParam);
 
@@ -70,12 +72,12 @@ void ANPC_DrJoe::WannaTalkTo()
 	if (bResult)
 	{
 
-		for (auto OverlapResult : OverlapResults)
+		for (FOverlapResult&  OverlapResult : OverlapResults)
 		{
-			//Ä«¸Þ¶ó ÆùÀ» Ã£¾Æ³½´Ù
-			auto resultChara = Cast<APawn_Camera>(OverlapResult.Actor);
+			//Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ³ï¿½ï¿½ï¿½
+			TObjectPtr<APawn_Camera> resultChara = Cast<APawn_Camera>(OverlapResult.GetActor());
 			if (resultChara == nullptr)continue;
-			//ÇÃ·¹ÀÌ¾î°¡ Á¶Á¾ÇÏ´Â°Ô ¸Â´Ù¸é ¸»À» °Ç´Ù
+			//ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´Â°ï¿½ ï¿½Â´Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½
 			if (resultChara->GetController()->IsPlayerController())
 			{
 				OtherPlayer = resultChara;
@@ -94,7 +96,7 @@ void ANPC_DrJoe::WannaTalkTo()
 void ANPC_DrJoe::TalkTo()
 {
 
-	//¸¸¾à ¸»À» °É¾î¾ßµÉ ´ë»óÀÌ ¾ø´Ù¸é ¸®ÅÏÇÑ´Ù
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½É¾ï¿½ßµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½
 	if (OtherPlayer == nullptr)return;
 
 	auto tempPlayer = Cast<APawn_Camera>(OtherPlayer);

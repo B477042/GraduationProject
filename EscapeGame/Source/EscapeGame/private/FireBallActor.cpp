@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "FireBallActor.h"
-#include"EGPlayerCharacter.h"
+
+#include "Actor/Trap/FireBallActor.h"
 
 // Sets default values
 AFireBallActor::AFireBallActor()
@@ -140,7 +140,7 @@ void AFireBallActor::setupCollision()
 }
 
 
-//¸ÂÀ¸¸é µ¥¹ÌÁö ÁÖ°í ÅÍÆ®¸®°í
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½
 void AFireBallActor::OnCharacterHit(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const  FHitResult& SweepResult)
 {
 	//EGLOG(Error, TEXT("Hit"));
@@ -159,7 +159,7 @@ void AFireBallActor::OnCharacterHit(UPrimitiveComponent* OverlappedComp, AActor*
 
 }
 
-//³¯¾Æ°¡´Â ¼Ò¸®°¡ µé¸®´Â ¹üÀ§¿¡ µé¾î°¬´Ù¸é
+//ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½ï¿½ï¿½ ï¿½é¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¬ï¿½Ù¸ï¿½
 void AFireBallActor::OnCharacterEntered(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	SoundCast->Play();

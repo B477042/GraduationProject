@@ -1,18 +1,22 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "EnemyBossCharacter.h"
-#include "EnemyAIController_Boss.h"
-#include "Boss_Fireball.h"
-#include "EGSaveGame.h"
-#include "EGGameInstance.h"
-#include "AnimInstance_Boss.h"
-#include "SkillActor_BossLightning.h"
+#include "Actor/Character/EnemyBossCharacter.h"
+
+#include "Actor/Controller/EnemyAIController_Boss.h"
+#include "Actor/SklillActor/Boss_Fireball.h"
+#include "Actor/SklillActor/SkillActor_BossLightning.h"
+#include "Actor/SklillActor/SkillContainer_ProjectileType.h"
+#include "Component/StatComponent_Enemy.h"
+#include "Components/ProgressBar.h"
+#include "Components/WidgetComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Sound/SoundCue.h"
+#include "UnrealCore/EGGameInstance.h"
+#include "UnrealCore/SaveGame/EGSaveGame.h"
 
-AEnemyBossCharacter::AEnemyBossCharacter()
+AEnemyBossCharacter::AEnemyBossCharacter(const FObjectInitializer& ObjectInitializer):Super(ObjectInitializer)
 {
 	AIControllerClass = AEnemyAIController_Boss::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
@@ -73,7 +77,7 @@ void AEnemyBossCharacter::PostInitializeComponents()
 	Super::PostInitializeComponents();
 	
 	GetCharacterMovement()->JumpZVelocity = 1000.0f;
-	//Á×À» ÁØºñ¸¦ ½ÃÅ²´Ù
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½ ï¿½ï¿½Å²ï¿½ï¿½
 	Stat->HPZeroDelegate.AddLambda([this]()->void {
 		auto OwnerCon = Cast<AEnemyAIController>(GetController());
 		if (!OwnerCon)
@@ -123,9 +127,9 @@ bool AEnemyBossCharacter::TeleportTo(const FVector & DestLocation, const FRotato
 
 
 /*
-ºÒÀ» ´øÁö´Â ¿¢¼Ç
+ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-1) Á¤¸éÀ¸·Î ´øÁø´Ù
+1) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 2) 
 */
 void AEnemyBossCharacter::ThrowFireBall()
@@ -171,7 +175,7 @@ void AEnemyBossCharacter::AtPlayThunderblotAnim()
 	if (SA_Thunder->IsActivate()) { SA_Thunder->DeactivateEffect(); }
 
 
-	//50%È®·ü·Î ¹ø°³ÀÇ ÁøÇà¹æÇâÀ» ¼öÁ÷À¸·Î ÇÒÁö ¼öÆòÀ¸·ÎÇÒÁö Á¤ÇÕ´Ï´Ù.
+	//50%È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
 	int rand = UKismetMathLibrary::RandomIntegerInRange(0, 10);
 
 	if (rand < 5)
@@ -228,13 +232,13 @@ void AEnemyBossCharacter::ChargeMP()
 
 void AEnemyBossCharacter::PlayChargeEffect(bool Power)
 {
-	//ÀÌÆåÆ® ÄÑ±â
+	//ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ñ±ï¿½
 	if (Power)
 	{
 		MpChargingEffect->Activate();
 		MpChargingSound->Play();
 	}
-	//ÀÌÆåÆ® ²ô±â
+	//ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 	MpChargingEffect->Deactivate();
 	MpChargingSound->Stop();
 
@@ -275,7 +279,7 @@ void AEnemyBossCharacter::loadAsset()
 	static ConstructorHelpers::FClassFinder<UAnimInstance>ANIM_BOSS(TEXT("AnimBlueprint'/Game/MyFolder/AnimationBlueprint/Anim_Boss.Anim_Boss_C'"));
 	if (ANIM_BOSS.Succeeded())
 	{
-		GetMesh()->SetAnimClass(ANIM_BOSS.Class);
+		GetMesh()->SetAnimInstanceClass(ANIM_BOSS.Class);
 		EGLOG(Warning, TEXT("jooooooo"));
 	}
 	static ConstructorHelpers::FObjectFinder<UParticleSystem>PS_TELEENTER(TEXT("ParticleSystem'/Game/ParagonGideon/FX/Particles/Gideon/Abilities/Portal/FX/P_Portal_Teleport_Enter.P_Portal_Teleport_Enter'"));

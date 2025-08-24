@@ -1,8 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "DT_GameData.h"
-
+#include "Data/DT_GameData.h"
 // Sets default values
 ADT_GameData::ADT_GameData()
 {

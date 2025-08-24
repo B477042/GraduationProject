@@ -1,7 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SkillActor_PlayerFury.h"
+#include "Actor/SklillActor/SkillActor_PlayerFury.h"
+
+#include "Engine/OverlapResult.h"
 
 ASkillActor_PlayerFury::ASkillActor_PlayerFury()
 {
@@ -44,23 +46,23 @@ void ASkillActor_PlayerFury::UseSkill(const FVector& Point)
 	SFX_Hit->Play();
 	MainCollision->SetCollisionProfileName(TEXT("NoCollision"));
 
-	//Å½ÁöµÈ ¿©·¯°¡ÁöÀÇ °á°úµé
+	//Å½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	TArray<FOverlapResult>OverlapResults;
 	FCollisionQueryParams CollisionQueryParam(NAME_None, false, this);
 	FDamageEvent DamageEvent;
-	auto playerCon = World->GetFirstPlayerController();
+	TObjectPtr<APlayerController> playerCon = World->GetFirstPlayerController();
 	if (!playerCon)
 	{
 		EGLOG(Error, TEXT("Cating fail"));
 		return;
 	}
 
-	//PlayerCharacter¸¦ Overlap ¹ÝÀÀÀ¸·Î Ã£¾Æ³½´Ù. ¸ð¾çÀº DetectRadius¸¸ÇÑ ±¸
+	//PlayerCharacterï¿½ï¿½ Overlap ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ³ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ DetectRadiusï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 	bool bResult = World->OverlapMultiByChannel(OverlapResults, Point, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2,
 		FCollisionShape::MakeSphere(100.0f), CollisionQueryParam);
 	if (bResult)
 	{
-		for (auto it : OverlapResults)
+		for (FOverlapResult& it : OverlapResults)
 		{
 			if (it.GetActor()->IsValidLowLevel())
 			{

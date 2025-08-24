@@ -1,10 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTTaskNode_ToggleSprint.h"
-#include "EnemyCharacter_Gunner.h"
+#include "AI/BTTaskNode_ToggleSprint.h"
+
 #include "AIController.h"
-#include "AnimInstance_Gunner.h"
+#include "Actor/Character/EnemyCharacter_Gunner.h"
+#include "Animation/AnimInstance_Gunner.h"
 
 UBTTaskNode_ToggleSprint::UBTTaskNode_ToggleSprint()
 {

@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "TrapType.h"
+
+#include "Actor/Trap/TrapType.h"
 
 // Sets default values
 ATrapType::ATrapType()

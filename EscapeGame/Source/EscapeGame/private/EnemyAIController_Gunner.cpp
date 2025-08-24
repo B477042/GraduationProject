@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "EnemyAIController_Gunner.h"
+#include "Actor/Controller/EnemyAIController_Gunner.h"
 
-#include "EGPlayerCharacter.h"
-#include "EGPlayerController.h"
+#include "Actor/Character/EGPlayerController.h"
+#include "GameFramework/Character.h"
 FName AEnemyAIController_Gunner::SoundPlayed = TEXT("SoundPlayed");
 
 AEnemyAIController_Gunner::AEnemyAIController_Gunner()
@@ -35,8 +35,8 @@ AEnemyAIController_Gunner::AEnemyAIController_Gunner()
 	AiConfigSight->DetectionByAffiliation.bDetectFriendlies = true;
 	AiConfigSight->SetMaxAge(10.0f);
 	//Hearing Setting
-	AiConfigHearing->HearingRange = 500;
-	AiConfigHearing->LoSHearingRange = 550;
+	
+	AiConfigHearing->HearingRange = 550;
 	AiConfigHearing->DetectionByAffiliation.bDetectFriendlies = true;
 	AiConfigHearing->DetectionByAffiliation.bDetectEnemies = true;
 	AiConfigHearing->DetectionByAffiliation.bDetectNeutrals = true;
@@ -107,10 +107,10 @@ void AEnemyAIController_Gunner::OnPerceptionUpdated(const TArray<AActor*>& Updat
 		{
 			continue;
 		}
-		//¹ü¿ë¼ºÀ» »ý°¢ÇÏ¸é Player controller·Î °Ë»çÇÏ´Â°Ô ¸Â´Â ÄÚµå °°´Ù
+		//ï¿½ï¿½ï¿½ë¼ºï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ Player controllerï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ï´Â°ï¿½ ï¿½Â´ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½
 		AEGPlayerController* TempCon = Cast<AEGPlayerController>(TempCharacter->GetController());
 
-		//°¡Àå¸ÕÀú È®ÀÎµÈ player¸¦ Å¸°ÙÀ¸·Î
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½Îµï¿½ playerï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if (TempCon!=nullptr)
 		{
 
@@ -121,7 +121,7 @@ void AEnemyAIController_Gunner::OnPerceptionUpdated(const TArray<AActor*>& Updat
 
 	}
 
-	//°Ë»öµÈ player°¡ ¾ø´Ù¸é null·Î ¹Ù²ãÁØ´Ù
+	//ï¿½Ë»ï¿½ï¿½ï¿½ playerï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½ nullï¿½ï¿½ ï¿½Ù²ï¿½ï¿½Ø´ï¿½
 	EGLOG(Log, TEXT("Lost Target"));
 	GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, nullptr);
 	
@@ -131,7 +131,7 @@ void AEnemyAIController_Gunner::OnPerceptionUpdated(const TArray<AActor*>& Updat
 void AEnemyAIController_Gunner::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
 	//EGLOG(Log, TEXT("Hi : %s"), *Actor->GetName());
-	//°¨ÁöµÈ ¿¢ÅÍ°¡ playerÀÎÁö °Ë»çÇÕ´Ï´Ù
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í°ï¿½ playerï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Õ´Ï´ï¿½
 	auto target = Cast<APawn>(Actor);
 	if (target == nullptr)return;
 
@@ -140,11 +140,11 @@ void AEnemyAIController_Gunner::OnTargetPerceptionUpdated(AActor* Actor, FAIStim
 
 
 
-	//Å½Áö°á°ú
-	//True = °¨Áö ¼º°ø  | False = »ç¶óÁü
+	//Å½ï¿½ï¿½ï¿½ï¿½ï¿½
+	//True = ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½  | False = ï¿½ï¿½ï¿½ï¿½ï¿½
 	bool bSenseResult = Stimulus.WasSuccessfullySensed();
 	
-	//¼º°ø½Ã °ªÀ» ÀúÀåÇÏ°í return
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ return
 	if (bSenseResult)
 	{
 		EGLOG(Log, TEXT("Find %s "), *Actor->GetName());
@@ -152,7 +152,7 @@ void AEnemyAIController_Gunner::OnTargetPerceptionUpdated(AActor* Actor, FAIStim
 		return;
 	}
 
-	//½ÇÆÐ½Ã °ü·Ã BB°ª ÃÊ±âÈ­
+	//ï¿½ï¿½ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ BBï¿½ï¿½ ï¿½Ê±ï¿½È­
 	EGLOG(Log, TEXT("Lose %s"), *Actor->GetName());
 	GetBlackboardComponent()->SetValueAsObject(AEnemyAIController::TargetPlayer, nullptr);
 	GetBlackboardComponent()->SetValueAsVector(AEnemyAIController::TargetPos, Actor->GetActorLocation());

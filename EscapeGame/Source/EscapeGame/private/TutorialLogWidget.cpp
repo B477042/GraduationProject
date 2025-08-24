@@ -1,9 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "TutorialLogWidget.h"
-
-#include "EGGameInstance.h"
+#include "GameSystem/Tutorial/TutorialLogWidget.h"
 
 void UTutorialLogWidget::NativeConstruct()
 {
@@ -27,7 +25,7 @@ void UTutorialLogWidget::NativeTick(const FGeometry& Geometry,float InDeltaTime)
 	if (ActiveTime <= ActiveTimer)
 	{
 		ActiveTimer = 0.0f;
-		RemoveFromViewport();
+		RemoveFromParent();
 	}
 
 }

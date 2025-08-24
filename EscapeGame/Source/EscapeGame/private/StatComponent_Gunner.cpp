@@ -1,8 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "StatComponent_Gunner.h"
-#include "EnemyCharacter_Gunner.h"
+#include "Component/StatComponent_Gunner.h"
+#include "UnrealCore/SaveGame/EGSaveGame.h"
+#include "Actor/Character/EnemyCharacter_Gunner.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 UStatComponent_Gunner::UStatComponent_Gunner()

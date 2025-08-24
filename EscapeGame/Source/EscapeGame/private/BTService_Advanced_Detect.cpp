@@ -1,11 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTService_Advanced_Detect.h"
-#include "EGPlayerCharacter.h"
-#include "EnemyBossCharacter.h"
-#include "EnemyAIController_Boss.h"
-//#include "DrawDebugHelpers.h"
+#include "AI/BTService_Advanced_Detect.h"
+
+#include "AIController.h"
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "Actor/Character/EnemyBossCharacter.h"
+#include "Actor/Character/EnemyCharacter.h"
+#include "Actor/Controller/EnemyAIController_Boss.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "Engine/OverlapResult.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 UBTService_Advanced_Detect::UBTService_Advanced_Detect()
@@ -31,11 +35,11 @@ void UBTService_Advanced_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, ui
 	auto World = GetWorld();
 	if (World == nullptr)return;
 
-	//Å½ÁöµÈ ¿©·¯°¡ÁöÀÇ °á°úµé
+	//Å½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	TArray<FOverlapResult>OverlapResults;
 	FCollisionQueryParams CollisionQueryParam(NAME_None, false, ControllingPawn);
 
-	//PlayerCharacter¸¦ Overlap ¹ÝÀÀÀ¸·Î Ã£¾Æ³½´Ù. ¸ð¾çÀº ¹Ú½ºÇüÀ¸·Î Center´Â Controlling pawnÀÇ ¸Ó¸® À§Ä¡ÂëÀÌ´Ù
+	//PlayerCharacterï¿½ï¿½ Overlap ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ³ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Centerï¿½ï¿½ Controlling pawnï¿½ï¿½ ï¿½Ó¸ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½Ì´ï¿½
 	bool bResult = World->OverlapMultiByChannel(OverlapResults, Center, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel12,
 		FCollisionShape::MakeBox(DetectBoxSize), CollisionQueryParam);
 
@@ -43,23 +47,26 @@ void UBTService_Advanced_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, ui
 	if (bResult)
 	{
 
-		for (auto OverlapResult : OverlapResults)
+		for (FOverlapResult&  OverlapResult : OverlapResults)
 		{
-			//½ºÄµÇÑ °á°úµé Áß¿¡¼­ PlayerCharacter¸¦ Ã£¾Æ³½´Ù
-			//Ã£¾Ò´Ù¸é Ã£¾Ò´Ù°í Ç¥½ÃÇÑ´Ù===1´Ü°è
-			auto resultChara = Cast<AEGPlayerCharacter>(OverlapResult.Actor);
-			if (resultChara == nullptr)continue;
+			//ï¿½ï¿½Äµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß¿ï¿½ï¿½ï¿½ PlayerCharacterï¿½ï¿½ Ã£ï¿½Æ³ï¿½ï¿½ï¿½
+			//Ã£ï¿½Ò´Ù¸ï¿½ Ã£ï¿½Ò´Ù°ï¿½ Ç¥ï¿½ï¿½ï¿½Ñ´ï¿½===1ï¿½Ü°ï¿½
+			TObjectPtr<AEGPlayerCharacter> resultChara = Cast<AEGPlayerCharacter>(OverlapResult.GetActor());
+			if (!resultChara)
+			{
+				continue;
+			}
 
 			if (resultChara->GetController()->IsPlayerController())
 			{
-				////Debug ¸ðµå¶ó¸é ±×·Á¼­ Ç¥½ÃÇØÁØ´Ù
+				////Debug ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½
 				//if (DrawingDebugMode)
 				//{
 				//	DrawDebugBox(World, Center, DetectBoxSize, FColor::Purple, false, 0.2f);
 
 				//	//DrawDebugBox(World, Center, DetectBoxSize, 16, FColor::Purple, false, 0.2f);
 				//	//Draw Point Detected Player
-				//	//Å½ÁöµÈ ÇÃ·¹ÀÌ¾î À§¿¡ Ç¥½ÃÇÏ±â
+				//	//Å½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½Ï±ï¿½
 				//	DrawDebugPoint(World, resultChara->GetTargetPlayerLocation(), 100.0f, FColor::Magenta, false, 0.2f);
 
 				//	FVector DebugFVPoint = ControllingPawn->GetActorLocation() + ControllingPawn->GetActorForwardVector()/**FVector(1.0f,1.0f,1.0f)*/*600.0f;

@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "AstarNode.h"
-#include "EGPlayerCharacter.h"
-#include "AstarFinder.h"
-#include "Item_CardKey.h"
-#include "Engine.h"
-#include "EGGameInstance.h"
+#include "GameSystem/AstarNode.h"
 
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "Actor/Item/Item_CardKey.h"
+#include "GameAbility/Component_Inventory.h"
+#include "GameSystem/AStarFinder.h"
+#include "UnrealCore/EGGameInstance.h"
 // Sets default values
 AAstarNode::AAstarNode()
 {
@@ -107,7 +107,7 @@ void AAstarNode::OnActorOverlap(UPrimitiveComponent * OverlappedComp, AActor * O
 	if (!player)return;
 
 	EPathTarget Mode;
-	//¿­¼è°¡ ÀÖ´Ù¸é ¹®À¸·Î ¾È³»
+	//ï¿½ï¿½ï¿½è°¡ ï¿½Ö´Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È³ï¿½
 	if (player->Inventory->HasItem(AItem_CardKey::Tag))
 		Mode = EPathTarget::Gate;
 	else
@@ -261,9 +261,9 @@ void AAstarNode::SetNearNodesPrevAsMe()
 {
 	for (auto it : NearNodes)
 	{
-		//it°¡ À¯È¿ÇÏ°í
+		//itï¿½ï¿½ ï¿½ï¿½È¿ï¿½Ï°ï¿½
 		if (!it.IsValid())continue;
-		//¹æ¹®ÇÏÁö ¾ÊÀº ³ëµå¿©¾ß ÇÑ´Ù
+		//ï¿½æ¹®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½å¿©ï¿½ï¿½ ï¿½Ñ´ï¿½
 		if(!it->bIsVisited)
 		it->PrevNode = this;
 	}

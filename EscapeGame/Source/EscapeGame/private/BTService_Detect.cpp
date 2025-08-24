@@ -1,11 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTService_Detect.h"
-#include "EGPlayerCharacter.h"
-#include "EnemyCharacter.h"
-#include "EnemyAIController.h"
+
 //#include "DrawDebugHelpers.h"
+#include "AI/BTService_Detect.h"
+
+#include "AIController.h"
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "Actor/Controller/EnemyAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 UBTService_Detect::UBTService_Detect()
@@ -36,12 +38,12 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, uint8 * Nod
 
 	
 	
-	//Å½ÁöµÈ ¿©·¯°¡ÁöÀÇ °á°úµé
+	//Å½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	TArray<FOverlapResult>OverlapResults;
 	FCollisionQueryParams CollisionQueryParam(NAME_None, false, ControllingPawn);
 	
 
-	//PlayerCharacter¸¦ Overlap ¹ÝÀÀÀ¸·Î Ã£¾Æ³½´Ù. ¸ð¾çÀº DetectRadius¸¸ÇÑ ±¸
+	//PlayerCharacterï¿½ï¿½ Overlap ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ³ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ DetectRadiusï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 	bool bResult = World->OverlapMultiByChannel(OverlapResults, Center, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel12,
 		FCollisionShape::MakeSphere(DetectRadius), CollisionQueryParam);
 
@@ -52,14 +54,14 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent & OwnerComp, uint8 * Nod
 		
 		for (auto OverlapResult : OverlapResults)
 		{
-			//½ºÄµÇÑ °á°úµé Áß¿¡¼­ PlayerCharacter¸¦ Ã£¾Æ³½´Ù
-			//Ã£¾Ò´Ù¸é Ã£¾Ò´Ù°í Ç¥½ÃÇÑ´Ù===1´Ü°è
-			auto resultChara = Cast<AEGPlayerCharacter>(OverlapResult.Actor);
-			if (resultChara == nullptr)continue;
+			//ï¿½ï¿½Äµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß¿ï¿½ï¿½ï¿½ PlayerCharacterï¿½ï¿½ Ã£ï¿½Æ³ï¿½ï¿½ï¿½
+			//Ã£ï¿½Ò´Ù¸ï¿½ Ã£ï¿½Ò´Ù°ï¿½ Ç¥ï¿½ï¿½ï¿½Ñ´ï¿½===1ï¿½Ü°ï¿½
+			auto resultChara = Cast<AEGPlayerCharacter>(OverlapResult.GetActor());
+			if (!resultChara)continue;
 
 			if (resultChara->GetController()->IsPlayerController())
 			{
-				////Debug ¸ðµå¶ó¸é ±×·Á¼­ Ç¥½ÃÇØÁØ´Ù
+				////Debug ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½
 				//if (DrawingDebugMode)
 				//{
 				//DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Purple, false, 0.2f);

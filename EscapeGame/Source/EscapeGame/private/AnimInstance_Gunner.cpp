@@ -1,7 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AnimInstance_Gunner.h"
+#include "Animation/AnimInstance_Gunner.h"
+
+#include "KismetAnimationLibrary.h"
+#include "KismetAnimationLibrary.h"
+#include "KismetAnimationLibrary.h"
+#include "Actor/Character/EnemyCharacter_Gunner.h"
+#include "Component/StatComponent_Gunner.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -89,7 +95,7 @@ void UAnimInstance_Gunner::NativeUpdateAnimation(float DeltaSeconds)
 	////Update bs_Walk Speed
 	
 	//Update Direction bs_Walk
-	Direction = CalculateDirection(Character->GetVelocity(), Character->GetActorRotation());
+	Direction = UKismetAnimationLibrary::CalculateDirection(Character->GetVelocity(), Character->GetActorRotation());
 }
 
 void UAnimInstance_Gunner::SetCrouch(bool bSet)

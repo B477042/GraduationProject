@@ -1,21 +1,28 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "EnemyCharacter_Gunner.h"
-#include "EnemyAIController_Gunner.h"
-#include "EGSaveGame.h"
-#include "EGGameInstance.h"
-#include "EGPlayerCharacter.h"
+#include "Actor/Character/EnemyCharacter_Gunner.h"
+
+#include "Actor/Weapon.h"
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "Actor/Controller/EnemyAIController_Gunner.h"
+#include "Animation/AnimInstance_Gunner.h"
+#include "Component/StatComponent_Gunner.h"
+#include "Component/StatComponent_Player.h"
+#include "Components/AudioComponent.h"
+#include "Components/ProgressBar.h"
+#include "Components/WidgetComponent.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "AnimInstance_Gunner.h"
+
 #include "Sound/SoundCue.h"
 #include "Perception/AISenseConfig.h"
 #include "Materials/Material.h"
 #include "Materials/MaterialInstance.h"
+#include "UnrealCore/EGGameInstance.h"
+#include "UnrealCore/SaveGame/EGSaveGame.h"
 
-#include "Weapon.h"
 
-AEnemyCharacter_Gunner::AEnemyCharacter_Gunner()
+AEnemyCharacter_Gunner::AEnemyCharacter_Gunner(const FObjectInitializer& ObjectInitializer):Super(ObjectInitializer)
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -107,7 +114,7 @@ void  AEnemyCharacter_Gunner::Tick(float DeltaTime)
 	//	Cooltime = 0.0f;
 
 	//	//EGLOG(Warning, TEXT("Can fire"));	
-	////tick Áß´Ü
+	////tick ï¿½ß´ï¿½
 	//	SetActorTickEnabled(false);
 	//}
 
@@ -165,8 +172,8 @@ void AEnemyCharacter_Gunner::BeginPlay()
 		});
 
 	StatComponent->HPZeroDelegate.AddLambda([this]()->void {
-		//Anim Dead ¼³Á¤
-		//AIController Áß´Ü
+		//Anim Dead ï¿½ï¿½ï¿½ï¿½
+		//AIController ï¿½ß´ï¿½
 		
 		/*if (Anim->IsAnyMontagePlaying())
 		{
@@ -224,7 +231,7 @@ void AEnemyCharacter_Gunner::SaveGame(UEGSaveGame * SaveInstance)
 		EGLOG(Error, TEXT("Can't find %s's Data"), *GetName());
 		return;
 	}
-	//HpÀúÀå
+	//Hpï¿½ï¿½ï¿½ï¿½
 	StatComponent->SaveGame(SaveData);
 	
 
@@ -451,7 +458,7 @@ void AEnemyCharacter_Gunner::Attack()
 
 	if (bWeaponAvailable)
 	{
-		//¾Ö´Ï¸ÞÀÌ¼Ç Àç»ý
+		//ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½
 		Anim->PlayFire(StatComponent->GetState());
 		//EGLOG(Log, TEXT("Fire"));
 	}
@@ -483,7 +490,7 @@ float AEnemyCharacter_Gunner::TakeDamage(float DamageAmount, FDamageEvent const 
 
 	StatComponent->TakeDamage(FinalDamage);
 
-	//Á×¾ú´Ù¸é causer°¡ playerÀÎÁö °Ë»çÇÏ°í °æÇèÄ¡¸¦ ÁØ´Ù
+	//ï¿½×¾ï¿½ï¿½Ù¸ï¿½ causerï¿½ï¿½ playerï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ø´ï¿½
 	if (StatComponent->GetHPRatio() <= 0.0f)
 	{
 		auto player = Cast<AEGPlayerCharacter>(DamageCauser);

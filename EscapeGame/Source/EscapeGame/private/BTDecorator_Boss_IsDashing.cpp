@@ -1,10 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTDecorator_Boss_IsDashing.h"
+#include "AI/BTDecorator_Boss_IsDashing.h"
 
-#include "EnemyBossCharacter.h"
-#include "EnemyAIController_Boss.h"
+#include "AIController.h"
+#include "Actor/Character/EnemyBossCharacter.h"
+#include "Actor/Controller/EnemyAIController_Boss.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 UBTDecorator_Boss_IsDashing::UBTDecorator_Boss_IsDashing()
 {

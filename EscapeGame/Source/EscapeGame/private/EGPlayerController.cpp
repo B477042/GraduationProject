@@ -1,20 +1,27 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "EGPlayerController.h"
-#include "GameWidget.h"
-#include "EGPlayerCharacter.h"
-#include "DT_DataStruct.h"
-#include "EGSaveGame.h"
-#include "Item_Recover.h"
-#include "Item_CardKey.h"
-#include "EGGameState.h"
-#include "Engine.h"
-#include "EGGameInstance.h"
-#include "TutorialLogWidget.h"
-#include "SaveInfoWidget.h"
 
 //#include"GameStat.h"
 
+
+#include "Actor/Character/EGPlayerController.h"
+
+#include "AbilitySystemComponent.h"
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "Actor/Item/Item_CardKey.h"
+#include "Actor/Item/Item_Recover.h"
+#include "Blueprint/UserWidget.h"
+#include "Component/Component_TimeLimit.h"
+#include "Component/StatComponent_Player.h"
+#include "Data/DT_DataStruct.h"
+#include "GameAbility/Component_Fury.h"
+#include "GameAbility/Component_Inventory.h"
+#include "GameFramework/Character.h"
+#include "GameSystem/Tutorial/TutorialLogWidget.h"
+#include "UI/GameWidget.h"
+#include "UnrealCore/EGGameInstance.h"
+#include "UnrealCore/EGPlayerState.h"
+#include "UnrealCore/SaveGame/EGSaveGame.h"
 
 AEGPlayerController::AEGPlayerController()
 {
@@ -85,7 +92,7 @@ void AEGPlayerController::BeginPlay()
 	HUD = CreateWidget<UGameWidget>(this, HUDWidgetClass);
 	TutorialUI = CreateWidget<UTutorialLogWidget>(this, TUTOWidgetClass);
 
-	//¹øÈ£°¡ ³ôÀ»¼ö·Ï À§¿¡ ¶ß´Â ui °¡ µÈ´Ù
+	//ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß´ï¿½ ui ï¿½ï¿½ ï¿½È´ï¿½
 	HUD->AddToViewport(VP_HUD);
 	//TutorialUI->AddToViewport(VP_Tutorial);
 	
@@ -142,12 +149,29 @@ void AEGPlayerController::OnPossess(APawn * aPawn)
 	Super::OnPossess(aPawn);
 	
 	EGLOG(Log, TEXT("Player con Possess"));
-	
 
+	// PlayerStateì—ì„œ GASë¥¼ ê°€ì ¸ì˜¤ê¸°
+	TObjectPtr<AEGPlayerState> egPlayerState = GetEGPlayerState();
+	TObjectPtr<AGameCharacterBase> gameCharacter = Cast<AGameCharacterBase>(aPawn);
+	if (egPlayerState && gameCharacter)
+	{
+		TObjectPtr<UEGCharacterAttributeSet> playerStateAttribute = egPlayerState->GetAttributeSet();
+		TObjectPtr<UAbilitySystemComponent> asc = egPlayerState->GetAbilitySystemComponent();
+
+		gameCharacter->SetAbilitySystemComponent(asc);
+		gameCharacter->SetAttributeSet(playerStateAttribute);
+
+		// Reset ASC Owner
+		asc->InitAbilityActorInfo(this,aPawn);
+
+		
+		
+	}
+	
 	
 }
 
-//True¸é Å°º¸µå ÀÔ·Â, false¸é ¸¶¿ì½º Á¶ÀÛ°ú Å°º¸µå ÀÔ·Â
+//Trueï¿½ï¿½ Å°ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½, falseï¿½ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½Û°ï¿½ Å°ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
 void AEGPlayerController::ChangeInputMode(bool bGameMode)
 {
 	if (bGameMode)
@@ -164,12 +188,21 @@ void AEGPlayerController::ChangeInputMode(bool bGameMode)
 
 }
 
+AEGPlayerState* AEGPlayerController::GetEGPlayerState()
+{
+	if (!PlayerState)
+	{
+		EGLOG(Error, TEXT("PlayerState is null"));
+		return nullptr;
+	}
+	return Cast<AEGPlayerState>(PlayerState);
+}
 
 
 /*
-1. Tutorial UI°¡ ¶ç¿öÁ®ÀÖÀ¸¸é UI¸¦ ²¨ÁÖ°í ³¡
-2. Turorial UI°¡ ²¨Á®ÀÖ°í °ÔÀÓÀÌ ÁøÇà ÁßÀÌ¸é Pause ¸Ş´º Ãâ·Â
-3. Tutorial UI°¡ ²¨Á®ÀÖ°í °ÔÀÓÀÌ Áß´Ü µÆÀ¸¸é Àç°³
+1. Tutorial UIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UIï¿½ï¿½ ï¿½ï¿½ï¿½Ö°ï¿½ ï¿½ï¿½
+2. Turorial UIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ Pause ï¿½Ş´ï¿½ ï¿½ï¿½ï¿½
+3. Tutorial UIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ç°³
 
 
 */
@@ -182,19 +215,19 @@ void AEGPlayerController::OnEscPressed()
 		return;
 	}
 
-	//Tutorial UI ´İ±â
+	//Tutorial UI ï¿½İ±ï¿½
 	if (TutorialUI->IsInViewport())
 	{
 		CloseTutorialMessage();
 	}
-	//Á×Àº »óÅÂ¸é ¹ÌÃâ·Â
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (DeadUI)
 	{
 		return;
 	}
 
 
-	//Pasue È£ÃâÇÏ±â
+	//Pasue È£ï¿½ï¿½ï¿½Ï±ï¿½
 	else if (!World->IsPaused())
 	{
 		//EGLOG(Warning, TEXT("TIMEEE"));
@@ -204,18 +237,18 @@ void AEGPlayerController::OnEscPressed()
 
 		PauseUI->AddToViewport(VP_Pause);
 		SetPause(true);
-	//UIInput mode·Î ÀüÈ¯
+	//UIInput modeï¿½ï¿½ ï¿½ï¿½È¯
 		ChangeInputMode(false);
 	
 		//bIsPauseCalled = true;
 	}
-	//ToggleÇÏ¿© ´İ±â
+	//Toggleï¿½Ï¿ï¿½ ï¿½İ±ï¿½
 	else
 	{
 		ChangeInputMode(true);
 		//bIsPauseCalled = false;
 		SetPause(false);
-		PauseUI->RemoveFromViewport();
+		PauseUI->RemoveFromParent();
 		PauseUI->RemoveFromParent();
 
 	}
@@ -237,7 +270,7 @@ void AEGPlayerController::OnKillMode()
 	auto chara = GetCharacter();
 	if (!chara)return;
 
-	//Å½ÁöµÈ ¿©·¯°¡ÁöÀÇ °á°úµé
+	//Å½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	TArray<FOverlapResult>OverlapResults;
 	FCollisionQueryParams CollisionQueryParam(NAME_None, false, this);
 	FDamageEvent DamageEvent;
@@ -260,14 +293,14 @@ void AEGPlayerController::OnKillMode()
 
 
 
- UGameWidget* AEGPlayerController::GetHUDWidget() const
+UGameWidget* AEGPlayerController::GetHUDWidget() const
 {
 	return HUD;
 }
 
  void AEGPlayerController::OnCineamticStart()
  {
-	 HUD->RemoveFromViewport();
+	 HUD->RemoveFromParent();
 	 DisableInput(this);
  }
 
@@ -283,9 +316,9 @@ void AEGPlayerController::OnKillMode()
  {
 	 DeadUI = CreateWidget< UUserWidget >(this, DeadWidgetClass);
 
-	 HUD->RemoveFromViewport();
+	 HUD->RemoveFromParent();
 	 DeadUI->AddToViewport(VP_Dead);
-	 //UIInput mode·Î ÀüÈ¯
+	 //UIInput modeï¿½ï¿½ ï¿½ï¿½È¯
 	 ChangeInputMode(false);
 	 SetPause(true);
  }
@@ -300,7 +333,7 @@ void AEGPlayerController::OnKillMode()
 	 }
 	 HUD->BindCharacterStat(EGPlayer->GetStatComponent());
 
-	 HUD->BindCharacterInven(EGPlayer->GetInventory());
+	 HUD->BindCharacterInventory(EGPlayer->GetInventory());
 	 HUD->BindCharacterFury(EGPlayer->GetFuryComponent());
 	 HUD->BindCharacterTimeLimit(EGPlayer->GetTimeLimitComponent());
 	 HUD->BindCharacterStamina(EGPlayer->GetStaminaComponenet());
@@ -346,7 +379,7 @@ void AEGPlayerController::SaveGame(UEGSaveGame* SaveInstance)
 		return;
 	}
 
-	//SaveInstance¿¡ PlayerÀÇ Á¤º¸¸¦ ÀúÀåÇØ¾ßµÈ´Ù
+	//SaveInstanceï¿½ï¿½ Playerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ßµÈ´ï¿½
 	
 	FPlayerData playerData;
 	playerData.ActorName= EGPlayer->GetName();
@@ -390,18 +423,18 @@ void AEGPlayerController::LoadGame(const UEGSaveGame* LoadInstance)
 	auto LoadData = LoadInstance->D_Player;
 
 	/*
-		PlayerÀÇ µ¥ÀÌÅÍ¸¦ ºÒ·¯¿À´Â °úÁ¤
-		1. ÁÂÇ¥ Á¤º¸ ºÒ·¯¿À±â
-		2. ½ºÅİ ºÒ·¯¿À±â
-		3. ¾ÆÀÌÅÛ °¹¼ö ºÒ·¯¿À±â
+		Playerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		1. ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
+		2. ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
+		3. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
 	*/
 	EGPlayer->SetActorLocationAndRotation(LoadData.Location, LoadData.Rotation);
 	EGPlayer->GetStatComponent()->LoadGameStat(LoadData.Level, LoadData.Exp, LoadData.Hp);
 
-	//Item > 0ÀÏ °æ¿ì¿¡¸¸ ºÒ·¯¿Â´Ù
+	//Item > 0ï¿½ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½Â´ï¿½
 	if (LoadData.n_RecoverItmes > 0)
 	{
-		//World¿¡ Recover ItemÀ» ½ºÆù
+		//Worldï¿½ï¿½ Recover Itemï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		auto TempRecover = Cast<AItem_Recover>(World->SpawnActor(AItem_Recover::StaticClass()));
 		if (!TempRecover)
 		{
@@ -416,7 +449,7 @@ void AEGPlayerController::LoadGame(const UEGSaveGame* LoadInstance)
 
 	if (LoadData.n_CardKeys > 0)
 	{
-		//World¿¡ Recover ItemÀ» ½ºÆù
+		//Worldï¿½ï¿½ Recover Itemï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		auto TempRecover = Cast<AItem_CardKey>(World->SpawnActor(AItem_CardKey::StaticClass()));
 		if (!TempRecover)
 		{
@@ -429,7 +462,7 @@ void AEGPlayerController::LoadGame(const UEGSaveGame* LoadInstance)
 	}
 
 	
-	//Time ºÒ·¯¿À±â
+	//Time ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
 	EGPlayer->GetTimeLimitComponent()->LoadTime(LoadInstance->GameProgressData.RemainTimes);
 	EGPlayer->GetFuryComponent()->LoadFury(LoadData.Fury);
 
@@ -437,7 +470,7 @@ void AEGPlayerController::LoadGame(const UEGSaveGame* LoadInstance)
 	EGLOG(Error, TEXT("Player Load game called"));
 }
 
-//³Ñ¾î¿À´Â enum(uint8)À» ±âÁØÀ¸·Î ±× ¿­ÀÇ µ¥ÀÌÅÍ¸¦ ºÒ·¯¿Í Æ©Åä¸®¾óÀ§Á¬À» ²Ù¹Î´Ù
+//ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ enum(uint8)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ Æ©ï¿½ä¸®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¹Î´ï¿½
 void AEGPlayerController::ShowTutorialMessage(uint8 TutorialMessage)
 {
 	auto tempData = DT_Tutorial->FindRow<FTutorialDataTable>(FName(*FString::FormatAsNumber(TutorialMessage)), FString(""));
@@ -496,7 +529,7 @@ void AEGPlayerController::CloseTutorialMessage()
 		EGLOG(Log, TEXT("Close Failed"));
 		return;
 	}
-	TutorialUI->RemoveFromViewport();
+	TutorialUI->RemoveFromParent();
 	SetInputMode(GameInputMode);
 	bShowMouseCursor = false;
 	auto World = GetWorld();

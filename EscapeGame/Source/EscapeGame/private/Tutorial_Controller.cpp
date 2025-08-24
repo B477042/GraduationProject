@@ -1,9 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Tutorial_Controller.h"
-#include "Blueprint/UserWidget.h"
-#include "DialogueWidget.h"
+#include "GameSystem/Tutorial/Tutorial_Controller.h"
 
 ATutorial_Controller::ATutorial_Controller()
 {

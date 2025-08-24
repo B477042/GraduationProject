@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Component_Stamina.h"
+
+#include "GameAbility/Component_Stamina.h"
 
 UComponent_Stamina::UComponent_Stamina()
 {

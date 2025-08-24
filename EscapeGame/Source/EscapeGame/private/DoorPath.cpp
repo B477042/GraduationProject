@@ -1,8 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "DoorPath.h"
-#include "EGPlayerCharacter.h"
-#include "Item_CardKey.h"
+
+#include "DecoActor/DoorPath.h"
+
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "Actor/Item/Item_CardKey.h"
+#include "Components/BoxComponent.h"
+#include "GameAbility/Component_Inventory.h"
 
 ADoorPath::ADoorPath()
 {
@@ -37,7 +41,7 @@ ADoorPath::ADoorPath()
 	bIsOpened = false;
 
 }
-//2019 10 07 ³ªÁß¿¡ ½Ã°£¿¡ µû¶ó ÃµÃµÈ÷ ¿­¸®µµ·Ï Á¶Á¤
+//2019 10 07 ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ÃµÃµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 void ADoorPath::OpenTheDoor()
 {
 	bIsOpened = true;
@@ -51,7 +55,7 @@ void ADoorPath::OpenTheDoor()
 
 	
 }
-//2019 10 07 ³ªÁß¿¡ ½Ã°£¿¡ µû¶ó ÃµÃµÈ÷ ´ÝÈ÷µµ·Ï Á¶Á¤
+//2019 10 07 ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ÃµÃµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 void ADoorPath::CloseTheDoor()
 {
 	float X = 0.0f, Y = 0.0f, Z = 0.0f;
@@ -90,7 +94,7 @@ void ADoorPath::OnPlayerOverlap(UPrimitiveComponent * OverlappedComp, AActor * O
 {
 	auto player = Cast<AEGPlayerCharacter>(OtherActor);
 	if (!player)return;
-	//ÀÌ¹Ì ¿­¸° »óÅÂ¶ó¸é ¹ÝÈ¯
+	//ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¶ï¿½ï¿½ ï¿½ï¿½È¯
 	if (bIsOpened)return;
 
 	if (player->GetInventory()->UseItem(AItem_CardKey::Tag, player))

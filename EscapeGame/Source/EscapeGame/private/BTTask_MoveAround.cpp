@@ -1,10 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTTask_MoveAround.h"
+#include "AI/BTTask_MoveAround.h"
+
+#include "AIController.h"
 #include "NavigationSystem.h"
-#include "EnemyAIController.h"
-#include "EnemyCharacter.h"
+#include "Actor/Controller/EnemyAIController.h"
 
 
 UBTTask_MoveAround::UBTTask_MoveAround()

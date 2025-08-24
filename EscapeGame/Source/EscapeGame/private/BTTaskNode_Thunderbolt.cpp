@@ -1,9 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTTaskNode_Thunderbolt.h"
-#include "EnemyBossCharacter.h"
-#include "EnemyAIController.h"
+#include "AI/BTTaskNode_Thunderbolt.h"
+
+#include "Actor/Character/EnemyBossCharacter.h"
+#include "Actor/Controller/EnemyAIController.h"
+
 UBTTaskNode_Thunderbolt::UBTTaskNode_Thunderbolt()
 {
 	NodeName = TEXT("Thunderbolt");

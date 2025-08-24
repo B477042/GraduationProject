@@ -1,19 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "TutorialNotify.h"
-#include "EGPlayerController.h"
-#include "EGPlayerCharacter.h"
-#include "Engine/Font.h"
-#include "EGSaveGame.h"
-#include "EGGameInstance.h"
-#include "Blueprint/UserWidget.h"
-#include "Kismet/KismetMathLibrary.h"
-#include "DT_DataStruct.h"
 //#include "Components/BoxComponent.h"
 
 
+#include "GameSystem/Tutorial/TutorialNotify.h"
 
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "Actor/Character/EGPlayerController.h"
+#include "UnrealCore/EGGameInstance.h"
 // Sets default values
 ATutorialNotify::ATutorialNotify()
 {
@@ -75,12 +70,12 @@ void ATutorialNotify::BeginPlay()
 	
 	//TutoWidget = CreateWidget<UTutorialWidget>(GetWorld()->GetFirstPlayerController(), TutoWidgetClass);
 
-	//Widget¿¡ ³ÖÀ» Á¤º¸¸¦ ºÒ·¯¿Â´Ù
+	//Widgetï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½Â´ï¿½
 	
 
 	//auto Controller = Cast<AEGPlayerController>(GetWorld()->GetFirstPlayerController());
 	//if (!Controller)return;
-	////Æ©Åä¸®¾ó ¸Þ½ÃÁö¸¦ player controller·Î º¸³»¼­ widgetÀ» ÁØºñ ½ÃÅ²´Ù
+	////Æ©ï¿½ä¸®ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ player controllerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ widgetï¿½ï¿½ ï¿½Øºï¿½ ï¿½ï¿½Å²ï¿½ï¿½
 	//if (!TutoWidget)
 	//	TutoWidget = CreateWidget<UTutorialWidget>(Controller, TutoWidgetClass);
 	//if (!TutoWidget)
@@ -122,7 +117,7 @@ void ATutorialNotify::OnOverlapBegin(AActor * OvelappedActor, AActor * OtherActo
 
 	auto Controller = Cast<AEGPlayerController>(Player->GetController());
 	if (!Controller)return;
-	////Æ©Åä¸®¾ó ¸Þ½ÃÁö¸¦ player controller·Î º¸³»¼­ widgetÀ» ÁØºñ ½ÃÅ²´Ù
+	////Æ©ï¿½ä¸®ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ player controllerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ widgetï¿½ï¿½ ï¿½Øºï¿½ ï¿½ï¿½Å²ï¿½ï¿½
 	//if (!TutoWidget)
 	//	TutoWidget = CreateWidget<UUserWidget>(Controller, TutoWidgetClass);
 	//if (!TutoWidget)

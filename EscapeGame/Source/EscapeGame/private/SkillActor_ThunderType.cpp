@@ -1,9 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SkillActor_ThunderType.h"
-#include "EGPlayerCharacter.h"
+#include "Actor/SklillActor/SkillActor_ThunderType.h"
+
 #include "DrawDebugHelpers.h"
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "Engine/OverlapResult.h"
 
 ASkillActor_ThunderType::ASkillActor_ThunderType()
 {
@@ -74,22 +76,22 @@ void ASkillActor_ThunderType::UseSkill(const FVector & Location)
 
 	FVector HitBoxRadius = FVector(300.0f, 300.0f, 100.0f);
 
-	//PlayerCharacter¸¦ Overlap ¹ÝÀÀÀ¸·Î Ã£¾Æ³½´Ù. ¸ð¾çÀº DetectRadius¸¸ÇÑ ±¸
+	//PlayerCharacterï¿½ï¿½ Overlap ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ³ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ DetectRadiusï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 	bool bResult = World->OverlapMultiByChannel(OverlapResults, GetActorLocation()+FVector(0.0f,0.0f,HitBoxRadius.Z), FQuat::Identity, ECollisionChannel::ECC_EngineTraceChannel2,
 		FCollisionShape::MakeBox(HitBoxRadius), CollisionQueryParam);
 	FDamageEvent DamageEvent;
 	if (bResult)
 	{
 		EGLOG(Warning, TEXT("Ovbepasdf"));
-		for (auto OverlapResult : OverlapResults)
+		for (FOverlapResult&  OverlapResult : OverlapResults)
 		{
-			auto player = Cast<AEGPlayerCharacter>(OverlapResult.Actor);
+			auto player = Cast<AEGPlayerCharacter>(OverlapResult.GetActor());
 			if (player)continue;
 			/*
 			DrawDebugPoint(World, OverlapResult.Actor->GetTargetPlayerLocation(), 100.0f, FColor::Red, false, 0.2f);
 			EGLOG(Error, TEXT(" Hit Actor : %s , Damage : %d"), *OverlapResult.Actor->GetName(),Damage);*/
 			
-			OverlapResult.Actor->TakeDamage(Damage,DamageEvent,World->GetFirstPlayerController(),this);
+			OverlapResult.GetActor()->TakeDamage(Damage,DamageEvent,World->GetFirstPlayerController(),this);
 
 
 		}

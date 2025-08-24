@@ -1,7 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Component_SkillContainer.h"
+
+#include "GameAbility/Component_SkillContainer.h"
+
+#include "EscapeGame.h"
+#include "Actor/SklillActor/SkillActor.h"
 
 // Sets default values for this component's properties
 UComponent_SkillContainer::UComponent_SkillContainer()
@@ -56,7 +60,7 @@ void UComponent_SkillContainer::AddSkillObj(TWeakObjectPtr<ASkillActor> Input)
 
 }
 
-//½½·Ô¿¡ ÀÖ´Â ´ÙÀ½ ¿¢ÅÍ¸¦ ÁØºñ½ÃÅ²´Ù
+//ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½Øºï¿½ï¿½Å²ï¿½ï¿½
 void UComponent_SkillContainer::revolve()
 {
 	

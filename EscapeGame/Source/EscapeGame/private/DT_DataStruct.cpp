@@ -1,8 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "DT_DataStruct.h"
-
+#include "Data/DT_DataStruct.h"
 // Sets default values
 ADT_DataStruct::ADT_DataStruct()
 {

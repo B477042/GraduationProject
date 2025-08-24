@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTService_MovingShot.h"
-#include "EnemyCharacter_Gunner.h"
-#include "EnemyAIController.h"
+#include "AI/BTService_MovingShot.h"
 
+#include "AIController.h"
+#include "Actor/Character/EnemyCharacter_Gunner.h"
 
 UBTService_MovingShot::UBTService_MovingShot()
 {

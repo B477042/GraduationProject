@@ -1,8 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "CharacterAnimInstance.h"
-#include "EGPlayerCharacter.h"
+
+#include "Animation/CharacterAnimInstance.h"
+
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "Component/StatComponent_Player.h"
+#include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
+
 
 UCharacterAnimInstance::UCharacterAnimInstance()
 {
@@ -73,7 +78,7 @@ void UCharacterAnimInstance::PlayAttackMontage()
 //	
 //}
 
-//°ø°Ý ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ýµÇ°í ´ÙÀ½ ¾Ö´Ï¸ÞÀÌ¼ÇÀ» Àç»ýÇÒÁö °Ë»çÇÏ´Â Å¸ÀÌ¹Ö¿¡ ³ª¿Â´Ù
+//ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ï´ï¿½ Å¸ï¿½Ì¹Ö¿ï¿½ ï¿½ï¿½ï¿½Â´ï¿½
 void UCharacterAnimInstance::AnimNotify_CanComboAttack()
 {
 	//EGLOG(Warning, TEXT("AnimNotify_CanCombo"));
@@ -85,7 +90,7 @@ void UCharacterAnimInstance::AnimNotify_CanComboAttack()
 		if (player->GetStatComponent()->CheckCanComboAttack())
 		{
 			EGLOG(Error, TEXT("lambda check combo"));
-			//AnimNotify_CanComboAttack ¿¡¼­ È£ÃâµÉ ÇÔ¼ö´Ù
+			//AnimNotify_CanComboAttack ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½
 			player->GetStatComponent()->SetComboStartState();
 			JumpToComboAttackSection(player->GetStatComponent()->GetCurrentCombo());
 			//Anim->Montage->Play();
@@ -97,7 +102,7 @@ void UCharacterAnimInstance::AnimNotify_CanComboAttack()
 
 }
 
-//°ø°Ý ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ýµÇ°í ´ÙÀ½ ¾Ö´Ï¸ÞÀÌ¼ÇÀ» Àç»ýÇÒÁö °Ë»çÇÏ´Â Å¸ÀÌ¹Ö¿¡ ³ª¿Â´Ù
+//ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ï´ï¿½ Å¸ï¿½Ì¹Ö¿ï¿½ ï¿½ï¿½ï¿½Â´ï¿½
 void UCharacterAnimInstance::AnimNotify_CanChargeAttack()
 {
 	//EGLOG(Warning, TEXT("AnimNotify_CanCharge"));

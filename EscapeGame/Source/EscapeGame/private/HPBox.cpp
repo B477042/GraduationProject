@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "HPBox.h"
-#include "EGPlayerCharacter.h"
-#include "EGPlayerController.h"
-#include "GameWidget.h"
 
+#include "Actor/Trap/HPBox.h"
+
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "Component/Component_TimeLimit.h"
 // Sets default values
 AHPBox::AHPBox()
 {

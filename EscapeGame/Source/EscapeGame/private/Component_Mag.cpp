@@ -1,10 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Component_Mag.h"
-#include "EGSaveGame.h"
-#include "Weapon.h"
-
+#include "GameAbility/Component_Mag.h"
+#include "UnrealCore/SaveGame/EGSaveGame.h"
+#include "EscapeGame.h"
+#include "Actor/Weapon.h"
+#include "Actor/SklillActor/GunnerBullet.h"
 // Sets default values for this component's properties
 UComponent_Mag::UComponent_Mag()
 {
@@ -43,7 +44,7 @@ void UComponent_Mag::BeginPlay()
 void UComponent_Mag::nextBullet()
 {
 	++idxBullet;
-	//ÀçÀåÀü ÇÊ¿ä
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
 	if (idxBullet >= MaxCapacity)
 	{
 		idxBullet = 0;

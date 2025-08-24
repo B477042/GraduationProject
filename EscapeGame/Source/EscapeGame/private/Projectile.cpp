@@ -1,11 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Projectile.h"
-#include "EnemyCharacter.h"
-#include "EGPlayerCharacter.h"
+#include "Actor/Trap/Projectile.h"
+
 #include "DrawDebugHelpers.h"
-#include "EGGameInstance.h"
+#include "Actor/Character/EGPlayerCharacter.h"
+#include "UnrealCore/EGGameInstance.h"
+
 
 // Sets default values
 AProjectile::AProjectile()
