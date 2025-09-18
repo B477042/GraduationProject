@@ -1,0 +1,29 @@
+﻿{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "CustomSecondaryAnimation",
+	"Description": "",
+	"Category": "Other",
+	"CreatedBy": "",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+    "EnabledByDefault": true,
+	"CanContainContent": false,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "CustomSecondaryAnimation",
+			"Type": "Runtime",
+			"LoadingPhase": "PostConfigInit"
+		},
+        {
+          "Name": "CustomSecondaryAnimationEditor",
+          "Type": "Editor",
+          "LoadingPhase": "Default"
+        }
+	]
+}

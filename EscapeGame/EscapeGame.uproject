@@ -88,6 +88,14 @@
 		{
 			"Name": "GameplayAbilities",
 			"Enabled": true
+		},
+		{
+			"Name": "ChaosCloth",
+			"Enabled": false
+		},
+		{
+			"Name": "CustomSecondaryAnimation",
+			"Enabled": true
 		}
 	]
 }
