@@ -1,9 +1,8 @@
-# [Go to Wiki](https://github.com/B477042/GraduationProject/wiki)
-## About Project
-
-This project made for to apply graduate the Hongik university.
-
-
-
----
-
+# 紹介
+大学生のころ卒業作品として作った３Dアクションゲームです。
+・Unreal　Engine4.26
+・目的：Unreal　Engineの基本的なシステムを理解することで重視していました。
+　Animation、Material、Particle、Lighting、PostProcessなどを活かしながらエンジンの特徴を勉強し、浅いレベルで独学したプロジェクトでした。
+ ウィンドウズパッケージングまで挑戦し、開発プロセスを身につける経験になりました。
+・純粋なC+＋クラスを適応する方法についての知識がなくて、残念な構造として実装したのが今まで深く後悔している部分です。
+・なるべく良い構造で作成するために、大学で勉強した知識をまとめてつくりました。
